@@ -431,6 +431,45 @@ namespace qblocks {
         return false;
     }
 
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmEnum(const string_q&name, string_q& value, const string_q& argIn) const {
+        const COption *param = findParam(name);
+        if (!param)
+            return usage("Unknown parameter `" + name + "'. Quitting...");
+        if (param->type.empty() || !contains(param->type, "enum["))
+            return true;
+
+        string_q type = param->type;
+        replace(type, "*", "");
+        replace(type, "enum", "");
+        replace(type, "list<", "");
+        replace(type, ">", "");
+        replace(type, "[", "|");
+        replace(type, "]", "|");
+
+        string_q arg = argIn;
+        replaceAll(arg, "-", "");
+        replace(arg, param->shortName + ":", "");
+        replace(arg, name + ":", "");
+
+        if (!contains(type, "|" + arg + "|")) {
+            string_q desc = substitute(substitute(param->description, ", one ", "| One "), "*", "");
+            nextTokenClear(desc, '|');
+            return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required. Quitting...");
+        }
+
+        value = arg;
+        return true;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    const COption *COptionsBase::findParam(const string_q& name) const {
+        for (size_t i = 0 ; i < cntParams ; i++)
+            if (startsWith(pParams[i].longName, "--" + name))
+                return &pParams[i];
+        return NULL;
+    }
+
     //--------------------------------------------------------------------------------
     // If nameIn starts with (modes are required -- unless noted. --options are optional):
     //      -    ==> regular option
@@ -465,6 +504,7 @@ namespace qblocks {
         if (contains(longName, ":")) {
             permitted = longName;
             longName = nextTokenClear(permitted, ':');
+            type = permitted;
             replaceAny(permitted, "<>", "");
             if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
                 permitted = "val";
@@ -481,7 +521,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d) {
+    COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size_t opts, const string_q& d) {
         description = substitute(d, "&#44;", ",");
         if (ln.empty())
             return;
@@ -490,9 +530,14 @@ namespace qblocks {
         is_hidden = (opts & OPT_HIDDEN);
         is_optional = !(opts & OPT_REQUIRED);
 
-        permitted = type;
-        permitted = substitute(permitted, "enum[none|json*|txt|csv|api]", "<fmt>");
+        type = t;
+        permitted = t;
         permitted = substitute(permitted, "<blknum>", "<num>");
+        if (contains(type, "enum")) {
+            description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
+            replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
+            permitted = "<val>";
+        }
 
         longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
         shortName = (sn.empty() ? "" : "-" + sn);
@@ -966,6 +1011,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     COptionsBase::~COptionsBase(void) {
         closeRedirect();
+    }
+
+    //-----------------------------------------------------------------------
+    void COptionsBase::setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3) {
+        sorts[0] = c1;
+        sorts[1] = c2;
+        sorts[2] = c3;
     }
 
     //--------------------------------------------------------------------------------

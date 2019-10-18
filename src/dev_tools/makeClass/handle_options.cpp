@@ -100,8 +100,7 @@ bool COptions::check_option(const COptionDef& option) {
 
     // Check valid data types
     CStringArray validTypes = {
-        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint>",
-        "boolean", "string",
+        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint>", "<boolean>",
     };
 
     bool valid_type = false;

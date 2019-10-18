@@ -17,12 +17,15 @@
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool silent;
+// END_CODE_DECLARE
+
     bool isAll;
     bool isRun;
     bool isEdit;
     bool isRemove;
     bool isList;
-    bool silent;
     string_q namesp;
     bool writeHeader;
     bool writeSource;

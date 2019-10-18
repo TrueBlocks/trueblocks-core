@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information [name|decimals|totalSupply|version|symbol|all] about the token"),
+    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information about the token"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
 // END_CODE_OPTIONS
 };
@@ -172,9 +172,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : CHistoryOptions() {
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 

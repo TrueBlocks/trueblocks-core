@@ -190,6 +190,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : transStats(), blockStats(),
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 #ifdef DEBUGGER_ON
 tBuffer(),
 #endif

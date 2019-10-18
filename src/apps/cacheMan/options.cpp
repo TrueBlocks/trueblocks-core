@@ -19,11 +19,11 @@ static const COption params[] = {
     COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
     COption("skip", "p", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
     COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
     COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
 // END_CODE_OPTIONS
 };
@@ -205,6 +205,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 

@@ -8,14 +8,14 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]"),
+    COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retreive"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival (inclusive)"),
     COption("end", "", "<blknum>", OPT_FLAG, "ending block for data retreival (inclusive)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
     COption("config-set", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
 };
@@ -150,6 +150,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     CStatus::registerClass();

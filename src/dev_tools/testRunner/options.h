@@ -21,8 +21,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    string_q filter = "";
+// END_CODE_DECLARE
+
     int modes = CMD;
-    string_q speed_filter = "";
     bool quit_on_error = true;
     bool ignoreOff = false;
     bool cleanTests = false;

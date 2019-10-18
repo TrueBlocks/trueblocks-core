@@ -15,10 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("which", "w", "enum[cmd*|api|both]", OPT_FLAG, "run command line, api, or both test cases (default 'cmd')"),
-    COption("filter", "f", "enum[fast*|medi|slow]", OPT_FLAG, "filter the tests to run only the fast, medium speed, or slow tests (default 'fast')"),
-    COption("clean", "c", "", OPT_SWITCH, "clean working test folder before running tests"),
-    COption("no_quit", "n", "", OPT_SWITCH, "do not quit on error (default is to quit)"),
+    COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
+    COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
+    COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
+    COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -31,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    string_q mode = "";
 // END_CODE_LOCAL_INIT
     string_q path;
 
@@ -40,21 +41,15 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            arg = substitute(substitute(arg, "-f:", ""), "--filter:", "");
-            if (arg != "fast" && arg != "medi" && arg != "slow" && arg != "all")
-                return usage("Specify only fast, medi, or slow for --filter option. Quitting...");
-            speed_filter = arg;
+            if (!confirmEnum("filter", filter, arg))
+                return false;
 
-        } else if (startsWith(arg, "-w:") || startsWith(arg, "--which:")) {
-            arg = substitute(substitute(arg, "-w:", ""), "--which:", "");
-                 if (arg == "cmd")  modes = CMD;
-            else if (arg == "api")  modes = API;
-            else if (arg == "both") modes = BOTH;
-            else return usage("Specify only cmd, api, or both for --which option. Quitting...");
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+            if (!confirmEnum("mode", mode, arg))
+                return false;
 
+// END_CODE_AUTO
         } else if (arg == "-n" || arg == "--no_quit") {
             quit_on_error = false;
 
@@ -123,10 +118,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (speed_filter.empty())
-        speed_filter = "fast";
-    else if (speed_filter == "all")
-        speed_filter = "";
+    modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
+
+    if (filter.empty())
+        filter = "fast";
+    else if (filter == "all")
+        filter = "";
 
     if (tests.empty()) {
         tests.push_back("libs/utillib");
@@ -154,12 +151,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/cacheStatus");
         tests.push_back("apps/chifra");
     }
-
-//    if (verbose) {
-//        for (auto test : tests)
-//            LOG4("Testing ", test);
-//        getchar();
-//    }
 
     return true;
 }
@@ -196,4 +187,3 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     system(os.str().c_str());
     return true;
 }
-

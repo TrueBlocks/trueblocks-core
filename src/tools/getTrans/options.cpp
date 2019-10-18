@@ -18,8 +18,8 @@ static const COption params[] = {
     COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -127,10 +127,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
 }

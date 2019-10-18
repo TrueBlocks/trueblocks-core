@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]"),
+    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -192,6 +192,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 

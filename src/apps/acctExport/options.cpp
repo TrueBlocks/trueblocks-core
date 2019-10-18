@@ -9,7 +9,6 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
@@ -28,6 +27,7 @@ static const COption params[] = {
     COption("deltas", "e", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
     COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };
@@ -341,6 +341,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     ts_array = NULL;
     ts_cnt = 0;
     Init();

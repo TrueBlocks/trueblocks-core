@@ -53,11 +53,11 @@ int main(int argc, const char *argv[]) {
                 bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
                 bool ignore3 = contains(line, ", route,");
                 bool ignore4 = false;
-                if (!ignore3 && !options.speed_filter.empty()) {
+                if (!ignore3 && !options.filter.empty()) {
                          if (contains(line, " all,")) { /* do nothing */ }
-                    else if (options.speed_filter == "fast" ) ignore4 = !contains(line, "fast,");
-                    else if (options.speed_filter == "slow" ) ignore4 = !contains(line, "slow,");
-                    else if (options.speed_filter == "medi" ) ignore4 = !contains(line, "medi,");
+                    else if (options.filter == "fast" ) ignore4 = !contains(line, "fast,");
+                    else if (options.filter == "slow" ) ignore4 = !contains(line, "slow,");
+                    else if (options.filter == "medi" ) ignore4 = !contains(line, "medi,");
                 }
 
                 if (line.empty() || startsWith(line, "enabled") || ignore1 || ignore2 || ignore3 || ignore4) {

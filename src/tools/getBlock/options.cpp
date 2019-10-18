@@ -275,15 +275,12 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
+
     // Mimics jq indenting
     expContext().spcs = 2;
     expContext().hexNums = false;
     expContext().quoteNums = false;
-
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
 
     Init();
 }

@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "extract either [ext*|int|token|miner|all] type of transactions"),
+    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
     COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
     COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
@@ -133,9 +133,9 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
-//    CAccount::registerClass();
     UNHIDE_FIELD(CTransaction, "isError");
     UNHIDE_FIELD(CTransaction, "isInternal");
     UNHIDE_FIELD(CTransaction, "date");

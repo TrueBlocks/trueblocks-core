@@ -154,15 +154,12 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
+
     // Mimics python -m json.tool indenting.
     expContext().spcs = 2;
     expContext().hexNums = false;
     expContext().quoteNums = false;
-
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);       sorts[0]->hideAllFields();
-    sorts[1] = GETRUNTIME_CLASS(CTransaction); sorts[1]->hideAllFields();
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);     sorts[2]->hideAllFields();
     UNHIDE_FIELD(CBlock, "blockNumber");
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();

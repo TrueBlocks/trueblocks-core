@@ -113,6 +113,10 @@ namespace qblocks {
         string_q notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
+        const COption *findParam(const string_q& name) const;
+        bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
+        void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
+
     protected:
         void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
@@ -138,6 +142,7 @@ namespace qblocks {
         string_q  longName;
         string_q  description;
         string_q  permitted;
+        string_q  type;
         bool      is_hidden;
         bool      is_positional;
         bool      is_optional;
