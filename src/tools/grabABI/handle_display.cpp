@@ -20,12 +20,12 @@ void COptions::handle_display(void) {
 
     string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_ABIFUNCTION);
     string_q header = toLower(substitute(substitute(format, "[{", ""), "}]", ""));
-    if (asData)
+    if (data)
         cout << header << "\n";
     replace(format, "[{address}]", toLower("")); //primaryAddr));
 
     for (auto abi : abi_specs) {
-        if (asData) {
+        if (data) {
             HIDE_FIELD(CFunction, "inputs");
             HIDE_FIELD(CFunction, "outputs");
             for (auto interface : abi.interfaces) {

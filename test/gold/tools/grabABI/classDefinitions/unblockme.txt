@@ -1,0 +1,6 @@
+[settings]
+class     = CUnblockMe
+baseClass = CTransaction
+fields    = 
+includes  = transaction.h
+cIncs     = #include "etherlib.h"

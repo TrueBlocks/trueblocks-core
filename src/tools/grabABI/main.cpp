@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.isGenerate) {
+        if (options.generate) {
             options.handle_generate();
         } else {
             options.handle_display();

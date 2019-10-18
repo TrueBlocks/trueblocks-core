@@ -20,7 +20,7 @@ grabABI 0x00001
 #### Hidden options (shown during testing only)
 	-o  (--open)          open the ABI file for editing, download if not already present
 	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
-	-r  (--nodec)         do not decorate duplicate names
+	-r  (--no_decorate)   do not decorate duplicate names
 	-k  (--known)         load common 'known' ABIs from cache
 #### Hidden options (shown during testing only)
 

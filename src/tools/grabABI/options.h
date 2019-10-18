@@ -16,15 +16,13 @@
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
+    bool generate;
+    bool data;
     bool noconst;
     bool silent;
 // END_CODE_DECLARE
 
     uint64_t parts;
-    bool asData;
-    bool loadKnown;
-    bool decNames;
-    bool isGenerate;
     CAbiArray abi_specs;
     CAddressArray addrs;
     string_q classDir;

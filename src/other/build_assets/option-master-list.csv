@@ -50,17 +50,17 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 10690,tools,accounts,getAccounts,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 10700,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.,,FALSE,TRUE,TRUE
 10800,tools,abi,grabABI,,addr_list,,list<addr>,positional,,list of one or more smart contracts whose ABI to grab from EtherScan,,TRUE,TRUE,TRUE
-10810,tools,abi,grabABI,,canonical,c,<boolean>,switch,,convert all types to their canonical represenation and remove all spaces from display,,FALSE,TRUE,TRUE
-10820,tools,abi,grabABI,,generate,g,<boolean>,switch,,generate C++ code into the current folder for all functions and events found in the ABI,,FALSE,TRUE,TRUE
-10830,tools,abi,grabABI,,data,d,<boolean>,switch,,export the display as data,,FALSE,TRUE,TRUE
-10840,tools,abi,grabABI,,encode,e,<boolean>,switch,,generate the encodings for the functions / events in the ABI,,FALSE,TRUE,TRUE
-10850,tools,abi,grabABI,,json,j,<boolean>,switch,,print the ABI to the screen as json,,FALSE,TRUE,TRUE
+10810,tools,abi,grabABI,,canonical,c,<boolean>,switch,,convert all types to their canonical represenation and remove all spaces from display,local,FALSE,TRUE,TRUE
+10820,tools,abi,grabABI,,generate,g,<boolean>,switch,,generate C++ code into the current folder for all functions and events found in the ABI,yes,FALSE,TRUE,TRUE
+10830,tools,abi,grabABI,,data,d,<boolean>,switch,,export the display as data,yes,FALSE,TRUE,TRUE
+10840,tools,abi,grabABI,,encode,e,<boolean>,switch,,generate the encodings for the functions / events in the ABI,local,FALSE,TRUE,TRUE
+10850,tools,abi,grabABI,,json,j,<boolean>,switch,,print the ABI to the screen as json,local,FALSE,TRUE,TRUE
 10860,tools,abi,grabABI,,noconst,n,<boolean>,switch,,generate encodings for non-constant functions and events only (always true when generating),yes,FALSE,TRUE,TRUE
 10870,tools,abi,grabABI,,sol,l,<path>,flag,,create the ABI file from a .sol file in the local directory,,FALSE,TRUE,TRUE
-10880,tools,abi,grabABI,,open,o,<boolean>,switch,,open the ABI file for editing&#44; download if not already present,,FALSE,FALSE,FALSE
+10880,tools,abi,grabABI,,open,o,<boolean>,switch,,open the ABI file for editing&#44; download if not already present,local,FALSE,FALSE,FALSE
 10890,tools,abi,grabABI,,silent,s,<boolean>,switch,,if ABI cannot be acquired&#44; fail silently (useful for scripting),yes,FALSE,FALSE,FALSE
-10900,tools,abi,grabABI,,nodec,r,<boolean>,switch,,do not decorate duplicate names,,FALSE,FALSE,FALSE
-10910,tools,abi,grabABI,,known,k,<boolean>,switch,,load common 'known' ABIs from cache,,FALSE,FALSE,FALSE
+10900,tools,abi,grabABI,,no_decorate,r,<boolean>,switch,,do not decorate duplicate names,local,FALSE,FALSE,FALSE
+10910,tools,abi,grabABI,,known,k,<boolean>,switch,,load common 'known' ABIs from cache,local,FALSE,FALSE,FALSE
 10920,tools,abi,grabABI,,,,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.,,FALSE,TRUE,TRUE
 11000,tools,state,getState,,addr_list,,list<addr>,positional,,one or more addresses (0x...) from which to retrieve balances,,TRUE,TRUE,TRUE
 11010,tools,state,getState,,block_list,,list<blknum>,positional,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest',,FALSE,TRUE,TRUE

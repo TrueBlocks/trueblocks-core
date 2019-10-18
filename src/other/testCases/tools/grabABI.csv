@@ -13,7 +13,7 @@ on, cmd, fast, abi, tools/grabABI, encoding_nv,           n, addr_list = 0xbb9bc
 on, cmd, fast, abi, tools/grabABI, etherTip,              n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known & encode
 on, cmd, fast, abi, tools/grabABI, fromSolidity,          y, sol = 0x1234567812345678123456781234567812345678.sol & json
 on, cmd, fast, abi, tools/grabABI, fromSolidity_fail,     y, addr_list = 0x2234567812345678123456781234567812345678 & sol
-on, cmd, fast, abi, tools/grabABI, generation,            y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & encode & generate & code
+on, cmd, fast, abi, tools/grabABI, generation,            y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & encode & generate
 on, cmd, fast, abi, tools/grabABI, generation2,           y, addr_list = 0xdac17f958d2ee523a2206206994597c13d831ec7 @ vne
 on, cmd, fast, abi, tools/grabABI, known_contracts,       n, known & encode
 
@@ -26,7 +26,7 @@ on, cmd, fast, abi, tools/grabABI, underbar_functions,    n, addr_list = 0xdac17
 on, cmd, fast, abi, tools/grabABI, verbose1,              y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & json
 on, cmd, fast, abi, tools/grabABI, verbose3,              y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & json
 on, cmd, fast, abi, tools/grabABI, verbose4,              n, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
-on, cmd, fast, abi, tools/grabABI, verbose5,              y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate & code
+on, cmd, fast, abi, tools/grabABI, verbose5,              y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
 on, cmd, fast, abi, tools/grabABI, output_test,           n, addr_list = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & json & output = testing_file
 
 on, cmd, fast, abi, tools/grabABI, known_prev_bug1,       n, addr_list = 0x5901deb2c898d5dbe5923e05e510e95968a35067 & raw

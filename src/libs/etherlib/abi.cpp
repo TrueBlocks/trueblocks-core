@@ -386,7 +386,7 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
 }
 
 //-----------------------------------------------------------------------
-void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames) {
+void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decorate) {
 
     if (isZeroAddr(addr))
         return;
@@ -462,7 +462,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
     CFunction func;
     while (func.parseJson3(results)) {
-        abi.addIfUnique(addr, func, decNames);
+        abi.addIfUnique(addr, func, decorate);
         func = CFunction();  // reset
     }
     return;
