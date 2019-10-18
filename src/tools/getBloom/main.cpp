@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
         while (!list.empty()) {
             blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
             cout << doOneBloom(bn, options);
-            if (!options.asBars && !options.asBitBars && !options.asPctBars) {
+            if (!options.bars && !options.bitbars && !options.pctbars) {
                 if (!list.empty())
                     cout << ",";
                 cout << "\n";
@@ -82,26 +82,26 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
         CBloomBlock rawBlock;
         string_q raw = getRawBlock(num);
         rawBlock.parseJson3(raw);
-        if (opt.blockOnly)
+        if (opt.block_only)
             rawBlock.transactions.clear();
 
         blooms.push_back(str_2_BigUint(rawBlock.logsBloom));
-        if (opt.receiptsOnly) {
+        if (opt.receipt_only) {
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++)
                 blooms.push_back(str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom));
         }
 
-             if (opt.asBars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
-        else if (opt.asBitBars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
-        else if (opt.asPctBars) return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)1024);
+             if (opt.bars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
+        else if (opt.bitbars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
+        else if (opt.pctbars) return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)1024);
         else {
             CBloomTransArray showing;
-            if (opt.asBits)
+            if (opt.bits)
                 rawBlock.logsBloom = bloom_2_Bits(str_2_BigUint(rawBlock.logsBloom));
             for (size_t i = 0 ; i < rawBlock.transactions.size() ; i++) {
                 bloom_t bloom = str_2_BigUint(rawBlock.transactions.at(i).receipt.logsBloom);  // .at cannot go past end of vector!
                 if (verbose || bloom != 0) {
-                    if (opt.asBits)
+                    if (opt.bits)
                         rawBlock.transactions.at(i).receipt.logsBloom = bloom_2_Bits(bloom);
                     CBloomTrans t = rawBlock.transactions.at(i);
                     showing.push_back(t);
@@ -118,9 +118,9 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
         string_q fileName = getBinaryCacheFilename(CT_BLOOMS, num);
         readBloomFromBinary(blooms, fileName);
-             if (opt.asBars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
-        else if (opt.asBitBars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
-        else if (opt.asPctBars) {
+             if (opt.bars)    return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
+        else if (opt.bitbars) return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
+        else if (opt.pctbars) {
             bloom_t one_bloom = 0;
             uint64_t n = blooms.size();
             for (size_t i = 0 ; i < blooms.size() ; i++)
@@ -132,7 +132,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
 
             os << "{\n";
             os << "\t\"blockNumber\": \"" << num << "\",\n";
-            if (verbose || opt.bitCount) {
+            if (verbose || opt.bitcount) {
                 os << "\t\"bitCount\": [";
                 if (blooms.size()) os << "\n";
                 for (size_t i = 0 ; i < blooms.size() ; i++) {
@@ -151,7 +151,7 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
             for (size_t i = 0 ; i < blooms.size() ; i++) {
                 bloom_t bloom = blooms[i];
                 if (verbose || bloom != 0) {
-                    if (opt.asBits) {
+                    if (opt.bits) {
                         os << "\t\t\"0x" << bloom_2_Bits(bloom) << "\"";
 
                     } else {

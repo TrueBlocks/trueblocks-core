@@ -17,15 +17,15 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
+    bool block_only;
+    bool receipt_only;
+    bool bits;
+    bool bars;
+    bool bitbars;
+    bool pctbars;
+    bool bitcount;
 // END_CODE_DECLARE
 
-    bool blockOnly;
-    bool receiptsOnly;
-    bool asBits;
-    bool asBars;
-    bool asBitBars;
-    bool asPctBars;
-    bool bitCount;
     uint64_t bitBound;
 
     COptions(void);

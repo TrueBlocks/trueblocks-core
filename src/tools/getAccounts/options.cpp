@@ -22,8 +22,8 @@ static const COption params[] = {
     COption("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "Include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
-    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
+    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 // END_CODE_OPTIONS
@@ -38,6 +38,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool expand = false;
+    bool owned = false;
+    bool custom = false;
+    bool prefund = false;
+    bool named = false;
+    bool other = false;
+    bool addr = false;
 // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -51,40 +58,31 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-e" || arg == "--expand") {
+            expand = true;
+
         } else if (arg == "-m" || arg == "--matchCase") {
             matchCase = true;
 
-// END_CODE_AUTO
-        } else if (arg == "-e" || arg == "--expand") {
-            searchFields = STR_DISPLAY_ACCOUNTNAME;
-            format = searchFields;
-
-        } else if (arg == "-n" || arg == "--named") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= NAMED;
-
-        } else if (arg == "-p" || arg == "--prefund") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= PREFUND;
+        } else if (arg == "-o" || arg == "--owned") {
+            owned = true;
 
         } else if (arg == "-c" || arg == "--custom") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= CUSTOM;
+            custom = true;
 
-        } else if (arg == "-o" || arg == "--owned") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= OWNED;
+        } else if (arg == "-p" || arg == "--prefund") {
+            prefund = true;
+
+        } else if (arg == "-n" || arg == "--named") {
+            named = true;
 
         } else if (arg == "-t" || arg == "--other") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= OTHER;
+            other = true;
 
         } else if (arg == "-a" || arg == "--addr") {
-            addr_only = true;
-            no_header = true;
-            format = "[{ADDRESS}]";
-            searchFields = "[{ADDRESS}]\t[{NAME}]";
+            addr = true;
 
+// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -95,6 +93,25 @@ bool COptions::parseArguments(string_q& command) {
 
         }
     }
+
+    if (expand) {
+        searchFields = STR_DISPLAY_ACCOUNTNAME;
+        format = searchFields;
+    }
+
+    if (named)   { if (deflt) { types = 0; deflt = false; } types |= NAMED;   }
+    if (prefund) { if (deflt) { types = 0; deflt = false; } types |= PREFUND; }
+    if (custom)  { if (deflt) { types = 0; deflt = false; } types |= CUSTOM;  }
+    if (owned)   { if (deflt) { types = 0; deflt = false; } types |= OWNED;   }
+    if (other)   { if (deflt) { types = 0; deflt = false; } types |= OTHER;   }
+
+    if (addr) {
+        addr_only = true;
+        no_header = true;
+        format = "[{ADDRESS}]";
+        searchFields = "[{ADDRESS}]\t[{NAME}]";
+    }
+
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 

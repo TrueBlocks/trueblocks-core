@@ -17,8 +17,8 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
-    COption("block", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
-    COption("receipts", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
+    COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
+    COption("receipt_only", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
     COption("bits", "i", "", OPT_SWITCH, "display blooms as bits instead of hex"),
     COption("bars", "a", "", OPT_SWITCH, "display blooms as bar chart instead of hex"),
     COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
@@ -37,6 +37,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool eab = false;
+    bool force = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -46,43 +48,34 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
-        } else if (arg == "-o" || arg == "--force") {
-            etherlib_init(defaultQuitHandler);
-            isRaw = false;
-
-        } else if (arg == "-r" || arg == "--raw") {
-            isRaw = true;  // last in wins
-
         } else if (arg == "-e" || arg == "--eab") {
-            isRaw = false;  // last in wins
+            eab = true;
 
-        } else if (arg == "-n" || arg == "--bitcount") {
-            bitCount = true;
+        } else if (arg == "-b" || arg == "--block_only") {
+            block_only = true;
 
-        } else if (arg == "-b" || arg == "--block") {
-            blockOnly = true;
-            if (receiptsOnly)
-                return usage("Please choose either --block or --receipt, not both. Quitting...");
-
-        } else if (arg == "-c" || arg == "--receipts") {
-            receiptsOnly = true;
-            if (blockOnly)
-                return usage("Please choose either --block or --receipt, not both. Quitting...");
-
-        } else if (arg == "-a" || arg == "--bars") {
-            asBars = true;
+        } else if (arg == "-c" || arg == "--receipt_only") {
+            receipt_only = true;
 
         } else if (arg == "-i" || arg == "--bits") {
-            asBits = true;
+            bits = true;
+
+        } else if (arg == "-a" || arg == "--bars") {
+            bars = true;
 
         } else if (arg == "-s" || arg == "--bitbars") {
-            asBitBars = true;
+            bitbars = true;
 
         } else if (arg == "-p" || arg == "--pctbars") {
-            asPctBars = true;
+            pctbars = true;
 
+        } else if (arg == "-n" || arg == "--bitcount") {
+            bitcount = true;
+
+        } else if (arg == "-o" || arg == "--force") {
+            force = true;
+
+// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg))
                 return usage("Invalid option: " + arg);
@@ -98,28 +91,38 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (asBits + asBars + asBitBars + asPctBars > 1)
+    if (receipt_only && block_only)
+        return usage("Please choose either --block_only or --receipt_only, not both. Quitting...");
+
+    if (force) {
+        etherlib_init(defaultQuitHandler);
+        isRaw = true;
+    } else if (eab) {
+        isRaw = false;
+    }
+
+    if (bits + bars + bitbars + pctbars > 1)
         return usage("Only one of --bits, --bars, --barbits, or --pctbars may be chosen. Quitting...");
 
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block number or block hash. Quitting...");
 
-    if (blockOnly && !isRaw)
+    if (block_only && !isRaw)
         return usage("--eab and --block options are not allowed together. Choose one. Quitting...");
 
-    if (receiptsOnly && !isRaw)
+    if (receipt_only && !isRaw)
         return usage("--eab and --receipts options are not allowed together. Choose one. Quitting...");
 
     // Initialize these here (hack alert)
     CBloomReceipt noRemove1; CBloomTrans noRemove2; CBloomBlock noRemove3;
     HIDE_FIELD(CBloomTrans, "hash");
-    if (blockOnly)
+    if (block_only)
         HIDE_FIELD(CBloomBlock, "transactions");
 
-    if (receiptsOnly)
+    if (receipt_only)
         HIDE_FIELD(CBloomBlock, "logsBloom");
 
-    if (bitCount || verbose) {
+    if (bitcount || verbose) {
         UNHIDE_FIELD(CBloomReceipt, "bitCount");
         UNHIDE_FIELD(CBloomBlock, "bitCount");
         if (verbose)
@@ -138,16 +141,16 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
 
 // BEG_CODE_INIT
+    block_only = false;
+    receipt_only = false;
+    bits = false;
+    bars = false;
+    bitbars = false;
+    pctbars = false;
+    bitcount = false;
 // END_CODE_INIT
 
     isRaw        = true; // unusual, but true
-    asBits       = false;
-    asBars       = false;
-    asBitBars    = false;
-    asPctBars    = false;
-    bitCount     = false;
-    receiptsOnly = false;
-    blockOnly    = false;
     bitBound     = 200;
     blocks.Init();
 }

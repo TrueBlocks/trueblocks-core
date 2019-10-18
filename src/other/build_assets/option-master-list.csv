@@ -39,14 +39,14 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 10550,tools,slurp,ethslurp,,fmt,x,enum[none|json*|txt|csv|html|api],flag,,pretty print,,FALSE,TRUE,TRUE
 10560,tools,slurp,ethslurp,,,,,description,,Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.,,FALSE,TRUE,TRUE
 10600,tools,accounts,getAccounts,,term_list,,list<string>,positional,,a space separated list of one or more search terms,,TRUE,TRUE,TRUE
-10610,tools,accounts,getAccounts,,expand,e,<boolean>,switch,,expand search to include all fields (default searches name&#44; address&#44; and symbol only),,FALSE,TRUE,TRUE
+10610,tools,accounts,getAccounts,,expand,e,<boolean>,switch,,expand search to include all fields (default searches name&#44; address&#44; and symbol only),local,FALSE,TRUE,TRUE
 10620,tools,accounts,getAccounts,,matchCase,m,<boolean>,switch,,do case-sensitive search,yes,FALSE,TRUE,TRUE
-10630,tools,accounts,getAccounts,,owned,o,<boolean>,switch,,Include personal accounts in the search,,FALSE,TRUE,TRUE
-10640,tools,accounts,getAccounts,,custom,c,<boolean>,switch,,Include your custom named accounts,,FALSE,TRUE,TRUE
-10650,tools,accounts,getAccounts,,prefund,p,<boolean>,switch,,Include prefund accounts,,FALSE,TRUE,TRUE
-10660,tools,accounts,getAccounts,,named,n,<boolean>,switch,,Include well know token and airdrop addresses in the search,,FALSE,TRUE,TRUE
-10670,tools,accounts,getAccounts,,addr,a,<boolean>,switch,,display only addresses in the results (useful for scripting),,FALSE,TRUE,TRUE
-10680,tools,accounts,getAccounts,,other,t,<boolean>,switch,,export other addresses if found,,FALSE,FALSE,FALSE
+10630,tools,accounts,getAccounts,,owned,o,<boolean>,switch,,Include personal accounts in the search,local,FALSE,TRUE,TRUE
+10640,tools,accounts,getAccounts,,custom,c,<boolean>,switch,,Include your custom named accounts,local,FALSE,TRUE,TRUE
+10650,tools,accounts,getAccounts,,prefund,p,<boolean>,switch,,Include prefund accounts,local,FALSE,TRUE,TRUE
+10660,tools,accounts,getAccounts,,named,n,<boolean>,switch,,Include well know token and airdrop addresses in the search,local,FALSE,TRUE,TRUE
+10680,tools,accounts,getAccounts,,other,t,<boolean>,switch,,export other addresses if found,local,FALSE,FALSE,FALSE
+10670,tools,accounts,getAccounts,,addr,a,<boolean>,switch,,display only addresses in the results (useful for scripting),local,FALSE,TRUE,TRUE
 10690,tools,accounts,getAccounts,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 10700,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.,,FALSE,TRUE,TRUE
 10800,tools,abi,grabABI,,addr_list,,list<addr>,positional,,list of one or more smart contracts whose ABI to grab from EtherScan,,TRUE,TRUE,TRUE
@@ -104,12 +104,12 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11610,tools,traces,getTrace,,articulate,a,<boolean>,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
 11620,tools,traces,getTrace,,count_only,c,<boolean>,switch,,show the number of traces for the transaction only (fast),yes,FALSE,TRUE,TRUE
 11630,tools,traces,getTrace,,no_header,n,<boolean>,switch,,do not show the header row,local,FALSE,TRUE,TRUE
-11640,tools,traces,getTrace,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
+11640,tools,traces,getTrace,,skip_ddos,s,enum[on*|off],flag,,skip over dDos transactions during export ('on' by default),local,FALSE,FALSE,FALSE
 11650,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11660,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
 11700,tools,quotes,ethQuote,,freshen,f,<boolean>,switch,,Freshen database (append new data),yes,FALSE,TRUE,TRUE
 11710,tools,quotes,ethQuote,,period,p,enum[5|15|30|60|120*|240|1440],flag,,Display prices in this increment,local,FALSE,TRUE,TRUE
-11720,tools,quotes,ethQuote,,pair,r,<pair>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
+11720,tools,quotes,ethQuote,,pair,r,<pair>,flag,,Which price pair to freshen or list (see Poloniex),local,FALSE,TRUE,TRUE
 11730,tools,quotes,ethQuote,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11740,tools,quotes,ethQuote,,,,,description,,Freshen and/or display Ethereum price data and other purposes.,,FALSE,TRUE,TRUE
 11800,apps,scrape,blockScrape,,nBlocks,n,<blknum>,flag,,maximum number of blocks to process (defaults to 5000),,FALSE,TRUE,TRUE
@@ -162,8 +162,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 12490,apps,,cacheMan,,maxBlock,k,<blknum>,flag,,for testing&#44; max block to visit,,FALSE,TRUE,FALSE
 12500,apps,,cacheMan,,merge,m,<boolean>,switch,,merge two or more caches into a single cache,,FALSE,TRUE,FALSE
 12510,apps,,cacheMan,,skip,p,<boolean>,switch,,skip value for testing,,FALSE,FALSE,FALSE
-12520,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,dummy,FALSE,FALSE,FALSE
-12530,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,dummy,FALSE,FALSE,FALSE
+12520,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,local,FALSE,FALSE,FALSE
+12530,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,local,FALSE,FALSE,FALSE
 12540,apps,,cacheMan,,no_header,o,<boolean>,switch,,do not show header row of data,local,FALSE,FALSE,FALSE
 12550,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,TRUE,FALSE
 12560,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.,,FALSE,TRUE,FALSE
@@ -182,15 +182,15 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 12840,tools,tokens,getTokenInfo,,info,i,enum[name|decimals|totalSupply|version|symbol|all],flag,,retreive information about the token,,FALSE,FALSE,FALSE
 12850,tools,tokens,getTokenInfo,,,,,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).,,FALSE,TRUE,TRUE
 12900,tools,blooms,getBloom,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks for which to retrieve blooms,,TRUE,TRUE,TRUE
-12910,tools,blooms,getBloom,,eab,e,<boolean>,switch,,pull the enhanced adaptive blooms from QBlocks cache,,FALSE,TRUE,TRUE
-12920,tools,blooms,getBloom,,block,b,<boolean>,switch,,show only the block-level bloom (--raw only),,FALSE,TRUE,TRUE
-12930,tools,blooms,getBloom,,receipts,c,<boolean>,switch,,show only the receipt-level blooms (--raw only),,FALSE,TRUE,TRUE
-12940,tools,blooms,getBloom,,bits,i,<boolean>,switch,,display blooms as bits instead of hex,,FALSE,TRUE,TRUE
-12950,tools,blooms,getBloom,,bars,a,<boolean>,switch,,display blooms as bar chart instead of hex,,FALSE,TRUE,TRUE
-12960,tools,blooms,getBloom,,bitbars,s,<boolean>,switch,,display nBits as a bar chart,,FALSE,TRUE,TRUE
-12970,tools,blooms,getBloom,,pctbars,p,<boolean>,switch,,display nBits as a percentage of bloom space,,FALSE,TRUE,TRUE
-12980,tools,blooms,getBloom,,bitcount,n,<boolean>,switch,,display the number of bits lit per bloom,,FALSE,TRUE,TRUE
-12990,tools,blooms,getBloom,,force,o,<boolean>,switch,,force a re-write of the bloom to the cache,,FALSE,FALSE,FALSE
+12910,tools,blooms,getBloom,,eab,e,<boolean>,switch,,pull the enhanced adaptive blooms from QBlocks cache,local,FALSE,TRUE,TRUE
+12920,tools,blooms,getBloom,,block_only,b,<boolean>,switch,,show only the block-level bloom (--raw only),yes,FALSE,TRUE,TRUE
+12930,tools,blooms,getBloom,,receipt_only,c,<boolean>,switch,,show only the receipt-level blooms (--raw only),yes,FALSE,TRUE,TRUE
+12940,tools,blooms,getBloom,,bits,i,<boolean>,switch,,display blooms as bits instead of hex,yes,FALSE,TRUE,TRUE
+12950,tools,blooms,getBloom,,bars,a,<boolean>,switch,,display blooms as bar chart instead of hex,yes,FALSE,TRUE,TRUE
+12960,tools,blooms,getBloom,,bitbars,s,<boolean>,switch,,display nBits as a bar chart,yes,FALSE,TRUE,TRUE
+12970,tools,blooms,getBloom,,pctbars,p,<boolean>,switch,,display nBits as a percentage of bloom space,yes,FALSE,TRUE,TRUE
+12980,tools,blooms,getBloom,,bitcount,n,<boolean>,switch,,display the number of bits lit per bloom,yes,FALSE,TRUE,TRUE
+12990,tools,blooms,getBloom,,force,o,<boolean>,switch,,force a re-write of the bloom to the cache,local,FALSE,FALSE,FALSE
 13000,tools,blooms,getBloom,,,,,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.,,FALSE,TRUE,TRUE
 13100,tools,,templates,,parse,p,<boolean>,switch,,display parsed input data,,FALSE,TRUE,TRUE
 13110,tools,,templates,,logs,g,<boolean>,switch,,display smart contract lo(g)s or events,,FALSE,TRUE,TRUE

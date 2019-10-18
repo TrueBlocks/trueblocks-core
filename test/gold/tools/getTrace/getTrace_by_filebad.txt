@@ -13,7 +13,7 @@ getTrace --bad --file:cmd_file
 	-n  (--no_header)     do not show the header row
 
 #### Hidden options (shown during testing only)
-	-d  (--ddos <val>)    skip over dDos transactions in export ('on' by default), one of [on*|off]
+	-s  (--skip_ddos <val>)skip over dDos transactions during export ('on' by default), one of [on*|off]
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 

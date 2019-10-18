@@ -7,8 +7,8 @@ getBloom --help
   Where:  
 	block_list            a space-separated list of one or more blocks for which to retrieve blooms (required)
 	-e  (--eab)           pull the enhanced adaptive blooms from QBlocks cache
-	-b  (--block)         show only the block-level bloom (--raw only)
-	-c  (--receipts)      show only the receipt-level blooms (--raw only)
+	-b  (--block_only)    show only the block-level bloom (--raw only)
+	-c  (--receipt_only)  show only the receipt-level blooms (--raw only)
 	-i  (--bits)          display blooms as bits instead of hex
 	-a  (--bars)          display blooms as bar chart instead of hex
 	-s  (--bitbars)       display nBits as a bar chart

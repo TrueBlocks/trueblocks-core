@@ -166,7 +166,7 @@ const char* STR_AUTO_SWITCH =
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
 "        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-"            arg = substitute(substitute(arg, \"-[{COMMAND_SHORT}]:\", ""), \"--[{COMMAND}]:\", \"\");\n";
+"            [{COMMAND}] = substitute(substitute(arg, \"-[{COMMAND_SHORT}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =

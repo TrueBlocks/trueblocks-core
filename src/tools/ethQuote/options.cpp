@@ -32,6 +32,7 @@ bool COptions::parseArguments(string_q& command) {
 
 // BEG_CODE_LOCAL_INIT
     string_q period = "";
+    string_q pair = "";
 // END_CODE_LOCAL_INIT
 
     bool no_header = false;
@@ -50,12 +51,10 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("period", period, arg))
                 return false;
 
-// END_CODE_AUTO
-
         } else if (startsWith(arg, "-r:") || startsWith(arg, "--pair:")) {
-            arg = substitute(substitute(orig, "-r:", ""), "--pair:", "");
-            source.pair = arg;
+            pair = substitute(substitute(arg, "-r:", ""), "--pair:", "");
 
+// END_CODE_AUTO
         } else {
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
@@ -64,6 +63,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Data wrangling
+    if (!pair.empty())
+        source.pair = pair;
     if (!period.empty()) {
         freq = str_2_Uint(period);
         if (!isUnsigned(period) || freq % 5)

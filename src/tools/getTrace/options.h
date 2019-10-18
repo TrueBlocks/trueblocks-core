@@ -23,8 +23,8 @@ public:
 
     COptionsTransList transList;
     CAbi abi_spec;
-    bool first;
     bool skipDdos;
+    bool first;
     CStringArray errors;
 
     COptions(void);

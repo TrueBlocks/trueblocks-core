@@ -36,6 +36,8 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
+    string_q start = "";
+    string_q end = "";
     bool no_header = false;
 // END_CODE_LOCAL_INIT
 
@@ -47,12 +49,10 @@ bool COptions::parseArguments(string_q& command) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
         } else if (startsWith(arg, "--start:")) {
-            arg = substitute(arg, "--start:", "");
-            // do nothing
+            start = substitute(substitute(arg, "-:", ""), "--start:", "");
 
         } else if (startsWith(arg, "--end:")) {
-            arg = substitute(arg, "--end:", "");
-            // do nothing
+            end = substitute(substitute(arg, "-:", ""), "--end:", "");
 
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;

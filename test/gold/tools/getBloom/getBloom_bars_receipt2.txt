@@ -1,5 +1,5 @@
-getBloom argc: 4 [1:2501030-2501060] [2:--bitbars] [3:--receipts] 
-getBloom 2501030-2501060 --bitbars --receipts 
+getBloom argc: 4 [1:2501030-2501060] [2:--bitbars] [3:--receipt_only] 
+getBloom 2501030-2501060 --bitbars --receipt_only 
 [
 2501030: ------------
          ------
