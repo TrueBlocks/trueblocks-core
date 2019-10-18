@@ -18,8 +18,8 @@ The tool may also be used to double check that the results produced from the QBl
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
-| -q | --uniqTx | display only uniq addresses found per transaction |
-| -m | --number | display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt) |
+| -q | --uniq_tx | display only uniq addresses found per transaction |
+| -m | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
 | -i | --filter <addr> | useful only for --addrs or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

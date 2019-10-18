@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
         if (!options.quiet && options.filterType.empty())
             cout << (options.isMulti() ? "[" : "");
 #else
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.count_only && !expContext().proving)
             cout << (options.isMulti() ? "[" : "");
         if (expContext().proving)
             expContext().proof << "[";
@@ -46,9 +46,9 @@ int main(int argc, const char *argv[]) {
             if (!options.filterType.empty()) {
                 getAddresses(bn, options);
 
-            } else if (options.isCheck) {
+            } else if (options.check) {
                 string_q checkResults = checkOneBlock(bn, options);
-                cout << checkResults << (options.quiet > 1 ? "" : "\n");
+                cout << checkResults << endl;
                 cout.flush();
 
             } else {
@@ -76,7 +76,7 @@ int main(int argc, const char *argv[]) {
         if (!options.quiet && options.filterType.empty())
             cout << (options.isMulti() ? "]" : "");
 #else
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.counting && !expContext().proving)
+        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.count_only && !expContext().proving)
             cout << (options.isMulti() ? "]" : "");
         if (expContext().proving)
             expContext().proof << "]";
@@ -97,7 +97,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     if (opt.isRaw) {
 
 //        double start = qbNow();
-        if (!queryRawBlock(result, numStr, true, opt.hashes)) {
+        if (!queryRawBlock(result, numStr, true, opt.hash_only)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
 //            double end = qbNow();
@@ -116,7 +116,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 
     } else {
         string_q fileName = getBinaryCacheFilename(CT_BLOCKS, gold.blockNumber);
-        if (opt.isCache) {
+        if (opt.cache) {
 
             // --source::cache mode doesn't include timestamp in transactions
             readBlockFromBinary(gold, fileName);
@@ -153,10 +153,6 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 //------------------------------------------------------------
 string_q checkOneBlock(uint64_t num, const COptions& opt) {
 
-    if (opt.quiet == 2) {
-        cout << "Checking block " << cYellow << uint_2_Str(num) << cOff << "...       \r";
-        cout.flush();
-    }
     string_q numStr = uint_2_Str(num);
 
     // Get the block raw from the node...
@@ -191,16 +187,16 @@ extern string_q hiddenFields(void);
 
     // return the results
     string_q head = "\n" + string_q(80, '-') + "\n";
-    if (opt.quiet == 2) {
-        // only report results if we're being very quiet
-        if (fromNode != fromQblocks)
-            return "Difference at block " + cYellow + uint_2_Str(num) + cOff + ".\n" +
-            "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
-        cout << "Checking block " + cYellow + uint_2_Str(num) + cOff + "...";
-        cout << greenCheck << "         \r";
-        cout.flush();
-        return "";
-    }
+//    if (opt.quiet) {
+//        // only report results if we're being very quiet
+//        if (fromNode != fromQblocks)
+//            return "Difference at block " + cYellow + uint_2_Str(num) + cOff + ".\n" +
+//            "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
+//        cout << "Checking block " + cYellow + uint_2_Str(num) + cOff + "...";
+//        cout << greenCheck << "         \r";
+//        cout.flush();
+//        return "";
+//    }
 
     return head + "from Node:\n" + fromNode +
             head + "from QBlocks:\n" + fromQblocks +
@@ -250,16 +246,16 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
     getBlock(block, num);
     if (opt.filterType == "uniq")
         block.forEveryUniqueAddress(visitAddrs, transFilter, (void*)&opt);
-    else if (opt.filterType == "uniqTx")
+    else if (opt.filterType == "uniq_tx")
         block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, (void*)&opt);
     else
         block.forEveryAddress(visitAddrs, transFilter, (void*)&opt);
-    if (opt.counting) {
-        uint64_t cnt = opt.addrCnt;
+    if (opt.count_only) {
+        uint64_t cnt = opt.addrCounter;
         string_q be  = (cnt == 1 ? "was " : "were ");
         string_q adj = (contains(opt.filterType, "uniq") ? " unique" : "");
-        cout << "There " << be << opt.addrCnt << adj << " addreses" << (cnt == 1 ? "" : "es") << " found in block " << block.blockNumber << ".\n";
-        ((COptions*)&opt)->addrCnt = 0;
+        cout << "There " << be << opt.addrCounter << adj << " addreses" << (cnt == 1 ? "" : "es") << " found in block " << block.blockNumber << ".\n";
+        ((COptions*)&opt)->addrCounter = 0;
     }
     return "";
 }
@@ -269,8 +265,8 @@ bool visitAddrs(const CAppearance& item, void *data) {
     if (!isZeroAddr(item.addr)) {
         COptions *opt = (COptions*)data;
         if (passesFilter(opt, item)) {
-            if (opt->counting) {
-                opt->addrCnt++;
+            if (opt->count_only) {
+                opt->addrCounter++;
 
             } else {
                 cout << item.Format(opt->format);

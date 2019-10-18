@@ -1,3 +1,0 @@
-getBlock argc: 3 [1:3982128] [2:--uniqCnt] 
-getBlock 3982128 --uniqCnt 
-There were 164 unique addreseses found in block 3982128.

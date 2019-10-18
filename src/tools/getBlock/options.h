@@ -17,20 +17,20 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
+    bool hash_only;
+    bool check;
+    bool count_only;
     bool force;
+    bool quiet;
+    bool cache;
     bool normalize;
 // END_CODE_DECLARE
 
-    bool isCheck;
-    bool isCache;
-    bool hashes;
-    int quiet;
     bool showZeroTrace;
     string_q format;
     bool priceBlocks;
     CBlock latest;
-    bool counting;
-    uint64_t addrCnt;
+    uint64_t addrCounter;
     string_q filterType;
     CAddressArray filters;
     timestamp_t secsFinal;

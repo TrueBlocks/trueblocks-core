@@ -1,5 +1,5 @@
-getBlock argc: 2 [1:--latest] 
-getBlock --latest 
+getBlock argc: 2 [1:--report] 
+getBlock --report 
   Client version:     --version--
   Trueblocks version: GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-
   RPC provider:       --rpc_provider--

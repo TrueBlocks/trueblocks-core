@@ -16,18 +16,17 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hash_only", "n", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+    COption("hash_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("check", "c", "", OPT_SWITCH, "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
-    COption("uniqTx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("number", "m", "", OPT_SWITCH, "display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt)"),
+    COption("uniq_tx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
+    COption("count_only", "n", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
     COption("filter", "i", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
-    COption("latest", "l", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
+    COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("quiet", "t", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
-    COption("source", "s", "enum[c*|r]", OPT_HIDDEN | OPT_FLAG, "either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node)"),
-    COption("fields", "f", "enum[a*|m|c|r]", OPT_HIDDEN | OPT_FLAG, "either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default)"),
+    COption("cache", "e", "", OPT_HIDDEN | OPT_SWITCH, "use the cache for data retrieval"),
     COption("normalize", "z", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
@@ -41,6 +40,10 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool addrs = false;
+    bool uniq = false;
+    bool uniq_tx = false;
+    bool report = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -48,130 +51,49 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         string_q orig = arg;
 
-        // shortcuts
-        if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
-        if (arg == "-k" || arg == "--cache") { arg = "--source:cache"; }
-
         // do not collapse
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-s" || arg == "--hash_only") {
+            hash_only = true;
+
+        } else if (arg == "-c" || arg == "--check") {
+            check = true;
+
+        } else if (arg == "-a" || arg == "--addrs") {
+            addrs = true;
+
+        } else if (arg == "-u" || arg == "--uniq") {
+            uniq = true;
+
+        } else if (arg == "-q" || arg == "--uniq_tx") {
+            uniq_tx = true;
+
+        } else if (arg == "-n" || arg == "--count_only") {
+            count_only = true;
+
+        } else if (arg == "-r" || arg == "--report") {
+            report = true;
+
         } else if (arg == "-o" || arg == "--force") {
             force = true;
+
+        } else if (arg == "-t" || arg == "--quiet") {
+            quiet = true;
+
+        } else if (arg == "-e" || arg == "--cache") {
+            cache = true;
 
         } else if (arg == "-z" || arg == "--normalize") {
             normalize = true;
 
 // END_CODE_AUTO
-
-        } else if (arg == "-c" || arg == "--check") {
-            setenv("TEST_MODE", "true", true);
-            isCheck = true;
-            quiet++;  // if both --check and --quiet are present, be very quiet...
-            expContext().spcs = 2;
-            expContext().hexNums = true;
-            expContext().quoteNums = true;
-            RENAME_FIELD(CBlock, "blockNumber", "number");
-            RENAME_FIELD(CBlock, "hash", "blockHash");
-            GETRUNTIME_CLASS(CBlock)->sortFieldList();
-            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
-            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
-
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--filter:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
             filters.push_back(str_2_Addr(toLower(arg)));
-
-        } else if (arg == "-l" || arg == "--latest") {
-            cout << scraperStatus(false);
-            return false;
-
-        } else if (startsWith(arg, "--source:")) {
-            string_q mode = substitute(arg, "--source:", "");
-            if (mode == "r" || mode == "raw") {
-                isRaw = true;
-
-            } else if (mode == "c" || mode == "cache") {
-                isCache = true;
-
-            } else {
-                return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
-            }
-
-        } else if (arg == "-n" || arg == "--hash_only") {
-            hashes = true;
-
-        } else if (arg == "-a" || arg == "--addrs") {
-            filterType = "addrs";
-
-        } else if (arg == "--addrsCnt") {
-            filterType = "addrs";
-            counting = true;
-
-        } else if (arg == "-u" || arg == "--uniq") {
-            filterType = "uniq";
-
-        } else if (arg == "--uniqCnt") {
-            filterType = "uniq";
-            counting = true;
-
-        } else if (arg == "-q" || arg == "--uniqTx") {
-            filterType = "uniqTx";
-
-        } else if (arg == "--uniqTxCnt") {
-            filterType = "uniqTx";
-            counting = true;
-
-        } else if (arg == "-m" || arg == "--number") {
-            counting = true;
-
-        } else if (arg == "-t" || arg == "--quiet") {
-            quiet++;  // if both --check and --quiet are present, be very quiet...
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            string_q mode = substitute(substitute(arg, "-f:", ""), "--fields:", "");
-
-            if (mode == "a" || mode == "all") {
-                GETRUNTIME_CLASS(CBlock)->showAllFields();
-                GETRUNTIME_CLASS(CTransaction)->showAllFields();
-                GETRUNTIME_CLASS(CReceipt)->showAllFields();
-
-            } else if (mode == "m" || mode == "mini") {
-                GETRUNTIME_CLASS(CBlock)->hideAllFields();
-                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
-                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-
-            } else if (mode == "r" || mode == "raw") {
-            } else if (mode == "c" || mode == "cache") {
-                GETRUNTIME_CLASS(CBlock)->hideAllFields();
-                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
-                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-            }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -191,6 +113,24 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (check) {
+        quiet = true;
+        setenv("TEST_MODE", "true", true);
+        expContext().spcs = 2;
+        expContext().hexNums = true;
+        expContext().quoteNums = true;
+        RENAME_FIELD(CBlock, "blockNumber", "number");
+        RENAME_FIELD(CBlock, "hash", "blockHash");
+        GETRUNTIME_CLASS(CBlock)->sortFieldList();
+        GETRUNTIME_CLASS(CTransaction)->sortFieldList();
+        GETRUNTIME_CLASS(CReceipt)->sortFieldList();
+    }
+
+    if (report) {
+        cout << scraperStatus(false);
+        return false;
+    }
+
     if (force)
         etherlib_init(defaultQuitHandler);
 
@@ -202,7 +142,7 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hashes) {
+    if (hash_only) {
         HIDE_FIELD(CTransaction, "blockHash");
         HIDE_FIELD(CTransaction, "blockNumber");
         HIDE_FIELD(CTransaction, "transactionIndex");
@@ -230,8 +170,9 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CBlock,       "finalized");
     }
 
-    if (counting && (filterType.empty()))
-        return usage("--number option is only available with either --addrs or --uniq. Quitting...");
+    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
+    if (count_only && (filterType.empty()))
+        return usage("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
 
     if (!filterType.empty() && force)
         return usage("The --force option is not available when using one of the address options. Quitting...");
@@ -253,18 +194,18 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
 
 // BEG_CODE_INIT
+    hash_only = false;
+    check = false;
+    count_only = false;
     force = false;
+    quiet = false;
+    cache = false;
     normalize = false;
 // END_CODE_INIT
 
     secsFinal     = (60 * 5);
-    isCheck       = false;
-    isCache       = false;
-    hashes        = false;
     filterType    = "";
-    counting      = false;
-    addrCnt       = 0;
-    quiet         = 0;  // quiet has levels
+    addrCounter   = 0;
     format        = "";
     priceBlocks   = false;
     showZeroTrace = false;

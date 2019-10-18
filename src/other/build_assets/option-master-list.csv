@@ -72,18 +72,17 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11070,tools,state,getState,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11080,tools,state,getState,,,,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).,,FALSE,TRUE,TRUE
 11100,tools,blocks,getBlock,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
-11110,tools,blocks,getBlock,,hash_only,n,<boolean>,switch,,display only transaction hashes&#44; default is to display full transaction detail,,FALSE,TRUE,TRUE
-11120,tools,blocks,getBlock,,check,c,<boolean>,switch,,compare results between qblocks and Ethereum node&#44; report differences&#44; if any,,FALSE,TRUE,TRUE
-11130,tools,blocks,getBlock,,addrs,a,<boolean>,switch,,display all addresses included in the block,,FALSE,TRUE,TRUE
-11140,tools,blocks,getBlock,,uniq,u,<boolean>,switch,,display only uniq addresses found per block,,FALSE,TRUE,TRUE
-11150,tools,blocks,getBlock,,uniqTx,q,<boolean>,switch,,display only uniq addresses found per transaction,,FALSE,TRUE,TRUE
-11160,tools,blocks,getBlock,,number,m,<boolean>,switch,,display address counts (alterntively --addrCnt&#44; --uniqTxCnt&#44; or --uniqCnt),,FALSE,TRUE,TRUE
+11110,tools,blocks,getBlock,,hash_only,s,<boolean>,switch,,display only transaction hashes&#44; default is to display full transaction detail,yes,FALSE,TRUE,TRUE
+11120,tools,blocks,getBlock,,check,c,<boolean>,switch,,compare results between qblocks and Ethereum node&#44; report differences&#44; if any,yes,FALSE,TRUE,TRUE
+11130,tools,blocks,getBlock,,addrs,a,<boolean>,switch,,display all addresses included in the block,local,FALSE,TRUE,TRUE
+11140,tools,blocks,getBlock,,uniq,u,<boolean>,switch,,display only uniq addresses found per block,local,FALSE,TRUE,TRUE
+11150,tools,blocks,getBlock,,uniq_tx,q,<boolean>,switch,,display only uniq addresses found per transaction,local,FALSE,TRUE,TRUE
+11160,tools,blocks,getBlock,,count_only,n,<boolean>,switch,,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only),yes,FALSE,TRUE,TRUE
 11170,tools,blocks,getBlock,,filter,i,<addr>,flag,,useful only for --addrs or --uniq&#44; only display this address in results,,FALSE,TRUE,TRUE
-11180,tools,blocks,getBlock,,latest,l,<boolean>,switch,,display the latest blocks at both the node and the cache,,FALSE,FALSE,FALSE
+11180,tools,blocks,getBlock,,report,r,<boolean>,switch,,display the latest blocks at both the node and the cache,local,FALSE,FALSE,FALSE
 11190,tools,blocks,getBlock,,force,o,<boolean>,switch,,force a re-write of the block to the cache,yes,FALSE,FALSE,FALSE
-11200,tools,blocks,getBlock,,quiet,t,<boolean>,switch,,do not print results to screen&#44; used for speed testing and data checking,,FALSE,FALSE,FALSE
-11210,tools,blocks,getBlock,,source,s,enum[c*|r],flag,,either :c(a)che or :(r)aw&#44; source for data retrival. (shortcuts -k = qblocks&#44; -r = node),,FALSE,FALSE,FALSE
-11220,tools,blocks,getBlock,,fields,f,enum[a*|m|c|r],flag,,either :(a)ll&#44; (m)ini&#44; (c)ache or :(r)aw; which fields to include in output (all is default),,FALSE,FALSE,FALSE
+11200,tools,blocks,getBlock,,quiet,t,<boolean>,switch,,do not print results to screen&#44; used for speed testing and data checking,yes,FALSE,FALSE,FALSE
+11205,tools,blocks,getBlock,,cache,e,<boolean>,switch,,use the cache for data retrieval,yes,FALSE,FALSE,FALSE
 11230,tools,blocks,getBlock,,normalize,z,<boolean>,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),yes,FALSE,FALSE,FALSE
 11240,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
 11300,tools,transactions,getTrans,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE

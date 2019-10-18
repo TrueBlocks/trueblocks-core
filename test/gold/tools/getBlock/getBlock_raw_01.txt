@@ -1,5 +1,5 @@
-getBlock argc: 6 [1:2768801] [2:1995314] [3:1958017] [4:--normalize] [5:--source:raw] 
-getBlock 2768801 1995314 1958017 --normalize --source:raw 
+getBlock argc: 6 [1:2768801] [2:1995314] [3:1958017] [4:--normalize] [5:--raw] 
+getBlock 2768801 1995314 1958017 --normalize --raw 
 ["author":"0xea674fdde714fd979de3edf0f56aa9716b898ec8"
 "blockHash":"0x55d9959f2d782dceb3986fcfd0a695007e4f4df3cd3aade5fef2049c21d93d88"
 "blockNumber":"0x2a3fa1"

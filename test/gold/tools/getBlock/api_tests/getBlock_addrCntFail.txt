@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getBlock - --number option is only available with either --addrs or --uniq. Quitting..."
+    "getBlock - --count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting..."
   ]
 }
