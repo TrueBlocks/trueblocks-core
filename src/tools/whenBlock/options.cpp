@@ -149,8 +149,8 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+    optionOff(OPT_DENOM);
 
 // BEG_CODE_INIT
 // END_CODE_INIT

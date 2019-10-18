@@ -31,8 +31,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 

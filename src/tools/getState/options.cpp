@@ -30,7 +30,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     replace(command, "*", " --mode:");
     if (!standardOptions(command))
         return false;

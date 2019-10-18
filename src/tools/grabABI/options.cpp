@@ -36,8 +36,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
     if (!standardOptions(command))
         return false;
 
@@ -215,8 +214,8 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
     noconst = false;

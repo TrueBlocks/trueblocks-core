@@ -20,7 +20,6 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     ENTER4("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
