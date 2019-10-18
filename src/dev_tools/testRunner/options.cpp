@@ -41,12 +41,12 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            if (!confirmEnum("filter", filter, arg))
-                return false;
-
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
+                return false;
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
+            if (!confirmEnum("filter", filter, arg))
                 return false;
 
 // END_CODE_AUTO
@@ -161,6 +161,7 @@ void COptions::Init(void) {
     optionOn(0);
 
 // BEG_CODE_INIT
+    filter = "";
 // END_CODE_INIT
 
     minArgs = 0;

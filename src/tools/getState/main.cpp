@@ -69,21 +69,21 @@ bool visitBlock(uint64_t blockNum, void *data) {
         return !shouldQuit();
 
     state.blockNumber = blockNum;
-    if (opt->mode & ST_BALANCE)
+    if (opt->modes & ST_BALANCE)
         state.balance = balance;
-    if (opt->mode & ST_NONCE)
+    if (opt->modes & ST_NONCE)
         state.nonce = getNonceAt(state.address, blockNum);
-    if (opt->mode & ST_CODE) {
+    if (opt->modes & ST_CODE) {
         string_q code = getCodeAt(state.address);
         state.code = code;
         if (code.length() > 250 && !verbose)
             state.code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
     }
-    if (opt->mode & ST_STORAGE)
+    if (opt->modes & ST_STORAGE)
         state.storage = getStorageAt(state.address, 0);
-    if (opt->mode & ST_DEPLOYED)
+    if (opt->modes & ST_DEPLOYED)
         state.deployed = getDeployBlock(state.address);
-    if (opt->mode & ST_ACCTTYPE)
+    if (opt->modes & ST_ACCTTYPE)
         state.accttype = (isContractAt(state.address) ? "Contract" : "EOA");
 
     if (true) {

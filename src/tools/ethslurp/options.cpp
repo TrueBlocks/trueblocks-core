@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
     COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
     COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print, optionally add ':txt,' ':csv,' or ':html'"),
+    COption("fmt", "x", "enum[none|json*|txt|csv|html|api]", OPT_FLAG, "pretty print"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
 // END_CODE_OPTIONS
 };
@@ -43,18 +43,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
+            if (!confirmEnum("type", type, arg))
+                return false;
+
         } else if (arg == "-s" || arg == "--silent") {
             silent = true;
 
 // END_CODE_AUTO
-
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
-            type = substitute(substitute(arg, "-t:", ""), "--type:", "");
-            if (type == "all")
-                return usage("Type 'all' is currently disabled. Quitting...");
-
-            if (type != "int" && type != "ext" && type != "token" && type != "miner")
-                return usage("Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting...");
 
         } else if (arg == "-f") {
             exportFormat = "json";
@@ -86,6 +82,9 @@ bool COptions::parseArguments(string_q& command) {
             addrs.push_back(str_2_Addr(toLower(arg)));
         }
     }
+
+    if (type == "all")
+        return usage("Type 'all' is currently disabled. Quitting...");
 
     // Note this may not return if user chooses to quit
     api.checkKey();
@@ -121,10 +120,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    type = "";
     silent = false;
 // END_CODE_INIT
 
-    type = "";
     blocks.Init();
     exportFormat = "json";
     addrs.clear();

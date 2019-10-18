@@ -13,7 +13,7 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type
 	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
 	-b  (--blocks <range>)export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
-	-x  (--fmt <val>)     pretty print, optionally add ':txt,' ':csv,' or ':html', one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     pretty print, one of [none|json*|txt|csv|html|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

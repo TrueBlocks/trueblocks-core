@@ -24,7 +24,7 @@ public:
     CStringArray errors;
     CAddressArray addrs;
     address_t current;
-    ethstate_t mode;
+    ethstate_t modes;
     biguint_t prevBal;
     wei_t deminimus;
     bool first;

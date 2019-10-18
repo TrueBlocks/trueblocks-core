@@ -33,7 +33,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 10400,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,FALSE,TRUE,TRUE
 10500,tools,slurp,ethslurp,,addr_list,,list<addr>,positional,,one or more addresses to slurp,,TRUE,TRUE,TRUE
 10510,tools,slurp,ethslurp,,block_list,,list<blknum>,positional,,an optional range of blocks to slurp,,FALSE,TRUE,TRUE
-10520,tools,slurp,ethslurp,,type,t,enum[ext*|int|token|miner|all],flag,,type of transactions to request,,FALSE,TRUE,TRUE
+10520,tools,slurp,ethslurp,,type,t,enum[ext*|int|token|miner|all],flag,,type of transactions to request,yes,FALSE,TRUE,TRUE
 10530,tools,slurp,ethslurp,,blocks,b,<range>,flag,,export records in block range (:0[:max]),,FALSE,TRUE,TRUE
 10540,tools,slurp,ethslurp,,silent,s,<boolean>,switch,,Run silently (only freshen the data&#44; do not display it),yes,FALSE,TRUE,TRUE
 10550,tools,slurp,ethslurp,,fmt,x,enum[none|json*|txt|csv|html|api],flag,,pretty print,,FALSE,TRUE,TRUE
@@ -64,11 +64,11 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 10920,tools,abi,grabABI,,,,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.,,FALSE,TRUE,TRUE
 11000,tools,state,getState,,addr_list,,list<addr>,positional,,one or more addresses (0x...) from which to retrieve balances,,TRUE,TRUE,TRUE
 11010,tools,state,getState,,block_list,,list<blknum>,positional,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest',,FALSE,TRUE,TRUE
-11020,tools,state,getState,,mode,m,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],flag,,control which state to export,,FALSE,TRUE,TRUE
+11020,tools,state,getState,,mode,m,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],flag,,control which state to export,local,FALSE,TRUE,TRUE
 11030,tools,state,getState,,no_zero,n,<boolean>,switch,,suppress the display of zero balance accounts,yes,FALSE,TRUE,TRUE
 11040,tools,state,getState,,changes,c,<boolean>,switch,,only report a balance when it changes from one block to the next,yes,FALSE,TRUE,TRUE
 11050,tools,state,getState,,no_header,o,<boolean>,switch,,hide the header in txt and csv mode,local,FALSE,FALSE,FALSE
-11060,tools,state,getState,,no_history,,<boolean>,switch,,for testing only&#44; hide the server's historical state,,FALSE,FALSE,FALSE
+11060,tools,state,getState,,no_history,,<boolean>,switch,,for testing only&#44; hide the server's historical state,local,FALSE,FALSE,FALSE
 11070,tools,state,getState,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11080,tools,state,getState,,,,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).,,FALSE,TRUE,TRUE
 11100,tools,blocks,getBlock,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
@@ -109,7 +109,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11650,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11660,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
 11700,tools,quotes,ethQuote,,freshen,f,<boolean>,switch,,Freshen database (append new data),yes,FALSE,TRUE,TRUE
-11710,tools,quotes,ethQuote,,period,p,enum[5|15|30|120*|240|1440],flag,,Display prices in this increment,,FALSE,TRUE,TRUE
+11710,tools,quotes,ethQuote,,period,p,enum[5|15|30|60|120*|240|1440],flag,,Display prices in this increment,local,FALSE,TRUE,TRUE
 11720,tools,quotes,ethQuote,,pair,r,<pair>,flag,,Which price pair to freshen or list (see Poloniex),,FALSE,TRUE,TRUE
 11730,tools,quotes,ethQuote,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
 11740,tools,quotes,ethQuote,,,,,description,,Freshen and/or display Ethereum price data and other purposes.,,FALSE,TRUE,TRUE
@@ -117,7 +117,7 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 11810,apps,scrape,blockScrape,,nBlockProcs,b,<uint>,flag,,number of block channels for blaze,,FALSE,FALSE,FALSE
 11820,apps,scrape,blockScrape,,nAddrProcs,a,<uint>,flag,,number of address channels for blaze,,FALSE,FALSE,FALSE
 11830,apps,scrape,blockScrape,,,,,description,,Decentralized blockchain scraper and block cache.,,FALSE,TRUE,TRUE
-11900,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,mode of operation,,FALSE,TRUE,TRUE
+11900,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,which data to retrieve,,FALSE,TRUE,TRUE
 11910,apps,status,cacheStatus,,details,d,<boolean>,switch,,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches,yes,FALSE,TRUE,TRUE
 11920,apps,status,cacheStatus,,list,l,<boolean>,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
 11930,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival (inclusive),,FALSE,TRUE,TRUE
@@ -221,8 +221,8 @@ num,group,api_route,tool,order,command,command_short,data_type,option_kind,defau
 13410,dev_tools,,makeClass,,edit,e,<boolean>,switch,,edit <className(s)> definition file in local folder,,FALSE,FALSE,FALSE
 13420,dev_tools,,makeClass,,options,p,<boolean>,switch,,process options (generate code&#44; check data) and quit,,FALSE,FALSE,FALSE
 13430,dev_tools,,makeClass,,,,,description,,Creates C++ code based on definition file at ./classDefinition/<className>.,,FALSE,TRUE,FALSE
-13500,dev_tools,,testRunner,,mode,m,enum[cmd*|api|both],flag,,determine which set of tests to run,yes,FALSE,TRUE,FALSE
-13510,dev_tools,,testRunner,,filter,f,enum[fast*|medi|slow|all],flag,,determine how long it takes to run tests,local,FALSE,TRUE,FALSE
+13500,dev_tools,,testRunner,,mode,m,enum[cmd*|api|both],flag,,determine which set of tests to run,local,FALSE,TRUE,FALSE
+13510,dev_tools,,testRunner,,filter,f,enum[fast*|medi|slow|all],flag,,determine how long it takes to run tests,yes,FALSE,TRUE,FALSE
 13520,dev_tools,,testRunner,,clean,c,<boolean>,switch,,clean working folder before running tests,,FALSE,TRUE,FALSE
 13530,dev_tools,,testRunner,,no_quit,n,<boolean>,switch,,do not quit testing on first error,,FALSE,TRUE,FALSE
 13540,dev_tools,,testRunner,,,,,description,,Retrieve a transaction's logs from the local cache or a running node.,,FALSE,TRUE,FALSE

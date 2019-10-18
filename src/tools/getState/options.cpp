@@ -35,10 +35,10 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    string_q mode = "";
     bool no_header = false;
+    bool no_history = false;
 // END_CODE_LOCAL_INIT
-
-    bool fake_no_history = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -46,6 +46,10 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+            if (!confirmEnum("mode", mode, arg))
+                return false;
+
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
@@ -55,23 +59,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
 
+        } else if (arg == "--no_history") {
+            no_history = true;
+
 // END_CODE_AUTO
-        } else if (arg == "--no_history" && isTestMode()) {
-            fake_no_history = true;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
-
-            arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
-            if (arg == "none") mode = ST_NONE;
-            if (arg == "balance") mode = ethstate_t(mode|ST_BALANCE);
-            if (arg == "nonce") mode = ethstate_t(mode|ST_NONCE);
-            if (arg == "code") mode = ethstate_t(mode|ST_CODE);
-            if (arg == "storage") mode = ethstate_t(mode|ST_STORAGE);
-            if (arg == "deployed") mode = ethstate_t(mode|ST_DEPLOYED);
-            if (arg == "accttype") mode = ethstate_t(mode|ST_ACCTTYPE);
-            if (arg == "some") mode = ethstate_t(mode|ST_SOME);
-            if (arg == "all") mode = ethstate_t(mode|ST_ALL);
-
         } else if (isHash(arg)) {
 
             string_q ret = blocks.parseBlockList(arg, newestBlock);
@@ -102,6 +93,16 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(ret);
             }
         }
+
+        if (mode == "none") modes = ST_NONE;
+        if (mode == "balance") modes = ethstate_t(modes|ST_BALANCE);
+        if (mode == "nonce") modes = ethstate_t(modes|ST_NONCE);
+        if (mode == "code") modes = ethstate_t(modes|ST_CODE);
+        if (mode == "storage") modes = ethstate_t(modes|ST_STORAGE);
+        if (mode == "deployed") modes = ethstate_t(modes|ST_DEPLOYED);
+        if (mode == "accttype") modes = ethstate_t(modes|ST_ACCTTYPE);
+        if (mode == "some") modes = ethstate_t(modes|ST_SOME);
+        if (mode == "all") modes = ethstate_t(modes|ST_ALL);
     }
 
     // Data wrangling
@@ -115,12 +116,12 @@ bool COptions::parseArguments(string_q& command) {
 
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(mode & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
-    if (!(mode & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
-    if (!(mode & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
-    if (!(mode & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
-    if (!(mode & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
-    if (!(mode & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
+    if (!(modes & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
+    if (!(modes & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
+    if (!(modes & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
+    if (!(modes & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
+    if (!(modes & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
+    if (!(modes & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
     switch (exportFmt) {
@@ -146,11 +147,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!requestsHistory()) // if the user did not request historical state, we can return safely
         return true;
 
-    if (fake_no_history || !nodeHasBalances(false)) {
+    if ((isTestMode() && no_history) || !nodeHasBalances(false)) {
         // The user requested history, so try to get a different server. Fail silently. The user will be warned in the response
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-        if (fake_no_history || (rpcProvider == balanceProvider || balanceProvider.empty()))
+        if ((isTestMode() && no_history) || (rpcProvider == balanceProvider || balanceProvider.empty()))
             return usage("Request asks for historical state, but the RPC server does not have historical state. Quitting...");
 
         getCurlContext()->baseURL = balanceProvider;
@@ -174,7 +175,7 @@ void COptions::Init(void) {
 // END_CODE_INIT
 
     prevBal = 0;
-    mode = ST_BALANCE;
+    modes = ST_BALANCE;
 
     addrs.clear();
     current = "";

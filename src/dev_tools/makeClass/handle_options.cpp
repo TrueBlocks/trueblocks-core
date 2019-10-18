@@ -16,6 +16,7 @@
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
 extern const char* STR_AUTO_FLAG;
+extern const char* STR_AUTO_FLAG_ENUM;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
@@ -46,21 +47,30 @@ bool COptions::handle_options(void) {
             if ((option.group + "/" + option.tool) == tool.first) {
                 check_option(option);
 
+                bool isEnum = contains(option.data_type, "enum");
                 opt_stream << option.Format(STR_OPTION_STR) << endl;
 
                 if (!option.auto_generate.empty()) {
+
                     if (option.option_kind == "switch") {
-                        auto_stream << option.Format(STR_AUTO_SWITCH);
-                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    bool [{COMMAND}];\n") : "");
+                        local_stream   << (option.auto_generate == "local" ? option.Format("    bool [{COMMAND}] = false;\n") : "");
+                        init_stream    << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = false;\n")      : "");
+                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    bool [{COMMAND}];\n")         : "");
+                        auto_stream    << option.Format(STR_AUTO_SWITCH);
+
                     } else if (option.option_kind == "flag") {
-                        auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg");
+                        local_stream   << (option.auto_generate == "local" ? option.Format("    string_q [{COMMAND}] = \"\";\n") : "");
+                        init_stream    << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = \"\";\n")          : "");
+                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    string_q [{COMMAND}];\n")      : "");
+                        if (isEnum)
+                            auto_stream << option.Format(STR_AUTO_FLAG_ENUM);
+                        else
+                            auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg");
                     }
-                    if (option.auto_generate != "dummy") {
-                        init_stream  << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = false;\n") : "");
-                        local_stream << (option.auto_generate == "local" ? option.Format("    bool [{COMMAND}] = false;\n") : "");
-                    } else {
+
+                    if (option.auto_generate == "dummy")
                         auto_stream << "            // do nothing" << endl;
-                    }
+
                     auto_stream << endl;
                 }
 
@@ -157,3 +167,8 @@ const char* STR_AUTO_SWITCH =
 const char* STR_AUTO_FLAG =
 "        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
 "            arg = substitute(substitute(arg, \"-[{COMMAND_SHORT}]:\", ""), \"--[{COMMAND}]:\", \"\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_ENUM =
+"        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n                return false;\n";

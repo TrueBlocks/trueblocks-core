@@ -1,14 +1,14 @@
 ethQuote argc: 3 [1:--period] [2:12] 
 ethQuote --period 12 
 
-  Positive multiple of 5 expected: --period:12
+  Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440] required. Quitting...
 
   Usage:    ethQuote -f|-p|-r|-v|-h  
   Purpose:  Freshen and/or display Ethereum price data and other purposes.
 
   Where:  
 	-f  (--freshen)       Freshen database (append new data)
-	-p  (--period <val>)  Display prices in this increment, one of [5|15|30|120*|240|1440]
+	-p  (--period <val>)  Display prices in this increment, one of [5|15|30|60|120*|240|1440]
 	-r  (--pair <pair>)   Which price pair to freshen or list (see Poloniex)
 
 #### Hidden options (shown during testing only)

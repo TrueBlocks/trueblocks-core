@@ -22,7 +22,7 @@
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
-    string_q filter = "";
+    string_q filter;
 // END_CODE_DECLARE
 
     int modes = CMD;

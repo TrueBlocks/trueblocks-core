@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethslurp - Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting..."
+    "ethslurp - Invalid option 'junk' for 'type'. One of [ext|int|token|miner|all] required. Quitting..."
   ]
 }

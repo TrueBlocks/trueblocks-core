@@ -448,9 +448,9 @@ namespace qblocks {
         replace(type, "]", "|");
 
         string_q arg = argIn;
-        replaceAll(arg, "-", "");
         replace(arg, param->shortName + ":", "");
         replace(arg, name + ":", "");
+        replaceAll(arg, "-", "");
 
         if (!contains(type, "|" + arg + "|")) {
             string_q desc = substitute(substitute(param->description, ", one ", "| One "), "*", "");

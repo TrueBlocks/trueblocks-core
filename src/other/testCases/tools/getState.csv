@@ -40,7 +40,7 @@ on, both, fast, state, tools/getState, e_dao_1500000,                  n, addr_l
 on, both, fast, state, tools/getState, e_two_accts,                    n, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & block_list = 1500000 & ether & fmt = txt
 on, both, fast, state, tools/getState, e_tip_4,                        n, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & block_list = 1500000 2000000 2500000 3000000 & ether & fmt = txt
 
-on, both, fast, state, tools/getState, mode_bal,                       y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = bal & block_list = 2500000
+on, both, fast, state, tools/getState, mode_bal,                       y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = balance & block_list = 2500000
 on, both, fast, state, tools/getState, mode_nonce,                     y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = nonce & block_list = 2500000
 on, both, fast, state, tools/getState, mode_code,                      y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = code & block_list = 2500000
 on, both, fast, state, tools/getState, mode_storage,                   y, addr_list = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = storage & block_list = 2500000

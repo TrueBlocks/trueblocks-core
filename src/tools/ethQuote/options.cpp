@@ -16,7 +16,7 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
-    COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment"),
+    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "Display prices in this increment"),
     COption("pair", "r", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
@@ -31,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    string_q period = "";
 // END_CODE_LOCAL_INIT
 
     bool no_header = false;
@@ -45,13 +46,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-// END_CODE_AUTO
-
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
-            arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
-            freq = str_2_Uint(arg);
-            if (!isUnsigned(arg) || freq % 5)
-                return usage("Positive multiple of 5 expected: " + orig);
+            if (!confirmEnum("period", period, arg))
+                return false;
+
+// END_CODE_AUTO
 
         } else if (startsWith(arg, "-r:") || startsWith(arg, "--pair:")) {
             arg = substitute(substitute(orig, "-r:", ""), "--pair:", "");
@@ -65,7 +64,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Data wrangling
-    // None
+    if (!period.empty()) {
+        freq = str_2_Uint(period);
+        if (!isUnsigned(period) || freq % 5)
+            return usage("Positive multiple of 5 expected: --period: " + period + ". Quitting...");
+    }
 
     // Display formatting
     switch (exportFmt) {

@@ -18,6 +18,7 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
+    string_q type;
     bool silent;
 // END_CODE_DECLARE
 
@@ -26,7 +27,6 @@ public:
     string_q header;
     string_q displayString;
     string_q exportFormat;
-    string_q type;
     bool fromFile;
 
     COptions(void);
