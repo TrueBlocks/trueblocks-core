@@ -19,8 +19,8 @@ You may optionally specify one or more blocks at which to report.
 | -------: | :------- | :------- |
 |  | addr_list | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -b | --byAcct | consider each address an ERC20 token except the last, whose balance is reported for each token |
-| -n | --nozero | suppress the display of zero balance accounts |
+| -b | --by_acct | consider each address an ERC20 token except the last, whose balance is reported for each token |
+| -n | --no_zero | suppress the display of zero balance accounts |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

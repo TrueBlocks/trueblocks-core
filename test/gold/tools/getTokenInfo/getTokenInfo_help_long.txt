@@ -11,7 +11,7 @@ getTokenInfo --help
 	-n  (--no_zero)       suppress the display of zero balance accounts
 
 #### Hidden options (shown during testing only)
-	-i  (--info enum[name|decimals|totalSupply|version|symbol|all])retreive information [name|decimals|totalSupply|version|symbol|all] about the token
+	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

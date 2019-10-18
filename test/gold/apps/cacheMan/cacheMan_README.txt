@@ -20,7 +20,7 @@ cacheMan -th
 | -t | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
 | -k | --maxBlock <num> | for testing, max block to visit |
 | -m | --merge | merge two or more caches into a single cache |
-| -x | --fmt <fmt> | export format (one of [json*&#124;txt&#124;csv]) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 
 #### Hidden options (shown during testing only)
 | -p | --skip | skip value for testing |

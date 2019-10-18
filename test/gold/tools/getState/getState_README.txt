@@ -11,13 +11,13 @@ getState -th
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -m | --mode <val> | control which state to export, one of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 
 #### Hidden options (shown during testing only)
 | -o | --no_header | hide the header in txt and csv mode |
-| -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

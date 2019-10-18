@@ -11,10 +11,10 @@ ethslurp -th
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses to slurp (required) |
 |  | block_list | an optional range of blocks to slurp |
-| -t | --type enum[ext*|int|token|miner|all] | extract either [ext*&#124;int&#124;token&#124;miner&#124;all] type of transactions |
+| -t | --type <val> | type of transactions to request, one of [ext*&#124;int&#124;token&#124;miner&#124;all] |
 | -b | --blocks <range> | export records in block range (:0[:max]) |
 | -s | --silent | Run silently (only freshen the data, do not display it) |
-| -x | --fmt <fmt> | pretty print, optionally add ':txt,' ':csv,' or ':html' |
+| -x | --fmt <val> | pretty print, optionally add ':txt,' ':csv,' or ':html', one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

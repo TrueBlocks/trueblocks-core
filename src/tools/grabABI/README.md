@@ -18,7 +18,7 @@
 | -e | --encode | generate the encodings for the functions / events in the ABI |
 | -j | --json | print the ABI to the screen as json |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
-| -l | --sol <fn> | create the ABI file from a .sol file in the local directory |
+| -l | --sol <path> | create the ABI file from a .sol file in the local directory |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

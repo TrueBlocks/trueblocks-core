@@ -22,8 +22,8 @@ getBlock -th
 | -l | --latest | display the latest blocks at both the node and the cache |
 | -o | --force | force a re-write of the block to the cache |
 | -t | --quiet | do not print results to screen, used for speed testing and data checking |
-| -s | --source enum[c*|r] | either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node) |
-| -f | --fields enum[a*|m|c|r] | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default) |
+| -s | --source <val> | either :c(a)che or :(r)aw, source for data retrival. (shortcuts -k = qblocks, -r = node), one of [c*&#124;r] |
+| -f | --fields <val> | either :(a)ll, (m)ini, (c)ache or :(r)aw; which fields to include in output (all is default), one of [a*&#124;m&#124;c&#124;r] |
 | -z | --normalize | normalize (remove un-common fields and sort) for comparison with other results (testing) |
 #### Hidden options (shown during testing only)
 

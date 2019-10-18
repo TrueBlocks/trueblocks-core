@@ -22,7 +22,7 @@
 
 - `addresses` must start with '0x' and be forty two characters long.
 
-account scraper is finished.                 
+                                                                                                                        
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):

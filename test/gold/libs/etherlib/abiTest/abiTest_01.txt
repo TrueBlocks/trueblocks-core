@@ -3,12 +3,11 @@ abiTest ecoding
 
   Invalid argument ecoding. Please enter either 'encoding' or 'generation'. Quitting...
 
-  Usage:    abiTest [-s|-v|-h] mode  
+  Usage:    abiTest [-s|-v|-h] mode_list  
   Purpose:  Simple program to illustrate how to encode function and event signatures.
-        
+
   Where:  
-	mode                  Mode of operation. One or more of 'encoding' or 'generation'.
- (required)
+	mode_list             mode of operation, one or more of [encoding|generation] (required)
 	-s  (--sub <num>)     sub mode
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

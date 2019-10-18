@@ -16,8 +16,8 @@ This simple program may be used to query an Ethereum address to determine if it 
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
-| -n | --nozero | suppress the display of zero balance accounts |
+| -m | --mode <val> | control which state to export, one of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
@@ -45,8 +45,8 @@ This simple program may be used to query an Ethereum address to determine if it 
 | -------: | :------- | :------- |
 |  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -m | --mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype] | control which state to export. One of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
-| -n | --nozero | suppress the display of zero balance accounts |
+| -m | --mode <val> | control which state to export, one of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

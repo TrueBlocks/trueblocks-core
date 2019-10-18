@@ -10,11 +10,11 @@ ethQuote -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -f | --freshen | Freshen database (append new data) |
-| -p | --period enum[5|15|30|120*|240|1440] | Display prices in this increment. One of [5&#124;15&#124;30&#124;120*&#124;240&#124;1440] |
+| -p | --period <val> | Display prices in this increment, one of [5&#124;15&#124;30&#124;120*&#124;240&#124;1440] |
 | -r | --pair <pair> | Which price pair to freshen or list (see Poloniex) |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

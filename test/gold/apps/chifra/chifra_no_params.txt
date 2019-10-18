@@ -2,13 +2,13 @@ chifra argc: 1
 chifra 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
-  Please specify one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
+  Please specify which command to run, one or more of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
 
   Usage:    chifra [-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
 
   Where:  
-	command               one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
+	command               which command to run, one or more of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

@@ -13,8 +13,8 @@ getTrace --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	-n  (--no_header)     do not show the header row
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
-	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
+	-d  (--ddos <val>)    skip over dDos transactions in export ('on' by default), one of [on*|off]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

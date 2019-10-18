@@ -13,7 +13,7 @@ getTokenInfo 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --mode code
 	-n  (--no_zero)       suppress the display of zero balance accounts
 
 #### Hidden options (shown during testing only)
-	-i  (--info enum[name|decimals|totalSupply|version|symbol|all])retreive information [name|decimals|totalSupply|version|symbol|all] about the token
+	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

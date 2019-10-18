@@ -15,8 +15,8 @@ getTrace -th
 | -n | --no_header | do not show the header row |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
-| -d | --ddos enum[on*|off] | skip over dDos transactions in export ('on' by default) |
+| -d | --ddos <val> | skip over dDos transactions in export ('on' by default), one of [on*&#124;off] |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

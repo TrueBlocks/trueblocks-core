@@ -6,7 +6,7 @@ The tool may also be used to double check that the results produced from the QBl
 
 #### Usage
 
-`Usage:`    getBlock [-n|-c|-a|-u|-q|-m|-l|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-n|-c|-a|-u|-q|-m|-i|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  
@@ -20,7 +20,7 @@ The tool may also be used to double check that the results produced from the QBl
 | -u | --uniq | display only uniq addresses found per block |
 | -q | --uniqTx | display only uniq addresses found per transaction |
 | -m | --number | display address counts (alterntively --addrCnt, --uniqTxCnt, or --uniqCnt) |
-| -l | --filter <address> | useful only for --addrs or --uniq, only display this address in results |
+| -i | --filter <addr> | useful only for --addrs or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
