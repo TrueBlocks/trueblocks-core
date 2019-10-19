@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-The only dependencies for QBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, `python`, and `go`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QBlocks and further steps.
+The only dependencies for QBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io) or [QuikNode](http://quiknode.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, `python`, and `go`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QBlocks and further steps.
 
 The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will request a key from that site before running.
 
