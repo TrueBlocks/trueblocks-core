@@ -14,8 +14,10 @@ cacheStatus -th
 | -l | --list | display results in Linux ls -l format (assumes --detail) |
 
 #### Hidden options (shown during testing only)
-| -g | --config-get | returns JSON data of the editable configuration file items |
-| -s | --config-set | accepts JSON in an env variable and writes it to configuration files |
+| -g | --get_config | returns JSON data of the editable configuration file items |
+| -s | --set_config | accepts JSON in an env variable and writes it to configuration files |
+| -S | --start <num> | first block to process(inclusive) |
+| -E | --end <num> | last block to process (inclusive) |
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 

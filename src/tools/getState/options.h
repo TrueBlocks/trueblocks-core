@@ -17,8 +17,8 @@
 class COptions : public CHistoryOptions {
 public:
 // BEG_CODE_DECLARE
-    bool no_zero;
     bool changes;
+    bool no_zero;
 // END_CODE_DECLARE
 
     CStringArray errors;

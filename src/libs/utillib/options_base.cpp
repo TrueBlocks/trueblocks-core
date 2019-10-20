@@ -314,8 +314,8 @@ namespace qblocks {
             expContext().asWei = false;
         }
 
-        if (isEnabled(OPT_RAW) && contains(cmdLine, "--veryRaw ")) {
-            replaceAll(cmdLine, "--veryRaw ", "");
+        if (isEnabled(OPT_RAW) && contains(cmdLine, "--very_raw ")) {
+            replaceAll(cmdLine, "--very_raw ", "");
             isRaw = true;
             isVeryRaw = true;
         }
@@ -412,7 +412,7 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
             return true;
-        if (isEnabled(OPT_RAW) && arg == "--veryRaw")
+        if (isEnabled(OPT_RAW) && arg == "--very_raw")
             return true;
         if (isEnabled(OPT_WEI) && arg == "--wei")
             return true;
@@ -429,6 +429,31 @@ namespace qblocks {
         if (arg == "--noop")
             return true;
         return false;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value, const string_q& argIn, blknum_t latest) const {
+
+        value = NOPOS;
+
+        const COption *param = findParam(name);
+        if (!param)
+            return usage("Unknown parameter `" + name + "'. Quitting...");
+        if (param->type != "blknum")
+            return true;
+
+        string_q arg = argIn;
+        replace(arg, param->shortName + ":", "");
+        replace(arg, name + ":", "");
+        replaceAll(arg, "-", "");
+
+        if (!isNumeral(arg))
+            return usage("Value to --" + name + " parameter (" + arg + ") must be a valid block number. Quitting...");
+        value = str_2_Uint(arg);
+        if (value > latest)
+            return usage("Start block (" + arg + ") is greater than the latest block. Quitting...");
+
+        return true;
     }
 
     //---------------------------------------------------------------------------------------------------

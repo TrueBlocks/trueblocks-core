@@ -11,10 +11,10 @@ static const COption params[] = {
     COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
-    COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival (inclusive)"),
-    COption("end", "", "<blknum>", OPT_FLAG, "ending block for data retreival (inclusive)"),
-    COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("config-set", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
+    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
@@ -28,7 +28,11 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
+    bool get_config = false;
+    bool set_config = false;
 // END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLastBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -39,42 +43,30 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--details") {
             details = true;
 
-// END_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
-            isListing = true;
+            list = true;
 
-        } else if (startsWith(arg, "--start:")) {
-            arg = substitute(arg, "--start:", "");
-            if (!isNumeral(arg))
-                return usage("'" + arg + "' is not a number for --start parameter. Quitting...");
-            start = str_2_Uint(arg);
-            CBlock block;
-            getBlock_light(block, "latest");
-            if (start > block.blockNumber)
-                return usage("Start block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
+        } else if (arg == "-g" || arg == "--get_config") {
+            get_config = true;
 
-        } else if (startsWith(arg, "--end:")) {
-            arg = substitute(arg, "--end:", "");
-            if (!isNumeral(arg))
-                return usage("'" + arg + "' is not a number for --end parameter. Quitting...");
-//            end = str_2_Uint(arg);
-//            CBlock block;
-//            getBlock_light(block, "latest");
-//            if (end > block.blockNumber)
-//                return usage("End block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
+        } else if (arg == "-s" || arg == "--set_config") {
+            set_config = true;
 
-        } else if (arg == "--config-get") {
-            isConfig = true;
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
 
-        } else if (startsWith(arg, "--config-set")) {
-            mode = "set";
-            isConfig = true;
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             string_q permitted = params[0].description;
             replaceAny(permitted, "[]*", "|");
@@ -82,6 +74,19 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
             mode += (arg + "|");
         }
+    }
+
+    if (start == NOPOS)
+        start = 0;
+
+    if (get_config && set_config)
+        return usage("Please chose only one of --set_config and --get_config. Quitting...");
+
+    if (set_config) {
+        mode = "set";
+        isConfig = true;
+    } else if (get_config) {
+        isConfig = true;
     }
 
     if (!isConfig) {
@@ -114,12 +119,13 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     details = false;
+    list = false;
+    start = NOPOS;
+    end = NOPOS;
 // END_CODE_INIT
 
-    isListing = false;
     isConfig = false;
     mode = "";
-    start = 0;
 
     char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);

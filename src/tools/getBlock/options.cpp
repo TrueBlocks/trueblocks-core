@@ -16,18 +16,18 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hash_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+    COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("check", "c", "", OPT_SWITCH, "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
-    COption("uniq_tx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count_only", "n", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
-    COption("filter", "i", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
+    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
+    COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+    COption("filter", "f", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq, only display this address in results"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
-    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
-    COption("quiet", "t", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
-    COption("cache", "e", "", OPT_HIDDEN | OPT_SWITCH, "use the cache for data retrieval"),
-    COption("normalize", "z", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
+    COption("quiet", "q", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen, used for speed testing and data checking"),
+    COption("cache", "C", "", OPT_HIDDEN | OPT_SWITCH, "use the cache for data retrieval"),
+    COption("normalize", "m", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
 };
@@ -55,8 +55,8 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (arg == "-s" || arg == "--hash_only") {
-            hash_only = true;
+        } else if (arg == "-s" || arg == "--hashes_only") {
+            hashes_only = true;
 
         } else if (arg == "-c" || arg == "--check") {
             check = true;
@@ -67,29 +67,29 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
 
-        } else if (arg == "-q" || arg == "--uniq_tx") {
+        } else if (arg == "-n" || arg == "--uniq_tx") {
             uniq_tx = true;
 
-        } else if (arg == "-n" || arg == "--count_only") {
+        } else if (arg == "-o" || arg == "--count_only") {
             count_only = true;
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
 
-        } else if (arg == "-o" || arg == "--force") {
+        } else if (arg == "-e" || arg == "--force") {
             force = true;
 
-        } else if (arg == "-t" || arg == "--quiet") {
+        } else if (arg == "-q" || arg == "--quiet") {
             quiet = true;
 
-        } else if (arg == "-e" || arg == "--cache") {
+        } else if (arg == "-C" || arg == "--cache") {
             cache = true;
 
-        } else if (arg == "-z" || arg == "--normalize") {
+        } else if (arg == "-m" || arg == "--normalize") {
             normalize = true;
 
 // END_CODE_AUTO
-        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--filter:", "");
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address.\n");
@@ -142,7 +142,7 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hash_only) {
+    if (hashes_only) {
         HIDE_FIELD(CTransaction, "blockHash");
         HIDE_FIELD(CTransaction, "blockNumber");
         HIDE_FIELD(CTransaction, "transactionIndex");
@@ -194,7 +194,7 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
 
 // BEG_CODE_INIT
-    hash_only = false;
+    hashes_only = false;
     check = false;
     count_only = false;
     force = false;

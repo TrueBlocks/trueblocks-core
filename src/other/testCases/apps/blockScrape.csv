@@ -3,17 +3,16 @@ on, cmd,  fast, scrape, apps/blockScrape, README,          n, @th
 on, cmd,  fast, scrape, apps/blockScrape, help,            n, @h
 on, cmd,  fast, scrape, apps/blockScrape, help_long,       n, help
 
-#
 # Note: Be careful when making these test cases live under the API. The API calls into chifra
 # which has some live code (for example to update the timestamp file). Make sure you're not
 # damaging data in API mode before making these tests 'both'
 #
 # off, cmd,  fast, scrape, apps/blockScrape, invalid,         n, junk
-# off, cmd,  fast, scrape, apps/blockScrape, nBlocks_invalid, n, nBlocks = -12
-# off, cmd,  fast, scrape, apps/blockScrape, nBProcs_invalid, n, nBlockProcs = -12
-# off, cmd,  fast, scrape, apps/blockScrape, nAProcs_invalid, n, nAddrProcs = -12
+# off, cmd,  fast, scrape, apps/blockScrape, nBlocks_invalid, n, n_blocks = -12
+# off, cmd,  fast, scrape, apps/blockScrape, nBProcs_invalid, n, n_block_procs = -12
+# off, cmd,  fast, scrape, apps/blockScrape, nAProcs_invalid, n, n_addr_procs = -12
 
-# off, cmd,  fast, scrape, apps/blockScrape, nBlocks,         n, nBlocks = 12
-# off, cmd,  fast, scrape, apps/blockScrape, nBlockProcs,     n, nBlockProcs = 12
-# off, cmd,  fast, scrape, apps/blockScrape, nAddrProcs,      n, nAddrProcs = 12
-# off, cmd,  fast, scrape, apps/blockScrape, all,             n, nBlocks = 12 & nBlockProcs = 12 & nAddrProcs = 12
+# off, cmd,  fast, scrape, apps/blockScrape, nBlocks,         n, n_blocks = 12
+# off, cmd,  fast, scrape, apps/blockScrape, nBlockProcs,     n, n_block_procs = 12
+# off, cmd,  fast, scrape, apps/blockScrape, nAddrProcs,      n, n_addr_procs = 12
+# off, cmd,  fast, scrape, apps/blockScrape, all,             n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12

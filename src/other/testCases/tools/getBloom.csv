@@ -6,7 +6,7 @@ on, cmd,  fast, blooms, tools/getBloom, help,            y, @h
 on, cmd,  fast, blooms, tools/getBloom, help_long,       y, help
 
 on, both, fast, blooms, tools/getBloom, no_params,       y,
-on, cmd,  fast, blooms, tools/getBloom, invalid_option,  y, @x
+on, cmd,  fast, blooms, tools/getBloom, invalid_option,  y, @z
 on, both, fast, blooms, tools/getBloom, baddata,         y, block_list = 1590000 4000001-4000002 x400x001
 on, both, fast, blooms, tools/getBloom, badopt5,         y, block_list = 4501030 & receipt_only & block_only
 on, both, medi, blooms, tools/getBloom, badopt9,         y, block_list = 4501030 & bars & bits

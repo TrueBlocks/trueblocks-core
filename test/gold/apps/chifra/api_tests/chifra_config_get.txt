@@ -164,7 +164,7 @@
           "name": "settings",
           "keys": [
             {
-              "name": "nBlocks",
+              "name": "n_blocks",
               "value": "--n Blocks--",
               "type": "uint",
               "tip": "number of blocks to process per invocation of blaze (> 50)",
@@ -172,7 +172,7 @@
               "read_only": false
             },
             {
-              "name": "nAddrProcs",
+              "name": "n_addr_procs",
               "value": "--n Addr Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process addresses (> 0)",
@@ -180,7 +180,7 @@
               "read_only": false
             },
             {
-              "name": "nBlockProcs",
+              "name": "n_block_procs",
               "value": "--n Block Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process blocks (> 0)",
@@ -199,7 +199,15 @@
           "name": "settings",
           "keys": [
             {
-              "name": "writeTxs",
+              "name": "write_blocks",
+              "value": --write Blocks--,
+              "type": "bool",
+              "tip": "write blocks to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "write_txs",
               "value": --write Txs--,
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",
@@ -207,7 +215,7 @@
               "read_only": false
             },
             {
-              "name": "writeTraces",
+              "name": "write_traces",
               "value": --write Traces--,
               "type": "bool",
               "tip": "write traces to the TrueBlocks binary cache",

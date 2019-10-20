@@ -19,8 +19,8 @@ on, both, fast, transactions, tools/getTrans, by_txhash,           n, trans_list
 on, both, medi, transactions, tools/getTrans, by_bnun_and_txid,    n, trans_list = 4000002.5 & trace & fmt = txt
 on, both, fast, transactions, tools/getTrans, by_bhash_and_txid,   y, trans_list = 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json & parity
 on, both, medi, transactions, tools/getTrans, keys_combination,    y, trans_list = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000000.5 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json
-on, both, fast, transactions, tools/getTrans, from_node,           n, trans_list = 4000000.5 & veryRaw
-on, both, fast, transactions, tools/getTrans, from_node_long,      n, trans_list = 4000000.5 & veryRaw
+on, both, fast, transactions, tools/getTrans, from_node,           n, trans_list = 4000000.5 & very_raw
+on, both, fast, transactions, tools/getTrans, from_node_long,      n, trans_list = 4000000.5 & very_raw
 on, both, fast, transactions, tools/getTrans, should_be_error,     y, trans_list = 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a & fmt = api
 on, both, fast, transactions, tools/getTrans, verbose_blk_idx1,    y, trans_list = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on, both, fast, transactions, tools/getTrans, verbose_blk_idx2,    y, trans_list = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 & fmt = api
@@ -33,9 +33,9 @@ on, both, medi, transactions, tools/getTrans, by_blk_hash_good,    y, trans_list
 
 on, both, fast, transactions, tools/getTrans, three_ways,          n, trans_list = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & fmt = txt
 on, both, fast, transactions, tools/getTrans, bad_hash_msg,        n, trans_list = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = csv
-on, both, fast, transactions, tools/getTrans, bad_hash_msg_raw,    n, trans_list = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & veryRaw
+on, both, fast, transactions, tools/getTrans, bad_hash_msg_raw,    n, trans_list = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & very_raw
 on, both, fast, transactions, tools/getTrans, bad_blkhash_msg,     y, trans_list = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2
-on, both, fast, transactions, tools/getTrans, bad_blkhash_msg_raw, n, trans_list = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & veryRaw
+on, both, fast, transactions, tools/getTrans, bad_blkhash_msg_raw, n, trans_list = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & very_raw
 on, both, fast, transactions, tools/getTrans, revert_not_err,      y, trans_list = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & trace
 on, both, fast, transactions, tools/getTrans, message,             y, trans_list = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
 on, cmd,  medi, transactions, tools/getTrans, core_dump_bug,       y, trans_list = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 @ avt & fmt = api

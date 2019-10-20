@@ -1,4 +1,4 @@
 [settings]
 class       = COptionDef
-fields      = string num|string group|string api_route|string tool|string order|string command|string command_short|string data_type|string option_kind|string default_value|string description_core|string auto_generate|string is_required|string core_visible|string docs_visible
+fields      = string num|string group|string api_route|string tool|string command|string hotkey|string def_val|string is_required|string core_visible|string docs_visible|string generate|string option_kind|string data_type|string description|
 includes    = etherlib.h

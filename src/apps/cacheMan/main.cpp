@@ -50,7 +50,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                         if (shouldQuit())
                             break;
 
-                        if (item.blk < options.maxBlock) {
+                        if (item.blk < options.end) {
                             options.stats.nRecords++;
                             bool isDup = (lastItem.blk == item.blk && lastItem.txid == item.txid);
                             if (mode == "check") {

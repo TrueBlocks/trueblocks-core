@@ -1,5 +1,5 @@
-getAccounts argc: 6 [1:*] [2:torj] [3:--fmt] [4:json] [5:--matchCase] 
-getAccounts * torj --fmt json --matchCase 
+getAccounts argc: 6 [1:*] [2:torj] [3:--fmt] [4:json] [5:--match_case] 
+getAccounts * torj --fmt json --match_case 
 { "data": [
   {
     "group": "50-Tokens",

@@ -9,7 +9,6 @@
 #include "displayapp.h"
 
 using uint_addr_mp = map<uint32_t,address_t>;
-
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -20,6 +19,10 @@ public:
     bool balances;
     bool appearances;
     bool count_only;
+    bool write_blocks;
+    bool nowrite_txs;
+    bool nowrite_traces;
+    bool grab_abis;
     bool freshen;
     bool deltas;
 // END_CODE_DECLARE
@@ -28,12 +31,9 @@ public:
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
-    bool writeTxs;
-    bool writeTraces;
     bool skipDdos;
     size_t maxTraces;
     size_t nExported;
-    bool grabABIs;
     string_q className;
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;

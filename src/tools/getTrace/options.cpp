@@ -18,8 +18,8 @@ static const COption params[] = {
     COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("skip_ddos", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions during export ('on' by default)"),
+    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
@@ -33,8 +33,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
-    bool no_header = false;
     string_q skip_ddos = "";
+    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -49,12 +49,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
-
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip_ddos:")) {
             if (!confirmEnum("skip_ddos", skip_ddos, arg))
                 return false;
+
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
 // END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse

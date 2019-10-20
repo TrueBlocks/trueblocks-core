@@ -1,227 +1,251 @@
-num,group,api_route,tool,unused,command,command_short,data_type,option_kind,default_value,description_core,auto_generate,is_required,core_visible,docs_visible
-10000,apps,export,acctExport,,addr_list,,list<addr>,positional,,one or more addresses (0x...) to export,,TRUE,TRUE,TRUE
-10020,apps,export,acctExport,,articulate,a,<boolean>,switch,,articulate transactions&#44; traces&#44; logs&#44; and outputs,yes,FALSE,TRUE,TRUE
-10040,apps,export,acctExport,,logs,l,<boolean>,switch,,export logs instead of transaction list,yes,FALSE,TRUE,TRUE
-10060,apps,export,acctExport,,traces,t,<boolean>,switch,,export traces instead of transaction list,yes,FALSE,TRUE,TRUE
-10080,apps,export,acctExport,,balances,c,<boolean>,switch,,export balance history instead of transaction list,yes,FALSE,TRUE,TRUE
-10100,apps,export,acctExport,,appearances,p,<boolean>,switch,,export a list of appearances,yes,FALSE,TRUE,TRUE
-10120,apps,export,acctExport,,count_only,o,<boolean>,switch,,display only the count of the number of data items requested,yes,FALSE,TRUE,TRUE
-10140,apps,export,acctExport,,blocks,b,enum[on|off*],flag,,write blocks to the binary cache ('off' by default),,FALSE,FALSE,FALSE
-10160,apps,export,acctExport,,writeTxs,s,enum[on*|off],flag,,write transactions to the binary cache ('on' by default),,FALSE,FALSE,FALSE
-10180,apps,export,acctExport,,writeTraces,r,enum[on*|off],flag,,write traces to the binary cache ('on' by default),,FALSE,FALSE,FALSE
-10200,apps,export,acctExport,,ddos,d,enum[on*|off],flag,,skip over dDos transactions in export ('on' by default),,FALSE,FALSE,FALSE
-10220,apps,export,acctExport,,maxTraces,m,<uint>,flag,,if --ddos:on&#44; the number of traces defining a dDos (default = 250),,FALSE,FALSE,FALSE
-10240,apps,export,acctExport,,no_header,n,<boolean>,switch,,do not show the header row,local,FALSE,FALSE,FALSE
-10260,apps,export,acctExport,,allABIs,A,<boolean>,switch,,load all previously cached abi files,local,FALSE,FALSE,FALSE
-10280,apps,export,acctExport,,grabABIs,g,<boolean>,switch,,using each trace's 'to' address&#44; grab the abi for that address (improves articulation),,FALSE,FALSE,FALSE
-10300,apps,export,acctExport,,freshen,f,<boolean>,switch,,freshen but do not print the exported data,yes,FALSE,FALSE,FALSE
-10320,apps,export,acctExport,,deltas,e,<boolean>,switch,,for --balances option only&#44; export only changes in balances,yes,FALSE,FALSE,FALSE
-10340,apps,export,acctExport,,start,,<blknum>,flag,,first block to export (inclusive),,FALSE,FALSE,FALSE
-10360,apps,export,acctExport,,end,,<blknum>,flag,,last block to export (inclusive),,FALSE,FALSE,FALSE
-10380,apps,export,acctExport,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,TRUE,TRUE
-10400,apps,export,acctExport,,,,,description,,Export full detail of transactions for one or more Ethereum addresses.,,FALSE,TRUE,TRUE
-10420,apps,list,acctScrape,,addr_list,,list<addr>,positional,,one or more Ethereum addresses,,TRUE,TRUE,TRUE
-10440,apps,list,acctScrape,,staging,s,<boolean>,switch,,produce results in the staging folder instead of production folder,,FALSE,FALSE,FALSE
-10460,apps,list,acctScrape,,unripe,u,<boolean>,switch,,visit unripe (not old enough and not yet staged or finalized) blocks,,FALSE,FALSE,FALSE
-10480,apps,list,acctScrape,,daemon,d,<boolean>,switch,,we are being called in daemon mode which causes us to print results differently,,FALSE,FALSE,FALSE
-10500,apps,list,acctScrape,,no_header,o,<boolean>,switch,,do not show the header row,local,FALSE,TRUE,TRUE
-10520,apps,list,acctScrape,,start,,<blknum>,flag,,first block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
-10540,apps,list,acctScrape,,end,,<blknum>,flag,,end block to scan for appearances (inclusive),,FALSE,FALSE,FALSE
-10560,apps,list,acctScrape,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
-10580,apps,scrape,blockScrape,,nBlocks,n,<blknum>,flag,,maximum number of blocks to process (defaults to 5000),,FALSE,TRUE,TRUE
-10600,apps,scrape,blockScrape,,nBlockProcs,b,<uint>,flag,,number of block channels for blaze,,FALSE,FALSE,FALSE
-10620,apps,scrape,blockScrape,,nAddrProcs,a,<uint>,flag,,number of address channels for blaze,,FALSE,FALSE,FALSE
-10640,apps,scrape,blockScrape,,,,,description,,Decentralized blockchain scraper and block cache.,,FALSE,TRUE,TRUE
-10660,apps,,cacheMan,,fn_list,,list<path>,positional,,path(s) of files to check&#44; merge&#44; fix or display (default=display),,TRUE,TRUE,TRUE
-10680,apps,,cacheMan,,check,c,<boolean>,switch,,check for duplicates and other problems in the cache,,FALSE,TRUE,FALSE
-10700,apps,,cacheMan,,data,d,<boolean>,switch,,in 'list' mode&#44; render results as data (i.e export mode),,FALSE,TRUE,FALSE
-10720,apps,,cacheMan,,sort,s,<boolean>,switch,,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup),,FALSE,TRUE,FALSE
-10740,apps,,cacheMan,,fix,f,<boolean>,switch,,remove duplicates from the cache (if any),,FALSE,TRUE,FALSE
-10760,apps,,cacheMan,,list,l,<boolean>,switch,,list the contents of the cache (the default if no other option),,FALSE,TRUE,FALSE
-10780,apps,,cacheMan,,import,i,<boolean>,switch,,import transactions if import.txt file exists in current folder,,FALSE,TRUE,FALSE
-10800,apps,,cacheMan,,remove,r,<boolean>,switch,,remove transactions if remove.txt file exists in current folder,,FALSE,TRUE,FALSE
-10820,apps,,cacheMan,,truncate,t,<blknum>,flag,,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix),,FALSE,TRUE,FALSE
-10840,apps,,cacheMan,,maxBlock,k,<blknum>,flag,,for testing&#44; max block to visit,,FALSE,TRUE,FALSE
-10860,apps,,cacheMan,,merge,m,<boolean>,switch,,merge two or more caches into a single cache,,FALSE,TRUE,FALSE
-10880,apps,,cacheMan,,skip,p,<boolean>,switch,,skip value for testing,,FALSE,FALSE,FALSE
-10900,apps,,cacheMan,,start,,<blknum>,flag,,un-used hidden value - do not remove,local,FALSE,FALSE,FALSE
-10920,apps,,cacheMan,,end,,<blknum>,flag,,un-used hidden value - do not remove,local,FALSE,FALSE,FALSE
-10940,apps,,cacheMan,,no_header,o,<boolean>,switch,,do not show header row of data,local,FALSE,FALSE,FALSE
-10960,apps,,cacheMan,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,TRUE,FALSE
-10980,apps,,cacheMan,,,,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.,,FALSE,TRUE,FALSE
-11000,apps,status,cacheStatus,,mode_list,,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,positional,,which data to retrieve,,FALSE,TRUE,TRUE
-11020,apps,status,cacheStatus,,details,d,<boolean>,switch,,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches,yes,FALSE,TRUE,TRUE
-11040,apps,status,cacheStatus,,list,l,<boolean>,switch,,display results in Linux ls -l format (assumes --detail),,FALSE,TRUE,TRUE
-11060,apps,status,cacheStatus,,start,,<blknum>,flag,,starting block for data retreival (inclusive),,FALSE,TRUE,TRUE
-11080,apps,status,cacheStatus,,end,,<blknum>,flag,,ending block for data retreival (inclusive),,FALSE,TRUE,TRUE
-11100,apps,status,cacheStatus,,config-get,g,<boolean>,switch,,returns JSON data of the editable configuration file items,,FALSE,FALSE,FALSE
-11120,apps,status,cacheStatus,,config-set,s,<boolean>,switch,,accepts JSON in an env variable and writes it to configuration files,,FALSE,FALSE,FALSE
-11140,apps,status,cacheStatus,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-11160,apps,status,cacheStatus,,,,,description,,Report on status of one or more TrueBlocks caches.,,FALSE,TRUE,TRUE
-11180,apps,,chifra,,command,,enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed],positional,,which command to run,,TRUE,TRUE,TRUE
-11200,apps,,chifra,,sleep,,<uint>,flag,,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default 0),,FALSE,TRUE,TRUE
-11220,apps,,chifra,,,,,description,,Create a TrueBlocks monitor configuration.,,FALSE,TRUE,TRUE
-11240,apps,config,,,addr_list,,list<addr>,positional,,show or edit one or more addresses' config file,,FALSE,TRUE,TRUE
-11260,apps,config,,,mode,,enum[show|edit],flag,,whether to show or edit the config,,FALSE,TRUE,TRUE
-11280,apps,config,,,get,,<boolean>,switch,,retrieve current configuration values,,FALSE,FALSE,FALSE
-11300,apps,config,,,set,,<string>,flag,,set new configuration values,,FALSE,FALSE,FALSE
-11320,apps,rm,,,addr_list,,list<addr>,positional,,remove one or more monitors,,TRUE,TRUE,TRUE
-11340,apps,rm,,,yes,,<boolean>,switch,,must be present for remove to occur,,TRUE,TRUE,TRUE
-11360,apps,message,,,bytes,b,<string>,positional,,convert the given bytes into an ascii string,,FALSE,TRUE,TRUE
-11380,apps,message,,,chars,c,<string>,positional,,convert the given string into bytes,,FALSE,TRUE,TRUE
-11400,apps,leech,,,,,<string>,flag,,leech the address index from IPFS,,FALSE,TRUE,TRUE
-11420,apps,seed,,,,,<string>,flag,,seed the address index to IPFS,,FALSE,TRUE,TRUE
-11440,dev_tools,,makeClass,,className,,<string>,positional,,name of C++ class(es) to process,,TRUE,TRUE,FALSE
-11460,dev_tools,,makeClass,,open,o,<boolean>,switch,,edit <className(s)> definition file in local folder,,FALSE,TRUE,FALSE
-11480,dev_tools,,makeClass,,run,r,<boolean>,switch,,run the class maker on associated <className(s)>,,FALSE,TRUE,FALSE
-11500,dev_tools,,makeClass,,js,j,<string>,flag,,export javaScript components for 'class',,FALSE,TRUE,FALSE
-11520,dev_tools,,makeClass,,filter,f,<string>,flag,,process only files with :filter in their names,,FALSE,TRUE,FALSE
-11540,dev_tools,,makeClass,,list,l,<boolean>,switch,,list all definition files found in the local folder,,FALSE,TRUE,FALSE
-11560,dev_tools,,makeClass,,header,h,<boolean>,switch,,write headers files only,,FALSE,TRUE,FALSE
-11580,dev_tools,,makeClass,,source,c,<boolean>,switch,,write source files only,,FALSE,TRUE,FALSE
-11600,dev_tools,,makeClass,,namespace,n,<string>,flag,,surround the code with a --namespace:ns,,FALSE,TRUE,FALSE
-11620,dev_tools,,makeClass,,silent,s,<boolean>,switch,,on error (no classDefinition file) exit silently,yes,FALSE,TRUE,FALSE
-11640,dev_tools,,makeClass,,all,a,<boolean>,switch,,clear&#44; edit&#44; list&#44; or run all class definitions found in the local folder,,FALSE,TRUE,FALSE
-11660,dev_tools,,makeClass,,edit,e,<boolean>,switch,,edit <className(s)> definition file in local folder,,FALSE,FALSE,FALSE
-11680,dev_tools,,makeClass,,options,p,<boolean>,switch,,process options (generate code&#44; check data) and quit,,FALSE,FALSE,FALSE
-11700,dev_tools,,makeClass,,,,,description,,Creates C++ code based on definition file at ./classDefinition/<className>.,,FALSE,TRUE,FALSE
-11720,dev_tools,,testRunner,,mode,m,enum[cmd*|api|both],flag,,determine which set of tests to run,local,FALSE,TRUE,FALSE
-11740,dev_tools,,testRunner,,filter,f,enum[fast*|medi|slow|all],flag,,determine how long it takes to run tests,yes,FALSE,TRUE,FALSE
-11760,dev_tools,,testRunner,,clean,c,<boolean>,switch,,clean working folder before running tests,,FALSE,TRUE,FALSE
-11780,dev_tools,,testRunner,,no_quit,n,<boolean>,switch,,do not quit testing on first error,,FALSE,TRUE,FALSE
-11800,dev_tools,,testRunner,,,,,description,,Retrieve a transaction's logs from the local cache or a running node.,,FALSE,TRUE,FALSE
-11820,tools,quotes,ethQuote,,freshen,f,<boolean>,switch,,Freshen database (append new data),yes,FALSE,TRUE,TRUE
-11840,tools,quotes,ethQuote,,period,p,enum[5|15|30|60|120*|240|1440],flag,,Display prices in this increment,local,FALSE,TRUE,TRUE
-11860,tools,quotes,ethQuote,,pair,r,<pair>,flag,,Which price pair to freshen or list (see Poloniex),local,FALSE,TRUE,TRUE
-11880,tools,quotes,ethQuote,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-11900,tools,quotes,ethQuote,,,,,description,,Freshen and/or display Ethereum price data and other purposes.,,FALSE,TRUE,TRUE
-11920,tools,slurp,ethslurp,,addr_list,,list<addr>,positional,,one or more addresses to slurp,,TRUE,TRUE,TRUE
-11940,tools,slurp,ethslurp,,block_list,,list<blknum>,positional,,an optional range of blocks to slurp,,FALSE,TRUE,TRUE
-11960,tools,slurp,ethslurp,,type,t,enum[ext*|int|token|miner|all],flag,,type of transactions to request,yes,FALSE,TRUE,TRUE
-11980,tools,slurp,ethslurp,,blocks,b,<range>,flag,,export records in block range (:0[:max]),,FALSE,TRUE,TRUE
-12000,tools,slurp,ethslurp,,silent,s,<boolean>,switch,,Run silently (only freshen the data&#44; do not display it),yes,FALSE,TRUE,TRUE
-12020,tools,slurp,ethslurp,,fmt,x,enum[none|json*|txt|csv|html|api],flag,,pretty print,,FALSE,TRUE,TRUE
-12040,tools,slurp,ethslurp,,,,,description,,Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.,,FALSE,TRUE,TRUE
-12060,tools,accounts,getAccounts,,term_list,,list<string>,positional,,a space separated list of one or more search terms,,TRUE,TRUE,TRUE
-12080,tools,accounts,getAccounts,,expand,e,<boolean>,switch,,expand search to include all fields (default searches name&#44; address&#44; and symbol only),local,FALSE,TRUE,TRUE
-12100,tools,accounts,getAccounts,,matchCase,m,<boolean>,switch,,do case-sensitive search,yes,FALSE,TRUE,TRUE
-12120,tools,accounts,getAccounts,,owned,o,<boolean>,switch,,Include personal accounts in the search,local,FALSE,TRUE,TRUE
-12140,tools,accounts,getAccounts,,custom,c,<boolean>,switch,,Include your custom named accounts,local,FALSE,TRUE,TRUE
-12160,tools,accounts,getAccounts,,prefund,p,<boolean>,switch,,Include prefund accounts,local,FALSE,TRUE,TRUE
-12180,tools,accounts,getAccounts,,named,n,<boolean>,switch,,Include well know token and airdrop addresses in the search,local,FALSE,TRUE,TRUE
-12200,tools,accounts,getAccounts,,other,t,<boolean>,switch,,export other addresses if found,local,FALSE,FALSE,FALSE
-12220,tools,accounts,getAccounts,,addr,a,<boolean>,switch,,display only addresses in the results (useful for scripting),local,FALSE,TRUE,TRUE
-12240,tools,accounts,getAccounts,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-12260,tools,accounts,getAccounts,,,,,description,,Query addresses and/or names of well known accounts.,,FALSE,TRUE,TRUE
-12280,tools,blocks,getBlock,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks to retrieve,,TRUE,TRUE,TRUE
-12300,tools,blocks,getBlock,,hash_only,s,<boolean>,switch,,display only transaction hashes&#44; default is to display full transaction detail,yes,FALSE,TRUE,TRUE
-12320,tools,blocks,getBlock,,check,c,<boolean>,switch,,compare results between qblocks and Ethereum node&#44; report differences&#44; if any,yes,FALSE,TRUE,TRUE
-12340,tools,blocks,getBlock,,addrs,a,<boolean>,switch,,display all addresses included in the block,local,FALSE,TRUE,TRUE
-12360,tools,blocks,getBlock,,uniq,u,<boolean>,switch,,display only uniq addresses found per block,local,FALSE,TRUE,TRUE
-12380,tools,blocks,getBlock,,uniq_tx,q,<boolean>,switch,,display only uniq addresses found per transaction,local,FALSE,TRUE,TRUE
-12400,tools,blocks,getBlock,,count_only,n,<boolean>,switch,,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only),yes,FALSE,TRUE,TRUE
-12420,tools,blocks,getBlock,,filter,i,<addr>,flag,,useful only for --addrs or --uniq&#44; only display this address in results,,FALSE,TRUE,TRUE
-12440,tools,blocks,getBlock,,report,r,<boolean>,switch,,display the latest blocks at both the node and the cache,local,FALSE,FALSE,FALSE
-12460,tools,blocks,getBlock,,force,o,<boolean>,switch,,force a re-write of the block to the cache,yes,FALSE,FALSE,FALSE
-12480,tools,blocks,getBlock,,quiet,t,<boolean>,switch,,do not print results to screen&#44; used for speed testing and data checking,yes,FALSE,FALSE,FALSE
-12500,tools,blocks,getBlock,,cache,e,<boolean>,switch,,use the cache for data retrieval,yes,FALSE,FALSE,FALSE
-12520,tools,blocks,getBlock,,normalize,z,<boolean>,switch,,normalize (remove un-common fields and sort) for comparison with other results (testing),yes,FALSE,FALSE,FALSE
-12540,tools,blocks,getBlock,,,,,description,,Returns block(s) from local cache or directly from a running node.,,FALSE,TRUE,TRUE
-12560,tools,blooms,getBloom,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks for which to retrieve blooms,,TRUE,TRUE,TRUE
-12580,tools,blooms,getBloom,,eab,e,<boolean>,switch,,pull the enhanced adaptive blooms from QBlocks cache,local,FALSE,TRUE,TRUE
-12600,tools,blooms,getBloom,,block_only,b,<boolean>,switch,,show only the block-level bloom (--raw only),yes,FALSE,TRUE,TRUE
-12620,tools,blooms,getBloom,,receipt_only,c,<boolean>,switch,,show only the receipt-level blooms (--raw only),yes,FALSE,TRUE,TRUE
-12640,tools,blooms,getBloom,,bits,i,<boolean>,switch,,display blooms as bits instead of hex,yes,FALSE,TRUE,TRUE
-12660,tools,blooms,getBloom,,bars,a,<boolean>,switch,,display blooms as bar chart instead of hex,yes,FALSE,TRUE,TRUE
-12680,tools,blooms,getBloom,,bitbars,s,<boolean>,switch,,display nBits as a bar chart,yes,FALSE,TRUE,TRUE
-12700,tools,blooms,getBloom,,pctbars,p,<boolean>,switch,,display nBits as a percentage of bloom space,yes,FALSE,TRUE,TRUE
-12720,tools,blooms,getBloom,,bitcount,n,<boolean>,switch,,display the number of bits lit per bloom,yes,FALSE,TRUE,TRUE
-12740,tools,blooms,getBloom,,force,o,<boolean>,switch,,force a re-write of the bloom to the cache,local,FALSE,FALSE,FALSE
-12760,tools,blooms,getBloom,,,,,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.,,FALSE,TRUE,TRUE
-12780,tools,logs,getLogs,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
-12800,tools,logs,getLogs,,articulate,a,<boolean>,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-12820,tools,logs,getLogs,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-12840,tools,logs,getLogs,,,,,description,,Retrieve a transaction's logs from the local cache or a running node.,,FALSE,TRUE,TRUE
-12860,tools,receipts,getReceipt,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
-12880,tools,receipts,getReceipt,,articulate,a,<boolean>,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-12900,tools,receipts,getReceipt,,logs,l,<boolean>,switch,,display the receipt's logs,yes,FALSE,TRUE,TRUE
-12920,tools,receipts,getReceipt,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-12940,tools,receipts,getReceipt,,,,,description,,Retrieve a transaction's receipt from the local cache or a running node.,,FALSE,TRUE,TRUE
-12960,tools,state,getState,,addr_list,,list<addr>,positional,,one or more addresses (0x...) from which to retrieve balances,,TRUE,TRUE,TRUE
-12980,tools,state,getState,,block_list,,list<blknum>,positional,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest',,FALSE,TRUE,TRUE
-13000,tools,state,getState,,mode,m,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],flag,,control which state to export,local,FALSE,TRUE,TRUE
-13020,tools,state,getState,,no_zero,n,<boolean>,switch,,suppress the display of zero balance accounts,yes,FALSE,TRUE,TRUE
-13040,tools,state,getState,,changes,c,<boolean>,switch,,only report a balance when it changes from one block to the next,yes,FALSE,TRUE,TRUE
-13060,tools,state,getState,,no_header,o,<boolean>,switch,,hide the header in txt and csv mode,local,FALSE,FALSE,FALSE
-13080,tools,state,getState,,no_history,,<boolean>,switch,,for testing only&#44; hide the server's historical state,local,FALSE,FALSE,FALSE
-13100,tools,state,getState,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-13120,tools,state,getState,,,,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).,,FALSE,TRUE,TRUE
-13140,tools,tokens,getTokenInfo,,addr_list,,list<addr>,positional,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported,,TRUE,TRUE,TRUE
-13160,tools,tokens,getTokenInfo,,block_list,,list<blknum>,positional,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest',,FALSE,TRUE,TRUE
-13180,tools,tokens,getTokenInfo,,by_acct,b,<boolean>,switch,,consider each address an ERC20 token except the last&#44; whose balance is reported for each token,yes,FALSE,TRUE,TRUE
-13200,tools,tokens,getTokenInfo,,no_zero,n,<boolean>,switch,,suppress the display of zero balance accounts,yes,FALSE,TRUE,TRUE
-13220,tools,tokens,getTokenInfo,,info,i,enum[name|decimals|totalSupply|version|symbol|all],flag,,retreive information about the token,,FALSE,FALSE,FALSE
-13240,tools,tokens,getTokenInfo,,,,,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).,,FALSE,TRUE,TRUE
-13260,tools,traces,getTrace,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
-13280,tools,traces,getTrace,,articulate,a,<boolean>,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-13300,tools,traces,getTrace,,count_only,c,<boolean>,switch,,show the number of traces for the transaction only (fast),yes,FALSE,TRUE,TRUE
-13320,tools,traces,getTrace,,no_header,n,<boolean>,switch,,do not show the header row,local,FALSE,TRUE,TRUE
-13340,tools,traces,getTrace,,skip_ddos,s,enum[on*|off],flag,,skip over dDos transactions during export ('on' by default),local,FALSE,FALSE,FALSE
-13360,tools,traces,getTrace,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-13380,tools,traces,getTrace,,,,,description,,Retrieve a transaction's traces from the local cache or a running node.,,FALSE,TRUE,TRUE
-13400,tools,transactions,getTrans,,trans_list,,list<tx_id>,positional,,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID),,TRUE,TRUE,TRUE
-13420,tools,transactions,getTrans,,articulate,a,<boolean>,switch,,articulate the transactions if an ABI is found for the 'to' address,yes,FALSE,TRUE,TRUE
-13440,tools,transactions,getTrans,,trace,t,<boolean>,switch,,display the transaction's trace,yes,FALSE,TRUE,TRUE
-13460,tools,transactions,getTrans,,force,o,<boolean>,switch,,force the results into the tx cache,yes,FALSE,FALSE,FALSE
-13480,tools,transactions,getTrans,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-13500,tools,transactions,getTrans,,,,,description,,Retrieve an Ethereum transaction from the local cache or a running node.,,FALSE,TRUE,TRUE
-13520,tools,abi,grabABI,,addr_list,,list<addr>,positional,,list of one or more smart contracts whose ABI to grab from EtherScan,,TRUE,TRUE,TRUE
-13540,tools,abi,grabABI,,canonical,c,<boolean>,switch,,convert all types to their canonical represenation and remove all spaces from display,local,FALSE,TRUE,TRUE
-13560,tools,abi,grabABI,,generate,g,<boolean>,switch,,generate C++ code into the current folder for all functions and events found in the ABI,yes,FALSE,TRUE,TRUE
-13580,tools,abi,grabABI,,data,d,<boolean>,switch,,export the display as data,yes,FALSE,TRUE,TRUE
-13600,tools,abi,grabABI,,encode,e,<boolean>,switch,,generate the encodings for the functions / events in the ABI,local,FALSE,TRUE,TRUE
-13620,tools,abi,grabABI,,json,j,<boolean>,switch,,print the ABI to the screen as json,local,FALSE,TRUE,TRUE
-13640,tools,abi,grabABI,,noconst,n,<boolean>,switch,,generate encodings for non-constant functions and events only (always true when generating),yes,FALSE,TRUE,TRUE
-13660,tools,abi,grabABI,,sol,l,<path>,flag,,create the ABI file from a .sol file in the local directory,,FALSE,TRUE,TRUE
-13680,tools,abi,grabABI,,open,o,<boolean>,switch,,open the ABI file for editing&#44; download if not already present,local,FALSE,FALSE,FALSE
-13700,tools,abi,grabABI,,silent,s,<boolean>,switch,,if ABI cannot be acquired&#44; fail silently (useful for scripting),yes,FALSE,FALSE,FALSE
-13720,tools,abi,grabABI,,no_decorate,r,<boolean>,switch,,do not decorate duplicate names,local,FALSE,FALSE,FALSE
-13740,tools,abi,grabABI,,known,k,<boolean>,switch,,load common 'known' ABIs from cache,local,FALSE,FALSE,FALSE
-13760,tools,abi,grabABI,,,,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.,,FALSE,TRUE,TRUE
-13780,tools,,templates,,parse,p,<boolean>,switch,,display parsed input data,,FALSE,TRUE,TRUE
-13800,tools,,templates,,logs,g,<boolean>,switch,,display smart contract lo(g)s or events,,FALSE,TRUE,TRUE
-13820,tools,,templates,,trace,t,<boolean>,switch,,display smart contract internal traces,,FALSE,TRUE,TRUE
-13840,tools,,templates,,accounting,a,<boolean>,switch,,display credits and debits per account and reconcile at each block,,FALSE,TRUE,TRUE
-13860,tools,,templates,,no_check,n,<boolean>,switch,,do not do balance check at each block,,FALSE,TRUE,TRUE
-13880,tools,,templates,,debug,d,<boolean>,switch,,enter debug mode (pause after each transaction),,FALSE,TRUE,TRUE
-13900,tools,,templates,,single,s,<boolean>,switch,,if debugging is enable&#44; single step through transactions,,FALSE,TRUE,TRUE
-13920,tools,,templates,,export,e,<boolean>,switch,,export the transactions to export file,,FALSE,TRUE,TRUE
-13940,tools,,templates,,json,j,<boolean>,switch,,ignore export format and export as json,,FALSE,TRUE,TRUE
-13960,tools,,templates,,balances,b,<boolean>,switch,,if a balance does not reconcile&#44; export a message to a file,,FALSE,TRUE,TRUE
-13980,tools,,templates,,list,l,<boolean>,switch,,display list of monitored accounts,,FALSE,TRUE,TRUE
-14000,tools,,templates,,kBlock,k,<blknum>,flag,,start processing at block :k,,FALSE,TRUE,TRUE
-14020,tools,,templates,,offset,o,<blknum>,flag,,offset to kBlock,,FALSE,TRUE,TRUE
-14040,tools,,templates,,,,,description,,Index transactions for a given Ethereum address (or series of addresses).,,FALSE,TRUE,TRUE
-14060,tools,when,whenBlock,,block_list,,list<blknum>,positional,,one or more block numbers (or a 'special' block)&#44; or,,FALSE,TRUE,FALSE
-14080,tools,when,whenBlock,,date_list,,list<date>,positional,,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]],,FALSE,TRUE,FALSE
-14100,tools,when,whenBlock,,list,l,<boolean>,switch,,export all the named blocks,,FALSE,TRUE,FALSE
-14120,tools,when,whenBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-14140,tools,when,whenBlock,,,,,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.,,FALSE,TRUE,FALSE
-14160,tools,where,whereBlock,,block_list,,list<blknum>,positional,,a space-separated list of one or more blocks to search for,,TRUE,TRUE,FALSE
-14180,tools,where,whereBlock,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format,,FALSE,FALSE,FALSE
-14200,tools,where,whereBlock,,,,,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.,,FALSE,TRUE,FALSE
-14220,all,all,all,,version,,<boolean>,switch,,display the current version of the tool,,FALSE,TRUE,FALSE
-14240,all,all,all,,nocolor,,<boolean>,switch,,turn off colored display,,FALSE,TRUE,FALSE
-14260,all,all,all,,wei,,<boolean>,switch,,specify value in wei (the default),,FALSE,TRUE,FALSE
-14280,all,all,all,,ether,,<boolean>,switch,,specify value in ether,,FALSE,TRUE,FALSE
-14300,all,all,all,,dollars,,<boolean>,switch,,specify value in US dollars,,FALSE,TRUE,FALSE
-14320,all,all,all,,raw,,<boolean>,switch,,report JSON data from the node with minimal processing,,FALSE,TRUE,FALSE
-14340,all,all,all,,veryRaw,,<boolean>,switch,,report JSON data from node with zero processing,,FALSE,TRUE,FALSE
-14360,all,all,all,,fmt,x,enum[none|json*|txt|csv|api],flag,,export format (where appropriate),,FALSE,TRUE,TRUE
-14380,all,all,all,,api_mode,,<boolean>,switch,,simulate api_mode for testing,,FALSE,TRUE,FALSE
-14400,all,all,all,,to_file,,<boolean>,switch,,write the results to a temporary file and return the filename,,FALSE,TRUE,FALSE
-14420,all,all,all,,output,,<path>,flag,,write the results to file 'fn' and return the filename,,FALSE,TRUE,FALSE
-14440,all,all,all,,file,,<path>,flag,,specify multiple sets of command line options in a file.,,FALSE,TRUE,FALSE
-14460,all,all,all,,noop,,<boolean>,switch,,non operation (for testing for example),,FALSE,TRUE,FALSE
-14480,all,all,all,,help,h,<boolean>,switch,,get help on this command,,FALSE,TRUE,TRUE
-14500,all,all,all,,parity,,<boolean>,switch,,mimic parity's output,,FALSE,TRUE,FALSE
+num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_visible,generate,option_kind,data_type,description
+10000,apps,list,acctScrape,addr_list,,,TRUE,TRUE,TRUE,no,positional,list<addr>,one or more Ethereum addresses
+10050,apps,list,acctScrape,staging,s,,FALSE,FALSE,FALSE,local,switch,<boolean>,produce results in the staging folder instead of production folder
+10100,apps,list,acctScrape,unripe,u,,FALSE,FALSE,FALSE,local,switch,<boolean>,visit unripe (not old enough and not yet staged or finalized) blocks
+10150,apps,list,acctScrape,daemon,d,,FALSE,FALSE,FALSE,yes,switch,<boolean>,we are being called in daemon mode which causes us to print results differently
+10200,apps,list,acctScrape,no_header,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,do not show the header row
+10250,apps,list,acctScrape,start,S,,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process(inclusive)
+10300,apps,list,acctScrape,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
+10350,apps,list,acctScrape,,,,FALSE,TRUE,TRUE,no,description,,Index transactions for a given Ethereum address (or series of addresses).
+
+10400,apps,export,acctExport,addr_list,,,TRUE,TRUE,TRUE,no,positional,list<addr>,one or more addresses (0x...) to export
+10450,apps,export,acctExport,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
+10500,apps,export,acctExport,logs,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export logs instead of transaction list
+10550,apps,export,acctExport,traces,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export traces instead of transaction list
+10600,apps,export,acctExport,balances,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export balance history instead of transaction list
+10650,apps,export,acctExport,appearances,p,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export a list of appearances
+10700,apps,export,acctExport,count_only,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only the count of the number of data items requested
+10750,apps,export,acctExport,write_blocks,w,,FALSE,FALSE,FALSE,yes,switch,<boolean>,turn on writing blocks to the binary cache ('off' by default)
+10800,apps,export,acctExport,nowrite_txs,o,,FALSE,FALSE,FALSE,yes,switch,<boolean>,turn off writing transactions to the binary cache ('on' by default)
+10850,apps,export,acctExport,nowrite_traces,r,,FALSE,FALSE,FALSE,yes,switch,<boolean>,turn off writing traces to the binary cache ('on' by default)
+10900,apps,export,acctExport,ddos,d,,FALSE,FALSE,FALSE,,flag,enum[on*|off],skip over dDos transactions in export ('on' by default)
+10950,apps,export,acctExport,max_traces,m,,FALSE,FALSE,FALSE,,flag,<uint>,if --ddos:on&#44; the number of traces defining a dDos (default = 250)
+11000,apps,export,acctExport,no_header,n,,FALSE,FALSE,FALSE,local,switch,<boolean>,do not show the header row
+11050,apps,export,acctExport,all_abis,A,,FALSE,FALSE,FALSE,local,switch,<boolean>,load all previously cached abi files
+11100,apps,export,acctExport,grab_abis,g,,FALSE,FALSE,FALSE,yes,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
+11150,apps,export,acctExport,freshen,f,,FALSE,FALSE,FALSE,yes,switch,<boolean>,freshen but do not print the exported data
+11200,apps,export,acctExport,deltas,D,,FALSE,FALSE,FALSE,yes,switch,<boolean>,for --balances option only&#44; export only changes in balances
+10250,apps,export,acctExport,start,S,,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process(inclusive)
+10300,apps,export,acctExport,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
+11350,apps,export,acctExport,fmt,x,,FALSE,TRUE,TRUE,no,flag,enum[none|json*|txt|csv|api],export format
+11400,apps,export,acctExport,,,,FALSE,TRUE,TRUE,,description,,Export full detail of transactions for one or more Ethereum addresses.
+
+11450,apps,scrape,blockScrape,n_blocks,n,,FALSE,TRUE,TRUE,,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
+11500,apps,scrape,blockScrape,n_block_procs,p,,FALSE,FALSE,FALSE,,flag,<uint>,number of block channels for blaze
+11550,apps,scrape,blockScrape,n_addr_procs,a,,FALSE,FALSE,FALSE,,flag,<uint>,number of address channels for blaze
+11600,apps,scrape,blockScrape,,,,FALSE,TRUE,TRUE,,description,,Decentralized blockchain scraper and block cache.
+
+11650,apps,status,cacheStatus,mode_list,,,FALSE,TRUE,TRUE,no,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,which data to retrieve
+11700,apps,status,cacheStatus,details,d,,FALSE,TRUE,TRUE,yes,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
+11750,apps,status,cacheStatus,list,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
+11900,apps,status,cacheStatus,get_config,g,,FALSE,FALSE,FALSE,local,switch,<boolean>,returns JSON data of the editable configuration file items
+11950,apps,status,cacheStatus,set_config,s,,FALSE,FALSE,FALSE,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
+10250,apps,status,cacheStatus,start,S,,FALSE,FALSE,FALSE,yes,flag,<blknum>,first block to process(inclusive)
+10300,apps,status,cacheStatus,end,E,,FALSE,FALSE,FALSE,yes,flag,<blknum>,last block to process (inclusive)
+12000,apps,status,cacheStatus,fmt,x,,FALSE,FALSE,FALSE,no,flag,enum[none|json*|txt|csv|api],export format
+12050,apps,status,cacheStatus,,,,FALSE,TRUE,TRUE,no,description,,Report on status of one or more TrueBlocks caches.
+
+12100,apps,config,,addr_list,,,FALSE,TRUE,TRUE,no,positional,list<addr>,show or edit one or more addresses' config file
+12150,apps,config,,mode,,,FALSE,TRUE,TRUE,no,flag,enum[show|edit],whether to show or edit the config
+12200,apps,config,,get,,,FALSE,FALSE,FALSE,no,switch,<boolean>,retrieve current configuration values
+12250,apps,config,,set,,,FALSE,FALSE,FALSE,no,flag,<string>,set new configuration values
+
+12300,apps,rm,,addr_list,,,TRUE,TRUE,TRUE,no,positional,list<addr>,remove one or more monitors
+12350,apps,rm,,yes,,,TRUE,TRUE,TRUE,no,switch,<boolean>,must be present for remove to occur
+
+12400,apps,message,,bytes,b,,FALSE,TRUE,TRUE,no,positional,<string>,convert the given bytes into an ascii string
+12450,apps,message,,chars,c,,FALSE,TRUE,TRUE,no,positional,<string>,convert the given string into bytes
+
+12500,apps,leech,,,,,FALSE,TRUE,TRUE,no,flag,<string>,leech the address index from IPFS
+
+12550,apps,seed,,,,,FALSE,TRUE,TRUE,no,flag,<string>,seed the address index to IPFS
+
+12600,apps,,chifra,command,,,TRUE,TRUE,TRUE,,positional,list<enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>,which command to run
+12650,apps,,chifra,sleep,s,,FALSE,TRUE,TRUE,,flag,<uint>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default 0)
+12700,apps,,chifra,,,,FALSE,TRUE,TRUE,,description,,Create a TrueBlocks monitor configuration.
+
+12750,apps,,cacheMan,fn_list,,,TRUE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
+12800,apps,,cacheMan,check,c,,FALSE,TRUE,FALSE,,switch,<boolean>,check for duplicates and other problems in the cache
+12850,apps,,cacheMan,data,d,,FALSE,TRUE,FALSE,,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
+12900,apps,,cacheMan,sort,s,,FALSE,TRUE,FALSE,,switch,<boolean>,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)
+12950,apps,,cacheMan,fix,f,,FALSE,TRUE,FALSE,,switch,<boolean>,remove duplicates from the cache (if any)
+13000,apps,,cacheMan,list,l,,FALSE,TRUE,FALSE,,switch,<boolean>,list the contents of the cache (the default if no other option)
+13050,apps,,cacheMan,import,i,,FALSE,TRUE,FALSE,,switch,<boolean>,import transactions if import.txt file exists in current folder
+13100,apps,,cacheMan,remove,r,,FALSE,TRUE,FALSE,,switch,<boolean>,remove transactions if remove.txt file exists in current folder
+13150,apps,,cacheMan,truncate,u,,FALSE,TRUE,FALSE,,flag,<blknum>,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)
+13250,apps,,cacheMan,merge,m,,FALSE,TRUE,FALSE,,switch,<boolean>,merge two or more caches into a single cache
+13300,apps,,cacheMan,skip,k,,FALSE,FALSE,FALSE,,switch,<boolean>,skip value for testing
+13450,apps,,cacheMan,no_header,n,,FALSE,FALSE,FALSE,local,switch,<boolean>,do not show header row of data
+10250,apps,,cacheMan,start,S,,FALSE,FALSE,FALSE,yes,flag,<blknum>,first block to process(inclusive)
+10300,apps,,cacheMan,end,E,,FALSE,FALSE,FALSE,yes,flag,<blknum>,last block to process (inclusive)
+13500,apps,,cacheMan,fmt,x,,FALSE,TRUE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+13550,apps,,cacheMan,,,,FALSE,TRUE,FALSE,,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
+
+13600,dev_tools,,makeClass,class_name,,,TRUE,TRUE,FALSE,,positional,list(<string>),one or more class definition files to process
+13650,dev_tools,,makeClass,name_space,n,,FALSE,TRUE,FALSE,yes,flag,<string>,surround the code with a namespace
+13700,dev_tools,,makeClass,run,r,,FALSE,TRUE,FALSE,local,switch,<boolean>,run the class maker on associated <class_name(s)>
+13750,dev_tools,,makeClass,list,l,,FALSE,TRUE,FALSE,local,switch,<boolean>,list all definition files found in the local folder
+13800,dev_tools,,makeClass,edit,e,,FALSE,FALSE,FALSE,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
+13850,dev_tools,,makeClass,all,a,,FALSE,TRUE,FALSE,yes,switch,<boolean>,edit&#44; list&#44; or run all class definitions found in the local folder
+13900,dev_tools,,makeClass,options,o,,FALSE,FALSE,FALSE,local,switch,<boolean>,export options code (check data&#44; generate code) and quit
+13950,dev_tools,,makeClass,javascript,j,,FALSE,TRUE,FALSE,local,flag,<string>,export javaScript code and quit
+14000,dev_tools,,makeClass,filter,f,,FALSE,TRUE,FALSE,yes,flag,<string>,process only files with :filter in their names
+14050,dev_tools,,makeClass,,,,FALSE,TRUE,FALSE,,description,,Creates C++ code based on definition file at ./classDefinition/<class_name>.
+
+14100,dev_tools,,testRunner,mode,m,,FALSE,TRUE,FALSE,local,flag,enum[cmd*|api|both],determine which set of tests to run
+14150,dev_tools,,testRunner,filter,f,,FALSE,TRUE,FALSE,yes,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+14200,dev_tools,,testRunner,clean,c,,FALSE,TRUE,FALSE,yes,switch,<boolean>,clean working folder before running tests
+14250,dev_tools,,testRunner,no_quit,n,,FALSE,TRUE,FALSE,yes,switch,<boolean>,do not quit testing on first error
+14300,dev_tools,,testRunner,,,,FALSE,TRUE,FALSE,,description,,Retrieve a transaction's logs from the local cache or a running node.
+
+14350,tools,quotes,ethQuote,freshen,f,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Freshen database (append new data)
+14400,tools,quotes,ethQuote,period,p,,FALSE,TRUE,TRUE,local,flag,enum[5|15|30|60|120*|240|1440],Display prices in this increment
+14450,tools,quotes,ethQuote,pair,a,,FALSE,TRUE,TRUE,local,flag,<string>,Which price pair to freshen or list (see Poloniex)
+14500,tools,quotes,ethQuote,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+14550,tools,quotes,ethQuote,,,,FALSE,TRUE,TRUE,,description,,Freshen and/or display Ethereum price data and other purposes.
+
+14600,tools,slurp,ethslurp,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp
+14650,tools,slurp,ethslurp,block_list,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
+14700,tools,slurp,ethslurp,type,t,,FALSE,TRUE,TRUE,yes,flag,enum[ext*|int|token|miner|all],type of transactions to request
+14750,tools,slurp,ethslurp,blocks,b,,FALSE,TRUE,TRUE,,flag,<range>,export records in block range (:0[:max])
+14800,tools,slurp,ethslurp,silent,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Run silently (only freshen the data&#44; do not display it)
+14850,tools,slurp,ethslurp,fmt,x,,FALSE,TRUE,TRUE,,flag,enum[none|json*|txt|csv|html|api],pretty print
+14900,tools,slurp,ethslurp,,,,FALSE,TRUE,TRUE,,description,,Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+
+14950,tools,accounts,getAccounts,term_list,,,TRUE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms
+15000,tools,accounts,getAccounts,expand,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
+15050,tools,accounts,getAccounts,match_case,m,,FALSE,TRUE,TRUE,yes,switch,<boolean>,do case-sensitive search
+15100,tools,accounts,getAccounts,owned,o,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include personal accounts in the search
+15150,tools,accounts,getAccounts,custom,c,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include your custom named accounts
+15200,tools,accounts,getAccounts,prefund,p,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include prefund accounts
+15250,tools,accounts,getAccounts,named,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include well know token and airdrop addresses in the search
+15300,tools,accounts,getAccounts,other,t,,FALSE,FALSE,FALSE,local,switch,<boolean>,export other addresses if found
+15350,tools,accounts,getAccounts,addr,a,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only addresses in the results (useful for scripting)
+15400,tools,accounts,getAccounts,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+15450,tools,accounts,getAccounts,,,,FALSE,TRUE,TRUE,,description,,Query addresses and/or names of well known accounts.
+
+15500,tools,blocks,getBlock,block_list,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
+15550,tools,blocks,getBlock,hashes_only,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
+15600,tools,blocks,getBlock,check,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,compare results between qblocks and Ethereum node&#44; report differences&#44; if any
+15650,tools,blocks,getBlock,addrs,a,,FALSE,TRUE,TRUE,local,switch,<boolean>,display all addresses included in the block
+15700,tools,blocks,getBlock,uniq,u,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per block
+15750,tools,blocks,getBlock,uniq_tx,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per transaction
+15800,tools,blocks,getBlock,count_only,o,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
+15850,tools,blocks,getBlock,filter,f,,FALSE,TRUE,TRUE,,flag,<addr>,useful only for --addrs or --uniq&#44; only display this address in results
+15900,tools,blocks,getBlock,report,r,,FALSE,FALSE,FALSE,local,switch,<boolean>,display the latest blocks at both the node and the cache
+15950,tools,blocks,getBlock,force,e,,FALSE,FALSE,FALSE,yes,switch,<boolean>,force a re-write of the block to the cache
+16000,tools,blocks,getBlock,quiet,q,,FALSE,FALSE,FALSE,yes,switch,<boolean>,do not print results to screen&#44; used for speed testing and data checking
+16050,tools,blocks,getBlock,cache,C,,FALSE,FALSE,FALSE,yes,switch,<boolean>,use the cache for data retrieval
+16100,tools,blocks,getBlock,normalize,m,,FALSE,FALSE,FALSE,yes,switch,<boolean>,normalize (remove un-common fields and sort) for comparison with other results (testing)
+
+16150,tools,blocks,getBlock,,,,FALSE,TRUE,TRUE,,description,,Returns block(s) from local cache or directly from a running node.
+16200,tools,blooms,getBloom,block_list,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
+16250,tools,blooms,getBloom,eab,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,pull the enhanced adaptive blooms from QBlocks cache
+16300,tools,blooms,getBloom,block_only,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the block-level bloom (--raw only)
+16350,tools,blooms,getBloom,receipt_only,r,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the receipt-level blooms (--raw only)
+16400,tools,blooms,getBloom,bits,i,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display blooms as bits instead of hex
+16450,tools,blooms,getBloom,bars,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display blooms as bar chart instead of hex
+16500,tools,blooms,getBloom,bitbars,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display nBits as a bar chart
+16550,tools,blooms,getBloom,pctbars,p,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display nBits as a percentage of bloom space
+16600,tools,blooms,getBloom,bitcount,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the number of bits lit per bloom
+16650,tools,blooms,getBloom,force,f,,FALSE,FALSE,FALSE,local,switch,<boolean>,force a re-write of the bloom to the cache
+16700,tools,blooms,getBloom,,,,FALSE,TRUE,TRUE,,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
+
+16750,tools,logs,getLogs,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+16800,tools,logs,getLogs,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+16850,tools,logs,getLogs,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+16900,tools,logs,getLogs,,,,FALSE,TRUE,TRUE,,description,,Retrieve a transaction's logs from the local cache or a running node.
+
+16950,tools,receipts,getReceipt,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+17000,tools,receipts,getReceipt,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+17050,tools,receipts,getReceipt,logs,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the receipt's logs
+17100,tools,receipts,getReceipt,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+17150,tools,receipts,getReceipt,,,,FALSE,TRUE,TRUE,,description,,Retrieve a transaction's receipt from the local cache or a running node.
+
+17200,tools,state,getState,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
+17250,tools,state,getState,block_list,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
+17300,tools,state,getState,mode,m,,FALSE,TRUE,TRUE,local,flag,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],control which state to export
+17400,tools,state,getState,changes,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,only report a balance when it changes from one block to the next
+17350,tools,state,getState,no_zero,n,,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
+17500,tools,state,getState,no_history,s,,FALSE,FALSE,FALSE,local,switch,<boolean>,for testing only&#44; hide the server's historical state
+17450,tools,state,getState,no_header,o,,FALSE,FALSE,FALSE,local,switch,<boolean>,hide the header in txt and csv mode
+17550,tools,state,getState,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+17600,tools,state,getState,,,,FALSE,TRUE,TRUE,,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
+
+17650,tools,tokens,getTokenInfo,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
+17700,tools,tokens,getTokenInfo,block_list,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
+17850,tools,tokens,getTokenInfo,info,i,,FALSE,FALSE,FALSE,,flag,enum[name|decimals|totalSupply|version|symbol|all],retreive information about the token
+17750,tools,tokens,getTokenInfo,by_acct,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
+17800,tools,tokens,getTokenInfo,no_zero,n,,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
+17900,tools,tokens,getTokenInfo,,,,FALSE,TRUE,TRUE,,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
+
+17950,tools,traces,getTrace,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+18000,tools,traces,getTrace,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+18050,tools,traces,getTrace,count_only,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show the number of traces for the transaction only (fast)
+18150,tools,traces,getTrace,skip_ddos,s,,FALSE,FALSE,FALSE,local,flag,enum[on*|off],skip over dDos transactions during export ('on' by default)
+18100,tools,traces,getTrace,no_header,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,do not show the header row
+18200,tools,traces,getTrace,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+18250,tools,traces,getTrace,,,,FALSE,TRUE,TRUE,,description,,Retrieve a transaction's traces from the local cache or a running node.
+
+18300,tools,transactions,getTrans,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+18350,tools,transactions,getTrans,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+18400,tools,transactions,getTrans,trace,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the transaction's trace
+18450,tools,transactions,getTrans,force,o,,FALSE,FALSE,FALSE,yes,switch,<boolean>,force the results into the tx cache
+18500,tools,transactions,getTrans,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+18550,tools,transactions,getTrans,,,,FALSE,TRUE,TRUE,,description,,Retrieve an Ethereum transaction from the local cache or a running node.
+
+18600,tools,abi,grabABI,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
+18650,tools,abi,grabABI,canonical,c,,FALSE,TRUE,TRUE,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
+18700,tools,abi,grabABI,generate,g,,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
+18750,tools,abi,grabABI,data,d,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export the display as data
+18800,tools,abi,grabABI,encode,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,generate the encodings for the functions / events in the ABI
+18850,tools,abi,grabABI,json,j,,FALSE,TRUE,TRUE,local,switch,<boolean>,print the ABI to the screen as json
+18900,tools,abi,grabABI,noconst,n,,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
+18950,tools,abi,grabABI,sol,s,,FALSE,TRUE,TRUE,,flag,<path>,create the ABI file from a .sol file in the local directory
+19000,tools,abi,grabABI,open,o,,FALSE,FALSE,FALSE,local,switch,<boolean>,open the ABI file for editing&#44; download if not already present
+19050,tools,abi,grabABI,silent,i,,FALSE,FALSE,FALSE,yes,switch,<boolean>,if ABI cannot be acquired&#44; fail silently (useful for scripting)
+19100,tools,abi,grabABI,no_decorate,r,,FALSE,FALSE,FALSE,local,switch,<boolean>,do not decorate duplicate names
+19150,tools,abi,grabABI,known,k,,FALSE,FALSE,FALSE,local,switch,<boolean>,load common 'known' ABIs from cache
+19200,tools,abi,grabABI,,,,FALSE,TRUE,TRUE,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+
+19250,tools,,templates,parse,p,,FALSE,TRUE,TRUE,,switch,<boolean>,display parsed input data
+19300,tools,,templates,logs,l,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract lo(g)s or events
+19350,tools,,templates,trace,t,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract internal traces
+19400,tools,,templates,accounting,a,,FALSE,TRUE,TRUE,,switch,<boolean>,display credits and debits per account and reconcile at each block
+19450,tools,,templates,no_check,n,,FALSE,TRUE,TRUE,,switch,<boolean>,do not do balance check at each block
+19500,tools,,templates,debug,d,,FALSE,TRUE,TRUE,,switch,<boolean>,enter debug mode (pause after each transaction)
+19550,tools,,templates,single,s,,FALSE,TRUE,TRUE,,switch,<boolean>,if debugging is enable&#44; single step through transactions
+19600,tools,,templates,export,e,,FALSE,TRUE,TRUE,,switch,<boolean>,export the transactions to export file
+19650,tools,,templates,json,j,,FALSE,TRUE,TRUE,,switch,<boolean>,ignore export format and export as json
+19700,tools,,templates,balances,b,,FALSE,TRUE,TRUE,,switch,<boolean>,if a balance does not reconcile&#44; export a message to a file
+19750,tools,,templates,list,i,,FALSE,TRUE,TRUE,,switch,<boolean>,display list of monitored accounts
+19850,tools,,templates,offset,o,,FALSE,TRUE,TRUE,,flag,<blknum>,offset to kBlock
+10250,tools,,templates,start,S,,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process(inclusive)
+10300,tools,,templates,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
+19900,tools,,templates,,,,FALSE,TRUE,TRUE,,description,,Index transactions for a given Ethereum address (or series of addresses).
+
+19950,tools,when,whenBlock,block_list,,,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
+20000,tools,when,whenBlock,date_list,,,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
+20050,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,,switch,<boolean>,export all the named blocks
+20100,tools,when,whenBlock,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+20150,tools,when,whenBlock,,,,FALSE,TRUE,FALSE,,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
+
+20200,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,,positional,list<blknum>,a space-separated list of one or more blocks to search for
+20250,tools,where,whereBlock,fmt,x,,FALSE,FALSE,FALSE,,flag,enum[none|json*|txt|csv|api],export format
+20300,tools,where,whereBlock,,,,FALSE,TRUE,FALSE,,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
+
+20350,all,all,all,version,,,FALSE,TRUE,FALSE,,switch,<boolean>,display the current version of the tool
+20400,all,all,all,nocolor,,,FALSE,TRUE,FALSE,,switch,<boolean>,turn off colored display
+20450,all,all,all,wei,,,FALSE,TRUE,FALSE,,switch,<boolean>,specify value in wei (the default)
+20500,all,all,all,ether,,,FALSE,TRUE,FALSE,,switch,<boolean>,specify value in ether
+20550,all,all,all,dollars,,,FALSE,TRUE,FALSE,,switch,<boolean>,specify value in US dollars
+20600,all,all,all,raw,,,FALSE,TRUE,FALSE,,switch,<boolean>,report JSON data from the node with minimal processing
+20650,all,all,all,very_raw,,,FALSE,TRUE,FALSE,,switch,<boolean>,report JSON data from node with zero processing
+20700,all,all,all,fmt1,x,,FALSE,TRUE,TRUE,,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
+20750,all,all,all,api_mode,,,FALSE,TRUE,FALSE,,switch,<boolean>,simulate api_mode for testing
+20800,all,all,all,to_file,,,FALSE,TRUE,FALSE,,switch,<boolean>,write the results to a temporary file and return the filename
+20850,all,all,all,output,,,FALSE,TRUE,FALSE,,flag,<path>,write the results to file 'fn' and return the filename
+20900,all,all,all,file,,,FALSE,TRUE,FALSE,,flag,<path>,specify multiple sets of command line options in a file.
+20950,all,all,all,noop,,,FALSE,TRUE,FALSE,,switch,<boolean>,non operation (for testing for example)
+21000,all,all,all,help,h,,FALSE,TRUE,TRUE,,switch,<boolean>,get help on this command
+21050,all,all,all,parity,,,FALSE,TRUE,FALSE,,switch,<boolean>,mimic parity's output

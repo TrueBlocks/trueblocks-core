@@ -23,12 +23,12 @@ class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
     string_q filter;
+    bool clean;
+    bool no_quit;
 // END_CODE_DECLARE
 
     int modes = CMD;
-    bool quit_on_error = true;
     bool ignoreOff = false;
-    bool cleanTests = false;
     CStringArray tests;
 
     COptions(void);

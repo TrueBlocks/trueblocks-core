@@ -165,7 +165,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                 cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0,90) << endl;
             }
 
-            if (quit_on_error && (result == redX))
+            if (!no_quit && (result == redX))
                 return false;
 
             usleep(1000);

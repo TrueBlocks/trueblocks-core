@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.isListing) {
+        if (options.list) {
             if (once)
                 cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
             options.handle_listing(cout);

@@ -23,9 +23,9 @@ static const COption params[] = {
     COption("encode", "e", "", OPT_SWITCH, "generate the encodings for the functions / events in the ABI"),
     COption("json", "j", "", OPT_SWITCH, "print the ABI to the screen as json"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
-    COption("sol", "l", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
+    COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
     COption("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing, download if not already present"),
-    COption("silent", "s", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("no_decorate", "r", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
@@ -78,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--open") {
             open = true;
 
-        } else if (arg == "-s" || arg == "--silent") {
+        } else if (arg == "-i" || arg == "--silent") {
             silent = true;
 
         } else if (arg == "-r" || arg == "--no_decorate") {
@@ -90,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
 // END_CODE_AUTO
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--sol:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-l:", ""), "--sol:", "");
+            arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
             if (!fileExists(arg))
                 arg += ".sol";
             if (!fileExists(arg))

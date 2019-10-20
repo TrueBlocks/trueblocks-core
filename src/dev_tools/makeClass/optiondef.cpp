@@ -69,21 +69,23 @@ bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fie
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "api_route" ) { api_route = fieldValue; return true; }
-            if ( fieldName % "auto_generate" ) { auto_generate = fieldValue; return true; }
             break;
         case 'c':
             if ( fieldName % "command" ) { command = fieldValue; return true; }
-            if ( fieldName % "command_short" ) { command_short = fieldValue; return true; }
             if ( fieldName % "core_visible" ) { core_visible = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "data_type" ) { data_type = fieldValue; return true; }
-            if ( fieldName % "default_value" ) { default_value = fieldValue; return true; }
-            if ( fieldName % "description_core" ) { description_core = fieldValue; return true; }
+            if ( fieldName % "deft_val" ) { def_val = fieldValue; return true; }
             if ( fieldName % "docs_visible" ) { docs_visible = fieldValue; return true; }
+            if ( fieldName % "data_type" ) { data_type = fieldValue; return true; }
+            if ( fieldName % "description" ) { description = fieldValue; return true; }
             break;
         case 'g':
             if ( fieldName % "group" ) { group = fieldValue; return true; }
+            if ( fieldName % "generate" ) { generate = fieldValue; return true; }
+            break;
+        case 'h':
+            if ( fieldName % "hotkey" ) { hotkey = fieldValue; return true; }
             break;
         case 'i':
             if ( fieldName % "is_required" ) { is_required = fieldValue; return true; }
@@ -92,7 +94,6 @@ bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fie
             if ( fieldName % "num" ) { num = fieldValue; return true; }
             break;
         case 'o':
-            if ( fieldName % "order" ) { order = fieldValue; return true; }
             if ( fieldName % "option_kind" ) { option_kind = fieldValue; return true; }
             break;
         case 't':
@@ -128,17 +129,16 @@ bool COptionDef::Serialize(CArchive& archive) {
     archive >> group;
     archive >> api_route;
     archive >> tool;
-    archive >> order;
     archive >> command;
-    archive >> command_short;
-    archive >> data_type;
-    archive >> option_kind;
-    archive >> default_value;
-    archive >> description_core;
-    archive >> auto_generate;
+    archive >> hotkey;
+    archive >> def_val;
     archive >> is_required;
     archive >> core_visible;
     archive >> docs_visible;
+    archive >> generate;
+    archive >> option_kind;
+    archive >> data_type;
+    archive >> description;
     finishParse();
     return true;
 }
@@ -155,17 +155,16 @@ bool COptionDef::SerializeC(CArchive& archive) const {
     archive << group;
     archive << api_route;
     archive << tool;
-    archive << order;
     archive << command;
-    archive << command_short;
-    archive << data_type;
-    archive << option_kind;
-    archive << default_value;
-    archive << description_core;
-    archive << auto_generate;
+    archive << hotkey;
+    archive << def_val;
     archive << is_required;
     archive << core_visible;
     archive << docs_visible;
+    archive << generate;
+    archive << option_kind;
+    archive << data_type;
+    archive << description;
 
     return true;
 }
@@ -205,17 +204,16 @@ void COptionDef::registerClass(void) {
     ADD_FIELD(COptionDef, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "api_route", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "tool", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "order", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "command", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "command_short", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "data_type", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "option_kind", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "default_value", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "description_core", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "auto_generate", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "hotkey", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "def_val", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "is_required", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "core_visible", T_TEXT, ++fieldNum);
     ADD_FIELD(COptionDef, "docs_visible", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "generate", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "option_kind", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "data_type", T_TEXT, ++fieldNum);
+    ADD_FIELD(COptionDef, "description", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(COptionDef, "schema");
@@ -295,21 +293,23 @@ string_q COptionDef::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "api_route" ) return api_route;
-            if ( fieldName % "auto_generate" ) return auto_generate;
             break;
         case 'c':
             if ( fieldName % "command" ) return command;
-            if ( fieldName % "command_short" ) return command_short;
             if ( fieldName % "core_visible" ) return core_visible;
             break;
         case 'd':
-            if ( fieldName % "data_type" ) return data_type;
-            if ( fieldName % "default_value" ) return default_value;
-            if ( fieldName % "description_core" ) return description_core;
+            if ( fieldName % "def_val" ) return def_val;
             if ( fieldName % "docs_visible" ) return docs_visible;
+            if ( fieldName % "data_type" ) return data_type;
+            if ( fieldName % "description" ) return description;
             break;
         case 'g':
             if ( fieldName % "group" ) return group;
+            if ( fieldName % "generate" ) return generate;
+            break;
+        case 'h':
+            if ( fieldName % "hotkey" ) return hotkey;
             break;
         case 'i':
             if ( fieldName % "is_required" ) return is_required;
@@ -318,7 +318,6 @@ string_q COptionDef::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "num" ) return num;
             break;
         case 'o':
-            if ( fieldName % "order" ) return order;
             if ( fieldName % "option_kind" ) return option_kind;
             break;
         case 't':
@@ -356,17 +355,16 @@ COptionDef::COptionDef(const string_q& line) {
     if (parts.size() > 1)  group = parts[1];
     if (parts.size() > 2)  api_route = parts[2];
     if (parts.size() > 3)  tool = parts[3];
-    if (parts.size() > 4)  order = parts[4];
-    if (parts.size() > 5)  command = parts[5];
-    if (parts.size() > 6)  command_short = parts[6];
-    if (parts.size() > 7)  data_type = parts[7];
-    if (parts.size() > 8)  option_kind = parts[8];
-    if (parts.size() > 9)  default_value = parts[9];
-    if (parts.size() > 10) description_core = substitute(parts[10], "&#44;", ",");
-    if (parts.size() > 11) auto_generate = parts[11];
-    if (parts.size() > 12) is_required = parts[12];
-    if (parts.size() > 13) core_visible = parts[13];
-    if (parts.size() > 14) docs_visible = parts[14];
+    if (parts.size() > 4)  command = parts[4];
+    if (parts.size() > 5)  hotkey = parts[5];
+    if (parts.size() > 6)  def_val = parts[6];
+    if (parts.size() > 7)  is_required = parts[7];
+    if (parts.size() > 8)  core_visible = parts[8];
+    if (parts.size() > 9)  docs_visible = parts[9];
+    if (parts.size() > 10) generate = parts[10];
+    if (parts.size() > 11) option_kind = parts[11];
+    if (parts.size() > 12) data_type = parts[12];
+    if (parts.size() > 13) description = substitute(parts[13], "&#44;", ",");
 }
 // EXISTING_CODE
 }  // namespace qblocks

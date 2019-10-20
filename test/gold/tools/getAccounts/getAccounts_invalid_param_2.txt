@@ -9,7 +9,7 @@ getAccounts torj --pink --fmt txt
   Where:  
 	term_list             a space separated list of one or more search terms (required)
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
-	-m  (--matchCase)     do case-sensitive search
+	-m  (--match_case)    do case-sensitive search
 	-o  (--owned)         Include personal accounts in the search
 	-c  (--custom)        Include your custom named accounts
 	-p  (--prefund)       Include prefund accounts

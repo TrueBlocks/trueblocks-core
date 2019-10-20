@@ -18,10 +18,10 @@ static const COption params[] = {
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
-    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
+    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
-    COption("no_history", "", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
@@ -36,8 +36,8 @@ bool COptions::parseArguments(string_q& command) {
 
 // BEG_CODE_LOCAL_INIT
     string_q mode = "";
-    bool no_header = false;
     bool no_history = false;
+    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -50,17 +50,17 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
 
-        } else if (arg == "-n" || arg == "--no_zero") {
-            no_zero = true;
-
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
+        } else if (arg == "-n" || arg == "--no_zero") {
+            no_zero = true;
+
+        } else if (arg == "-s" || arg == "--no_history") {
+            no_history = true;
+
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
-
-        } else if (arg == "--no_history") {
-            no_history = true;
 
 // END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -169,8 +169,8 @@ void COptions::Init(void) {
     optionOn(OPT_RAW | OPT_OUTPUT);
 
 // BEG_CODE_INIT
-    no_zero = false;
     changes = false;
+    no_zero = false;
 // END_CODE_INIT
 
     prevBal = 0;

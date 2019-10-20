@@ -1,5 +1,5 @@
-getAccounts argc: 4 [1:--matchCase] [2:--fmt] [3:txt] 
-getAccounts --matchCase --fmt txt 
+getAccounts argc: 4 [1:--match_case] [2:--fmt] [3:txt] 
+getAccounts --match_case --fmt txt 
 group	subgroup	address	name	symbol
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX

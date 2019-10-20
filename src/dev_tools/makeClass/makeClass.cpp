@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.isList)
+        if (options.mode & LIST)
             cout << "Classes found in the classDefinitions folder:\n";
 
         while (!options.classNames.empty()) {
@@ -51,7 +51,7 @@ int main(int argc, const char *argv[]) {
                 CToml toml(fileName);
                 toml.readFile(fileName);
 
-                if (options.isList) {
+                if (options.mode & LIST) {
                     if (verbose) {
                         cout << string_q(80, '-') << "\nFile (dest): " << fileName << "\n";
                         cout << toml << "\n";
@@ -60,21 +60,11 @@ int main(int argc, const char *argv[]) {
                         cout << "\t" << toml.getConfigStr("settings", "class", "") << "\n";
                     }
 
-                } else if (options.isEdit) {
+                } else if (options.mode & EDIT) {
                     editFile(fileName);
 
-                } else if (options.isRemove) {
-                    if (isTestMode()) {
-                        cout << "Are you sure you want to remove " << className
-                                << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
-                        cout << "Testing, but would have deleted " << className << ".[ch]*\n";
-                    } else {
-                        // This does not work on purpose
-                        cout << "Are you sure you want to remove " << className
-                                << ".cpp and " << className << ".h? (y=remove files, otherwise ignore): ";
-                        return options.usage("Files not removed. Quitting...");
-                    }
                 } else {
+                    ASSERT(options.mode & RUN);
                     if (isTestMode())
                         cout << "Would run class definition file: " << className << " (not run, testing)\n";
                     else if (verbose)
@@ -85,7 +75,7 @@ int main(int argc, const char *argv[]) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
                         } else {
-                            generateCode(options, toml, fileName, options.namesp);
+                            generateCode(options, toml, fileName, options.name_space);
                         }
                     }
                 }
@@ -395,8 +385,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
     replaceAll(headSource, "public:\n\npublic:", "public:");
 
-    if (options.writeHeader)
-        writeTheCode(headerFile, headSource, ns);
+    writeTheCode(headerFile, headSource, ns);
 
     //------------------------------------------------------------------------------------------------
     string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
@@ -446,8 +435,7 @@ void generateCode(const COptions& options, CToml& toml, const string_q& dataFile
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(srcSource, "[{FN}]",              fnBase);
-    if (options.writeSource)
-        writeTheCode(srcFile, srcSource, ns);
+    writeTheCode(srcFile, srcSource, ns);
 }
 
 //------------------------------------------------------------------------------------------------

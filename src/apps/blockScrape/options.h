@@ -35,9 +35,9 @@ public:
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
 
-    blknum_t    nBlocks;
-    size_t      nBlockProcs;
-    size_t      nAddrProcs;
+    blknum_t    n_blocks;
+    size_t      n_block_procs;
+    size_t      n_addr_procs;
 
     COptions(void);
     ~COptions(void);

@@ -31,9 +31,9 @@ on, both, fast, blocks, tools/getBlock, force_02,           y, block_list = 2769
 on, both, fast, blocks, tools/getBlock, force_fail,         y, block_list = 2769609 2799895 2872831 3076260 & force & uniq_tx
 on, both, fast, blocks, tools/getBlock, multi1,             y, block_list = 2769609 2799895 2872831 3076260 & parity & raw
 on, both, fast, blocks, tools/getBlock, multi2,             y, block_list = 2769609 2799895 2872831 3076260 & raw & parity
-on, both, slow, blocks, tools/getBlock, terse_no_raw,       y, block_list = 4001001-4001003 & hash_only
-on, both, fast, blocks, tools/getBlock, terse_yes_raw,      y, block_list = 4001001 & hash_only & raw
-on, both, medi, blocks, tools/getBlock, hashes_1,           y, block_list = 4001001 & hash_only
+on, both, slow, blocks, tools/getBlock, terse_no_raw,       y, block_list = 4001001-4001003 & hashes_only
+on, both, fast, blocks, tools/getBlock, terse_yes_raw,      y, block_list = 4001001 & hashes_only & raw
+on, both, medi, blocks, tools/getBlock, hashes_1,           y, block_list = 4001001 & hashes_only
 on, both, medi, blocks, tools/getBlock, address_addrs1,     n, block_list = 3982128 & addrs
 on, both, medi, blocks, tools/getBlock, address_addrsv,     n, block_list = 3982128 & addrs & verbose = 1
 on, both, fast, blocks, tools/getBlock, address_addrsf,     n, block_list = 3982128 & addr

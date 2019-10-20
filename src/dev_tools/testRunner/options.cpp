@@ -49,12 +49,11 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("filter", filter, arg))
                 return false;
 
-// END_CODE_AUTO
-        } else if (arg == "-n" || arg == "--no_quit") {
-            quit_on_error = false;
-
         } else if (arg == "-c" || arg == "--clean") {
-            cleanTests = true;
+            clean = true;
+
+        } else if (arg == "-n" || arg == "--no_quit") {
+            no_quit = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -62,6 +61,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             arg = trim(arg, '/');
             if (arg == "libs" || arg == "libs/") {
@@ -162,6 +162,8 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     filter = "";
+    clean = false;
+    no_quit = false;
 // END_CODE_INIT
 
     minArgs = 0;
@@ -178,7 +180,7 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    if (!cleanTests)
+    if (!clean)
         return true;
     ostringstream os;
     os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";

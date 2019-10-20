@@ -97,7 +97,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     if (opt.isRaw) {
 
 //        double start = qbNow();
-        if (!queryRawBlock(result, numStr, true, opt.hash_only)) {
+        if (!queryRawBlock(result, numStr, true, opt.hashes_only)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
 //            double end = qbNow();

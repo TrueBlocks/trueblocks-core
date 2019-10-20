@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
     COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "Display prices in this increment"),
-    COption("pair", "r", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
+    COption("pair", "a", "<string>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
@@ -51,8 +51,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("period", period, arg))
                 return false;
 
-        } else if (startsWith(arg, "-r:") || startsWith(arg, "--pair:")) {
-            pair = substitute(substitute(arg, "-r:", ""), "--pair:", "");
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
+            pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
 
 // END_CODE_AUTO
         } else {

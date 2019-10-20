@@ -16,13 +16,12 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
     COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
     COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
-    COption("truncate", "t", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-    COption("maxBlock", "k", "<blknum>", OPT_FLAG, "for testing, max block to visit"),
+    COption("truncate", "u", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
-    COption("skip", "p", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
-    COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
-    COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "un-used hidden value - do not remove"),
-    COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
+    COption("skip", "k", "", OPT_HIDDEN | OPT_SWITCH, "skip value for testing"),
+    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
 // END_CODE_OPTIONS
@@ -36,10 +35,10 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
-    string_q start = "";
-    string_q end = "";
     bool no_header = false;
 // END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLastBlock_client();
 
     bool isMerge = false, isSort = false;
     Init();
@@ -48,14 +47,16 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (startsWith(arg, "--start:")) {
-            start = substitute(substitute(arg, "-:", ""), "--start:", "");
-
-        } else if (startsWith(arg, "--end:")) {
-            end = substitute(substitute(arg, "-:", ""), "--end:", "");
-
-        } else if (arg == "-o" || arg == "--no_header") {
+        } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
+
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
 
 // END_CODE_AUTO
 
@@ -81,14 +82,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!contains(mode, "fix"))
                 mode += "fix|";
             replace(mode, "list|fix", "fix|list");  // do 'fixing' prior to 'listing'
-
-        } else if (startsWith(arg, "-k:") || startsWith(arg, "--maxBlock:")) {
-            arg = substitute(substitute(arg, "-k:", ""), "--maxBlock:", "");
-            if (!isNumeral(arg))
-                EXIT_USAGE("You must supply a block number with the --maxBlock:n command.");
-            maxBlock = str_2_Uint(arg);
-            if (maxBlock == 0)
-                maxBlock = NOPOS;
 
         } else if (arg == "-m" || arg == "--merge") {
             isMerge = true;
@@ -127,8 +120,8 @@ bool COptions::parseArguments(string_q& command) {
             asData = true;
             colorsOff();
 
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--skip:")) {
-            string_q arg1 = substitute(substitute(arg, "-p:", ""), "--skip:", "");
+        } else if (startsWith(arg, "-k:") || startsWith(arg, "--skip:")) {
+            string_q arg1 = substitute(substitute(arg, "-k:", ""), "--skip:", "");
             skip = str_2_Uint(arg1);
             if (!skip)
                 skip = 1;
@@ -191,13 +184,14 @@ void COptions::Init(void) {
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    start = NOPOS;
+    end = NOPOS;
 // END_CODE_INIT
 
     monitors.clear();
     mode = "";
     trunc = 0;
     asData = false;
-    maxBlock = NOPOS;
     skip = 1;
     isRemove = false;
     isImport = false;

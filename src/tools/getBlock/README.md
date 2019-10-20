@@ -14,7 +14,7 @@ The tool may also be used to double check that the results produced from the QBl
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | block_list | a space-separated list of one or more blocks to retrieve (required) |
-| -n | --hash_only | display only transaction hashes, default is to display full transaction detail |
+| -n | --hashes_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
@@ -42,7 +42,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

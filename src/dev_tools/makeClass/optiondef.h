@@ -29,17 +29,16 @@ public:
     string_q group;
     string_q api_route;
     string_q tool;
-    string_q order;
     string_q command;
-    string_q command_short;
-    string_q data_type;
-    string_q option_kind;
-    string_q default_value;
-    string_q description_core;
-    string_q auto_generate;
+    string_q hotkey;
+    string_q def_val;
     string_q is_required;
     string_q core_visible;
     string_q docs_visible;
+    string_q generate;
+    string_q option_kind;
+    string_q data_type;
+    string_q description;
 
 public:
     COptionDef(void);
@@ -105,17 +104,16 @@ inline void COptionDef::initialize(void) {
     group = "";
     api_route = "";
     tool = "";
-    order = "";
     command = "";
-    command_short = "";
-    data_type = "";
-    option_kind = "";
-    default_value = "";
-    description_core = "";
-    auto_generate = "";
+    hotkey = "";
+    def_val = "";
     is_required = "";
     core_visible = "";
     docs_visible = "";
+    generate = "";
+    option_kind = "";
+    data_type = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,17 +128,16 @@ inline void COptionDef::duplicate(const COptionDef& op) {
     group = op.group;
     api_route = op.api_route;
     tool = op.tool;
-    order = op.order;
     command = op.command;
-    command_short = op.command_short;
-    data_type = op.data_type;
-    option_kind = op.option_kind;
-    default_value = op.default_value;
-    description_core = op.description_core;
-    auto_generate = op.auto_generate;
+    hotkey = op.hotkey;
+    def_val = op.def_val;
     is_required = op.is_required;
     core_visible = op.core_visible;
     docs_visible = op.docs_visible;
+    generate = op.generate;
+    option_kind = op.option_kind;
+    data_type = op.data_type;
+    description = op.description;
 
     // EXISTING_CODE
     // EXISTING_CODE

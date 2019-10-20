@@ -22,8 +22,8 @@ on, both, slow, status, apps/cacheStatus, mode_some,       y, mode_list = some
 on, both, fast, status, apps/cacheStatus, mode_all,        y, mode_list = all
 on, both, slow, status, apps/cacheStatus, config_bad,      y, mode_list = config
 
-on, both, fast, status, apps/cacheStatus, config_get,      n, config-get
-on, both, fast, status, apps/cacheStatus, config_set,      n, config-set
+on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
+on, both, fast, status, apps/cacheStatus, config_set,      n, set_config
 
 on, both, slow, status, apps/cacheStatus, items_monitors,  y, mode_list = monitors & details
 on, both, slow, status, apps/cacheStatus, items_abis,      y, mode_list = abis & details

@@ -9,8 +9,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("sleep", "", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("sleep", "s", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -163,9 +163,9 @@ bool COptions::parseArguments(string_q& command) {
             replace(tool_flags, "get", "--get"); // syntactic sugar for command line
         if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
             replace(tool_flags, "set", "--set"); // syntactic sugar for command line
-        replaceAll(tool_flags, "--get", "--config-get");
-        replaceAll(tool_flags, "--set", "--config-set");
-        if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
+        replaceAll(tool_flags, "--get", "--get_config");
+        replaceAll(tool_flags, "--set", "--set_config");
+        if (!startsWith(tool_flags, "--get_config") && !startsWith(tool_flags, "--set_config"))
             EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
     }
 

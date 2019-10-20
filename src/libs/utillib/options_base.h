@@ -113,8 +113,9 @@ namespace qblocks {
         string_q notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
-        const COption *findParam(const string_q& name) const;
         bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
+        bool confirmBlockNum(const string_q&name, blknum_t& value, const string_q& arg, blknum_t latest) const;
+        const COption *findParam(const string_q& name) const;
         void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
 
     protected:

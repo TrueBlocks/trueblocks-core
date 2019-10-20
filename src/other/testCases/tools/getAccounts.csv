@@ -7,7 +7,7 @@ on, both, medi, accounts, tools/getAccounts, no_params,                        y
 on, both, fast, accounts, tools/getAccounts, invalid_option,                   y, pink
 on, both, fast, accounts, tools/getAccounts, invalid_param_1,                  y, punk
 on, both, fast, accounts, tools/getAccounts, bad_option,                       y, addr
-on, both, fast, accounts, tools/getAccounts, missing_param_1,                  n, matchCase & fmt = txt
+on, both, fast, accounts, tools/getAccounts, missing_param_1,                  n, match_case & fmt = txt
 on, both, medi, accounts, tools/getAccounts, missing_param_2,                  y, addr
 on, both, medi, accounts, tools/getAccounts, missing_param_3,                  n, verbose & fmt = txt
 on, both, medi, accounts, tools/getAccounts, missing_param_4,                  n, verbose & fmt = txt
@@ -36,15 +36,15 @@ on, both, fast, accounts, tools/getAccounts, named_custom,                     n
 on, both, medi, accounts, tools/getAccounts, named_custom_owned,               n, named & custom & owned & fmt = csv
 on, both, medi, accounts, tools/getAccounts, named,                            n, named & fmt = txt
 on, both, fast, accounts, tools/getAccounts, custom,                           n, custom & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_name_case_match_both,        y, term_list = 0xcb Humaniq & matchCase
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_both,        y, term_list = 0xcb Humaniq & match_case
 on, both, medi, accounts, tools/getAccounts, addr_name_source_match,           n, term_list = cbCC Humaniq Ether & fmt = csv & expand
 on, both, medi, accounts, tools/getAccounts, addr_name_verbose_match,          n, term_list = 0xb6 torj & verbose & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_no_hex_number,               n, term_list = b64 torj & fmt = txt
 on, both, medi, accounts, tools/getAccounts, address_match,                    y, term_list = 0x1 & fmt = api
 on, both, medi, accounts, tools/getAccounts, api_mode,                         y, term_list = tip & fmt = api
 on, both, medi, accounts, tools/getAccounts, duplicated_option_1,              n, term_list = 0xb6 torj & addr & addr & addr & addr & fmt = txt
-on, both, medi, accounts, tools/getAccounts, name_case_match,                  n, term_list = \* torj & fmt = json & matchCase
-on, both, medi, accounts, tools/getAccounts, name_long_case_match,             n, term_list = \* torj & fmt = json & matchCase
+on, both, medi, accounts, tools/getAccounts, name_case_match,                  n, term_list = \* torj & fmt = json & match_case
+on, both, medi, accounts, tools/getAccounts, name_long_case_match,             n, term_list = \* torj & fmt = json & match_case
 on, both, medi, accounts, tools/getAccounts, name_long_show_addr_match,        n, term_list = \* torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_long_source_match,           n, term_list = Ether & expand & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_long_verbose_match,          y, term_list = torj & verbose
@@ -54,15 +54,15 @@ on, both, medi, accounts, tools/getAccounts, name_verbose_match,               y
 on, both, medi, accounts, tools/getAccounts, simple_search,                    y, term_list = 88897
 on, both, medi, accounts, tools/getAccounts, tip1,                             y, term_list = tip
 on, both, medi, accounts, tools/getAccounts, tip2,                             n, term_list = tip & addr
-on, both, medi, accounts, tools/getAccounts, addr_case_match,                  n, term_list = 0xcb & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_case_no_match,               n, term_list = 0xCB & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_case_match,             n, term_list = 0xcb & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_case_no_match,          n, term_list = 0xCB & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_case_match,                  n, term_list = 0xcb & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_case_no_match,               n, term_list = 0xCB & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_case_match,             n, term_list = 0xcb & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_case_no_match,          n, term_list = 0xCB & match_case & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_long_show_addr_match,   n, term_list = 0xb6 & addr & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_addr,   n, term_list = 0xcb torJ & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_both,   n, term_list = 0xcb Humaniq & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_name,   n, term_list = 0xCB torj & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_long_name_case_no_match,     n, term_list = 0xCB torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_addr,   n, term_list = 0xcb torJ & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_both,   n, term_list = 0xcb Humaniq & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_match_name,   n, term_list = 0xCB torj & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_long_name_case_no_match,     n, term_list = 0xCB torJ & match_case & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_name_show_addr_match,   n, term_list = 0xb6 torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_name_show_addr_no_match,n, term_list = 0x01 torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_name_source_match,      n, term_list = Humaniq 1e17 Ether & verbose & fmt = txt
@@ -74,9 +74,9 @@ on, both, medi, accounts, tools/getAccounts, addr_long_source_match,           n
 on, both, medi, accounts, tools/getAccounts, addr_long_source_no_match,        n, term_list = Ether 1e17 & verbose & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_verbose_match,          n, term_list = 0xb6 & verbose & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_long_verbose_no_match,       n, term_list = 0xCB1 & verbose & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_name_case_match_addr,        n, term_list = 0xcb torJ & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_name_case_match_name,        n, term_list = 0xCB torj & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, addr_name_case_no_match,          n, term_list = 0xCB torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_addr,        n, term_list = 0xcb torJ & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_match_name,        n, term_list = 0xCB torj & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, addr_name_case_no_match,          n, term_list = 0xCB torJ & match_case & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_name_show_addr_match,        n, term_list = 0xb6 torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_name_show_addr_no_match,     n, term_list = 0x01 torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, addr_name_source_no_match,        n, term_list = cbCD Humaniq EtherScan & verbose & fmt = txt
@@ -91,8 +91,8 @@ on, both, medi, accounts, tools/getAccounts, full_addr,                        y
 on, both, medi, accounts, tools/getAccounts, mixed_options_with_list_1,        n, term_list = 0xb6 torj & addr & fmt = json
 on, both, medi, accounts, tools/getAccounts, name_and_addr_match,              n, term_list = 0xb6 torj & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_and_addr_no_match,           n, term_list = 0x01 torj & fmt = txt
-on, both, medi, accounts, tools/getAccounts, name_case_no_match,               n, term_list = torJ & matchCase & fmt = txt
-on, both, medi, accounts, tools/getAccounts, name_long_case_no_match,          n, term_list = torJ & matchCase & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_case_no_match,               n, term_list = torJ & match_case & fmt = txt
+on, both, medi, accounts, tools/getAccounts, name_long_case_no_match,          n, term_list = torJ & match_case & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_long_show_addr_no_match,     n, term_list = no_torj & addr & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_long_source_no_match,        n, term_list = no_ETHER & verbose & fmt = txt
 on, both, medi, accounts, tools/getAccounts, name_long_verbose_no_match,       n, term_list = no_torj & verbose & fmt = txt

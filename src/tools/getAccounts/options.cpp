@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
-    COption("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
+    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "Include prefund accounts"),
@@ -61,8 +61,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--expand") {
             expand = true;
 
-        } else if (arg == "-m" || arg == "--matchCase") {
-            matchCase = true;
+        } else if (arg == "-m" || arg == "--match_case") {
+            match_case = true;
 
         } else if (arg == "-o" || arg == "--owned") {
             owned = true;
@@ -165,7 +165,7 @@ void COptions::Init(void) {
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
 // BEG_CODE_INIT
-    matchCase = false;
+    match_case = false;
 // END_CODE_INIT
 
     items.clear();
@@ -200,7 +200,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         ret += "With a single search term, the tool searches both [{name}] and [{address}].\n";
         ret += "With two search terms, the first term must match the [{address}] field, and the second term must match the [{name}] field.\n";
         ret += "When there are two search terms, both must match.\n";
-        ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
+        ret += "The [{--match_case}] option requires case sensitive matching. It works with all other options.\n";
         ret += "To customize the list of names add a [{custom}] section to the config file (see documentation).\n";
         ret += "Name file: [{" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
@@ -222,7 +222,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return false;
     }
 
-    if (!matchCase)
+    if (!match_case)
         for (size_t i = 0 ; i < searches.size() ; i++)
             searches[i] = toLower(searches[i]);
 
@@ -231,7 +231,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
     string_q str = item.Format(searchFields);
-    if (!matchCase)
+    if (!match_case)
         str = toLower(str);
 
     if ((search1.empty() || search1 == "*" || contains(str, search1)) &&

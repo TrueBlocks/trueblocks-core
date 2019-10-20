@@ -12,16 +12,15 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-    COption("no_header", "o", "", OPT_SWITCH, "do not show the header row"),
-    COption("start", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to scan for appearances (inclusive)"),
-    COption("end", "", "<blknum>", OPT_HIDDEN | OPT_FLAG, "end block to scan for appearances (inclusive)"),
+    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 string_q dTabs;
-bool daemonMode = false;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -31,8 +30,16 @@ bool COptions::parseArguments(string_q& command) {
     scanRange.first = UINT_MAX;
 
 // BEG_CODE_LOCAL_INIT
+    bool staging = false;
+    bool unripe = false;
     bool no_header = false;
+    blknum_t start = NOPOS;
+    blknum_t end = NOPOS;
 // END_CODE_LOCAL_INIT
+
+    CBlock lBlock;
+    getBlock_light(lBlock, "latest");
+    blknum_t latest = lBlock.blockNumber;
 
     Init();
     explode(arguments, command, ' ');
@@ -40,59 +47,57 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (arg == "-o" || arg == "--no_header") {
-            no_header = true;
-
-// END_CODE_AUTO
-        } else if (arg == "-u" || arg == "--unripe") {
-            visitTypes |= VIS_UNRIPE;
-
         } else if (arg == "-s" || arg == "--staging") {
-            visitTypes |= VIS_STAGING;
+            staging = true;
 
-        } else if (startsWith(arg, "--start:")) {
-            arg = substitute(arg, "--start:", "");
-            if (!isNumeral(arg))
-                return usage("Value to --start parameter (" + arg + ") must be a number. Quitting...");
-            scanRange.first = str_2_Uint(arg);
-
-        } else if (startsWith(arg, "--end:")) {
-            arg = substitute(arg, "--end:", "");
-            if (!isNumeral(arg))
-                return usage("Value to --end parameter (" + arg + ") must be a number. Quitting...");
-            scanRange.second = str_2_Uint(arg);
+        } else if (arg == "-u" || arg == "--unripe") {
+            unripe = true;
 
         } else if (arg == "-d" || arg == "--daemon") {
-            daemonMode = true;
+            daemon = true;
 
-        } else if (startsWith(arg, "0x")) {
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid address. Quitting...");
+        } else if (arg == "-n" || arg == "--no_header") {
+            no_header = true;
 
-            // TODO(tjayrush): HARD CODED LIMIT???
-            if (monitors.size() < 100) {
-                CAccountWatch watch;
-                watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
-                watch.setValueByName("name", toLower(arg));
-                watch.extra_data = getVersionStr() + "/" + watch.address;
-                watch.color = cBlue;
-                watch.finishParse();
-                monitors.push_back(watch);
-            } else {
-                return usage("You may scrape at most 30 addresses per invocation. Quitting...");
-            }
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+// END_CODE_AUTO
         } else {
-            return usage("Invalid option: " + arg);
+            if (!startsWith(arg, "0x"))
+                return usage("Invalid option: " + arg);
+
+            if (!isAddress(arg))
+                return usage(arg + " does not appear to be a valid address. Quitting...");
+
+            CAccountWatch watch;
+            watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
+            watch.setValueByName("name", toLower(arg));
+            watch.extra_data = getVersionStr() + "/" + watch.address;
+            watch.color = cBlue;
+            watch.finishParse();
+            monitors.push_back(watch);
         }
     }
 
     if (monitors.size() == 0)
         return usage("You must provide at least one Ethereum address. Quitting...");
+
+    if (start != NOPOS) scanRange.first = start;
+    if (end != NOPOS) scanRange.second = end;
+    if (unripe)  visitTypes |= VIS_UNRIPE;
+    if (staging) visitTypes |= VIS_STAGING;
 
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -101,8 +106,8 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    dTabs = (daemonMode ? "\t  " : "");
-    string_q endLine = (daemonMode ? "\r" : "\n");
+    dTabs = (daemon ? "\t  " : "");
+    string_q endLine = (daemon ? "\r" : "\n");
     for (auto monitor : monitors) {
         string_q fn1 = getMonitorPath(monitor.address);
         if (fileExists(fn1 + ".lck"))
@@ -118,20 +123,19 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The last export file '" + fn4 + "' is locked. Quitting...");
         if (!isTestMode())
             LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
-        // If file doesn't exist, this will report '0'
         if (scanRange.first == UINT_MAX)
-            scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2)));
+            scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2))); // If file doesn't exist, this will report '0'
     }
 
-    blknum_t unripe, ripe, staging, finalized, client;
-    getLastBlocks(unripe, ripe, staging, finalized, client);
+    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
+    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
 
     if (scanRange.second == NOPOS) {
-        scanRange.second = finalized;
+        scanRange.second = finalizedBlk;
         if (visitTypes & VIS_STAGING)
-            scanRange.second = staging;
+            scanRange.second = stagingBlk;
         if (visitTypes & VIS_UNRIPE)
-            scanRange.second = unripe;
+            scanRange.second = unripeBlk;
     }
 
     if (no_header)
@@ -159,6 +163,7 @@ void COptions::Init(void) {
     // optionOn(OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    daemon = false;
 // END_CODE_INIT
 
     minArgs    = 0;
@@ -174,7 +179,7 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
     // just some cleanup of the screen
-    if (!daemonMode) {
+    if (!daemon) {
         cerr << string_q(120, ' ') << "\r";
         cerr.flush();
     }

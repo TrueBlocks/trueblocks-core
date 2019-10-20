@@ -17,6 +17,8 @@ extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
+extern const char* STR_AUTO_FLAG_BLOCKNUM;
+extern const char* STR_CHECK_BUILTIN;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
@@ -41,6 +43,7 @@ bool COptions::handle_options(void) {
         warnings.clear();
         warnings.str("");
 
+        bool allAuto = true;
         map<string, string> shortCmds;
         ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream;
         for (auto option : optionArray) {
@@ -48,50 +51,84 @@ bool COptions::handle_options(void) {
                 check_option(option);
 
                 bool isEnum = contains(option.data_type, "enum");
+                bool isBlockNum = contains(option.data_type, "blknum");
                 opt_stream << option.Format(STR_OPTION_STR) << endl;
 
-                if (!option.auto_generate.empty()) {
+                if (!option.generate.empty()) {
 
-                    if (option.option_kind == "switch") {
-                        local_stream   << (option.auto_generate == "local" ? option.Format("    bool [{COMMAND}] = false;\n") : "");
-                        init_stream    << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = false;\n")      : "");
-                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    bool [{COMMAND}];\n")         : "");
-                        auto_stream    << option.Format(STR_AUTO_SWITCH);
+                    string_q type = substitute(substitute(substitute(option.data_type, "boolean", "bool"), "<", ""), ">", "");
+                    if (contains(option.data_type, "enum"))
+                        type = "string";
+                    replace(type, "blknum", "blknum_t");
+                    replace(type, "string", "string_q");
+                    string_q def = (type == "bool" ? "false" : (type == "string_q" ? "\"\"" : "NOPOS"));
 
-                    } else if (option.option_kind == "flag") {
-                        local_stream   << (option.auto_generate == "local" ? option.Format("    string_q [{COMMAND}] = \"\";\n") : "");
-                        init_stream    << (option.auto_generate == "yes"   ? option.Format("    [{COMMAND}] = \"\";\n")          : "");
-                        declare_stream << (option.auto_generate == "yes"   ? option.Format("    string_q [{COMMAND}];\n")      : "");
-                        if (isEnum)
-                            auto_stream << option.Format(STR_AUTO_FLAG_ENUM);
-                        else
-                            auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg");
+                    if (option.generate == "local") {
+
+                        if (option.option_kind == "switch") {
+
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+
+                        } else if (option.option_kind == "flag") {
+
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            if (isEnum)
+                                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                            else if (isBlockNum)
+                                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                            else
+                                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
+
+                        } else {
+                            // do nothing
+                        }
+
+                    } else if (option.generate == "yes") {
+
+                        if (option.option_kind == "switch") {
+
+                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
+                            auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+
+                        } else if (option.option_kind == "flag") {
+
+                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
+                            if (isEnum)
+                                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                            else if (isBlockNum)
+                                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                            else
+                                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
+
+                        } else {
+                            // do nothing
+                        }
+
+                    } else {
+                        // do nothing
                     }
-
-                    if (option.auto_generate == "dummy")
-                        auto_stream << "            // do nothing" << endl;
-
-                    auto_stream << endl;
+                } else {
+                    if (option.option_kind == "switch" || option.option_kind == "flag")
+                        allAuto = false;
                 }
 
-                if (!option.command_short.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
-                    if (!shortCmds[option.command_short].empty())
-                        warnings << "Short command '" << cRed << option.command << "-" << option.command_short << cOff << "' conflicts with existing '" << cRed << shortCmds[option.command_short] << cOff << "'|";
-                    shortCmds[option.command_short] = option.command + "-" + option.command_short;
+                if (!option.hotkey.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
+                    if (!shortCmds[option.hotkey].empty())
+                        warnings << "Short command '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with existing '" << cRed << shortCmds[option.hotkey] << cOff << "'|";
+                    shortCmds[option.hotkey] = option.command + "-" + option.hotkey;
                 }
             }
         }
 
+        if (allAuto)
+            auto_stream << STR_CHECK_BUILTIN << endl;
+
         string_q fn = "../src/" + tool.first + "/options.cpp";
-        bool changed = false;
-        changed |= writeNewCode(fn, "CODE_OPTIONS", opt_stream.str());
-        changed |= writeNewCode(fn, "CODE_INIT", init_stream.str());
-        changed |= writeNewCode(fn, "CODE_LOCAL_INIT", local_stream.str());
-        changed |= writeNewCode(fn, "CODE_AUTO", auto_stream.str());
-        changed |= writeNewCode(substitute(fn, ".cpp", ".h"), "CODE_DECLARE", declare_stream.str());
-        if (changed)
-            nChanges++;
-        nFiles++;
+        writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str());
+        writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
 
         if (!warnings.str().empty()) {
             CStringArray w;
@@ -127,26 +164,41 @@ bool COptions::check_option(const COptionDef& option) {
 
     if (!valid_type)
         warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command << cOff << "'|";
-    if (option.option_kind == "description" && !endsWith(option.description_core, "."))
-        warnings << "Description '" << cRed << option.description_core << cOff << "' should end with a period.|";
-    if (option.option_kind != "description" && endsWith(option.description_core, "."))
-        warnings << "Option '" << cRed << option.description_core << cOff << "' should not end with a period.|";
+    if (option.option_kind == "description" && !endsWith(option.description, "."))
+        warnings << "Description '" << cRed << option.description << cOff << "' should end with a period.|";
+    if (option.option_kind != "description" && endsWith(option.description, "."))
+        warnings << "Option '" << cRed << option.description << cOff << "' should not end with a period.|";
 
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::writeNewCode(const string_q& fn, const string_q& which, const string_q& new_code) {
-    string_q orig = asciiFileToString(fn);
+string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
     string_q converted = orig;
     converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
     converted = substitute(converted, "// END_" + which, "</remove>\n// END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
-    cerr << bBlue << "Processing " + which + ": " << cOff << fn << " ";
+    return converted;
+}
+//---------------------------------------------------------------------------------------------------
+bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local, const string_q& init) {
+    string_q orig = asciiFileToString(fn);
+    string_q converted = orig;
+    if (endsWith(fn, ".cpp")) {
+        converted = replaceCode(converted, "CODE_AUTO", code);
+        converted = replaceCode(converted, "CODE_OPTIONS", opt);
+        converted = replaceCode(converted, "CODE_LOCAL_INIT", local);
+        converted = replaceCode(converted, "CODE_INIT", init);
+    } else {
+        converted = replaceCode(converted, "CODE_DECLARE", code);
+    }
+    cerr << bBlue << "Processing " << cOff << fn << " ";
+    nFiles++;
     if (converted != orig) {
         cerr << cGreen << "wrote " << converted.size() << " bytes..." << cOff << endl;
         stringToAsciiFile(fn, converted);
+        nChanges++;
         return true;
     }
     cerr << cTeal << "no changes..." << cOff << "\r";
@@ -156,19 +208,33 @@ bool COptions::writeNewCode(const string_q& fn, const string_q& which, const str
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_STR =
-"    COption(\"[{COMMAND}]\", \"[{COMMAND_SHORT}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION_CORE}]\"),";
+"    COption(\"[{COMMAND}]\", \"[{HOTKEY}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION}]\"),";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_SWITCH =
-"        } else if ([arg == \"-{COMMAND_SHORT}\" || ]arg == \"--[{COMMAND}]\") {\n"
+"        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
 "            [{COMMAND}] = true;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
-"        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-"            [{COMMAND}] = substitute(substitute(arg, \"-[{COMMAND_SHORT}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n";
+"        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =
-"        } else if ([startsWith(arg, \"-{COMMAND_SHORT}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
 "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_BLOCKNUM =
+"        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
+"                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_CHECK_BUILTIN =
+"        } else if (startsWith(arg, '-')) {  // do not collapse\n"
+"\n"
+"            if (!builtInCmd(arg)) {\n"
+"                return usage(\"Invalid option: \" + arg);\n"
+"            }\n";

@@ -17,7 +17,7 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
-    bool hash_only;
+    bool hashes_only;
     bool check;
     bool count_only;
     bool force;

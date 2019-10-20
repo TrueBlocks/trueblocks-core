@@ -3,17 +3,18 @@ getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --data
 
   Invalid option: --data
 
-  Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-m|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
 
   Where:  
 	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-m  (--mode <val>)    control which state to export, one of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-	-n  (--no_zero)       suppress the display of zero balance accounts
 	-c  (--changes)       only report a balance when it changes from one block to the next
+	-n  (--no_zero)       suppress the display of zero balance accounts
 
 #### Hidden options (shown during testing only)
+	-s  (--no_history)    for testing only, hide the server's historical state
 	-o  (--no_header)     hide the header in txt and csv mode
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)

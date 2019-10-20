@@ -14,26 +14,20 @@
 #include "etherlib.h"
 #include "optiondef.h"
 
+typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
-    bool silent;
+    string_q name_space;
+    bool all;
+    string_q filter;
 // END_CODE_DECLARE
 
-    bool isAll;
-    bool isRun;
-    bool isEdit;
-    bool isRemove;
-    bool isList;
-    string_q namesp;
-    bool writeHeader;
-    bool writeSource;
-    ostringstream warnings;
-
+    runmode_t mode;
     string_q classNames;
-    string_q filter;
     CToml classFile;
+    ostringstream warnings;
 
     COptions(void);
     ~COptions(void);
@@ -44,7 +38,7 @@ public:
     bool exportJson(const string_q& cl);
     bool handle_options(void);
     bool check_option(const COptionDef& option);
-    bool writeNewCode(const string_q& fn, const string_q& which, const string_q& new_code);
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="");
 };
 
 //-------------------------------------------------------------------

@@ -8,9 +8,9 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
+    COption("n_block_procs", "p", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_addr_procs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };
@@ -33,23 +33,23 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_AUTO
 // END_CODE_AUTO
 
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nBlocks:")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--nBlocks:", "");
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
+            arg = substitute(substitute(arg, "-n:", ""), "--n_blocks:", "");
             if (!isUnsigned(arg))
-                return usage("--nBlocks must be a non-negative number. Quitting...");
-            nBlocks = str_2_Uint(arg);
+                return usage("--n_blocks must be a non-negative number. Quitting...");
+            n_blocks = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--nBlockProcs:")) {
-            arg = substitute(substitute(arg, "--nBlockProcs:", ""), "-b:", "");
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--n_block_procs:")) {
+            arg = substitute(substitute(arg, "--n_block_procs:", ""), "-p:", "");
             if (!isUnsigned(arg))
-                return usage("--nBlockProcs must be a non-negative number. Quitting...");
-            nBlockProcs = str_2_Uint(arg);
+                return usage("--n_block_procs must be a non-negative number. Quitting...");
+            n_block_procs = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--nAddrProcs:")) {
-            arg = substitute(substitute(arg, "--nAddrProcs:", ""), "-a:", "");
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
+            arg = substitute(substitute(arg, "--n_addr_procs:", ""), "-a:", "");
             if (!isUnsigned(arg))
-                return usage("--nAddrProcs must be a non-negative number. Quitting...");
-            nAddrProcs = str_2_Uint(arg);
+                return usage("--n_addr_procs must be a non-negative number. Quitting...");
+            n_addr_procs = str_2_Uint(arg);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -76,21 +76,21 @@ const char* STR_ERROR_MSG =
 "{\n"
 "  \"message\": \"Reporting for test mode only\",\n"
 "  \"errors\": [\n"
-"    \"nBlocks [NBLOCKS]\",\n"
-"    \"nBlockProcs [NBLOCKPROCS]\",\n"
-"    \"nAddrProcs [NADDRPROCS]\"\n"
+"    \"n_blocks [N_BLOCKS]\",\n"
+"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
+"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
 "  ]\n"
 "}\n";
             string_q msg = STR_ERROR_MSG;
-            replace(msg, "[NBLOCKS]", uint_2_Str(nBlocks));
-            replace(msg, "[NBLOCKPROCS]", uint_2_Str(nBlockProcs));
-            replace(msg, "[NADDRPROCS]", uint_2_Str(nAddrProcs));
+            replace(msg, "[N_BLOCKS]", uint_2_Str(n_blocks));
+            replace(msg, "[N_BLOCK_PROCS]", uint_2_Str(n_block_procs));
+            replace(msg, "[N_ADDR_PROCS]", uint_2_Str(n_addr_procs));
             cout << msg << endl;
         } else {
             cout << "Reporting for test mode only:" << endl;
-            cout << "\tnBlocks: " << nBlocks << endl;
-            cout << "\tnBlockProcs: " << nBlockProcs << endl;
-            cout << "\tnAddrProcs: " << nAddrProcs << endl;
+            cout << "\tn_blocks: " << n_blocks << endl;
+            cout << "\tn_block_procs: " << n_block_procs << endl;
+            cout << "\tn_addr_procs: " << n_addr_procs << endl;
         }
         return false;
     }
@@ -141,9 +141,9 @@ const char* STR_ERROR_MSG =
     if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
-    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
-    nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   10 : nBlockProcs));
-    nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   20 : nAddrProcs ));
+    n_blocks      = config->getConfigInt("settings", "n_blocks",      (n_blocks      == NOPOS ? 2000 : n_blocks     ));
+    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ?   10 : n_block_procs));
+    n_addr_procs  = config->getConfigInt("settings", "n_addr_procs",  (n_addr_procs  == NOPOS ?   20 : n_addr_procs ));
 
     return true;
 }
@@ -157,13 +157,13 @@ void COptions::Init(void) {
 // END_CODE_INIT
 
     if (getEnvStr("DOCKER_MODE") == "true") {
-        nBlocks     = 100;
-        nBlockProcs = 5;
-        nAddrProcs  = 10;
+        n_blocks      = 100;
+        n_block_procs = 5;
+        n_addr_procs  = 10;
     } else {
-        nBlocks     = NOPOS;
-        nBlockProcs = NOPOS;
-        nAddrProcs  = NOPOS;
+        n_blocks      = NOPOS;
+        n_block_procs = NOPOS;
+        n_addr_procs  = NOPOS;
     }
 
     minArgs     = 0;

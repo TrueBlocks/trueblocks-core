@@ -18,13 +18,13 @@ static const COption params[] = {
     COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
-    COption("receipt_only", "c", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
+    COption("receipt_only", "r", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
     COption("bits", "i", "", OPT_SWITCH, "display blooms as bits instead of hex"),
     COption("bars", "a", "", OPT_SWITCH, "display blooms as bar chart instead of hex"),
     COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
     COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
-    COption("bitcount", "n", "", OPT_SWITCH, "display the number of bits lit per bloom"),
-    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
+    COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
+    COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
 // END_CODE_OPTIONS
 };
@@ -54,7 +54,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--block_only") {
             block_only = true;
 
-        } else if (arg == "-c" || arg == "--receipt_only") {
+        } else if (arg == "-r" || arg == "--receipt_only") {
             receipt_only = true;
 
         } else if (arg == "-i" || arg == "--bits") {
@@ -69,17 +69,19 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--pctbars") {
             pctbars = true;
 
-        } else if (arg == "-n" || arg == "--bitcount") {
+        } else if (arg == "-t" || arg == "--bitcount") {
             bitcount = true;
 
-        } else if (arg == "-o" || arg == "--force") {
+        } else if (arg == "-f" || arg == "--force") {
             force = true;
 
-// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
-            if (!builtInCmd(arg))
-                return usage("Invalid option: " + arg);
 
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
+// END_CODE_AUTO
         } else {
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {

@@ -60,21 +60,21 @@ bool COptions::exportData(void) {
                     }
                     trans.pBlock = &block;
                     trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
-                    if (writeTxs && !fileExists(txFilename))
+                    if (!nowrite_txs && !fileExists(txFilename))
                         writeTransToBinary(trans, txFilename);
                 }
 
                 if (traces) {
 
                     // acctExport --traces
-                    loadTraces(trans, item->blk, item->txid, writeTraces, (skipDdos && excludeTrace(&trans, maxTraces)));
+                    loadTraces(trans, item->blk, item->txid, !nowrite_traces, (skipDdos && excludeTrace(&trans, maxTraces)));
                     for (auto trace : trans.traces) {
 
                         bool isSuicide = trace.action.address != "";
                         bool isCreation = trace.result.address != "";
 
                         if (!isSuicide) {
-                            if (grabABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
                             } else {
                                 if (!isTestMode() && isApiMode()) {
@@ -102,7 +102,7 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = "0x";
-                            if (grabABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
                             } else {
                                 if (isJson && shouldDisplay && !first)
@@ -124,7 +124,7 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = trace.action.input;
-                            if (grabABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
 
                             } else {
@@ -189,8 +189,8 @@ bool COptions::exportData(void) {
     LOG_INFO(string_q(120,' '));
     qblocks::eLogger->setEndline('\n');
 
-    if (grabABIs) {
-        // acctExport --grabABIs (downloads and writes the ABIs for all the traces to disc)
+    if (grab_abis) {
+        // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
         for (pair<address_t,bool> item : abiMap) {
             if (isContractAt(item.first)) {
                 CAbi unused;
