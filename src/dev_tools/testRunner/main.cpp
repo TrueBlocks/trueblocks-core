@@ -91,6 +91,16 @@ int main(int argc, const char *argv[]) {
         cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
         cout << "seconds: " << cYellow << totalTime << cOff << endl;
         if (options.report) {
+            perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
+            perf << Now().Format(FMT_EXPORT) << ",";
+            perf << "allTests" << ",";
+            perf << "all" << ",";
+            perf << options.filter << ",";
+            perf << totalTests << ",";
+            perf << totalPassed << ",";
+            perf << (totalTests - totalPassed) << ",";
+            perf << double_2_Str(totalTime, 5) << ",";
+            perf << double_2_Str(totalTime / totalTests, 5) << endl;
             appendToAsciiFile(configPath("performance.txt"), perf.str());
             cout << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         }

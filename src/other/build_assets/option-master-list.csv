@@ -1,4 +1,5 @@
 num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_visible,generate,option_kind,data_type,description
+
 10000,apps,list,acctScrape,addr_list,,,TRUE,TRUE,TRUE,no,positional,list<addr>,one or more Ethereum addresses
 10050,apps,list,acctScrape,staging,s,,FALSE,FALSE,FALSE,local,switch,<boolean>,produce results in the staging folder instead of production folder
 10100,apps,list,acctScrape,unripe,u,,FALSE,FALSE,FALSE,local,switch,<boolean>,visit unripe (not old enough and not yet staged or finalized) blocks
@@ -200,7 +201,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 
 19250,tools,when,whenBlock,block_list,,,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
 19300,tools,when,whenBlock,date_list,,,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-19350,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,,switch,<boolean>,export all the named blocks
+19350,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,local,switch,<boolean>,export all the named blocks
 19400,tools,when,whenBlock,,,,FALSE,TRUE,FALSE,,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
 
 19450,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,,positional,list<blknum>,a space-separated list of one or more blocks to search for

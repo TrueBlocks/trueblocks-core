@@ -31,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
+    bool list = false;
 // END_CODE_LOCAL_INIT
 
     bool no_header = false;
@@ -44,17 +45,19 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-l" || arg == "--list") {
+            list = true;
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
 // END_CODE_AUTO
 
         } else if (arg == "UTC") {
             // do nothing
-
-        } else if (arg == "-l" || arg == "--list") {
-            forEverySpecialBlock(showSpecials, &requests);
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
-            if (!builtInCmd(arg))
-                return usage("Invalid option: '" + orig + "'.");
 
         } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
@@ -121,6 +124,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (list)
+        forEverySpecialBlock(showSpecials, &requests);
+            
     // Data verifictions
     if (requests.size() == 0)
         return usage("Please supply either a JSON formatted date or a blockNumber.");
