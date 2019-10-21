@@ -20,7 +20,7 @@ chmod uog+x test_results
 
 #echo "Testing 2..."
 cd $BUILD_FOLDER/
-doTestingApi --filter all --mode both --clean $@
+doTestingApi --filter all --mode both --clean --report $@
 
 echo "Copying working folder to compare folder..."
 cd $TEST_FOLDER/

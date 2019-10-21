@@ -1,5 +1,5 @@
-makeClass argc: 5 [1:-e] [2:--name_space] [3:qblock] [4:function] 
-makeClass -e --name_space qblock function 
+makeClass argc: 5 [1:--edit] [2:-a] [3:--filter] [4:function] 
+makeClass --edit -a --filter function 
 Testing editFile: function.txt
 [settings]
 class    = CFunction

@@ -36,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOff(OPT_FMT);
 
     minArgs = 0;
 }

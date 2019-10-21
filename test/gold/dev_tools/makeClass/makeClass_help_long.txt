@@ -1,7 +1,5 @@
-makeClass argc: 3 [1:-e] [2:--run] 
-makeClass -e --run 
-
-  Please chose only one of --run, --list, or --edit. Quitting...
+makeClass argc: 2 [1:-help] 
+makeClass -help 
 
   Usage:    makeClass [-l|-r|-a|-j|-o|-n|-f|-v|-h] <class_name> [class_name...]  
   Purpose:  Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>.

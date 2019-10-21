@@ -19,7 +19,6 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -49,14 +48,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--force") {
             force = true;
 
-// END_CODE_AUTO
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
 
             string_q errorMsg;

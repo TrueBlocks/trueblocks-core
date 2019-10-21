@@ -11,7 +11,7 @@ ethQuote -th
 | -------: | :------- | :------- |
 | -f | --freshen | Freshen database (append new data) |
 | -p | --period <val> | Display prices in this increment, one of [5&#124;15&#124;30&#124;60&#124;120*&#124;240&#124;1440] |
-| -a | --pair <string> | Which price pair to freshen or list (see Poloniex) |
+| -a | --pair <str> | Which price pair to freshen or list (see Poloniex) |
 
 #### Hidden options (shown during testing only)
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

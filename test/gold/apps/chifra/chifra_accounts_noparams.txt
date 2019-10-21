@@ -1,8 +1,8 @@
 chifra argc: 4 [1:accounts] [2:--fmt] [3:txt] 
 chifra accounts --fmt txt 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
-getAccounts argc: 3 [1:--fmt] [2:txt] 
-getAccounts --fmt txt 
+getAccounts argc: 1 
+getAccounts 
 group	subgroup	address	name	symbol
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX

@@ -27,7 +27,6 @@ static const COption params[] = {
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };

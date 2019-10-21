@@ -2,14 +2,19 @@ chifra argc: 1
 chifra 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
-  Please specify which command to run, one or more of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
+  Please specify which command to run, one or more of [list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
 
   Usage:    chifra [-s|-v|-h] command  
   Purpose:  Create a TrueBlocks monitor configuration.
 
   Where:  
-	command               which command to run, one or more of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
+	command               which command to run, one or more of [list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
 	-s  (--sleep <uint>)  for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

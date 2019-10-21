@@ -1,21 +1,17 @@
-getTokenInfo argc: 5 [1:0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98] [2:--fmt] [3:junk] [4:2000000] 
-getTokenInfo 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt junk 2000000 
+getTokenInfo argc: 6 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--fmt] [4:junk] [5:2000000] 
+getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt junk 2000000 
 
-  Invalid option: --fmt
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getTokenInfo [-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    getTokenInfo [-i|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 
   Where:  
 	addr_list             two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
 	-b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
 	-n  (--no_zero)       suppress the display of zero balance accounts
-
-#### Hidden options (shown during testing only)
-	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
-#### Hidden options (shown during testing only)
-
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

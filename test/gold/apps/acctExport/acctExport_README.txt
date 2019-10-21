@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-a|-l|-t|-b|-p|-c|-x|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-a|-l|-t|-b|-p|-c|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -16,7 +16,6 @@ acctExport -th
 | -b | --balances | export balance history instead of transaction list |
 | -p | --appearances | export a list of appearances |
 | -c | --count_only | display only the count of the number of data items requested |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 
 #### Hidden options (shown during testing only)
 | -w | --write_blocks | turn on writing blocks to the binary cache ('off' by default) |
@@ -31,6 +30,7 @@ acctExport -th
 | -D | --deltas | for --balances option only, export only changes in balances |
 | -S | --start <num> | first block to process(inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

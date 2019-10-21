@@ -152,6 +152,7 @@ const char* STR_ERROR_MSG =
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
+    optionOff(OPT_FMT);
 
 // BEG_CODE_INIT
 // END_CODE_INIT

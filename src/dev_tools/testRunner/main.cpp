@@ -14,6 +14,10 @@
 #include "options.h"
 #include "test_case.h"
 
+ostringstream perf;
+uint32_t totalTests = 0;
+uint32_t totalPassed = 0;
+double totalTime = 0.0;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -82,6 +86,14 @@ int main(int argc, const char *argv[]) {
         }
     }
 
+    if (totalTests == totalPassed) {
+        cout << "nTests: " << cYellow << totalTests << cOff << " ";
+        cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
+        cout << "seconds: " << cYellow << totalTime << cOff << endl;
+        if (options.report)
+            cout << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+    }
+
     return 0;
 }
 
@@ -92,7 +104,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
         return true;
 
     resetClock();
-    double totalTime = 0;
+    double testTime = 0;
+    uint32_t nTests = 0;
+    uint32_t nPassed = 0;
 
     bool cmdTests = whichTest & CMD;
 
@@ -136,12 +150,13 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
+            nTests++;
             int ret = system(theCmd.c_str());
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             double thisTime = str_2_Double(TIC());
-            totalTime += thisTime;
+            testTime += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
             string_q result = greenCheck;
@@ -152,6 +167,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                 string_q oldText = asciiFileToString(test.goldPath + test.fileName);
                 if (newText.empty() || newText != oldText)
                     result = redX;
+                else
+                    nPassed++;
 
             } else {
                 result = redX;
@@ -176,7 +193,34 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             }
         }
     }
-    cout << "   " << cTeal << double_2_Str(totalTime, 5) << " " << cOff << testName << " " << (cmdTests ? "cmd" : "api") << " total seconds" << endl << endl;
+
+    totalTests += nTests;
+    totalPassed += nPassed;
+    totalTime += testTime;
+
+    if (nTests) {
+        ostringstream os;
+        os << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
+        os << Now().Format(FMT_EXPORT) << ",";
+        os << testName << ",";
+        os << (cmdTests ? "cmd" : "api") << ",";
+        os << filter << ",";
+        os << nTests << ",";
+        os << nPassed << ",";
+        os << (nTests - nPassed) << ",";
+        os << double_2_Str(testTime, 5) << ",";
+        os << double_2_Str(testTime / nTests, 5) << endl;
+        perf << os.str();
+
+        cerr << "   " << testName << "(" << (cmdTests ? "cmd" : "api") << "," << filter << "): ";
+        cerr << cYellow << nTests << " tests " << cOff ;
+        cerr << cGreen << nPassed << " passed " << greenCheck << cOff << " ";
+        if (nTests != nPassed)
+            cerr << cRed << (nTests - nPassed) << " failed " << cOff << "in ";
+        cerr << cTeal << double_2_Str(testTime, 5) << " seconds " << cOff;
+        cerr << cBlue << double_2_Str(testTime / nTests, 5) << " avg." << cOff << endl;
+        cerr << endl;
+    }
 
     return true;
 }

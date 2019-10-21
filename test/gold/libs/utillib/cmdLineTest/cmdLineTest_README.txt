@@ -14,7 +14,7 @@ cmdLineTest -th
 | -b | --bool <bool> | enter a boolean value (either '0', '1', 'false', or 'true') |
 | -i | --int <int> | enter any numeric value |
 | -u | --uint <uint> | enter any numeric value greater than or equal to zero |
-| -s | --string <string> | enter any value |
+| -s | --string <str> | enter any value |
 | -r | --range <range> | enter a range of numeric values |
 | -l | --list <list> | enter a list of value separated by commas (no spaces or quoted) |
 

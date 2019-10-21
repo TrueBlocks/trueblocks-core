@@ -2,7 +2,7 @@ ethslurp argc: 2 [1:-th]
 ethslurp -th 
 #### Usage
 
-`Usage:`    ethslurp [-t|-b|-s|-x|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    ethslurp [-t|-b|-s|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
 
 `Where:`  
@@ -14,7 +14,11 @@ ethslurp -th
 | -t | --type <val> | type of transactions to request, one of [ext*&#124;int&#124;token&#124;miner&#124;all] |
 | -b | --blocks <range> | export records in block range (:0[:max]) |
 | -s | --silent | Run silently (only freshen the data, do not display it) |
-| -x | --fmt <val> | pretty print, one of [none&#124;json*&#124;txt&#124;csv&#124;html&#124;api] |
+
+#### Hidden options (shown during testing only)
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+#### Hidden options (shown during testing only)
+
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

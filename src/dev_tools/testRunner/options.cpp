@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
+    COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -54,6 +55,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;
+
+        } else if (arg == "-r" || arg == "--report") {
+            report = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -164,6 +168,7 @@ void COptions::Init(void) {
     filter = "";
     clean = false;
     no_quit = false;
+    report = false;
 // END_CODE_INIT
 
     minArgs = 0;

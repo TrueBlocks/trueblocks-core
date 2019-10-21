@@ -9,7 +9,7 @@ ethQuote
   Where:  
 	-f  (--freshen)       Freshen database (append new data)
 	-p  (--period <val>)  Display prices in this increment, one of [5|15|30|60|120*|240|1440]
-	-a  (--pair <string>) Which price pair to freshen or list (see Poloniex)
+	-a  (--pair <str>)    Which price pair to freshen or list (see Poloniex)
 
 #### Hidden options (shown during testing only)
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

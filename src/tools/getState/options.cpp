@@ -22,7 +22,6 @@ static const COption params[] = {
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };
@@ -62,14 +61,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--no_header") {
             no_header = true;
 
-// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else if (isHash(arg)) {
-
             string_q ret = blocks.parseBlockList(arg, newestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";

@@ -4,7 +4,7 @@ Processing: --pank
 
   Invalid option: --pank
 
-  Usage:    ethslurp [-t|-b|-s|-x|-v|-h] <address> [address...] [block...]  
+  Usage:    ethslurp [-t|-b|-s|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
 
   Where:  
@@ -13,7 +13,11 @@ Processing: --pank
 	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
 	-b  (--blocks <range>)export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
-	-x  (--fmt <val>)     pretty print, one of [none|json*|txt|csv|html|api]
+
+#### Hidden options (shown during testing only)
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+#### Hidden options (shown during testing only)
+
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

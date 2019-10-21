@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_HIDDEN | OPT_FLAG, "retreive information about the token"),
+    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "retreive information about the token"),
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
@@ -154,6 +154,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW);
+    optionOff(OPT_FMT);
 
 // BEG_CODE_INIT
     by_acct = false;

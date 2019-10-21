@@ -166,10 +166,14 @@ namespace qblocks {
                 }
             }
 
+            if (!combine && (arg == "-x" || arg == "--fmt")) {
+                if (i < nArgs-1)
+                    combine = true;
+            }
+
             if (combine && i < (nArgs-1)) {
                 args[curArg++] = arg + ":" + args[i+1];
                 i++;
-
             } else {
                 args[curArg++] = arg;
             }
@@ -193,6 +197,7 @@ namespace qblocks {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
+
             } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
                 verbose = true;
                 arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
@@ -273,6 +278,7 @@ namespace qblocks {
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
         replace(cmdLine, "--output ", "--output:");
+        replace(cmdLine, "--fmt ", "--fmt:");
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -420,7 +426,7 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
-        if (startsWith(arg, "--fmt:"))
+        if (isEnabled(OPT_FMT) && startsWith(arg, "--fmt:"))
             return true;
         if (arg == "--version")
             return true;
@@ -558,6 +564,7 @@ namespace qblocks {
         type = t;
         permitted = t;
         permitted = substitute(permitted, "<blknum>", "<num>");
+        permitted = substitute(permitted, "<string>", "<str>");
         if (contains(type, "enum")) {
             description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
             replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
@@ -619,9 +626,6 @@ const char *STR_ERROR_JSON =
 
             } else if (pParams[i].is_hidden) {
                 // invisible option
-
-            } else if (!pParams[i].shortName.empty()) {
-                os << pParams[i].shortName << "|";
 
             } else if (!pParams[i].shortName.empty()) {
                 os << pParams[i].shortName << "|";
@@ -739,6 +743,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
             if (pParams[i].is_hidden)
                 nHidden++;
+            if (isTestMode() && isEnabled(OPT_FMT))
+                nHidden++;
         }
 
         // For testing purposes, we show the hidden options
@@ -757,12 +763,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
+            if (isEnabled(OPT_FMT))
+                os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
         if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose",
-                    "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+            os << oneDescription("-v", "--verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen", false, false);
         return postProcess("description", os.str().c_str());

@@ -19,6 +19,7 @@ getBloom 1590000 4000001-4000002 1001001-1001100 1234567
 
 #### Hidden options (shown during testing only)
 	-f  (--force)         force a re-write of the bloom to the cache
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

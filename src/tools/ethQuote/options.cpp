@@ -18,7 +18,6 @@ static const COption params[] = {
     COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
     COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "Display prices in this increment"),
     COption("pair", "a", "<string>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
 // END_CODE_OPTIONS
 };
@@ -53,6 +52,12 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
             pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
 
 // END_CODE_AUTO
         } else {

@@ -25,6 +25,7 @@ public:
     string_q filter;
     bool clean;
     bool no_quit;
+    bool report;
 // END_CODE_DECLARE
 
     int modes = CMD;

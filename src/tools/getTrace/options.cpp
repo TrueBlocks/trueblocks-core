@@ -20,7 +20,6 @@ static const COption params[] = {
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions during export ('on' by default)"),
     COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -56,13 +55,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
 
-// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
 
             string_q errorMsg;

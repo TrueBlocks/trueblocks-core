@@ -22,6 +22,7 @@ grabABI 0x00001
 	-i  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
 	-r  (--no_decorate)   do not decorate duplicate names
 	-k  (--known)         load common 'known' ABIs from cache
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

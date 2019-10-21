@@ -24,6 +24,7 @@ getBlock -th
 | -q | --quiet | do not print results to screen, used for speed testing and data checking |
 | -C | --cache | use the cache for data retrieval |
 | -m | --normalize | normalize (remove un-common fields and sort) for comparison with other results (testing) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

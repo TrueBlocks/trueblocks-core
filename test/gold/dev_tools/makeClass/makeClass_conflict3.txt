@@ -1,5 +1,5 @@
-makeClass argc: 3 [1:-e] [2:--run] 
-makeClass -e --run 
+makeClass argc: 3 [1:-r] [2:--edit] 
+makeClass -r --edit 
 
   Please chose only one of --run, --list, or --edit. Quitting...
 

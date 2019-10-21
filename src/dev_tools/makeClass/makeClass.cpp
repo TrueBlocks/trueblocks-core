@@ -75,7 +75,7 @@ int main(int argc, const char *argv[]) {
                             if (verbose)
                                 cerr << "Disabled class not processed " << className << "\n";
                         } else {
-                            generateCode(options, toml, fileName, options.name_space);
+                            generateCode(options, toml, fileName, options.nspace);
                         }
                     }
                 }

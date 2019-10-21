@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "s", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS

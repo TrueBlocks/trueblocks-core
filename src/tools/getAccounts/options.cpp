@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 // END_CODE_OPTIONS
 };
@@ -82,12 +81,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
 
-// END_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             searches.push_back(arg);
 

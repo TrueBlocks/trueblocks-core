@@ -361,7 +361,7 @@ void CTestCase::prepareTest(bool cmdLine) {
 
     if (cmdLine) {
         CStringArray opts = {
-            "val", "addr_list", "block_list", "date_list",
+            "val", "addr_list", "block_list", "class_list", "date_list",
             "trans_list", "term_list", "func_list", "mode_list",
         };
         options = "&" + options;

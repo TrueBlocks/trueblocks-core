@@ -16,16 +16,16 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("class_name", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
-    COption("name_space", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
+    COption("class_list", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
-    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local folder"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
-    COption("all", "a", "", OPT_SWITCH, "edit, list, or run all class definitions found in the local folder"),
-    COption("options", "o", "", OPT_HIDDEN | OPT_SWITCH, "export options code (check data, generate code) and quit"),
-    COption("javascript", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),
-    COption("filter", "f", "<string>", OPT_FLAG, "process only files with :filter in their names"),
-    COption("", "", "", OPT_DESCRIPTION, "Creates C++ code based on definition file at ./classDefinition/<class_name>."),
+    COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
+    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),
+    COption("options", "o", "", OPT_SWITCH, "export options code (check data, generate code) and quit"),
+    COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
+    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+    COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -37,11 +37,11 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
-    bool run = false;
     bool list = false;
+    bool run = false;
     bool edit = false;
+    string_q js = "";
     bool options = false;
-    string_q javascript = "";
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -50,14 +50,11 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--name_space:")) {
-            name_space = substitute(substitute(arg, "-n:", ""), "--name_space:", "");
+        } else if (arg == "-l" || arg == "--list") {
+            list = true;
 
         } else if (arg == "-r" || arg == "--run") {
             run = true;
-
-        } else if (arg == "-l" || arg == "--list") {
-            list = true;
 
         } else if (arg == "-e" || arg == "--edit") {
             edit = true;
@@ -65,11 +62,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
+        } else if (startsWith(arg, "-j:") || startsWith(arg, "--js:")) {
+            js = substitute(substitute(arg, "-j:", ""), "--js:", "");
+
         } else if (arg == "-o" || arg == "--options") {
             options = true;
 
-        } else if (startsWith(arg, "-j:") || startsWith(arg, "--javascript:")) {
-            javascript = substitute(substitute(arg, "-j:", ""), "--javascript:", "");
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
+            nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
@@ -92,10 +92,10 @@ bool COptions::parseArguments(string_q& command) {
     if (options)
         return !handle_options();
 
-    if (!javascript.empty())
-        return exportJson(javascript);
+    if (!js.empty())
+        return exportJson(js);
 
-    if (contains(command, "javascript") && javascript.empty())
+    if (contains(command, "-j") && js.empty())
         return usage("Cannot export javscript for an empty class. Quitting...");
 
     if (!folderExists("./classDefinitions/"))
@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!folderExists(configPath("makeClass/")))
         return usage(configPath("makeClass/") + " folder does not exist. Quitting...");
 
-    if (run + list + edit > 1)
+    if ((run + list + edit) > 1)
         return usage("Please chose only one of --run, --list, or --edit. Quitting...");
 
     if (!run && !list && !edit)
@@ -130,10 +130,11 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOff(OPT_FMT);
 
 // BEG_CODE_INIT
-    name_space = "";
     all = false;
+    nspace = "";
     filter = "";
 // END_CODE_INIT
 
@@ -151,6 +152,18 @@ COptions::COptions(void) : classFile("") {
 COptions::~COptions(void) {
 }
 
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "options") {
+        return substitute(str, "class_list", "<class_name> [class_name...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        return "";
+
+    }
+    return str;
+}
+
 //---------------------------------------------------------------------------------------------------
 bool listClasses(const string_q& path, void *data) {
     if (endsWith(path, "/")) {
@@ -165,7 +178,7 @@ bool listClasses(const string_q& path, void *data) {
             if (!opts->filter.empty()) {
                 string_q contents;
                 asciiFileToString(path, contents);
-                include = contains(contents, opts->filter);
+                include = (file == opts->filter) || contains(contents, opts->filter);
             }
             if (include) {
                 if (!opts->classNames.empty())

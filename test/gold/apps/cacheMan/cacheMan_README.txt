@@ -2,7 +2,7 @@ cacheMan argc: 2 [1:-th]
 cacheMan -th 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-x|-v|-h] fn_list  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] fn_list  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
 
 `Where:`  
@@ -19,13 +19,13 @@ cacheMan -th
 | -r | --remove | remove transactions if remove.txt file exists in current folder |
 | -u | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
 | -m | --merge | merge two or more caches into a single cache |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 
 #### Hidden options (shown during testing only)
 | -k | --skip | skip value for testing |
 | -n | --no_header | do not show header row of data |
 | -S | --start <num> | first block to process(inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

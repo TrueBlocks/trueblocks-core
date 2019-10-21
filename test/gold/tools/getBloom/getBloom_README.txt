@@ -21,6 +21,7 @@ getBloom -th
 
 #### Hidden options (shown during testing only)
 | -f | --force | force a re-write of the bloom to the cache |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

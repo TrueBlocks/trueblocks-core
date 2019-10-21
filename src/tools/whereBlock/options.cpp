@@ -16,7 +16,6 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
 // END_CODE_OPTIONS
 };
@@ -44,13 +43,13 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {

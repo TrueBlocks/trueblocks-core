@@ -3,19 +3,15 @@ getTokenInfo 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca2
 
   Invalid option: --dollars
 
-  Usage:    getTokenInfo [-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    getTokenInfo [-i|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 
   Where:  
 	addr_list             two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
 	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
 	-b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
 	-n  (--no_zero)       suppress the display of zero balance accounts
-
-#### Hidden options (shown during testing only)
-	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
-#### Hidden options (shown during testing only)
-
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

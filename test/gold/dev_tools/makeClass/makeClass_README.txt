@@ -2,24 +2,24 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 #### Usage
 
-`Usage:`    makeClass [-n|-r|-l|-a|-j|-f|-v|-h] class_name  
-`Purpose:`  Creates C++ code based on definition file at ./classDefinition/<class_name>.
+`Usage:`    makeClass [-l|-r|-a|-j|-o|-n|-f|-v|-h] &lt;class_name&gt; [class_name...]  
+`Purpose:`  Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | class_name | one or more class definition files to process (required) |
-| -n | --name_space <string> | surround the code with a namespace |
+|  | class_list | one or more class definition files to process (required) |
+| -l | --list | list all definition files found in the local ./classDefinitions folder |
 | -r | --run | run the class maker on associated <class_name(s)> |
-| -l | --list | list all definition files found in the local folder |
-| -a | --all | edit, list, or run all class definitions found in the local folder |
-| -j | --javascript <string> | export javaScript code and quit |
-| -f | --filter <string> | process only files with :filter in their names |
+| -a | --all | list, or run all class definitions found in the local folder |
+| -j | --js <str> | export javaScript code and quit |
+| -o | --options | export options code (check data, generate code) and quit |
+| -n | --nspace <str> | surround the code with a namespace |
+| -f | --filter <str> | process only files whose filename or contents contain 'filter' |
 
 #### Hidden options (shown during testing only)
 | -e | --edit | edit <class_name(s)> definition file in local folder |
-| -o | --options | export options code (check data, generate code) and quit |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

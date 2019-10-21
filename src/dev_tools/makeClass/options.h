@@ -19,8 +19,8 @@ typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
-    string_q name_space;
     bool all;
+    string_q nspace;
     string_q filter;
 // END_CODE_DECLARE
 
@@ -32,6 +32,7 @@ public:
     COptions(void);
     ~COptions(void);
 
+    string_q postProcess(const string_q& which, const string_q& str) const;
     bool parseArguments(string_q& command);
     void Init(void);
 

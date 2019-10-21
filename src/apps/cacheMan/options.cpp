@@ -22,7 +22,6 @@ static const COption params[] = {
     COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
 // END_CODE_OPTIONS
 };
