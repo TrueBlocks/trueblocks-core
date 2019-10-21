@@ -15,12 +15,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp"),
+    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
     COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
     COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
-    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

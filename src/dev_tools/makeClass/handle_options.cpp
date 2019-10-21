@@ -117,8 +117,16 @@ bool COptions::handle_options(void) {
 
                 if (!option.hotkey.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
                     if (!shortCmds[option.hotkey].empty())
-                        warnings << "Short command '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with existing '" << cRed << shortCmds[option.hotkey] << cOff << "'|";
+                        warnings << "Hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with existing '" << cRed << shortCmds[option.hotkey] << cOff << "'|";
                     shortCmds[option.hotkey] = option.command + "-" + option.hotkey;
+                    bool isUpper = (toLower(option.hotkey) != option.hotkey);
+                    bool isFirst = option.hotkey == option.command.substr(0,1);
+                    bool isSecond = option.hotkey == option.command.substr(1,1);
+                    bool isContained = !verbose && contains(option.command, option.hotkey);
+                    if (!isFirst && !isSecond && !isUpper && !isContained) {
+                        warnings << "Hotkey '" << cRed << option.hotkey << "' " << cOff;
+                        warnings << "of command '" << cRed << option.command << cOff << "' is not first or second character|";
+                    }
                 }
             }
         }

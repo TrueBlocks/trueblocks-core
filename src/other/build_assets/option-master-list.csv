@@ -94,19 +94,19 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 14200,dev_tools,,testRunner,clean,c,,FALSE,TRUE,FALSE,yes,switch,<boolean>,clean working folder before running tests
 14250,dev_tools,,testRunner,no_quit,n,,FALSE,TRUE,FALSE,yes,switch,<boolean>,do not quit testing on first error
 14250,dev_tools,,testRunner,report,r,,FALSE,TRUE,FALSE,yes,switch,<boolean>,display performance report to screen
-14300,dev_tools,,testRunner,,,,FALSE,TRUE,FALSE,,description,,Retrieve a transaction's logs from the local cache or a running node.
+14300,dev_tools,,testRunner,,,,FALSE,TRUE,FALSE,,description,,Run TrueBlocks' test cases with options.
 
-14350,tools,quotes,ethQuote,freshen,f,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Freshen database (append new data)
+14350,tools,quotes,ethQuote,freshen,f,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Freshen price database (append new data)
 14400,tools,quotes,ethQuote,period,p,,FALSE,TRUE,TRUE,local,flag,enum[5|15|30|60|120*|240|1440],Display prices in this increment
 14450,tools,quotes,ethQuote,pair,a,,FALSE,TRUE,TRUE,local,flag,<string>,Which price pair to freshen or list (see Poloniex)
-14550,tools,quotes,ethQuote,,,,FALSE,TRUE,TRUE,,description,,Freshen and/or display Ethereum price data and other purposes.
+14550,tools,quotes,ethQuote,,,,FALSE,TRUE,TRUE,,description,,Freshen and/or display Ethereum price data.
 
-14600,tools,slurp,ethslurp,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp
+14600,tools,slurp,ethslurp,addr_list,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 14650,tools,slurp,ethslurp,block_list,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
 14700,tools,slurp,ethslurp,type,t,,FALSE,TRUE,TRUE,yes,flag,enum[ext*|int|token|miner|all],type of transactions to request
 14750,tools,slurp,ethslurp,blocks,b,,FALSE,TRUE,TRUE,,flag,<range>,export records in block range (:0[:max])
 14800,tools,slurp,ethslurp,silent,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Run silently (only freshen the data&#44; do not display it)
-14900,tools,slurp,ethslurp,,,,FALSE,TRUE,TRUE,,description,,Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+14900,tools,slurp,ethslurp,,,,FALSE,TRUE,TRUE,,description,,Fetches data from EtherScan for an arbitrary address.
 
 14950,tools,accounts,getAccounts,term_list,,,TRUE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms
 15000,tools,accounts,getAccounts,expand,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
@@ -132,8 +132,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 16000,tools,blocks,getBlock,quiet,q,,FALSE,FALSE,FALSE,yes,switch,<boolean>,do not print results to screen&#44; used for speed testing and data checking
 16050,tools,blocks,getBlock,cache,C,,FALSE,FALSE,FALSE,yes,switch,<boolean>,use the cache for data retrieval
 16100,tools,blocks,getBlock,normalize,m,,FALSE,FALSE,FALSE,yes,switch,<boolean>,normalize (remove un-common fields and sort) for comparison with other results (testing)
-
 16150,tools,blocks,getBlock,,,,FALSE,TRUE,TRUE,,description,,Returns block(s) from local cache or directly from a running node.
+
 16200,tools,blooms,getBloom,block_list,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
 16250,tools,blooms,getBloom,eab,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,pull the enhanced adaptive blooms from QBlocks cache
 16300,tools,blooms,getBloom,block_only,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the block-level bloom (--raw only)
@@ -198,29 +198,29 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 19150,tools,abi,grabABI,known,k,,FALSE,FALSE,FALSE,local,switch,<boolean>,load common 'known' ABIs from cache
 19200,tools,abi,grabABI,,,,FALSE,TRUE,TRUE,,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
-19250,tools,,templates,parse,p,,FALSE,TRUE,TRUE,,switch,<boolean>,display parsed input data
-19300,tools,,templates,logs,l,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract lo(g)s or events
-19350,tools,,templates,trace,t,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract internal traces
-19400,tools,,templates,accounting,a,,FALSE,TRUE,TRUE,,switch,<boolean>,display credits and debits per account and reconcile at each block
-19450,tools,,templates,no_check,n,,FALSE,TRUE,TRUE,,switch,<boolean>,do not do balance check at each block
-19500,tools,,templates,debug,d,,FALSE,TRUE,TRUE,,switch,<boolean>,enter debug mode (pause after each transaction)
-19550,tools,,templates,single,s,,FALSE,TRUE,TRUE,,switch,<boolean>,if debugging is enable&#44; single step through transactions
-19600,tools,,templates,export,e,,FALSE,TRUE,TRUE,,switch,<boolean>,export the transactions to export file
-19650,tools,,templates,json,j,,FALSE,TRUE,TRUE,,switch,<boolean>,ignore export format and export as json
-19700,tools,,templates,balances,b,,FALSE,TRUE,TRUE,,switch,<boolean>,if a balance does not reconcile&#44; export a message to a file
-19750,tools,,templates,list,i,,FALSE,TRUE,TRUE,,switch,<boolean>,display list of monitored accounts
-19850,tools,,templates,offset,o,,FALSE,TRUE,TRUE,,flag,<blknum>,offset to kBlock
-10250,tools,,templates,start,S,,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process(inclusive)
-10300,tools,,templates,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
-19900,tools,,templates,,,,FALSE,TRUE,TRUE,,description,,Index transactions for a given Ethereum address (or series of addresses).
+19250,tools,when,whenBlock,block_list,,,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
+19300,tools,when,whenBlock,date_list,,,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
+19350,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,,switch,<boolean>,export all the named blocks
+19400,tools,when,whenBlock,,,,FALSE,TRUE,FALSE,,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
 
-19950,tools,when,whenBlock,block_list,,,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
-20000,tools,when,whenBlock,date_list,,,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-20050,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,,switch,<boolean>,export all the named blocks
-20150,tools,when,whenBlock,,,,FALSE,TRUE,FALSE,,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
+19450,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,,positional,list<blknum>,a space-separated list of one or more blocks to search for
+19500,tools,where,whereBlock,,,,FALSE,TRUE,FALSE,,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
 
-20200,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,,positional,list<blknum>,a space-separated list of one or more blocks to search for
-20300,tools,where,whereBlock,,,,FALSE,TRUE,FALSE,,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
+19550,tools,,templates,parse,p,,FALSE,TRUE,TRUE,,switch,<boolean>,display parsed input data
+19600,tools,,templates,logs,l,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract lo(g)s or events
+19650,tools,,templates,trace,t,,FALSE,TRUE,TRUE,,switch,<boolean>,display smart contract internal traces
+19700,tools,,templates,accounting,a,,FALSE,TRUE,TRUE,,switch,<boolean>,display credits and debits per account and reconcile at each block
+19750,tools,,templates,no_check,n,,FALSE,TRUE,TRUE,,switch,<boolean>,do not do balance check at each block
+19800,tools,,templates,debug,d,,FALSE,TRUE,TRUE,,switch,<boolean>,enter debug mode (pause after each transaction)
+19850,tools,,templates,single,s,,FALSE,TRUE,TRUE,,switch,<boolean>,if debugging is enable&#44; single step through transactions
+19900,tools,,templates,export,e,,FALSE,TRUE,TRUE,,switch,<boolean>,export the transactions to export file
+19950,tools,,templates,json,j,,FALSE,TRUE,TRUE,,switch,<boolean>,ignore export format and export as json
+20000,tools,,templates,balances,b,,FALSE,TRUE,TRUE,,switch,<boolean>,if a balance does not reconcile&#44; export a message to a file
+20050,tools,,templates,list,i,,FALSE,TRUE,TRUE,,switch,<boolean>,display list of monitored accounts
+20150,tools,,templates,offset,o,,FALSE,TRUE,TRUE,,flag,<blknum>,offset to kBlock
+20200,tools,,templates,start,S,,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process(inclusive)
+20250,tools,,templates,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
+20300,tools,,templates,,,,FALSE,TRUE,TRUE,,description,,Index transactions for a given Ethereum address (or series of addresses).
 
 20350,all,all,all,version,,,FALSE,TRUE,FALSE,,switch,<boolean>,display the current version of the tool
 20400,all,all,all,nocolor,,,FALSE,TRUE,FALSE,,switch,<boolean>,turn off colored display
