@@ -137,7 +137,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 16100,tools,blocks,getBlock,normalize,m,,FALSE,FALSE,FALSE,yes,switch,<boolean>,normalize (remove un-common fields and sort) for comparison with other results (testing)
 16150,tools,blocks,getBlock,,,,FALSE,TRUE,TRUE,na,description,,Returns block(s) from local cache or directly from a running node.
 
-16200,tools,blooms,getBloom,block_list,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
+16200,tools,blooms,getBloom,block_list,,,TRUE,TRUE,TRUE,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
 16250,tools,blooms,getBloom,eab,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,pull the enhanced adaptive blooms from QBlocks cache
 16300,tools,blooms,getBloom,block_only,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the block-level bloom (--raw only)
 16350,tools,blooms,getBloom,receipt_only,r,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the receipt-level blooms (--raw only)
@@ -149,11 +149,11 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 16650,tools,blooms,getBloom,force,f,,FALSE,FALSE,FALSE,local,switch,<boolean>,force a re-write of the bloom to the cache
 16700,tools,blooms,getBloom,,,,FALSE,TRUE,TRUE,na,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
 
-16750,tools,logs,getLogs,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+16750,tools,logs,getLogs,trans_list,,,TRUE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 16800,tools,logs,getLogs,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 16900,tools,logs,getLogs,,,,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's logs from the local cache or a running node.
 
-16950,tools,receipts,getReceipt,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+16950,tools,receipts,getReceipt,trans_list,,,TRUE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 17000,tools,receipts,getReceipt,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 17050,tools,receipts,getReceipt,logs,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the receipt's logs
 17150,tools,receipts,getReceipt,,,,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's receipt from the local cache or a running node.
@@ -174,7 +174,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 17800,tools,tokens,getTokenInfo,no_zero,n,,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
 17900,tools,tokens,getTokenInfo,,,,FALSE,TRUE,TRUE,na,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 
-17950,tools,traces,getTrace,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+17950,tools,traces,getTrace,trans_list,,,TRUE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 18000,tools,traces,getTrace,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 18050,tools,traces,getTrace,count_only,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show the number of traces for the transaction only (fast)
 18150,tools,traces,getTrace,skip_ddos,s,true,FALSE,FALSE,FALSE,yes,toggle,<boolean>,toggle skipping over 2018 ddos transactions during export ([{DEF}] by default)
@@ -182,7 +182,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 18100,tools,traces,getTrace,no_header,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,do not show the header row
 18250,tools,traces,getTrace,,,,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's traces from the local cache or a running node.
 
-18300,tools,transactions,getTrans,trans_list,,,TRUE,TRUE,TRUE,,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+18300,tools,transactions,getTrans,trans_list,,,TRUE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 18350,tools,transactions,getTrans,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 18400,tools,transactions,getTrans,trace,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the transaction's trace
 18450,tools,transactions,getTrans,force,o,,FALSE,FALSE,FALSE,yes,switch,<boolean>,force the results into the tx cache
@@ -207,7 +207,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 19350,tools,when,whenBlock,list,l,,FALSE,TRUE,FALSE,yes,switch,<boolean>,export all the named blocks
 19400,tools,when,whenBlock,,,,FALSE,TRUE,FALSE,na,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
 
-19450,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,,positional,list<blknum>,a space-separated list of one or more blocks to search for
+19450,tools,where,whereBlock,block_list,,,TRUE,TRUE,FALSE,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 19500,tools,where,whereBlock,,,,FALSE,TRUE,FALSE,na,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
 
 19550,tools,,templates,parse,p,,FALSE,TRUE,TRUE,,switch,<boolean>,display parsed input data

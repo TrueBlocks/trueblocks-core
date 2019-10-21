@@ -75,7 +75,6 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-
             if (!isAddress(arg))
                  return usage("Please provide a valid Ethereum address. Quitting...");
             addrs.push_back(str_2_Addr(toLower(arg)));

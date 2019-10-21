@@ -62,19 +62,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (isHash(arg)) {
-            string_q ret = blocks.parseBlockList(arg, newestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
-
-        } else if (startsWith(arg, "0x")) {
-
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
+        } else if (isAddress(arg)) {
             addrs.push_back(toLower(arg));
 
         } else {

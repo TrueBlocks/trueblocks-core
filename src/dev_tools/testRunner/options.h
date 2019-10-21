@@ -31,6 +31,7 @@ public:
     int modes = CMD;
     bool ignoreOff = false;
     CStringArray tests;
+    bool full_test;
 
     COptions(void);
     ~COptions(void);

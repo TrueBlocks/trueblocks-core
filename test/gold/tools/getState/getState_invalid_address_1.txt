@@ -1,7 +1,7 @@
 getState argc: 2 [1:0x12] 
 getState 0x12 
 
-  0x12 does not appear to be a valid Ethereum address. Quitting...
+  You must provide at least one Ethereum address.
 
   Usage:    getState [-m|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).

@@ -31,12 +31,11 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_LOCAL_INIT
 // END_CODE_LOCAL_INIT
 
-    bool no_header = false;
-    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
-    Init();
-    blknum_t latestBlock = getLastBlock_client();
+    blknum_t latest = getLastBlock_client();
     if (!isNodeRunning()) // it's okay if it's not
-        latestBlock = NOPOS;
+        latest = NOPOS;
+
+    Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -49,23 +48,19 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else if (!parseBlockList2(this, blocks, arg, latest)) {
+            return false;
+
 // END_CODE_AUTO
-        } else {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
         }
     }
 
-    // Data verifictions
+    // Data verifiction
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
     // Display formatting
+    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
     switch (exportFmt) {
         case NONE1: format = STR_DISPLAY_WHERE; break;
         case API1:
@@ -78,7 +73,8 @@ bool COptions::parseArguments(string_q& command) {
     manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    bool no_header = false;
+    if (no_header) // not an option
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display

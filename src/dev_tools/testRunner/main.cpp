@@ -91,7 +91,7 @@ int main(int argc, const char *argv[]) {
     cout << "nFailed: " << cRed << (totalTests - totalPassed) << cOff << " ";
     cout << "seconds: " << cYellow << totalTime << cOff << endl;
     if (totalTests == totalPassed) {
-        if (options.report) {
+        if (options.full_test && options.report) {
             perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
             perf << Now().Format(FMT_EXPORT) << ",";
             perf << "allTests" << ",";

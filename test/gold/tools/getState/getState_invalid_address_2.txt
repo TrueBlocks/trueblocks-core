@@ -1,25 +1,5 @@
 getState argc: 2 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592] 
 getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592 
 
-  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592 does not appear to be a valid Ethereum address. Quitting...
+  Block 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592 is later than the last valid block --.
 
-  Usage:    getState [-m|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
-
-  Where:  
-	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
-	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-m  (--mode <val>)    control which state to export, one of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-	-c  (--changes)       only report a balance when it changes from one block to the next
-	-n  (--no_zero)       suppress the display of zero balance accounts
-
-#### Hidden options (shown during testing only)
-	-s  (--no_history)    for testing only, hide the server's historical state
-	-o  (--no_header)     hide the header in txt and csv mode
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks

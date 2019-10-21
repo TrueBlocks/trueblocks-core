@@ -167,3 +167,28 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     errorMsg = "Could not find " + dir + " transaction to " + uint_2_Str(bn) + "." + uint_2_Str(txid);
     return false;
 }
+
+//--------------------------------------------------------------------------------
+bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn) {
+    string_q errorMsg;
+    string_q arg = argIn;
+    if (!wrangleTxId(arg, errorMsg))
+        return (opt ? opt->usage(errorMsg) : false);
+    string_q ret = transList.parseTransList(arg);
+    if (!ret.empty())
+        return (opt ? opt->usage(ret) : false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_q& argIn, blknum_t latest) {
+    string_q ret = blocks.parseBlockList(argIn, latest);
+    if (endsWith(ret, "\n")) {
+        cerr << "\n  " << ret << "\n";
+        return false;
+    } else if (!ret.empty()) {
+        return (opt ? opt->usage(ret) : false);
+    }
+    return true;
+}
+

@@ -50,15 +50,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
-        } else {
+        } else if (!parseTransList2(this, transList, arg)) {
+            return false;
 
-            string_q errorMsg;
-            if (!wrangleTxId(arg, errorMsg))
-                return usage(errorMsg);
-            string_q ret = transList.parseTransList(arg);
-            if (!ret.empty())
-                return usage(ret);
+// END_CODE_AUTO
         }
     }
 

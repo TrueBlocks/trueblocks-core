@@ -21,6 +21,8 @@ extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_CHECK_BUILTIN;
+extern const char* STR_BLOCK_PROCESSOR;
+extern const char* STR_TX_PROCESSOR;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
@@ -45,7 +47,7 @@ bool COptions::handle_options(void) {
         warnings.clear();
         warnings.str("");
 
-        bool allAuto = true;
+        bool allAuto = true, hasBlockList = false, hasTxList = false;
         map<string, string> shortCmds;
         ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream;
         for (auto option : optionArray) {
@@ -73,6 +75,8 @@ bool COptions::handle_options(void) {
 
                     if (option.generate == "local") {
 
+                        hasBlockList = (hasBlockList || (option.option_kind == "positional" && option.data_type == "list<blknum>"));
+                        hasTxList = (hasTxList || (option.option_kind == "positional" && option.data_type == "list<tx_id>"));
                         if (option.option_kind == "switch") {
 
                             local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
@@ -154,8 +158,13 @@ bool COptions::handle_options(void) {
             }
         }
 
-        if (allAuto)
+        if (allAuto) {
             auto_stream << STR_CHECK_BUILTIN << endl;
+            if (hasBlockList)
+                auto_stream << STR_BLOCK_PROCESSOR << endl;
+            if (hasTxList)
+                auto_stream << STR_TX_PROCESSOR << endl;
+        }
 
         string_q fn = "../src/" + tool.first + "/options.cpp";
         writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str());
@@ -280,3 +289,13 @@ const char* STR_CHECK_BUILTIN =
 "            if (!builtInCmd(arg)) {\n"
 "                return usage(\"Invalid option: \" + arg);\n"
 "            }\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_BLOCK_PROCESSOR =
+"        } else if (!parseBlockList2(this, blocks, arg, latest)) {\n"
+"            return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_TX_PROCESSOR =
+"        } else if (!parseTransList2(this, transList, arg)) {\n"
+"            return false;\n";

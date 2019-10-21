@@ -130,6 +130,7 @@ bool COptions::parseArguments(string_q& command) {
         filter = "";
 
     if (tests.empty()) {
+        full_test = true;
         tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
@@ -171,6 +172,7 @@ void COptions::Init(void) {
     report = false;
 // END_CODE_INIT
 
+    full_test = false;
     minArgs = 0;
 }
 

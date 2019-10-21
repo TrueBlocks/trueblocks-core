@@ -35,5 +35,9 @@ public:
 
 //-----------------------------------------------------------------------------
 extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
-extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
+
+//-----------------------------------------------------------------------------
+extern bool parseBlockList2(COptionsBase *opts, COptionsBlockList& blocks, const string_q& arg, blknum_t latest);
+extern bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);
+extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
