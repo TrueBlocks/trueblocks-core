@@ -5,17 +5,17 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type
   Invalid option: --type
 
   Usage:    ethslurp [-t|-b|-s|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address. Formats the output to your specification.
+  Purpose:  Fetches data from EtherScan for an arbitrary address.
 
   Where:  
-	addr_list             one or more addresses to slurp (required)
+	addr_list             one or more addresses to slurp from Etherscan (required)
 	block_list            an optional range of blocks to slurp
 	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
 	-b  (--blocks <range>)export records in block range (:0[:max])
 	-s  (--silent)        Run silently (only freshen the data, do not display it)
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

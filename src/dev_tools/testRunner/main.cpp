@@ -90,8 +90,10 @@ int main(int argc, const char *argv[]) {
         cout << "nTests: " << cYellow << totalTests << cOff << " ";
         cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
         cout << "seconds: " << cYellow << totalTime << cOff << endl;
-        if (options.report)
+        if (options.report) {
+            appendToAsciiFile("performance.txt", perf.str());
             cout << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+        }
     }
 
     return 0;

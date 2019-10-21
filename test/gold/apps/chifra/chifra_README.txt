@@ -13,7 +13,7 @@ chifra -th
 | -s | --sleep <uint> | for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0) |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

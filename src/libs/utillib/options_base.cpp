@@ -166,7 +166,7 @@ namespace qblocks {
                 }
             }
 
-            if (!combine && (arg == "-x" || arg == "--fmt")) {
+            if (!combine && arg == "--fmt") {
                 if (i < nArgs-1)
                     combine = true;
             }
@@ -207,8 +207,8 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
-                arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
+            } else if (startsWith(arg, "--fmt:")) {
+                arg = substitute(arg, "--fmt:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  }
                 else if ( arg == "csv" ) { exportFmt = CSV1; }
                 else if ( arg == "json") { exportFmt = JSON1; }
@@ -764,7 +764,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 }
             }
             if (isEnabled(OPT_FMT))
-                os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]", false, false);
+                os << oneDescription(" ", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 

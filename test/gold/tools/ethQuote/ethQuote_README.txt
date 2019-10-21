@@ -3,18 +3,18 @@ ethQuote -th
 #### Usage
 
 `Usage:`    ethQuote -f|-p|-a|-v|-h  
-`Purpose:`  Freshen and/or display Ethereum price data and other purposes.
+`Purpose:`  Freshen and/or display Ethereum price data.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -f | --freshen | Freshen database (append new data) |
+| -f | --freshen | Freshen price database (append new data) |
 | -p | --period <val> | Display prices in this increment, one of [5&#124;15&#124;30&#124;60&#124;120*&#124;240&#124;1440] |
 | -a | --pair <str> | Which price pair to freshen or list (see Poloniex) |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

@@ -229,7 +229,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 20550,all,all,all,dollars,,,FALSE,TRUE,FALSE,,switch,<boolean>,specify value in US dollars
 20600,all,all,all,raw,,,FALSE,TRUE,FALSE,,switch,<boolean>,report JSON data from the node with minimal processing
 20650,all,all,all,very_raw,,,FALSE,TRUE,FALSE,,switch,<boolean>,report JSON data from node with zero processing
-20700,all,all,all,fmt,x,,FALSE,TRUE,TRUE,,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
+20700,all,all,all,fmt,,,FALSE,TRUE,TRUE,,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
 20750,all,all,all,api_mode,,,FALSE,TRUE,FALSE,,switch,<boolean>,simulate api_mode for testing
 20800,all,all,all,to_file,,,FALSE,TRUE,FALSE,,switch,<boolean>,write the results to a temporary file and return the filename
 20850,all,all,all,output,,,FALSE,TRUE,FALSE,,flag,<path>,write the results to file 'fn' and return the filename

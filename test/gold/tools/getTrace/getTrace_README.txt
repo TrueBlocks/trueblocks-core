@@ -16,7 +16,7 @@ getTrace -th
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos <val> | skip over dDos transactions during export ('on' by default), one of [on*&#124;off] |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

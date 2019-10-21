@@ -14,7 +14,7 @@ getTrace --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 
 #### Hidden options (shown during testing only)
 	-s  (--skip_ddos <val>)skip over dDos transactions during export ('on' by default), one of [on*|off]
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

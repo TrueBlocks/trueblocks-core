@@ -14,7 +14,7 @@ cacheStatus --help
 	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
 	-S  (--start <num>)   first block to process(inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
