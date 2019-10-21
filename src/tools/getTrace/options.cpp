@@ -18,8 +18,8 @@ static const COption params[] = {
     COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('off' by default)"),
-    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = [{DEF}])"),
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
+    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
@@ -48,7 +48,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip_ddos:")) {
+        } else if (arg == "-s" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
@@ -131,7 +131,7 @@ void COptions::Init(void) {
 // BEG_CODE_INIT
     articulate = false;
     count_only = false;
-    skip_ddos = false;
+    skip_ddos = true;
     max_traces = 250;
 // END_CODE_INIT
 

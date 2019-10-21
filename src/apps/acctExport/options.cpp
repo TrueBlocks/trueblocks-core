@@ -16,7 +16,7 @@ static const COption params[] = {
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
-    COption("write_txs", "o", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
+    COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
     COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
     COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
@@ -71,14 +71,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
-            if (!confirmUint("max_traces", max_traces, arg))
-                return false;
-
         } else if (arg == "-w" || arg == "--write_blocks") {
             write_blocks = !write_blocks;
 
-        } else if (arg == "-o" || arg == "--write_txs") {
+        } else if (arg == "-x" || arg == "--write_txs") {
             write_txs = !write_txs;
 
         } else if (arg == "-r" || arg == "--write_traces") {
@@ -86,6 +82,10 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-s" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
+            if (!confirmUint("max_traces", max_traces, arg))
+                return false;
 
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
@@ -324,7 +324,7 @@ void COptions::Init(void) {
     write_txs = true;
     write_traces = true;
     skip_ddos = true;
-    max_traces = NOPOS;
+    max_traces = 250;
     grab_abis = false;
     freshen = false;
     deltas = false;

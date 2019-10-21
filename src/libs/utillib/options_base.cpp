@@ -445,7 +445,7 @@ namespace qblocks {
         const COption *param = findParam(name);
         if (!param)
             return usage("Unknown parameter `" + name + "'. Quitting...");
-        if (!startsWith(param->type, "uint"))
+        if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
             return true;
 
         string_q arg = argIn;
@@ -570,6 +570,8 @@ namespace qblocks {
 
         type = t;
         permitted = t;
+        permitted = substitute(permitted, "<uint32>", "<num>");
+        permitted = substitute(permitted, "<uint64>", "<num>");
         permitted = substitute(permitted, "<blknum>", "<num>");
         permitted = substitute(permitted, "<string>", "<str>");
         if (contains(type, "enum")) {

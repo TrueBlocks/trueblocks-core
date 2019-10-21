@@ -26,18 +26,16 @@ typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAp
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
+    bool data;
+    blknum_t truncate;
+    uint32_t skip;
     blknum_t start;
     blknum_t end;
 // END_CODE_DECLARE
 
+    string_q mode;
     CStats stats;
     CAccountWatchArray monitors;
-    string_q mode;
-    blknum_t trunc;
-    bool asData;
-    uint64_t skip;
-    bool isImport;
-    bool isRemove;
     CAppearanceArray_base removals;
 
     COptions(void);

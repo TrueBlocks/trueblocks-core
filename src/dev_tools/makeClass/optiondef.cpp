@@ -234,8 +234,8 @@ string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr)
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if ( fieldIn % "dataType" )
-                    return (opt->option_kind == "switch" ? "" : opt->data_type);
+                if ( fieldIn % "datatype" )
+                    return ((opt->option_kind == "switch" || opt->option_kind == "toggle") ? "" : opt->data_type);
                 break;
             case 'o':
                 if ( fieldIn % "opts" ) {
@@ -369,6 +369,7 @@ COptionDef::COptionDef(const string_q& line) {
     if (parts.size() > 11) option_kind = parts[11];
     if (parts.size() > 12) data_type = parts[12];
     if (parts.size() > 13) description = substitute(parts[13], "&#44;", ",");
+    description = substitute(description, "[{DEF}]", (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
 }
 // EXISTING_CODE
 }  // namespace qblocks

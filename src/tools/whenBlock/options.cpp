@@ -31,7 +31,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
-    bool list = false;
 // END_CODE_LOCAL_INIT
 
     bool no_header = false;
@@ -158,6 +157,7 @@ void COptions::Init(void) {
     optionOff(OPT_DENOM);
 
 // BEG_CODE_INIT
+    list = false;
 // END_CODE_INIT
 
     items.clear();

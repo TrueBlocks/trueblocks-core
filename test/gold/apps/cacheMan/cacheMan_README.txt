@@ -21,7 +21,7 @@ cacheMan -th
 | -m | --merge | merge two or more caches into a single cache |
 
 #### Hidden options (shown during testing only)
-| -k | --skip | skip value for testing |
+| -k | --skip <num> | skip value for testing |
 | -n | --no_header | do not show header row of data |
 | -S | --start <num> | first block to process(inclusive) |
 | -E | --end <num> | last block to process (inclusive) |

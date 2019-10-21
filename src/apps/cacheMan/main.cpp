@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         blknum_t latest = getLastBlock_cache_final();
-        string_q def = (options.asData ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
+        string_q def = (options.data ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
 
         // Handle the various modes (there may be more than one)
         CStringArray modes;
@@ -40,7 +40,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                 CAppearanceArray_base items;
                 if (loadMonitorData(items, watch->address)) {
 
-                    if (!options.asData)
+                    if (!options.data)
                         cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
                     if (options.exportFmt == JSON1)
                         cout << "[";
@@ -97,7 +97,7 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                     options.stats.nFixed++;
 
                                 } else {
-                                    if (!options.trunc || item.blk <= options.trunc) {
+                                    if (!options.truncate || item.blk <= options.truncate) {
 
                                         fixed.push_back(item);
                                         lastItem = item;

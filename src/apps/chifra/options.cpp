@@ -10,7 +10,9 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 0)"),
+    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
+    COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
+    COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -25,6 +27,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
+    bool tool_help = false;
 // END_CODE_LOCAL_INIT
 
     bool copy_to_tool = false;
@@ -35,16 +38,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-// END_CODE_AUTO
-
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--sleep:", "");
-            if (!isUnsigned(arg))
-                EXIT_USAGE("--sleep must be a non-negative number. Quitting...");
-            scrapeSleep = (useconds_t)str_2_Uint(arg);
+            if (!confirmUint("sleep", sleep, arg))
+                return false;
 
-        } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
-            tool_flags += (" --help");
+        } else if (arg == "-t" || arg == "--tool_help") {
+            tool_help = true;
+
+// END_CODE_AUTO
 
         } else if (arg == "--set") {
             tool_flags += (arg + " ");
@@ -116,6 +117,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (tool_help)
+        tool_flags += (" --help");
+
+    scrapeSleep = (useconds_t)sleep;
     if (mode == "blocks" ||
     	mode == "transactions" ||
         mode == "receipts" ||
@@ -180,6 +185,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
+    sleep = 14;
 // END_CODE_INIT
 
     addrs.clear();

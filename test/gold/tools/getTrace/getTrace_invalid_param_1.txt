@@ -13,7 +13,8 @@ getTrace .th
 	-n  (--no_header)     do not show the header row
 
 #### Hidden options (shown during testing only)
-	-s  (--skip_ddos <val>)skip over dDos transactions during export ('on' by default), one of [on*|off]
+	-s  (--skip_ddos)     toggle skipping over 2018 ddos transactions during export ('on' by default)
+	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 

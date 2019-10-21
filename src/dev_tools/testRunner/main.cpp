@@ -86,10 +86,11 @@ int main(int argc, const char *argv[]) {
         }
     }
 
+    cout << "nTests: " << cYellow << totalTests << cOff << " ";
+    cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
+    cout << "nFailed: " << cRed << (totalTests - totalPassed) << cOff << " ";
+    cout << "seconds: " << cYellow << totalTime << cOff << endl;
     if (totalTests == totalPassed) {
-        cout << "nTests: " << cYellow << totalTests << cOff << " ";
-        cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
-        cout << "seconds: " << cYellow << totalTime << cOff << endl;
         if (options.report) {
             perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
             perf << Now().Format(FMT_EXPORT) << ",";

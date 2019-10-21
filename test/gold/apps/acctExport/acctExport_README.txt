@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-a|-l|-t|-b|-p|-c|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-a|-l|-t|-b|-p|-c|-w|-x|-r|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -16,13 +16,13 @@ acctExport -th
 | -b | --balances | export balance history instead of transaction list |
 | -p | --appearances | export a list of appearances |
 | -c | --count_only | display only the count of the number of data items requested |
+| -w | --write_blocks | toggle writing blocks to the binary cache ('off' by default) |
+| -x | --write_txs | toggle writing transactions to the cache ('on' by default) |
+| -r | --write_traces | toggle writing traces to the cache ('on' by default) |
 
 #### Hidden options (shown during testing only)
-| -w | --write_blocks | turn on writing blocks to the binary cache ('off' by default) |
-| -o | --nowrite_txs | turn off writing transactions to the binary cache ('on' by default) |
-| -r | --nowrite_traces | turn off writing traces to the binary cache ('on' by default) |
-| -d | --ddos <val> | skip over dDos transactions in export ('on' by default), one of [on*&#124;off] |
-| -m | --max_traces <uint> | if --ddos:on, the number of traces defining a dDos (default = 250) |
+| -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
+| -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -n | --no_header | do not show the header row |
 | -A | --all_abis | load all previously cached abi files |
 | -g | --grab_abis | using each trace's 'to' address, grab the abi for that address (improves articulation) |

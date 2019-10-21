@@ -15,6 +15,7 @@
 
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
+extern const char* STR_AUTO_TOGGLE;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
@@ -67,6 +68,8 @@ bool COptions::handle_options(void) {
                     replace(type, "uint32", "uint32_t");
                     replace(type, "uint64", "uint64_t");
                     string_q def = (type == "bool" ? "false" : (type == "string_q" ? "\"\"" : "NOPOS"));
+                    if (!option.def_val.empty())
+                        def = option.def_val;
 
                     if (option.generate == "local") {
 
@@ -74,6 +77,11 @@ bool COptions::handle_options(void) {
 
                             local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+
+                        } else if (option.option_kind == "toggle") {
+
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
 
                         } else if (option.option_kind == "flag") {
 
@@ -99,6 +107,12 @@ bool COptions::handle_options(void) {
                             declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
 
+                        } else if (option.option_kind == "toggle") {
+
+                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
+                            auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
+
                         } else if (option.option_kind == "flag") {
 
                             init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
@@ -120,7 +134,7 @@ bool COptions::handle_options(void) {
                         // do nothing
                     }
                 } else {
-                    if (option.option_kind == "switch" || option.option_kind == "flag")
+                    if (option.option_kind == "toggle" || option.option_kind == "switch" || option.option_kind == "flag")
                         allAuto = false;
                 }
 
@@ -164,7 +178,7 @@ bool COptions::check_option(const COptionDef& option) {
 
     // Check valid data types
     CStringArray validTypes = {
-        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint>", "<boolean>",
+        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint32>", "<uint64>", "<boolean>",
     };
 
     bool valid_type = false;
@@ -231,6 +245,11 @@ const char* STR_OPTION_STR =
 const char* STR_AUTO_SWITCH =
 "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
 "            [{COMMAND}] = true;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_TOGGLE =
+"        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+"            [{COMMAND}] = ![{COMMAND}];\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
