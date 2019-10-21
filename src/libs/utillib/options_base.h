@@ -44,6 +44,7 @@
 #define OPT_POSITIONAL  (1<<15)
 #define OPT_FLAG        (1<<16)
 #define OPT_SWITCH      OPT_FLAG
+#define OPT_TOGGLE      OPT_SWITCH
 #define OPT_HIDDEN      (1<<17)
 
 //-----------------------------------------------------------------------------
@@ -116,6 +117,15 @@ namespace qblocks {
 
         bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
         bool confirmBlockNum(const string_q&name, blknum_t& value, const string_q& arg, blknum_t latest) const;
+        bool confirmUint(const string_q&name, uint64_t& value, const string_q& arg) const;
+        inline bool confirmUint(const string_q&name, uint32_t& value, const string_q& arg) const {
+            value = (uint32_t)NOPOS;
+            uint64_t temp;
+            if (!confirmUint(name, temp, arg))
+                return false;
+            value = (uint32_t)temp;
+            return true;
+        }
         const COption *findParam(const string_q& name) const;
         void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
 

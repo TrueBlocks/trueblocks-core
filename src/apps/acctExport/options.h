@@ -20,8 +20,10 @@ public:
     bool appearances;
     bool count_only;
     bool write_blocks;
-    bool nowrite_txs;
-    bool nowrite_traces;
+    bool write_txs;
+    bool write_traces;
+    bool skip_ddos;
+    uint32_t max_traces;
     bool grab_abis;
     bool freshen;
     bool deltas;
@@ -31,8 +33,6 @@ public:
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
-    bool skipDdos;
-    size_t maxTraces;
     size_t nExported;
     string_q className;
     address_t hackAppAddr;

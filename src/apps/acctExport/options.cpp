@@ -15,11 +15,11 @@ static const COption params[] = {
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
-    COption("write_blocks", "w", "", OPT_HIDDEN | OPT_SWITCH, "turn on writing blocks to the binary cache ('off' by default)"),
-    COption("nowrite_txs", "o", "", OPT_HIDDEN | OPT_SWITCH, "turn off writing transactions to the binary cache ('on' by default)"),
-    COption("nowrite_traces", "r", "", OPT_HIDDEN | OPT_SWITCH, "turn off writing traces to the binary cache ('on' by default)"),
-    COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption("max_traces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on, the number of traces defining a dDos (default = 250)"),
+    COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
+    COption("write_txs", "o", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
+    COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
+    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
@@ -71,14 +71,21 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
+            if (!confirmUint("max_traces", max_traces, arg))
+                return false;
+
         } else if (arg == "-w" || arg == "--write_blocks") {
-            write_blocks = true;
+            write_blocks = !write_blocks;
 
-        } else if (arg == "-o" || arg == "--nowrite_txs") {
-            nowrite_txs = true;
+        } else if (arg == "-o" || arg == "--write_txs") {
+            write_txs = !write_txs;
 
-        } else if (arg == "-r" || arg == "--nowrite_traces") {
-            nowrite_traces = true;
+        } else if (arg == "-r" || arg == "--write_traces") {
+            write_traces = !write_traces;
+
+        } else if (arg == "-s" || arg == "--skip_ddos") {
+            skip_ddos = !skip_ddos;
 
         } else if (arg == "-n" || arg == "--no_header") {
             no_header = true;
@@ -103,25 +110,13 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
 
-// END_CODE_AUTO
-
-        } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
-            arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
-            if (arg != "on" && arg != "off")
-                EXIT_USAGE("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
-            skipDdos = (arg == "on" ? true : false);
-
-        } else if (startsWith(arg, "-m") || startsWith(arg, "--maxTraces")) {
-            arg = substitute(substitute(arg, "-m:", ""), "--maxTraces:", "");
-            if (!isNumeral(arg))
-                EXIT_USAGE("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
-            maxTraces = str_2_Uint(arg);
-
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
-                EXIT_USAGE("Invalid option: " + arg);
+                return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             if (!startsWith(arg, "0x"))
                 return usage("Invalid option: " + arg + ". Quitting...");
@@ -216,11 +211,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    write_blocks   = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", write_blocks);;
-    nowrite_txs    = getGlobalConfig("acctExport")->getConfigBool("settings", "nowrite_txs", nowrite_txs);;
-    nowrite_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "nowrite_traces", nowrite_traces);;
-    skipDdos        = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
-    maxTraces       = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
+    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", write_blocks);;
+    write_txs    = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", write_txs);;
+    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", write_traces);;
+    skip_ddos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
+    max_traces   = getGlobalConfig("acctExport")->getConfigBool("settings", "max_traces", max_traces);;
 
     if (exportFmt != JSON1 && exportFmt != API1) {
         string_q deflt, format;
@@ -326,15 +321,15 @@ void COptions::Init(void) {
     appearances = false;
     count_only = false;
     write_blocks = false;
-    nowrite_txs = false;
-    nowrite_traces = false;
+    write_txs = true;
+    write_traces = true;
+    skip_ddos = true;
+    max_traces = NOPOS;
     grab_abis = false;
     freshen = false;
     deltas = false;
 // END_CODE_INIT
 
-    skipDdos = true;
-    maxTraces = 250;
     nExported = 0;
     scanRange.second = getLastBlock_cache_ripe();
 

@@ -242,10 +242,14 @@ string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr)
                     string_q ret;
                     if (opt->is_required == "TRUE")
                         ret += ("|OPT_REQUIRED");
+
                     if (opt->core_visible != "TRUE")
                         ret += ("|OPT_HIDDEN");
+
                     if (opt->option_kind == "switch")
                         ret += ("|OPT_SWITCH");
+                    else if (opt->option_kind == "toggle")
+                        ret += ("|OPT_TOGGLE");
                     else if (opt->option_kind == "flag")
                         ret += ("|OPT_FLAG");
                     else if (opt->option_kind == "positional")

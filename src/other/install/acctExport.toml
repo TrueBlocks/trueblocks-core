@@ -3,10 +3,10 @@ current = "0.5.5-alpha"
 
 [settings]
 # write_blocks = false
-# nowrite_txs = false
-# nowrite_trcs = false
+# write_txs = true
+# write_traces = true
 # skip_ddos = true
-# maxTraces = 250
+# max_traces = 250
 
 [exclusions]
 enabled = true

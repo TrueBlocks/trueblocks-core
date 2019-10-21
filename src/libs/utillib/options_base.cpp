@@ -438,14 +438,14 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------------------------------
-    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value, const string_q& argIn, blknum_t latest) const {
+    bool COptionsBase::confirmUint(const string_q&name, uint64_t& value, const string_q& argIn) const {
 
         value = NOPOS;
 
         const COption *param = findParam(name);
         if (!param)
             return usage("Unknown parameter `" + name + "'. Quitting...");
-        if (param->type != "blknum")
+        if (!startsWith(param->type, "uint"))
             return true;
 
         string_q arg = argIn;
@@ -454,11 +454,18 @@ namespace qblocks {
         replaceAll(arg, "-", "");
 
         if (!isNumeral(arg))
-            return usage("Value to --" + name + " parameter (" + arg + ") must be a valid block number. Quitting...");
+            return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer. Quitting...");
         value = str_2_Uint(arg);
-        if (value > latest)
-            return usage("Start block (" + arg + ") is greater than the latest block. Quitting...");
+        return true;
+    }
 
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value, const string_q& argIn, blknum_t latest) const {
+
+        if (!confirmUint(name, value, argIn))
+            return false;
+        if (value > latest)
+            return usage("Block number (" + argIn + ") is greater than the latest block. Quitting...");
         return true;
     }
 

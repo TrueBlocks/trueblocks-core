@@ -18,6 +18,7 @@ extern const char* STR_AUTO_SWITCH;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
+extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_CHECK_BUILTIN;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
@@ -52,6 +53,8 @@ bool COptions::handle_options(void) {
 
                 bool isEnum = contains(option.data_type, "enum");
                 bool isBlockNum = contains(option.data_type, "blknum");
+                bool isUint32 = contains(option.data_type, "uint32");
+                bool isUint64 = contains(option.data_type, "uint64");
                 opt_stream << option.Format(STR_OPTION_STR) << endl;
 
                 if (!option.generate.empty()) {
@@ -61,6 +64,8 @@ bool COptions::handle_options(void) {
                         type = "string";
                     replace(type, "blknum", "blknum_t");
                     replace(type, "string", "string_q");
+                    replace(type, "uint32", "uint32_t");
+                    replace(type, "uint64", "uint64_t");
                     string_q def = (type == "bool" ? "false" : (type == "string_q" ? "\"\"" : "NOPOS"));
 
                     if (option.generate == "local") {
@@ -77,6 +82,8 @@ bool COptions::handle_options(void) {
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
                             else if (isBlockNum)
                                 auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                            else if (isUint32 || isUint64)
+                                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
                             else
                                 auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
 
@@ -100,6 +107,8 @@ bool COptions::handle_options(void) {
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
                             else if (isBlockNum)
                                 auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                            else if (isUint32 || isUint64)
+                                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
                             else
                                 auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
 
@@ -237,6 +246,12 @@ const char* STR_AUTO_FLAG_ENUM =
 const char* STR_AUTO_FLAG_BLOCKNUM =
 "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
 "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
+"                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_UINT =
+"        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+"            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
 "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------

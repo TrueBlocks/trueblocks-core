@@ -73,7 +73,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    loadTraces(trans, trans.blockNumber, trans.transactionIndex, true, (opt->skipDdos && excludeTrace(&trans, 250))); //maxTraces)));
+    loadTraces(trans, trans.blockNumber, trans.transactionIndex, true, (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
 
     //////////////////////////////////////////////////////
 

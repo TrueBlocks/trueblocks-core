@@ -18,7 +18,8 @@ static const COption params[] = {
     COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("skip_ddos", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions during export ('on' by default)"),
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('off' by default)"),
+    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = [{DEF}])"),
     COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
@@ -32,7 +33,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
-    string_q skip_ddos = "";
     bool no_header = false;
 // END_CODE_LOCAL_INIT
 
@@ -49,7 +49,10 @@ bool COptions::parseArguments(string_q& command) {
             count_only = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip_ddos:")) {
-            if (!confirmEnum("skip_ddos", skip_ddos, arg))
+            skip_ddos = !skip_ddos;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
+            if (!confirmUint("max_traces", max_traces, arg))
                 return false;
 
         } else if (arg == "-n" || arg == "--no_header") {
@@ -115,7 +118,7 @@ bool COptions::parseArguments(string_q& command) {
     if (no_header)
         expContext().fmtMap["header"] = "";
 
-    skipDdos = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", (skip_ddos == "off" ? false : true));;
+    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
 
     return true;
 }
@@ -128,9 +131,10 @@ void COptions::Init(void) {
 // BEG_CODE_INIT
     articulate = false;
     count_only = false;
+    skip_ddos = false;
+    max_traces = 250;
 // END_CODE_INIT
 
-    skipDdos = false;
     transList.Init();
 }
 

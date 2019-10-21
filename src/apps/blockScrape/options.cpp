@@ -9,8 +9,8 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "p", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("n_addr_procs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("n_block_procs", "p", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_addr_procs", "a", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };

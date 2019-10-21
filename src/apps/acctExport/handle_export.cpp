@@ -60,14 +60,14 @@ bool COptions::exportData(void) {
                     }
                     trans.pBlock = &block;
                     trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
-                    if (!nowrite_txs && !fileExists(txFilename))
+                    if (write_txs && !fileExists(txFilename))
                         writeTransToBinary(trans, txFilename);
                 }
 
                 if (traces) {
 
                     // acctExport --traces
-                    loadTraces(trans, item->blk, item->txid, !nowrite_traces, (skipDdos && excludeTrace(&trans, maxTraces)));
+                    loadTraces(trans, item->blk, item->txid, write_traces, (skip_ddos && excludeTrace(&trans, max_traces)));
                     for (auto trace : trans.traces) {
 
                         bool isSuicide = trace.action.address != "";
