@@ -91,7 +91,7 @@ int main(int argc, const char *argv[]) {
         cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
         cout << "seconds: " << cYellow << totalTime << cOff << endl;
         if (options.report) {
-            appendToAsciiFile("performance.txt", perf.str());
+            appendToAsciiFile(configPath("performance.txt"), perf.str());
             cout << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         }
     }
