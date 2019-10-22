@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:monitors] [2:--details] 
-cacheStatus monitors --details 
+cacheStatus argc: 3 [1:--details] [2:monitors] 
+cacheStatus --details monitors 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",

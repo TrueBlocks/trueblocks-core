@@ -100,8 +100,11 @@ namespace qblocks {
 
         //----------------------------------------------------------------
         void print_impl() {
+            if (!log_stream.str().empty() && log_stream.str()[log_stream.str().length()-1] == '\r')
+                setEndline('\r');
             policy->write( get_logline_header() + log_stream.str() );
             log_stream.str("");
+            setEndline('\n');
         }
 
         //----------------------------------------------------------------

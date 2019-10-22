@@ -86,10 +86,14 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    cout << "nTests: " << cYellow << totalTests << cOff << " ";
-    cout << "nPassed: " << cYellow << totalPassed << cOff << " ";
-    cout << "nFailed: " << cRed << (totalTests - totalPassed) << cOff << " ";
-    cout << "seconds: " << cYellow << totalTime << cOff << endl;
+    cerr << "   allTests (all): ";
+    cerr << cYellow << totalTests << " tests " << cOff ;
+    cerr << cGreen << totalPassed << " passed " << greenCheck << cOff << " ";
+    if (totalTests != totalPassed)
+        cerr << cRed << (totalTests - totalPassed) << " failed " << cOff << "in ";
+    cerr << cTeal << double_2_Str(totalTime, 5) << " seconds " << cOff;
+    cerr << cBlue << double_2_Str(totalTime / totalTests, 5) << " avg." << cOff << endl;
+    cerr << endl;
     if (totalTests == totalPassed) {
         if (options.full_test && options.report) {
             perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
@@ -102,8 +106,8 @@ int main(int argc, const char *argv[]) {
             perf << (totalTests - totalPassed) << ",";
             perf << double_2_Str(totalTime, 5) << ",";
             perf << double_2_Str(totalTime / totalTests, 5) << endl;
+            cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
             appendToAsciiFile(configPath("performance.txt"), perf.str());
-            cout << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         }
     }
 

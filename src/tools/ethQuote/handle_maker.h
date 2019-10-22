@@ -1,3 +1,4 @@
+#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -10,24 +11,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
-#include "logging.h"
+#include "etherlib.h"
 
-namespace qblocks {
-    static logger<file_log> flog("");
-    static logger<err_log> elog("");
-    logger<log_policy_i> *dLogger = (logger<log_policy_i>*)&elog;
-    logger<log_policy_i> *eLogger = (logger<log_policy_i>*)&elog;
+//-----------------------------------------------------------------------------
+extern wei_t getUsdFromMakerAt(blknum_t blk);
 
-    static CDefaultOptions g_LocalUseOnly;
-
-    //----------------------------------------------------------------
-    string_q _logEnter(const string_q& func) {
-        return "Enter(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
-    }
-
-    //----------------------------------------------------------------
-    string_q _logExit(const string_q& func) {
-        return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
-    }
+//-----------------------------------------------------------------------------
+inline wei_t getUsdFromMakerAt(const string_q& blk) {
+    if (blk == "first") return getUsdFromMakerAt(0);
+    if (blk == "latest") return getUsdFromMakerAt(getLastBlock_client());
+    return getUsdFromMakerAt(str_2_Uint(blk)); // handles hex
 }

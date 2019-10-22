@@ -10,24 +10,27 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "utillib.h"
-#include "logging.h"
+#include "options.h"
+#include "handle_maker.h"
 
-namespace qblocks {
-    static logger<file_log> flog("");
-    static logger<err_log> elog("");
-    logger<log_policy_i> *dLogger = (logger<log_policy_i>*)&elog;
-    logger<log_policy_i> *eLogger = (logger<log_policy_i>*)&elog;
+#define MAKER_V1 "0x729d19f657bd0614b4985cf1d82531c67569197b"
+#define PEEK "0x59e02dd7"
 
-    static CDefaultOptions g_LocalUseOnly;
+//-----------------------------------------------------------------------------
+wei_t getUsdFromMakerAt(blknum_t blk) {
 
-    //----------------------------------------------------------------
-    string_q _logEnter(const string_q& func) {
-        return "Enter(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
-    }
+    string_q cmd = "[{\"to\": \"[CONTRACT]\", \"data\": \"[INPUT]\"}, \"[BLOCK]\"]";
+    replace(cmd, "[CONTRACT]", MAKER_V1);
+    replace(cmd, "[INPUT]",    PEEK);
+    replace(cmd, "[BLOCK]",    uint_2_Hex(blk));
 
-    //----------------------------------------------------------------
-    string_q _logExit(const string_q& func) {
-        return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
-    }
+    string_q result = callRPC("eth_call", cmd, false).substr(2);
+    if (result.length() != 128)
+        return 0;
+
+    wei_t value = str_2_BigUint("0x"+result.substr(0,64));
+    bool valid = str_2_Bool(result.substr(127,1));
+    if (valid)
+        return value;
+    return 0;
 }

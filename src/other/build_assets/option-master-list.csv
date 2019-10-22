@@ -114,12 +114,13 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 14950,tools,accounts,getAccounts,term_list,,,TRUE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms
 15000,tools,accounts,getAccounts,expand,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
 15050,tools,accounts,getAccounts,match_case,m,,FALSE,TRUE,TRUE,yes,switch,<boolean>,do case-sensitive search
-15100,tools,accounts,getAccounts,owned,o,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include personal accounts in the search
-15150,tools,accounts,getAccounts,custom,c,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include your custom named accounts
-15200,tools,accounts,getAccounts,prefund,p,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include prefund accounts
-15250,tools,accounts,getAccounts,named,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,Include well know token and airdrop addresses in the search
+15100,tools,accounts,getAccounts,owned,o,,FALSE,TRUE,TRUE,local,switch,<boolean>,include personal accounts in the search
+15150,tools,accounts,getAccounts,custom,c,,FALSE,TRUE,TRUE,local,switch,<boolean>,include your custom named accounts
+15200,tools,accounts,getAccounts,prefund,p,,FALSE,TRUE,TRUE,local,switch,<boolean>,include prefund accounts
+15250,tools,accounts,getAccounts,named,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,include well know token and airdrop addresses in the search
 15300,tools,accounts,getAccounts,other,t,,FALSE,FALSE,FALSE,local,switch,<boolean>,export other addresses if found
 15350,tools,accounts,getAccounts,addr,a,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only addresses in the results (useful for scripting)
+15400,tools,accounts,getAccounts,add,d,,FALSE,FALSE,FALSE,local,flag,<string>,add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
 15450,tools,accounts,getAccounts,,,,FALSE,TRUE,TRUE,na,description,,Query addresses and/or names of well known accounts.
 
 15500,tools,blocks,getBlock,block_list,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks to retrieve

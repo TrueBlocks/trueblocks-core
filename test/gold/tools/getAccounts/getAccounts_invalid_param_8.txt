@@ -10,14 +10,15 @@ getAccounts 0xb6 torj --verboses --other --fmt txt
 	term_list             a space separated list of one or more search terms (required)
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
 	-m  (--match_case)    do case-sensitive search
-	-o  (--owned)         Include personal accounts in the search
-	-c  (--custom)        Include your custom named accounts
-	-p  (--prefund)       Include prefund accounts
-	-n  (--named)         Include well know token and airdrop addresses in the search
+	-o  (--owned)         include personal accounts in the search
+	-c  (--custom)        include your custom named accounts
+	-p  (--prefund)       include prefund accounts
+	-n  (--named)         include well know token and airdrop addresses in the search
 	-a  (--addr)          display only addresses in the results (useful for scripting)
 
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
+	-d  (--add <str>)     add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 

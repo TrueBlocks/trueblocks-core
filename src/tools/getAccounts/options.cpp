@@ -18,12 +18,13 @@ static const COption params[] = {
     COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
-    COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
-    COption("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
-    COption("prefund", "p", "", OPT_SWITCH, "Include prefund accounts"),
-    COption("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
+    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
+    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
+    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
+    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 // END_CODE_OPTIONS
 };
@@ -44,6 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     bool named = false;
     bool other = false;
     bool addr = false;
+    string_q add = "";
 // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -81,6 +83,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
 
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
+            add = substitute(substitute(arg, "-d:", ""), "--add:", "");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -92,6 +97,11 @@ bool COptions::parseArguments(string_q& command) {
             searches.push_back(arg);
 
         }
+    }
+
+    if (!add.empty()) {
+        cout << add << endl;
+        return false;
     }
 
     if (expand) {

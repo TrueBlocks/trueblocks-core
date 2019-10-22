@@ -118,3 +118,5 @@ on, both, fast, accounts, tools/getAccounts, fmt_junk,                         y
 on, cmd,  slow, accounts, tools/getAccounts, fromFile,                         n, file:names.txt
 
 on, cmd,  fast, accounts, tools/getAccounts, prefund_output,                   n, output = test_file & prefund
+
+on, cmd,  fast, accounts, tools/getAccounts, fmt_add,                          y, add = G+S+A+N+S+Y+D

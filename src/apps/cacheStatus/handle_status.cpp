@@ -14,7 +14,7 @@ bool COptions::handle_status(ostream& os) {
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
-        CItemCounter counter(this, start);
+        CItemCounter counter(this, start, end);
         loadTimestampArray(&counter.ts_array, counter.ts_cnt);
         counter.cachePtr = &aid;
         counter.indexArray = &aid.items;
@@ -40,7 +40,7 @@ bool COptions::handle_status(ostream& os) {
         md.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &md);
         status.caches.push_back(&md);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &md;
         counter.monitorArray = &md.items;
         if (details) {
@@ -58,7 +58,7 @@ bool COptions::handle_status(ostream& os) {
         nc.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &nc);
         status.caches.push_back(&nc);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &nc;
         counter.monitorArray = &nc.items;
         if (details) {
@@ -77,7 +77,7 @@ bool COptions::handle_status(ostream& os) {
         forEveryFileInFolder(getCachePath("abis/"), countFiles, &abi);
         status.caches.push_back(&abi);
         if (details) {
-            CItemCounter counter(this);
+            CItemCounter counter(this, start, end);
             counter.cachePtr = &abi;
             counter.abiArray = &abi.items;
             forEveryFileInFolder(getCachePath("abis/"), noteABI, &counter);
@@ -114,7 +114,7 @@ bool COptions::handle_status(ostream& os) {
         slurps.path = (isTestMode() ? "SlurpPath" : getCachePath("slurps/"));
         forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
         status.caches.push_back(&slurps);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &slurps;
         counter.monitorArray = &slurps.items;
         if (details) {
@@ -133,7 +133,7 @@ bool COptions::handle_status(ostream& os) {
         forEveryFileInFolder(getCachePath("prices/"), countFiles, &pd);
         status.caches.push_back(&pd);
         if (details) {
-            CItemCounter counter(this);
+            CItemCounter counter(this, start, end);
             counter.cachePtr = &pd;
             counter.priceArray = &pd.items;
             forEveryFileInFolder(getCachePath("prices/"), notePrice, &counter);
@@ -266,23 +266,28 @@ bool noteMonitor(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteIndex(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
+        if (!isTestMode()) {
+            cerr << path << "\r";
+            cerr.flush();
+        }
+
         CItemCounter *counter = (CItemCounter*)data;
+
         timestamp_t unused;
-        blknum_t ll = 0;
-        blknum_t ff = bnFromPath(path, ll, unused);
-        if (ff < counter->skipTo)
-            return true;
-        cerr << path << "\r"; cerr.flush();
+        blknum_t last = NOPOS;
+        blknum_t first = bnFromPath(path, last, unused);
+        if (last < counter->scanRange.first) return true;
+        if (first > counter->scanRange.second) return !contains(path,"finalized");
+
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
+//        aci.path = substitute(path, getIndexPath(""), "${INDEX}/");
+//        string_q fn = substitute(path, getIndexPath(""), "");
         aci.path = substitute(path, counter->cachePtr->path, "");
         string_q fn = aci.path;
         replace(fn, "blooms/", "");

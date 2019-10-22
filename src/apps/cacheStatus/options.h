@@ -67,8 +67,8 @@ public:
     CPriceCacheItemArray   *priceArray;
     uint32_t               *ts_array;
     size_t                  ts_cnt;
-    blknum_t                skipTo;
-    CItemCounter(COptions *opt, blknum_t st=0) : CCache(), options(opt) {
+    blkrange_t              scanRange;
+    CItemCounter(COptions *opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;
         monitorArray = NULL;
@@ -76,7 +76,8 @@ public:
         priceArray = NULL;
         ts_array = NULL;
         ts_cnt = 0;
-        skipTo = st;
+        scanRange.first = start;
+        scanRange.second = end;
     }
 public:
     CItemCounter(void) : CCache() {}

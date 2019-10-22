@@ -84,11 +84,9 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
         if (!hit) {
             if (! ( ++n % BREAK_PT)) {
-                qblocks::eLogger->setEndline('\r');
                 ostringstream os;
-                os << bBlue << "Skip blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./");
+                os << bBlue << "Skip blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./") << "\r";
                 LOG_INFO(os.str());
-                qblocks::eLogger->setEndline('\n');
             }
             // none of them hit, so write last block for each of them
             for (size_t ac = 0 ; ac < monitors.size() && !hit ; ac++) {
@@ -103,17 +101,16 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     }
 
     if (! ( ++n % BREAK_PT)) {
-        qblocks::eLogger->setEndline('\r');
         ostringstream os;
-        os << cYellow << "Scan blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./");
+        os << cYellow << "Scan blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./") << "\r";
         LOG_INFO(os.str());
-        qblocks::eLogger->setEndline('\n');
     }
 
     CArchive *chunk = NULL;
     char *rawData = NULL;
     uint32_t nAddrs = 0;
 
+    bool indexHit = false;
     for (size_t ac = 0 ; ac < monitors.size() && !shouldQuit() ; ac++) {
 
         CAccountWatch *acct = &monitors[ac];
@@ -163,6 +160,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
             (CAddressRecord_base *)bsearch(&search, (rawData+sizeof(CHeaderRecord_base)), nAddrs, sizeof(CAddressRecord_base), findAppearance);
 
         if (found) {
+            indexHit = true;
             CAddressRecord_base *addrsOnFile = (CAddressRecord_base *)(rawData+sizeof(CHeaderRecord_base));
             CAppearance_base *blocksOnFile = (CAppearance_base *)&addrsOnFile[nAddrs];
             for (size_t i = found->offset ; i < found->offset + found->cnt ; i++) {
@@ -177,7 +175,6 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
                 lockSection(false);
             }
         } else {
-
             acct->writeLastBlock(lastBlockInFile + 1);
         }
 
@@ -193,6 +190,10 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
         delete rawData;
         rawData = NULL;
     }
+
+    ostringstream os;
+    os << cBlue << "    bloom file hit " << (indexHit ? cGreen : cRed) << (indexHit ? "index file hit" : "false positive") << cOff << " at " << cTeal << substitute(path, indexFolder_finalized, "./") << cOff;
+    LOG_INFO(os.str());
 
     return !shouldQuit();
 }

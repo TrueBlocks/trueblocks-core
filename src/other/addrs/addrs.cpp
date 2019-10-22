@@ -13,7 +13,7 @@
 #include "acctlib.h"
 
 uint64_t cnt = 0;
-#define indexFolder_sorted (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted (getIndexPath("sorted/"))
 //----------------------------------------------------------------
 bool visitFile(const string_q& path, void *data) {
 

@@ -192,3 +192,9 @@ bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_
     return true;
 }
 
+//----------------------------------------------------------------------------------------------------
+time_q bn_2_Date(const blknum_t& bn) {
+    CBlock block;
+    getBlock_light(block, bn);
+    return ts_2_Date(block.timestamp);
+}

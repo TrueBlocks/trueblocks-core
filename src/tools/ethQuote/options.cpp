@@ -69,11 +69,9 @@ bool COptions::parseArguments(string_q& command) {
     // Data wrangling
     if (!pair.empty())
         source.pair = pair;
-    if (!period.empty()) {
+
+    if (!period.empty())
         freq = str_2_Uint(period);
-        if (!isUnsigned(period) || freq % 5)
-            return usage("Positive multiple of 5 expected: --period: " + period + ". Quitting...");
-    }
 
     // Display formatting
     switch (exportFmt) {
@@ -120,6 +118,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     needsOption = true;
+
     Init();
 }
 

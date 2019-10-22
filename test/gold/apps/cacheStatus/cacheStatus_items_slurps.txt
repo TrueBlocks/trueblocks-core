@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:slurps] [2:--details] 
-cacheStatus slurps --details 
+cacheStatus argc: 3 [1:--details] [2:slurps] 
+cacheStatus --details slurps 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",

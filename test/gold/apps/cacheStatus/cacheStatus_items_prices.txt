@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:prices] [2:--details] 
-cacheStatus prices --details 
+cacheStatus argc: 3 [1:--details] [2:prices] 
+cacheStatus --details prices 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
