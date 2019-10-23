@@ -10,10 +10,10 @@ on, cmd, fast, null, dev_tools/makeClass, conflict1, n, @e & run
 on, cmd, fast, null, dev_tools/makeClass, conflict2, n, @l & run
 on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @r & edit
 
-on, cmd, fast, null, dev_tools/makeClass, list,      n, list & class_list = function
-on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & class_list = function & verbose
+on, cmd, fast, null, dev_tools/makeClass, list,      n, list & classes = function
+on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & classes = function & verbose
 on, cmd, fast, null, dev_tools/makeClass, edit,      n, edit @ a & filter = function
 on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, list @ a @ f = CFunc
-on, cmd, fast, null, dev_tools/makeClass, run,       n, run & class_list = block
-on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & class_list = function
-on, cmd, fast, null, dev_tools/makeClass, js,        n, js & class_list = CBlock
+on, cmd, fast, null, dev_tools/makeClass, run,       n, run & classes = block
+on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & classes = function
+on, cmd, fast, null, dev_tools/makeClass, js,        n, js & classes = CBlock

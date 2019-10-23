@@ -1,5 +1,5 @@
-getLogs argc: 4 [1:1718400-1718420] [2:trans_list] [3:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
-getLogs 1718400-1718420 trans_list 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
+getLogs argc: 4 [1:1718400-1718420] [2:transactions] [3:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
+getLogs 1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 
   1718400-1718420 does not appear to be a valid transaction index.
 
@@ -7,7 +7,7 @@ getLogs 1718400-1718420 trans_list 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.
 
   Where:  
-	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
+	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
 	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
 
 #### Hidden options (shown during testing only)

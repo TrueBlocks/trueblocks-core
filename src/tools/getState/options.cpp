@@ -15,13 +15,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
-    COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };
@@ -36,7 +35,6 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_LOCAL_INIT
     string_q mode = "";
     bool no_history = false;
-    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -57,9 +55,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-s" || arg == "--no_history") {
             no_history = true;
-
-        } else if (arg == "-o" || arg == "--no_header") {
-            no_header = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -129,7 +124,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     if (!requestsHistory()) // if the user did not request historical state, we can return safely
@@ -186,12 +181,12 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "addr_list block_list", "<address> [address...] [block...]");
+        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "[{blocks}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";

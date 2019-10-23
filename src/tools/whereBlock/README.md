@@ -15,7 +15,7 @@ This tool is intended mostly as an aid in developing and debugging QBlocks tools
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks to search for (required) |
+|  | blocks | a space-separated list of one or more blocks to search for (required) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -7,7 +7,7 @@ getBloom
   Purpose:  Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
 
   Where:  
-	block_list            a space-separated list of one or more blocks for which to retrieve blooms (required)
+	blocks                a space-separated list of one or more blocks for which to retrieve blooms (required)
 	-e  (--eab)           pull the enhanced adaptive blooms from QBlocks cache
 	-b  (--block_only)    show only the block-level bloom (--raw only)
 	-r  (--receipt_only)  show only the receipt-level blooms (--raw only)

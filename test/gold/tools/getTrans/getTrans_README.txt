@@ -9,7 +9,7 @@ getTrans -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
+|  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -t | --trace | display the transaction's trace |
 
@@ -23,7 +23,7 @@ getTrans -th
 
 `Notes:`
 
-- `trans_list` is one or more space-separated identifiers which may be either a transaction hash,
+- `transactions` is one or more space-separated identifiers which may be either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).

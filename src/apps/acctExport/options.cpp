@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
@@ -20,7 +20,6 @@ static const COption params[] = {
     COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
     COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
-    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -39,7 +38,6 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
-    bool no_header = false;
     bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
@@ -86,9 +84,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
-
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
 
         } else if (arg == "-A" || arg == "--all_abis") {
             all_abis = true;
@@ -270,7 +265,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     expContext().fmtMap["header"] = "";
-    if (!no_header) {
+    if (!isNoHeader) {
         if (traces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
         } else if (logs) {
@@ -353,7 +348,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "addr_list", "<address> [address...]");
+        return substitute(str, "addrs", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

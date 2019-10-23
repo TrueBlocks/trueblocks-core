@@ -22,8 +22,9 @@ public:
     COptions(void);
     ~COptions(void);
 
-    bool parseArguments(string_q& command);
-    void Init(void);
+    string_q postProcess(const string_q& which, const string_q& str) const override;
+    bool parseArguments(string_q& command) override;
+    void Init(void) override;
 };
 
 //-----------------------------------------------------------------------------

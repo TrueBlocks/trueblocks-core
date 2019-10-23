@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
     COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("check", "c", "", OPT_SWITCH, "compare results between qblocks and Ethereum node, report differences, if any"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
@@ -239,12 +239,12 @@ bool COptions::isMulti(void) const {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "block_list", "<block> [block...]");
+        return substitute(str, "blocks", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+        ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
                     "or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";

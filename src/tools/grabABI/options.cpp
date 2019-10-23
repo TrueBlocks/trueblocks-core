@@ -16,18 +16,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption("data", "d", "", OPT_SWITCH, "export the display as data"),
     COption("encode", "e", "", OPT_SWITCH, "generate the encodings for the functions / events in the ABI"),
-    COption("json", "j", "", OPT_SWITCH, "print the ABI to the screen as json"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
     COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
     COption("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing, download if not already present"),
     COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
     COption("no_decorate", "r", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
+    COption("data", "d", "", OPT_SWITCH, "export the display as data"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
 // END_CODE_OPTIONS
 };
@@ -44,7 +43,6 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_LOCAL_INIT
     bool canonical = false;
     bool encode = false;
-    bool json = false;
     bool open = false;
     bool no_decorate = false;
     bool known = false;
@@ -68,9 +66,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-e" || arg == "--encode") {
             encode = true;
-
-        } else if (arg == "-j" || arg == "--json") {
-            json = true;
 
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
@@ -165,11 +160,11 @@ bool COptions::parseArguments(string_q& command) {
 
             ::remove((addr + ".json").c_str());
             stringToAsciiFile(addr + ".json", os.str());
-            json = false;
+            isRaw = false;
         }
     }
 
-    if (json) {
+    if (isRaw) {
         for (auto addr : addrs) {
             string_q fileName = getCachePath("abis/" + addr + ".json");
             string_q localFile("./" + addr + ".json");
@@ -253,7 +248,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "addr_list", "<address> [address...]");
+        return substitute(str, "addrs", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

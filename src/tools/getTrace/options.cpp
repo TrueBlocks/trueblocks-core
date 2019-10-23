@@ -15,12 +15,11 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
     COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
-    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -33,7 +32,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
 // BEG_CODE_LOCAL_INIT
-    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
     Init();
@@ -54,9 +52,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
-
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -110,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (count_only)
         expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
@@ -147,12 +142,12 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "trans_list", "<tx_id> [tx_id...]");
+        return substitute(str, "transactions", "<tx_id> [tx_id...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
+        ret += "[{transactions}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "

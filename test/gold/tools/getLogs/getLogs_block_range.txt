@@ -7,7 +7,7 @@ getLogs 1718400-1718420
   Purpose:  Retrieve a transaction's logs from the local cache or a running node.
 
   Where:  
-	trans_list            a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
+	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
 	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
 
 #### Hidden options (shown during testing only)

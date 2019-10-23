@@ -150,6 +150,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asEther) { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
     if (expContext().isParity) { tool_flags += " --parity"; }
+    if (isNoHeader) { tool_flags += " --no_header"; }
     tool_flags += addExportMode(exportFmt);
     tool_flags = trim(tool_flags, ' ');
 

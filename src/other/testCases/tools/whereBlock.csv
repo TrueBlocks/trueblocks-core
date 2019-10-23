@@ -1,6 +1,6 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, both, all,  blocks,tools/whereBlock, preload,          y, block_list = 1001001 & force, getBlock
-on, both, all,  blocks,tools/whereBlock, preload2,         y, block_list = 1001010 & force, getBlock
+on, both, all,  blocks,tools/whereBlock, preload,          y, blocks = 1001001 & force, getBlock
+on, both, all,  blocks,tools/whereBlock, preload2,         y, blocks = 1001010 & force, getBlock
 
 on, cmd,  fast, where, tools/whereBlock, README,           n, @th
 on, cmd,  fast, where, tools/whereBlock, help,             n, @h
@@ -9,17 +9,17 @@ on, cmd,  fast, where, tools/whereBlock, long_help,        n, help
 on, both, fast, where, tools/whereBlock, no_options,       y,
 on, both, fast, where, tools/whereBlock, invalid_option_1, y, junk1
 
-on, both, fast, where, tools/whereBlock, notcached,        y, block_list = 45000
-on, both, fast, where, tools/whereBlock, cached,           y, block_list = 1001001
-on, both, fast, where, tools/whereBlock, by_list,          y, block_list = 1001001 2002002 3003003
-on, both, fast, where, tools/whereBlock, block_hex1,       y, block_list = 0xabcd
-on, both, fast, where, tools/whereBlock, by_range,         y, block_list = 2001001-2001005
-on, both, fast, where, tools/whereBlock, by_hash,          y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
-on, both, fast, where, tools/whereBlock, block_hex2,       y, block_list = 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, where, tools/whereBlock, notcached,        y, blocks = 45000
+on, both, fast, where, tools/whereBlock, cached,           y, blocks = 1001001
+on, both, fast, where, tools/whereBlock, by_list,          y, blocks = 1001001 2002002 3003003
+on, both, fast, where, tools/whereBlock, block_hex1,       y, blocks = 0xabcd
+on, both, fast, where, tools/whereBlock, by_range,         y, blocks = 2001001-2001005
+on, both, fast, where, tools/whereBlock, by_hash,          y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, where, tools/whereBlock, block_hex2,       y, blocks = 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 
-on, both, fast, where, tools/whereBlock, fmt_default,      y, block_list = 1001001
-on, both, fast, where, tools/whereBlock, fmt_txt,          n, block_list = 1001001 & fmt = txt
-on, both, fast, where, tools/whereBlock, fmt_csv,          n, block_list = 1001001 & fmt = csv
-on, both, fast, where, tools/whereBlock, fmt_api,          y, block_list = 1001001 & fmt = api
-on, both, fast, where, tools/whereBlock, fmt_json,         y, block_list = 1001001 & fmt = json
-on, both, fast, where, tools/whereBlock, fmt_junk,         y, block_list = 1001001 & fmt = junk
+on, both, fast, where, tools/whereBlock, fmt_default,      y, blocks = 1001001
+on, both, fast, where, tools/whereBlock, fmt_txt,          n, blocks = 1001001 & fmt = txt
+on, both, fast, where, tools/whereBlock, fmt_csv,          n, blocks = 1001001 & fmt = csv
+on, both, fast, where, tools/whereBlock, fmt_api,          y, blocks = 1001001 & fmt = api
+on, both, fast, where, tools/whereBlock, fmt_json,         y, blocks = 1001001 & fmt = json
+on, both, fast, where, tools/whereBlock, fmt_junk,         y, blocks = 1001001 & fmt = junk

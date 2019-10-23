@@ -1,5 +1,5 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-off, cmd,  fast, list, apps/acctScrape, preload_list, n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b
+off, cmd,  fast, list, apps/acctScrape, preload_list, n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
 
 off, cmd,  fast, null, apps/acctScrape, README,       n, @th
 off, cmd,  fast, null, apps/acctScrape, help,         n, @h
@@ -7,5 +7,5 @@ off, cmd,  fast, null, apps/acctScrape, help_long,    n, help
 
 off, both, fast, list, apps/acctScrape, no_params,    n,
 off, both, fast, list, apps/acctScrape, fail_list1,   n, list
-off, both, fast, list, apps/acctScrape, fail_list2,   n, addr_list = 0x1234567890123456789012345678901234567890
-off, both, fast, list, apps/acctScrape, list_test,    n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b
+off, both, fast, list, apps/acctScrape, fail_list2,   n, addrs = 0x1234567890123456789012345678901234567890
+off, both, fast, list, apps/acctScrape, list_test,    n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b

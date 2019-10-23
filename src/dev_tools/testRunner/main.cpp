@@ -18,6 +18,7 @@ ostringstream perf;
 uint32_t totalTests = 0;
 uint32_t totalPassed = 0;
 double totalTime = 0.0;
+CStringArray fails;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -93,6 +94,8 @@ int main(int argc, const char *argv[]) {
         cerr << cRed << (totalTests - totalPassed) << " failed " << cOff << "in ";
     cerr << cTeal << double_2_Str(totalTime, 5) << " seconds " << cOff;
     cerr << cBlue << double_2_Str(totalTime / totalTests, 5) << " avg." << cOff << endl;
+    for (auto fail : fails)
+        cerr << fail;
     cerr << endl;
     if (totalTests == totalPassed) {
         if (options.full_test && options.report) {
@@ -182,12 +185,20 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                     replace(test.workPath, "../", "");
                 string_q newText = asciiFileToString(test.workPath + test.fileName);
                 string_q oldText = asciiFileToString(test.goldPath + test.fileName);
-                if (newText.empty() || newText != oldText)
+                if (newText.empty() || newText != oldText) {
+                    ostringstream os;
+                    os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
+                    os << test.filename << ".txt " << cOff << "(" << testName << trim(test.options) << ")" << endl;
+                    fails.push_back(os.str());
                     result = redX;
-                else
+                } else
                     nPassed++;
 
             } else {
+                ostringstream os;
+                os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
+                os << test.filename << ".txt " << cOff << "(" << testName << trim(test.options) << ")" << endl;
+                fails.push_back(os.str());
                 result = redX;
             }
 

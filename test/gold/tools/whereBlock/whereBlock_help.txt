@@ -5,7 +5,7 @@ whereBlock -h
   Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
 
   Where:  
-	block_list            a space-separated list of one or more blocks to search for (required)
+	blocks                a space-separated list of one or more blocks to search for (required)
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

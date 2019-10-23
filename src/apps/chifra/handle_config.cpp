@@ -47,7 +47,7 @@ bool COptions::handle_config(void) {
     ENTER4("handle_" + mode);
     nodeNotRequired();
 
-    tool_flags = trim(substitute(substitute(tool_flags, "--addr_list", ""), "--mode", ""));
+    tool_flags = trim(substitute(substitute(tool_flags, "--addrs", ""), "--mode", ""));
     string_q cmd = nextTokenClear(tool_flags, ' ');
     if (cmd != "edit" && cmd != "show")
         EXIT_USAGE("chifra co nfig 'mode' must be either 'edit' or 'show'.");

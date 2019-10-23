@@ -15,10 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
-    COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
+    COption("block_range", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
     COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
@@ -59,8 +59,8 @@ bool COptions::parseArguments(string_q& command) {
             if (exportFormat.empty())
                 return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--blocks:")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_range:")) {
+            arg = substitute(substitute(arg, "-b:", ""), "--block_range:", "");
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
@@ -151,7 +151,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "addr_list block_list", "<address> [address...] [block...]");
+        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

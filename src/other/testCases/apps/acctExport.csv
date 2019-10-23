@@ -1,6 +1,6 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-# on, both, fast, rm,     apps/acctExport, chifra_rm,             n, mode_list = rm & yes & addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b, chifra
-# on, both, fast, export, apps/acctExport, preload_list,          n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b
+# on, both, fast, rm,     apps/acctExport, chifra_rm,             n, modes = rm & yes & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b, chifra
+# on, both, fast, export, apps/acctExport, preload_list,          n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
 
 on,   cmd,  fast, export, apps/acctExport, README,                n, @th
 on,   cmd,  fast, export, apps/acctExport, help,                  n, @h
@@ -8,25 +8,25 @@ on,   cmd,  fast, export, apps/acctExport, help_long,             n, help
 
 on,   both,  fast, export, apps/acctExport, no_params,            n,
 
-# on, both, fast, export, apps/acctExport, export,                n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
-# on, both, fast, export, apps/acctExport, export_apps,           n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = txt
-# on, both, fast, export, apps/acctExport, export_traces,         n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = txt
-# on, both, fast, export, apps/acctExport, export_logs,           n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt
-# on, both, fast, export, apps/acctExport, export_abis,           n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & abis & fmt = txt
-# on, both, fast, export, apps/acctExport, export_balances,       n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt
-# on, both, fast, export, apps/acctExport, export_balances_d,     n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = txt
+# on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
+# on, both, fast, export, apps/acctExport, export_apps,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = txt
+# on, both, fast, export, apps/acctExport, export_traces,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = txt
+# on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt
+# on, both, fast, export, apps/acctExport, export_abis,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & abis & fmt = txt
+# on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt
+# on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = txt
 
-# on, both, fast, export, apps/acctExport, api_export,            y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_apps,       y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_traces,     y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_logs,       y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_abis,       y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & abis & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_balances_d, y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = api
-# on, both, fast, export, apps/acctExport, api_export_balances,   y, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = api
+# on, both, fast, export, apps/acctExport, api_export,            y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_apps,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_traces,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_logs,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_abis,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & abis & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_balances_d, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = api
+# on, both, fast, export, apps/acctExport, api_export_balances,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = api
 
-# on, both, fast, export, apps/acctExport, export_c,              n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & count_only
-# on, both, fast, export, apps/acctExport, export_apps_c,         n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count_only
+# on, both, fast, export, apps/acctExport, export_c,              n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count_only
+# on, both, fast, export, apps/acctExport, export_apps_c,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count_only
 
 # state tests
-# on, both, fast, export, apps/acctExport, export_balances,       n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances
-# on, both, fast, export, apps/acctExport, export_balances_d,     n, addr_list = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas
+# on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances
+# on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas

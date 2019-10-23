@@ -14,8 +14,8 @@ This simple program may be used to query an Ethereum address to determine if it 
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
-|  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
+|  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
+|  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -m | --mode <val> | control which state to export, one of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
@@ -25,7 +25,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.
@@ -43,8 +43,8 @@ This simple program may be used to query an Ethereum address to determine if it 
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) from which to retrieve balances (required) |
-|  | block_list | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
+|  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
+|  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -m | --mode <val> | control which state to export, one of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -c | --changes | only report a balance when it changes from one block to the next |
@@ -54,7 +54,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-- `block_list` may be a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.

@@ -85,6 +85,9 @@ Generating class for derived event type: 'CApprovalEvent'
 makeClass -r approvalevent 
 Would run class definition file: approvalevent (not run, testing)
 Generating class for derived event type: 'CCreatedTokenEvent'
+	makeClass argc: 3 [1:-r] [2:createdtokenevent] 
+makeClass -r createdtokenevent 
+Would run class definition file: createdtokenevent (not run, testing)
 Generating class for derived event type: 'CFuelingToDateEvent'
 	makeClass argc: 3 [1:-r] [2:fuelingtodateevent] 
 makeClass -r fuelingtodateevent 

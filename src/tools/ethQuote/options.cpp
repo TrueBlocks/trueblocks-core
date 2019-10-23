@@ -34,7 +34,6 @@ bool COptions::parseArguments(string_q& command) {
     string_q pair = "";
 // END_CODE_LOCAL_INIT
 
-    bool no_header = false;
     string_q format;
     Init();
     explode(arguments, command, ' ');
@@ -87,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     string_q unused;

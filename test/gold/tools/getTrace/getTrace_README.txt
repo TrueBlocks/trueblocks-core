@@ -2,17 +2,16 @@ getTrace argc: 2 [1:-th]
 getTrace -th 
 #### Usage
 
-`Usage:`    getTrace [-a|-c|-n|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    getTrace [-a|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's traces from the local cache or a running node.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | trans_list | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
+|  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -c | --count_only | show the number of traces for the transaction only (fast) |
-| -n | --no_header | do not show the header row |
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2018 ddos transactions during export ('on' by default) |
@@ -25,7 +24,7 @@ getTrace -th
 
 `Notes:`
 
-- `trans_list` is one or more space-separated identifiers which may be either a transaction hash,
+- `transactions` is one or more space-separated identifiers which may be either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).

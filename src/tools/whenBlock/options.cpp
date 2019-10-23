@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
-    COption("date_list", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
+    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
 // END_CODE_OPTIONS
@@ -33,7 +33,6 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_LOCAL_INIT
 // END_CODE_LOCAL_INIT
 
-    bool no_header = false;
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -142,7 +141,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display
@@ -193,7 +192,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "block_list date_list", "< block | date > [ block... | date... ]");
+        return substitute(str, "blocks dates", "< block | date > [ block... | date... ]");
 
     } else if (which == "notes") {
         string_q ret = str;

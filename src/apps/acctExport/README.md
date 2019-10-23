@@ -15,7 +15,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) to export (required) |
+|  | addrs | one or more addresses (0x...) to export (required) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |

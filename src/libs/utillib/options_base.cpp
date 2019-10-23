@@ -295,6 +295,11 @@ namespace qblocks {
             colorsOff();
         }
 
+        if (contains(cmdLine, "--no_header ")) {
+            replaceAll(cmdLine, "--no_header ", "");
+            isNoHeader = true;
+        }
+
         if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
             exit(0);
@@ -1030,6 +1035,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isReadme = false;
         isRaw = false;
         isVeryRaw = false;
+        isNoHeader = false;
         exportFmt = (isApiMode() ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;

@@ -9,7 +9,7 @@ acctExport -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) to export (required) |
+|  | addrs | one or more addresses (0x...) to export (required) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
@@ -23,7 +23,6 @@ acctExport -th
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
-| -n | --no_header | do not show the header row |
 | -A | --all_abis | load all previously cached abi files |
 | -g | --grab_abis | using each trace's 'to' address, grab the abi for that address (improves articulation) |
 | -f | --freshen | freshen but do not print the exported data |

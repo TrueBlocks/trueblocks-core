@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("mode_list", "m", "list<enum[encoding|generation]>", OPT_REQUIRED | OPT_POSITIONAL, "mode of operation"),
+    COption("modes", "m", "list<enum[encoding|generation]>", OPT_REQUIRED | OPT_POSITIONAL, "mode of operation"),
     COption("sub", "s", "<num>", OPT_FLAG, "sub mode"),
     COption("", "", "", OPT_DESCRIPTION, "Simple program to illustrate how to encode function and event signatures."),
 };
@@ -68,4 +68,16 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "options") {
+        return substitute(str, "modes", "<mode> [mode...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        // do nothing
+
+    }
+    return str;
 }

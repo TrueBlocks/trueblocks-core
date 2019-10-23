@@ -6,22 +6,22 @@ on, cmd,  fast, slurp, tools/ethslurp, help_long,                     n, help
 on, both, fast, slurp, tools/ethslurp, no_params,                     y,
 on, both, fast, slurp, tools/ethslurp, invalid_param_1,               y, pink
 on, both, fast, slurp, tools/ethslurp, invalid_param_2,               y, pank
-on, both, fast, slurp, tools/ethslurp, invalid_address_1,             y, addr_list = invalid
-on, both, fast, slurp, tools/ethslurp, invalid_address_2,             y, addr_list = 0x63c8c29af409bd31ec7ddeea58f
-on, both, fast, slurp, tools/ethslurp, invalid_type1,                 y, addr_list = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = junk
-on, both, fast, slurp, tools/ethslurp, invalid_type2,                 y, addr_list = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type =
-on, cmd,  medi, slurp, tools/ethslurp, no_record_in_block_range,      n, addr_list = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
-on, cmd,  medi, slurp, tools/ethslurp, not_found_address,             n, addr_list = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
+on, both, fast, slurp, tools/ethslurp, invalid_address_1,             y, addrs = invalid
+on, both, fast, slurp, tools/ethslurp, invalid_address_2,             y, addrs = 0x63c8c29af409bd31ec7ddeea58f
+on, both, fast, slurp, tools/ethslurp, invalid_type1,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = junk
+on, both, fast, slurp, tools/ethslurp, invalid_type2,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type =
+on, cmd,  medi, slurp, tools/ethslurp, no_record_in_block_range,      n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & block_range = 0-1
+on, cmd,  medi, slurp, tools/ethslurp, not_found_address,             n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
 
-on, both, medi, slurp, tools/ethslurp, range_of_blocks,               y, addr_list = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186301
-on, both, fast, slurp, tools/ethslurp, single_block_range,            n, addr_list = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186280
-on, cmd,  medi, slurp, tools/ethslurp, blockByHash,                   n, addr_list = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, medi, slurp, tools/ethslurp, range_of_blocks,               y, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & block_range = 4186279-4186301
+on, both, fast, slurp, tools/ethslurp, single_block_range,            n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & block_range = 4186279-4186280
+on, cmd,  medi, slurp, tools/ethslurp, blockByHash,                   n, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 
-on, both, medi, slurp, tools/ethslurp, type_ext,                      y, addr_list = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = ext
-on, both, medi, slurp, tools/ethslurp, type_int,                      y, addr_list = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = int
-on, both, slow, slurp, tools/ethslurp, type_token,                    y, addr_list = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & type = token & blocks = 1428756-1428758
-on, both, medi, slurp, tools/ethslurp, type_miner,                    y, addr_list = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & type = miner & blocks = 1-1000
-on, both, fast, slurp, tools/ethslurp, type_both,                     y, addr_list = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = all
+on, both, medi, slurp, tools/ethslurp, type_ext,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = ext
+on, both, medi, slurp, tools/ethslurp, type_int,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = int
+on, both, slow, slurp, tools/ethslurp, type_token,                    y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & type = token & block_range = 1428756-1428758
+on, both, medi, slurp, tools/ethslurp, type_miner,                    y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & type = miner & block_range = 1-1000
+on, both, fast, slurp, tools/ethslurp, type_both,                     y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & type = all
 
 #
 #--------------------------------------------------------------------------------
@@ -60,8 +60,8 @@ on, both, fast, slurp, tools/ethslurp, type_both,                     y, addr_li
 # #run_special_test("ethslurp_out_html_format_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -d:20170519:20170519"      " --fmt:html")
 # run_special_test("ethslurp_options_combination_2"          "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547-3730548"        " -f:csv"     " -i")
 # run_special_test("ethslurp_verbose_options"                "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " -b:3730547-3730548"        " -f:csv"     " -i"  " -v")
-# run_special_test("ethslurp_options_combination_2_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks" " 3730547-3730548"  " --fmt:csv"  " --income")
-# run_special_test("ethslurp_verbose_options_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --blocks" " 3730547-3730548"  " --fmt:csv"  " --income" " --verbose")
+# run_special_test("ethslurp_options_combination_2_long"     "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --block_range" " 3730547-3730548"  " --fmt:csv"  " --income")
+# run_special_test("ethslurp_verbose_options_long"           "0x1324e7b922b30B49Ab8EA81086341cc41C249346" " --block_range" " 3730547-3730548"  " --fmt:csv"  " --income" " --verbose")
 # run_special_test("ethslurp_single_date_range"              "0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0" " -d:20170821:20170821")
 #
 #--------------------------------------------------------------------------------

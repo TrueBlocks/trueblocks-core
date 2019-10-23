@@ -13,7 +13,7 @@ The tool may also be used to double check that the results produced from the QBl
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks to retrieve (required) |
+|  | blocks | a space-separated list of one or more blocks to retrieve (required) |
 | -n | --hashes_only | display only transaction hashes, default is to display full transaction detail |
 | -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -a | --addrs | display all addresses included in the block |
@@ -26,7 +26,7 @@ The tool may also be used to double check that the results produced from the QBl
 
 `Notes:`
 
-- `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - `special` blocks are detailed under `whenBlock --list`.
 

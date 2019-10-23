@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
     COption("receipt_only", "r", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
@@ -179,12 +179,12 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     if (which == "options") {
         return
-            substitute(substitute(str, "block_list", "<block> [block...]"), "-l|", "-l fn|");
+            substitute(substitute(str, "blocks", "<block> [block...]"), "-l|", "-l fn|");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+        ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
                         "or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if "
                         "configured (see documentation).\n";

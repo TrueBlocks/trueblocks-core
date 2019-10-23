@@ -9,7 +9,7 @@ whereBlock -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks to search for (required) |
+|  | blocks | a space-separated list of one or more blocks to search for (required) |
 
 #### Hidden options (shown during testing only)
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

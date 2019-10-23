@@ -22,7 +22,6 @@ cacheMan -th
 
 #### Hidden options (shown during testing only)
 | -k | --skip <num> | skip value for testing |
-| -n | --no_header | do not show header row of data |
 | -S | --start <num> | first block to process(inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

@@ -9,7 +9,7 @@ getBloom -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks for which to retrieve blooms (required) |
+|  | blocks | a space-separated list of one or more blocks for which to retrieve blooms (required) |
 | -e | --eab | pull the enhanced adaptive blooms from QBlocks cache |
 | -b | --block_only | show only the block-level bloom (--raw only) |
 | -r | --receipt_only | show only the receipt-level blooms (--raw only) |
@@ -29,7 +29,7 @@ getBloom -th
 
 `Notes:`
 
-- `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - `special` blocks are detailed under `whenBlock --list`.
 

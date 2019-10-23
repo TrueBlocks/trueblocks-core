@@ -1,11 +1,11 @@
 cacheStatus argc: 2 [1:-h] 
 cacheStatus -h 
 
-  Usage:    cacheStatus [-d|-l|-v|-h] mode_list  
+  Usage:    cacheStatus [-d|-l|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
-	mode_list             which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
+	modes                 which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-l  (--list)          display results in Linux ls -l format (assumes --detail)
 

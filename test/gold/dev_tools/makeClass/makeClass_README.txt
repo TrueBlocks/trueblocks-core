@@ -9,7 +9,7 @@ makeClass -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | class_list | one or more class definition files to process (required) |
+|  | classes | one or more class definition files to process (required) |
 | -l | --list | list all definition files found in the local ./classDefinitions folder |
 | -r | --run | run the class maker on associated <class_name(s)> |
 | -a | --all | list, or run all class definitions found in the local folder |

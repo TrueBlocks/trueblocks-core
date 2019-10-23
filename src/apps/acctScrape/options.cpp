@@ -8,11 +8,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-    COption("no_header", "n", "", OPT_SWITCH, "do not show the header row"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
@@ -32,7 +31,6 @@ bool COptions::parseArguments(string_q& command) {
 // BEG_CODE_LOCAL_INIT
     bool staging = false;
     bool unripe = false;
-    bool no_header = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
 // END_CODE_LOCAL_INIT
@@ -55,9 +53,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-d" || arg == "--daemon") {
             daemon = true;
-
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
@@ -138,7 +133,7 @@ bool COptions::parseArguments(string_q& command) {
             scanRange.second = unripeBlk;
     }
 
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // So one of the test cases passes only
@@ -189,7 +184,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "addr_list", "<address> [address...]");
+        return substitute(str, "addrs", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

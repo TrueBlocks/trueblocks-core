@@ -19,7 +19,6 @@ static const COption params[] = {
     COption("truncate", "u", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
     COption("skip", "k", "<uint32>", OPT_HIDDEN | OPT_FLAG, "skip value for testing"),
-    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show header row of data"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
@@ -41,7 +40,6 @@ bool COptions::parseArguments(string_q& command) {
     bool import = false;
     bool remove = false;
     bool merge = false;
-    bool no_header = false;
 // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
@@ -83,9 +81,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-k:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
                 return false;
-
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))

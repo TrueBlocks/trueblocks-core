@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
@@ -49,7 +49,6 @@ bool COptions::parseArguments(string_q& command) {
 // END_CODE_LOCAL_INIT
 
     string_q format;
-    bool no_header = false;
     bool deflt = true;
     bool addr_only = false;
 
@@ -117,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (addr) {
         addr_only = true;
-        no_header = true;
+        isNoHeader = true;
         format = "[{ADDRESS}]";
         searchFields = "[{ADDRESS}]\t[{NAME}]";
     }
@@ -146,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // Collect results for later display
@@ -203,7 +202,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "term_list", "<term> [term...]");
+        return substitute(str, "terms", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

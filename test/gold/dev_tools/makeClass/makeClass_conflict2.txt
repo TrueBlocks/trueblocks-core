@@ -7,7 +7,7 @@ makeClass -l --run
   Purpose:  Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>.
 
   Where:  
-	class_list            one or more class definition files to process (required)
+	classes               one or more class definition files to process (required)
 	-l  (--list)          list all definition files found in the local ./classDefinitions folder
 	-r  (--run)           run the class maker on associated <class_name(s)>
 	-a  (--all)           list, or run all class definitions found in the local folder

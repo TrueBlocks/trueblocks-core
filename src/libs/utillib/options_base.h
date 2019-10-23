@@ -61,6 +61,7 @@ namespace qblocks {
         bool isReadme;
         bool isRaw;
         bool isVeryRaw;
+        bool isNoHeader;
         format_t exportFmt;
         blkrange_t scanRange;
 
