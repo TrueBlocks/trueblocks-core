@@ -17,10 +17,14 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
-          "addrs": [],
+          "addrs": [
+            "--address--",
+            "--address--",
+            "--address--"
+          ],
           "type": "CMonitorCache",
           "path": "CachePath",
           "nFiles": 0,
@@ -42,7 +46,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "type": "CChainCache",
@@ -50,7 +54,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "type": "CChainCache",
@@ -58,7 +62,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "type": "CChainCache",
@@ -66,7 +70,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "addrs": [],
@@ -83,7 +87,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         }
       ]
     }

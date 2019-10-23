@@ -173,7 +173,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             nTests++;
-            int ret = system(theCmd.c_str());
+//            int ret =
+                system(theCmd.c_str());
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
@@ -203,16 +204,15 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
                 os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":testName) << " " << trim(test.options) << ")" << cRed;
-                if (newText.empty())    os << " working file is empty ";
-                if (ret)                os << " system call returned non-zero ";
-
-                if (newText != oldText) {
-                    os << " files differ " << endl;
-                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
-//                    os << cYellow << newText << endl;
-                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
-//                    os << cBlue << oldText;
-                }
+//                if (newText.empty())    os << " working file is empty ";
+//                if (ret)                os << " system call returned non-zero ";
+//                if (newText != oldText) {
+//                    os << " files differ " << endl;
+//                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
+////                    os << cYellow << newText << endl;
+//                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
+////                    os << cBlue << oldText;
+//                }
                 os << cOff << endl;
                 fails.push_back(os.str());
                 result = redX;

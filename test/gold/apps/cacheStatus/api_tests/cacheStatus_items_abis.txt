@@ -11,13 +11,22 @@
       "is_scraping": false,
       "caches": [
         {
-          "items": [],
+          "items": [
+            {
+              "type": "CAbiCacheItem",
+              "nFunctions": 36963,
+              "nEvents": 36963,
+              "nOther": 36963,
+              "address": "---address---",
+              "sizeInBytes": 36963
+            }
+          ],
           "type": "CAbiCache",
           "path": "CachePath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         }
       ]
     }

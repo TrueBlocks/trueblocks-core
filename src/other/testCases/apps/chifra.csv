@@ -6,8 +6,8 @@ on, cmd,  fast, null,     apps/chifra, README,               n, @th
 on, cmd,  fast, null,     apps/chifra, help,                 n, @h
 on, cmd,  fast, null,     apps/chifra, help_long,            n, help
 
-on, both, fast, seed,     apps/chifra, no_params,            y,
-on, both, fast, leech,    apps/chifra, invalid_option,       y, modes = not_a_mode
+on, cmd,  fast, seed,     apps/chifra, no_params,            n,
+on, cmd,  fast, leech,    apps/chifra, invalid_option,       n, modes = not_a_mode
 
 on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
 #on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678

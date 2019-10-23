@@ -138,17 +138,28 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "addrs": [],
-          "items": [],
+          "items": [
+            {
+              "type": "CMonitorCacheItem",
+              "curBalance": 10000,
+              "enabled": true,
+              "address": "---address---",
+              "firstAppearance": 18446744073709552000,
+              "latestAppearance": 18446744073709552000,
+              "nRecords": 18446744073709552000,
+              "sizeInBytes": 18446744073709552000
+            }
+          ],
           "type": "CMonitorCache",
           "path": "CachePath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "type": "CNameCache",
@@ -156,7 +167,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "addrs": [],
@@ -166,16 +177,23 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
-          "items": [],
+          "items": [
+            {
+              "type": "CPriceCacheItem",
+              "pair": "---pair---",
+              "nRecords": 36910963,
+              "sizeInBytes": 36910963
+            }
+          ],
           "type": "CPriceCache",
           "path": "PricePath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         }
       ]
     }

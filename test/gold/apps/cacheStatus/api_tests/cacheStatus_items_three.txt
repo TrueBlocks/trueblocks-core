@@ -12,22 +12,42 @@
       "caches": [
         {
           "addrs": [],
-          "items": [],
+          "items": [
+            {
+              "type": "CMonitorCacheItem",
+              "curBalance": 10000,
+              "enabled": true,
+              "address": "---address---",
+              "firstAppearance": 18446744073709552000,
+              "latestAppearance": 18446744073709552000,
+              "nRecords": 18446744073709552000,
+              "sizeInBytes": 18446744073709552000
+            }
+          ],
           "type": "CMonitorCache",
           "path": "CachePath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
-          "items": [],
+          "items": [
+            {
+              "type": "CAbiCacheItem",
+              "nFunctions": 36963,
+              "nEvents": 36963,
+              "nOther": 36963,
+              "address": "---address---",
+              "sizeInBytes": 36963
+            }
+          ],
           "type": "CAbiCache",
           "path": "CachePath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         },
         {
           "addrs": [],
@@ -37,7 +57,7 @@
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": false
+          "valid_counts": true
         }
       ]
     }

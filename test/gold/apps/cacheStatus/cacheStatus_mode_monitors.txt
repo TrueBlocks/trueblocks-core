@@ -10,7 +10,11 @@ cacheStatus monitors
   "is_scraping": false,
   "caches": [
     {
-      "addrs": [],
+      "addrs": [
+        "--address--",
+        "--address--",
+        "--address--"
+      ],
       "type": "CMonitorCache",
       "path": "CachePath",
       "nFiles": 0,
