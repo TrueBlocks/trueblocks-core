@@ -2,11 +2,11 @@ enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 # on, both, fast, rm,     apps/acctExport, chifra_rm,             n, modes = rm & yes & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b, chifra
 # on, both, fast, export, apps/acctExport, preload_list,          n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
 
-on,   cmd,  fast, export, apps/acctExport, README,                n, @th
-on,   cmd,  fast, export, apps/acctExport, help,                  n, @h
-on,   cmd,  fast, export, apps/acctExport, help_long,             n, help
+# on,   cmd,  fast, export, apps/acctExport, README,                n, @th
+# on,   cmd,  fast, export, apps/acctExport, help,                  n, @h
+# on,   cmd,  fast, export, apps/acctExport, help_long,             n, help
 
-on,   both,  fast, export, apps/acctExport, no_params,            n,
+# on,   both,  fast, export, apps/acctExport, no_params,            n,
 
 # on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
 # on, both, fast, export, apps/acctExport, export_apps,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = txt

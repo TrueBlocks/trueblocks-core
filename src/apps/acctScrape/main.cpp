@@ -44,13 +44,8 @@ int main(int argc, const char *argv[]) {
 void doMoveFile(const string_q& from, const string_q& to) {
     if (verbose)
         cerr << "Moving " << cTeal << from << cOff << " to " << cTeal << to << cOff << endl;
-    if (isTestMode()) {
-        cerr << "Would have moved " << substitute(from, getCachePath(""), "$BLOCK_CACHE/") << " to ";
-        cerr << substitute(to, getCachePath(""), "$BLOCK_CACHE/") << endl;
-    } else {
-        if (fileExists(from))
-            moveFile(from, to);
-    }
+    if (fileExists(from))
+        moveFile(from, to);
 }
 
 //--------------------------------------------------------------------------------

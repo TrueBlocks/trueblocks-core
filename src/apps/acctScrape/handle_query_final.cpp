@@ -27,9 +27,11 @@ bool visitFinalIndexFiles(const string_q& path, void *data) {
         ASSERT(unused != NOPOS);
         ASSERT(options->lastBlockInFile != NOPOS);
 
+        // If the user told us to start late, start late
         if (options->lastBlockInFile != 0 && options->lastBlockInFile < options->scanRange.first)
             return !shouldQuit();
 
+        // If the user told us to end early, end early
         if (options->scanRange.second != NOPOS && firstBlock > options->scanRange.second)
             return !shouldQuit();
 

@@ -1,80 +1,16 @@
-chifra argc: 4 [1:list] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--end:10] 
-chifra list 0xfb744b951d094b310262c8f986c860df9ab1de65 --end:10 
+chifra argc: 5 [1:list] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--end] [4:10000] 
+chifra list 0xfb744b951d094b310262c8f986c860df9ab1de65 --end 10000 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
-acctScrape argc: 3 [1:--end:10] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
-acctScrape --end:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
-TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binWould have written to 0xfb744b951d094b310262c8f986c860df9ab1de65.last.txt with 1
-TIME ~ CLOCK - <INFO>  : Skip blocks ./000000001-000208533.binWould have written to 0xfb744b951d094b310262c8f986c860df9ab1de65.last.txt with 208534
-Would have moved $BLOCK_CACHE/monitors/staging/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin to $BLOCK_CACHE/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
-Would have moved $BLOCK_CACHE/monitors/staging/0xfb744b951d094b310262c8f986c860df9ab1de65.last.txt to $BLOCK_CACHE/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.last.txt
-Would have moved $BLOCK_CACHE/monitors/staging/0xfb744b951d094b310262c8f986c860df9ab1de65.expt.txt to $BLOCK_CACHE/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.expt.txt
-Would have moved $BLOCK_CACHE/monitors/staging/0xfb744b951d094b310262c8f986c860df9ab1de65.bals.bin to $BLOCK_CACHE/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.bals.bin
-                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctScrape argc: 4 [1:--end] [2:10000] [3:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctScrape --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
+TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./000000000-000000000.bin
+TIME ~ CLOCK - <INFO>  : Skip blocks ./000000001-000208533.bin                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 cacheMan --fix 0xfb744b951d094b310262c8f986c860df9ab1de65 
-0xfb744b951d094b310262c8f986c860df9ab1de65
-/Volumes/Samsung_T4/scraper/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
-TIME ~ CLOCK - <ERROR> : Exit(cacheMan,parseArguments): 
-
-  Monitor file for '0xfb744b951d094b310262c8f986c860df9ab1de65' does not exist.
-
-  Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
-  Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
-
-  Where:  
-	fn_list               path(s) of files to check, merge, fix or display (default=display) (required)
-	-c  (--check)         check for duplicates and other problems in the cache
-	-d  (--data)          in 'list' mode, render results as data (i.e export mode)
-	-s  (--sort)          sort the list of transactions and re-write (precludes other modes, other than --dedup)
-	-f  (--fix)           remove duplicates from the cache (if any)
-	-l  (--list)          list the contents of the cache (the default if no other option)
-	-i  (--import)        import transactions if import.txt file exists in current folder
-	-r  (--remove)        remove transactions if remove.txt file exists in current folder
-	-t  (--truncate <num>)truncate the cache at block :n (keeps block 'n' and before, implies --fix)
-	-k  (--maxBlock <num>)for testing, max block to visit
-	-m  (--merge)         merge two or more caches into a single cache
-	-x  (--fmt <fmt>)     export format (one of [json*|txt|csv])
-
-#### Hidden options (shown during testing only)
-	-p  (--skip)          skip value for testing
-	-o  (--no_header)     do not show header row of data
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
-acctExport argc: 4 [1:--appearances] [2:--end:10] [3:0xfb744b951d094b310262c8f986c860df9ab1de65] 
-acctExport --appearances --end:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
-TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
-
-  File not found './0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin. Quitting...
-
-  Usage:    acctExport [-x|-a|-l|-t|-c|-p|-o|-v|-h] <address> [address...]  
-  Purpose:  Export full detail of transactions for one or more Ethereum addresses.
-
-  Where:  
-	addr_list             one or more addresses (0x...) to export (required)
-	-x  (--fmt <fmt>)     export format (one of [json*|txt|csv])
-	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-l  (--logs)          export logs instead of transaction list
-	-t  (--traces)        export traces instead of transaction list
-	-c  (--balances)      export balance history instead of transaction list
-	-p  (--appearances)   export a list of appearances
-	-o  (--count_only)    display only the count of the number of data items requested
-
-#### Hidden options (shown during testing only)
-	-b  (--blocks enum[on|off*])write blocks to the binary cache ('off' by default)
-	-s  (--writeTxs enum[on*|off])write transactions to the binary cache ('on' by default)
-	-r  (--writeTraces enum[on*|off])write traces to the binary cache ('on' by default)
-	-d  (--ddos enum[on*|off])skip over dDos transactions in export ('on' by default)
-	-m  (--maxTraces <uint>)if --ddos:on, the number of traces defining a dDos (default = 250)
-	-n  (--no_header)     do not show the header row
-	-A  (--allABIs)       load all previously cached abi files
-	-g  (--grabABIs)      using each trace's 'to' address, grab the abi for that address (improves articulation)
-	-f  (--freshen)       freshen but do not print the exported data
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+Fixing cache: /Volumes/Samsung_T4/scraper/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
+	There was nothing to fix (0).
+acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
+address	blocknumber	transactionindex
+0xfb744b951d094b310262c8f986c860df9ab1de65	0	8713
+TIME ~ CLOCK - <INFO>  :                                                                                                                         
+TIME ~ CLOCK - <INFO>  : exported 1 appearances from 1 transactions                                                       

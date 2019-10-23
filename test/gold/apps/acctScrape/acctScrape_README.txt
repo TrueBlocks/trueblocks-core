@@ -2,21 +2,22 @@ acctScrape argc: 2 [1:-th]
 acctScrape -th 
 #### Usage
 
-`Usage:`    acctScrape [-o|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more Ethereum addresses (required) |
-| -o | --no_header | do not show the header row |
+|  | addrs | one or more Ethereum addresses (required) |
 
 #### Hidden options (shown during testing only)
 | -s | --staging | produce results in the staging folder instead of production folder |
 | -u | --unripe | visit unripe (not old enough and not yet staged or finalized) blocks |
 | -d | --daemon | we are being called in daemon mode which causes us to print results differently |
-| -r | --start <num> | start block for scan of appearances |
+| -S | --start <num> | first block to process(inclusive) |
+| -E | --end <num> | last block to process (inclusive) |
+|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

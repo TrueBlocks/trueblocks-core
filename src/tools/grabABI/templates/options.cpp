@@ -21,7 +21,7 @@ static const COption params[] = {
     COption("json", "j", "", OPT_SWITCH, "ignore export format and export as json"),
     COption("bals", "b", "", OPT_SWITCH, "if a balance does not reconcile&#44; export a message to a file"),
     COption("list", "l", "", OPT_SWITCH, "display list of monitored accounts"),
-    COption("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
+    COpt ion("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
     COption("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS

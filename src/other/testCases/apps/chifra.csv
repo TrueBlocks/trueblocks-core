@@ -1,36 +1,47 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+
+on, cmd,  fast, null,     apps/chifra, copy1,                n, COPYFILE -f ./testing_data/* ./
+
 on, cmd,  fast, null,     apps/chifra, README,               n, @th
 on, cmd,  fast, null,     apps/chifra, help,                 n, @h
 on, cmd,  fast, null,     apps/chifra, help_long,            n, help
 
-on, cmd,  fast, null,     apps/chifra, no_params,            y,
-on, cmd,  fast, null,     apps/chifra, invalid_option,       y, modes = not_a_mode
-on, both, fast, config,   apps/chifra, config_noparms,       y, modes = config
-on, both, slow, config,   apps/chifra, config_badparms,      y, modes = config & bad-param
-on, both, slow, config,   apps/chifra, config_get,           n, modes = config & get
-on, both, slow, config,   apps/chifra, config_set,           n, modes = config & set
-on, cmd,  slow, status,   apps/chifra, status,               n, modes = status all
-on, cmd,  slow, status,   apps/chifra, status_details,       n, modes = status all & details & start = 1400000 & end = 2000000
-on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, modes = blocks
-on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks & not_an_option
-on, cmd,  fast, blocks,   apps/chifra, blocks,               n, modes = blocks @ d
-on, cmd,  slow, quotes,   apps/chifra, prices,               n, modes = quotes @ p 1440
-on, both, fast, accounts, apps/chifra, accounts_noparams,    n, modes = accounts & fmt = txt
-on, both, fast, accounts, apps/chifra, accounts_badparams,   y, modes = accounts & not_an_option
-on, both, fast, accounts, apps/chifra, accounts,             n, modes = accounts & expand & fmt = txt
-on, both, slow, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
-# on, both, slow, list,     apps/chifra, list,                 y, modes = list  & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
-# on, both, slow, export,   apps/chifra, export,               y, modes = export & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+on, both, fast, seed,     apps/chifra, no_params,            y,
+on, both, fast, leech,    apps/chifra, invalid_option,       y, modes = not_a_mode
 
-off, both, fast, null,     apps/chifra, daemon_noparms,      n, modes = scrape & daemon
-off, both, fast, null,     apps/chifra, daemon_badparms,     n, modes = scrape & daemon & not_an_option
-off, both, fast, null,     apps/chifra, daemon,              n, modes = scrape & daemon & sleep 10 & filter 0x1 0x2
-off, both, fast, null,     apps/chifra, scrape,              n, modes = scrape
-off, both, fast, null,     apps/chifra, seed,                n, modes = seed & verbose
-off, both, fast, null,     apps/chifra, seed,                n, modes = leech & verbose
+on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
+#on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+#on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
 
-# These tests work against the ability to customize the exporter per
-# address. This feature has been somewhat lost.
+on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & yes & verbose = 10
+
+#on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, modes = blocks
+#on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks & not_an_option
+#on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
+
+#on, both, fast, accounts, apps/chifra, accounts,             y, modes = accounts & expand & fmt = txt
+#on, both, fast, accounts, apps/chifra, accounts_noparams,    y, modes = accounts & fmt = txt
+#on, both, fast, accounts, apps/chifra, accounts_badparams,   y, modes = accounts & not_an_option
+
+#on, both, fast, config,   apps/chifra, config_noparms,       y, modes = config
+#on, both, fast, config,   apps/chifra, config_badparms,      y, modes = config & bad-param
+#on, both, fast, config,   apps/chifra, config_get,           y, modes = config & get
+#on, both, fast, config,   apps/chifra, config_set,           y, modes = config & set
+
+#on, both, fast, status,   apps/chifra, status,               y, modes = status all
+#on, both, fast, status,   apps/chifra, status_details,       y, modes = status all & details & start = 1400000 & end = 2000000
+
+#on, both, slow, export,   apps/chifra, export,               y, modes = export & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+#on, both, fast, null,     apps/chifra, daemon_noparms,      n, modes = scrape & daemon
+#on, both, fast, null,     apps/chifra, daemon_badparms,     n, modes = scrape & daemon & not_an_option
+#on, both, fast, null,     apps/chifra, daemon,              n, modes = scrape & daemon & sleep 10 & filter 0x1 0x2
+#on, both, fast, null,     apps/chifra, scrape,              n, modes = scrape
+#on, both, fast, null,     apps/chifra, seed,                n, modes = seed & verbose
+#on, both, fast, null,     apps/chifra, seed,                n, modes = leech & verbose
+
+#
+# These tests used to work against the ability to customize the exporter per address. This feature has been lost.
+#
 # off, both, fast, null,    apps/chifra, config_show_noaddr,  n, config show
 # off, both, fast, null,    apps/chifra, config_show_badaddr, n, config show & addrs = 0x1234567812345678123456781234567812345678
 # off, both, fast, null,    apps/chifra, config_show_tip,     n, config show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359

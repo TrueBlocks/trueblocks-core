@@ -1,4 +1,9 @@
-{ "type": "CConfiguration", "data": [
+chifra argc: 3 [1:config] [2:--get] 
+chifra config --get 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --get_config
+cacheStatus argc: 2 [1:--get_config] 
+cacheStatus --get_config 
 {
   "files": [
     {
@@ -277,4 +282,3 @@
     }
   ]
 }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

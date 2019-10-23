@@ -147,18 +147,16 @@ bool COptions::handle_status(ostream& os) {
 //---------------------------------------------------------------------------
 bool countFiles(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     CCache *counter = (CCache *)data;
     if (endsWith(path, '/')) {
-        if (!contains(path, "monitors/staging"))
+        if (!isTestMode() && !contains(path, "monitors/staging"))
             counter->noteFolder(path);
         return forEveryFileInFolder(path + "*", countFiles, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
 
-        counter->noteFile(path);
+        if (!isTestMode())
+            counter->noteFile(path);
         counter->valid_counts = true;
 
     }
@@ -167,9 +165,6 @@ bool countFiles(const string_q& path, void *data) {
 
 //---------------------------------------------------------------------------
 bool noteMonitor_light(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -180,16 +175,19 @@ bool noteMonitor_light(const string_q& path, void *data) {
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
-        ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
+        CMonitorCache *ptr = (CMonitorCache*)counter->cachePtr;
+        if (isTestMode()) {
+            if (ptr->addrs.size() < 3)
+                ptr->addrs.push_back("--address--");
+        } else {
+            ptr->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
+        }
     }
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
 bool noteMonitor(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -198,15 +196,20 @@ bool noteMonitor(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
-        
+
         LOG4("Processing: ", path);
-        
+
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
+        if (isTestMode()) {
+            mdi.address = "---address---";
+            mdi.curBalance = 10000;
+        } else {
+            mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
+        }
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
@@ -235,7 +238,7 @@ bool noteMonitor(const string_q& path, void *data) {
         if (mdi.name.empty())
             counter->options->getNamedAccount(mdi, mdi.address);
 
-        if (endsWith(path, ".acct.bin")) {
+        if (!isTestMode() && endsWith(path, ".acct.bin")) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 uint32_t first = 0, last = 0;  // the data on file is stored as uint32_t. Make sure to read the right thing
@@ -259,6 +262,8 @@ bool noteMonitor(const string_q& path, void *data) {
             mdi.sizeInBytes = NOPOS;
         }
         counter->monitorArray->push_back(mdi);
+        if (isTestMode())
+            return false;
     }
     return !shouldQuit();
 }
@@ -340,9 +345,6 @@ bool noteIndex(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteABI(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     if (contains(path, "/staging"))
         return !shouldQuit();
 
@@ -357,27 +359,31 @@ bool noteABI(const string_q& path, void *data) {
         CAbiCacheItem abii;
         abii.type = abii.getRuntimeClass()->m_ClassName;
         abii.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
+        if (isTestMode())
+            abii.address = "---address---";
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
         abii.name = n.name;
-        CAbi abi;
-        abi.loadAbiFromFile(path, false);
-        sort(abi.interfaces.begin(), abi.interfaces.end());
-        abii.nFunctions = abi.nFunctions();
-        abii.nEvents = abi.nEvents();
-        abii.nOther = abi.nOther();
-        abii.sizeInBytes = fileSize(path);
+        if (isTestMode()) {
+            abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
+        } else {
+            CAbi abi;
+            abi.loadAbiFromFile(path, false);
+            sort(abi.interfaces.begin(), abi.interfaces.end());
+            abii.nFunctions = abi.nFunctions();
+            abii.nEvents = abi.nEvents();
+            abii.nOther = abi.nOther();
+            abii.sizeInBytes = fileSize(path);
+        }
         counter->abiArray->push_back(abii);
-
+        if (isTestMode())
+            return false;
     }
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
 bool notePrice(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", notePrice, data);
@@ -389,9 +395,14 @@ bool notePrice(const string_q& path, void *data) {
 
         CPriceCacheItem price;
         price.type = price.getRuntimeClass()->m_ClassName;
-        price.pair = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        price.sizeInBytes = fileSize(path);
-        price.nRecords = fileSize(path) / sizeof(CPriceQuote);
+        if (isTestMode()) {
+            price.pair = "---pair---";
+            price.sizeInBytes = price.nRecords = 36910963;
+        } else {
+            price.pair = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
+            price.sizeInBytes = fileSize(path);
+            price.nRecords = fileSize(path) / sizeof(CPriceQuote);
+        }
         counter->priceArray->push_back(price);
     }
     return !shouldQuit();

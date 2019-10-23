@@ -374,19 +374,11 @@ bool CAccountWatch::openCacheFile1(void) {
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
-    if (isTestMode()) {
-        cerr << "Would have written to " << address << ".last.txt with " << bn << endl;
-        return;
-    }
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastExport(blknum_t bn) {
-    if (isTestMode()) {
-        cerr << "Would have written to " << address << ".expt.txt with " << bn << endl;
-        return;
-    }
     stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 

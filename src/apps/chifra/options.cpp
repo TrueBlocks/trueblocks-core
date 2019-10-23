@@ -13,6 +13,8 @@ static const COption params[] = {
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
     COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -28,6 +30,8 @@ bool COptions::parseArguments(string_q& command) {
 
 // BEG_CODE_LOCAL_INIT
     bool tool_help = false;
+    blknum_t start = 0;
+    blknum_t end = NOPOS;
 // END_CODE_LOCAL_INIT
 
     bool copy_to_tool = false;
@@ -35,6 +39,7 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
+
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
@@ -44,6 +49,16 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-t" || arg == "--tool_help") {
             tool_help = true;
+
+        } else if (startsWith(arg, "--S:") || startsWith(arg, "--start:")) {
+            arg = substitute(substitute(arg, "-S:", ""), "--start:", "");
+            if (!confirmUint("start", start, arg))
+                return false;
+
+        } else if (startsWith(arg, "--E:") || startsWith(arg, "--end:")) {
+            arg = substitute(substitute(arg, "-E:", ""), "--end:", "");
+            if (!confirmUint("end", end, arg))
+                return false;
 
 // END_CODE_AUTO
 
@@ -74,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
                 mode = arg;
 
             } else if (contains(arg, ",") && isAddress(arg.substr(0,42))) {
-                if (contains(arg, ",--start=") && mode == "list") {
+                if (mode == "list") {
                     CStringArray parts;
                     explode(parts, arg, ',');
                     arg = parts[0];
@@ -105,10 +120,6 @@ bool COptions::parseArguments(string_q& command) {
                     if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
-                    } else if (startsWith(arg, "--start:") || startsWith(arg, "--end:")) {
-                        freshen_flags += (arg + " ");
-                        tool_flags += (arg + " ");
-
                     } else {
                         tool_flags += (arg + " ");
                     }
@@ -117,10 +128,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (tool_help)
-        tool_flags += (" --help");
-
     scrapeSleep = (useconds_t)sleep;
+
     if (mode == "blocks" ||
     	mode == "transactions" ||
         mode == "receipts" ||
@@ -142,17 +151,16 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (verbose) { freshen_flags += (" -v:" + uint_2_Str(verbose)); }
-    freshen_flags += addExportMode(exportFmt);
-    freshen_flags = trim(freshen_flags, ' ');
-
-    if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
-    if (expContext().asEther) { tool_flags += " --ether"; }
+    if (tool_help)              { tool_flags += " --help"; }
+    if (isNoHeader)             { tool_flags += " --no_header"; }
+    if (expContext().asEther)   { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
-    if (expContext().isParity) { tool_flags += " --parity"; }
-    if (isNoHeader) { tool_flags += " --no_header"; }
-    tool_flags += addExportMode(exportFmt);
-    tool_flags = trim(tool_flags, ' ');
+    if (expContext().isParity)  { tool_flags += " --parity"; }
+    if (verbose)      { tool_flags += " -v:"      + uint_2_Str(verbose); freshen_flags += (" -v:"     + uint_2_Str(verbose)); }
+    if (start != 0)   { tool_flags += " --start " + uint_2_Str(start);   freshen_flags += " --start " + uint_2_Str(start); }
+    if (end != NOPOS) { tool_flags += " --end "   + uint_2_Str(end);     freshen_flags += " --end "   + uint_2_Str(end); }
+    if (true)         { tool_flags += addExportMode(exportFmt);          freshen_flags += addExportMode(exportFmt); }
+    if (true)         { tool_flags  = trim(tool_flags, ' ');             freshen_flags  = trim(freshen_flags, ' '); }
 
     LOG_INFO("Connecting to node...");
     if (isNodeRunning()) {

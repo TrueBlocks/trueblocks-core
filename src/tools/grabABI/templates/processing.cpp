@@ -14,7 +14,7 @@
 #include "ncurses.h"
 
 //-----------------------------------------------------------------------
-bool COptions::displayFromCache(uint64_t startBlock) {
+bool COptions::displayFromCache(uint64_t st artBlock) {
 
     // Make sure we have a cache file...
     string_q cacheFileName = getMonitorPath(watches[0].address);

@@ -153,7 +153,7 @@ namespace qblocks {
                 }
             }
 
-            if (!combine && (arg == "-v" || arg == "-verbose")) {
+            if (!combine && (arg == "-v" || arg == "-verbose" || arg == "--verbose")) {
                 if (i < nArgs-1) {
                     uint64_t n = str_2_Uint(args[i+1]);
                     if (n > 0 && n <= 10) {

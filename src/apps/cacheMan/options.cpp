@@ -99,13 +99,11 @@ bool COptions::parseArguments(string_q& command) {
 // END_CODE_AUTO
         } else {
             address_t addr = toLower(substitute(arg, ".acct.bin", ""));
-            if (isTestMode()) cerr << addr << endl;
-            if (!isTestMode() && !isAddress(addr))
+            if (!isAddress(addr))
                 EXIT_USAGE("Option '" + arg + "' does not appear to be an address.");
 
             // Command line and chifra send in straight addresses, some test cases may send a local file...
             string_q path = (fileExists(arg + ".acct.bin") ? (arg + ".acct.bin") : getMonitorPath(addr));
-            if (isTestMode()) cerr << path << endl;
             if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
                 EXIT_USAGE("Monitor file for '" + arg + "' does not exist.");
 
@@ -176,9 +174,8 @@ bool COptions::parseArguments(string_q& command) {
                 LOG_INFO(cYellow, "\tremoval instruction: ", cTeal, removals.size(), "-", item.blk, ".", item.txid, cOff, "\r");
             }
         }
-        if (!isTestMode()) {
+        if (fileExists("./removed.txt"))
             ::remove("./remove.txt");
-        }
         ::sort(removals.begin(), removals.end());
         if (removals.size() > 0)
             handleRemove();
@@ -216,14 +213,17 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
+bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
     ENTER("loadMonitorData");
     string_q fn = getMonitorPath(addr);
-    if (isTestMode()) {
+    if (!fileExists(fn)) {
         replace(fn, getMonitorPath(""), "./");
         if (!contains(fn, ".acct.bin"))
             fn += ".acct.bin";
+        if (!fileExists(fn))
+            EXIT_FAIL("Failed to lock file '" + fn + "'. Quitting...\n");
     }
+
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
     CAppearance_base *buffer = new CAppearance_base[nRecords];
@@ -234,7 +234,8 @@ bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
             txCache.Release();
         } else {
-            EXIT_FAIL("Could not open cache file.");
+            EXIT_FAIL("Failed to lock file '" + fn + "'. Quitting...\n");
+
         }
         // Add to the items which may be non-empty
         items.reserve(items.size() + nRecords);
@@ -242,7 +243,7 @@ bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
             items.push_back(buffer[i]);
         delete [] buffer;
     } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr);
+        EXIT_FAIL("Could not allocate memory for address " + addr + "Quitting...\n");
     }
     EXIT_NOMSG(true);
 }

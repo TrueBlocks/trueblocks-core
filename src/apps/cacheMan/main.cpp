@@ -27,6 +27,7 @@ int main(int argc, const char *argv[]) {
         CStringArray modes;
         explode(modes, options.mode, '|');
         for (auto mode: modes) {
+            uint32_t nOpened = 0;
             for (size_t ac = 0 ; ac < options.monitors.size() ; ac++) {
 
                 CAccountWatch *watch = &options.monitors[ac];
@@ -36,10 +37,12 @@ int main(int argc, const char *argv[]) {
                 CAppearanceArray_base fixed;
                 fixed.reserve(2000000); // just a guess, but makes adding new records very much faster
 
-extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr);
                 CAppearanceArray_base items;
-                if (loadMonitorData(items, watch->address)) {
+                if (!options.loadMonitorData(items, watch->address)) {
+                    // do nothing
 
+                } else {
+                    nOpened++;
                     if (!options.data)
                         cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
                     if (options.exportFmt == JSON1)
@@ -123,6 +126,9 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                                         cout << "\"tx_id\": " << item.txid;
                                         cout << "}\n";
                                         first = false;
+                                    } else if (options.exportFmt == CSV1) {
+                                        cout << (isApiMode() ? ("\"" + watch->address + "\",") : "");
+                                        cout << item.blk << "," << item.txid << endl;
                                     } else {
                                         cout << (isApiMode() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
                                     }
@@ -136,10 +142,10 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
 
                     if (options.exportFmt == JSON1)
                         cout << "]";
-
-                } else {
-                    cout << "Could not open file: " << watch->name << "\n";
                 }
+
+                if (nOpened == 0)
+                    return 0;
 
                 if (options.stats.nDups) {
                     cout << cMagenta << "\tThe cache has " << options.stats.nDups << " duplicates.\n" << cOff;
@@ -156,38 +162,35 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                 asciiFileToString(lbFileName, contents);
                 blknum_t prevLastBlock = str_2_Uint(contents);
                 if (options.stats.nFixed || options.stats.nTruncs) {
-                    if (!isTestMode()) {
-                        string_q backFile = watch->name+".bak";
-                        copyFile(watch->name, backFile);
-                        usleep(1000000); // wait a second, just in case
-                        if (!fileExists(backFile)) {
-                            cerr << "Could not create backup file `" << backFile << ". Quitting...";
-                            return 1;
-                        }
+                    string_q backFile = watch->name+".bak";
+                    copyFile(watch->name, backFile);
+                    usleep(500000); // wait a second, just in case
+                    if (!fileExists(backFile)) {
+                        cerr << "Could not create backup file `" << backFile << ". Quitting...";
+                        return 1;
                     }
                     cout << "\tRe-writing " << cYellow << fixed.size() << cOff
                             << " of " << options.stats.nRecords << " records to cache: "
                             << cYellow << watch->name << cOff << " (" << options.stats.nTruncs << " truncated)\n";
 
-                    if (!isTestMode()) {
-                        remove(watch->name.c_str());
-                        CArchive txCache2(WRITING_ARCHIVE);
-                        if (txCache2.Lock(watch->name, modeWriteCreate, LOCK_NOWAIT)) {
-                            for (size_t i=0 ; i < fixed.size() ; i++) {
-                                txCache2 << fixed[i].blk << fixed[i].txid;
-                                lastBlock = fixed[i].blk;
-                            }
-                            txCache2.Release();
-                            // write the last block to file
-                            if (lastBlock > prevLastBlock || options.stats.nTruncs) {
-                                CAccountWatch monitor;
-                                monitor.address = watch->address;
-                                monitor.writeLastBlock(lastBlock);
-                            }
-                        } else {
-                            cerr << "Could not create corrected file `" << watch->name << ". Quitting...";
-                            return 1;
+                    if (fileExists(watch->name))
+                        ::remove(watch->name.c_str());
+                    CArchive txCache2(WRITING_ARCHIVE);
+                    if (txCache2.Lock(watch->name, modeWriteCreate, LOCK_NOWAIT)) {
+                        for (size_t i=0 ; i < fixed.size() ; i++) {
+                            txCache2 << fixed[i].blk << fixed[i].txid;
+                            lastBlock = fixed[i].blk;
                         }
+                        txCache2.Release();
+                        // write the last block to file
+                        if (lastBlock > prevLastBlock || options.stats.nTruncs) {
+                            CAccountWatch monitor;
+                            monitor.address = watch->address;
+                            monitor.writeLastBlock(lastBlock);
+                        }
+                    } else {
+                        cerr << "Could not create corrected file `" << watch->name << ". Quitting...";
+                        return 1;
                     }
                     cout << cMagenta << "\tThe cache was repaired and a backup created.\n" << cOff;
 
@@ -195,19 +198,17 @@ extern bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr)
                     if (!isApiMode())
                         cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
                     // write the last block to file
-                    if (!isTestMode()) {
-                        if (lastItem.blk > prevLastBlock || options.stats.nTruncs) {
-                            CAccountWatch monitor;
-                            monitor.address = watch->address;
-                            monitor.writeLastBlock(lastItem.blk);
-                        }
+                    if (lastItem.blk > prevLastBlock || options.stats.nTruncs) {
+                        CAccountWatch monitor;
+                        monitor.address = watch->address;
+                        monitor.writeLastBlock(lastItem.blk);
                     }
                 }
             }
         }
     }
 
-    if (isTestMode())
+    if (fileExists("./merged.bin"))
         ::remove("./merged.bin");
 
     acctlib_cleanup();

@@ -25,7 +25,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
-
     scanRange.first = UINT_MAX;
 
 // BEG_CODE_LOCAL_INIT

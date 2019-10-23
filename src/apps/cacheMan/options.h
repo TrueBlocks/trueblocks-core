@@ -41,6 +41,7 @@ public:
     COptions(void);
     ~COptions(void);
 
+    bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr);
     bool handleMerge    (void) const;
     bool handleSort     (void) const;
     bool handleImport   (void) const;

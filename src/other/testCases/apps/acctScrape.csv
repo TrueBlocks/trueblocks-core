@@ -1,11 +1,20 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-off, cmd,  fast, list, apps/acctScrape, preload_list, n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
+#
+# Note: for these tests we need to limit the block range. Otherwise the test changes each time we run
+#
+#on, both,  fast, rm,   apps/acctScrape, chifra_rm,       n, modes = rm & yes & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & verbose = 10, chifra
+#on, both,  fast, list, apps/acctScrape, preload_list1,   n, addrs = 0x1234567890123456789012345678901234567890 & end = 2500000 & start = 1000000 & verbose = 10
+#on, both,  fast, list, apps/acctScrape, preload_list2,   n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & verbose = 10
 
-off, cmd,  fast, null, apps/acctScrape, README,       n, @th
-off, cmd,  fast, null, apps/acctScrape, help,         n, @h
-off, cmd,  fast, null, apps/acctScrape, help_long,    n, help
+# on, cmd,  fast, null, apps/acctScrape, README,          n, @th
+# on, cmd,  fast, null, apps/acctScrape, help,            n, @h
+# on, cmd,  fast, null, apps/acctScrape, help_long,       n, help
 
-off, both, fast, list, apps/acctScrape, no_params,    n,
-off, both, fast, list, apps/acctScrape, fail_list1,   n, list
-off, both, fast, list, apps/acctScrape, fail_list2,   n, addrs = 0x1234567890123456789012345678901234567890
-off, both, fast, list, apps/acctScrape, list_test,    n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
+# on, both, fast, list, apps/acctScrape, no_params,       n,
+# on, both, fast, list, apps/acctScrape, fail_list1,      n, list
+# on, cmd,  fast, list, apps/acctScrape, fail_list2,      n, addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2500000
+# on, both, fast, list, apps/acctScrape, list_test,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+
+# on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+# on, both, fast, list, apps/acctScrape, list_stage,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+# on, both, fast, list, apps/acctScrape, list_unripe,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000

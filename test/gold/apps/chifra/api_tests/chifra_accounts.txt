@@ -1,3 +1,8 @@
+chifra argc: 5 [1:accounts] [2:--expand] [3:--fmt] [4:txt] 
+chifra accounts --expand --fmt txt 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+getAccounts argc: 2 [1:--expand] 
+getAccounts --expand 
 group	subgroup	address	name	symbol	source	description	logo	is_contract	is_private	is_shared
 50-Tokens		0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	Etherscan.io	The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	trueusdtoken_28.png	true	false	true
 50-Tokens		0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	Etherscan.io	Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs	ipexchange_28.png	true	false	true

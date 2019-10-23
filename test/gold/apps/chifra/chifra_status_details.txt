@@ -1,9 +1,9 @@
 chifra argc: 8 [1:status] [2:all] [3:--details] [4:--start] [5:1400000] [6:--end] [7:2000000] 
 chifra status all --details --start 1400000 --end 2000000 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
-TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details --start 1400000 --end 2000000
-cacheStatus argc: 7 [1:all] [2:--details] [3:--start] [4:1400000] [5:--end] [6:2000000] 
-cacheStatus all --details --start 1400000 --end 2000000 
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details --start:1400000 --end:2000000
+cacheStatus argc: 5 [1:all] [2:--details] [3:--start:1400000] [4:--end:2000000] 
+cacheStatus all --details --start:1400000 --end:2000000 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -549,17 +549,28 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "addrs": [],
-      "items": [],
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "curBalance": 10000,
+          "enabled": true,
+          "address": "---address---",
+          "firstAppearance": 18446744073709551615,
+          "latestAppearance": 18446744073709551615,
+          "nRecords": 18446744073709551615,
+          "sizeInBytes": 18446744073709551615
+        }
+      ],
       "type": "CMonitorCache",
       "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CNameCache",
@@ -567,16 +578,25 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
-      "items": [],
+      "items": [
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36963,
+          "nEvents": 36963,
+          "nOther": 36963,
+          "address": "---address---",
+          "sizeInBytes": 36963
+        }
+      ],
       "type": "CAbiCache",
       "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -584,7 +604,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -592,7 +612,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -600,7 +620,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "addrs": [],
@@ -610,16 +630,23 @@ cacheStatus all --details --start 1400000 --end 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
-      "items": [],
+      "items": [
+        {
+          "type": "CPriceCacheItem",
+          "pair": "---pair---",
+          "nRecords": 36910963,
+          "sizeInBytes": 36910963
+        }
+      ],
       "type": "CPriceCache",
       "path": "PricePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
   ]
 }

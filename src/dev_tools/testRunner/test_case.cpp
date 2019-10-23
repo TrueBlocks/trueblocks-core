@@ -17,8 +17,6 @@
 #include <algorithm>
 #include "test_case.h"
 
-namespace qblocks {
-
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CTestCase, CBaseNode);
 
@@ -67,6 +65,9 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "builtin" ) { builtin = str_2_Bool(fieldValue); return true; }
+            break;
         case 'f':
             if ( fieldName % "filename" ) { filename = fieldValue; return true; }
             if ( fieldName % "fileName" ) { fileName = fieldValue; return true; }
@@ -126,6 +127,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> origLine;
+    archive >> builtin;
     archive >> onOff;
     archive >> mode;
     archive >> speed;
@@ -152,6 +154,7 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << origLine;
+    archive << builtin;
     archive << onOff;
     archive << mode;
     archive << speed;
@@ -201,6 +204,7 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD(CTestCase, "cname", T_TEXT,  ++fieldNum);
     ADD_FIELD(CTestCase, "origLine", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTestCase, "builtin", T_BOOL, ++fieldNum);
     ADD_FIELD(CTestCase, "onOff", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "mode", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "speed", T_TEXT, ++fieldNum);
@@ -269,6 +273,9 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "builtin" ) return bool_2_Str_t(builtin);
+            break;
         case 'f':
             if ( fieldName % "filename" ) return filename;
             if ( fieldName % "fileName" ) return fileName;
@@ -326,6 +333,29 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
+CStringArray commands = { "COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv" };
+
+//-----------------------------------------------------------------------
+bool prepareBuiltIn(string_q& options) {
+    for (auto cmd : commands) {
+        string_q match = nextTokenClear(cmd, '|');
+        if (startsWith(options, match)) {
+            ostringstream os;
+            bool debug = false;
+            if (debug)
+               os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
+            os << options;
+            if (debug)
+               os << " ; ls -l ; ";
+            options = os.str();
+            replaceAll(options, match, cmd);
+            return true;
+        }
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
 CTestCase::CTestCase(const string_q& line) {
     origLine = line;
 
@@ -343,15 +373,19 @@ CTestCase::CTestCase(const string_q& line) {
 
     path     = nextTokenClear(tool, '/');
     if (endsWith(path, "lib"))
-        path = "libs/" + path;
+    path = "libs/" + path;
 
     fileName = tool + "_" + filename + ".txt";
 
-    replaceAll(options, " = ", "=");
-    replaceAll(options, " & ", "&");
-    replaceAll(options, " @ ", "@");
     replaceAll(post, "n", "");
     replaceAll(post, "y", "jq");
+
+    builtin = prepareBuiltIn(options);
+    if (!builtin) {
+        replaceAll(options, " = ", "=");
+        replaceAll(options, " & ", "&");
+        replaceAll(options, " @ ", "@");
+    }
 }
 
 //---------------------------------------------------------------------------------------------
@@ -359,39 +393,41 @@ void CTestCase::prepareTest(bool cmdLine) {
     goldPath = "../../../gold/" + path + "/" + tool + "/";
     workPath = substitute(goldPath, "/gold/", "/working/");
 
-    if (cmdLine) {
-        CStringArray opts = {
-            "val",
-            "addrs",
-            "blocks",
-            "classes",
-            "dates",
-            "transactions",
-            "terms",
-            "functions",
-            "modes",
-        };
-        options = "&" + options;
-        for (auto opt : opts)
-            replaceAll(options, "&" + opt + "=", " ");
-        replaceAll(options, "%20", " ");
-        replaceAll(options, "@", " -");
-        replaceAll(options, "&", " --");
-        replaceAll(options, "\\*", " \"*\"");
-        replaceAll(options, "=", " ");
-        if (trim(options) == "--" || startsWith(trim(options), "-- "))
-            replace(options, "--", "");
+    if (!builtin) { // order matters
+        if (cmdLine) {
+            CStringArray opts = {
+                "val",
+                "addrs",
+                "blocks",
+                "classes",
+                "dates",
+                "transactions",
+                "terms",
+                "functions",
+                "modes",
+            };
+            options = "&" + options;
+            for (auto opt : opts)
+                replaceAll(options, "&" + opt + "=", " ");
+            replaceAll(options, "%20", " ");
+            replaceAll(options, "@", " -");
+            replaceAll(options, "&", " --");
+            replaceAll(options, "\\*", " \"*\"");
+            replaceAll(options, "=", " ");
+            if (trim(options) == "--" || startsWith(trim(options), "-- "))
+                replace(options, "--", "");
 
-    } else {
-        if (tool == "chifra")
-            nextTokenClear(options, '&');
-        replaceAll(options, "@", "");
-        replaceAll(options, " ", "%20");
-        goldPath += "api_tests/";
-        workPath += "api_tests/";
+        } else {
+            if (tool == "chifra")
+                nextTokenClear(options, '&');
+            replaceAll(options, "@", "");
+            replaceAll(options, " ", "%20");
+            goldPath += "api_tests/";
+            workPath += "api_tests/";
+        }
     }
 
-    string_q removePath = workPath + fileName;
+    string_q removePath = workPath + fileName; // order matters
     if (fileExists(removePath))
         ::remove(removePath.c_str());
 
@@ -399,5 +435,4 @@ void CTestCase::prepareTest(bool cmdLine) {
         tool = optTool;
 }
 // EXISTING_CODE
-}  // namespace qblocks
 

@@ -1,0 +1,37 @@
+cacheMan argc: 3 [1:--fix] [2:0x5555533333555553333355555333335555533333] 
+cacheMan --fix 0x5555533333555553333355555333335555533333 
+Fixing cache: 0x5555533333555553333355555333335555533333.acct.bin
+	Reversal skipped at record 33, current 988725	1, previous 1017545	4
+	Reversal skipped at record 34, current 988728	2, previous 1017545	4
+	Reversal skipped at record 35, current 988732	4, previous 1017545	4
+	Reversal skipped at record 36, current 988733	2, previous 1017545	4
+	Reversal skipped at record 37, current 988737	9, previous 1017545	4
+	Reversal skipped at record 38, current 988752	3, previous 1017545	4
+	Reversal skipped at record 39, current 988775	1, previous 1017545	4
+	Reversal skipped at record 40, current 988781	5, previous 1017545	4
+	Reversal skipped at record 41, current 988783	4, previous 1017545	4
+	Reversal skipped at record 42, current 988784	1, previous 1017545	4
+	Reversal skipped at record 43, current 988831	2, previous 1017545	4
+	Reversal skipped at record 44, current 988838	0, previous 1017545	4
+	Reversal skipped at record 45, current 988840	0, previous 1017545	4
+	Reversal skipped at record 46, current 988850	5, previous 1017545	4
+	Reversal skipped at record 47, current 988957	4, previous 1017545	4
+	Reversal skipped at record 48, current 988961	3, previous 1017545	4
+	Reversal skipped at record 49, current 988966	3, previous 1017545	4
+	Reversal skipped at record 50, current 988970	1, previous 1017545	4
+	Reversal skipped at record 51, current 988972	2, previous 1017545	4
+	Reversal skipped at record 52, current 988986	0, previous 1017545	4
+	Reversal skipped at record 53, current 989042	2, previous 1017545	4
+	Reversal skipped at record 54, current 989198	3, previous 1017545	4
+	Reversal skipped at record 55, current 989332	2, previous 1017545	4
+	Reversal skipped at record 56, current 989345	2, previous 1017545	4
+	Reversal skipped at record 57, current 992893	13, previous 1017545	4
+	Reversal skipped at record 58, current 994377	3, previous 1017545	4
+	Reversal skipped at record 59, current 994542	7, previous 1017545	4
+	Reversal skipped at record 60, current 994800	2, previous 1017545	4
+	Reversal skipped at record 61, current 997079	10, previous 1017545	4
+	Reversal skipped at record 62, current 1014512	3, previous 1017545	4
+	Reversal skipped at record 63, current 1016810	6, previous 1017545	4
+	Duplicate removed at record 64, current 1017545	4, previous 1017545	4
+	Re-writing 32 of 64 records to cache: 0x5555533333555553333355555333335555533333.acct.bin (0 truncated)
+	The cache was repaired and a backup created.

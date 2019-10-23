@@ -20,10 +20,14 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
-      "addrs": [],
+      "addrs": [
+        "--address--",
+        "--address--",
+        "--address--"
+      ],
       "type": "CMonitorCache",
       "path": "CachePath",
       "nFiles": 0,
@@ -45,7 +49,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -53,7 +57,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -61,7 +65,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -69,7 +73,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "addrs": [],
@@ -86,7 +90,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
   ]
 }

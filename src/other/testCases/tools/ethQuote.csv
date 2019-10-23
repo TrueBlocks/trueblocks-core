@@ -3,6 +3,7 @@ on, cmd,  fast, quotes, tools/ethQuote, README,            n, @th
 on, cmd,  fast, quotes, tools/ethQuote, help,              n, @h
 on, cmd,  fast, quotes, tools/ethQuote, help_long,         n, help
 on, cmd,  fast, quotes, tools/ethQuote, no_params,         y,
+
 on, both, fast, quotes, tools/ethQuote, invalid_param_1,   y, junk
 on, both, fast, quotes, tools/ethQuote, period_invalid,    y, period
 on, both, fast, quotes, tools/ethQuote, period_invalid_02, y, period = 12

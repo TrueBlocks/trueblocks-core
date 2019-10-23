@@ -11,6 +11,8 @@ chifra --help
 #### Hidden options (shown during testing only)
 	-e  (--set)           for status config only, indicates that this is config --sef
 	-t  (--tool_help)     call into the underlying tool's help screen
+	-S  (--start <num>)   first block to process(inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 

@@ -59,13 +59,13 @@ int main(int argc, const char *argv[]) {
                 bool ignore3 = contains(line, ", route,");
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
-                         if (contains(line, " all,")) { /* do nothing */ }
+                    if (contains(line, " all,")) { /* do nothing */ }
                     else if (options.filter == "fast" ) ignore4 = !contains(line, "fast,");
                     else if (options.filter == "slow" ) ignore4 = !contains(line, "slow,");
                     else if (options.filter == "medi" ) ignore4 = !contains(line, "medi,");
                 }
 
-                if (line.empty() || startsWith(line, "enabled") || ignore1 || ignore2 || ignore3 || ignore4) {
+                if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff)
                         cerr << iBlue << "   # " << line << cOff << endl;
                     // do nothing
@@ -156,7 +156,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
 
             } else {
                 cmd << "curl -s \"http:/""/localhost:8080/" << test.route;
-                if (!test.options.empty())
+                if (!test.builtin && !test.options.empty())
                     cmd << "?" << test.options;
                 cmd << "\"";
                 if (!test.post.empty())
@@ -165,6 +165,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             }
 
             string_q theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + cmd.str();
+            if (test.builtin)
+                theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + test.options;
             LOG4(theCmd);
 
             string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
@@ -175,29 +177,43 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
+            if (test.builtin) {
+                nPassed++;
+                continue;
+            }
+
             double thisTime = str_2_Double(TIC());
             testTime += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
+            if (endsWith(test.path, "lib"))
+                replace(test.workPath, "../", "");
+
+            string_q newFn = test.goldPath + test.fileName;
+            string_q newText = asciiFileToString(newFn);
+
+            string_q oldFn = test.workPath + test.fileName;
+            string_q oldText = asciiFileToString(oldFn);
+
             string_q result = greenCheck;
-            if (!ret) {
-                if (endsWith(test.path, "lib"))
-                    replace(test.workPath, "../", "");
-                string_q newText = asciiFileToString(test.workPath + test.fileName);
-                string_q oldText = asciiFileToString(test.goldPath + test.fileName);
-                if (newText.empty() || newText != oldText) {
-                    ostringstream os;
-                    os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
-                    os << test.filename << ".txt " << cOff << "(" << testName << trim(test.options) << ")" << endl;
-                    fails.push_back(os.str());
-                    result = redX;
-                } else
-                    nPassed++;
+            if (!newText.empty() && newText == oldText) {
+                nPassed++;
 
             } else {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
-                os << test.filename << ".txt " << cOff << "(" << testName << trim(test.options) << ")" << endl;
+                os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":testName) << " " << trim(test.options) << ")" << cRed;
+                if (newText.empty())    os << " working file is empty ";
+                if (ret)                os << " system call returned non-zero ";
+
+                if (newText != oldText) {
+                    os << " files differ " << endl;
+                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
+//                    os << cYellow << newText << endl;
+                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
+//                    os << cBlue << oldText;
+                }
+                os << cOff << endl;
                 fails.push_back(os.str());
                 result = redX;
             }
