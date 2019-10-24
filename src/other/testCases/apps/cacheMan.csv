@@ -13,7 +13,10 @@ on, cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
 on, cmd, fast, null, apps/cacheMan, invalid_param_2, n, @l & junk
 on, cmd, fast, null, apps/cacheMan, noFile,          n, stats
 
-on, cmd, fast, null, apps/cacheMan, copy_0x9,        n, COPYFILE -f ./testing_data/* ./
+on, cmd, fast, null, apps/cacheMan, copy_1,          n, COPYFILE -f ./testing_data/0x1111122222111112222211111222221111122222.history ./0x1111122222111112222211111222221111122222.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_2,          n, COPYFILE -f ./testing_data/0x5555533333555553333355555333335555533333.history ./0x5555533333555553333355555333335555533333.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_3,          n, COPYFILE -f ./testing_data/0x9876543210987654321098765432109876543210.history ./0x9876543210987654321098765432109876543210.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_4,          n, COPYFILE -f ./testing_data/*.txt ./
 
 on, cmd, fast, null, apps/cacheMan, list_0x9,        n, @l & addrs = 0x9876543210987654321098765432109876543210
 on, cmd, fast, null, apps/cacheMan, check_0x9,       n, @c & addrs = 0x9876543210987654321098765432109876543210
