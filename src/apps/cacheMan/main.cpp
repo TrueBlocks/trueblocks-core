@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
                 } else {
                     nOpened++;
                     if (!options.data)
-                        cerr << toProper(mode)+"ing cache: " << watch->name << "\n";
+                        cerr << toProper(mode)+"ing cache: " << substitute(watch->name, getCachePath(""), "${CACHE}/") << "\n";
                     if (options.exportFmt == JSON1)
                         cout << "[";
 
