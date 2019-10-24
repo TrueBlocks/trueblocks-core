@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "test_case.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CTestCase, CBaseNode);
 
@@ -435,4 +437,5 @@ void CTestCase::prepareTest(bool cmdLine) {
         tool = optTool;
 }
 // EXISTING_CODE
+}  // namespace qblocks
 
