@@ -111,10 +111,10 @@ const char* STR_ERROR_MSG =
     latestBlockTs = latest.timestamp;
     latestBlockNum = latest.blockNumber;
 
-    string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";
+    string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        ASSERT(prefunds.size() == 8893);  // This is a known value
-        cerr << "\tBuilding origin block index" << endl;
+        LOG_INFO("Origin block index (" + zeroBin + ") not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
+        ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
             // The prefund transactions have a zero for thier block numbers and an index
@@ -124,7 +124,9 @@ const char* STR_ERROR_MSG =
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());
         }
+        LOG_INFO("Writing index...");
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
+        LOG_INFO("Done...");
     }
 
     const CToml *config = getGlobalConfig("blockScrape");
