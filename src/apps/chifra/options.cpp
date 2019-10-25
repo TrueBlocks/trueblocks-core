@@ -120,6 +120,10 @@ bool COptions::parseArguments(string_q& command) {
                     if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
+                    } else if (startsWith(arg, "--start:") || startsWith(arg, "--end:")) {
+                        freshen_flags += (arg + " ");
+                        tool_flags += (arg + " ");
+
                     } else {
                         tool_flags += (arg + " ");
                     }
