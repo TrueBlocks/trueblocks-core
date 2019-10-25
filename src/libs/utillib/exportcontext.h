@@ -31,16 +31,7 @@ namespace qblocks {
         bool asWei;
         bool isParity;
         CNameValueMap fmtMap;
-#ifndef PROVING
         CExportOptions(void) {
-#else
-        bool proving;
-        bool verifying;
-        ostringstream proof;
-        CExportOptions(void) : proof() {
-            proving = false;
-            verifying = false;
-#endif
             noFrst = false;
             lev = 0; spcs = 2;
             tab = ' '; nl = '\n';

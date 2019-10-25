@@ -75,17 +75,6 @@ extern void loadParseMap(void);
 
     //-------------------------------------------------------------------------
     void etherlib_cleanup(void) {
-#ifdef PROVING
-        if (expContext().proving) {
-            string_q proof = expContext().proof.str();
-            cout << bGreen << "proof: " << cOff << proof << "\n";
-            if (verbose)
-                cout << bGreen << "hex: " << cOff  << chr_2_HexStr(proof) << "\n";
-            cout << bGreen << "hash: " << cOff  << getSha3(chr_2_HexStr(proof)) << "\n";
-            cout.flush();
-        }
-#endif
-
         {
             // Keep the frame
             mutex aMutex;

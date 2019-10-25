@@ -16,8 +16,8 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (append new data)"),
-    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "Display prices in this increment"),
-    COption("pair", "a", "<string>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
+    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "display prices in this increment"),
+    COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
 // END_CODE_OPTIONS
 };

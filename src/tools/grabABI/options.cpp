@@ -61,9 +61,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-g" || arg == "--generate") {
             generate = true;
 
-        } else if (arg == "-d" || arg == "--data") {
-            data = true;
-
         } else if (arg == "-e" || arg == "--encode") {
             encode = true;
 
@@ -81,6 +78,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-k" || arg == "--known") {
             known = true;
+
+        } else if (arg == "-d" || arg == "--data") {
+            data = true;
 
 // END_CODE_AUTO
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--sol:")) {
@@ -226,9 +226,9 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     generate = false;
-    data = false;
     noconst = false;
     silent = false;
+    data = false;
 // END_CODE_INIT
 
     parts = SIG_DEFAULT;

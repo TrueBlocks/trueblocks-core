@@ -306,18 +306,6 @@ namespace qblocks {
 
         }
 
-#ifdef PROVING
-        if (isEnabled(OPT_PROVE) && contains(cmdLine, "--prove ")) {
-            replaceAll(cmdLine, "--prove ", "");
-            expContext().proving = true;
-        }
-
-        if (isEnabled(OPT_VERIFY) && contains(cmdLine, "--verify ")) {
-            replaceAll(cmdLine, "--verify ", "");
-            expContext().verifying = true;
-        }
-#endif
-
         if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
             expContext().asEther = true;
@@ -411,12 +399,6 @@ namespace qblocks {
                 return true;
         }
 
-#ifdef PROVING
-        if (isEnabled(OPT_PROVE) && arg == "--prove")
-            return true;
-        if (isEnabled(OPT_VERIFY) && arg == "--verify")
-            return true;
-#endif
         if (isEnabled(OPT_ETHER) && arg == "--ether")
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")

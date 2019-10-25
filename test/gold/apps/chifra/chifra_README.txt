@@ -15,7 +15,7 @@ chifra -th
 #### Hidden options (shown during testing only)
 | -e | --set | for status config only, indicates that this is config --sef |
 | -t | --tool_help | call into the underlying tool's help screen |
-| -S | --start <num> | first block to process(inclusive) |
+| -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)

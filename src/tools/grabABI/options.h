@@ -17,9 +17,9 @@ class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
     bool generate;
-    bool data;
     bool noconst;
     bool silent;
+    bool data;
 // END_CODE_DECLARE
 
     uint64_t parts;

@@ -2,8 +2,6 @@
 
 The `getBlock` tool retrieves Ethereum block data from a running node or, if previously retrieved, the QBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
 
-The tool may also be used to double check that the results produced from the QBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that QBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
-
 #### Usage
 
 `Usage:`    getBlock [-n|-c|-a|-u|-q|-m|-i|-v|-h] &lt;block&gt; [block...]  
@@ -15,12 +13,10 @@ The tool may also be used to double check that the results produced from the QBl
 | -------: | :------- | :------- |
 |  | blocks | a space-separated list of one or more blocks to retrieve (required) |
 | -n | --hashes_only | display only transaction hashes, default is to display full transaction detail |
-| -c | --check | compare results between qblocks and Ethereum node, report differences, if any |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -q | --uniq_tx | display only uniq addresses found per transaction |
 | -m | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
-| -i | --filter <addr> | useful only for --addrs or --uniq, only display this address in results |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

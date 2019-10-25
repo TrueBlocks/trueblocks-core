@@ -76,13 +76,6 @@ PRINT(msg); }
         postData +=  quote("params")  + ":"  + params + ",";
         postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
         postData += "}";
-#ifdef PROVING
-        if (expContext().proving) {
-            if (expContext().proof.str().length() > 1)
-                expContext().proof << ",";
-            expContext().proof << postData;
-        }
-#endif
 
 PRINT("postData: " + postData);
 

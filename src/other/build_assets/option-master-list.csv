@@ -1,7 +1,7 @@
 num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_visible,generate,option_kind,data_type,description
 
 10020,apps,list,acctScrape,addrs,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more Ethereum addresses
-10040,apps,list,acctScrape,finalized,s,true,FALSE,FALSE,FALSE,local,toggle,<boolean>,toggle search of finalized folder ([{DEF}] by default)
+10040,apps,list,acctScrape,finalized,f,true,FALSE,FALSE,FALSE,local,toggle,<boolean>,toggle search of finalized folder ([{DEF}] by default)
 10060,apps,list,acctScrape,staging,s,false,FALSE,FALSE,FALSE,local,toggle,<boolean>,toggle search of staging (not yet finalized) folder ([{DEF}] by default)
 10080,apps,list,acctScrape,unripe,u,false,FALSE,FALSE,FALSE,local,toggle,<boolean>,toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
 10100,apps,list,acctScrape,daemon,d,,FALSE,FALSE,FALSE,yes,switch,<boolean>,we are being called in daemon mode which causes us to print results differently
@@ -62,6 +62,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 11200,apps,,chifra,sleep,s,14,FALSE,TRUE,FALSE,yes,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
 11220,apps,,chifra,set,e,,FALSE,FALSE,FALSE,,switch,<boolean>,for status config only&#44; indicates that this is config --sef
 11240,apps,,chifra,tool_help,t,,FALSE,FALSE,FALSE,local,switch,<boolean>,call into the underlying tool's help screen
+10120,apps,,chifra,start,S,0,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process (inclusive)
+10140,apps,,chifra,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
 11260,apps,,chifra,,,,FALSE,TRUE,TRUE,na,description,,Create a TrueBlocks monitor configuration.
 
 11300,apps,,cacheMan,filenames,,,TRUE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
@@ -123,17 +125,11 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 
 12440,tools,blocks,getBlock,blocks,,,TRUE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12460,tools,blocks,getBlock,hashes_only,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
-12480,tools,blocks,getBlock,check,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,compare results between qblocks and Ethereum node&#44; report differences&#44; if any
 12500,tools,blocks,getBlock,addrs,a,,FALSE,TRUE,TRUE,local,switch,<boolean>,display all addresses included in the block
 12520,tools,blocks,getBlock,uniq,u,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per block
 12540,tools,blocks,getBlock,uniq_tx,n,,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per transaction
 12560,tools,blocks,getBlock,count_only,o,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
-12580,tools,blocks,getBlock,filter,f,,FALSE,TRUE,TRUE,,flag,<addr>,useful only for --addrs or --uniq&#44; only display this address in results
-12600,tools,blocks,getBlock,report,r,,FALSE,FALSE,FALSE,local,switch,<boolean>,display the latest blocks at both the node and the cache
 12620,tools,blocks,getBlock,force,e,,FALSE,FALSE,FALSE,yes,switch,<boolean>,force a re-write of the block to the cache
-12640,tools,blocks,getBlock,quiet,q,,FALSE,FALSE,FALSE,yes,switch,<boolean>,do not print results to screen&#44; used for speed testing and data checking
-12660,tools,blocks,getBlock,cache,C,,FALSE,FALSE,FALSE,yes,switch,<boolean>,use the cache for data retrieval
-12680,tools,blocks,getBlock,normalize,m,,FALSE,FALSE,FALSE,yes,switch,<boolean>,normalize (remove un-common fields and sort) for comparison with other results (testing)
 12700,tools,blocks,getBlock,,,,FALSE,TRUE,TRUE,na,description,,Returns block(s) from local cache or directly from a running node.
 
 12740,tools,blooms,getBloom,blocks,,,TRUE,TRUE,TRUE,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms

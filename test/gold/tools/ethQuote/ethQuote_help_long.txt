@@ -6,8 +6,8 @@ ethQuote --help
 
   Where:  
 	-f  (--freshen)       Freshen price database (append new data)
-	-p  (--period <val>)  Display prices in this increment, one of [5|15|30|60|120*|240|1440]
-	-a  (--pair <str>)    Which price pair to freshen or list (see Poloniex)
+	-p  (--period <val>)  display prices in this increment, one of [5|15|30|60|120*|240|1440]
+	-a  (--pair <str>)    which price pair to freshen or list (see Poloniex)
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

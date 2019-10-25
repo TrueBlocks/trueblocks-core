@@ -2,14 +2,14 @@ cacheMan argc: 2 [1:-th]
 cacheMan -th 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] fn_list  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] filenames  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | fn_list | path(s) of files to check, merge, fix or display (default=display) (required) |
+|  | filenames | path(s) of files to check, merge, fix or display (default=display) (required) |
 | -c | --check | check for duplicates and other problems in the cache |
 | -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
@@ -22,7 +22,7 @@ cacheMan -th
 
 #### Hidden options (shown during testing only)
 | -k | --skip <num> | skip value for testing |
-| -S | --start <num> | first block to process(inclusive) |
+| -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)

@@ -30,15 +30,8 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         // There can be more than one thing to do...
-#ifndef PROVING
-        if (!options.quiet && options.filterType.empty())
+        if (options.filterType.empty())
             cout << (options.isMulti() ? "[" : "");
-#else
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.count_only && !expContext().proving)
-            cout << (options.isMulti() ? "[" : "");
-        if (expContext().proving)
-            expContext().proof << "[";
-#endif
 
         string_q list = options.getBlockNumList();
         while (!list.empty() && !shouldQuit()) {
@@ -46,41 +39,19 @@ int main(int argc, const char *argv[]) {
             if (!options.filterType.empty()) {
                 getAddresses(bn, options);
 
-            } else if (options.check) {
-                string_q checkResults = checkOneBlock(bn, options);
-                cout << checkResults << endl;
-                cout.flush();
-
             } else {
                 string_q result = doOneBlock(bn, options);
-                if (options.normalize) {
-                    if (verbose)
-                        cout << bn << "\n";
-                    result = normalizeBlock(result, false, bn >= byzantiumBlock);
-                }
-                if (!options.quiet) {
-                    if (!result.empty()) {
-                        cout << result;
-                        if (!list.empty())
-                            cout << ",";
-                        cout << "\n";
-                    }
-
-                } else {
-                    interumReport(cerr, bn);
+                if (!result.empty()) {
+                    cout << result;
+                    if (!list.empty())
+                        cout << ",";
+                    cout << "\n";
                 }
             }
         }
 
-#ifndef PROVING
-        if (!options.quiet && options.filterType.empty())
+        if (options.filterType.empty())
             cout << (options.isMulti() ? "]" : "");
-#else
-        if (!options.quiet && !options.showAddrs && !options.uniqAddrs && !options.count_only && !expContext().proving)
-            cout << (options.isMulti() ? "]" : "");
-        if (expContext().proving)
-            expContext().proof << "]";
-#endif
     }
 
     etherlib_cleanup();
@@ -96,12 +67,9 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
     string_q numStr = uint_2_Str(num);
     if (opt.isRaw) {
 
-//        double start = qbNow();
         if (!queryRawBlock(result, numStr, true, opt.hashes_only)) {
             result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
-//            double end = qbNow();
-//            cerr << numStr << "\t" << (end - start) << "\n";
             if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
                 generic.parseJson3(result);
@@ -116,16 +84,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
 
     } else {
         string_q fileName = getBinaryCacheFilename(CT_BLOCKS, gold.blockNumber);
-        if (opt.cache) {
-
-            // --source::cache mode doesn't include timestamp in transactions
-            readBlockFromBinary(gold, fileName);
-            for (size_t t = 0 ; t < gold.transactions.size() ; t++)
-                gold.transactions.at(t).timestamp = gold.timestamp;  // .at cannot go past end of vector!
-
-        } else {
-            queryBlock(gold, numStr, (isApiMode() ? false : true));
-        }
+        queryBlock(gold, numStr, (isApiMode() ? false : true));
         if (gold.blockNumber == 0 && gold.timestamp == 0)
             gold.timestamp = blockZeroTs;
         gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
@@ -138,71 +97,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         result = gold.Format(opt.format);
     }
 
-#ifndef PROVING
-#else
-    if (expContext().proving) {
-        if (!expContext().proof.str().empty())
-            expContext().proof << ",";
-        expContext().proof << substitute(substitute(result, " ", ""), "\n", "");
-        result = "";
-    }
-#endif
     return result;
-}
-
-//------------------------------------------------------------
-string_q checkOneBlock(uint64_t num, const COptions& opt) {
-
-    string_q numStr = uint_2_Str(num);
-
-    // Get the block raw from the node...
-    string_q fromNode;
-    queryRawBlock(fromNode, numStr, true, false);
-    replace(fromNode, "\"hash\":", "\"blockHash\":");
-    if (verbose)
-        cout << num << "\n";
-    fromNode = normalizeBlock(fromNode, true, num >= byzantiumBlock);
-
-    // Now get the same block from QBlocks
-    string_q fromQblocks;
-    CBlock qBlocks;
-    queryBlock(qBlocks, numStr, true);
-    for (size_t i = 0 ; i < qBlocks.transactions.size() ; i++) {
-        // QBlocks pulls the receipt for each transaction, but the RPC does
-        // not. Therefore, we must set the transactions' gasUsed and logsBloom
-        // to be the same as the block's (even though they are not) so they
-        // are removed as duplicates. Otherwise, the blocks won't match
-        qBlocks.transactions.at(i).receipt.gasUsed = qBlocks.gasUsed;  // .at cannot go past end of vector!
-        // qBlocks.transactions[i].receipt.logsBloom = qBlocks.logsBloom;
-    }
-    if (verbose)
-        cout << num << "\n";
-    fromQblocks = normalizeBlock(qBlocks.Format(), true, num >= byzantiumBlock);
-
-extern string_q hiddenFields(void);
-    string_q result = hiddenFields() + "The strings are ";
-             result += ((fromNode != fromQblocks) ? "different\n" : "the same\n");
-    string_q diffA  = "In fromNode but not fromQblocks:\n" + diffStr(fromNode, fromQblocks);
-    string_q diffB  = "In fromQblocks but not fromNode:\n" + diffStr(fromQblocks, fromNode);
-
-    // return the results
-    string_q head = "\n" + string_q(80, '-') + "\n";
-//    if (opt.quiet) {
-//        // only report results if we're being very quiet
-//        if (fromNode != fromQblocks)
-//            return "Difference at block " + cYellow + uint_2_Str(num) + cOff + ".\n" +
-//            "\t" + diffStr(fromNode, fromQblocks) + "\t" + diffStr(fromQblocks, fromNode);
-//        cout << "Checking block " + cYellow + uint_2_Str(num) + cOff + "...";
-//        cout << greenCheck << "         \r";
-//        cout.flush();
-//        return "";
-//    }
-
-    return head + "from Node:\n" + fromNode +
-            head + "from QBlocks:\n" + fromQblocks +
-            head + result +
-            head + diffA +
-            head + diffB;
 }
 
 //------------------------------------------------------------
@@ -226,19 +121,6 @@ bool sortByBlocknumTxId(const CAppearance& v1, const CAppearance& v2) {
 
 extern bool visitAddrs(const CAppearance& item, void *data);
 extern bool transFilter(const CTransaction *trans, void *data);
-
-//------------------------------------------------------------
-bool passesFilter(const COptions *opts, const CAppearance& item) {
-    if (item.tc == 10 && !opts->showZeroTrace)
-        return false;
-    if (opts->filters.size() == 0)
-        return true;
-    for (auto elem : opts->filters)
-        if (elem % item.addr)
-            return true;
-    return false;
-}
-
 //------------------------------------------------------------
 string_q getAddresses(uint64_t num, const COptions& opt) {
 
@@ -264,7 +146,7 @@ string_q getAddresses(uint64_t num, const COptions& opt) {
 bool visitAddrs(const CAppearance& item, void *data) {
     if (!isZeroAddr(item.addr)) {
         COptions *opt = (COptions*)data;
-        if (passesFilter(opt, item)) {
+        if (item.tc != 10) {  // do not show or count the zeroTrace items since it duplicates the transaction's from and to
             if (opt->count_only) {
                 opt->addrCounter++;
 

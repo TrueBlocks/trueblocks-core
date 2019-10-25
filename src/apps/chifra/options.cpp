@@ -13,7 +13,7 @@ static const COption params[] = {
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
     COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
@@ -35,6 +35,7 @@ bool COptions::parseArguments(string_q& command) {
 // END_CODE_LOCAL_INIT
 
     bool copy_to_tool = false;
+    blknum_t latest = getLastBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -50,14 +51,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--tool_help") {
             tool_help = true;
 
-        } else if (startsWith(arg, "--S:") || startsWith(arg, "--start:")) {
-            arg = substitute(substitute(arg, "-S:", ""), "--start:", "");
-            if (!confirmUint("start", start, arg))
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
                 return false;
 
-        } else if (startsWith(arg, "--E:") || startsWith(arg, "--end:")) {
-            arg = substitute(substitute(arg, "-E:", ""), "--end:", "");
-            if (!confirmUint("end", end, arg))
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
                 return false;
 
 // END_CODE_AUTO

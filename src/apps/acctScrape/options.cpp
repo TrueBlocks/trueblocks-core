@@ -9,10 +9,11 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "produce results in the staging folder instead of production folder"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "visit unripe (not old enough and not yet staged or finalized) blocks"),
+    COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
+    COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process(inclusive)"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
@@ -28,6 +29,7 @@ bool COptions::parseArguments(string_q& command) {
     scanRange.first = UINT_MAX;
 
 // BEG_CODE_LOCAL_INIT
+    bool finalized = true;
     bool staging = false;
     bool unripe = false;
     blknum_t start = NOPOS;
@@ -44,11 +46,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-f" || arg == "--finalized") {
+            finalized = !finalized;
+
         } else if (arg == "-s" || arg == "--staging") {
-            staging = true;
+            staging = !staging;
 
         } else if (arg == "-u" || arg == "--unripe") {
-            unripe = true;
+            unripe = !unripe;
 
         } else if (arg == "-d" || arg == "--daemon") {
             daemon = true;

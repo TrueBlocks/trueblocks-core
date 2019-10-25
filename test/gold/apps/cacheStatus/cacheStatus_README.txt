@@ -16,7 +16,7 @@ cacheStatus -th
 #### Hidden options (shown during testing only)
 | -g | --get_config | returns JSON data of the editable configuration file items |
 | -s | --set_config | accepts JSON in an env variable and writes it to configuration files |
-| -S | --start <num> | first block to process(inclusive) |
+| -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)

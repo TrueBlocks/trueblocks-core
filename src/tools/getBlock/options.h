@@ -18,21 +18,14 @@ class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
     bool hashes_only;
-    bool check;
     bool count_only;
     bool force;
-    bool quiet;
-    bool cache;
-    bool normalize;
 // END_CODE_DECLARE
 
-    bool showZeroTrace;
     string_q format;
-    bool priceBlocks;
     CBlock latest;
     uint64_t addrCounter;
     string_q filterType;
-    CAddressArray filters;
     timestamp_t secsFinal;
 
     COptions(void);
@@ -46,8 +39,5 @@ public:
 
 //-----------------------------------------------------------------------------
 extern string_q doOneBlock(uint64_t num, const COptions& opt);
-extern string_q checkOneBlock(uint64_t num, const COptions& opt);
 extern string_q getAddresses(uint64_t num, const COptions& opt);
-extern string_q normalizeBlock(const string_q& inIn, bool remove, bool isByzan);
-extern string_q diffStr(const string_q& str1, const string_q& str2);
 extern void interumReport(ostream& os, blknum_t i);
