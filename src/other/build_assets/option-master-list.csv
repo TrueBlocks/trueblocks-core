@@ -37,6 +37,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 10700,apps,status,cacheStatus,modes,,,FALSE,TRUE,TRUE,,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,which data to retrieve
 10720,apps,status,cacheStatus,details,d,,FALSE,TRUE,TRUE,yes,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10740,apps,status,cacheStatus,list,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
+10740,apps,status,cacheStatus,report,r,,FALSE,TRUE,TRUE,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
 10760,apps,status,cacheStatus,get_config,g,,FALSE,FALSE,FALSE,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10780,apps,status,cacheStatus,set_config,s,,FALSE,FALSE,FALSE,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
 10800,apps,status,cacheStatus,start,S,,FALSE,FALSE,FALSE,yes,flag,<blknum>,first block to process (inclusive)

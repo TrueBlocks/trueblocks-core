@@ -11,6 +11,7 @@ static const COption params[] = {
     COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
+    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
@@ -27,6 +28,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
 // BEG_CODE_LOCAL_INIT
+    bool report = false;
     bool get_config = false;
     bool set_config = false;
 // END_CODE_LOCAL_INIT
@@ -44,6 +46,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--list") {
             list = true;
+
+        } else if (arg == "-r" || arg == "--report") {
+            report = true;
 
         } else if (arg == "-g" || arg == "--get_config") {
             get_config = true;
@@ -106,6 +111,13 @@ bool COptions::parseArguments(string_q& command) {
     } else {
         loadHashes(indexHashes, "finalized");
         loadHashes(bloomHashes, "blooms");
+    }
+
+    if (report) {
+        if (exportFmt == TXT1 || exportFmt == CSV1) {
+            cout << scraperStatus(false);
+            return false;
+        }
     }
 
     EXIT_NOMSG(true);

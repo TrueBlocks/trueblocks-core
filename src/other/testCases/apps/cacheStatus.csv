@@ -33,3 +33,6 @@ on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = 
 
 on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
 on, both, fast, status, apps/cacheStatus, config_set,      n, set_config
+
+on, both, fast, status, apps/cacheStatus, report,          n, report & fmt = txt
+on, both, fast, status, apps/cacheStatus, report_json,     y, report & fmt = json
