@@ -100,6 +100,8 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (isNoHeader)
+        expContext().fmtMap["header"] = "";
 
     return true;
 }

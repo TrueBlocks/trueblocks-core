@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:stateclear] [2:--force] 
 getBlock stateclear --force 
+{ "data": [
 {
   "gasLimit": 3296773,
   "gasUsed": 1226267,
@@ -189,4 +190,4 @@ getBlock stateclear --force
       "gasUsed": 21000
     }
   ]
-}
+}] }

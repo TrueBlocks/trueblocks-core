@@ -1,6 +1,7 @@
 getBlock argc: 5 [1:2768801] [2:1995314] [3:1958017] [4:--force] 
 getBlock 2768801 1995314 1958017 --force 
-[{
+{ "data": [
+{
   "gasLimit": 4007810,
   "gasUsed": 58230,
   "hash": "0x55d9959f2d782dceb3986fcfd0a695007e4f4df3cd3aade5fef2049c21d93d88",
@@ -206,5 +207,4 @@ getBlock 2768801 1995314 1958017 --force
       "gasUsed": 21000
     }
   ]
-}
-]
+}] }

@@ -2,19 +2,19 @@ enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 # on, both, fast, rm,     apps/acctExport, chifra_rm,             n, modes = rm & yes & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b, chifra
 # on, both, fast, export, apps/acctExport, preload_list,          n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b
 
-# on,   cmd,  fast, export, apps/acctExport, README,                n, @th
-# on,   cmd,  fast, export, apps/acctExport, help,                  n, @h
-# on,   cmd,  fast, export, apps/acctExport, help_long,             n, help
+# on,   cmd,  fast, export, apps/acctExport, README,              n, @th
+# on,   cmd,  fast, export, apps/acctExport, help,                n, @h
+# on,   cmd,  fast, export, apps/acctExport, help_long,           n, help
 
-# on,   both,  fast, export, apps/acctExport, no_params,            n,
+# on,   both,  fast, export, apps/acctExport, no_params,          n,
 
 # on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt
 # on, both, fast, export, apps/acctExport, export_apps,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = txt
 # on, both, fast, export, apps/acctExport, export_traces,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = txt
-# on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt
+# on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt & no_header
 # on, both, fast, export, apps/acctExport, export_abis,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & abis & fmt = txt
 # on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt
-# on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = txt
+# on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & fmt = txt & no_header
 
 # on, both, fast, export, apps/acctExport, api_export,            y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = api
 # on, both, fast, export, apps/acctExport, api_export_apps,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = api

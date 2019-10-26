@@ -21,7 +21,6 @@ public:
     bool logs;
 // END_CODE_DECLARE
 
-    CStringArray errors;
     COptionsTransList transList;
     CAbi abi_spec;
     bool first;

@@ -68,7 +68,7 @@ bool COptions::handle_rm(void) {
         if (msg.empty())
             msg = "{ \"msg\": \"noting was removed\" }";
         cout << msg;
-        cout  << exportPostamble(JSON1, "") << endl;
+        cout  << exportPostamble(JSON1, errors, "") << endl;
     }
 
     EXIT_NOMSG4(true);

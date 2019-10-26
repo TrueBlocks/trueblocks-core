@@ -18,7 +18,7 @@ on, both, slow, receipts, tools/getReceipt, verbose_blk_idx1,    y, transactions
 on, both, fast, receipts, tools/getReceipt, verbose_blk_idx2,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = api & verbose
 on, both, fast, receipts, tools/getReceipt, verbose_blk_idx3,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & verbose
 on, both, medi, receipts, tools/getReceipt, by_txhash,           y, transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 & fmt = api
-on, both, medi, receipts, tools/getReceipt, by_bnun_and_txid,    n, transactions = 4000000.5 & logs & fmt = txt
+on, both, medi, receipts, tools/getReceipt, by_bnun_and_txid,    n, transactions = 4000000.5 & logs & fmt = txt & no_header
 on, both, fast, receipts, tools/getReceipt, by_bhash_and_txid,   y, transactions = 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & verbose & fmt = json & parity
 on, both, medi, receipts, tools/getReceipt, by_blk_hash_good,    n, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose & fmt = csv
 on, both, fast, receipts, tools/getReceipt, by_blk_hash_bad,     y, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155

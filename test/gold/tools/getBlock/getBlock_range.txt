@@ -1,6 +1,7 @@
 getBlock argc: 3 [1:4000001-4000003] [2:--force] 
 getBlock 4000001-4000003 --force 
-[{
+{ "data": [
+{
   "gasLimit": 6712392,
   "gasUsed": 337966,
   "hash": "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39",
@@ -599,5 +600,4 @@ getBlock 4000001-4000003 --force
       "gasUsed": 21000
     }
   ]
-}
-]
+}] }

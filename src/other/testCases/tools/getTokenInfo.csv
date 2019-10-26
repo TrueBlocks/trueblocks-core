@@ -62,7 +62,7 @@ on, both, slow, tokens, tools/getTokenInfo, info_symbol3,                  y, ad
 on, both, slow, tokens, tools/getTokenInfo, info_all3,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = all & blocks = 4001001-4001002
 
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_txt,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = txt & blocks = 2000000
-on, cmd, slow, tokens, tools/getTokenInfo, fmt_csv,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = csv & blocks = 2000000
+on, cmd, slow, tokens, tools/getTokenInfo, fmt_csv,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = csv & blocks = 2000000 & no_header
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_json,                      y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = json & blocks = 2000000
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_api,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = api & blocks = 2000000
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_junk,                      y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = junk & blocks = 2000000

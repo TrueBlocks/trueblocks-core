@@ -2,7 +2,7 @@ blockTest argc: 2 [1:0]
 blockTest 0 
 ------------------------------------------------------------------------------------------------------------------------
 Every address in block 4312145
-4312145			0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	miner
+4312145	99999		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	miner
 4312145	0		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	from
 4312145	0		0x2b97bc72d6ac5bc933d8eb6dc9a04a2e98beff01	to
 4312145	0	0	0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	trace_0_from

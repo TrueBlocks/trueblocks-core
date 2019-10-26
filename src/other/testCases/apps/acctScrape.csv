@@ -15,6 +15,6 @@ enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 # on, cmd,  fast, list, apps/acctScrape, fail_list2,      n, addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2500000
 # on, both, fast, list, apps/acctScrape, list_test,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
 
-# on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+# on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & fmt = csv & no_header
 # on, both, fast, list, apps/acctScrape, list_stage,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
 # on, both, fast, list, apps/acctScrape, list_unripe,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000

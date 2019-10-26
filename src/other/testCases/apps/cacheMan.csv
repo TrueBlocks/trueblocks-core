@@ -24,7 +24,7 @@ on, cmd, fast, null, apps/cacheMan, fix_0x9,         n, fix & addrs = 0x98765432
 on, cmd, fast, null, apps/cacheMan, check2_0x9,      n, @c & addrs = 0x9876543210987654321098765432109876543210
 on, cmd, fast, null, apps/cacheMan, list2_0x9,       n, @l & addrs = 0x9876543210987654321098765432109876543210
 
-on, cmd, fast, null, apps/cacheMan, list_0x5,        n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = txt
+on, cmd, fast, null, apps/cacheMan, list_0x5,        n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = txt & no_header
 on, cmd, fast, null, apps/cacheMan, check_0x5,       n, check & addrs = 0x5555533333555553333355555333335555533333
 on, cmd, fast, null, apps/cacheMan, fix_0x5,         n, fix & addrs = 0x5555533333555553333355555333335555533333
 on, cmd, fast, null, apps/cacheMan, check2_0x5,      n, check & addrs = 0x5555533333555553333355555333335555533333

@@ -43,7 +43,7 @@ on, cmd,  fast, transactions, tools/getTrans, mulit_line_mulit_txs,n, file:cmd_f
 
 on, both, fast, transactions, tools/getTrans, first,               n, transactions = 40500.0.next & fmt = txt
 on, both, fast, transactions, tools/getTrans, nav_prev1,           n, transactions = 1001001.1.prev & fmt = txt
-on, both, fast, transactions, tools/getTrans, nav_prev2,           n, transactions = 1001001.0.prev & fmt = txt
+on, both, fast, transactions, tools/getTrans, nav_prev2,           n, transactions = 1001001.0.prev & fmt = txt & no_header
 on, both, fast, transactions, tools/getTrans, nav_next1,           n, transactions = 1001001.2.next & fmt = txt
 on, both, fast, transactions, tools/getTrans, nav_next2,           n, transactions = 1001001.1.next & fmt = txt
 

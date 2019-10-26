@@ -27,6 +27,10 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_FORMAT_COUNT_JSON;
+extern const char* STR_FORMAT_COUNT_TXT;
+extern const char* STR_FORMAT_FILTER_JSON;
+extern const char* STR_FORMAT_FILTER_TXT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -125,7 +129,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
-    if (count_only && (filterType.empty()))
+    if (filterType.empty() && count_only)
         return usage("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
 
     if (!filterType.empty() && force)
@@ -134,9 +138,36 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig("getBlock")->getConfigStr("display", "format", STR_DISPLAY_BLOCK);
-
     secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
+
+    if (exportFmt == NONE1)
+        exportFmt = (filterType.empty() ? JSON1 : TXT1);
+
+    // Display formatting
+    string_q format;
+    switch (exportFmt) {
+        case NONE1:
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig("getBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_BLOCK : format);
+            if (count_only)
+                format = STR_FORMAT_COUNT_TXT;
+            else if (!filterType.empty())
+                format = STR_FORMAT_FILTER_TXT;
+            manageFields("CBlock:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            if (count_only)
+                format = STR_FORMAT_COUNT_JSON;
+            else if (!filterType.empty())
+                format = STR_FORMAT_FILTER_JSON;
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (isNoHeader)
+        expContext().fmtMap["header"] = "";
 
     return true;
 }
@@ -152,17 +183,19 @@ void COptions::Init(void) {
     force = false;
 // END_CODE_INIT
 
-    filterType    = "";
-    format        = "";
-    secsFinal     = (60 * 5);
-    addrCounter   = 0;
+    filterType  = "";
+    secsFinal   = (60 * 5);
+    addrCounter = 0;
     blocks.Init();
+    CBlockOptions::Init();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    first = true;
+    exportFmt = NONE1;
 }
 
 //--------------------------------------------------------------------------------
@@ -192,3 +225,35 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
+//--------------------------------------------------------------------------------
+void interumReport(ostream& os, blknum_t i) {
+    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
+    os.flush();
+}
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_COUNT_JSON =
+"{\n"
+" \"blockNumber\": [{BLOCKNUMBER}],\n"
+" \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+" \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
+"}\n";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_COUNT_TXT =
+"[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_FILTER_JSON =
+"{\n"
+" \"bn\": \"[{BN}]\",\n"
+" \"tx\": \"[{TX}]\",\n"
+" \"tc\": \"[{TC}]\",\n"
+" \"addr\": \"[{ADDR}]\",\n"
+" \"reason\": \"[{REASON}]\"\n"
+"}\n";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_FILTER_TXT =
+"[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";

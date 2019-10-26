@@ -1,5 +1,6 @@
 getBlock argc: 2 [1:4000001] 
 getBlock 4000001 
+{ "data": [
 {
   "gasLimit": 6712392,
   "gasUsed": 337966,
@@ -376,4 +377,4 @@ getBlock 4000001
       "gasUsed": 21000
     }
   ]
-}
+}] }

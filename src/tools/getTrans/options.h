@@ -25,7 +25,6 @@ public:
     COptionsTransList transList;
     CAbi abi_spec;
     bool first;
-    CStringArray errors;
 
     COptions(void);
     ~COptions(void);

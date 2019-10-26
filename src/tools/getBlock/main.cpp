@@ -25,34 +25,16 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-
-        // There can be more than one thing to do...
-        if (options.filterType.empty())
-            cout << (options.isMulti() ? "[" : "");
-
-        string_q list = options.getBlockNumList();
-        while (!list.empty() && !shouldQuit()) {
-            blknum_t bn = str_2_Uint(nextTokenClear(list, '|'));
-            if (!options.filterType.empty()) {
-                getAddresses(bn, options);
-
-            } else {
-                string_q result = doOneBlock(bn, options);
-                if (!result.empty()) {
-                    cout << result;
-                    if (!list.empty())
-                        cout << ",";
-                    cout << "\n";
-                }
-            }
-        }
-
-        if (options.filterType.empty())
-            cout << (options.isMulti() ? "]" : "");
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+        options.blocks.forEveryBlockNumber(visitBlock, &options);
+        once = false;
     }
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -61,105 +43,66 @@ int main(int argc, const char *argv[]) {
 //------------------------------------------------------------
 string_q doOneBlock(uint64_t num, const COptions& opt) {
 
+    string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
+
     CBlock gold;
     gold.blockNumber = num;
     string_q result;
-    string_q numStr = uint_2_Str(num);
     if (opt.isRaw) {
+        if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes_only)) {
+            result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 
-        if (!queryRawBlock(result, numStr, true, opt.hashes_only)) {
-            result = "Could not query raw block " + numStr + ". Is an Ethereum node running?";
         } else {
+            if (endsWith(result, "\n"))
+                replaceReverse(result, "\n", "");
+
+            // The query worked. If user wants us to write the block to cache, do so...
             if (opt.force) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
-                    string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
                     gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
                     writeBlockToBinary(gold, fileName);
                 }
             }
+
         }
 
     } else {
-        string_q fileName = getBinaryCacheFilename(CT_BLOCKS, gold.blockNumber);
-        queryBlock(gold, numStr, (isApiMode() ? false : true));
+        queryBlock(gold, uint_2_Str(num), (isApiMode() ? false : true));
         if (gold.blockNumber == 0 && gold.timestamp == 0)
             gold.timestamp = blockZeroTs;
         gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
-
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            writeBlockToBinary(gold, fileName);
             LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
+            writeBlockToBinary(gold, fileName);
         }
+        result = gold.Format(expContext().fmtMap["format"]);
 
-        result = gold.Format(opt.format);
     }
 
     return result;
 }
 
-//------------------------------------------------------------
-void interumReport(ostream& os, blknum_t i) {
-    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
-    os.flush();
-}
-
-//------------------------------------------------------------
-bool sortByBlocknumTxId(const CAppearance& v1, const CAppearance& v2) {
-    if (v1.bn != v2.bn)
-        return v1.bn < v2.bn;
-    else if (v1.tx != v2.tx)
-        return v1.tx < v2.tx;
-    else if (v1.tc != v2.tc)
-        return v1.tc < v2.tc;
-    else if (v1.reason != v2.reason)
-        return v1.reason < v2.reason;
-    return v1.addr < v2.addr;
-}
-
-extern bool visitAddrs(const CAppearance& item, void *data);
-extern bool transFilter(const CTransaction *trans, void *data);
-//------------------------------------------------------------
-string_q getAddresses(uint64_t num, const COptions& opt) {
-
-    CBlock block;
-    getBlock(block, num);
-    if (opt.filterType == "uniq")
-        block.forEveryUniqueAddress(visitAddrs, transFilter, (void*)&opt);
-    else if (opt.filterType == "uniq_tx")
-        block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, (void*)&opt);
-    else
-        block.forEveryAddress(visitAddrs, transFilter, (void*)&opt);
-    if (opt.count_only) {
-        uint64_t cnt = opt.addrCounter;
-        string_q be  = (cnt == 1 ? "was " : "were ");
-        string_q adj = (contains(opt.filterType, "uniq") ? " unique" : "");
-        cout << "There " << be << opt.addrCounter << adj << " addreses" << (cnt == 1 ? "" : "es") << " found in block " << block.blockNumber << ".\n";
-        ((COptions*)&opt)->addrCounter = 0;
-    }
-    return "";
-}
-
 //----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void *data) {
-    if (!isZeroAddr(item.addr)) {
-        COptions *opt = (COptions*)data;
-        if (item.tc != 10) {  // do not show or count the zeroTrace items since it duplicates the transaction's from and to
-            if (opt->count_only) {
-                opt->addrCounter++;
 
-            } else {
-                cout << item.Format(opt->format);
-                if (!isTestMode())
-                    cout << "                   ";
-                cout << "\n";
-                cout.flush();
-            }
-        }
+    // We do not account for zero addresses or the addresses found in the zeroth trace since
+    // it's identical to the transaction itself
+    if (item.tc == 10 || isZeroAddr(item.addr))
+        return !shouldQuit();
+
+    COptions *opt = (COptions*)data;
+    if (opt->count_only) {
+        opt->addrCounter++;
+
+    } else {
+        cout << item.Format(expContext().fmtMap["format"]) << endl;
+
     }
-    return true;
+
+    return !shouldQuit();
 }
 
 //----------------------------------------------------------------
@@ -170,6 +113,42 @@ bool transFilter(const CTransaction *trans, void *data) {
     return (getTraceCount(trans->hash) > 250);
 }
 
+//------------------------------------------------------------
+bool visitBlock(uint64_t num, void *data) {
+    COptions *opt = reinterpret_cast<COptions *>(data);
+    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
+    if (!opt->first) {
+        if (!isText)
+            cout << ",";
+        cout << endl;
+    }
+
+    if (!opt->filterType.empty()) {
+        CBlock block;
+        getBlock(block, num);
+
+        opt->addrCounter = 0;
+        if (opt->filterType == "uniq")
+            block.forEveryUniqueAddress(visitAddrs, transFilter, opt);
+        else if (opt->filterType == "uniq_tx")
+            block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, opt);
+        else
+            block.forEveryAddress(visitAddrs, transFilter, opt);
+
+        if (opt->count_only)
+            cout << block.Format(substitute(substitute(expContext().fmtMap["format"], "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter)), "[{FILTER_TYPE}]", opt->filterType));
+
+    } else {
+        cout << doOneBlock(num, *opt);
+
+    }
+
+    opt->first = false;
+
+    return !shouldQuit();
+}
+
 //---------------------------------------------------------------------------
 bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distance) {
     // If the distance from the front of the node's current view of the front of the chain
@@ -177,3 +156,80 @@ bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distan
     // in a perfectly mathematical sense)
     return ((ts_chain - ts_block) > distance);
 }
+
+
+#if 0
+int main(int argc, const char *argv[]) {
+    bool once = true;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
+        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        once = false;
+    }
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+}
+
+//--------------------------------------------------------------
+bool visitTransaction(CTransaction& trans, void *data) {
+
+    //    COptions *opt = reinterpret_cast<COptions *>(data);
+    //    bool isText = (opt->exportFmt & (TXT1|CSV1));
+
+    if (contains(trans.hash, "invalid")) {
+        string_q hash = nextTokenClear(trans.hash, ' ');
+        opt->errors.push_back("Transaction " + hash + " not found.");
+        return true; // continue even with an invalid item
+    }
+
+    if (opt->isRaw || opt->isVeryRaw) {
+        string_q result;
+        queryRawLogs(result, trans.blockNumber, trans.blockNumber);
+        if (!isText && !opt->first)
+            cout << ",";
+        cout << result;
+        opt->first = false;
+        return true;
+    }
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+    if (opt->articulate) {
+        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.articulateTransaction(&trans);
+    }
+    for (auto log : trans.receipt.logs) {
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiByAddress(log.address);
+            opt->abi_spec.articulateLog(&log);
+        }
+        manageFields("CFunction:message", !log.articulatedLog.message.empty());
+
+        if (isText) {
+            cout << trim(log.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            log.doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
+    }
+    return true;
+}
+#endif
+
+#if 0
+string_q result = doOneBlock(bn, options);
+if (!result.empty()) {
+    cout << result;
+    if (!list.empty())
+    cout << ",";
+    cout << "\n";
+    }
+#endif

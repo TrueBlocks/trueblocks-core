@@ -21,7 +21,6 @@ public:
     bool no_zero;
 // END_CODE_DECLARE
 
-    CStringArray errors;
     CAddressArray addrs;
     address_t current;
     ethstate_t modes;

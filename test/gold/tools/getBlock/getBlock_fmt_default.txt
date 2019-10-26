@@ -1,6 +1,7 @@
 getBlock argc: 3 [1:2222222] [2:2332332] 
 getBlock 2222222 2332332 
-[{
+{ "data": [
+{
   "gasLimit": 4704588,
   "gasUsed": 1306412,
   "hash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -708,5 +709,4 @@ getBlock 2222222 2332332
       "gasUsed": 21000
     }
   ]
-}
-]
+}] }

@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
                 first = false;
             }
         }
-        cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+        cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
     }
 
     etherlib_cleanup();

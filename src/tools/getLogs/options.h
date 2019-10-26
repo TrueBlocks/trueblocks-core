@@ -24,7 +24,6 @@ public:
     bool option1;
     CAbi abi_spec;
     bool first;
-    CStringArray errors;
 
     COptions(void);
     ~COptions(void);

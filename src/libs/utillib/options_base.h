@@ -47,6 +47,7 @@ namespace qblocks {
     public:
         addr_wei_mp prefundWeiMap;
         CStringArray arguments;
+        CStringArray errors;
         //TODO(tjayrush): global data
         uint32_t enableBits;
         bool needsOption;

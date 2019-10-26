@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:--file:cmd_file1] [2:--force] 
 getBlock --file:cmd_file1 --force 
+{ "data": [
 {
   "gasLimit": 4712388,
   "gasUsed": 42000,
@@ -57,7 +58,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 567000,
@@ -665,7 +666,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 241566,
@@ -701,7 +702,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 241566
     }
   ]
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 0,
@@ -714,7 +715,7 @@ getBlock --file:cmd_file1 --force
   "finalized": 1,
   "timestamp": 1461564158,
   "transactions": []
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 370499,
@@ -1065,7 +1066,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 0,
@@ -1078,7 +1079,7 @@ getBlock --file:cmd_file1 --force
   "finalized": 1,
   "timestamp": 1468865843,
   "transactions": []
-}
+},
 {
   "gasLimit": 4700000,
   "gasUsed": 0,
@@ -1091,7 +1092,7 @@ getBlock --file:cmd_file1 --force
   "finalized": 1,
   "timestamp": 1470422063,
   "transactions": []
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 635141,
@@ -1666,7 +1667,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 4712388,
   "gasUsed": 21000,
@@ -1702,7 +1703,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 4703174,
   "gasUsed": 21000,
@@ -1738,7 +1739,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 1498537,
   "gasUsed": 126000,
@@ -1884,7 +1885,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 1996159,
   "gasUsed": 0,
@@ -1897,7 +1898,7 @@ getBlock --file:cmd_file1 --force
   "finalized": 1,
   "timestamp": 1477523292,
   "transactions": []
-}
+},
 {
   "gasLimit": 2001952,
   "gasUsed": 21000,
@@ -1933,7 +1934,7 @@ getBlock --file:cmd_file1 --force
       "gasUsed": 21000
     }
   ]
-}
+},
 {
   "gasLimit": 3263330,
   "gasUsed": 0,
@@ -1946,4 +1947,4 @@ getBlock --file:cmd_file1 --force
   "finalized": 1,
   "timestamp": 1480604456,
   "transactions": []
-}
+}] }

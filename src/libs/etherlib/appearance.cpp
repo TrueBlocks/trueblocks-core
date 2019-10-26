@@ -36,13 +36,12 @@ namespace qblocks {
         string_q ret = fmt;
         ret = substitute(ret, "{BN}", uint_2_Str(bn));
         ret = substitute(ret, "{TX}", tx == NOPOS ? "" : uint_2_Str(tx));
-        ret = substitute(ret, "{TC}", tx < 10 ? "" : uint_2_Str(tc));
+        ret = substitute(ret, "{TC}", tc < 10 ? "" : uint_2_Str(tc-10));
         ret = substitute(ret, "{ADDR}", addr);
-        ret = substitute(ret, "{REASON}", reason);
+        ret = substitute(ret, "{REASON}", substitute(substitute(reason, "[", "`"), "]", "+"));
         ret = substitute(ret, "[", "");
         ret = substitute(ret, "]", "");
-        ret = substitute(ret, "+(", "[{");
-        ret = substitute(ret, ")+", "}]");
+        ret = substitute(substitute(ret, "`", "["), "+", "]");
         return ret;
     }
 

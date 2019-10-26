@@ -33,19 +33,21 @@ on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 
 on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & addrs & verbose = 1
 on, both, medi, blocks, tools/getBlock, address_uniq1,      n, blocks = 3982128 & uniq
 on, both, medi, blocks, tools/getBlock, address_uniqTx1,    n, blocks = 3982128 & uniq_tx
-on, both, medi, blocks, tools/getBlock, address_addrsCnt1,  n, blocks = 3982128 & addrs & count_only
-on, both, medi, blocks, tools/getBlock, address_uniqCnt1,   n, blocks = 3982128 & uniq & count_only
-on, both, medi, blocks, tools/getBlock, address_uniqTxCnt1, n, blocks = 3982128 & uniq_tx & count_only
-on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count_only
 on, both, slow, blocks, tools/getBlock, byzantium_1,        y, blocks = 4369999 4370000 4380101 & force
 on, both, fast, blocks, tools/getBlock, blockByHash,        y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, blocks, tools/getBlock, miner,              y, blocks = 1 & uniq_tx & fmt json
+
+on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 & addrs & count_only & fmt csv
+on, both, medi, blocks, tools/getBlock, uniqCnt1,           n, blocks = 3982128 & uniq & count_only & fmt txt
+on, both, medi, blocks, tools/getBlock, uniqTxCnt1,         y, blocks = 3982128 & uniq_tx & count_only & fmt json
+on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count_only
 
 on, cmd,  fast, blocks, tools/getBlock, cmd_file1,          n, file:cmd_file1 & force
 on, cmd,  fast, blocks, tools/getBlock, cmd_file2,          n, file:cmd_file2 & force
 
 on, both, fast, blocks, tools/getBlock, fmt_default,        y, blocks = 2222222 2332332
 on, both, fast, blocks, tools/getBlock, fmt_txt,            n, blocks = 2222222 2332332 & fmt = txt
-on, both, fast, blocks, tools/getBlock, fmt_csv,            n, blocks = 2222222 2332332 & fmt = csv
+on, both, fast, blocks, tools/getBlock, fmt_csv,            n, blocks = 2222222 2332332 & fmt = csv & no_header
 on, both, fast, blocks, tools/getBlock, fmt_api,            y, blocks = 2222222 2332332 & fmt = api
 on, both, fast, blocks, tools/getBlock, fmt_json,           y, blocks = 2222222 2332332 & fmt = json
 on, both, fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk

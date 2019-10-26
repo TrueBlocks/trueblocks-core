@@ -18,6 +18,7 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, modes = blocks
 # on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks & not_an_option
 # on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
+# on, both, fast, blocks,   apps/chifra, blocks2,              y, modes = blocks & blocks = 12 & fmt = csv & no_header
 
 # on, both, fast, accounts, apps/chifra, accounts,             y, modes = accounts & expand & fmt = txt
 # on, both, fast, accounts, apps/chifra, accounts_noparams,    y, modes = accounts & fmt = txt

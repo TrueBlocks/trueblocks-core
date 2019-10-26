@@ -21,7 +21,7 @@ on, both, fast, logs, tools/getLogs, bad_blkhash_msg_raw, n, transactions = 0x0b
 on, both, fast, logs, tools/getLogs, default,             y, address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on, both, fast, logs, tools/getLogs, block_range,         y, transactions = 1718400-1718420
 on, both, fast, logs, tools/getLogs, block_range_addr,    y, transactions = 1718400-1718420 transactions = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-on, both, fast, logs, tools/getLogs, three_ways,          n, transactions = 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb424 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 3657480.36 1001010.12 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422 & fmt = txt
+on, both, fast, logs, tools/getLogs, three_ways,          n, transactions = 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb424 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 3657480.36 1001010.12 0xbed082f2f6fb5f91924df74eb79ac37ea9490e49dda0b29a01db27d171efb422 & fmt = txt & no_header
 on, both, fast, logs, tools/getLogs, verbose_blk_idx1,    n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = csv
 on, both, fast, logs, tools/getLogs, verbose_blk_idx2,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & verbose
 on, both, fast, logs, tools/getLogs, verbose_blk_idx3,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = json

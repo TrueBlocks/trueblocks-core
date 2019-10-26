@@ -22,11 +22,11 @@ public:
     bool force;
 // END_CODE_DECLARE
 
-    string_q format;
     CBlock latest;
     uint64_t addrCounter;
     string_q filterType;
     timestamp_t secsFinal;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -38,6 +38,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern string_q doOneBlock(uint64_t num, const COptions& opt);
-extern string_q getAddresses(uint64_t num, const COptions& opt);
+extern bool visitBlock(uint64_t num, void *data);
 extern void interumReport(ostream& os, blknum_t i);

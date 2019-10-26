@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
 
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
     if (!options.freshen && !options.count_only)
         LOG_INFO("exported ", options.nExported, " ", (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(), " transactions", string_q(55,' '));

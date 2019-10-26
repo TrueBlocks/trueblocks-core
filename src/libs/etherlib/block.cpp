@@ -479,7 +479,17 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BLOCK = "";
+const char* STR_DISPLAY_BLOCK = 
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DIFFICULTY}]\t"
+"[{GASUSED}]\t"
+"[{GASLIMIT}]\t"
+"[{MINER}]\t"
+"[{HASH}]\t"
+"[{PARENTHASH}]\t"
+"[{TRANSACTIONSCNT}]\t"
+"[{FINALIZED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -508,7 +518,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data
     if (!func)
         return false;
 
-    foundOne(func, data, blockNumber, NOPOS, 0, miner, "miner");
+    foundOne(func, data, blockNumber, 99999, 0, miner, "miner");
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         CTransaction *trans = &transactions[tr];
         if (!trans->forEveryAddress(func, traceFilter, data))
