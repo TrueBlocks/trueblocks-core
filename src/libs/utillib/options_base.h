@@ -48,7 +48,7 @@ namespace qblocks {
         addr_wei_mp prefundWeiMap;
         CStringArray arguments;
         CStringArray errors;
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         uint32_t enableBits;
         bool needsOption;
         bool isReadme;
@@ -58,8 +58,8 @@ namespace qblocks {
         format_t exportFmt;
         blkrange_t scanRange;
 
-        streambuf *coutBackup; // saves original cout buffer
-        ofstream redirStream; // the redirected stream (if any)
+        streambuf *coutBackup;  // saves original cout buffer
+        ofstream redirStream;  // the redirected stream (if any)
         string_q redirFilename;
         void closeRedirect(void);
         bool isRedirected(void) const;
@@ -105,7 +105,8 @@ namespace qblocks {
         string_q purpose(void) const;
         string_q options(void) const;
         string_q descriptions(void) const;
-        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
+                                    bool isMode, bool required) const;
         string_q notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 

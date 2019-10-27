@@ -97,7 +97,7 @@ extern string_q collapseArrays(const string_q& inStr);
         asciiFileToString(filename, contents);
         if (!contains(contents, "[version]")) {
             addGroup("version", false, false);
-            addKey("version", "current", getVersionStr(false,false), false);
+            addKey("version", "current", getVersionStr(false, false), false);
         }
         replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
         replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
@@ -111,7 +111,7 @@ extern string_q collapseArrays(const string_q& inStr);
             if (!value.empty()) {
                 bool isArray = contains(value, "[[");
                 if (startsWith(value, '[')) {  // it's a group
-                    value = trim(trimWhitespace(substitute(substitute(value, "[", ""), "]", "")),'\"');
+                    value = trim(trimWhitespace(substitute(substitute(value, "[", ""), "]", "")), '\"');
                     addGroup(value, comment, isArray);
                     curGroup = value;
 
@@ -169,7 +169,7 @@ extern string_q collapseArrays(const string_q& inStr);
 
     //---------------------------------------------------------------------------------------
     bool CToml::isBackLevel(void) const {
-        if (getVersion() < getVersionNum(0,6,0))
+        if (getVersion() < getVersionNum(0, 6, 0))
             return true;
         // This is where we would handle future upgrades
         return false;
@@ -281,9 +281,9 @@ extern string_q collapseArrays(const string_q& inStr);
             os << endl;
             for (auto key : group.keys) {
                 os << (key.comment || group.isComment || key.deleted ? "# " : "");
-                if ((!key.value.empty() && isNumeral(key.value)) || (key.value == "true" || key.value == "false"))
+                if ((!key.value.empty() && isNumeral(key.value)) || (key.value == "true" || key.value == "false")) {
                     os << key.keyName << " = " << key.value;
-                else {
+                } else {
                     string val = substitute(key.value, "\"", "\\\"");
                     if (key.keyName == "list" && !contains(val, '[')) {
                         val = "\"\"" + substitute(val, "|", "|\\\n    ") + "\"\"";

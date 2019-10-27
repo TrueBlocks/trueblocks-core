@@ -70,7 +70,7 @@ namespace qblocks {
 (&CLASS_NAME::class##CLASS_NAME)
 
 //------------------------------------------------------------
-//TODO(tjayrush): global data
+// TODO(tjayrush): global data
 #define DECLARE_NODE(CLASS_NAME) \
 public: \
     static CRuntimeClass  class##CLASS_NAME; \
@@ -89,7 +89,7 @@ public: \
            string_q       getClassName    (void) const;
 
 //------------------------------------------------------------
-//TODO(tjayrush): global data
+// TODO(tjayrush): global data
 #define IMPLEMENT_NODE(CLASS_NAME, BASECLASS_NAME) \
     static CBuiltIn       _bi##CLASS_NAME(&CLASS_NAME::class##CLASS_NAME, #CLASS_NAME, sizeof(CLASS_NAME), \
                                 CLASS_NAME::createObject, GETRUNTIME_CLASS(BASECLASS_NAME)); \

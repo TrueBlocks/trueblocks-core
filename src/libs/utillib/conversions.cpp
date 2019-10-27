@@ -188,11 +188,11 @@ namespace qblocks {
     inline bigint_t str_2_BigInt_nonhex(const string_q& s) {
         biguint_t val;
         if (s[0] == '-') {
-            string_q ss = s.substr(1,s.length());
+            string_q ss = s.substr(1, s.length());
             val = str_2_BigUint(ss);
             return bigint_t(val, -1);
         } else if (s[0] == '+') {
-            string_q ss = s.substr(1,s.length());
+            string_q ss = s.substr(1, s.length());
             val = str_2_BigUint(ss);
             return bigint_t(val, 1);
         }
@@ -240,7 +240,7 @@ namespace qblocks {
         return map[bits];
     }
 
-//#define NO_STR_CONVERT_FAST
+// #define NO_STR_CONVERT_FAST
     //--------------------------------------------------------------------------------
     bigint_t str_2_BigInt(const string_q& s, size_t bits) {
 #ifdef NO_STR_CONVERT_FAST
@@ -268,8 +268,8 @@ namespace qblocks {
             return uValIn;
         bigint_t maxInt = bigint_t(str_2_BigUint(maxStr), 1);
         bigint_t sVal = bigint_t(uValIn, 1);
-        if (sVal > (maxInt / 2)) // If it's bigger than half, we have to wrap
-            sVal = sVal - maxInt - 1; // wrap if larger than half of max int256
+        if (sVal > (maxInt / 2))  // If it's bigger than half, we have to wrap
+            sVal = sVal - maxInt - 1;  // wrap if larger than half of max int256
 
         return sVal;
 #endif
@@ -291,7 +291,7 @@ namespace qblocks {
             size_t lenInBits = ss.length() * 4;
             if (lenInBits > bits && bits != 257) {
                 reverse(ss);
-                ss = ss.substr(0,bits/4);
+                ss = ss.substr(0, bits/4);
                 reverse(ss);
             }
             ret = str_2_Wei("0x" + ss);
@@ -307,7 +307,7 @@ namespace qblocks {
             return ret;
         biguint_t maxInt = biguint_t(BigUnsignedInABase(maxStr, 10));
 
-        if (ret > maxInt) // If it's bigger than the max size, we have to wrap
+        if (ret > maxInt)  // If it's bigger than the max size, we have to wrap
             ret = (ret % maxInt);
 
         return ret;
@@ -394,15 +394,15 @@ namespace qblocks {
 
         // if no nDecimals specified, default to 10 with trailing zero truncation
         bool truncate = false;
-        if(nDecimals == NOPOS) {
+        if (nDecimals == NOPOS) {
             nDecimals = 10;
             truncate = true;
         }
 
         stringstream stream;
-        stream << fixed << setprecision((int)nDecimals) << f;
+        stream << fixed << setprecision(static_case<int>(nDecimals)) << f;
         string_q str = stream.str();
-        if(truncate) {
+        if (truncate) {
             str.erase(str.find_last_not_of('0') + 1, string_q::npos);
             // if all decimals gone, truncate period
             str.erase(str.find_last_not_of('.') + 1, string_q::npos);
@@ -469,7 +469,7 @@ namespace qblocks {
     bool isHexStr(const string_q& str) {
         if (!startsWith(str, "0x") || str.size() < 2)
             return false;
-        for (auto ch : extract(str,2))
+        for (auto ch : extract(str, 2))
             if (!isxdigit(ch))
                 return false;
         return true;
@@ -582,13 +582,13 @@ namespace qblocks {
 
         string_q str = strIn;
         replaceAny(str, "T:-", "");
-             if (str.length() ==  4) str += "0101000000"; // YYYY
-        else if (str.length() ==  6) str += "01000000";   // YYYYMM
-        else if (str.length() ==  8) str += "000000";     // YYYYMMDD
-        else if (str.length() == 10) str += "0000";       // YYYYMMDDHH
-        else if (str.length() == 12) str += "00";         // YYYYMMDDHHMM
-        else if (str.length() == 14) str += "";           // YYYYMMDDHHMMSS
-        else {
+             if (str.length() ==  4) str += "0101000000";  // YYYY NOLINT
+        else if (str.length() ==  6) str += "01000000";    // YYYYMM
+        else if (str.length() ==  8) str += "000000";      // YYYYMMDD
+        else if (str.length() == 10) str += "0000";        // YYYYMMDDHH
+        else if (str.length() == 12) str += "00";          // YYYYMMDDHHMM
+        else if (str.length() == 14) str += "";            // YYYYMMDDHHMMSS
+        else {  // NOLINT
             cerr << "str_2_Date: Invalid date string '" << strIn << "'";
         }
 
@@ -671,7 +671,7 @@ namespace qblocks {
         }
         len = nDigits;
 
-        char s[len+1];
+        char s[len+1];  // NOLINT
         memset(s, '\0', sizeof(s));
         for (unsigned int p = 0 ; p < len ; p++) {
             unsigned short c = blk[len-1-p];  // NOLINT
@@ -694,7 +694,7 @@ namespace qblocks {
         ostringstream os;
         os << "0x";
         for (size_t i = 0 ; i < 32 ; i++)
-            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
         return os.str();
     }
 
@@ -712,7 +712,7 @@ namespace qblocks {
         ostringstream os;
         os << "0x";
         for (size_t i = 0 ; i < 20 ; i++)
-            os << toLower(padLeft(bnu_2_Hex(bytes[i]),2,'0'));
+            os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
         return os.str();
     }
 
@@ -736,7 +736,7 @@ namespace qblocks {
             in = extract(in, 2);
             char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
             if (ch != '\"')
-                ret += (char)ch;
+                ret += static_cast<char>(ch);
         }
         return ret;
     }

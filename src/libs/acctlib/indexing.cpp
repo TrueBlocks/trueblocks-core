@@ -95,7 +95,7 @@ namespace qblocks {
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);
         archive.Write((uint32_t)blockTable.size());  // not accurate yet
-        for (size_t l = 0 ; l < lines.size() ; l++) { //auto line : lines) {
+        for (size_t l = 0 ; l < lines.size() ; l++) {
             string_q line = lines[l];
             ASSERT(countOf(line, '\t') == 2);
             CStringArray parts;

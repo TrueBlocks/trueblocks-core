@@ -30,4 +30,4 @@ namespace qblocks {
     string_q _logExit(const string_q& func) {
         return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
     }
-}
+}  // namespace qblocks

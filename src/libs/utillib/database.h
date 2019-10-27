@@ -129,7 +129,7 @@ namespace qblocks {
 
     //----------------------------------------------------------------------
     extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
-    extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, bool addNewline=false);
+    extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, bool addNewline = false);
     extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
 
     //----------------------------------------------------------------------

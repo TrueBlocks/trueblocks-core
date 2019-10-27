@@ -212,7 +212,7 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
 }
 
 [{GET_OBJ}][{GET_STR}]//---------------------------------------------------------------------------
-const char* STR_DISPLAY_[{CLASS_UPPER}] = [{DISPLAY_FIELDS}];
+const char* STR_DISPLAY_[{CLASS_UPPER}] =[{DISPLAY_FIELDS}];
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

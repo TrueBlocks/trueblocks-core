@@ -51,7 +51,7 @@ namespace qblocks {
             CFileListState(const string_q& t, CStringArray& l, bool r) : top(t), list(l), recurse(r) { }
         };
         bool visitFile(const string_q& path, void *data) {
-            CFileListState *state = (CFileListState *)data;
+            CFileListState *state = reinterpret_case<CFileListState *>(data);
             if (endsWith(path, '/')) {
                 if (path == state->top || state->recurse) {
                     return forEveryFileInFolder(path + "*", visitFile, data);
@@ -63,7 +63,7 @@ namespace qblocks {
             state->list.push_back(path);
             return true;
         }
-    }; // namespace filename_local
+    };  // namespace filename_local
 
     //------------------------------------------------------------------
     size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recurse) {

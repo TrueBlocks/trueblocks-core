@@ -92,7 +92,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
+            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e, fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }

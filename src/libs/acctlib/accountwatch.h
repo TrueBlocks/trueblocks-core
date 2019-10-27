@@ -90,7 +90,8 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color) {
+inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB,
+                                        blknum_t lB, const string_q& _color) {
     initialize();
     address = toLower(_addr);
     name = _name;
@@ -164,7 +165,7 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     latestAppearance = ac.latestAppearance;
     bloom = ac.bloom;
     inBlock = ac.inBlock;
-    tx_cache = NULL; // we do not copy the tx_cache
+    tx_cache = NULL;  // we do not copy the tx_cache
     extra_data = ac.extra_data;
     // EXISTING_CODE
 }
@@ -203,7 +204,7 @@ extern const char* STR_DISPLAY_ACCOUNTWATCH;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t,CAccountWatch> CAccountWatchMap;
+typedef map<address_t,CAccountWatch> CAccountWatchMap;  // NOLINT
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks

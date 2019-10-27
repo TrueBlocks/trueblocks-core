@@ -19,7 +19,7 @@ namespace qblocks {
 
     extern int copyFile(const string_q& from, const string_q& to);
     extern int moveFile(const string_q& from, const string_q& to);
-    extern int cleanFolder(const string_q& path, bool recurse=false, bool interactive=false);
+    extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
 
     extern bool folderExists(const string_q& path);
     extern bool fileExists(const string_q& file);

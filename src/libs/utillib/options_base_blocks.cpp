@@ -37,7 +37,8 @@ namespace qblocks {
                 ret = str_2_Uint(spec.second);
 
             } else {
-                msg = "The given value '" + arg + "' is not a numeral or a special named block." + (isApiMode() ? "" : "\n");
+                msg = "The given value '" + arg +
+                    "' is not a numeral or a special named block." + (isApiMode() ? "" : "\n");
                 return NOPOS;
 
             }

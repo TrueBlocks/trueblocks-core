@@ -24,7 +24,11 @@ namespace qblocks {
 
     //----------------------------------------------------------------
     extern uint64_t verbose;
-    inline bool isLevelOn(severity_t test) { if (test < sev_debug0) return true; return (((severity_t)verbose) > (test - sev_debug0)); }
+    inline bool isLevelOn(severity_t test) {
+        if (test < sev_debug0)
+            return true;
+        return (((severity_t)verbose) > (test - sev_debug0));
+    }
 
     //----------------------------------------------------------------
     class log_policy_i {
@@ -34,7 +38,7 @@ namespace qblocks {
         virtual void open_ostream(const string_q& name) = 0;
         virtual void close_ostream() = 0;
         virtual void write(const string_q& msg) = 0;
-        virtual ~log_policy_i(void) { };
+        virtual ~log_policy_i(void) { }
     };
 
     //----------------------------------------------------------------
@@ -86,11 +90,13 @@ namespace qblocks {
 #define LOG_TIMING false
 #define LOG_THREAD false
                 if (LOG_TIMING) {
-                    header.fill('0');header.width(7);
+                    header.fill('0');
+                    header.width(7);
                     header << clock() << " - ";
                 }
                 if (LOG_THREAD) {
-                    header.fill('0');header.width(7);
+                    header.fill('0');
+                    header.width(7);
                     header << this_thread::get_id() << " + ";
                 }
             }
@@ -110,7 +116,7 @@ namespace qblocks {
         //----------------------------------------------------------------
         template<typename First, typename...Rest >
         void print_impl(First parm1, Rest...parm) {
-            log_stream<<parm1;
+            log_stream << parm1;
             print_impl(parm...);
         }
 
@@ -119,9 +125,9 @@ namespace qblocks {
         void setEndline(char ch) { if (policy) policy->end_line = ch; }
 
         //----------------------------------------------------------------
-        logger( const string_q& name ) {
+        logger( const string_q& name ) explicit {  // NOLINT
             policy = new log_policy;
-            if( !policy ) {
+            if ( !policy ) {
                 throw std::runtime_error("LOGGER: Unable to create the logger instance");
             }
             if (!name.empty())
@@ -134,7 +140,7 @@ namespace qblocks {
             if (!isLevelOn(severity))
                 return;
             write_mutex.lock();
-            switch( severity ) {
+            switch ( severity ) {
                 case sev_debug0:  log_stream << ": " << cWhite  << "0" << cOff << "-"; break;
                 case sev_debug1:  log_stream << ": " << cWhite  << "1" << cOff << "--"; break;
                 case sev_debug2:  log_stream << ": " << cGreen  << "2" << cOff << "---"; break;
@@ -145,16 +151,16 @@ namespace qblocks {
                 case sev_warning: log_stream << bYellow  << "<WARNG> " << cOff << ": "; break;
                 case sev_error:   log_stream << bRed     << "<ERROR> " << cOff << ": "; break;
                 case sev_fatal:   log_stream << bTeal    << "<FATAL> " << cOff << ": "; break;
-            };
+            }
             print_impl( args... );
             write_mutex.unlock();
         }
 
         //----------------------------------------------------------------
         virtual ~logger() {
-            if( policy ) {
+            if ( policy ) {
                 policy->close_ostream();
-                //delete policy;
+                // delete policy;
             }
         }
     };
@@ -175,11 +181,11 @@ namespace qblocks {
 #define LOG_WARN   qblocks::eLogger->print<sev_warning>
 #define LOG_ERR    qblocks::eLogger->print<sev_error>
 #define LOG_FATAL  qblocks::eLogger->print<sev_fatal>
-#define SEP1(a)    LOG1(cWhite + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP2(a)    LOG2(cGreen + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP3(a)    LOG3(cYellow + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP4(a)    LOG4(cRed + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
-#define SEP5(a)    LOG5(cTeal + string_q(10,'-') + (a) + string_q(10,'-') + cOff)
+#define SEP1(a)    LOG1(cWhite + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define SEP2(a)    LOG2(cGreen + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define SEP3(a)    LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define SEP4(a)    LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define SEP5(a)    LOG5(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -202,14 +208,14 @@ namespace qblocks {
 namespace qblocks {
     extern string_q _logEnter(const string_q& func);
     extern string_q _logExit(const string_q& func);
-}  //namespace qblocks
+}  // namespace qblocks
 
 #define ENTER(a)       { LOG2(_logEnter(a)); } string_q l_funcName = (a);
 #define EXIT_USAGE(a)  { LOG_ERR(_logExit(l_funcName)); return usage((a)); }
 #define EXIT_FAIL(a)   { LOG_WARN(_logExit(l_funcName)); cerr << (a); return false; }
-#define EXIT_MSG(a,b)  { LOG2(_logExit(l_funcName)); cerr << (a); return (b); }
+#define EXIT_MSG(a, b) { LOG2(_logExit(l_funcName)); cerr << (a); return (b); }
 #define EXIT_NOMSG(b)  { LOG2(_logExit(l_funcName)); return (b); }
 
 #define ENTER4(a)       { LOG4(_logEnter(a)); } string_q l_funcName = (a);
-#define EXIT_MSG4(a,b)  { LOG4(_logExit(l_funcName)); cerr << a; return (b); }
+#define EXIT_MSG4(a, b) { LOG4(_logExit(l_funcName)); cerr << a; return (b); }
 #define EXIT_NOMSG4(b)  { LOG4(_logExit(l_funcName)); return (b); }

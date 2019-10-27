@@ -16,7 +16,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    extern string_q getVersionStr(bool incProg=true, bool incGit=true);
+    extern string_q getVersionStr(bool incProg = true, bool incGit = true);
     extern uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build);
     extern uint32_t getVersionNum(void);
 

@@ -22,7 +22,7 @@
 namespace qblocks {
 
     //--------------------------------------------------------------------------------
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     CRuntimeClass CBaseNode::classCBaseNode;
     static CBuiltIn _biBaseNode(&CBaseNode::classCBaseNode, "CBaseNode", sizeof(CBaseNode), NULL, NULL);
     vector<CBuiltIn> builtIns;  // Keeps track of all the classes that have beebn registered
@@ -133,7 +133,7 @@ namespace qblocks {
     inline void preserveSpaces(string_q& str) {
         enum state_t { OUT = 0, IN = 1 };
         state_t state = OUT;
-        char *s = (char *)str.c_str();
+        char *s = reinterpret_case<char *>(str.c_str());
         while (*s) {
             switch (state) {
                 case OUT:
@@ -142,7 +142,7 @@ namespace qblocks {
                     break;
                 case IN:
                     if (*s == ' ') {
-                        *s = char(5);
+                        *s = static_case<char>(5);
                     }
                     if (*s == '\"')
                         state = OUT;
@@ -156,7 +156,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     inline void unpreserveSpaces(char *s) {
         while (*s) {
-            if (*s == char(5))
+            if (*s == static_cast<char>(5))
                 *s = ' ';
             s++;
         }
@@ -165,7 +165,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void unpreserveSpaces(string_q& str) {
-        unpreserveSpaces((char*)str.c_str());
+        unpreserveSpaces(reinterpret_cast<char*>(str.c_str()));
         return;
     }
 
@@ -272,7 +272,7 @@ namespace qblocks {
                            (const char*)tbs, fieldName, fieldVal, (s+1));
                     fflush(stdout);
 #endif
-                    if (!strchr(fieldVal, '{')) // if it's not an object, replace space savers
+                    if (!strchr(fieldVal, '{'))  // if it's not an object, replace space savers
                         unpreserveSpaces(fieldVal);
                     nFields += this->setValueByName(fieldName, fieldVal);
                     fieldName = NULL;
@@ -361,7 +361,7 @@ namespace qblocks {
     }
 
     //---------------------------------------------------------------------------
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static CExportOptions expC;
     CExportOptions& expContext(void) {
         return expC;
@@ -485,7 +485,7 @@ namespace qblocks {
                 } else if (field.m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums)
                         ret += "\"";
-                    ret += (expContext().hexNums && !contains(val,".") ? str_2_Hex(val) : val);
+                    ret += (expContext().hexNums && !contains(val, ".") ? str_2_Hex(val) : val);
                     if (expContext().quoteNums)
                         ret += "\"";
 
@@ -730,8 +730,8 @@ namespace qblocks {
             fieldValue = "";
         if (rightJust) {
             fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
-        } if (zeroJust) {
-            fieldValue = padLeft(fieldValue, maxWidth, '0'); // pad
+        } else if (zeroJust) {
+            fieldValue = padLeft(fieldValue, maxWidth, '0');  // pad
         } else {
             fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
         }
@@ -757,8 +757,8 @@ extern string_q reformat1(const string_q& in, size_t len);
 
     //---------------------------------------------------------------------------------------------------
     CBaseNode *createObjectOfType(const string_q& className) {
-        //TODO(tjayrush): global data
-        { // keep the frame
+        // TODO(tjayrush): global data
+        {  // keep the frame
             mutex aMutex;
             lock_guard<mutex> lock(aMutex);
             static bool isSorted = false;

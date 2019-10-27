@@ -479,7 +479,7 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BLOCK = 
+const char* STR_DISPLAY_BLOCK =
 "[{BLOCKNUMBER}]\t"
 "[{TIMESTAMP}]\t"
 "[{DIFFICULTY}]\t"

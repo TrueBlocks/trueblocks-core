@@ -76,7 +76,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     uint64_t barLen(uint64_t newLen) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static uint64_t _barLen = 100;
         if (newLen)
             _barLen = newLen;
@@ -103,7 +103,7 @@ namespace qblocks {
         cout.flush();
     }
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static double pb_Value = -1.0;
     double getProgBarVal(void) { return pb_Value; }
 

@@ -47,7 +47,7 @@ namespace qblocks {
         virtual string_q jsonFromArray(const CFieldDataArray& array) const;
 
     public:
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static CRuntimeClass classCBaseNode;
         static CBaseNode *createObject(void);
         virtual CRuntimeClass *getRuntimeClass(void) const;

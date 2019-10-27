@@ -48,7 +48,7 @@ namespace qblocks {
         listFilesInFolder(files, path, true);
         for (auto file : files)
             ::remove(file.c_str());
-        return (int)files.size();
+        return static_cast<int>(files.size());
     }
 
     //------------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace qblocks {
         if (from % to)
             return true;
         if (copyFile(from, to)) {
-            int ret = ::remove(from.c_str()); // remove file returns '0' on success
+            int ret = ::remove(from.c_str());  // remove file returns '0' on success
             return !ret;
         }
         return false;
@@ -260,7 +260,7 @@ namespace qblocks {
         string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
         string_q result = doCommand(cmd);
         uint64_t cnt = str_2_Uint(result);
-        if (!cnt || !contains(result, getEffectiveUserName())) // not running or not running by this user
+        if (!cnt || !contains(result, getEffectiveUserName()))  // not running or not running by this user
             return false;
         return (!excludeSelf || cnt > 1);
     }

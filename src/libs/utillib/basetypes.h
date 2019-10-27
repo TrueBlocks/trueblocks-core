@@ -28,7 +28,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <time.h>
-#include <unistd.h>
 #include <utime.h>
 #include <string.h>
 #include <sys/mman.h>
@@ -42,10 +41,10 @@
 #include <vector>
 #include <map>
 #include <tuple>
-#include <chrono>
+#include <chrono>  // NOLINT
 #include <iomanip>
-#include <thread>
-#include <mutex>
+#include <thread>  // NOLINT
+#include <mutex>  // NOLINT
 #include <bitset>
 
 //-------------------------------------------------------------------------

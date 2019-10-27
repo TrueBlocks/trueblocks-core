@@ -23,14 +23,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void COptionsBase::registerOptions(size_t nP, COption const *pP) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         arguments.clear();
         cntParams = nP;
         pParams = pP;
     }
 
     //--------------------------------------------------------------------------------
-    //TODO(tjayrush): global data - but okay, a program only has one name
+    // TODO(tjayrush): global data - but okay, a program only has one name
     string_q COptionsBase::g_progName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
@@ -210,10 +210,11 @@ namespace qblocks {
             } else if (startsWith(arg, "--fmt:")) {
                 arg = substitute(arg, "--fmt:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  }
-                else if ( arg == "csv" ) { exportFmt = CSV1; }
-                else if ( arg == "json") { exportFmt = JSON1; }
-                else if ( arg == "api" ) { exportFmt = API1; }
-                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
+                else if ( arg == "csv" ) { exportFmt = CSV1; }  // NOLINT
+                else if ( arg == "json") { exportFmt = JSON1; }  // NOLINT
+                else if ( arg == "api" ) { exportFmt = API1; }  // NOLINT
+                else return usage("Export format (" + arg +  // NOLINT
+                    ") must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
         }
@@ -441,13 +442,15 @@ namespace qblocks {
         replaceAll(arg, "-", "");
 
         if (!isNumeral(arg))
-            return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer. Quitting...");
+            return usage("Value to --" + name + " parameter (" + arg +
+                ") must be a valid unsigned integer. Quitting...");
         value = str_2_Uint(arg);
         return true;
     }
 
     //---------------------------------------------------------------------------------------------------
-    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value, const string_q& argIn, blknum_t latest) const {
+    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value,
+                                        const string_q& argIn, blknum_t latest) const {
 
         if (!confirmUint(name, value, argIn))
             return false;
@@ -521,7 +524,7 @@ namespace qblocks {
 
         if (!is_positional) {
             longName = "--" + shortName;
-            shortName = "-" + (contains(shortName,"fmt") ? "x" : extract(shortName, 0, 1));
+            shortName = "-" + (contains(shortName, "fmt") ? "x" : extract(shortName, 0, 1));
         } else {
             longName = shortName;
         }
@@ -531,7 +534,11 @@ namespace qblocks {
             longName = nextTokenClear(permitted, ':');
             type = permitted;
             replaceAny(permitted, "<>", "");
-            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
+            if (permitted != "range" &&
+                permitted != "list" &&
+                permitted != "fn" &&
+                permitted != "mode" &&
+                permitted != "on/off")
                 permitted = "val";
             longName += (" " + permitted);
         }
@@ -647,7 +654,7 @@ const char *STR_ERROR_JSON =
         os << hiUp1 << "Purpose:" << hiDown << "  ";
         string_q purpose;
         for (size_t p = 0 ; p < cntParams ; p++)
-            if (pParams[p].longName.empty()) // program description
+            if (pParams[p].longName.empty())  // program description
                 purpose = pParams[p].description;
         os << substitute(purpose, "\n", "\n        ") << "\n";
         if (!endsWith(purpose, "\n"))
@@ -658,7 +665,8 @@ const char *STR_ERROR_JSON =
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional, bool required) const {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
+                                            bool isPositional, bool required) const {
         ostringstream os;
         if (isReadme) {
 
@@ -753,19 +761,22 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 bool isPositional = pParams[i].is_positional;
                 if (pParams[i].is_hidden && !sName.empty()) {
                     bool isReq = !pParams[i].is_optional;
-                    lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                    lName = substitute(substitute((isPositional ? substitute(lName, "-", "")
+                                 : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
                     sName = (isPositional ? "" : pParams[i].shortName);
                     os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
             if (isEnabled(OPT_FMT))
-                os << oneDescription(" ", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]", false, false);
+                os << oneDescription(" ", "--fmt <val>",
+                    "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
         if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+            os << oneDescription("-v", "--verbose",
+                "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen", false, false);
         return postProcess("description", os.str().c_str());
@@ -967,7 +978,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     CNameValueArray COptionsBase::specials;
 
     //-----------------------------------------------------------------------
@@ -1021,7 +1032,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         exportFmt = (isApiMode() ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
-        scanRange = make_pair(0,NOPOS);
+        scanRange = make_pair(0, NOPOS);
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
         hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
@@ -1034,7 +1045,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         cntParams = 0;
         coutBackup = NULL;
         redirFilename = "";
-        //redirStream
+        // redirStream
     }
 
     //--------------------------------------------------------------------------------
@@ -1057,7 +1068,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     void COptionsBase::closeRedirect(void) {
         if (coutBackup != NULL) {
-            cout.rdbuf( coutBackup ); // restore cout's original streambuf
+            cout.rdbuf( coutBackup );  // restore cout's original streambuf
             redirStream.close();
             coutBackup = NULL;
             cout << redirFilename;
@@ -1071,7 +1082,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             uint64_t save = verbose;
             verbose = false;
             if (!contains(namesFile.getFullPath(), "names.txt"))
-                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));
+                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));  // NOLINT
             ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }

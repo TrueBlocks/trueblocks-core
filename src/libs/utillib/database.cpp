@@ -405,7 +405,7 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static uint32_t sectionLocks = 0;
     void lockSection(bool lock) {
         if (lock)
@@ -422,7 +422,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     size_t quitCount(size_t s) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         // This is global data, and therefore not thread safe, but it's okay since
         // we want to count a quit request no matter which thread it's from.
         static size_t g_QuitCount = 0;
@@ -467,14 +467,14 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     void defaultQuitHandler(int signum) {
         if (quitCount(1) > 2) {
-//            LOG_INFO(cBlue, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
+// LOG_INFO(cBlue, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
             cleanFileLocks();
             if (signum != -1) {
-//                LOG_INFO(cYellow, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
+// LOG_INFO(cYellow, COptionsBase::g_progName, ": defaultQuitHander (>2): ", quitCount(), ": ", signum, cOff);
                 exit(EXIT_SUCCESS);
             }
         }
-//        LOG_INFO(cTeal, COptionsBase::g_progName, ": defaultQuitHander (<2): ", quitCount(), ": ", signum, cOff);
+// LOG_INFO(cTeal, COptionsBase::g_progName, ": defaultQuitHander (<2): ", quitCount(), ": ", signum, cOff);
     }
 
     //-----------------------------------------------------------------------
@@ -503,7 +503,7 @@ namespace qblocks {
         mutex aMutex;
         lock_guard<mutex> lock(aMutex);
 
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static string_q theList;
         if (filename == "clear") {
             theList = "";

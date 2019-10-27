@@ -260,7 +260,7 @@ const char* STR_DISPLAY_APISPEC = "";
 // EXISTING_CODE
 bool CApiSpec::sendData(const string_q& data) {
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     CURLcode ret = CURLE_SEND_ERROR;
     CURL *curl_handle = curl_easy_init();
     if (curl_handle) {

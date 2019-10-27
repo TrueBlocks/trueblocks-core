@@ -242,7 +242,7 @@ ostream& operator<<(ostream& os, const CDisplayApp& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_DISPLAYAPP = 
+const char* STR_DISPLAY_DISPLAYAPP =
 "[{ADDRESS}]\t"
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]";
