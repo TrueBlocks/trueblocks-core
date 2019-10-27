@@ -1,0 +1,24 @@
+grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:-vne] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vne 
+
+  Invalid option: -e
+
+  Usage:    grabABI [-c|-g|-n|-s|-v|-h] <address> [address...]  
+  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+
+  Where:  
+	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
+	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
+	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
+	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
+	-s  (--sol <path>)    create the ABI file from a .sol file in the local directory
+
+#### Hidden options (shown during testing only)
+	-k  (--known)         load common 'known' ABIs from cache
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+#### Hidden options (shown during testing only)
+
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

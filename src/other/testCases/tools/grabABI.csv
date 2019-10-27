@@ -1,55 +1,45 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd, fast, abi, tools/grabABI, README,                n, @th
-on, cmd, fast, abi, tools/grabABI, help,                  n, @h
-on, cmd, fast, abi, tools/grabABI, help_long,             n, help
+on, cmd, fast, abi, tools/grabABI, README,                 n, @th
+on, cmd, fast, abi, tools/grabABI, help,                   n, @h
+on, cmd, fast, abi, tools/grabABI, help_long,              n, help
 
-on, cmd, fast, abi, tools/grabABI, invalid_1,             y, addrs = 0x00001
-on, cmd, fast, abi, tools/grabABI, not_found,             n, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & open
-on, cmd, fast, abi, tools/grabABI, not_a_contract,        n, addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
+on, both, fast, abi, tools/grabABI, invalid_1,             y, addrs = 0x00001
+on, both, fast, abi, tools/grabABI, not_a_contract,        y, addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
 
-on, cmd, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw
-on, cmd, fast, abi, tools/grabABI, encoding,              n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & encode
-on, cmd, fast, abi, tools/grabABI, encoding_nv,           n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & noconst & encode
-on, cmd, fast, abi, tools/grabABI, etherTip,              n, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known & encode
-on, cmd, fast, abi, tools/grabABI, fromSolidity,          y, sol = 0x1234567812345678123456781234567812345678.sol & raw
-on, cmd, fast, abi, tools/grabABI, fromSolidity_fail,     y, addrs = 0x2234567812345678123456781234567812345678 & sol
-# on, cmd, fast, abi, tools/grabABI, generation,            y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & encode & generate
-on, cmd, fast, abi, tools/grabABI, generation2,           y, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 @ vne
-on, cmd, fast, abi, tools/grabABI, known_contracts,       n, known & encode
+on, both, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw
+on, both, fast, abi, tools/grabABI, local_fail,            n, addrs = 0x1234567812345678123456781234567812345678 & fmt = txt
+on, both, fast, abi, tools/grabABI, local_file,            y, addrs = 0x1234567812345678123456781234567812345678 & fmt = json
+on, cmd,  fast, abi, tools/grabABI, invalid_option,        n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
+on, both, fast, abi, tools/grabABI, no_abi1,               y, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
+on, both, fast, abi, tools/grabABI, no_abi2,               n, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & raw
 
-on, cmd, fast, abi, tools/grabABI, local_fail,            n, addrs = 0x1234567812345678123456781234567812345678
-on, cmd, fast, abi, tools/grabABI, local_file,            n, addrs = 0x1234567812345678123456781234567812345678
-on, cmd, fast, abi, tools/grabABI, no_abi1,               y, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
-on, cmd, fast, abi, tools/grabABI, no_abi2,               y, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & raw
-on, cmd, fast, abi, tools/grabABI, noconst,               n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst
-on, cmd, fast, abi, tools/grabABI, underbar_functions,    n, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
-on, cmd, fast, abi, tools/grabABI, verbose1,              y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & raw
-on, cmd, fast, abi, tools/grabABI, verbose3,              y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & raw
-on, cmd, fast, abi, tools/grabABI, verbose4,              n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
-# on, cmd, fast, abi, tools/grabABI, verbose5,              y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
-on, cmd, fast, abi, tools/grabABI, output_test,           n, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & raw & output = testing_file
+on, both, fast, abi, tools/grabABI, const,                 y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+on, both, fast, abi, tools/grabABI, noconst,               y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & noconst
+on, both, fast, abi, tools/grabABI, noconst_v,             y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst
+on, both, fast, abi, tools/grabABI, verbose1,              y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & raw
+on, cmd,  fast, abi, tools/grabABI, noconst_short,         n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vn
 
-on, cmd, fast, abi, tools/grabABI, known_prev_bug1,       n, addrs = 0x5901deb2c898d5dbe5923e05e510e95968a35067
-on, cmd, fast, abi, tools/grabABI, known_prev_bug2,       n, addrs = 0x5f742383b6d1298980030d6af943b76cdd902143
-on, cmd, fast, abi, tools/grabABI, known_prev_bug3,       n, addrs = 0x6090a6e47849629b7245dfa1ca21d94cd15878ef
-on, cmd, fast, abi, tools/grabABI, known_prev_bug4,       n, addrs = 0x6810e776880c02933d47db1b9fc05908e5386b96
-on, cmd, fast, abi, tools/grabABI, known_prev_bug5,       n, addrs = 0x851b7f3ab81bd8df354f0d7640efcd7288553419
-on, cmd, fast, abi, tools/grabABI, known_prev_bug6,       n, addrs = 0xa68780dd261cfea0d479728db3ed318940bfa9f9 & data
-on, cmd, fast, abi, tools/grabABI, known_prev_bug7,       n, addrs = 0xaaaf91d9b90df800df4f55c205fd6989c977e73a
-on, cmd, fast, abi, tools/grabABI, known_prev_bug8,       n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
-on, cmd, fast, abi, tools/grabABI, known_prev_bug9,       n, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2
-on, cmd, fast, abi, tools/grabABI, known_prev_bug10,      n, addrs = 0x012233b3c8177f0778d910ed88170b82de3bfe57
-on, cmd, fast, abi, tools/grabABI, known_prev_bug11,      n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-on, cmd, fast, abi, tools/grabABI, known_prev_bug12,      n, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & data
+on, both, fast, abi, tools/grabABI, known_alone,           y, known
+on, both, fast, abi, tools/grabABI, known_with,            y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug1,  y, addrs = 0x5901deb2c898d5dbe5923e05e510e95968a35067 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug2,  y, addrs = 0x5f742383b6d1298980030d6af943b76cdd902143 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug3,  y, addrs = 0x6090a6e47849629b7245dfa1ca21d94cd15878ef & data
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug4,  y, addrs = 0x6810e776880c02933d47db1b9fc05908e5386b96
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug5,  y, addrs = 0x851b7f3ab81bd8df354f0d7640efcd7288553419 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug6,  y, addrs = 0xa68780dd261cfea0d479728db3ed318940bfa9f9 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug7,  y, addrs = 0xaaaf91d9b90df800df4f55c205fd6989c977e73a & data
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug8,  y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug9,  y, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug10, y, addrs = 0x012233b3c8177f0778d910ed88170b82de3bfe57 & raw
-on, cmd, fast, abi, tools/grabABI, known_prev_json_bug11, y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & raw
+on, both, fast, abi, tools/grabABI, underbar_functions,    n, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
+on, both, fast, abi, tools/grabABI, output_test,           n, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & raw & output = testing_file
+
+on, both, fast, abi, tools/grabABI, known_bug1,            n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
+on, both, fast, abi, tools/grabABI, known_bug1_raw,        y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & raw & fmt = json
+
+on, both, fast, abi, tools/grabABI, known_bug2,            n, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
+on, both, fast, abi, tools/grabABI, known_bug2_raw,        y, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & raw & fmt = json
+
+on, cmd,  fast, abi, tools/grabABI, fromSolidity_fail,     n, sol = 0x2234567812345678123456781234567812345678
+on, cmd,  fast, abi, tools/grabABI, fromSolidity,          n, sol = 0x1234567812345678123456781234567812345678.sol & raw
+
+on, both, fast, abi, tools/grabABI, fmt_default,           y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
+on, both, fast, abi, tools/grabABI, fmt_txt,               n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt
+on, both, fast, abi, tools/grabABI, fmt_csv,               n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
+on, both, fast, abi, tools/grabABI, fmt_api,               y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = api
+on, both, fast, abi, tools/grabABI, fmt_json,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
+on, both, fast, abi, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
+
+# on, both, fast, abi, tools/grabABI, generation,          n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
+# on, both, fast, abi, tools/grabABI, verbose5,            n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate

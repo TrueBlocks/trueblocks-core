@@ -19,8 +19,8 @@ bool COptions::handle_list(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cacheMan " << " --fix " << addr << " >&2 ; ";
-        os << "acctExport --appearances " << tool_flags << " " << addr << " ; ";
+        os << "cacheMan " << " --fix " << addr << " >&2 && ";
+        os << "acctExport --appearances " << tool_flags << " " << addr;
         LOG4("Calling " + os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }

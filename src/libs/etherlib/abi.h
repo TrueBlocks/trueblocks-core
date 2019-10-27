@@ -179,7 +179,7 @@ extern const char* STR_DISPLAY_ABI;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
-extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decorate);
+extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
 // EXISTING_CODE
 }  // namespace qblocks
 

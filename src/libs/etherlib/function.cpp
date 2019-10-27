@@ -266,6 +266,8 @@ void CFunction::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CFunction, "input_names", T_TEXT, ++fieldNum);
     HIDE_FIELD(CFunction, "input_names");
+    ADD_FIELD(CFunction, "declaration", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "indexed");
     HIDE_FIELD(CFunction, "anonymous");
     // EXISTING_CODE
@@ -288,6 +290,11 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                     ret += ")";
                     replace(ret, ",)", ")");
                     return (ret + "\t" + chr_2_HexStr(ret));
+                }
+                break;
+            case 'd':
+                if ( fieldIn % "declaration") {
+               return fun->getSignature(SIG_FTYPE | SIG_FNAME | SIG_ITYPE | SIG_INAME | SIG_IINDEXED);
                 }
                 break;
             case 'i':

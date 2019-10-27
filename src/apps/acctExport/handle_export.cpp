@@ -194,7 +194,7 @@ bool COptions::exportData(void) {
         for (pair<address_t,bool> item : abiMap) {
             if (isContractAt(item.first)) {
                 CAbi unused;
-                loadAbiAndCache(unused, item.first, false, true, false);
+                loadAbiAndCache(unused, item.first, false, errors);
                 cout << "ABI for " << item.first << " ";
                 cout << (fileExists(getCachePath("abis/" + item.first + ".json")) ? "cached" : "not cached") << endl;
             }

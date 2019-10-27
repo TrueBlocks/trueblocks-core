@@ -185,14 +185,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 13660,tools,abi,grabABI,addrs,,,TRUE,TRUE,TRUE,,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,abi,grabABI,canonical,c,,FALSE,TRUE,TRUE,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
 13700,tools,abi,grabABI,generate,g,,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
-13720,tools,abi,grabABI,encode,e,,FALSE,TRUE,TRUE,local,switch,<boolean>,generate the encodings for the functions / events in the ABI
 13740,tools,abi,grabABI,noconst,n,,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
 13760,tools,abi,grabABI,sol,s,,FALSE,TRUE,TRUE,,flag,<path>,create the ABI file from a .sol file in the local directory
-13780,tools,abi,grabABI,open,o,,FALSE,FALSE,FALSE,local,switch,<boolean>,open the ABI file for editing&#44; download if not already present
-13800,tools,abi,grabABI,silent,i,,FALSE,FALSE,FALSE,yes,switch,<boolean>,if ABI cannot be acquired&#44; fail silently (useful for scripting)
-13820,tools,abi,grabABI,no_decorate,r,,FALSE,FALSE,FALSE,local,switch,<boolean>,do not decorate duplicate names
 13840,tools,abi,grabABI,known,k,,FALSE,FALSE,FALSE,local,switch,<boolean>,load common 'known' ABIs from cache
-13860,tools,abi,grabABI,data,d,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export the display as data
 13880,tools,abi,grabABI,,,,FALSE,TRUE,TRUE,na,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
 13920,tools,when,whenBlock,blocks,,,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or

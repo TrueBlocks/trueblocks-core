@@ -1,0 +1,60 @@
+Generating class for derived transaction type: 'CApprove'
+	Would run class definition file: approve (not run, testing)
+Generating class for derived transaction type: 'CChangeAllowedRecipients'
+	Would run class definition file: changeallowedrecipients (not run, testing)
+Generating class for derived transaction type: 'CChangeProposalDeposit'
+	Would run class definition file: changeproposaldeposit (not run, testing)
+Generating class for derived transaction type: 'CCreateTokenProxy'
+	Would run class definition file: createtokenproxy (not run, testing)
+Generating class for derived transaction type: 'CExecuteProposal'
+	Would run class definition file: executeproposal (not run, testing)
+Generating class for derived transaction type: 'CGetMyReward'
+	Would run class definition file: getmyreward (not run, testing)
+Generating class for derived transaction type: 'CHalveMinQuorum'
+	Would run class definition file: halveminquorum (not run, testing)
+Generating class for derived transaction type: 'CNewContract'
+	Would run class definition file: newcontract (not run, testing)
+Generating class for derived transaction type: 'CNewProposal'
+	Would run class definition file: newproposal (not run, testing)
+Generating class for derived transaction type: 'CReceiveEther'
+	Would run class definition file: receiveether (not run, testing)
+Generating class for derived transaction type: 'CRefund'
+	Would run class definition file: refund (not run, testing)
+Generating class for derived transaction type: 'CRetrieveDAOReward'
+	Would run class definition file: retrievedaoreward (not run, testing)
+Generating class for derived transaction type: 'CSplitDAO'
+	Would run class definition file: splitdao (not run, testing)
+Generating class for derived transaction type: 'CTransfer'
+	Would run class definition file: transfer (not run, testing)
+Generating class for derived transaction type: 'CTransferFrom'
+	Would run class definition file: transferfrom (not run, testing)
+Generating class for derived transaction type: 'CTransferFromWithoutReward'
+	Would run class definition file: transferfromwithoutreward (not run, testing)
+Generating class for derived transaction type: 'CTransferWithoutReward'
+	Would run class definition file: transferwithoutreward (not run, testing)
+Generating class for derived transaction type: 'CUnblockMe'
+	Would run class definition file: unblockme (not run, testing)
+Generating class for derived transaction type: 'CVote'
+	Would run class definition file: vote (not run, testing)
+Generating class for derived event type: 'CAllowedRecipientChangedEvent'
+	Would run class definition file: allowedrecipientchangedevent (not run, testing)
+Generating class for derived event type: 'CApprovalEvent'
+	Would run class definition file: approvalevent (not run, testing)
+Generating class for derived event type: 'CCreatedTokenEvent'
+	Would run class definition file: createdtokenevent (not run, testing)
+Generating class for derived event type: 'CFuelingToDateEvent'
+	Would run class definition file: fuelingtodateevent (not run, testing)
+Generating class for derived event type: 'CNewCuratorEvent'
+	Would run class definition file: newcuratorevent (not run, testing)
+Generating class for derived event type: 'CProposalAddedEvent'
+	Would run class definition file: proposaladdedevent (not run, testing)
+Generating class for derived event type: 'CProposalTalliedEvent'
+	Would run class definition file: proposaltalliedevent (not run, testing)
+Generating class for derived event type: 'CRefundEvent'
+	Would run class definition file: refundevent (not run, testing)
+Generating class for derived event type: 'CTransferEvent'
+	Would run class definition file: transferevent (not run, testing)
+Generating class for derived event type: 'CVotedEvent'
+	Would run class definition file: votedevent (not run, testing)
+{ "type": "CAbi", "data": [
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

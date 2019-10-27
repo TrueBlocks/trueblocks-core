@@ -1,105 +1,101 @@
 grabABI argc: 4 [1:0x1234567812345678123456781234567812345678] [2:0x6090a6e47849629b7245dfa1ca21d94cd15878ef] [3:0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22] 
 grabABI 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 
-ABI for address 0x1234567812345678123456781234567812345678
-	function ETH                        (uint256 _id)
-	function EUR                        (uint256 _id)
-	function GBP                        (uint256 _id)
-	function USD                        (uint256 _id)
-	function acceptRequest              (uint256 _key,uint256 _etherAmount,address _acceptor)
-	function acceptTheseAskRequestsAndBUY(uint256[] _keys,uint256[] _tokenAmounts,uint256[] _dollarPrices)
-	function acceptTheseBidRequestsAndSELL(uint256[] _keys,uint256[] _tokenAmounts,uint256[] _dollarPrices)
-	function add                        (uint256 a,uint256 b)
-	function affirmStatusAsAccreditedInvestor(address _account)
-	function allowance                  (address _owner,address _spender)
-	function approve                    (address _spender,uint256 _amount)
-	function balanceOf                  (address tokenOwner)
-	function burnTokens                 (uint256 _amount)
-	function cancelExistingRequest      (uint256 _key)
-	function changeSetting              (uint8 _setting,uint256 _value)
-	function contractSetting            (uint8 _setting)
-	function createRequest              (uint256 _tokenAmount,uint256 _dollarPrice,uint256 _deposit,uint8 _requestType,address _requester)
-	function depositPayment             ()
-	function div                        (uint256 a,uint256 b)
-	function doesRequestMatch           (uint256 _key,uint256 _tokenAmount,uint256 _dollarPrice,uint8 _requestType)
-	function etherEquivalent            (uint256 _dollarPrice,uint256 _tokenAmount)
-	function getHolderInfo              (address _address)
-	function getHolders                 ()
-	function getRequest                 (uint256 _key)
-	function getRequestKeys             ()
-	function isRequestOpen              (uint256 _key)
-	function makeDepositDue             (uint256 _deposit)
-	function makeNewAskRequestToSELL    (uint256 _tokenAmount,uint256 _dollarPrice)
-	function makeNewBidRequestToBUY     (uint256 _tokenAmount,uint256 _dollarPrice)
-	function mintTokens                 (uint256 _amount)
-	function mul                        (uint256 a,uint256 b)
-	function permitTransfer             (address _to)
-	function priceOkay                  (uint256 _dollarPrice)
-	function reclaimMisplacedTokens     (address _account)
-	function releaseCommitment          (uint256 _tokenAmount,address _requester)
-	function setAdminAddress            (address _address)
-	function setFiatContractAddress     (address _address)
-	function setOwnerAddress            (address _address)
-	function splitEther                 (uint256 _payment,uint256 _deposit,address _buyer,address _seller)
-	function sub                        (uint256 a,uint256 b)
-	function sufficientBalance          (address _account,uint256 _amount)
-	function togglePause                ()
-	function toggleTrustedVerifier      (address _verifier)
-	function totalSupply                ()
-	function transfer                   (address _to,uint256 _amount)
-	function transferAnyERC20Token      (address _tokenAddress,uint256 _tokens)
-	function transferFrom               (address _from,address _to,uint256 _amount)
-	function transferX                  (address _to,uint256 _amount,string _transferMetaData)
-	function updatedAt                  (uint256 _id)
-	function verifyStatusAsAccreditedInvestor(address _account,string _verifyMetaData)
-	function withdrawExcessEther        ()
-	function withdrawPayment            ()
-	event AcceptRequest                 (uint256 _key,uint256 _etherAmount,uint256 _tokenAmount,uint256 _dollarPrice,address indexed _acceptor)
-	event AffirmStatus                  (address indexed _sender,address indexed _account,uint256 _affirmDate,uint256 _value)
-	event Approval                      (address indexed _owner,address indexed _spender,uint256 _value)
-	event BurnTokens                    (uint256 _value,uint256 _balance)
-	event CancelRequest                 (uint256 _key,address indexed _sender,uint256 _deposit,uint256 _amount)
-	event MakeRequest                   (uint256 _key,uint256 _date,uint256 _tokenAmount,uint256 _dollarPrice,uint8 _requestType,address indexed _requester)
-	event Message                       (string fName,string message)
-	event MintTokens                    (uint256 _value,uint256 _balance)
-	event ReclaimMisplacedTokens        (address indexed _from,uint256 _tokenAmount)
-	event SettingChange                 (address _admin,uint8 _setting,uint256 _value)
-	event ToggleTrustedVerifier         (address indexed _verifier,bool _isTrustedVerifier)
-	event Transfer                      (address indexed _from,address indexed _to,uint256 _value)
-	event TransferX                     (address indexed _from,address indexed _to,uint256 _value,string _transferMetaData)
-	event VerifyStatus                  (address indexed _verifier,address indexed _account,uint256 _verifyDate,string _verifyMetaData)
-	event WithdrawPayment               (address indexed _account,uint256 _payment)
-
-ABI for address 0x6090a6e47849629b7245dfa1ca21d94cd15878ef
-	function acceptRegistrarTransfer    (bytes32 hash,address deed,uint256 registrationDate)
-	function cancelBid                  (address bidder,bytes32 seal)
-	function ens                        ()
-	function entries                    (bytes32 _hash)
-	function eraseNode                  (bytes32[] labels)
-	function finalizeAuction            (bytes32 _hash)
-	function getAllowedTime             (bytes32 _hash)
-	function invalidateName             (string unhashedName)
-	function isAllowed                  (bytes32 _hash,uint256 _timestamp)
-	function launchLength               ()
-	function newBid                     (bytes32 sealedBid)
-	function registryStarted            ()
-	function releaseDeed                (bytes32 _hash)
-	function rootNode                   ()
-	function sealedBids                 (address val_0,bytes32 val_1)
-	function shaBid                     (bytes32 hash,address owner,uint256 value,bytes32 salt)
-	function startAuction               (bytes32 _hash)
-	function startAuctions              (bytes32[] _hashes)
-	function startAuctionsAndBid        (bytes32[] hashes,bytes32 sealedBid)
-	function state                      (bytes32 _hash)
-	function transfer                   (bytes32 _hash,address newOwner)
-	function transferRegistrars         (bytes32 _hash)
-	function unsealBid                  (bytes32 _hash,uint256 _value,bytes32 _salt)
-	event AuctionStarted                (bytes32 indexed hash,uint256 registrationDate)
-	event BidRevealed                   (bytes32 indexed hash,address indexed owner,uint256 value,uint8 status)
-	event HashInvalidated               (bytes32 indexed hash,string indexed name,uint256 value,uint256 registrationDate)
-	event HashRegistered                (bytes32 indexed hash,address indexed owner,uint256 value,uint256 registrationDate)
-	event HashReleased                  (bytes32 indexed hash,uint256 value)
-	event NewBid                        (bytes32 indexed hash,address indexed bidder,uint256 deposit)
-
-ABI for address 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22
-	function split                      (address targetFork,address targetNoFork)
-
+address	encoding	type	constant	name	signature	input_names
+	0x67f01c04	function	true	ETH	ETH(uint256)	_id,,
+	0xd67ae54d	function	true	EUR	EUR(uint256)	_id,,
+	0x5a8ef28a	function	true	GBP	GBP(uint256)	_id,,
+	0x0c560c64	function	true	USD	USD(uint256)	_id,,
+	0xbd943312	function		acceptRequest	acceptRequest(uint256,uint256,address)	_key,_etherAmount,_acceptor,,
+	0x9775fc80	function		acceptTheseAskRequestsAndBUY	acceptTheseAskRequestsAndBUY(uint256[],uint256[],uint256[])	_keys,_tokenAmounts,_dollarPrices,,
+	0x2c7845cd	function		acceptTheseBidRequestsAndSELL	acceptTheseBidRequestsAndSELL(uint256[],uint256[],uint256[])	_keys,_tokenAmounts,_dollarPrices,,
+	0x771602f7	function		add	add(uint256,uint256)	a,b,,
+	0x328d06c6	function		affirmStatusAsAccreditedInvestor	affirmStatusAsAccreditedInvestor(address)	_account,,
+	0xdd62ed3e	function	true	allowance	allowance(address,address)	_owner,_spender,,
+	0x095ea7b3	function		approve	approve(address,uint256)	_spender,_amount,,
+	0x70a08231	function	true	balanceOf	balanceOf(address)	tokenOwner,,
+	0x6d1b229d	function		burnTokens	burnTokens(uint256)	_amount,,
+	0x0a3120f2	function		cancelExistingRequest	cancelExistingRequest(uint256)	_key,,
+	0xd6918013	function		changeSetting	changeSetting(uint8,uint256)	_setting,_value,,
+	0x0619a976	function	true	contractSetting	contractSetting(uint8)	_setting,,
+	0x653726d8	function		createRequest	createRequest(uint256,uint256,uint256,uint8,address)	_tokenAmount,_dollarPrice,_deposit,_requestType,_requester,,
+	0xaa5e2153	function		depositPayment	depositPayment()	,
+	0xa391c15b	function		div	div(uint256,uint256)	a,b,,
+	0xa4b8cf14	function		doesRequestMatch	doesRequestMatch(uint256,uint256,uint256,uint8)	_key,_tokenAmount,_dollarPrice,_requestType,,
+	0xd1dbc3b5	function	true	etherEquivalent	etherEquivalent(uint256,uint256)	_dollarPrice,_tokenAmount,,
+	0x54e4067a	function	true	getHolderInfo	getHolderInfo(address)	_address,,
+	0x5fe8e7cc	function	true	getHolders	getHolders()	,
+	0xc58343ef	function	true	getRequest	getRequest(uint256)	_key,,
+	0xc8c60a3b	function	true	getRequestKeys	getRequestKeys()	,
+	0x8274fbf5	function		isRequestOpen	isRequestOpen(uint256)	_key,,
+	0x0d1994fe	function		makeDepositDue	makeDepositDue(uint256)	_deposit,,
+	0xfaa47056	function		makeNewAskRequestToSELL	makeNewAskRequestToSELL(uint256,uint256)	_tokenAmount,_dollarPrice,,
+	0xeaca750d	function		makeNewBidRequestToBUY	makeNewBidRequestToBUY(uint256,uint256)	_tokenAmount,_dollarPrice,,
+	0x97304ced	function		mintTokens	mintTokens(uint256)	_amount,,
+	0xc8a4ac9c	function		mul	mul(uint256,uint256)	a,b,,
+	0xf812e909	function	true	permitTransfer	permitTransfer(address)	_to,,
+	0x80279f92	function		priceOkay	priceOkay(uint256)	_dollarPrice,,
+	0x1ec1eabf	function		reclaimMisplacedTokens	reclaimMisplacedTokens(address)	_account,,
+	0x5f443e73	function		releaseCommitment	releaseCommitment(uint256,address)	_tokenAmount,_requester,,
+	0x2c1e816d	function		setAdminAddress	setAdminAddress(address)	_address,,
+	0x45243120	function		setFiatContractAddress	setFiatContractAddress(address)	_address,,
+	0x331a6bf5	function		setOwnerAddress	setOwnerAddress(address)	_address,,
+	0x681f482e	function		splitEther	splitEther(uint256,uint256,address,address)	_payment,_deposit,_buyer,_seller,,
+	0xb67d77c5	function		sub	sub(uint256,uint256)	a,b,,
+	0xce0d0033	function		sufficientBalance	sufficientBalance(address,uint256)	_account,_amount,,
+	0xc4ae3168	function		togglePause	togglePause()	,
+	0x465f7840	function		toggleTrustedVerifier	toggleTrustedVerifier(address)	_verifier,,
+	0x18160ddd	function	true	totalSupply	totalSupply()	,
+	0xa9059cbb	function		transfer	transfer(address,uint256)	_to,_amount,,
+	0xdc39d06d	function		transferAnyERC20Token	transferAnyERC20Token(address,uint256)	_tokenAddress,_tokens,,
+	0x23b872dd	function		transferFrom	transferFrom(address,address,uint256)	_from,_to,_amount,,
+	0x39df656a	function		transferX	transferX(address,uint256,string)	_to,_amount,_transferMetaData,,
+	0xc818faec	function	true	updatedAt	updatedAt(uint256)	_id,,
+	0x21daa08e	function		verifyStatusAsAccreditedInvestor	verifyStatusAsAccreditedInvestor(address,string)	_account,_verifyMetaData,,
+	0x97d7392d	function		withdrawExcessEther	withdrawExcessEther()	,
+	0xa118babd	function		withdrawPayment	withdrawPayment()	,
+	0xc62f8b1313b549bc5c94efe776ee0559a8f88efdb3db504331857fc163553c71	event		AcceptRequest	AcceptRequest(uint256,uint256,uint256,uint256,address)	_key,_etherAmount,_tokenAmount,_dollarPrice,_acceptor,,
+	0x561d06141a26ac6edf895e7e79d3002d07dd7689b6dcec5ea29f4aba8922caf0	event		AffirmStatus	AffirmStatus(address,address,uint256,uint256)	_sender,_account,_affirmDate,_value,,
+	0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event		Approval	Approval(address,address,uint256)	_owner,_spender,_value,,
+	0xf1337af994b33c56a7ce51266931ae8dedce9d6eb9b3eb127fcf7f006374f74e	event		BurnTokens	BurnTokens(uint256,uint256)	_value,_balance,,
+	0xc08c07687f5dc22e00846ec2d0afff7fb5d509f6fc5c60ad9f70fdeb0ab6a5c7	event		CancelRequest	CancelRequest(uint256,address,uint256,uint256)	_key,_sender,_deposit,_amount,,
+	0x45ec157657ca4ad92c9a421e4b776d16042d8b7e497133b925e95bade7977c9f	event		MakeRequest	MakeRequest(uint256,uint256,uint256,uint256,uint8,address)	_key,_date,_tokenAmount,_dollarPrice,_requestType,_requester,,
+	0x8252da6cc8ba70656d63b4439295f2de59ffee7cf90c96f5aee10857159474e7	event		Message	Message(string,string)	fName,message,,
+	0xcadacfb8c0e49204cf16077a3391d064f2d96ca5279ac8952e9fe94a586820a2	event		MintTokens	MintTokens(uint256,uint256)	_value,_balance,,
+	0x21cb51cd5a443947666669cbd7817449c0c8655db9fdcbb54361bd7d5a3f6636	event		ReclaimMisplacedTokens	ReclaimMisplacedTokens(address,uint256)	_from,_tokenAmount,,
+	0x5d3b22fc1b5791b3bd0e715ed4a863225e41557da6054af84331354b3caa5da6	event		SettingChange	SettingChange(address,uint8,uint256)	_admin,_setting,_value,,
+	0x023b74e8ede17df2114fd7c1891458b2191a5e35f416f6e0516d27a436586b36	event		ToggleTrustedVerifier	ToggleTrustedVerifier(address,bool)	_verifier,_isTrustedVerifier,,
+	0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event		Transfer	Transfer(address,address,uint256)	_from,_to,_value,,
+	0xc620c23091c77c537ae2f7deb703ecdea8b2cb3df9053ac018b281ffa1a9cae4	event		TransferX	TransferX(address,address,uint256,string)	_from,_to,_value,_transferMetaData,,
+	0x915343c82f85b094d9cd849a66a07e32f510471c64a8d62cbd36f23148242b72	event		VerifyStatus	VerifyStatus(address,address,uint256,string)	_verifier,_account,_verifyDate,_verifyMetaData,,
+	0x37bf10b25ac7f114ebfb7b1d314deb36f7b89f2d9b3f155f61ea8a23af43339e	event		WithdrawPayment	WithdrawPayment(address,uint256)	_account,_payment,,
+	0x98ba8a57	constructor			(address,bytes32,uint256)	_ens,_rootNode,_startDate,,
+	0xea9e107a	function		acceptRegistrarTransfer	acceptRegistrarTransfer(bytes32,address,uint256)	hash,deed,registrationDate,,
+	0x2525f5c1	function		cancelBid	cancelBid(address,bytes32)	bidder,seal,,
+	0x3f15457f	function	true	ens	ens()	,
+	0x267b6922	function	true	entries	entries(bytes32)	_hash,,
+	0xde10f04b	function		eraseNode	eraseNode(bytes32[])	labels,,
+	0x983b94fb	function		finalizeAuction	finalizeAuction(bytes32)	_hash,,
+	0x13c89a8f	function	true	getAllowedTime	getAllowedTime(bytes32)	_hash,,
+	0x15f73331	function		invalidateName	invalidateName(string)	unhashedName,,
+	0x93503337	function	true	isAllowed	isAllowed(bytes32,uint256)	_hash,_timestamp,,
+	0xae1a0b0c	function	true	launchLength	launchLength()	,
+	0xce92dced	function		newBid	newBid(bytes32)	sealedBid,,
+	0x9c67f06f	function	true	registryStarted	registryStarted()	,
+	0x0230a07c	function		releaseDeed	releaseDeed(bytes32)	_hash,,
+	0xfaff50a8	function	true	rootNode	rootNode()	,
+	0x5e431709	function	true	sealedBids	sealedBids(address,bytes32)	val_0,val_1,,
+	0x22ec1244	function	true	shaBid	shaBid(bytes32,address,uint256,bytes32)	hash,owner,value,salt,,
+	0xede8acdb	function		startAuction	startAuction(bytes32)	_hash,,
+	0xe27fe50f	function		startAuctions	startAuctions(bytes32[])	_hashes,,
+	0xfebefd61	function		startAuctionsAndBid	startAuctionsAndBid(bytes32[],bytes32)	hashes,sealedBid,,
+	0x61d585da	function	true	state	state(bytes32)	_hash,,
+	0x79ce9fac	function		transfer	transfer(bytes32,address)	_hash,newOwner,,
+	0x5ddae283	function		transferRegistrars	transferRegistrars(bytes32)	_hash,,
+	0x47872b42	function		unsealBid	unsealBid(bytes32,uint256,bytes32)	_hash,_value,_salt,,
+	0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003	event		AuctionStarted	AuctionStarted(bytes32,uint256)	hash,registrationDate,,
+	0x7b6c4b278d165a6b33958f8ea5dfb00c8c9d4d0acf1985bef5d10786898bc3e7	event		BidRevealed	BidRevealed(bytes32,address,uint256,uint8)	hash,owner,value,status,,
+	0x1f9c649fe47e58bb60f4e52f0d90e4c47a526c9f90c5113df842c025970b66ad	event		HashInvalidated	HashInvalidated(bytes32,string,uint256,uint256)	hash,name,value,registrationDate,,
+	0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670	event		HashRegistered	HashRegistered(bytes32,address,uint256,uint256)	hash,owner,value,registrationDate,,
+	0x292b79b9246fa2c8e77d3fe195b251f9cb839d7d038e667c069ee7708c631e16	event		HashReleased	HashReleased(bytes32,uint256)	hash,value,,
+	0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29	event		NewBid	NewBid(bytes32,address,uint256)	hash,bidder,deposit,,
+	0x0f2c9329	function		split	split(address,address)	targetFork,targetNoFork,

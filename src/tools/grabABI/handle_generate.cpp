@@ -46,7 +46,7 @@ void COptions::handle_generate(void) {
     if (!isWallet()) headers += ("#include \"walletlib.h\"\n");
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
-    for (auto abi : abi_specs) {
+    for (auto abi : abis) {
         for (auto interface : abi.interfaces) {
             if (!interface.isBuiltIn) {
                 string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");

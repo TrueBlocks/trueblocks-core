@@ -43,8 +43,8 @@ bool COptions::handle_rm(void) {
 
             if (ch == 'y' || ch == 'Y' || hasYes) {
                 ostringstream os;
-                os << "cd " << getMonitorPath("") << " ; ";
-                os << "rm -f " << addr << ".* ; ";
+                os << "cd " << getMonitorPath("") << " && ";
+                os << "rm -f " << addr << ".*";
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 

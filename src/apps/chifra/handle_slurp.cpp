@@ -17,7 +17,7 @@ bool COptions::handle_slurp(void) {
     LOG5("tool_flags: " + tool_flags);
     for (auto addr : addrs) {
         ostringstream os;
-        os << "ethslurp " << tool_flags << " " << addr << " ; ";
+        os << "ethslurp " << tool_flags << " " << addr;
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 

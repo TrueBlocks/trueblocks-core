@@ -18,12 +18,11 @@ public:
 // BEG_CODE_DECLARE
     bool generate;
     bool noconst;
-    bool silent;
-    bool data;
 // END_CODE_DECLARE
 
+    bool first;
     uint64_t parts;
-    CAbiArray abi_specs;
+    CAbiArray abis;
     CAddressArray addrs;
     string_q classDir;
     string_q prefix;
@@ -38,7 +37,6 @@ public:
     bool isToken(void) const { return prefix % "tokenlib"; }
     bool isWallet(void) const { return prefix % "walletlib"; }
     bool isBuiltIn(void) const { return isToken() || isWallet(); }
-    void handle_display(void);
     void handle_generate(void);
 };
 

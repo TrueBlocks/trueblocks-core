@@ -123,7 +123,7 @@ bool COptions::handle_scrape(void) {
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
             wasPaused = false;
             ostringstream os;
-            os << "blockScrape " << tool_flags << " ; ";
+            os << "blockScrape " << tool_flags;
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
             // always catch the timestamp file up to the scraper

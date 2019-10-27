@@ -787,8 +787,6 @@ extern void loadParseMap(void);
         if (!func)
             return false;
 
-        //        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
-        //        cout.flush();
         for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
@@ -799,8 +797,6 @@ extern void loadParseMap(void);
 
     //-------------------------------------------------------------------------
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
-        //        cout << "Visiting " << block.transactions.size() << " transactions\n";
-        //        cout.flush();
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
@@ -879,6 +875,17 @@ extern void loadParseMap(void);
             if (!(*func)(trans, data))
                 return false;
 
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryAbiInArray(ABIVISITFUNC func, void *data, const CAbiArray& abis) {
+        if (!func)
+            return false;
+        for (auto abi : abis) {
+            if (!(*func)(abi, data))
+                return false;
         }
         return true;
     }
