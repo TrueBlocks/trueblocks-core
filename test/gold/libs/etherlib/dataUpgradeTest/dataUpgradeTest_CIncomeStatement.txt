@@ -52,7 +52,7 @@ gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
 endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
 blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
 {
-  "schema": 5008,
+  "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "IncomeStatement",

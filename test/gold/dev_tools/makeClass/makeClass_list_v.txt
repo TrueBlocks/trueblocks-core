@@ -4,7 +4,7 @@ Classes found in the classDefinitions folder:
 --------------------------------------------------------------------------------
 File (dest): ./classDefinitions/block.txt
 [version]
-current = "0.5.8-alpha"
+current = "0.6.1-alpha"
 
 [settings]
 class = "CBlock"
@@ -42,7 +42,7 @@ serialize = true
 --------------------------------------------------------------------------------
 File (dest): ./classDefinitions/function.txt
 [version]
-current = "0.5.8-alpha"
+current = "0.6.1-alpha"
 
 [settings]
 class = "CFunction"

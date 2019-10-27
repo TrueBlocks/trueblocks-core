@@ -133,7 +133,7 @@ namespace qblocks {
     inline void preserveSpaces(string_q& str) {
         enum state_t { OUT = 0, IN = 1 };
         state_t state = OUT;
-        char *s = reinterpret_case<char *>(str.c_str());
+        char *s = (char *)str.c_str();  // NOLINT
         while (*s) {
             switch (state) {
                 case OUT:
@@ -142,7 +142,7 @@ namespace qblocks {
                     break;
                 case IN:
                     if (*s == ' ') {
-                        *s = static_case<char>(5);
+                        *s = static_cast<char>(5);
                     }
                     if (*s == '\"')
                         state = OUT;
@@ -165,7 +165,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void unpreserveSpaces(string_q& str) {
-        unpreserveSpaces(reinterpret_cast<char*>(str.c_str()));
+        unpreserveSpaces((char *)str.c_str());  // NOLINT
         return;
     }
 

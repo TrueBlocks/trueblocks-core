@@ -52,7 +52,7 @@ isObject            	1010	0	65556	T_BOOL TS_NUMERAL
 strDefault          	1011	0	131122	T_TEXT TS_STRING
 value               	1012	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5008,
+  "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "Parameter"
