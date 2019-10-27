@@ -67,7 +67,8 @@ TEST_F(CThisTest, TestConverts_0) {
     ASSERT_EQ("str_2_Addr3",             str_2_Addr("0x"),             "0x0");
     ASSERT_EQ("str_2_Addr4",             str_2_Addr(""),               "0x0");
     ASSERT_EQ("str_2_Addr5",             str_2_Addr("0x12312abcde12"), "0x000000000000000000000000000012312abcde12");
-    ASSERT_EQ("str_2_Addr6",             str_2_Addr("000000000000000000000000de12121212312abcde12121212312abcde121212"),"0xde12121212312abcde12121212312abcde121212");
+    ASSERT_EQ("str_2_Addr6",             str_2_Addr("000000000000000000000000de12121212312abcde12121212312abcde121212"),
+                                                        "0xde12121212312abcde12121212312abcde121212");
     cout << "\n";
 
     ASSERT_EQ("timestamp empty address", str_2_Ts(array[0]), 0);
@@ -178,13 +179,13 @@ TEST_F(CThisTest, TestConverts_4) {
 
         ASSERT_EQ("double_2_Str1", double_2_Str(14.15019, 5), "14.15019")
         ASSERT_EQ("double_2_Str2", double_2_Str(14.15019, 3), "14.150")
-        ASSERT_EQ("double_2_Str3", double_2_Str(10586816.10315913591, 10), "10586816.1031591352") // should be 10586816.1031591359???
+        ASSERT_EQ("double_2_Str3", double_2_Str(10586816.10315913591, 10), "10586816.1031591352")  // should be 10586816.1031591359???
         ASSERT_EQ("double_2_Str4", double_2_Str(10586816.10315913591, 2), "10586816.10")
         ASSERT_EQ("double_2_Str5", double_2_Str(1050, 3), "1050.000")
         ASSERT_EQ("double_2_Str6", double_2_Str(0.150100005, 9), "0.150100005")
         ASSERT_EQ("double_2_Str7", double_2_Str(-14.15019, 5), "-14.15019")
         ASSERT_EQ("double_2_Str8", double_2_Str(-14.15019, 3), "-14.150")
-        ASSERT_EQ("double_2_Str9", double_2_Str(-10586816.10315913591, 10), "-10586816.1031591352") // should be -10586816.1031591359???
+        ASSERT_EQ("double_2_Str9", double_2_Str(-10586816.10315913591, 10), "-10586816.1031591352")  // should be -10586816.1031591359???
         ASSERT_EQ("double_2_Str10", double_2_Str(-10586816.10315913591, 2), "-10586816.10")
         ASSERT_EQ("double_2_Str11", double_2_Str(-1050, 3), "-1050.000")
         ASSERT_EQ("double_2_Str12", double_2_Str(-0.150100005, 9), "-0.150100005")
@@ -227,11 +228,11 @@ TEST_F(CThisTest, TestConverts_4) {
         ASSERT_EQ("isZeroHash_1", isZeroHash("0x0"), true)
         ASSERT_EQ("isZeroHash_2", isZeroHash("123"), false)
 
-        ASSERT_EQ("hex_2_Ascii1", hex_2_Ascii('0','1'),  0x1);
-        ASSERT_EQ("hex_2_Ascii2", bnu_2_Hex(hex_2_Ascii('2','3')), "23");
-        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2+'A',3+'A'), 0xCD);
-        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2+'a',3+'a'), 0xCD);
-        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii('9'-2,'9'-3), 0x76);
+        ASSERT_EQ("hex_2_Ascii1", hex_2_Ascii('0', '1'),  0x1);
+        ASSERT_EQ("hex_2_Ascii2", bnu_2_Hex(hex_2_Ascii('2', '3')), "23");
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2 + 'A', 3 + 'A'), 0xCD);
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii(2 + 'a', 3 + 'a'), 0xCD);
+        ASSERT_EQ("hex_2_Ascii3", hex_2_Ascii('9' - 2, '9' - 3), 0x76);
 
         address_t addr = "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74";
         addrbytes_t bytes = addr_2_Bytes(addr);
@@ -239,7 +240,7 @@ TEST_F(CThisTest, TestConverts_4) {
         ostringstream os;
         os << "0x";
         for (size_t i = 0 ; i < bytes.size() ; i++)
-            os << toLower(padLeft(bnu_2_Hex(ptr[i]),2,'0'));
+            os << toLower(padLeft(bnu_2_Hex(ptr[i]), 2, '0'));
         ASSERT_EQ("addr_2_Bytes", addr, os.str());
 
         return true;

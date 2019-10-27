@@ -41,7 +41,7 @@ public:
     DECLARE_NODE(CBalanceRecord);
 
     // EXISTING_CODE
-    CBalanceRecord(string_q& line);  // NOLINT
+    explicit CBalanceRecord(string_q& line);
     // EXISTING_CODE
     bool operator==(const CBalanceRecord& item) const;
     bool operator!=(const CBalanceRecord& item) const { return !operator==(item); }

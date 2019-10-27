@@ -291,7 +291,7 @@ bool visitABI(const qblocks::string_q& path, void *data) {
         LOG_INFO("Loading ABI: ", path);
         qblocks::eLogger->setEndline('\n');
     }
-    CAbi *abi = (CAbi*)data;
+    CAbi *abi = (CAbi*)data;  // NOLINT
     if (!abi->loadAbiFromFile(path, true))
         return false;
     return true;
@@ -440,7 +440,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
                 LOG_WARN("Could not get the ABI for address ", addr, ". Etherscan returned: ");
                 LOG_WARN(results);
                 LOG_WARN("If you copy the ABI to the current folder, QBlocks will use it.");
-                //quickQuitHandler(0);
+                // quickQuitHandler(0);
             }
             return;
 
@@ -449,7 +449,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
             if (!silent) {
                 cerr << "Etherscan returned " << results << "\n";
                 cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-                //quickQuitHandler(0);
+                // quickQuitHandler(0);
             }
 
             // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then

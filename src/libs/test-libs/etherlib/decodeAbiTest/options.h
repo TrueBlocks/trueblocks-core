@@ -39,9 +39,9 @@ public:
     string_q report(const string_q& res) {
         ostringstream os;
         os << "\tinput:    0x";
-        string_q in = substitute(input,"0x","");
+        string_q in = substitute(input, "0x", "");
         while (!in.empty()) {
-            string_q p = in.substr(0,64);
+            string_q p = in.substr(0, 64);
             replace(in, p, "");
             os << p << endl;
             if (!in.empty())

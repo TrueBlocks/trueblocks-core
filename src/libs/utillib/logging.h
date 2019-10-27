@@ -125,7 +125,7 @@ namespace qblocks {
         void setEndline(char ch) { if (policy) policy->end_line = ch; }
 
         //----------------------------------------------------------------
-        logger( const string_q& name ) {  // NOLINT
+        explicit logger( const string_q& name ) {
             policy = new log_policy;
             if ( !policy ) {
                 throw std::runtime_error("LOGGER: Unable to create the logger instance");

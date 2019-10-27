@@ -47,7 +47,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CReceipt(const CTransaction *pT) : pTrans(pT) {}
+    explicit CReceipt(const CTransaction *pT) : pTrans(pT) {}
     const CTransaction *pTrans;
     friend class CTransaction;
     // EXISTING_CODE

@@ -65,20 +65,20 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    //SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    // SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (pReceipt) {
         bool ret = ((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
-            bool done = true; // there are no fields handled in the receipt and the log
-            //LOG4(fieldName, done);
+            bool done = true;  // there are no fields handled in the receipt and the log
+            // LOG4(fieldName, done);
             if (done) {
-                //LOG4("set in transaction");
+                // LOG4("set in transaction");
                 return true;
             } else {
-                //LOG4("set in receipt and transaction");
+                // LOG4("set in receipt and transaction");
             }
         } else {
-            //LOG4("not set in transaction");
+            // LOG4("not set in transaction");
         }
     }
     // EXISTING_CODE

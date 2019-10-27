@@ -72,7 +72,7 @@ namespace qblocks {
     bool accumulateAddresses(const CAppearance& item, void *data) {
         if (isZeroAddr(item.addr))
             return true;
-        CUniqueState * state = (CUniqueState*)data;
+        CUniqueState * state = (CUniqueState*)data;  // NOLINT
         CAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
         return state->insertUnique(search);  // NOLINT
     }
@@ -183,15 +183,15 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     string_q getMonitorPath(const string_q& addr, freshen_e mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-        if (!isAddress(addr)) // empty for example
+        if (!isAddress(addr))  // empty for example
             return getCachePath(base + addr);
         return getCachePath(base + addr + ".acct.bin");
     }
 
     //----------------------------------------------------------------
     int findAppearance(const void* v1, const void* v2) {
-        const CAddressRecord_base *at1 = (CAddressRecord_base*)v1;
-        const CAddressRecord_base *at2 = (CAddressRecord_base*)v2;
+        const CAddressRecord_base *at1 = (CAddressRecord_base*)v1;  // NOLINT
+        const CAddressRecord_base *at2 = (CAddressRecord_base*)v2;  // NOLINT
         for (size_t i = 0 ; i < 20 ; i++) {
             int ret = at1->bytes[i] - at2->bytes[i];
             if (ret)

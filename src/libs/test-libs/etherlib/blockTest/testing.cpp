@@ -64,7 +64,7 @@ bool visitAddrs(const CAppearance& item, void *data) {
 bool accumAddrs(const CAppearance& item, void *data) {
     if (isZeroAddr(item.addr))
         return true;
-    CAppearanceArray *array = (CAppearanceArray *)data;
+    CAppearanceArray *array = (CAppearanceArray *)data;  // NOLINT
     array->push_back(item);
     return true;
 }

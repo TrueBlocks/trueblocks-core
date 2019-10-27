@@ -56,7 +56,7 @@ string_q CBlockOptions::getBlockNumList(void) {
 //--------------------------------------------------------------------------------
 bool CHistoryOptions::requestsHistory(void) const {
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
-    return ! ((newestBlock - oldestBlock) >= n_blocks);
+    return !((newestBlock - oldestBlock) >= n_blocks);
 }
 
 //--------------------------------------------------------------------------------
@@ -98,11 +98,11 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
     }
 
-    //txnum_t txid;
+    // txnum_t txid;
     if (parts.size() == 0 ||  // there are not enough
         (parts.size() == 1 && parts[0] != "latest") ||  // there's only one and it's not 'latest'
         ((parts.size() == 2 || parts.size() == 3) && (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
-        parts.size() > 3) { // too many
+        parts.size() > 3) {  // too many
         errorMsg = argOut + " does not appear to be a valid transaction index.";
         return false;
     }

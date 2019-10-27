@@ -285,8 +285,8 @@ CParameter::CParameter(string_q& textIn) {
     if (contains(textIn, "nowrite")) {
         noWrite = true;
         noWrite_min = contains(textIn, "-min");
-        replace(textIn," (nowrite)","");
-        replace(textIn," (nowrite-min)","");
+        replace(textIn, " (nowrite)", "");
+        replace(textIn, " (nowrite-min)", "");
     }
     if (contains(textIn, "=")) {
         strDefault = textIn;
@@ -441,11 +441,12 @@ bool CParameter::fromDefinition(const string_q &strIn) {
 //-----------------------------------------------------------------------
 bool CParameter::isValid(void) const {
     // TODO(tjayrush): not exhaustive
-    if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") || startsWith(type, "bytes") ||
-          startsWith(type, "fixed") || startsWith(type, "uint")  || startsWith(type, "int")))
+    if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") ||
+            startsWith(type, "bytes") || startsWith(type, "fixed") || startsWith(type, "uint")  ||
+            startsWith(type, "int")))
         return false;
     if (startsWith(type, "bytes") && type != "bytes") {
-        uint64_t n = str_2_Uint(substitute(type,"bytes",""));
+        uint64_t n = str_2_Uint(substitute(type, "bytes", ""));
         return n > 0 && n <= 32;
     }
     return true;

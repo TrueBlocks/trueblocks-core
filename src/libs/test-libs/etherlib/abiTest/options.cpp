@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
             arg == "eth_test") {
             mode += (arg + "|");
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sub:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--sub:","");
+            arg = substitute(substitute(arg, "-s:", ""), "--sub:", "");
             if (!isUnsigned(arg))
                 return usage("--sub must be a non-negative number. Quitting...");
             sub = str_2_Uint(arg);

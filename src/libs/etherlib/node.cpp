@@ -16,7 +16,7 @@
 
 namespace qblocks {
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static QUITHANDLER theQuitHandler = NULL;
     //-------------------------------------------------------------------------
     void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
@@ -219,7 +219,7 @@ extern void loadParseMap(void);
         CRPCResult generic;
         generic.parseJson3(str);  // pull out the result
 
-        generic.result = cleanUpJson((char*)generic.result.c_str());
+        generic.result = cleanUpJson((char*)generic.result.c_str());  // NOLINT
         CTrace trace;
         while (trace.parseJson4(generic.result)) {
             traces.push_back(trace);
@@ -436,7 +436,7 @@ extern void loadParseMap(void);
 
     //--------------------------------------------------------------------------
     bool getChainHead(void) {
-        return false; //callRPC("parity_chainStatus", "[]", false);
+        return false;  // callRPC("parity_chainStatus", "[]", false);
     }
 
     //--------------------------------------------------------------------------
@@ -535,7 +535,8 @@ extern void loadParseMap(void);
         //      "address": "0x8888f1f195afa192cfee860698584c030f4c9db1",
         //      "topics": ["0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
         //                  null,
-        //                  [ "0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b", "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"]]
+        //                  [ "0x000000000000000000000000a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+        //                          "0x0000000000000000000000000aff3454fce5edbc8cca8697c15331677e6ebccc"]]
         //      }]
         //  Returns QUANTITY - A filter id.
         return 0;
@@ -671,7 +672,7 @@ extern void loadParseMap(void);
             case CT_ACCTS:    os << "accts/"; break;
             case CT_MONITORS: os << "monitors/"; break;
             default:
-                ASSERT(0); // should not happen
+                ASSERT(0);  // should not happen
         }
         if (type == CT_ACCTS || type == CT_MONITORS) {
             string_q addr = toLower(substitute(bn, "0x", ""));
@@ -905,9 +906,9 @@ extern void loadParseMap(void);
     //-------------------------------------------------------------------------
     inline string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f, const blknum_t c) {
         ostringstream os;
-        if (isTestMode())
+        if (isTestMode()) {
             os << "--final--, --staging--, --ripe--, --unripe--, --client--";
-        else {
+        } else {
             os << cYellow;
             os << padNum9T((int64_t)f) << ", ";
             os << padNum9T((int64_t)s) << ", ";
@@ -990,9 +991,9 @@ extern void loadParseMap(void);
     //-------------------------------------------------------------------------
     string_q getCachePath(const string_q& _part) {
 
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static string_q g_cachePath;
-        if (!g_cachePath.empty()) // leave early if we can
+        if (!g_cachePath.empty())  // leave early if we can
             return substitute((g_cachePath + _part), "//", "/");
 
         { // give ourselves a frame - always enters - forces creation in the frame
@@ -1040,38 +1041,38 @@ extern void loadParseMap(void);
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
-        //LOG5("Entry: manageFields");
+        // LOG5("Entry: manageFields");
         string_q list = substitute(listIn, " ", "");
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
-            //LOG5("class: " + cl + " fields: " + fields);
+            // LOG5("class: " + cl + " fields: " + fields);
             CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
                     if (show) {
-                        //LOG5("show " + fieldName);
+                        // LOG5("show " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     } else {
-                        //LOG5("hide " + fieldName);
+                        // LOG5("hide " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     }
                 } else if (fieldName == "none") {
                     if (show) {
-                        //LOG5("show " + fieldName);
+                        // LOG5("show " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     } else {
-                        //LOG5("hide " + fieldName);
+                        // LOG5("hide " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     }
                 } else {
                     CFieldData *f = item->getRuntimeClass()->findField(fieldName);
                     if (f) {
-                        //LOG5((show ? "show " : "hide ") + fieldName);
+                        // LOG5((show ? "show " : "hide ") + fieldName);
                         f->setHidden(!show);
                     } else {
-                        //LOG5("field not found: " + fieldName);
+                        // LOG5("field not found: " + fieldName);
                     }
                 }
             }
@@ -1082,7 +1083,7 @@ extern void loadParseMap(void);
     //-----------------------------------------------------------------------
     void manageFields(const string_q& formatIn) {
         string_q fields;
-        string_q format = substitute(substitute(formatIn,"{","<field>"),"}","</field>");
+        string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
         string_q cl = nextTokenClear(format, ':');
         while (contains(format, "<field>"))
             fields += toLower(snagFieldClear(format, "field") + ",");
@@ -1124,10 +1125,10 @@ extern void loadParseMap(void);
                 os << "{ \"type\": \"" << className << "\", \"data\": [";
                 break;
             default:
-                ASSERT(0); // shouldn't happen
+                ASSERT(0);  // shouldn't happen
                 break;
         }
-        return trim(trim(os.str(),','),'\t') + "\n";
+        return trim(trim(os.str(), ','), '\t') + "\n";
     }
 
     //-----------------------------------------------------------------------
@@ -1153,7 +1154,7 @@ const char* STR_ERROR_MSG_JSON =
 
         CStringArray errors = errorsIn;
         for (auto curlError : getCurlContext()->curlErrors)
-            errors.push_back(substitute(substitute(curlError,"\"",""),"\n",""));
+            errors.push_back(substitute(substitute(curlError, "\"", ""), "\n", ""));
 
         ostringstream errStrs;
         bool first = true;
@@ -1174,7 +1175,7 @@ const char* STR_ERROR_MSG_JSON =
         ASSERT(fmt == JSON1 || fmt == API1);
 
         ostringstream os;
-        os << "]"; // finish the data array (or the error array)...
+        os << "]";  // finish the data array (or the error array)...
         if (!errStrs.str().empty())
             os << ", \"errors\": [\n" << errStrs.str() << "\n]";
 
@@ -1245,7 +1246,7 @@ const char* STR_ERROR_MSG_JSON =
     //----------------------------------------------------------------
     bool excludeTrace(const CTransaction *trans, size_t maxTraces) {
         if (!ddosRange(trans->blockNumber))
-            return false; // be careful, it's backwards
+            return false;  // be careful, it's backwards
 
         static string_q exclusions;
         if (getGlobalConfig("acctExport")->getConfigBool("exclusions", "enabled", false)) {
@@ -1268,7 +1269,7 @@ const char* STR_ERROR_MSG_JSON =
         string_q fn = configPath("ts.bin");
         if (!fileExists(fn)) {
             string_q zipFile = configPath("ts.bin.gz");
-            if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
+            if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
                 string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
                 cerr << doCommand(cmd) << endl;
                 ASSERT(!fileExists(zipFile));
@@ -1301,7 +1302,7 @@ const char* STR_ERROR_MSG_JSON =
 
         CBlock block;
         for (blknum_t bn = nRecords ; bn <= minBlock ; bn++) {
-            block = CBlock(); // reset
+            block = CBlock();  // reset
             getBlock_header(block, bn);
             file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
             file.flush();

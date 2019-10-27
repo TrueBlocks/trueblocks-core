@@ -543,7 +543,7 @@ _root = None
 # The allowed line length of files.
 # This is set by --linelength flag.
 # QBlocks
-_line_length = 120
+_line_length = 150
 
 # The allowed extensions for file names
 # This is set by --extensions flag.

@@ -46,12 +46,12 @@ namespace qblocks {
     extern bool     queryRawTransaction     (string_q& results, const hash_t& txHash);
     extern bool     queryRawReceipt         (string_q& results, const hash_t& txHash);
     extern bool     queryRawTrace           (string_q& results, const hash_t& hashIn);
-    extern bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr, const CTopicArray& topics);
-    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, addr, unused2); }
-    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, unused1, unused2); }
-    extern bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr, const CTopicArray& topics);
-    inline bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, hash, addr, unused2); }
-    inline bool     queryRawLogs            (string_q& results, const hash_t& hash) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, hash, unused1, unused2); }
+    extern bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr, const CTopicArray& topics);  // NOLINT
+    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, addr, unused2); }  // NOLINT
+    inline bool     queryRawLogs            (string_q& results, uint64_t fromBlock, uint64_t toBlock) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, fromBlock, toBlock, unused1, unused2); }  // NOLINT
+    extern bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr, const CTopicArray& topics);  // NOLINT
+    inline bool     queryRawLogs            (string_q& results, const hash_t& hash, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, hash, addr, unused2); }  // NOLINT
+    inline bool     queryRawLogs            (string_q& results, const hash_t& hash) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, hash, unused1, unused2); }  // NOLINT
 
     //-----------------------------------------------------------------------
     extern string_q getRawBlock             (blknum_t bn);
@@ -88,8 +88,8 @@ namespace qblocks {
     string_q        getSha3                 (const string_q& hexIn);
 
     //-------------------------------------------------------------------------
-    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
-    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid=NOPOS, const string_q& trc_id="");
+    extern string_q getBinaryCacheFilename  (cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
+    extern string_q getBinaryCachePath      (cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
     extern string_q getBinaryCacheFilename  (cache_t ct, const address_t& addr);
     extern string_q getBinaryCachePath      (cache_t ct, const address_t& addr);
 
@@ -156,7 +156,7 @@ namespace qblocks {
     string_q exportPostamble(format_t fmt, const CStringArray& errors, const string_q& extra);
 
     //-------------------------------------------------------------------------
-    extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress=false);
+    extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
     extern bool freshenTimestampFile(blknum_t minBlock);
 
     //-------------------------------------------------------------------------

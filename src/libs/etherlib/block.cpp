@@ -65,7 +65,7 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    //LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
+    // LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName % "number") {
         fieldName = "blockNumber";  // NOLINT
 
@@ -535,7 +535,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy,
     CRPCResult generic;
     generic.parseJson3(str);  // pull out the result
 
-    blknum_t traceID=0;
+    blknum_t traceID = 0;
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
         string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);

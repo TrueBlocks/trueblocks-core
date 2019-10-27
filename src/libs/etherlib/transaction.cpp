@@ -65,7 +65,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    //LOG4("CTransaction::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
+    // LOG4("CTransaction::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName == "to" && fieldValue == "null")
         fieldValue = "0x";  // NOLINT
 
@@ -99,15 +99,15 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             fieldName = "hash";  // otherwise, the block uses it and returns empty
         if (ret) {
             bool done = (fieldName != "blockHash" && fieldName != "blockNumber" && fieldName != "gasUsed");
-            //LOG4(fieldName, done);
+            // LOG4(fieldName, done);
             if (done) {
-                //LOG4("set in block");
+                // LOG4("set in block");
                 return true;
             } else {
-                //LOG4("set in block and transaction");
+                // LOG4("set in block and transaction");
             }
         } else {
-            //LOG4("not set in block");
+            // LOG4("not set in block");
         }
     }
 
@@ -400,7 +400,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     return wei_2_Ether(bnu_2_Str(tra->value));
                 if ( fieldIn % "encoding" )
                     return extract(tra->input, 0, 10);
-                if ( fieldIn % "events" || fieldIn % "eventnames") {
+                if ( fieldIn % "events" || fieldIn % "eventnames" ) {
                     string_q ret;
                     for (uint64_t n = 0 ; n < tra->receipt.logs.size() ; n++) {
                         string_q v = tra->receipt.logs[n].Format("[{ARTICULATEDLOG}]");
@@ -470,7 +470,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 if ( fieldIn % "price" ) {
                     if (!IS_HIDDEN(CTransaction, "price")) {
                         timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther()); // this has huge performance implications because it loads a big file
+                        return wei_2_Dollars(ts, weiPerEther());  // this has huge performance implications because it loads a big file
                     }
                 }
                 // EXISTING_CODE
@@ -537,7 +537,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) { if (articulatedTx == CFunction()) return ""; expContext().noFrst=true; return articulatedTx.Format(); }
+            if ( fieldName % "articulatedTx" ) {
+                if (articulatedTx == CFunction())
+                    return "";
+                expContext().noFrst = true;
+                return articulatedTx.Format();
+            }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);

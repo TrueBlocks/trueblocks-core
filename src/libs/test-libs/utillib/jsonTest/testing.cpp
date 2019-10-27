@@ -66,7 +66,6 @@ int main(int argc, const char *argv[]) {
 
         } else if (options.fileName == "big") {
 
-            //cout << contents;
             CRPCResult generic;
             while (generic.parseJson3(contents)) {
                 CTrace trace;

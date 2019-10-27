@@ -127,7 +127,7 @@ bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 void CNewBlock::finishParse() {
     // EXISTING_CODE
     for (size_t i = 0 ; i < transactions.size() ; i++)
-        transactions.at(i).pBlock = reinterpret_cast<CBlock *>(this); // .at cannot access past the end of vector
+        transactions.at(i).pBlock = reinterpret_cast<CBlock *>(this);  // .at cannot access past the end of vector
     // EXISTING_CODE
 }
 

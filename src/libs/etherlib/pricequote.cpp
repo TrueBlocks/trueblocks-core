@@ -294,15 +294,15 @@ string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static CPriceQuoteArray quotes;
-    if (quotes.size()) // leave early if we can
+    if (quotes.size())  // leave early if we can
         return getWeiQuote(quotes, ts, weiIn);
 
-    { // give ourselves a frame to make the mutex
+    {  // give ourselves a frame to make the mutex
         mutex aMutex;
         lock_guard<mutex> lock(aMutex);
-        if (quotes.size()) // leave early if we can (another thread may have filled the array while we were waiting
+        if (quotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
             return getWeiQuote(quotes, ts, weiIn);
 
         string_q message;
