@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -32,7 +32,7 @@ namespace qblocks {
         CAppearance_base(void) { blk = txid = 0; }
         CAppearance_base(uint32_t b, uint32_t t) : blk(b), txid(t) {}
         CAppearance_base(const string_q& b, const string_q& t) : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {}
-        CAppearance_base(string_q& line) {
+        CAppearance_base(string_q& line) {  // NOLINT
             replaceAll(line, ".", "\t");
             if (!contains(line, "\t"))
                 return;
@@ -101,8 +101,8 @@ namespace qblocks {
     };
 
     //---------------------------------------------------------------------------
-    typedef map<CAppearance,bool,addrOnlyComparator> CAddressOnlyAppearanceMap;
-    typedef map<CAppearance,bool,addrTxComparator> CAddressTxAppearanceMap;
+    typedef map<CAppearance,bool,addrOnlyComparator> CAddressOnlyAppearanceMap;  // NOLINT
+    typedef map<CAppearance,bool,addrTxComparator> CAddressTxAppearanceMap;  // NOLINT
     //---------------------------------------------------------------------------
     class CUniqueState {
     public:
@@ -123,9 +123,9 @@ namespace qblocks {
     extern int findAppearance(const void* v1, const void* v2);
 
     typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
-    extern string_q getMonitorPath(const string_q& addr, freshen_e mode=FM_PRODUCTION);
-    extern string_q getMonitorLast(const string_q& addr, freshen_e mode=FM_PRODUCTION);
-    extern string_q getMonitorExpt(const string_q& addr, freshen_e mode=FM_PRODUCTION);
-    extern string_q getMonitorBals(const string_q& addr, freshen_e mode=FM_PRODUCTION);
+    extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+    extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+    extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+    extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 
 }  // namespace qblocks

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *
  * The LICENSE at the root of this repo details your rights (if any)
@@ -21,7 +21,7 @@ static const COption params[] = {
     COption("json", "j", "", OPT_SWITCH, "ignore export format and export as json"),
     COption("bals", "b", "", OPT_SWITCH, "if a balance does not reconcile&#44; export a message to a file"),
     COption("list", "l", "", OPT_SWITCH, "display list of monitored accounts"),
-    COption("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
+    COpt ion("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
     COption("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
 // END_CODE_OPTIONS
@@ -37,10 +37,18 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
+
+        } else if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
 
             arg = substitute(substitute(arg, "-k:", ""), "--kBlock:", "");
             if (!isNumeral(arg)) {
@@ -160,6 +168,9 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
+// BEG_CODE_INIT
+// END_CODE_INIT
+
     no_check = false;
     single_on = false;
     accounting_on = false;
@@ -179,6 +190,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : transStats(), blockStats(),
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 #ifdef DEBUGGER_ON
 tBuffer(),
 #endif

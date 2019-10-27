@@ -1,8 +1,8 @@
-cacheStatus argc: 4 [1:index] [2:--start] [3:2000000] 
-cacheStatus index --start 2000000 
+cacheStatus argc: 6 [1:index] [2:--start] [3:1000000] [4:--end] [5:2500000] 
+cacheStatus index --start 1000000 --end 2500000 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
@@ -16,7 +16,7 @@ cacheStatus index --start 2000000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
   ]
 }

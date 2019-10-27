@@ -1,6 +1,7 @@
-getBlock argc: 3 [1:4001001-4001003] [2:--hash_only] 
-getBlock 4001001-4001003 --hash_only 
-[{
+getBlock argc: 3 [1:4001001-4001003] [2:--hashes_only] 
+getBlock 4001001-4001003 --hashes_only 
+{ "data": [
+{
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "blockNumber": 4001001,
   "timestamp": 1499651592,
@@ -1192,5 +1193,4 @@ getBlock 4001001-4001003 --hash_only
       "hash": "0x0d7dc75087c0753c4853dcdf8986ba832e718a8fee2af19d6c71af5a7f644630"
     }
   ]
-}
-]
+}] }

@@ -37,7 +37,7 @@ method              	1005	0	131122	T_TEXT TS_STRING
 uri                 	1006	0	131122	T_TEXT TS_STRING
 headers             	1007	0	131122	T_TEXT TS_STRING
 {
-  "schema": 5008,
+  "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "ApiSpec"

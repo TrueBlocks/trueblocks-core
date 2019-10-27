@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -46,7 +46,7 @@ int main(int argc, const char *argv[]) {
                 cout << "]\n";
 
         } else {
-            if (options.byAccount)
+            if (options.by_acct)
                 reportByAccount(options);
             else
                 reportByToken(options);
@@ -82,7 +82,7 @@ void reportByToken(COptions& options) {
                 biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
                 string_q dispBal = getDispBal(options.newestBlock, bal);
                 needsNewline = true;
-                if (bal > 0 || !options.exclude_zero) {
+                if (bal > 0 || !options.no_zero) {
                     cout << "    Balance for account " << cGreen << holder << cOff;
                     cout << " at block " << cTeal << blockNum << cOff;
                     cout << " is " << cYellow << dispBal << cOff << "\n";
@@ -125,7 +125,7 @@ void reportByAccount(COptions& options) {
                 biguint_t bal = str_2_Wei(getERC20State("balanceOf", token, holder, blockNum));
                 string_q dispBal = getDispBal(options.newestBlock, bal);
                 needsNewline = true;
-                if (bal > 0 || !options.exclude_zero) {
+                if (bal > 0 || !options.no_zero) {
                     cout << "    Balance of token contract " << cGreen << token.address << cOff;
                     cout << " at block " << cTeal << blockNum << cOff;
                     cout << " is " << cYellow << dispBal << cOff << "\n";

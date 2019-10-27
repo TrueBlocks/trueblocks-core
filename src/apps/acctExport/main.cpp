@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -21,10 +21,10 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         options.className =
-        (options.doAppearances ? "CAppearance" :
-         (options.doTraces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
-          (options.doLogs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
-           (options.doBalances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
+        (options.appearances ? "CAppearance" :
+         (options.traces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
+          (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
+           (options.balances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
             (options.count_only ? "CCounts" : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
         if (once)
@@ -33,7 +33,7 @@ int main(int argc, const char *argv[]) {
         if (options.count_only) {
             options.exportCounts();
 
-        } else if (options.doBalances) {
+        } else if (options.balances) {
             options.loadAllAppearances(); // allow the balance query to continue even with no appearances
             options.exportBalances();
         } else {
@@ -44,9 +44,9 @@ int main(int argc, const char *argv[]) {
 
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
-    if (!options.freshen_only && !options.count_only)
+    if (!options.freshen && !options.count_only)
         LOG_INFO("exported ", options.nExported, " ", (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(), " transactions", string_q(55,' '));
 
     acctlib_cleanup();

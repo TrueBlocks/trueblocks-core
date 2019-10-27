@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,22 +16,17 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool isCheck;
-    bool isCache;
-    bool hashes;
-    bool traces;
+// BEG_CODE_DECLARE
+    bool hashes_only;
+    bool count_only;
     bool force;
-    bool normalize;
-    int quiet;
-    bool showZeroTrace;
-    string_q format;
-    bool priceBlocks;
+// END_CODE_DECLARE
+
     CBlock latest;
-    bool counting;
-    uint64_t addrCnt;
+    uint64_t addrCounter;
     string_q filterType;
-    CAddressArray filters;
     timestamp_t secsFinal;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -43,9 +38,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern string_q doOneBlock(uint64_t num, const COptions& opt);
-extern string_q checkOneBlock(uint64_t num, const COptions& opt);
-extern string_q getAddresses(uint64_t num, const COptions& opt);
-extern string_q normalizeBlock(const string_q& inIn, bool remove, bool isByzan);
-extern string_q diffStr(const string_q& str1, const string_q& str2);
+extern bool visitBlock(uint64_t num, void *data);
 extern void interumReport(ostream& os, blknum_t i);

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -65,25 +65,25 @@ bool visitBlock(uint64_t blockNum, void *data) {
         opt->prevBal = balance;
     }
 
-    if (opt->exclude_zero && balance <= opt->deminimus)
+    if (opt->no_zero && balance <= opt->deminimus)
         return !shouldQuit();
 
     state.blockNumber = blockNum;
-    if (opt->mode & ST_BALANCE)
+    if (opt->modes & ST_BALANCE)
         state.balance = balance;
-    if (opt->mode & ST_NONCE)
+    if (opt->modes & ST_NONCE)
         state.nonce = getNonceAt(state.address, blockNum);
-    if (opt->mode & ST_CODE) {
+    if (opt->modes & ST_CODE) {
         string_q code = getCodeAt(state.address);
         state.code = code;
         if (code.length() > 250 && !verbose)
             state.code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
     }
-    if (opt->mode & ST_STORAGE)
+    if (opt->modes & ST_STORAGE)
         state.storage = getStorageAt(state.address, 0);
-    if (opt->mode & ST_DEPLOYED)
+    if (opt->modes & ST_DEPLOYED)
         state.deployed = getDeployBlock(state.address);
-    if (opt->mode & ST_ACCTTYPE)
+    if (opt->modes & ST_ACCTTYPE)
         state.accttype = (isContractAt(state.address) ? "Contract" : "EOA");
 
     if (true) {

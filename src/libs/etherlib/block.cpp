@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -65,7 +65,7 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    //LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
+    // LOG4("CBlock::setValueByName --> " + fieldName + "=" + fieldValue.substr(0,50));
     if (fieldName % "number") {
         fieldName = "blockNumber";  // NOLINT
 
@@ -479,7 +479,17 @@ const CBaseNode *CBlock::getObjectAt(const string_q& fieldName, size_t index) co
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BLOCK = "";
+const char* STR_DISPLAY_BLOCK =
+"[{BLOCKNUMBER}]\t"
+"[{TIMESTAMP}]\t"
+"[{DIFFICULTY}]\t"
+"[{GASUSED}]\t"
+"[{GASLIMIT}]\t"
+"[{MINER}]\t"
+"[{HASH}]\t"
+"[{PARENTHASH}]\t"
+"[{TRANSACTIONSCNT}]\t"
+"[{FINALIZED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -508,7 +518,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void *data
     if (!func)
         return false;
 
-    foundOne(func, data, blockNumber, NOPOS, 0, miner, "miner");
+    foundOne(func, data, blockNumber, 99999, 0, miner, "miner");
     for (size_t tr = 0 ; tr < transactions.size() ; tr++) {
         CTransaction *trans = &transactions[tr];
         if (!trans->forEveryAddress(func, traceFilter, data))
@@ -525,7 +535,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy,
     CRPCResult generic;
     generic.parseJson3(str);  // pull out the result
 
-    blknum_t traceID=0;
+    blknum_t traceID = 0;
     CTrace trace;
     while (trace.parseJson3(generic.result)) {
         string_q trID = "trace_" + uint_2_Str(traceID) + "_" + stringy(trace.traceAddress);

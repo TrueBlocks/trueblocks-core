@@ -1,3 +1,15 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include <stdio.h>
 #include "etherlib.h"
 #include "options.h"
@@ -113,7 +125,7 @@ void speedTest(void) {
         }
     }
     timepoint_t stop = qbNow2();
-    cout << double_2_Str(std::chrono::duration_cast<duration_t>(stop - start).count(), 5);
+    cout << double_2_Str(std::chrono::duration_cast<duration_t>(stop - start).count(), 5);  // NOLINT
 }
 
 //-----------------------------------------------------------------------------------------
@@ -125,10 +137,10 @@ void decodeTest(void) {
     contents = substitute(contents, "\n\n", "\n");
     CStringArray tests;
     explode(tests, contents, '\n');
-    for (auto testcase: tests) {
+    for (auto testcase : tests) {
         if (!startsWith(testcase, '#') && !startsWith(testcase, ';')) {
             if (verbose > 1)
-                cout << endl << testcase.substr(0,200) << endl;
+                cout << endl << testcase.substr(0, 200) << endl;
             CStringArray parts;
             explode(parts, testcase, '|');
             T test;
@@ -140,13 +152,14 @@ void decodeTest(void) {
             string_q cleaned = cleanIt(test.desc);
             decodeRLP(interfaces, cleaned, test.input);
             cout << test.check(params_2_Str(interfaces));
-        } else if (startsWith(testcase, "#end"))
+        } else if (startsWith(testcase, "#end")) {
             return;
+        }
     }
 }
 
 //-----------------------------------------------------------------------------------------
-string_q padBytes(const string_q& hexStr, bool toLeft){
+string_q padBytes(const string_q& hexStr, bool toLeft) {
     if (toLeft) return toLower(padLeft (hexStr, 64, '0'));
     else        return toLower(padRight(hexStr, 64, '0'));
 }

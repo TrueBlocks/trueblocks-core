@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
@@ -9,10 +9,13 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool daemon;
+// END_CODE_DECLARE
 
     CAccountWatchArray monitors;
-    blknum_t           lastBlockInFile;
-    size_t             visitTypes;
+    blknum_t lastBlockInFile;
+    size_t visitTypes;
 
     COptions(void);
     ~COptions(void);

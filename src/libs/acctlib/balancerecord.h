@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -41,7 +41,7 @@ public:
     DECLARE_NODE(CBalanceRecord);
 
     // EXISTING_CODE
-    CBalanceRecord(string_q& line);
+    explicit CBalanceRecord(string_q& line);
     // EXISTING_CODE
     bool operator==(const CBalanceRecord& item) const;
     bool operator!=(const CBalanceRecord& item) const { return !operator==(item); }

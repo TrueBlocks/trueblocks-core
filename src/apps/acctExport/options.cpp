@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -8,26 +8,24 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format (one of [json*|txt|csv])"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions&#44; traces&#44; logs&#44; and outputs"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-    COption("balances", "c", "", OPT_SWITCH, "export balance history instead of transaction list"),
+    COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
-    COption("count_only", "o", "", OPT_SWITCH, "display only the count of the number of data items requested"),
-    COption("blocks", "b", "enum[on|off*]", OPT_HIDDEN | OPT_FLAG, "write blocks to the binary cache ('off' by default)"),
-    COption("writeTxs", "s", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write transactions to the binary cache ('on' by default)"),
-    COption("writeTraces", "r", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "write traces to the binary cache ('on' by default)"),
-    COption("ddos", "d", "enum[on*|off]", OPT_HIDDEN | OPT_FLAG, "skip over dDos transactions in export ('on' by default)"),
-    COption("maxTraces", "m", "<uint>", OPT_HIDDEN | OPT_FLAG, "if --ddos:on&#44; the number of traces defining a dDos (default = 250)"),
-    COption("no_header", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not show the header row"),
-    COption("allABIs", "a", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-    COption("grabABIs", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address&#44; grab the abi for that address (improves articulation)"),
+    COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
+    COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
+    COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
+    COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
+    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+    COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
+    COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("deltas", "", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only&#44; export only changes in balances"),
-    COption("start", "s", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to export (inclusive)"),
-    COption("end", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to export (inclusive)"),
+    COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
 // END_CODE_OPTIONS
 };
@@ -35,90 +33,90 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    ENTER("parseArguments");
-
+    ENTER4("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
-    bool no_header = false, allABIs = false;
+// BEG_CODE_LOCAL_INIT
+    bool all_abis = false;
+    blknum_t start = NOPOS;
+    blknum_t end = NOPOS;
+// END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLastBlock_client();
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-s") || startsWith(arg, "--writeTxs")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--writeTxs:", "");
-            if (arg != "on" && arg != "off")
-                EXIT_USAGE("Please provide either 'on' or 'off' for the --writeTxs options. Quitting...");
-            writeTxs = (arg == "on" ? true : false);
-
-        } else if (startsWith(arg, "-r") || startsWith(arg, "--writeTraces")) {
-            arg = substitute(substitute(arg, "-r:", ""), "--writeTraces:", "");
-            if (arg != "on" && arg != "off")
-                EXIT_USAGE("Please provide either 'on' or 'off' for the --writeTraces options. Quitting...");
-            writeTraces = (arg == "on" ? true : false);
-
-        } else if (startsWith(arg, "-d") || startsWith(arg, "--ddos")) {
-            arg = substitute(substitute(arg, "-d:", ""), "--ddos:", "");
-            if (arg != "on" && arg != "off")
-                EXIT_USAGE("Please provide either 'on' or 'off' for the --ddos options. Quitting...");
-            skipDdos = (arg == "on" ? true : false);
-
-        } else if (startsWith(arg, "-m") || startsWith(arg, "--maxTraces")) {
-            arg = substitute(substitute(arg, "-m:", ""), "--maxTraces:", "");
-            if (!isNumeral(arg))
-                EXIT_USAGE("Please provide a number (you provided " + arg + ") for --maxTraces. Quitting...");
-            maxTraces = str_2_Uint(arg);
-
-        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
-            if (!isNumeral(arg))
-                EXIT_USAGE("Not a number for --startBlock: " + arg + ". Quitting.");
-            scanRange.first = str_2_Uint(arg);
-
-        } else if (startsWith(arg, "-e") || startsWith(arg, "--end")) {
-            arg = substitute(substitute(arg, "-e:", ""), "--end:", "");
-            if (!isNumeral(arg))
-                EXIT_USAGE("Not a number for --endBlock: " + arg + ". Quitting.");
-            scanRange.second = str_2_Uint(arg);
-
-        } else if (arg == "-n" || arg == "--no_header") {
-            no_header = true;
-
-        } else if (arg == "-n" || arg == "--allABIs") {
-            allABIs = true;
-
-        } else if (arg == "-p" || arg == "--appearances") {
-            doAppearances = true;
-
-        } else if (arg == "-l" || arg == "--logs") {
-            doLogs = true;
-
-        } else if (arg == "-t" || arg == "--traces") {
-            doTraces = true;
-
-        } else if (arg == "-c" || arg == "--balances") {
-            doBalances = true;
-
-        } else if (arg == "-g" || arg == "--grabABIs") {
-            doTraces = true;
-            doABIs = true;
-
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen_only = true;
-
-        } else if (arg == "-o" || arg == "--count_only") {
-            count_only = true;
-
-        } else if (arg == "--deltas") {
-            deltas_only = true;
-
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (startsWith(arg, "0x")) {
+        } else if (arg == "-l" || arg == "--logs") {
+            logs = true;
+
+        } else if (arg == "-t" || arg == "--traces") {
+            traces = true;
+
+        } else if (arg == "-b" || arg == "--balances") {
+            balances = true;
+
+        } else if (arg == "-p" || arg == "--appearances") {
+            appearances = true;
+
+        } else if (arg == "-c" || arg == "--count_only") {
+            count_only = true;
+
+        } else if (arg == "-w" || arg == "--write_blocks") {
+            write_blocks = !write_blocks;
+
+        } else if (arg == "-x" || arg == "--write_txs") {
+            write_txs = !write_txs;
+
+        } else if (arg == "-r" || arg == "--write_traces") {
+            write_traces = !write_traces;
+
+        } else if (arg == "-s" || arg == "--skip_ddos") {
+            skip_ddos = !skip_ddos;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
+            if (!confirmUint("max_traces", max_traces, arg))
+                return false;
+
+        } else if (arg == "-A" || arg == "--all_abis") {
+            all_abis = true;
+
+        } else if (arg == "-g" || arg == "--grab_abis") {
+            grab_abis = true;
+
+        } else if (arg == "-f" || arg == "--freshen") {
+            freshen = true;
+
+        } else if (arg == "-D" || arg == "--deltas") {
+            deltas = true;
+
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
+// END_CODE_AUTO
+        } else {
+            if (!startsWith(arg, "0x"))
+                return usage("Invalid option: " + arg + ". Quitting...");
 
             arg = toLower(arg);
-
             if (!isAddress(arg))
                 EXIT_USAGE(arg + " does not appear to be a valid address. Quitting...");
 
@@ -146,24 +144,23 @@ bool COptions::parseArguments(string_q& command) {
             watch.color = cTeal;
             watch.finishParse();
             monitors.push_back(watch);
-
-        } else if (startsWith(arg, '-')) {  // do not collapse
-            if (!builtInCmd(arg)) {
-                EXIT_USAGE("Invalid option: " + arg);
-            }
         }
     }
     LOG4("Finished parsing command line");
 
+    if (start != NOPOS) scanRange.first = start;
+    if (end != NOPOS) scanRange.second = end;
+    if (grab_abis) traces = true;
+
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((doAppearances + doLogs + doTraces + doBalances) > 1)
+    if ((appearances + logs + traces + balances) > 1)
         EXIT_USAGE("Please export only one of list, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
-    if (deltas_only && !doBalances)
+    if (deltas && !balances)
         EXIT_USAGE("--deltas option is only available with --balances. Quitting...");
 
     // show certain fields and hide others
@@ -179,10 +176,10 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true );
 
     // Load as many ABI files as we have
-    if (!doAppearances && !doBalances) {
+    if (!appearances && !balances) {
         LOG4("Loading ABIs");
         abis.loadAbiKnown("all");
-        if (allABIs)
+        if (all_abis)
             abis.loadCachedAbis("all");
         LOG4("Finished loading ABIs");
     }
@@ -209,10 +206,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    writeTxs    = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTxs", writeTxs);;
-    writeTraces = getGlobalConfig("acctExport")->getConfigBool("settings", "writeTraces", writeTraces);;
-    skipDdos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skipDdos", skipDdos);;
-    maxTraces   = getGlobalConfig("acctExport")->getConfigBool("settings", "maxTraces", maxTraces);;
+    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", write_blocks);;
+    write_txs    = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", write_txs);;
+    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", write_traces);;
+    skip_ddos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
+    max_traces   = getGlobalConfig("acctExport")->getConfigBool("settings", "max_traces", max_traces);;
 
     if (exportFmt != JSON1 && exportFmt != API1) {
         string_q deflt, format;
@@ -267,16 +265,16 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     expContext().fmtMap["header"] = "";
-    if (!no_header) {
-        if (doTraces) {
+    if (!isNoHeader) {
+        if (traces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
-        } else if (doLogs) {
+        } else if (logs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
-        } else if (doAppearances) {
+        } else if (appearances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"], exportFmt);
-        } else if (doBalances) {
+        } else if (balances) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
-            if (deltas_only)
+            if (deltas)
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"], exportFmt);
             SHOW_FIELD(CBalanceRecord, "address");
             SHOW_FIELD(CBalanceDelta, "address");
@@ -285,7 +283,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (freshen_only)
+    if (freshen)
         exportFmt = NONE1;
 
 //    if (count_only && !doAppearances)
@@ -310,20 +308,24 @@ void COptions::Init(void) {
 
     monitors.clear();
 
-    writeTxs = true;
-    writeTraces = true;
-    skipDdos = true;
-    maxTraces = 250;
+// BEG_CODE_INIT
     articulate = false;
-    doAppearances = false;
-    nExported = 0;
-    doLogs = false;
-    doTraces = false;
-    doBalances = false;
-    doABIs = false;
-    freshen_only = false;
+    logs = false;
+    traces = false;
+    balances = false;
+    appearances = false;
     count_only = false;
-    deltas_only = false;
+    write_blocks = false;
+    write_txs = true;
+    write_traces = true;
+    skip_ddos = true;
+    max_traces = 250;
+    grab_abis = false;
+    freshen = false;
+    deltas = false;
+// END_CODE_INIT
+
+    nExported = 0;
     scanRange.second = getLastBlock_cache_ripe();
 
     minArgs = 0;
@@ -331,6 +333,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     ts_array = NULL;
     ts_cnt = 0;
     Init();
@@ -345,7 +348,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "addr_list", "<address> [address...]");
+        return substitute(str, "addrs", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
@@ -408,7 +411,7 @@ bool COptions::loadAllAppearances(void) {
     for (auto monitor : monitors) {
         if (!loadOneAddress(tmp, monitor.address))
             EXIT_FAIL("Could not load data.");
-        if (freshen_only) {
+        if (freshen) {
             // If we're freshening...
             blknum_t lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(monitor.address)));
             if (scanRange.first == 0) // we can start where the last export happened on any address...
@@ -419,7 +422,7 @@ bool COptions::loadAllAppearances(void) {
     }
 
     if (tmp.size() == 0) {
-        if (!freshen_only)
+        if (!freshen)
             LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
         return false;
     }

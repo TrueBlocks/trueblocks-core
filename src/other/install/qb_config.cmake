@@ -1,11 +1,11 @@
 # Deploy basic configuration and directories structure for quickblocks
 
 set(QUICKBLOCKS_HOME "$ENV{HOME}/.quickBlocks")
+set(SOURCE_FOLDER "${CMAKE_SOURCE_DIR}/../../../src/other/install")
 
 # create the files (will silently fail if already present)
 message(STATUS "Establishing configuration folders at ${QUICKBLOCKS_HOME}")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}")
-file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/abis")
 file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/cache/prices")
@@ -29,10 +29,25 @@ if (NOT EXISTS "${QUICKBLOCKS_TOML_FILE}")
     file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/ethslurp.toml" DESTINATION "${QUICKBLOCKS_HOME}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
+#---------------------------------------------------------------
 # Copy the names file which replaces the .txt file
-set(QUICKBLOCKS_NAMES1_FILE "${QUICKBLOCKS_HOME}/names/names.txt")
-message(STATUS "Copying names file ${QUICKBLOCKS_NAMES1_FILE}")
+#---------------------------------------------------------------
+message(STATUS "Copying names file to ${QUICKBLOCKS_HOME}/names/names.txt")
+file(MAKE_DIRECTORY "${QUICKBLOCKS_HOME}/names")
 file(COPY "${CMAKE_SOURCE_DIR}/../../../src/other/install/names.txt" DESTINATION "${QUICKBLOCKS_HOME}/names/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
+# Copy the ipfs hashes file which replaces the .txt file
+#---------------------------------------------------------------
+set(SOURCE_HASH_FOLDER "${SOURCE_FOLDER}/ipfs-hashes/")
+set(DEST_HASH_FOLDER   "${QUICKBLOCKS_HOME}/ipfs-hashes")
+set(DEST_HASH_FILE     "${DEST_HASH_FOLDER}/finalized.txt")
+if (NOT EXISTS "${DEST_HASH_FILE}")
+    message(STATUS "Copying ipfs hashes to ${DEST_HASH_FOLDER}")
+    file(MAKE_DIRECTORY "${DEST_HASH_FOLDER}")
+    file(COPY "${SOURCE_HASH_FOLDER}/finalized.txt" DESTINATION "${DEST_HASH_FOLDER}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+    file(COPY "${SOURCE_HASH_FOLDER}/blooms.txt" DESTINATION "${DEST_HASH_FOLDER}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
 
 # Clear the bin file. It will get regenerated.
 message(STATUS "Removing binary name file: ${QUICKBLOCKS_HOME}/names/names.bin")

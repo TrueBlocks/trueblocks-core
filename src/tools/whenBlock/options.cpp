@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,11 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block)&#44; or..."),
-    COption("date_list", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
+    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -31,7 +30,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool no_header = false;
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -39,15 +40,22 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         string_q orig = arg;
 
-        if (arg == "UTC") {
-            // do nothing
-
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
-            forEverySpecialBlock(showSpecials, &requests);
+            list = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
-            if (!builtInCmd(arg))
-                return usage("Invalid option: '" + orig + "'.");
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
+// END_CODE_AUTO
+
+        } else if (arg == "UTC") {
+            // do nothing
 
         } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
 
@@ -114,6 +122,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (list)
+        forEverySpecialBlock(showSpecials, &requests);
+            
     // Data verifictions
     if (requests.size() == 0)
         return usage("Please supply either a JSON formatted date or a blockNumber.");
@@ -130,7 +141,7 @@ bool COptions::parseArguments(string_q& command) {
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display
@@ -141,8 +152,12 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+    optionOff(OPT_DENOM);
+
+// BEG_CODE_INIT
+    list = false;
+// END_CODE_INIT
 
     items.clear();
     requests.clear();
@@ -151,10 +166,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
     // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to 0.6.0)
     CToml toml(configPath("whenBlock.toml"));
@@ -180,7 +192,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "block_list date_list", "< block | date > [ block... | date... ]");
+        return substitute(str, "blocks dates", "< block | date > [ block... | date... ]");
 
     } else if (which == "notes") {
         string_q ret = str;

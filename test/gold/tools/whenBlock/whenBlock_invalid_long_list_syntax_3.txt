@@ -1,19 +1,19 @@
 whenBlock argc: 4 [1:2016-03-02] [2:--list] [3:--k] 
 whenBlock 2016-03-02 --list --k 
 
-  Invalid option: '--k'.
+  Invalid option: --k
 
   Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
             Alternatively, search for one of special 'named' blocks.
 
   Where:  
-	block_list            one or more block numbers (or a 'special' block), or...
-	date_list             one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
+	blocks                one or more block numbers (or a 'special' block), or
+	dates                 one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 	-l  (--list)          export all the named blocks
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

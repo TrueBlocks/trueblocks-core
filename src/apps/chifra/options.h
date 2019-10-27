@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
@@ -9,6 +9,10 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    uint32_t sleep;
+// END_CODE_DECLARE
+
     string_q   mode;
     useconds_t scrapeSleep;
 
@@ -41,4 +45,4 @@ extern bool freshen_internal(freshen_e mode, const CAddressArray& list, const st
 //--------------------------------------------------------------------------------
 extern string_q colors[];
 extern uint64_t nColors;
-#define indexFolder_sorted    (getCachePath("addr_index/sorted/"))
+#define indexFolder_sorted    (getIndexPath("sorted/"))

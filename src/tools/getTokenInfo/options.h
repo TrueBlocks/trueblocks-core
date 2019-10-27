@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,11 +16,14 @@
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
+// BEG_CODE_DECLARE
+    bool by_acct;
+    bool no_zero;
+// END_CODE_DECLARE
+
     CTokenState_erc20Array watches;
     CAddressArray holders;
     string_q tokenInfo;
-    bool byAccount;
-    bool exclude_zero;
 
     COptions(void);
     ~COptions(void);

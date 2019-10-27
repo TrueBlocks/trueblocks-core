@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -166,14 +166,15 @@ extern const char* STR_DISPLAY_ETHSTATE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t,CEthState> CEthStateMap;
+typedef map<address_t,CEthState> CEthStateMap;  // NOLINT
 //-------------------------------------------------------------------------
-extern wei_t    getBalanceAt   (const address_t& addr, blknum_t blockNum=NOPOS);
-extern bool     isContractAt   (const address_t& addr, blknum_t blockNum=NOPOS);
-extern string_q getCodeAt      (const address_t& addr, blknum_t blockNum=NOPOS);
-extern string_q getStorageAt   (const address_t& addr, uint64_t pos, blknum_t blockNum=NOPOS);
-extern uint64_t getNonceAt     (const address_t& addr, blknum_t num=NOPOS);
+extern wei_t    getBalanceAt   (const address_t& addr, blknum_t blockNum = NOPOS);
+extern bool     isContractAt   (const address_t& addr, blknum_t blockNum = NOPOS);
+extern string_q getCodeAt      (const address_t& addr, blknum_t blockNum = NOPOS);
+extern string_q getStorageAt   (const address_t& addr, uint64_t pos, blknum_t blockNum = NOPOS);
+extern uint64_t getNonceAt     (const address_t& addr, blknum_t num = NOPOS);
 extern blknum_t getDeployBlock (const address_t& addr);
 extern bool     nodeHasBalances(bool showErrors);
 // EXISTING_CODE
 }  // namespace qblocks
+

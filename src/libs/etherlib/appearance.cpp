@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -36,13 +36,12 @@ namespace qblocks {
         string_q ret = fmt;
         ret = substitute(ret, "{BN}", uint_2_Str(bn));
         ret = substitute(ret, "{TX}", tx == NOPOS ? "" : uint_2_Str(tx));
-        ret = substitute(ret, "{TC}", tx < 10 ? "" : uint_2_Str(tc));
+        ret = substitute(ret, "{TC}", tc < 10 ? "" : uint_2_Str(tc-10));
         ret = substitute(ret, "{ADDR}", addr);
-        ret = substitute(ret, "{REASON}", reason);
+        ret = substitute(ret, "{REASON}", substitute(substitute(reason, "[", "`"), "]", "+"));
         ret = substitute(ret, "[", "");
         ret = substitute(ret, "]", "");
-        ret = substitute(ret, "+(", "[{");
-        ret = substitute(ret, ")+", "}]");
+        ret = substitute(substitute(ret, "`", "["), "+", "]");
         return ret;
     }
 
@@ -73,7 +72,7 @@ namespace qblocks {
     bool accumulateAddresses(const CAppearance& item, void *data) {
         if (isZeroAddr(item.addr))
             return true;
-        CUniqueState * state = (CUniqueState*)data;
+        CUniqueState * state = (CUniqueState*)data;  // NOLINT
         CAppearance search(item.bn, item.tx, item.tc, item.addr, item.reason);
         return state->insertUnique(search);  // NOLINT
     }
@@ -184,15 +183,15 @@ namespace qblocks {
     //---------------------------------------------------------------------------
     string_q getMonitorPath(const string_q& addr, freshen_e mode) {
         string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-        if (!isAddress(addr)) // empty for example
+        if (!isAddress(addr))  // empty for example
             return getCachePath(base + addr);
         return getCachePath(base + addr + ".acct.bin");
     }
 
     //----------------------------------------------------------------
     int findAppearance(const void* v1, const void* v2) {
-        const CAddressRecord_base *at1 = (CAddressRecord_base*)v1;
-        const CAddressRecord_base *at2 = (CAddressRecord_base*)v2;
+        const CAddressRecord_base *at1 = (CAddressRecord_base*)v1;  // NOLINT
+        const CAddressRecord_base *at2 = (CAddressRecord_base*)v2;  // NOLINT
         for (size_t i = 0 ; i < 20 ; i++) {
             int ret = at1->bytes[i] - at2->bytes[i];
             if (ret)

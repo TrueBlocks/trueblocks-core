@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -15,9 +15,9 @@ int main(int argc, const char *argv[]) {
         return 0;
 
     for (auto command : options.commandLines) {
-        if (options.parseArguments(command)) {
-            options.handle_scrape();
-        }
+        if (!options.parseArguments(command))
+            return 0;
+        options.handle_scrape();
     }
     cerr << scraperStatus(true);
 
@@ -55,13 +55,13 @@ bool COptions::handle_scrape(void) {
 
     // Docker will kill blaze if it uses too many resources...
     if (getEnvStr("DOCKER_MODE") != "true") {
-        // ...so we only override on nBlocks to speed things up if not docker...
+        // ...so we only override on n_blocks to speed things up if not docker...
         if (startBlock < 450000) {
-            nBlocks = max((blknum_t)4000, nBlocks);
+            n_blocks = max((blknum_t)4000, n_blocks);
 
         } else if (ddosRange(startBlock)) {
             // ...or slow things down...
-            nBlocks = 200;
+            n_blocks = 200;
         }
     }
 
@@ -75,15 +75,15 @@ bool COptions::handle_scrape(void) {
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
-    os << "blaze scrape" << " --startBlock " << startBlock << " --nBlocks " << nBlocks;
-    if (nBlockProcs != 20)
-        os << " --nBlockProcs " << nBlockProcs;
-    if (nAddrProcs != 60)
-        os << " --nAddrProcs " << nAddrProcs;
+    os << "blaze scrape" << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
+    if (n_block_procs != 20)
+        os << " --nBlockProcs " << n_block_procs;
+    if (n_addr_procs != 60)
+        os << " --nAddrProcs " << n_addr_procs;
 
     // reporting...
     cerr << endl << cTeal << "\t" << string_q(10,'-') << Now().Format(FMT_EXPORT) << string(40, '-') << cOff << endl;
-    cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + nBlocks) << ")" << endl;
+    cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + n_blocks) << ")" << endl;
 
     os << " --ripeBlock " << ripeBlock;
     // ...and make the call to blaze.
@@ -98,7 +98,7 @@ bool COptions::handle_scrape(void) {
     }
 
     // If blaze returned '0', it has sucessfully run through all the blocks between 'startBlock'
-    // and 'startBlock + nBlocks'. The ripe folder contains individual files, one for each block,
+    // and 'startBlock + n_blocks'. The ripe folder contains individual files, one for each block,
     // containing lists of addresses that appear in that block. The unripe folder holds blocks that
     // are less than 28 blocks old. We do nothing further with them here, but the query tool (acctScrape)
     // may use them. acctScrape is responsible to report to the user that the unripe data may be

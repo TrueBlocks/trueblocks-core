@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,10 +12,17 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
+#include "test_case.h"
 
+ostringstream perf;
+uint32_t totalTests = 0;
+uint32_t totalPassed = 0;
+double totalTime = 0.0;
+CStringArray fails;
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
+    CTestCase::registerClass();
 
     cerr.rdbuf( cout.rdbuf() );
 
@@ -28,184 +35,236 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (auto test : options.tests) {
+        for (auto testName : options.tests) {
+
+            string_q path = nextTokenClear(testName, '/');
+            LOG1("Processing file: ", path);
+            options.cleanTest(path, testName);
+
+            string_q testFile = getCWD() + "../../../../src/other/testCases/" + path + "/" + testName + ".csv";
+            if (!fileExists(testFile))
+                return options.usage("Cannot find test file " + testFile + ". Quitting.");
+
+            string_q contents = asciiFileToString(testFile) + "\n";
+            replaceAll(contents, "\n\n", "\n");
+
+            CStringArray lines;
+            explode(lines, contents, '\n');
+
+            CTestCaseArray testArray;
+            for (auto line : lines) {
+
+                bool ignore1 = startsWith(line, "#");
+                bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
+                bool ignore3 = contains(line, ", route,");
+                bool ignore4 = false;
+                if (!ignore3 && !options.filter.empty()) {
+                    if (contains(line, " all,")) { /* do nothing */ }
+                    else if (options.filter == "fast" ) ignore4 = !contains(line, "fast,");
+                    else if (options.filter == "slow" ) ignore4 = !contains(line, "slow,");
+                    else if (options.filter == "medi" ) ignore4 = !contains(line, "medi,");
+                }
+
+                if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
+                    if (ignore2 && !options.ignoreOff)
+                        cerr << iBlue << "   # " << line << cOff << endl;
+                    // do nothing
+
+                } else {
+                    CTestCase test(line);
+                    testArray.push_back(test);
+                }
+            }
+
+            if (!options.doTests(testArray, testName, CMD))
+                return 1;
+
+            if (!options.doTests(testArray, testName, API))
+                return 1;
+
             if (shouldQuit())
-                continue;
-            string_q path = nextTokenClear(test, '/');
-            if (options.cleanTests)  options.cleanTest(path, test);
-            if (options.which & CMD) if (!options.doTest(path, test, true )) return 1;
-            if (options.which & API) if (!options.doTest(path, test, false)) return 1;
+                break;
         }
     }
+
+    cerr << "   allTests (all): ";
+    cerr << cYellow << totalTests << " tests " << cOff ;
+    cerr << cGreen << totalPassed << " passed " << greenCheck << cOff << " ";
+    if (totalTests != totalPassed)
+        cerr << cRed << (totalTests - totalPassed) << " failed " << cOff << "in ";
+    cerr << cTeal << double_2_Str(totalTime, 5) << " seconds " << cOff;
+    cerr << cBlue << double_2_Str(totalTime / totalTests, 5) << " avg." << cOff << endl;
+    for (auto fail : fails)
+        cerr << fail;
+    cerr << endl;
+    if (totalTests == totalPassed) {
+        if (options.full_test && options.report) {
+            perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
+            perf << Now().Format(FMT_EXPORT) << ",";
+            perf << "allTests" << ",";
+            perf << "all" << ",";
+            perf << options.filter << ",";
+            perf << totalTests << ",";
+            perf << totalPassed << ",";
+            perf << (totalTests - totalPassed) << ",";
+            perf << double_2_Str(totalTime, 5) << ",";
+            perf << double_2_Str(totalTime / totalTests, 5) << endl;
+            cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+            appendToAsciiFile(configPath("performance.txt"), perf.str());
+        }
+    }
+
     return 0;
 }
 
-extern bool saveAndCopy(const string_q& path, void *data);
-extern bool replaceFile(const string_q& path, void *data);
-double tooSlow = .4;
-double fastEnough = .2;
 //-----------------------------------------------------------------------
-bool COptions::doTest(const string_q& pathIn, const string_q& testName, bool cmdTests) {
+bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int whichTest) {
+
+    if (!(modes & whichTest))
+        return true;
+
+    resetClock();
+    double testTime = 0;
+    uint32_t nTests = 0;
+    uint32_t nPassed = 0;
+
+    bool cmdTests = whichTest & CMD;
 
     cerr << "Testing " << testName << " (" << (cmdTests ? "cmd" : "api") << " mode):" << endl;
 
-    resetClock();
-    double totalTime = 0;
+    for (auto test: testArray) {
 
-    string_q testFile = getCWD() + "../../../../src/other/testCases/" + pathIn + "/" + testName + ".csv";
-    if (!fileExists(testFile))
-        return usage("Cannot find test file " + testFile + ". Quitting.");
+        test.prepareTest(cmdTests);
+        if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
+            // do nothing - wrong mode
 
-    string_q contents = asciiFileToString(testFile) + "\n";
-    replaceAll(contents, "\n\n", "\n");
+        } else if (!folderExists(test.goldPath)) {
+            return usage("Folder " + test.goldPath + " not found. Quitting...");
 
-    CStringArray lines;
-    explode(lines, contents, '\n');
-
-    for (auto line : lines) {
-        if (shouldQuit())
-            continue;
-
-        string_q testMode = (cmdTests ? "cmd" : "api");
-
-        bool ignore1 = startsWith(line, "#");
-        bool ignore2 = !ignoreOff && startsWith(line, "off");
-        bool ignore3 = contains(line, ", route,");
-        bool ignore4 = false;
-        if (!ignore3 && !speed_filter.empty()) {
-                 if (contains(line, " all,")) { /* do nothing */ }
-            else if (speed_filter == "fast" ) ignore4 = !contains(line, "fast,");
-            else if (speed_filter == "slow" ) ignore4 = !contains(line, "slow,");
-            else if (speed_filter == "medi" ) ignore4 = !contains(line, "medi,");
-        }
-
-        if (ignore2 || ignore4) {
-            if (!ignore4 && testMode == "cmd")
-                cerr << iBlue << "   # " << line << cOff << endl;
-            cerr.flush();
-
-        } else if (ignore1 || ignore3 || line.empty()) {
-            // do nothing it's a comment
+        } else if (!folderExists(test.workPath)) {
+            return usage("Folder " + test.workPath + " not found. Quitting...");
 
         } else {
-            CStringArray parts;
-            explode(parts, line, ',');
-            string_q onOff    = trim(parts[0]);
-            string_q mode     = trim(parts[1]);
-            string_q speed    = trim(parts[2]);
-            string_q route    = trim(parts[3]);
-            string_q tool     = trim(parts[4]);
-            string_q filename = trim(parts[5]);
-            string_q post     = parts.size() > 6 ? trim(parts[6]) : "";
-            string_q options  = parts.size() > 7 ? trim(parts[7]) : "";
-            string_q optTool  = parts.size() > 8 ? trim(parts[8]) : "";
-            string_q path     = nextTokenClear(tool, '/');
-            if ((!cmdTests && mode == "cmd") || (cmdTests && mode == "api"))
-                continue;
 
-            if (endsWith(path, "lib"))
-                path = "libs/" + path;
-            string_q goldPath = "../../../gold/" + path + "/" + tool + (!cmdTests ? "/api_tests/" : "/");
-            if (!folderExists(goldPath))
-                return usage("Folder " + goldPath + " not found. Quitting...");
-            string_q workPath = substitute(goldPath, "/gold/", "/working/");
-            if (!folderExists(workPath))
-                return usage("Folder " + workPath + " not found. Quitting...");
-            string_q fileName = tool + "_" + filename + ".txt";
-            string_q removePath = workPath + fileName;
-            if (fileExists(removePath))
-                ::remove(removePath.c_str());
-
-            if (!optTool.empty())
-                tool = optTool;
-
-            if (endsWith(path, "lib"))
-                workPath = "../" + workPath;
+            if (endsWith(test.path, "lib"))
+                test.workPath = "../" + test.workPath;
 
             ostringstream cmd;
-
-            replaceAll(options, " = ", "=");
-            replaceAll(options, " & ", "&");
-            replaceAll(options, " @ ", "@");
-            replaceAll(post, "n", "");
-            replaceAll(post, "y", "jq");
-            if (!cmdTests) {
-                replaceAll(options, "@", "");
-                replaceAll(options, " ", "%20");
-                cmd << "curl -s \"http:/""/localhost:8080/" << route;
-                if (!options.empty())
-                    cmd << "?" << options;
-                cmd << "\"";
-                if (!post.empty())
-                    cmd << " | " <<  post << " ";
-                cmd << " >" << workPath + fileName;
+            if (cmdTests) {
+                string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
+                cmd << "TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
 
             } else {
-                options = "&" + options;
-                replaceAll(options, "&val=", " ");
-                replaceAll(options, "&addr_list=", " ");
-                replaceAll(options, "&block_list=", " ");
-                replaceAll(options, "&date_list=", " ");
-                replaceAll(options, "&trans_list=", " ");
-                replaceAll(options, "&term_list=", " ");
-                replaceAll(options, "&func_list=", " ");
-                replaceAll(options, "&mode_list=", " ");
-                replaceAll(options, "%20", " ");
-                replaceAll(options, "@", " -");
-                replaceAll(options, "&", " --");
-                replaceAll(options, "\\*", " \"*\"");
-                replaceAll(options, "=", " ");
-                if (trim(options) == "--" || startsWith(trim(options), "-- "))
-                    replace(options, "--", "");
-                string_q c = tool + options + " >" + workPath + fileName + " 2>&1";
-                cmd << "TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
+                cmd << "curl -s \"http:/""/localhost:8080/" << test.route;
+                if (!test.builtin && !test.options.empty())
+                    cmd << "?" << test.options;
+                cmd << "\"";
+                if (!test.post.empty())
+                    cmd << " | " <<  test.post << " ";
+                cmd << " >" << test.workPath + test.fileName;
             }
 
-            string_q theCmd = "cd " + substitute(goldPath, "/api_tests", "") + " ; " + cmd.str();
-//            cerr << "cwd: " << getCWD() << endl;
-//            cerr << "Calling " << theCmd << endl;
+            string_q theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + cmd.str();
+            if (test.builtin)
+                theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + test.options;
+            LOG4(theCmd);
 
-            string_q customized = substitute(substitute(workPath, "working", "custom_config") + tool + "_" + filename + "/", "/api_tests", "");
+            string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            if (verbose)
-                cout << theCmd << endl;
-            int ret = system(theCmd.c_str());
+            nTests++;
+//            int ret =
+                system(theCmd.c_str());
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
+            if (test.builtin) {
+                nPassed++;
+                continue;
+            }
+
             double thisTime = str_2_Double(TIC());
-            totalTime += thisTime;
+            testTime += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
+            if (endsWith(test.path, "lib"))
+                replace(test.workPath, "../", "");
+
+            string_q newFn = test.goldPath + test.fileName;
+            string_q newText = asciiFileToString(newFn);
+
+            string_q oldFn = test.workPath + test.fileName;
+            string_q oldText = asciiFileToString(oldFn);
+
             string_q result = greenCheck;
-            if (!ret) {
-                if (endsWith(path, "lib"))
-                    replace(workPath, "../", "");
-                string_q newText = asciiFileToString(workPath + fileName);
-                string_q oldText = asciiFileToString(goldPath + fileName);
-                if (newText.empty() || newText != oldText)
-                    result = redX;
+            if (!newText.empty() && newText == oldText) {
+                nPassed++;
+
             } else {
+                ostringstream os;
+                os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
+                os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":testName) << " " << trim(test.options) << ")" << cRed;
+//                if (newText.empty())    os << " working file is empty ";
+//                if (ret)                os << " system call returned non-zero ";
+//                if (newText != oldText) {
+//                    os << " files differ " << endl;
+//                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
+////                    os << cYellow << newText << endl;
+//                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
+////                    os << cBlue << oldText;
+//                }
+                os << cOff << endl;
+                fails.push_back(os.str());
                 result = redX;
             }
 
-            if (!contains(line, " all,")) {
-                reverse(filename);
-                filename = substitute(padLeft(filename, 30).substr(0,30), " ", ".");
-                reverse(filename);
-                cerr << "   " << timeRep << " - " << (endsWith(path, "lib") ? padRight(tool, 16) : testName) << " ";
-                cerr << trim(filename) << " " << result << "  " << trim(options).substr(0,90) << endl;
+            if (!contains(test.origLine, " all,")) {
+                reverse(test.filename);
+                test.filename = substitute(padLeft(test.filename, 30).substr(0,30), " ", ".");
+                reverse(test.filename);
+                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName) << " ";
+                cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0,90) << endl;
             }
 
-            if (quit_on_error && (result == redX))
+            if (!no_quit && (result == redX))
                 return false;
 
             usleep(1000);
+
+            if (shouldQuit()) {
+                LOG4("Quitting because of shouldQuit");
+                break;
+            }
         }
     }
 
-    cout << "   " << cTeal << double_2_Str(totalTime, 5) << " " << cOff << testName << " " << (cmdTests ? "cmd" : "api") << " total seconds" << endl << endl;
+    totalTests += nTests;
+    totalPassed += nPassed;
+    totalTime += testTime;
+
+    if (nTests) {
+        ostringstream os;
+        os << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
+        os << Now().Format(FMT_EXPORT) << ",";
+        os << testName << ",";
+        os << (cmdTests ? "cmd" : "api") << ",";
+        os << filter << ",";
+        os << nTests << ",";
+        os << nPassed << ",";
+        os << (nTests - nPassed) << ",";
+        os << double_2_Str(testTime, 5) << ",";
+        os << double_2_Str(testTime / nTests, 5) << endl;
+        perf << os.str();
+
+        cerr << "   " << testName << "(" << (cmdTests ? "cmd" : "api") << "," << filter << "): ";
+        cerr << cYellow << nTests << " tests " << cOff ;
+        cerr << cGreen << nPassed << " passed " << greenCheck << cOff << " ";
+        if (nTests != nPassed)
+            cerr << cRed << (nTests - nPassed) << " failed " << cOff << "in ";
+        cerr << cTeal << double_2_Str(testTime, 5) << " seconds " << cOff;
+        cerr << cBlue << double_2_Str(testTime / nTests, 5) << " avg." << cOff << endl;
+        cerr << endl;
+    }
 
     return true;
 }
@@ -233,12 +292,5 @@ bool replaceFile(const string_q& customFile, void *data) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
-    system(os.str().c_str());
-    return true;
-}
+double tooSlow = .4;
+double fastEnough = .2;

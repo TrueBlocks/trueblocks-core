@@ -1,5 +1,5 @@
-cacheStatus argc: 2 [1:--config-get] 
-cacheStatus --config-get 
+cacheStatus argc: 2 [1:--get_config] 
+cacheStatus --get_config 
 {
   "files": [
     {
@@ -18,19 +18,19 @@ cacheStatus --config-get
               "read_only": false
             },
             {
-              "name": "apiProvider",
-              "value": "--api Provider--",
-              "type": "url",
-              "tip": "TrueBlocks' API endpoint",
-              "required": true,
-              "read_only": false
-            },
-            {
               "name": "balanceProvider",
               "value": "--balance Prov--",
               "type": "url",
               "tip": "alternative node endpoint for account balances",
               "required": false,
+              "read_only": false
+            },
+            {
+              "name": "apiProvider",
+              "value": "--api Provider--",
+              "type": "url",
+              "tip": "TrueBlocks' API endpoint",
+              "required": true,
               "read_only": false
             }
           ]
@@ -165,7 +165,7 @@ cacheStatus --config-get
           "name": "settings",
           "keys": [
             {
-              "name": "nBlocks",
+              "name": "n_blocks",
               "value": "--n Blocks--",
               "type": "uint",
               "tip": "number of blocks to process per invocation of blaze (> 50)",
@@ -173,7 +173,7 @@ cacheStatus --config-get
               "read_only": false
             },
             {
-              "name": "nAddrProcs",
+              "name": "n_addr_procs",
               "value": "--n Addr Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process addresses (> 0)",
@@ -181,7 +181,7 @@ cacheStatus --config-get
               "read_only": false
             },
             {
-              "name": "nBlockProcs",
+              "name": "n_block_procs",
               "value": "--n Block Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process blocks (> 0)",
@@ -200,7 +200,15 @@ cacheStatus --config-get
           "name": "settings",
           "keys": [
             {
-              "name": "writeTxs",
+              "name": "write_blocks",
+              "value": --write Blocks--,
+              "type": "bool",
+              "tip": "write blocks to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
+            },
+            {
+              "name": "write_txs",
               "value": --write Txs--,
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",
@@ -208,7 +216,7 @@ cacheStatus --config-get
               "read_only": false
             },
             {
-              "name": "writeTraces",
+              "name": "write_traces",
               "value": --write Traces--,
               "type": "bool",
               "tip": "write traces to the TrueBlocks binary cache",

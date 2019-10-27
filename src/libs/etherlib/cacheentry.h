@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -22,7 +22,14 @@
 namespace qblocks {
 
 // EXISTING_CODE
-enum cache_t { CT_BLOCKS = 0, CT_BLOOMS, CT_TXS, CT_TRACES, CT_ACCTS, CT_MONITORS, CT_INDEX };
+typedef uint32_t cache_t;
+#define CT_BLOCKS   uint32_t(1<<0)
+#define CT_BLOOMS   uint32_t(1<<1)
+#define CT_TXS      uint32_t(1<<2)
+#define CT_TRACES   uint32_t(1<<3)
+#define CT_ACCTS    uint32_t(1<<4)
+#define CT_MONITORS uint32_t(1<<5)
+#define CT_INDEX    uint32_t(1<<6)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

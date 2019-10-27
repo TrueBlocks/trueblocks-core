@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,6 +16,6 @@
 namespace qblocks {
 
     typedef size_t (*CURLCALLBACKFUNC)(char *ptr, size_t size, size_t nmemb, void *userdata);
-    extern string_q urlToString(const string_q& url = "", CURLCALLBACKFUNC noteFunc=NULL);
+    extern string_q urlToString(const string_q& url = "", CURLCALLBACKFUNC noteFunc = NULL);
 
 }  // namespace qblocks

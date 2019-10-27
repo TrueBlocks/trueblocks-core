@@ -3,19 +3,19 @@ getState 12
 
   You must provide at least one Ethereum address.
 
-  Usage:    getState [-m|-n|-c|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-m|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
 
   Where:  
-	addr_list             one or more addresses (0x...) from which to retrieve balances (required)
-	block_list            an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-m  (--mode enum[none|some*|all|balance|nonce|code|storage|deployed|accttype])control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-	-n  (--nozero)        suppress the display of zero balance accounts
+	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
+	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-m  (--mode <val>)    control which state to export, one of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
 	-c  (--changes)       only report a balance when it changes from one block to the next
+	-n  (--no_zero)       suppress the display of zero balance accounts
 
 #### Hidden options (shown during testing only)
-	-o  (--no_header)     hide the header in txt and csv mode
-	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
+	-s  (--no_history)    for testing only, hide the server's historical state
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -68,7 +68,7 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     if (pTrans)
         if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
-    if (fieldName % "transactionPosition") // order matters
+    if (fieldName % "transactionPosition")  // order matters
         fieldName = "transactionIndex";
     // EXISTING_CODE
 
@@ -295,7 +295,12 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
+            if ( fieldName % "articulatedTrace" ) {
+                if (articulatedTrace == CFunction())
+                    return "";
+                expContext().noFrst = true;
+                return articulatedTrace.Format();
+            }
             if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
@@ -396,7 +401,7 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRACE = 
+const char* STR_DISPLAY_TRACE =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{TRACEADDRESS}]\t"

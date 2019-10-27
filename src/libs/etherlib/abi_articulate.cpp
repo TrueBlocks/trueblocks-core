@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -34,7 +34,7 @@ namespace qblocks {
         for (auto& trace : p->traces) {
             hasTraces = true;
             trace.articulatedTrace.m_showing = false;
-            ((CAbi*)this)->loadAbiByAddress(trace.action.to);
+            ((CAbi*)this)->loadAbiByAddress(trace.action.to);  // NOLINT
             if (articulateTrace(&trace))
                 trace.articulatedTrace.m_showing = true;
         }
@@ -80,7 +80,7 @@ namespace qblocks {
     }
 
     extern string_q parse_str(const string_q& input, const void *data);
-    extern string_q parse_by32(const string_q& input, const void *data=NULL);
+    extern string_q parse_by32(const string_q& input, const void *data = NULL);
     //-----------------------------------------------------------------------
     bool CAbi::articulateLog(CLogEntry *p) const {
 
@@ -97,7 +97,7 @@ namespace qblocks {
         // data params back into the copied array and from there into the event's inputs array. See the note below
         // from the Solidity documentation.
 
-        CAbi *ncABI = (CAbi*)this;
+        CAbi *ncABI = (CAbi*)this;  // NOLINT
         for (size_t i = 0 ; i < ncABI->interfaces.size() ; i++) {
             CFunction *funcPtr = &ncABI->interfaces[i];
 #if 0
@@ -194,7 +194,7 @@ namespace qblocks {
         // Upshot: Topics are always fixed length. They can be parsed as fixed length. The data field needs to be parsed
         // as potentially variable length RLP encoded. Since the indexed event args and the non-indexed event args can
         // be interleaved in the function interface, we need to decode them separately
-        // TODO: SEARCH FOR ISSUE #1013
+        // TODO(jayrush): SEARCH FOR ISSUE #1013
     }
 
     //-----------------------------------------------------------------------
@@ -253,8 +253,8 @@ namespace qblocks {
         if (hasControlChar) {
             // TODO(tjayrush): hack alert
             string s;
-            s += (char)0x20;
-            s += (char)0x19;
+            s += (char)0x20;  // NOLINT
+            s += (char)0x19;  // NOLINT
             result = substitute(result, s, "'");
         }
         return true;

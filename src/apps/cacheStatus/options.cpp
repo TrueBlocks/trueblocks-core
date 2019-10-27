@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -8,13 +8,14 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("mode_list", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]"),
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches"),
+    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
+    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
-    COption("start", "", "<blknum>", OPT_FLAG, "starting block for data retreival"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("config-get", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("config-set", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
+    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
+    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
 // END_CODE_OPTIONS
 };
@@ -22,42 +23,54 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
+
+// BEG_CODE_LOCAL_INIT
+    bool report = false;
+    bool get_config = false;
+    bool set_config = false;
+// END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLastBlock_client();
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-d" || arg == "--details") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-d" || arg == "--details") {
             details = true;
 
         } else if (arg == "-l" || arg == "--list") {
-            isListing = true;
+            list = true;
 
-        } else if (startsWith(arg, "--start:")) {
-            arg = substitute(arg, "--start:", "");
-            if (!isNumeral(arg))
-                return usage("'" + arg + "' is not a number for --start parameter. Quitting...");
-            start = str_2_Uint(arg);
-            CBlock block;
-            getBlock_light(block, "latest");
-            if (start > block.blockNumber)
-                return usage("Start block (" + uint_2_Str(start) + ") is greater than the latest block. Quitting...");
+        } else if (arg == "-r" || arg == "--report") {
+            report = true;
 
-        } else if (arg == "--config-get") {
-            isConfig = true;
+        } else if (arg == "-g" || arg == "--get_config") {
+            get_config = true;
 
-        } else if (startsWith(arg, "--config-set")) {
-            mode = "set";
-            isConfig = true;
+        } else if (arg == "-s" || arg == "--set_config") {
+            set_config = true;
+
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             string_q permitted = params[0].description;
             replaceAny(permitted, "[]*", "|");
@@ -65,6 +78,19 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
             mode += (arg + "|");
         }
+    }
+
+    if (start == NOPOS)
+        start = 0;
+
+    if (get_config && set_config)
+        return usage("Please chose only one of --set_config and --get_config. Quitting...");
+
+    if (set_config) {
+        mode = "set";
+        isConfig = true;
+    } else if (get_config) {
+        isConfig = true;
     }
 
     if (!isConfig) {
@@ -82,6 +108,16 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CSlurpCache, "items");
         HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CAbiCache, "items");
+    } else {
+        loadHashes(indexHashes, "finalized");
+        loadHashes(bloomHashes, "blooms");
+    }
+
+    if (report) {
+        if (exportFmt == TXT1 || exportFmt == CSV1) {
+            cout << scraperStatus(false);
+            return false;
+        }
     }
 
     EXIT_NOMSG(true);
@@ -92,11 +128,15 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-    isListing = false;
-    isConfig = false;
+// BEG_CODE_INIT
     details = false;
+    list = false;
+    start = NOPOS;
+    end = NOPOS;
+// END_CODE_INIT
+
+    isConfig = false;
     mode = "";
-    start = 0;
 
     char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
@@ -127,6 +167,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     CStatus::registerClass();
@@ -165,4 +206,34 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "options") {
+        return substitute(str, "modes", "<mode> [mode...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        // do nothing
+
+    }
+    return str;
+}
+
+//--------------------------------------------------------------------------------
+void loadHashes(CIndexHashMap& map, const string_q& which) {
+    string_q hashFn = configPath("ipfs-hashes/" + which + ".txt");
+    if (!fileExists(hashFn)) {
+        cerr << "Hash file (" << hashFn << ") not found." << endl;
+    } else {
+        string_q contents = asciiFileToString(hashFn);
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        for (auto line : lines) {
+            line = substitute(substitute(line, ".bin", ""), ".bloom", "");
+            CStringArray parts;
+            explode(parts, line, ' ');
+            map[parts[2]] = parts[1];
+        }
+    }
 }

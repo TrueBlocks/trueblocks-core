@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,13 +16,16 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-    bool blockOnly;
-    bool receiptsOnly;
-    bool asBits;
-    bool asBars;
-    bool asBitBars;
-    bool asPctBars;
-    bool bitCount;
+// BEG_CODE_DECLARE
+    bool block_only;
+    bool receipt_only;
+    bool bits;
+    bool bars;
+    bool bitbars;
+    bool pctbars;
+    bool bitcount;
+// END_CODE_DECLARE
+
     uint64_t bitBound;
 
     COptions(void);

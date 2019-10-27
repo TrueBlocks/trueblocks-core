@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
@@ -25,20 +25,23 @@ typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAp
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool data;
+    blknum_t truncate;
+    uint32_t skip;
+    blknum_t start;
+    blknum_t end;
+// END_CODE_DECLARE
+
+    string_q mode;
     CStats stats;
     CAccountWatchArray monitors;
-    string_q mode;
-    blknum_t trunc;
-    blknum_t maxBlock;
-    bool asData;
-    uint64_t skip;
-    bool isImport;
-    bool isRemove;
     CAppearanceArray_base removals;
 
     COptions(void);
     ~COptions(void);
 
+    bool loadMonitorData(CAppearanceArray_base& items, const address_t& addr);
     bool handleMerge    (void) const;
     bool handleSort     (void) const;
     bool handleImport   (void) const;

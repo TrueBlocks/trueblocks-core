@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:0x5f742383b6d1298980030d6af943b76cdd902143] [2:--raw] 
-grabABI 0x5f742383b6d1298980030d6af943b76cdd902143 --raw 
+grabABI argc: 2 [1:0x5f742383b6d1298980030d6af943b76cdd902143] 
+grabABI 0x5f742383b6d1298980030d6af943b76cdd902143 
 ABI for address 0x5f742383b6d1298980030d6af943b76cdd902143
 	function _rewardWinners             (string gameID,uint8 competitionIndex,address[] winners)
 	function _setBugFixVersion          (string gameID,uint32 version,bytes32 codeHash,uint32 numBlockAllowedForPastVersion)

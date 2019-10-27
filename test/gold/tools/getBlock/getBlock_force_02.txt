@@ -1,6 +1,7 @@
 getBlock argc: 6 [1:2769609] [2:2799895] [3:2872831] [4:3076260] [5:--force] 
 getBlock 2769609 2799895 2872831 3076260 --force 
-[{
+{ "data": [
+{
   "gasLimit": 3999996,
   "gasUsed": 165258,
   "hash": "0x549eb23a472504a498b07a122b8461121cec1a25a8b5ee8831917b426a99e3d7",
@@ -228,5 +229,4 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "finalized": 1,
   "timestamp": 1485564456,
   "transactions": []
-}
-]
+}] }

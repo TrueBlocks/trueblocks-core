@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -39,9 +39,9 @@ public:
     string_q report(const string_q& res) {
         ostringstream os;
         os << "\tinput:    0x";
-        string_q in = substitute(input,"0x","");
+        string_q in = substitute(input, "0x", "");
         while (!in.empty()) {
-            string_q p = in.substr(0,64);
+            string_q p = in.substr(0, 64);
             replace(in, p, "");
             os << p << endl;
             if (!in.empty())

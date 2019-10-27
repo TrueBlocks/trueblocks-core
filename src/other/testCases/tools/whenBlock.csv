@@ -3,61 +3,61 @@ on, cmd,  medi, when, tools/whenBlock, README,                      y, @th
 on, cmd,  fast, when, tools/whenBlock, help,                        y, @h
 on, cmd,  fast, when, tools/whenBlock, long_help,                   y, help
 
-on, both, fast, when, tools/whenBlock, blockByHash,                 y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
-on, both, fast, when, tools/whenBlock, combined_options_1,          y, block_list = 10000 & verbose
-on, both, fast, when, tools/whenBlock, customized_1,                y, block_list = myblock
-on, both, fast, when, tools/whenBlock, first_block,                 y, block_list = 0
-on, both, fast, when, tools/whenBlock, homestead_customized,        y, block_list = homestead & verbose & fmt = json
-on, both, fast, when, tools/whenBlock, intermediate_block_1,        y, block_list = 1000000
-on, both, fast, when, tools/whenBlock, intermediate_block_2,        y, block_list = 2677160
-on, both, fast, when, tools/whenBlock, invalid_alone_syntax_2,      y, date_list = 2015-03-02
-on, both, fast, when, tools/whenBlock, invalid_alone_syntax_3,      y, block_list = pppppp1
-on, both, fast, when, tools/whenBlock, invalid_alone_syntax_4,      y, block_list = 0pppppp
-on, both, fast, when, tools/whenBlock, invalid_block_1,             y, block_list = 0x0a
-on, both, fast, when, tools/whenBlock, invalid_block_2,             y, block_list = 1ppppppp
+on, both, fast, when, tools/whenBlock, blockByHash,                 y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+on, both, fast, when, tools/whenBlock, combined_options_1,          y, blocks = 10000 & verbose
+on, both, fast, when, tools/whenBlock, customized_1,                y, blocks = myblock
+on, both, fast, when, tools/whenBlock, first_block,                 y, blocks = 0
+on, both, fast, when, tools/whenBlock, homestead_customized,        y, blocks = homestead & verbose & fmt = json
+on, both, fast, when, tools/whenBlock, intermediate_block_1,        y, blocks = 1000000
+on, both, fast, when, tools/whenBlock, intermediate_block_2,        y, blocks = 2677160
+on, both, fast, when, tools/whenBlock, invalid_alone_syntax_2,      y, dates = 2015-03-02
+on, both, fast, when, tools/whenBlock, invalid_alone_syntax_3,      y, blocks = pppppp1
+on, both, fast, when, tools/whenBlock, invalid_alone_syntax_4,      y, blocks = 0pppppp
+on, both, fast, when, tools/whenBlock, invalid_block_1,             y, blocks = 0x0a
+on, both, fast, when, tools/whenBlock, invalid_block_2,             y, blocks = 1ppppppp
 on, both, slow, when, tools/whenBlock, invalid_list_syntax_1,       y, list
-on, both, fast, when, tools/whenBlock, invalid_list_syntax_2,       y, block_list = 213123213 & list
-on, both, fast, when, tools/whenBlock, invalid_list_syntax_3,       y, date_list = 2015-03-02 & list
-on, both, slow, when, tools/whenBlock, invalid_list_syntax_4,       n, block_list = 23123 & list & fmt = txt
-on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_2, y, date_list = 2015-03-02
-on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_3, y, block_list = pppppp1
-on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_4, y, block_list = 0pppppp
+on, both, fast, when, tools/whenBlock, invalid_list_syntax_2,       y, blocks = 213123213 & list
+on, both, fast, when, tools/whenBlock, invalid_list_syntax_3,       y, dates = 2015-03-02 & list
+on, both, slow, when, tools/whenBlock, invalid_list_syntax_4,       n, blocks = 23123 & list & fmt = txt
+on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_2, y, dates = 2015-03-02
+on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_3, y, blocks = pppppp1
+on, both, fast, when, tools/whenBlock, invalid_long_alone_syntax_4, y, blocks = 0pppppp
 on, both, slow, when, tools/whenBlock, invalid_long_list_syntax_1,  n, list & fmt = csv
-on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_2,  y, block_list = 213123213 & list
-on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_3,  y, date_list = 2016-03-02 & list & k
-on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_4,  y, date_list = 2015-03-02 & list
-on, both, fast, when, tools/whenBlock, invalid_long_option_1,       y, block_list = 0 & invalid
+on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_2,  y, blocks = 213123213 & list
+on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_3,  y, dates = 2016-03-02 & list & k
+on, both, fast, when, tools/whenBlock, invalid_long_list_syntax_4,  y, dates = 2015-03-02 & list
+on, both, fast, when, tools/whenBlock, invalid_long_option_1,       y, blocks = 0 & invalid
 on, both, fast, when, tools/whenBlock, invalid_long_verbose_syntax, y, verbose
 on, both, fast, when, tools/whenBlock, invalid_option_1,            y, @x
-on, both, fast, when, tools/whenBlock, invalid_option_2,            y, block_list = a
-on, both, fast, when, tools/whenBlock, invalid_option_3,            y, block_list = 0-0
+on, both, fast, when, tools/whenBlock, invalid_option_2,            y, blocks = a
+on, both, fast, when, tools/whenBlock, invalid_option_3,            y, blocks = 0-0
 on, both, fast, when, tools/whenBlock, invalid_verbose_syntax,      y, verbose
 on, both, slow, when, tools/whenBlock, list_dates,                  n, list & fmt = txt
 on, both, slow, when, tools/whenBlock, list_dates_long,             y, list
-on, both, fast, when, tools/whenBlock, long_verbose_valid_block,    y, verbose & block_list = 1000
-on, both, slow, when, tools/whenBlock, mixed_block_and_date,        y, date_list = 2017-03-02 & block_list = 123123
+on, both, fast, when, tools/whenBlock, long_verbose_valid_block,    y, verbose & blocks = 1000
+on, both, slow, when, tools/whenBlock, mixed_block_and_date,        y, dates = 2017-03-02 & blocks = 123123
 on, cmd,  slow, when, tools/whenBlock, mixed_options,               y, @vl
 on, both, fast, when, tools/whenBlock, noparams,                    y,
-on, both, slow, when, tools/whenBlock, not_present_block,           y, block_list = 8000000
-on, both, fast, when, tools/whenBlock, out_of_range_block,          y, block_list = 40000000000000000000000000000
-on, both, fast, when, tools/whenBlock, special_block_daofork,       y, block_list = daofork & verbose
-on, both, fast, when, tools/whenBlock, special_block_daofund,       y, block_list = daofund & verbose
-on, cmd,  fast, when, tools/whenBlock, special_block_daohack,       y, block_list = daohack@v
-on, both, fast, when, tools/whenBlock, special_block_first,         y, block_list = first & verbose
-on, both, fast, when, tools/whenBlock, special_block_iceage,        y, block_list = iceage
-on, both, medi, when, tools/whenBlock, special_block_multi1,        y, block_list = stateclear iceage 4001001 & verbose
-on, both, fast, when, tools/whenBlock, special_block_multi2,        y, block_list = stateclear iceage 4001001 junk & verbose
-on, both, fast, when, tools/whenBlock, special_block_not_found,     y, block_list = idonotexist
-on, both, fast, when, tools/whenBlock, special_block_spurious,      y, block_list = spurious
-on, both, fast, when, tools/whenBlock, special_block_stateclear,    y, block_list = stateclear & verbose
-on, both, fast, when, tools/whenBlock, special_block_tangerine,     y, block_list = tangerine & verbose
-on, both, fast, when, tools/whenBlock, verbose_level_1,             y, block_list = 1000 & verbose:1
-on, both, fast, when, tools/whenBlock, verbose_level_2,             y, block_list = 1000 & verbose:j
+on, both, slow, when, tools/whenBlock, not_present_block,           y, blocks = 8000000
+on, both, fast, when, tools/whenBlock, out_of_range_block,          y, blocks = 40000000000000000000000000000
+on, both, fast, when, tools/whenBlock, special_block_daofork,       y, blocks = daofork & verbose
+on, both, fast, when, tools/whenBlock, special_block_daofund,       y, blocks = daofund & verbose
+on, cmd,  fast, when, tools/whenBlock, special_block_daohack,       y, blocks = daohack@v
+on, both, fast, when, tools/whenBlock, special_block_first,         y, blocks = first & verbose
+on, both, fast, when, tools/whenBlock, special_block_iceage,        y, blocks = iceage
+on, both, medi, when, tools/whenBlock, special_block_multi1,        y, blocks = stateclear iceage 4001001 & verbose
+on, both, fast, when, tools/whenBlock, special_block_multi2,        y, blocks = stateclear iceage 4001001 junk & verbose
+on, both, fast, when, tools/whenBlock, special_block_not_found,     y, blocks = idonotexist
+on, both, fast, when, tools/whenBlock, special_block_spurious,      y, blocks = spurious
+on, both, fast, when, tools/whenBlock, special_block_stateclear,    y, blocks = stateclear & verbose
+on, both, fast, when, tools/whenBlock, special_block_tangerine,     y, blocks = tangerine & verbose
+on, both, fast, when, tools/whenBlock, verbose_level_1,             y, blocks = 1000 & verbose:1
+on, both, fast, when, tools/whenBlock, verbose_level_2,             y, blocks = 1000 & verbose:j
 on, cmd,  fast, when, tools/whenBlock, upgrade_test,                y, help
 
-on, both, fast, when, tools/whenBlock, fmt_default,                 y, block_list = 1001001
-on, both, fast, when, tools/whenBlock, fmt_txt,                     n, block_list = 1001001 & fmt = txt
-on, both, fast, when, tools/whenBlock, fmt_csv,                     n, block_list = 1001001 & fmt = csv
-on, both, fast, when, tools/whenBlock, fmt_api,                     y, block_list = 1001001 & fmt = api
-on, both, fast, when, tools/whenBlock, fmt_json,                    y, block_list = 1001001 & fmt = json
-on, both, fast, when, tools/whenBlock, fmt_junk,                    y, block_list = 1001001 & fmt = junk
+on, both, fast, when, tools/whenBlock, fmt_default,                 y, blocks = 1001001
+on, both, fast, when, tools/whenBlock, fmt_txt,                     n, blocks = 1001001 & fmt = txt
+on, both, fast, when, tools/whenBlock, fmt_csv,                     n, blocks = 1001001 & fmt = csv
+on, both, fast, when, tools/whenBlock, fmt_api,                     y, blocks = 1001001 & fmt = api
+on, both, fast, when, tools/whenBlock, fmt_json,                    y, blocks = 1001001 & fmt = json
+on, both, fast, when, tools/whenBlock, fmt_junk,                    y, blocks = 1001001 & fmt = junk

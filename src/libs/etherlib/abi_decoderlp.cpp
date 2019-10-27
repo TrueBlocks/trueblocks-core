@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -77,7 +77,7 @@ namespace qblocks {
                     uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
                     uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
                     size_t nWords = (nBytes / 32) + 1;
-                    if (nWords <= dataArray.size()) { // some of the data sent in may be bogus, so we protext ourselves
+                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
                         for (size_t w = 0 ; w < nWords ; w++) {
                             size_t pos = dataStart + 1 + w;
                             if (pos < dataArray.size())
@@ -101,7 +101,7 @@ namespace qblocks {
             } else {
 
                 ASSERT(!isBaseType);
-                if (type.find("[") == type.find("[]")) { // the first bracket is a dynamic array
+                if (type.find("[") == type.find("[]")) {  // the first bracket is a dynamic array
 
                     size_t found = type.find('[');
                     string baseType = type.substr(0, found);
@@ -122,7 +122,7 @@ namespace qblocks {
 
                 } else if (type.find("]") != string::npos) {
 
-                    //int tempPointer;
+                    // int tempPointer;
                     /*
                      if(interfaces.size() != 1) {
                      // Find offset pointing to "real values" of dynamic array
@@ -144,7 +144,7 @@ namespace qblocks {
                     { CParameter p; p.type = subType; tmp.push_back(p); }
                     decodeTheData(tmp, dataArray, readIndex);
                     pPtr->value = "[" + params_2_Str(tmp) + "]";
-                    //readIndex++;
+                    // readIndex++;
                 }
             }
         }
@@ -153,78 +153,78 @@ namespace qblocks {
 
 #define SPEEDY1
 #define SPEEDY2
-#define right(s,r) (s.substr(s.length()-r))
+#define right(s,r) (s.substr(s.length()-r))  // NOLINT
     typedef map<string_q, NEXTCHUNKFUNC> parse_map_t;
     parse_map_t parseMap;
     //-----------------------------------------------------------------------------------------
-    string_q parse_addr(const string_q& input, const void *data=NULL) {
-        return "0x" + right(input,40);
+    string_q parse_addr(const string_q& input, const void *data = NULL) {
+        return "0x" + right(input, 40);
     }
-    string_q parse_bool(const string_q& input, const void *data=NULL) {
+    string_q parse_bool(const string_q& input, const void *data = NULL) {
         if (input[input.length()-1] == '1')
             return "true";
         return "false";
     }
-    string_q parse_i8__(const string_q& input, const void *data=NULL) {
+    string_q parse_i8__(const string_q& input, const void *data = NULL) {
         ostringstream os;
-        os << (int)(signed char)strtol(("0x" + right(input, 2)).c_str(), NULL, 16);
+        os << (int)(signed char)strtol(("0x" + right(input, 2)).c_str(), NULL, 16);  // NOLINT
         return os.str();
     }
-    string_q parse_i16_(const string_q& input, const void *data=NULL) {
+    string_q parse_i16_(const string_q& input, const void *data = NULL) {
         ostringstream os;
-        os << (int)(signed char)strtol(("0x" + right(input, 4)).c_str(), NULL, 16);
+        os << (int)(signed char)strtol(("0x" + right(input, 4)).c_str(), NULL, 16);  // NOLINT
         return os.str();
     }
-    string_q parse_i32_(const string_q& input, const void *data=NULL) {
+    string_q parse_i32_(const string_q& input, const void *data = NULL) {
         ostringstream os;
-        os << (int)(signed char)strtol(("0x" + right(input, 8)).c_str(), NULL, 16);
+        os << (int)(signed char)strtol(("0x" + right(input, 8)).c_str(), NULL, 16);  // NOLINT
         return os.str();
     }
-    string_q parse_i64_(const string_q& input, const void *data=NULL) {
-        return int_2_Str(str_2_Int("0x"+right(input,16)));
+    string_q parse_i64_(const string_q& input, const void *data = NULL) {
+        return int_2_Str(str_2_Int("0x"+right(input, 16)));
     }
     static const string_q leads48 = "000000000000000000000000000000000000000000000000";
-    string_q parse_i128(const string_q& input, const void *data=NULL) {
+    string_q parse_i128(const string_q& input, const void *data = NULL) {
 #ifdef SPEEDY2
         if (startsWith(input, leads48))
             return parse_i64_(substitute(input, leads48, ""));
 #endif
         return bni_2_Str(str_2_BigInt("0x" + input, 128));
     }
-    string_q parse_i256(const string_q& input, const void *data=NULL) {
+    string_q parse_i256(const string_q& input, const void *data = NULL) {
 #ifdef SPEEDY2
         if (startsWith(input, leads48))
             return parse_i64_(substitute(input, leads48, ""));
 #endif
         return bni_2_Str(str_2_BigInt("0x" + input, 256));
     }
-    string_q parse_u8__(const string_q& input, const void *data=NULL) {
+    string_q parse_u8__(const string_q& input, const void *data = NULL) {
         return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-( 8/4))));
     }
-    string_q parse_u16_(const string_q& input, const void *data=NULL) {
+    string_q parse_u16_(const string_q& input, const void *data = NULL) {
         return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(16/4))));
     }
-    string_q parse_u32_(const string_q& input, const void *data=NULL) {
+    string_q parse_u32_(const string_q& input, const void *data = NULL) {
         return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(32/4))));
     }
-    string_q parse_u64_(const string_q& input, const void *data=NULL) {
+    string_q parse_u64_(const string_q& input, const void *data = NULL) {
         return uint_2_Str(str_2_Uint("0x"+input.substr(input.length()-(64/4))));
     }
-    string_q parse_u128(const string_q& input, const void *data=NULL) {
+    string_q parse_u128(const string_q& input, const void *data = NULL) {
 #ifdef SPEEDY2
         if (startsWith(input, "000000000000000000000000000000000000000000000000"))
             return parse_u64_(input);
 #endif
         return bnu_2_Str(str_2_BigUint("0x" + input, 128));
     }
-    string_q parse_u256(const string_q& input, const void *data=NULL) {
+    string_q parse_u256(const string_q& input, const void *data = NULL) {
 #ifdef SPEEDY2
         if (startsWith(input, "000000000000000000000000000000000000000000000000"))
             return parse_u64_(input);
 #endif
         return bnu_2_Str(str_2_BigUint("0x" + input, 256));
     }
-    string_q parse_by32(const string_q& input, const void *data=NULL) {
+    string_q parse_by32(const string_q& input, const void *data = NULL) {
         return "0x" + input;
     }
     string_q parse_addr_addr(const string_q& input, const void *data) {
@@ -243,8 +243,8 @@ namespace qblocks {
         parse_by32(input.substr(64, 64));
     }
     string_q parse_str(const string_q& input, const void *data) {
-        uint64_t len = str_2_Uint("0x"+right(input.substr(64,64),16)) * 2;
-        return hex_2_Str(input.substr(128,len));
+        uint64_t len = str_2_Uint("0x"+right(input.substr(64, 64), 16)) * 2;
+        return hex_2_Str(input.substr(128, len));
     }
     string_q parse_addr_i256(const string_q& input, const void *data) {
         return
@@ -482,12 +482,12 @@ namespace qblocks {
         if (!func) {
             for (auto i : interfaces)
                 built += (i.type + ",");
-            built = trim(built,',');
+            built = trim(built, ',');
             func = parseMap[built];
         }
         if (func) {
             if (!inputStr.empty()) {
-                string_q result = (*func)(substitute(inputStr,"0x",""), NULL);
+                string_q result = (*func)(substitute(inputStr, "0x", ""), NULL);
                 for (auto& item : interfaces)
                     item.value = nextTokenClear(result, ',');
                 return true;
@@ -505,7 +505,7 @@ namespace qblocks {
             string_q str = trim(substitute(inputStr, "0x", ""), ' ');
             ASSERT(!(str.size() % 64));
             while (!str.empty()) {
-                string_q item = str.substr(0,64);
+                string_q item = str.substr(0, 64);
                 ASSERT(items.size() == 64);
                 replace(str, item, "");
                 inputs.push_back(item);

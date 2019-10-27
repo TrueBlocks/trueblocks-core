@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -51,7 +51,7 @@ namespace qblocks {
             CFileListState(const string_q& t, CStringArray& l, bool r) : top(t), list(l), recurse(r) { }
         };
         bool visitFile(const string_q& path, void *data) {
-            CFileListState *state = (CFileListState *)data;
+            CFileListState *state = reinterpret_cast<CFileListState *>(data);
             if (endsWith(path, '/')) {
                 if (path == state->top || state->recurse) {
                     return forEveryFileInFolder(path + "*", visitFile, data);
@@ -63,7 +63,7 @@ namespace qblocks {
             state->list.push_back(path);
             return true;
         }
-    }; // namespace filename_local
+    };  // namespace filename_local
 
     //------------------------------------------------------------------
     size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recurse) {

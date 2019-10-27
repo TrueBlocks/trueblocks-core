@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:728708] [2:--parity] 
 getBlock 728708 --parity 
+{ "data": [
 {
   "difficulty": "0x80001821ea8",
   "finalized": "0x1",
@@ -12,4 +13,4 @@ getBlock 728708 --parity
   "price": "0x0",
   "timestamp": "0x5678c231",
   "transactions": []
-}
+}] }

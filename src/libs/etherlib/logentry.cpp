@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -65,20 +65,20 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    //SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
+    // SEP4("CLogEntry::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (pReceipt) {
         bool ret = ((CReceipt*)pReceipt)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
-            bool done = true; // there are no fields handled in the receipt and the log
-            //LOG4(fieldName, done);
+            bool done = true;  // there are no fields handled in the receipt and the log
+            // LOG4(fieldName, done);
             if (done) {
-                //LOG4("set in transaction");
+                // LOG4("set in transaction");
                 return true;
             } else {
-                //LOG4("set in receipt and transaction");
+                // LOG4("set in receipt and transaction");
             }
         } else {
-            //LOG4("not set in transaction");
+            // LOG4("not set in transaction");
         }
     }
     // EXISTING_CODE
@@ -391,7 +391,7 @@ const string_q CLogEntry::getStringAt(const string_q& fieldName, size_t i) const
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_LOGENTRY = 
+const char* STR_DISPLAY_LOGENTRY =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{LOGINDEX}]\t"

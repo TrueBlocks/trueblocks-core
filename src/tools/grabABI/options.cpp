@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,18 +16,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption("data", "d", "", OPT_SWITCH, "export the display as data"),
     COption("encode", "e", "", OPT_SWITCH, "generate the encodings for the functions / events in the ABI"),
-    COption("json", "j", "", OPT_SWITCH, "print the ABI to the screen as json"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
-    COption("sol", "l", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
-    COption("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing&#44; download if not already present"),
-    COption("silent", "s", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired&#44; fail silently (useful for scripting)"),
-    COption("nodec", "n", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),
+    COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
+    COption("open", "o", "", OPT_HIDDEN | OPT_SWITCH, "open the ABI file for editing, download if not already present"),
+    COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "if ABI cannot be acquired, fail silently (useful for scripting)"),
+    COption("no_decorate", "r", "", OPT_HIDDEN | OPT_SWITCH, "do not decorate duplicate names"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
+    COption("data", "d", "", OPT_SWITCH, "export the display as data"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
 // END_CODE_OPTIONS
 };
@@ -37,64 +36,62 @@ extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
-    ENTER("parseArguments");
+    ENTER4("parseArguments");
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+    bool canonical = false;
+    bool encode = false;
+    bool open = false;
+    bool no_decorate = false;
+    bool known = false;
+// END_CODE_LOCAL_INIT
+
     Init();
-    bool asJson = false, isOpen = false, fromSol = false;
+    bool from_sol = false;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-g" || arg == "--gen" || arg == "--generate") {
-            classDir = getCWD();
-            prefix = getPrefix(classDir);
-            isGenerate = true;
-
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--canonical") {
-            if (parts&SIG_ENCODE)
-                parts = (SIG_CANONICAL|SIG_ENCODE);
-            else
-                parts = SIG_CANONICAL;
+            canonical = true;
+
+        } else if (arg == "-g" || arg == "--generate") {
+            generate = true;
 
         } else if (arg == "-e" || arg == "--encode") {
-            parts |= SIG_ENCODE;
-
-        } else if (arg == "-k" || arg == "--known") {
-            loadKnown = true;
-
-        } else if (arg == "-d" || arg == "--data") {
-            parts |= SIG_FTYPE;
-            asData = true;
-            colorsOff();
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
+            encode = true;
 
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
 
-//        } else if (arg == "-f" || arg == "--freshen") {
-//extern void rebuildFourByteDB(void);
-//            rebuildFourByteDB();
+        } else if (arg == "-o" || arg == "--open") {
+            open = true;
 
-        } else if (arg == "--nodec") {
-            decNames = false;
+        } else if (arg == "-i" || arg == "--silent") {
+            silent = true;
 
-        } else if (startsWith(arg,"-l:") || startsWith(arg,"--sol:")) {
+        } else if (arg == "-r" || arg == "--no_decorate") {
+            no_decorate = true;
+
+        } else if (arg == "-k" || arg == "--known") {
+            known = true;
+
+        } else if (arg == "-d" || arg == "--data") {
+            data = true;
+
+// END_CODE_AUTO
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--sol:")) {
             string_q orig = arg;
-            arg = substitute(substitute(arg, "-l:", ""), "--sol:", "");
+            arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
             if (!fileExists(arg))
                 arg += ".sol";
             if (!fileExists(arg))
                 EXIT_USAGE("Solidity file " + orig + " not found in local folder.");
-            fromSol = true;
+            from_sol = true;
             addrs.push_back(substitute(arg, ".sol", ""));
-
-        } else if (arg == "-o" || arg == "--open") {
-            isOpen = true;
-
-        } else if (arg == "-j" || arg == "--json") {
-            asJson = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -114,13 +111,34 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!addrs.size() && !known)
+        return usage("Please supply at least one Ethereum address.\n");
+
+    if (generate) {
+        classDir = getCWD();
+        prefix = getPrefix(classDir);
+    }
+
+    if (canonical)
+        parts |= SIG_CANONICAL;
+
+    if (encode)
+        parts |= SIG_ENCODE;
+
+    if (data) {
+        parts |= SIG_FTYPE;
+        colorsOff();
+        if (generate)
+            return usage("Incompatible options --generate and --data. Quitting...");
+    }
+
     if (parts == 0)
         parts = SIG_DEFAULT;
 
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (fromSol) {
+    if (from_sol) {
         for (auto addr : addrs) {
             CAbi abi;
             if (!sol_2_Abi(abi, addr))
@@ -142,17 +160,11 @@ bool COptions::parseArguments(string_q& command) {
 
             ::remove((addr + ".json").c_str());
             stringToAsciiFile(addr + ".json", os.str());
-            asJson = false;
+            isRaw = false;
         }
     }
 
-    if (!addrs.size() && !loadKnown)
-        return usage("Please supply at least one Ethereum address.\n");
-
-    if (isGenerate && asData)
-        return usage("Incompatible options --generate and --data. Quitting...");
-
-    if (asJson) {
+    if (isRaw) {
         for (auto addr : addrs) {
             string_q fileName = getCachePath("abis/" + addr + ".json");
             string_q localFile("./" + addr + ".json");
@@ -171,7 +183,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (isOpen) {
+    if (open) {
         for (auto addr : addrs) {
             string_q fileName = getCachePath("abis/" + addr + ".json");
             if (!fileExists(fileName)) {
@@ -185,12 +197,13 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         CAbi abi;
-        loadAbiAndCache(abi, addr, isRaw, silent, decNames);
+        loadAbiAndCache(abi, addr, isRaw, silent, !no_decorate);
         abi.address = addr;
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abi_specs.push_back(abi);
     }
-    if (loadKnown) {
+
+    if (known) {
         string_q knownPath = configPath("known_abis/");
         CStringArray files;
         listFilesInFolder(files, knownPath + "*.*", false);
@@ -208,21 +221,23 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW | OPT_OUTPUT);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
-    parts = SIG_DEFAULT;
+// BEG_CODE_INIT
+    generate = false;
     noconst = false;
     silent = false;
-    loadKnown = false;
-    decNames = true;
-    asData = false;
-    isGenerate = false;
+    data = false;
+// END_CODE_INIT
+
+    parts = SIG_DEFAULT;
     addrs.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 
@@ -233,7 +248,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "addr_list", "<address> [address...]");
+        return substitute(str, "addrs", "<address> [address...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;

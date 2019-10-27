@@ -1,6 +1,7 @@
 getBlock argc: 4 [1:358450-0x5785a] [2:--force] [3:--parity] 
 getBlock 358450-0x5785a --force --parity 
-[{
+{ "data": [
+{
   "difficulty": "0x5a5753781c6",
   "finalized": "0x1",
   "gasLimit": "0x2fefd8",
@@ -2023,5 +2024,4 @@ getBlock 358450-0x5785a --force --parity
   "price": "0x0",
   "timestamp": "0x5617fc6a",
   "transactions": []
-}
-]
+}] }

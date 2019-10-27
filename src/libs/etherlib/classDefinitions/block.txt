@@ -7,7 +7,8 @@ includes    = etherlib.h|transaction.h
 cIncs       = appearance.h
 scope       = extern
 serialize   = true
-display_str =
+display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, miner, hash, parentHash, transactionsCnt, finalized
+
 ;
 ; full block definition from around Jan 2017
 ; number: Quantity - The block number. null when its pending block

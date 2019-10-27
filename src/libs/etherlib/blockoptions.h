@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -35,5 +35,12 @@ public:
 
 //-----------------------------------------------------------------------------
 extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
-extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
+
+//-----------------------------------------------------------------------------
+extern bool parseBlockList2(COptionsBase *opts, COptionsBlockList& blocks, const string_q& arg, blknum_t latest);
+extern bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);
+extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
+
+//-----------------------------------------------------------------------------
+extern time_q bn_2_Date(const blknum_t& bn);

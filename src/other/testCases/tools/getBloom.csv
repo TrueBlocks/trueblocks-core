@@ -1,49 +1,49 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  all,  blooms, tools/getBloom, force_01,        y, block_list = 2768801 1995314 1958017 & force, getBlock
+on, cmd,  all,  blooms, tools/getBloom, force_01,        y, blocks = 2768801 1995314 1958017 & force, getBlock
 
 on, cmd,  fast, blooms, tools/getBloom, README,          y, @th
 on, cmd,  fast, blooms, tools/getBloom, help,            y, @h
 on, cmd,  fast, blooms, tools/getBloom, help_long,       y, help
 
 on, both, fast, blooms, tools/getBloom, no_params,       y,
-on, cmd,  fast, blooms, tools/getBloom, invalid_option,  y, @x
-on, both, fast, blooms, tools/getBloom, baddata,         y, block_list = 1590000 4000001-4000002 x400x001
-on, both, fast, blooms, tools/getBloom, badopt5,         y, block_list = 4501030 & receipts & block
-on, both, medi, blooms, tools/getBloom, badopt9,         y, block_list = 4501030 & bars & bits
-on, both, fast, blooms, tools/getBloom, badopt16,        y, block_list = 4501030 & bars & bitbars
-on, both, fast, blooms, tools/getBloom, badopt17,        y, block_list = 4501030 & bars & pctbars
-on, both, fast, blooms, tools/getBloom, badopt12,        y, block_list = 4501030 & bars & bits
-on, both, medi, blooms, tools/getBloom, badopt14,        y, block_list = 4501030 & eab & block
-on, both, medi, blooms, tools/getBloom, badopt15,        y, block_list = 4501030 & eab & receipts & bitcount
+on, cmd,  fast, blooms, tools/getBloom, invalid_option,  y, @z
+on, both, fast, blooms, tools/getBloom, baddata,         y, blocks = 1590000 4000001-4000002 x400x001
+on, both, fast, blooms, tools/getBloom, badopt5,         y, blocks = 4501030 & receipt_only & block_only
+on, both, medi, blooms, tools/getBloom, badopt9,         y, blocks = 4501030 & bars & bits
+on, both, fast, blooms, tools/getBloom, badopt16,        y, blocks = 4501030 & bars & bitbars
+on, both, fast, blooms, tools/getBloom, badopt17,        y, blocks = 4501030 & bars & pctbars
+on, both, fast, blooms, tools/getBloom, badopt12,        y, blocks = 4501030 & bars & bits
+on, both, medi, blooms, tools/getBloom, badopt14,        y, blocks = 4501030 & eab & block_only
+on, both, medi, blooms, tools/getBloom, badopt15,        y, blocks = 4501030 & eab & receipt_only & bitcount
 
-on, both, medi, blooms, tools/getBloom, rawlast1,        y, block_list = 4501030 & eab & raw
-on, both, medi, blooms, tools/getBloom, rawlast2,        y, block_list = 4501030 & eab & raw
-on, both, medi, blooms, tools/getBloom, multi1,          y, block_list = 2769609 2799895 2872831 3076260 & parity & raw
-on, both, medi, blooms, tools/getBloom, special_1,       y, block_list = first
-on, both, medi, blooms, tools/getBloom, special_2,       y, block_list = stateclear
-on, both, slow, blooms, tools/getBloom, bloom,           y, block_list = 4000001
-on, both, slow, blooms, tools/getBloom, range,           y, block_list = 4000001-4000003
-on, both, slow, blooms, tools/getBloom, combo_one_range, y, block_list = 1590000 4000001-4000002 1001001 1234567 & receipts & verbose
-on, both, slow, blooms, tools/getBloom, raw_01,          y, block_list = 2768801 1995314 1958017 & verbose & raw
-on, both, slow, blooms, tools/getBloom, raw_02,          y, block_list = 2768801 1995314 1958017 & raw
-on, both, slow, blooms, tools/getBloom, parity_hex,      y, block_list = 0x2e7721 & block & parity
-on, both, slow, blooms, tools/getBloom, parity_num,      y, block_list = 728708 & parity
-on, both, slow, blooms, tools/getBloom, parity_range,    y, block_list = 358450-0x5785a & bitcount & parity
-on, both, slow, blooms, tools/getBloom, empty,           y, block_list = 1001001
-on, both, slow, blooms, tools/getBloom, blooms,          y, block_list = 1590000 4000001 4000002
-on, both, slow, blooms, tools/getBloom, blockByHash,     y, block_list = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 0x5cfb2aeb032f8280c85f51857badb4cd3837427603f2939baa34692c8da52be4
-on, cmd,  slow, blooms, tools/getBloom, short_receipt,   y, block_list = 4001001 & receipts
-on, both, slow, blooms, tools/getBloom, bitbars_raw,     n, block_list = 2501030-2501060 & bitbars
-on, both, slow, blooms, tools/getBloom, pctbars_raw,     n, block_list = 2501030-2501060 & pctbars
-on, both, slow, blooms, tools/getBloom, bars_block2,     n, block_list = 2501030-2501060 & bitbars & block
-on, both, slow, blooms, tools/getBloom, bars_block3,     n, block_list = 2501030-2501060 & pctbars & block
-on, both, slow, blooms, tools/getBloom, bars_receipt2,   n, block_list = 2501030-2501060 & bitbars & receipts
-on, both, slow, blooms, tools/getBloom, bars_receipt3,   n, block_list = 2501030-2501060 & pctbars & receipts
-on, both, slow, blooms, tools/getBloom, combo_two_range, y, block_list = 1590000 4000001-4000002 1001001-1001100 1234567
+on, both, medi, blooms, tools/getBloom, rawlast1,        y, blocks = 4501030 & eab & raw
+on, both, medi, blooms, tools/getBloom, rawlast2,        y, blocks = 4501030 & eab & raw
+on, both, medi, blooms, tools/getBloom, multi1,          y, blocks = 2769609 2799895 2872831 3076260 & parity & raw
+on, both, medi, blooms, tools/getBloom, special_1,       y, blocks = first
+on, both, medi, blooms, tools/getBloom, special_2,       y, blocks = stateclear
+on, both, slow, blooms, tools/getBloom, bloom,           y, blocks = 4000001
+on, both, slow, blooms, tools/getBloom, range,           y, blocks = 4000001-4000003
+on, both, slow, blooms, tools/getBloom, combo_one_range, y, blocks = 1590000 4000001-4000002 1001001 1234567 & receipt_only & verbose
+on, both, slow, blooms, tools/getBloom, raw_01,          y, blocks = 2768801 1995314 1958017 & verbose & raw
+on, both, slow, blooms, tools/getBloom, raw_02,          y, blocks = 2768801 1995314 1958017 & raw
+on, both, slow, blooms, tools/getBloom, parity_hex,      y, blocks = 0x2e7721 & block_only & parity
+on, both, slow, blooms, tools/getBloom, parity_num,      y, blocks = 728708 & parity
+on, both, slow, blooms, tools/getBloom, parity_range,    y, blocks = 358450-0x5785a & bitcount & parity
+on, both, slow, blooms, tools/getBloom, empty,           y, blocks = 1001001
+on, both, slow, blooms, tools/getBloom, blooms,          y, blocks = 1590000 4000001 4000002
+on, both, slow, blooms, tools/getBloom, blockByHash,     y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 0x5cfb2aeb032f8280c85f51857badb4cd3837427603f2939baa34692c8da52be4
+on, cmd,  slow, blooms, tools/getBloom, short_receipt,   y, blocks = 4001001 & receipt_only
+on, both, slow, blooms, tools/getBloom, bitbars_raw,     n, blocks = 2501030-2501060 & bitbars
+on, both, slow, blooms, tools/getBloom, pctbars_raw,     n, blocks = 2501030-2501060 & pctbars
+on, both, slow, blooms, tools/getBloom, bars_block2,     n, blocks = 2501030-2501060 & bitbars & block_only
+on, both, slow, blooms, tools/getBloom, bars_block3,     n, blocks = 2501030-2501060 & pctbars & block_only
+on, both, slow, blooms, tools/getBloom, bars_receipt2,   n, blocks = 2501030-2501060 & bitbars & receipt_only
+on, both, slow, blooms, tools/getBloom, bars_receipt3,   n, blocks = 2501030-2501060 & pctbars & receipt_only
+on, both, slow, blooms, tools/getBloom, combo_two_range, y, blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 
 on, cmd,  medi, blooms, tools/getBloom, cmd_file1,       y, file:cmd_file1
 on, cmd,  slow, blooms, tools/getBloom, cmd_file2,       y, file:cmd_file2
 
 # core dumps
-off,both, slow, blooms, tools/getBloom, badopt10,        y, block_list = 4501030 & receipts & bits
-off,both, slow, blooms, tools/getBloom, badopt11,        y, block_list = 4501030 & receipts & bits
+off,both, slow, blooms, tools/getBloom, badopt10,        y, blocks = 4501030 & receipt_only & bits
+off,both, slow, blooms, tools/getBloom, badopt11,        y, blocks = 4501030 & receipt_only & bits

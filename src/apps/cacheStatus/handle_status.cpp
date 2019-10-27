@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -14,14 +14,14 @@ bool COptions::handle_status(ostream& os) {
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
         status.caches.push_back(&aid);
-        CItemCounter counter(this, start);
+        CItemCounter counter(this, start, end);
         loadTimestampArray(&counter.ts_array, counter.ts_cnt);
         counter.cachePtr = &aid;
         counter.indexArray = &aid.items;
         if (details) {
             forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
         } else {
-//            forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+//            forEveryFileInFolder(getCachePath("monitors/"), noteIndex_light, &counter);
 //            if (aid.metrics.size() == 0)
 //                aid.valid_counts = true;
         }
@@ -40,7 +40,7 @@ bool COptions::handle_status(ostream& os) {
         md.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &md);
         status.caches.push_back(&md);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &md;
         counter.monitorArray = &md.items;
         if (details) {
@@ -58,7 +58,7 @@ bool COptions::handle_status(ostream& os) {
         nc.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &nc);
         status.caches.push_back(&nc);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &nc;
         counter.monitorArray = &nc.items;
         if (details) {
@@ -77,7 +77,7 @@ bool COptions::handle_status(ostream& os) {
         forEveryFileInFolder(getCachePath("abis/"), countFiles, &abi);
         status.caches.push_back(&abi);
         if (details) {
-            CItemCounter counter(this);
+            CItemCounter counter(this, start, end);
             counter.cachePtr = &abi;
             counter.abiArray = &abi.items;
             forEveryFileInFolder(getCachePath("abis/"), noteABI, &counter);
@@ -114,7 +114,7 @@ bool COptions::handle_status(ostream& os) {
         slurps.path = (isTestMode() ? "SlurpPath" : getCachePath("slurps/"));
         forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
         status.caches.push_back(&slurps);
-        CItemCounter counter(this);
+        CItemCounter counter(this, start, end);
         counter.cachePtr = &slurps;
         counter.monitorArray = &slurps.items;
         if (details) {
@@ -133,7 +133,7 @@ bool COptions::handle_status(ostream& os) {
         forEveryFileInFolder(getCachePath("prices/"), countFiles, &pd);
         status.caches.push_back(&pd);
         if (details) {
-            CItemCounter counter(this);
+            CItemCounter counter(this, start, end);
             counter.cachePtr = &pd;
             counter.priceArray = &pd.items;
             forEveryFileInFolder(getCachePath("prices/"), notePrice, &counter);
@@ -147,18 +147,16 @@ bool COptions::handle_status(ostream& os) {
 //---------------------------------------------------------------------------
 bool countFiles(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     CCache *counter = (CCache *)data;
     if (endsWith(path, '/')) {
-        if (!contains(path, "monitors/staging"))
+        if (!isTestMode() && !contains(path, "monitors/staging"))
             counter->noteFolder(path);
         return forEveryFileInFolder(path + "*", countFiles, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
 
-        counter->noteFile(path);
+        if (!isTestMode())
+            counter->noteFile(path);
         counter->valid_counts = true;
 
     }
@@ -167,9 +165,6 @@ bool countFiles(const string_q& path, void *data) {
 
 //---------------------------------------------------------------------------
 bool noteMonitor_light(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -180,16 +175,19 @@ bool noteMonitor_light(const string_q& path, void *data) {
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
-        ((CMonitorCache*)counter->cachePtr)->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
+        CMonitorCache *ptr = (CMonitorCache*)counter->cachePtr;
+        if (isTestMode()) {
+            if (ptr->addrs.size() < 3)
+                ptr->addrs.push_back("--address--");
+        } else {
+            ptr->addrs.push_back(substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", ""));
+        }
     }
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
 bool noteMonitor(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -198,12 +196,20 @@ bool noteMonitor(const string_q& path, void *data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
+
+        LOG4("Processing: ", path);
+
         CItemCounter *counter = (CItemCounter*)data;
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         mdi.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
+        if (isTestMode()) {
+            mdi.address = "---address---";
+            mdi.curBalance = 10000;
+        } else {
+            mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
+        }
         CAccountName item;
         string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
@@ -232,9 +238,21 @@ bool noteMonitor(const string_q& path, void *data) {
         if (mdi.name.empty())
             counter->options->getNamedAccount(mdi, mdi.address);
 
-        if (endsWith(path, ".acct.bin")) {
-            mdi.firstAppearance = 1001001;
-            mdi.latestAppearance = 8101001;
+        if (!isTestMode() && endsWith(path, ".acct.bin")) {
+            CArchive archive(READING_ARCHIVE);
+            if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+                uint32_t first = 0, last = 0;  // the data on file is stored as uint32_t. Make sure to read the right thing
+                archive.Seek(0, SEEK_SET);
+                archive.Read(first);
+                archive.Seek(-1 * (long)( 2 * sizeof(uint32_t)), SEEK_END);
+                archive.Read(last);
+                archive.Release();
+                mdi.firstAppearance = first;
+                mdi.latestAppearance = last;
+            } else {
+                mdi.firstAppearance = NOPOS;
+                mdi.latestAppearance = NOPOS;
+            }
             mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
         } else {
@@ -244,6 +262,8 @@ bool noteMonitor(const string_q& path, void *data) {
             mdi.sizeInBytes = NOPOS;
         }
         counter->monitorArray->push_back(mdi);
+        if (isTestMode())
+            return false;
     }
     return !shouldQuit();
 }
@@ -251,23 +271,28 @@ bool noteMonitor(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteIndex(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
+        if (!isTestMode()) {
+            cerr << path << "\r";
+            cerr.flush();
+        }
+
         CItemCounter *counter = (CItemCounter*)data;
+
         timestamp_t unused;
-        blknum_t ll = 0;
-        blknum_t ff = bnFromPath(path, ll, unused);
-        if (ff < counter->skipTo)
-            return true;
-        cerr << path << "\r"; cerr.flush();
+        blknum_t last = NOPOS;
+        blknum_t first = bnFromPath(path, last, unused);
+        if (last < counter->scanRange.first) return true;
+        if (first > counter->scanRange.second) return !contains(path,"finalized");
+
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
+//        aci.path = substitute(path, getIndexPath(""), "${INDEX}/");
+//        string_q fn = substitute(path, getIndexPath(""), "");
         aci.path = substitute(path, counter->cachePtr->path, "");
         string_q fn = aci.path;
         replace(fn, "blooms/", "");
@@ -279,6 +304,18 @@ bool noteIndex(const string_q& path, void *data) {
             uint64_t tmp;
             aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
             aci.latestAppearance = (uint32_t)tmp;
+            CStringArray parts;
+            explode(parts, path, '/');
+            string_q blks = substitute(substitute(parts[parts.size()-1], ".bloom", ""), ".bin", "");
+            if (contains(path, "blooms")) {
+                aci.hash = counter->options->bloomHashes[blks];
+            } else {
+                ASSERT(contains(path, "finalized"));
+                aci.hash = counter->options->indexHashes[blks];
+            }
+            size_t len = aci.hash.length();
+            if (len)
+                aci.hash = aci.hash.substr(0,4) + "..." + aci.hash.substr(len-4, len);
         } else {
             aci.firstAppearance = (uint32_t)str_2_Uint(fn);
             aci.latestAppearance = (uint32_t)str_2_Uint(fn);
@@ -308,9 +345,6 @@ bool noteIndex(const string_q& path, void *data) {
 //---------------------------------------------------------------------------
 bool noteABI(const string_q& path, void *data) {
 
-    if (isTestMode())
-        return false;
-
     if (contains(path, "/staging"))
         return !shouldQuit();
 
@@ -325,27 +359,31 @@ bool noteABI(const string_q& path, void *data) {
         CAbiCacheItem abii;
         abii.type = abii.getRuntimeClass()->m_ClassName;
         abii.address = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
+        if (isTestMode())
+            abii.address = "---address---";
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
         abii.name = n.name;
-        CAbi abi;
-        abi.loadAbiFromFile(path, false);
-        sort(abi.interfaces.begin(), abi.interfaces.end());
-        abii.nFunctions = abi.nFunctions();
-        abii.nEvents = abi.nEvents();
-        abii.nOther = abi.nOther();
-        abii.sizeInBytes = fileSize(path);
+        if (isTestMode()) {
+            abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
+        } else {
+            CAbi abi;
+            abi.loadAbiFromFile(path, false);
+            sort(abi.interfaces.begin(), abi.interfaces.end());
+            abii.nFunctions = abi.nFunctions();
+            abii.nEvents = abi.nEvents();
+            abii.nOther = abi.nOther();
+            abii.sizeInBytes = fileSize(path);
+        }
         counter->abiArray->push_back(abii);
-
+        if (isTestMode())
+            return false;
     }
     return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
 bool notePrice(const string_q& path, void *data) {
-
-    if (isTestMode())
-        return false;
 
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", notePrice, data);
@@ -357,9 +395,14 @@ bool notePrice(const string_q& path, void *data) {
 
         CPriceCacheItem price;
         price.type = price.getRuntimeClass()->m_ClassName;
-        price.pair = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
-        price.sizeInBytes = fileSize(path);
-        price.nRecords = fileSize(path) / sizeof(CPriceQuote);
+        if (isTestMode()) {
+            price.pair = "---pair---";
+            price.sizeInBytes = price.nRecords = 36910963;
+        } else {
+            price.pair = substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""),".acct", ""),".bin", ""), ".json", "");
+            price.sizeInBytes = fileSize(path);
+            price.nRecords = fileSize(path) / sizeof(CPriceQuote);
+        }
         counter->priceArray->push_back(price);
     }
     return !shouldQuit();

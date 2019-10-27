@@ -1,15 +1,19 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 on, cmd, fast, null, dev_tools/makeClass, README,    n, @th
+on, cmd, fast, null, dev_tools/makeClass, help,      n, @h
+on, cmd, fast, null, dev_tools/makeClass, help_long, n, @help
+
 on, cmd, fast, null, dev_tools/makeClass, noparams1, n,
 on, cmd, fast, null, dev_tools/makeClass, noparams2, n, x
 on, cmd, fast, null, dev_tools/makeClass, nonexist,  n, @e & x
 on, cmd, fast, null, dev_tools/makeClass, conflict1, n, @e & run
 on, cmd, fast, null, dev_tools/makeClass, conflict2, n, @l & run
-on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @cr
-on, cmd, fast, null, dev_tools/makeClass, conflict4, n, @cre
-on, cmd, fast, null, dev_tools/makeClass, clear,     n, @c & func_list = function
-on, cmd, fast, null, dev_tools/makeClass, list,      n, list & func_list = function
-on, cmd, fast, null, dev_tools/makeClass, edit,      n, @e & func_list = function
-on, cmd, fast, null, dev_tools/makeClass, run,       n, run & func_list = block
-on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & func_list = function
-on, cmd, fast, null, dev_tools/makeClass, js,        n, js & func_list = CBlock
+on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @r & edit
+
+on, cmd, fast, null, dev_tools/makeClass, list,      n, list & classes = function
+on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & classes = function & verbose
+on, cmd, fast, null, dev_tools/makeClass, edit,      n, edit @ a & filter = function
+on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, list @ a @ f = CFunc
+on, cmd, fast, null, dev_tools/makeClass, run,       n, run & classes = block
+on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & classes = function
+on, cmd, fast, null, dev_tools/makeClass, js,        n, js & classes = CBlock

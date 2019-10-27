@@ -11,14 +11,13 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
+|  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
 | -d | --data | export the display as data |
 | -e | --encode | generate the encodings for the functions / events in the ABI |
-| -j | --json | print the ABI to the screen as json |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
-| -l | --sol <fn> | create the ABI file from a .sol file in the local directory |
+| -l | --sol <path> | create the ABI file from a .sol file in the local directory |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -38,7 +37,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

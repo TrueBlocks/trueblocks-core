@@ -1,0 +1,4 @@
+makeClass argc: 5 [1:--list] [2:-a] [3:-f] [4:CFunc] 
+makeClass --list -a -f CFunc 
+Classes found in the classDefinitions folder:
+	CFunction

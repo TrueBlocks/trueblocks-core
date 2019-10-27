@@ -7,29 +7,32 @@ on, both, fast, status, apps/cacheStatus, no_params,       y,
 on, both, fast, status, apps/cacheStatus, invalid_param_1, y, junk
 on, both, fast, status, apps/cacheStatus, invalid_param_2, y, @l & junk
 
-on, both, fast, status, apps/cacheStatus, mode_scraper,    y, mode_list = index
-on, both, fast, status, apps/cacheStatus, index_start,     y, mode_list = index & start = 100
-on, both, fast, status, apps/cacheStatus, index_start_bad, y, mode_list = index & start = 2000000
-on, both, slow, status, apps/cacheStatus, mode_monitors,   y, mode_list = monitors
-on, both, slow, status, apps/cacheStatus, mode_names,      y, mode_list = names
-on, both, slow, status, apps/cacheStatus, mode_abis,       y, mode_list = abis
-on, both, slow, status, apps/cacheStatus, mode_blocks,     y, mode_list = blocks
-on, both, slow, status, apps/cacheStatus, mode_txs,        y, mode_list = transactions
-on, both, slow, status, apps/cacheStatus, mode_traces,     y, mode_list = traces
-on, both, slow, status, apps/cacheStatus, mode_slurps,     y, mode_list = slurps
-on, both, slow, status, apps/cacheStatus, mode_prices,     y, mode_list = prices
-on, both, slow, status, apps/cacheStatus, mode_some,       y, mode_list = some
-on, both, fast, status, apps/cacheStatus, mode_all,        y, mode_list = all
-on, both, slow, status, apps/cacheStatus, config_bad,      y, mode_list = config
+on, both, fast, status, apps/cacheStatus, mode_scraper,    y, modes = index
+on, both, fast, status, apps/cacheStatus, index_start,     y, modes = index & start = 100
+on, both, fast, status, apps/cacheStatus, index_start_bad, y, modes = index & start = 1000000 & end = 2500000
+on, both, slow, status, apps/cacheStatus, mode_monitors,   y, modes = monitors
+on, both, slow, status, apps/cacheStatus, mode_names,      y, modes = names
+on, both, slow, status, apps/cacheStatus, mode_abis,       y, modes = abis
+on, both, slow, status, apps/cacheStatus, mode_blocks,     y, modes = blocks
+on, both, slow, status, apps/cacheStatus, mode_txs,        y, modes = transactions
+on, both, slow, status, apps/cacheStatus, mode_traces,     y, modes = traces
+on, both, slow, status, apps/cacheStatus, mode_slurps,     y, modes = slurps
+on, both, slow, status, apps/cacheStatus, mode_prices,     y, modes = prices
+on, both, slow, status, apps/cacheStatus, mode_some,       y, modes = some
+on, both, fast, status, apps/cacheStatus, mode_all,        y, modes = all
+on, both, slow, status, apps/cacheStatus, config_bad,      y, modes = config
+on, both, slow, status, apps/cacheStatus, three,           y, modes = abis slurps monitors
 
-on, both, fast, status, apps/cacheStatus, config_get,      n, config-get
-on, both, fast, status, apps/cacheStatus, config_set,      n, config-set
+on, both, slow, status, apps/cacheStatus, items_monitors,  y, details & modes = monitors
+on, both, slow, status, apps/cacheStatus, items_abis,      y, details & modes = abis
+on, both, slow, status, apps/cacheStatus, items_slurps,    y, details & modes = slurps
+on, both, slow, status, apps/cacheStatus, items_prices,    y, details & modes = prices
+on, both, fast, status, apps/cacheStatus, items_some,      y, details & modes = some & start = 3000000 & end = 3100000
+on, both, fast, status, apps/cacheStatus, items_scrap_mon, y, details & modes = index & start = 1000000 & end = 2200000
+on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = abis slurps monitors
 
-on, both, slow, status, apps/cacheStatus, items_monitors,  y, mode_list = monitors & details
-on, both, slow, status, apps/cacheStatus, items_abis,      y, mode_list = abis & details
-on, both, slow, status, apps/cacheStatus, items_slurps,    y, mode_list = slurps & details
-on, both, slow, status, apps/cacheStatus, items_prices,    y, mode_list = prices & details
-on, both, slow, status, apps/cacheStatus, items_some,      y, mode_list = some & details
-on, both, slow, status, apps/cacheStatus, items_scrap_mon, y, mode_list = index monitors & details
-on, both, slow, status, apps/cacheStatus, three,           y, mode_list = abis slurps monitors
-on, both, fast, status, apps/cacheStatus, items_three,     y, mode_list = abis slurps monitors & details
+on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
+on, both, fast, status, apps/cacheStatus, config_set,      n, set_config
+
+on, both, fast, status, apps/cacheStatus, report,          n, report & fmt = txt
+on, both, fast, status, apps/cacheStatus, report_json,     y, report & fmt = json

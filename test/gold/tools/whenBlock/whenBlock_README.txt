@@ -10,12 +10,12 @@ whenBlock -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | one or more block numbers (or a 'special' block), or... |
-|  | date_list | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
+|  | blocks | one or more block numbers (or a 'special' block), or |
+|  | dates | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -l | --list | export all the named blocks |
 
 #### Hidden options (shown during testing only)
-| -x | --fmt <fmt> | export format (one of [none&#124;json*&#124;txt&#124;csv&#124;api]) |
+|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

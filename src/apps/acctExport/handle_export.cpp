@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -10,7 +10,7 @@ bool COptions::exportData(void) {
 
     ENTER("exportData");
 
-    bool shouldDisplay = !freshen_only;
+    bool shouldDisplay = !freshen;
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
 
     if (isJson && shouldDisplay)
@@ -21,7 +21,7 @@ bool COptions::exportData(void) {
 
         const CAppearance_base *item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
-            if (doAppearances) {
+            if (appearances) {
                 if (isJson && shouldDisplay && !first)
                     cout << ", ";
                 nExported++;
@@ -60,21 +60,21 @@ bool COptions::exportData(void) {
                     }
                     trans.pBlock = &block;
                     trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
-                    if (writeTxs && !fileExists(txFilename))
+                    if (write_txs && !fileExists(txFilename))
                         writeTransToBinary(trans, txFilename);
                 }
 
-                if (doTraces) {
+                if (traces) {
 
                     // acctExport --traces
-                    loadTraces(trans, item->blk, item->txid, writeTraces, (skipDdos && excludeTrace(&trans, maxTraces)));
+                    loadTraces(trans, item->blk, item->txid, write_traces, (skip_ddos && excludeTrace(&trans, max_traces)));
                     for (auto trace : trans.traces) {
 
                         bool isSuicide = trace.action.address != "";
                         bool isCreation = trace.result.address != "";
 
                         if (!isSuicide) {
-                            if (doABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
                             } else {
                                 if (!isTestMode() && isApiMode()) {
@@ -102,7 +102,7 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = "0x";
-                            if (doABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
                             } else {
                                 if (isJson && shouldDisplay && !first)
@@ -124,7 +124,7 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = trace.action.input;
-                            if (doABIs) {
+                            if (grab_abis) {
                                 abiMap[trace.action.to] = true;
 
                             } else {
@@ -139,7 +139,7 @@ bool COptions::exportData(void) {
 
                 } else {
 
-                    if (doLogs) {
+                    if (logs) {
 
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
@@ -189,8 +189,8 @@ bool COptions::exportData(void) {
     LOG_INFO(string_q(120,' '));
     qblocks::eLogger->setEndline('\n');
 
-    if (doABIs) {
-        // acctExport --grabABIs (downloads and writes the ABIs for all the traces to disc)
+    if (grab_abis) {
+        // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
         for (pair<address_t,bool> item : abiMap) {
             if (isContractAt(item.first)) {
                 CAbi unused;

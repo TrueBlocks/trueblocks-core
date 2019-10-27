@@ -6,21 +6,21 @@ export BUILD_FOLDER=$QUICKBLOCKS/build/
 export TEST_FOLDER=$QUICKBLOCKS/test/
 export DOCKER_FOLDER=$QUICKBLOCKS/../trueblocks-docker/
 
-echo "Making..."
+#echo "Making..."
 cd $BUILD_FOLDER/
 cmake ../src
 make
 
-echo "Testing..."
+#echo "Testing..."
 cd $BUILD_FOLDER/$1
 make test | tee test_results
 cat test_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
 mv -f x test_results
 chmod uog+x test_results
 
-echo "Testing 2..."
+#echo "Testing 2..."
 cd $BUILD_FOLDER/
-doTestingApi --filter fast --which cmd --no_quit $@
+doTestingApi --filter fast --mode cmd --no_quit $@
 
 echo "Copying working folder to compare folder..."
 cd $TEST_FOLDER/

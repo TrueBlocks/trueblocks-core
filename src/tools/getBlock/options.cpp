@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,158 +15,60 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hash_only", "n", "", OPT_SWITCH, "display only transaction hashes&#44; default is to display full transaction detail"),
-    COption("check", "c", "", OPT_SWITCH, "compare results between qblocks and Ethereum node&#44; report differences&#44; if any"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
+    COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
-    COption("uniqTx", "q", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("number", "m", "", OPT_SWITCH, "display address counts (alterntively --addrCnt&#44; --uniqTxCnt&#44; or --uniqCnt)"),
-    COption("filter", "l", "<addr>", OPT_FLAG, "useful only for --addrs or --uniq&#44; only display this address in results"),
-    COption("latest", "l", "", OPT_HIDDEN | OPT_SWITCH, "display the latest blocks at both the node and the cache"),
-    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
-    COption("quiet", "q", "", OPT_HIDDEN | OPT_SWITCH, "do not print results to screen&#44; used for speed testing and data checking"),
-    COption("source", "s", "enum[c*|r]", OPT_HIDDEN | OPT_FLAG, "either :c(a)che or :(r)aw&#44; source for data retrival. (shortcuts -k = qblocks&#44; -r = node)"),
-    COption("fields", "f", "enum[a*|m|c|r]", OPT_HIDDEN | OPT_FLAG, "either :(a)ll&#44; (m)ini&#44; (c)ache or :(r)aw; which fields to include in output (all is default)"),
-    COption("normalize", "n", "", OPT_HIDDEN | OPT_SWITCH, "normalize (remove un-common fields and sort) for comparison with other results (testing)"),
+    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
+    COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+    COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_FORMAT_COUNT_JSON;
+extern const char* STR_FORMAT_COUNT_TXT;
+extern const char* STR_FORMAT_FILTER_JSON;
+extern const char* STR_FORMAT_FILTER_TXT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+    bool addrs = false;
+    bool uniq = false;
+    bool uniq_tx = false;
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        // shortcuts
-        if (arg == "-r" || arg == "--raw")   { arg = "--source:raw";   }
-        if (arg == "-k" || arg == "--cache") { arg = "--source:cache"; }
+        string_q orig = arg;
 
         // do not collapse
-        if (arg == "-c" || arg == "--check") {
-            setenv("TEST_MODE", "true", true);
-            isCheck = true;
-            quiet++;  // if both --check and --quiet are present, be very quiet...
-            expContext().spcs = 2;
-            expContext().hexNums = true;
-            expContext().quoteNums = true;
-            RENAME_FIELD(CBlock, "blockNumber", "number");
-            RENAME_FIELD(CBlock, "hash", "blockHash");
-            GETRUNTIME_CLASS(CBlock)->sortFieldList();
-            GETRUNTIME_CLASS(CTransaction)->sortFieldList();
-            GETRUNTIME_CLASS(CReceipt)->sortFieldList();
-
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--filter:")) {
-            string_q orig = arg;
-            arg = substitute(substitute(arg, "-l:", ""), "--filter:", "");
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address.\n");
-            filters.push_back(str_2_Addr(toLower(arg)));
-
-        } else if (arg == "-o" || arg == "--force") {
-            etherlib_init(defaultQuitHandler);
-            force = true;
-
-        } else if (arg == "--normalize") {
-            normalize = true;
-
-        } else if (arg == "-l" || arg == "--latest") {
-            cout << scraperStatus(false);
-            return false;
-
-        } else if (startsWith(arg, "--source:")) {
-            string_q mode = substitute(arg, "--source:", "");
-            if (mode == "r" || mode == "raw") {
-                isRaw = true;
-
-            } else if (mode == "c" || mode == "cache") {
-                isCache = true;
-
-            } else {
-                return usage("Invalide source. Must be either '(r)aw' or '(c)ache'. Quitting...");
-            }
-
-        } else if (arg == "-n" || arg == "--hash_only") {
-            hashes = true;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-s" || arg == "--hashes_only") {
+            hashes_only = true;
 
         } else if (arg == "-a" || arg == "--addrs") {
-            filterType = "addrs";
-
-        } else if (arg == "--addrsCnt") {
-            filterType = "addrs";
-            counting = true;
+            addrs = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
-            filterType = "uniq";
+            uniq = true;
 
-        } else if (arg == "--uniqCnt") {
-            filterType = "uniq";
-            counting = true;
+        } else if (arg == "-n" || arg == "--uniq_tx") {
+            uniq_tx = true;
 
-        } else if (arg == "-q" || arg == "--uniqTx") {
-            filterType = "uniqTx";
+        } else if (arg == "-o" || arg == "--count_only") {
+            count_only = true;
 
-        } else if (arg == "--uniqTxCnt") {
-            filterType = "uniqTx";
-            counting = true;
-
-        } else if (arg == "-m" || arg == "--number") {
-            counting = true;
-
-        } else if (arg == "-e" || arg == "--traces") {
-            traces = true;
-
-        } else if (arg == "--quiet") {
-            quiet++;  // if both --check and --quiet are present, be very quiet...
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fields:")) {
-            string_q mode = substitute(substitute(arg, "-f:", ""), "--fields:", "");
-
-            if (mode == "a" || mode == "all") {
-                GETRUNTIME_CLASS(CBlock)->showAllFields();
-                GETRUNTIME_CLASS(CTransaction)->showAllFields();
-                GETRUNTIME_CLASS(CReceipt)->showAllFields();
-
-            } else if (mode == "m" || mode == "mini") {
-                GETRUNTIME_CLASS(CBlock)->hideAllFields();
-                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
-                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-
-            } else if (mode == "r" || mode == "raw") {
-            } else if (mode == "c" || mode == "cache") {
-                GETRUNTIME_CLASS(CBlock)->hideAllFields();
-                GETRUNTIME_CLASS(CTransaction)->hideAllFields();
-                GETRUNTIME_CLASS(CReceipt)->hideAllFields();
-                UNHIDE_FIELD(CBlock, "blockNumber");
-                UNHIDE_FIELD(CBlock, "timestamp");
-                UNHIDE_FIELD(CBlock, "transactions");
-                UNHIDE_FIELD(CTransaction, "receipt");
-                UNHIDE_FIELD(CTransaction, "transactionIndex");
-                UNHIDE_FIELD(CTransaction, "gasPrice");
-                UNHIDE_FIELD(CTransaction, "gas");
-                UNHIDE_FIELD(CTransaction, "isError");
-                UNHIDE_FIELD(CTransaction, "from");
-                UNHIDE_FIELD(CTransaction, "to");
-                UNHIDE_FIELD(CTransaction, "value");
-                UNHIDE_FIELD(CReceipt, "gasUsed");
-            }
+        } else if (arg == "-e" || arg == "--force") {
+            force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -174,6 +76,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
 
             string_q ret = blocks.parseBlockList(arg, latest.blockNumber);
@@ -186,6 +89,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (force)
+        etherlib_init(defaultQuitHandler);
+
     if (expContext().isParity) {
         HIDE_FIELD(CTransaction, "cumulativeGasUsed");
         HIDE_FIELD(CTransaction, "gasUsed");
@@ -194,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hashes) {
+    if (hashes_only) {
         HIDE_FIELD(CTransaction, "blockHash");
         HIDE_FIELD(CTransaction, "blockNumber");
         HIDE_FIELD(CTransaction, "transactionIndex");
@@ -222,8 +128,9 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CBlock,       "finalized");
     }
 
-    if (counting && (filterType.empty()))
-        return usage("--number option is only available with either --addrs or --uniq. Quitting...");
+    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
+    if (filterType.empty() && count_only)
+        return usage("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
 
     if (!filterType.empty() && force)
         return usage("The --force option is not available when using one of the address options. Quitting...");
@@ -231,51 +138,64 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    format = getGlobalConfig("getBlock")->getConfigStr("display", "format", STR_DISPLAY_BLOCK);
-
     secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
-    showZeroTrace = getGlobalConfig("getBlock")->getConfigBool("display", "showZeroTrace", false);
+    if (exportFmt == NONE1)
+        exportFmt = (filterType.empty() ? JSON1 : TXT1);
+
+    // Display formatting
+    string_q format;
+    switch (exportFmt) {
+        case NONE1:
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig("getBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_BLOCK : format);
+            if (count_only)
+                format = STR_FORMAT_COUNT_TXT;
+            else if (!filterType.empty())
+                format = STR_FORMAT_FILTER_TXT;
+            manageFields("CBlock:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            if (count_only)
+                format = STR_FORMAT_COUNT_JSON;
+            else if (!filterType.empty())
+                format = STR_FORMAT_FILTER_JSON;
+            break;
+    }
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (isNoHeader)
+        expContext().fmtMap["header"] = "";
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOn(OPT_RAW);
     registerOptions(nParams, params);
+    optionOn(OPT_RAW);
 
-    secsFinal     = (60 * 5);
-    isCheck       = false;
-    isCache       = false;
-    hashes        = false;
-    filterType    = "";
-    counting      = false;
-    addrCnt       = 0;
-    traces        = false;
-    force         = false;
-    normalize     = false;
-    quiet         = 0;  // quiet has levels
-    format        = "";
-    priceBlocks   = false;
-    showZeroTrace = false;
-    // latest.clear(); // use the same latest block for every run
-    filters.clear();
+// BEG_CODE_INIT
+    hashes_only = false;
+    count_only = false;
+    force = false;
+// END_CODE_INIT
+
+    filterType  = "";
+    secsFinal   = (60 * 5);
+    addrCounter = 0;
     blocks.Init();
+    CBlockOptions::Init();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // Mimics jq indenting
-    expContext().spcs = 2;
-    expContext().hexNums = false;
-    expContext().quoteNums = false;
-
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    first = true;
+    exportFmt = NONE1;
 }
 
 //--------------------------------------------------------------------------------
@@ -291,12 +211,12 @@ bool COptions::isMulti(void) const {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "block_list", "<block> [block...]");
+        return substitute(str, "blocks", "<block> [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{block_list}] is a space-separated list of values, a start-end range, a [{special}], "
+        ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
                     "or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
                     "(see documentation).\n";
@@ -305,3 +225,35 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     }
     return str;
 }
+
+//--------------------------------------------------------------------------------
+void interumReport(ostream& os, blknum_t i) {
+    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
+    os.flush();
+}
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_COUNT_JSON =
+"{\n"
+" \"blockNumber\": [{BLOCKNUMBER}],\n"
+" \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+" \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
+"}\n";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_COUNT_TXT =
+"[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_FILTER_JSON =
+"{\n"
+" \"bn\": \"[{BN}]\",\n"
+" \"tx\": \"[{TX}]\",\n"
+" \"tc\": \"[{TC}]\",\n"
+" \"addr\": \"[{ADDR}]\",\n"
+" \"reason\": \"[{REASON}]\"\n"
+"}\n";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_FILTER_TXT =
+"[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";

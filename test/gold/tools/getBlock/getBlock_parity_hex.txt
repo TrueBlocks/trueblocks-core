@@ -1,5 +1,6 @@
 getBlock argc: 4 [1:0x2e7721] [2:--force] [3:--parity] 
 getBlock 0x2e7721 --force --parity 
+{ "data": [
 {
   "difficulty": "0x62f79fffb26f",
   "finalized": "0x1",
@@ -323,4 +324,4 @@ getBlock 0x2e7721 --force --parity
       "value": "0x2e5cfb5f5bcad8c"
     }
   ]
-}
+}] }

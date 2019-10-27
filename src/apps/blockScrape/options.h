@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
 #include "acctlib.h"
@@ -29,12 +29,15 @@ private:
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+// END_CODE_DECLARE
+
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
 
-    blknum_t    nBlocks;
-    size_t      nBlockProcs;
-    size_t      nAddrProcs;
+    blknum_t    n_blocks;
+    size_t      n_block_procs;
+    size_t      n_addr_procs;
 
     COptions(void);
     ~COptions(void);

@@ -28,14 +28,14 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 `Usage:`    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
-        
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | term_list | a space separated list of one or more search terms (required) |
+|  | terms | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
-| -m | --matchCase | do case-sensitive search |
+| -m | --match_case | do case-sensitive search |
 | -o | --owned | Include personal accounts in the search |
 | -c | --custom | Include your custom named accounts |
 | -p | --prefund | Include prefund accounts |
@@ -49,9 +49,9 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 - With a single search term, the tool searches both `name` and `address`.
 - With two search terms, the first term must match the `address` field, and the second term must match the `name` field.
 - When there are two search terms, both must match.
-- The `--matchCase` option requires case sensitive matching. It works with all other options.
+- The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.txt` (193343)
+- Name file: `~/.quickBlocks/names/names.txt` (202498)
 
 #### Other Options
 
@@ -65,7 +65,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

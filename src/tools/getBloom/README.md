@@ -11,7 +11,7 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | block_list | a space-separated list of one or more blocks for which to retrieve blooms (required) |
+|  | blocks | a space-separated list of one or more blocks for which to retrieve blooms (required) |
 | -e | --eab | pull the enhanced adaptive blooms from QBlocks cache |
 | -b | --block | show only the block-level bloom (--raw only) |
 | -c | --receipts | show only the receipt-level blooms (--raw only) |
@@ -25,7 +25,7 @@
 
 `Notes:`
 
-- `block_list` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - `special` blocks are detailed under `whenBlock --list`.
 
@@ -41,7 +41,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

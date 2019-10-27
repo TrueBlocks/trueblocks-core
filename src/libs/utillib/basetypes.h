@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -28,7 +28,6 @@
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <time.h>
-#include <unistd.h>
 #include <utime.h>
 #include <string.h>
 #include <sys/mman.h>
@@ -42,10 +41,10 @@
 #include <vector>
 #include <map>
 #include <tuple>
-#include <chrono>
+#include <chrono>  // NOLINT
 #include <iomanip>
-#include <thread>
-#include <mutex>
+#include <thread>  // NOLINT
+#include <mutex>  // NOLINT
 #include <bitset>
 
 //-------------------------------------------------------------------------

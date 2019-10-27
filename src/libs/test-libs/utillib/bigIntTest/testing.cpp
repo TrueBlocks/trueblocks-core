@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -70,7 +70,7 @@ void performanceTest(void) {
     cout << "\t\t" << TIC();
     biguint_t bn;
     for (size_t i = 0 ; i < XXXX ; i++) {
-        bn = str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001",256);
+        bn = str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001", 256);
         if (!(i%20)) { cerr << "\r" << i; cerr.flush(); }
     }
     cout << "\t\t\t\t" << TIC() << "\t\tstr_2_BigUint" << endl;
@@ -85,7 +85,7 @@ void performanceTest(void) {
     cout << "\t\t" << TIC();
     bigint_t bi;
     for (size_t i = 0 ; i < XXXX ; i++) {
-        bi = str_2_BigInt("0x10000000000000000000000000000000000000000000000000000000000000001",256);
+        bi = str_2_BigInt("0x10000000000000000000000000000000000000000000000000000000000000001", 256);
         if (!(i%20)) { cerr << "\r" << i; cerr.flush(); }
     }
     cout << "\t\t\t\t" << TIC() << "\tstr_2_BigInt" << endl;
@@ -340,21 +340,21 @@ void contentTest(void) {
         cout << "18446744073709551615" << ": ";
         cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
-        cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << (str_2_Uint("0xffffffffffffffffffffffffffffffff") + 2) << endl;
         cout << "115792089237316195423570985008687907853269984665640564039457584007913129639935" << ": ";
         cout << (str_2_BigUint("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
-        cout << (str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001",256)) << endl;
+        cout << (str_2_BigUint("0x10000000000000000000000000000000000000000000000000000000000000001", 256)) << endl;
 
         cout << "-1" << ": ";
         cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
-        cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff")+2) << endl;
+        cout << (str_2_Int ("0xffffffffffffffffffffffffffffffff") + 2) << endl;
         cout << "-1" << ": ";
         cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")) << endl;
         cout << "1" << ": ";
-        cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")+2) << endl;
-        cout << (str_2_BigInt ("0x10000000000000000000000000000000000000000000000000000000000000001",256)) << endl;
+        cout << (str_2_BigInt ("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff") + 2) << endl;
+        cout << (str_2_BigInt ("0x10000000000000000000000000000000000000000000000000000000000000001", 256)) << endl;
 #endif
 
         cout << endl;

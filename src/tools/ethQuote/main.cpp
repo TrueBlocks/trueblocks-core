@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,11 +11,17 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
+#include "handle_maker.h"
 
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(defaultQuitHandler);
 
+#if 0
+    for (blknum_t bl = 3684349 ; bl < getLastBlock_client() ; bl = bl + 5000)
+        cout << bl << "\t" << bn_2_Date(bl).Format(FMT_JSON) << "\t" << wei_2_Ether(getUsdFromMakerAt(bl)) << endl;
+
+#else
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -40,7 +46,8 @@ int main(int argc, const char *argv[]) {
         }
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+#endif
 
     etherlib_cleanup();
     return 0;

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,14 +15,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'"),
-    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export. One of [none|some*|all|balance|nonce|code|storage|deployed|accttype]"),
-    COption("nozero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
-    COption("no_header", "o", "", OPT_HIDDEN | OPT_SWITCH, "hide the header in txt and csv mode"),
-    COption("no_history", "", "", OPT_HIDDEN | OPT_SWITCH, "for testing only&#44; hide the server's historical state"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
+    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
 // END_CODE_OPTIONS
 };
@@ -30,61 +28,43 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     replace(command, "*", " --mode:");
     if (!standardOptions(command))
         return false;
 
-    bool no_header = false;
-    bool fake_no_history = false;
+// BEG_CODE_LOCAL_INIT
+    string_q mode = "";
+    bool no_history = false;
+// END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-n" || arg == "--nozero") {
-            exclude_zero = true;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
+            if (!confirmEnum("mode", mode, arg))
+                return false;
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
 
-        } else if (arg == "-o" || arg == "--no_header") {
-            no_header = true;
+        } else if (arg == "-n" || arg == "--no_zero") {
+            no_zero = true;
 
-        } else if (arg == "--no_history" && isTestMode()) {
-            fake_no_history = true;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
-
-            arg = substitute(substitute(arg, "-m:", ""), "--mode:", "");
-            if (arg == "none") mode = ST_NONE;
-            if (arg == "balance") mode = ethstate_t(mode|ST_BALANCE);
-            if (arg == "nonce") mode = ethstate_t(mode|ST_NONCE);
-            if (arg == "code") mode = ethstate_t(mode|ST_CODE);
-            if (arg == "storage") mode = ethstate_t(mode|ST_STORAGE);
-            if (arg == "deployed") mode = ethstate_t(mode|ST_DEPLOYED);
-            if (arg == "accttype") mode = ethstate_t(mode|ST_ACCTTYPE);
-            if (arg == "some") mode = ethstate_t(mode|ST_SOME);
-            if (arg == "all") mode = ethstate_t(mode|ST_ALL);
-
-        } else if (isHash(arg)) {
-
-            string_q ret = blocks.parseBlockList(arg, newestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
-
-        } else if (startsWith(arg, "0x")) {
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
-            addrs.push_back(toLower(arg));
+        } else if (arg == "-s" || arg == "--no_history") {
+            no_history = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+// END_CODE_AUTO
+        } else if (isAddress(arg)) {
+            addrs.push_back(toLower(arg));
 
         } else {
 
@@ -96,6 +76,16 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(ret);
             }
         }
+
+        if (mode == "none") modes = ST_NONE;
+        if (mode == "balance") modes = ethstate_t(modes|ST_BALANCE);
+        if (mode == "nonce") modes = ethstate_t(modes|ST_NONCE);
+        if (mode == "code") modes = ethstate_t(modes|ST_CODE);
+        if (mode == "storage") modes = ethstate_t(modes|ST_STORAGE);
+        if (mode == "deployed") modes = ethstate_t(modes|ST_DEPLOYED);
+        if (mode == "accttype") modes = ethstate_t(modes|ST_ACCTTYPE);
+        if (mode == "some") modes = ethstate_t(modes|ST_SOME);
+        if (mode == "all") modes = ethstate_t(modes|ST_ALL);
     }
 
     // Data wrangling
@@ -109,12 +99,12 @@ bool COptions::parseArguments(string_q& command) {
 
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(mode & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
-    if (!(mode & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
-    if (!(mode & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
-    if (!(mode & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
-    if (!(mode & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
-    if (!(mode & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
+    if (!(modes & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
+    if (!(modes & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
+    if (!(modes & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
+    if (!(modes & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
+    if (!(modes & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
+    if (!(modes & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
     switch (exportFmt) {
@@ -134,17 +124,17 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     if (!requestsHistory()) // if the user did not request historical state, we can return safely
         return true;
 
-    if (fake_no_history || !nodeHasBalances(false)) {
+    if ((isTestMode() && no_history) || !nodeHasBalances(false)) {
         // The user requested history, so try to get a different server. Fail silently. The user will be warned in the response
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-        if (fake_no_history || (rpcProvider == balanceProvider || balanceProvider.empty()))
+        if ((isTestMode() && no_history) || (rpcProvider == balanceProvider || balanceProvider.empty()))
             return usage("Request asks for historical state, but the RPC server does not have historical state. Quitting...");
 
         getCurlContext()->baseURL = balanceProvider;
@@ -162,10 +152,13 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
 
-    exclude_zero = false;
+// BEG_CODE_INIT
     changes = false;
+    no_zero = false;
+// END_CODE_INIT
+
     prevBal = 0;
-    mode = ST_BALANCE;
+    modes = ST_BALANCE;
 
     addrs.clear();
     current = "";
@@ -176,9 +169,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : CHistoryOptions() {
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
 }
@@ -190,12 +181,12 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "addr_list block_list", "<address> [address...] [block...]");
+        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
         ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{block_list}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
+        ret += "[{blocks}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
         ret += "If the queried node does not store historical state, the results are undefined.\n";
         ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";

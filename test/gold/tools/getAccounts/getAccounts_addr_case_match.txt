@@ -1,5 +1,5 @@
-getAccounts argc: 5 [1:0xcb] [2:--matchCase] [3:--fmt] [4:txt] 
-getAccounts 0xcb --matchCase --fmt txt 
+getAccounts argc: 5 [1:0xcb] [2:--match_case] [3:--fmt] [4:txt] 
+getAccounts 0xcb --match_case --fmt txt 
 group	subgroup	address	name	symbol
 50-Tokens		0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR
 50-Tokens		0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST

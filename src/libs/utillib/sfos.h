@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -19,7 +19,7 @@ namespace qblocks {
 
     extern int copyFile(const string_q& from, const string_q& to);
     extern int moveFile(const string_q& from, const string_q& to);
-    extern int cleanFolder(const string_q& path, bool recurse=false, bool interactive=false);
+    extern int cleanFolder(const string_q& path, bool recurse = false, bool interactive = false);
 
     extern bool folderExists(const string_q& path);
     extern bool fileExists(const string_q& file);

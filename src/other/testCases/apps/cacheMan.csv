@@ -1,28 +1,58 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on,  cmd, fast, null, apps/cacheMan, README,          n, @th
-on,  cmd, fast, null, apps/cacheMan, help,            n, @h
-on,  cmd, fast, null, apps/cacheMan, help_long,       n, help
 
-on,  cmd, fast, null, apps/cacheMan, no_params,       n,
-on,  cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
-on,  cmd, fast, null, apps/cacheMan, invalid_param_2, n, @l & junk
-on,  cmd, fast, null, apps/cacheMan, noFile,          n, stats
-on,  cmd, fast, null, apps/cacheMan, list,            n, @l & addr_list = 0x9876543210987654321098765432109876543210
-on,  cmd, fast, null, apps/cacheMan, check,           n, @c & addr_list = 0x9876543210987654321098765432109876543210
-on,  cmd, fast, null, apps/cacheMan, listTip,         n, @l & addr_list = 0x5555533333555553333355555333335555533333
-on,  cmd, fast, null, apps/cacheMan, checkTip,        n, @c & addr_list = 0x5555533333555553333355555333335555533333
-on,  cmd, fast, null, apps/cacheMan, fixTip,          n, fix & addr_list = 0x5555533333555553333355555333335555533333
-on,  cmd, fast, null, apps/cacheMan, txtTip,          n, fmt = txt & addr_list = 0x5555533333555553333355555333335555533333
-on,  cmd, fast, null, apps/cacheMan, csvTip,          n, fmt = csv & addr_list = 0x5555533333555553333355555333335555533333
-on,  cmd, fast, null, apps/cacheMan, jsonTip,         n, fmt = json & addr_list = 0x5555533333555553333355555333335555533333
+#
+# Note: we use the hotkey options in some of these test cases to test that feature. Generally we don't test hotkeys elswhere
+#
 
-off, cmd, fast, null, apps/cacheMan, merge,           n, @md & addr_list = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210
-off, cmd, fast, null, apps/cacheMan, merge_list,      n, @l & merged
-off, cmd, fast, null, apps/cacheMan, merge_remove,    n, @r & merged
-off, cmd, fast, null, apps/cacheMan, merge_rlist,     n, @l & merged
-off, cmd, fast, null, apps/cacheMan, merge_import,    n, @i & merged
-off, cmd, fast, null, apps/cacheMan, merge_ilist,     n, @l & merged
-off, cmd, fast, null, apps/cacheMan, extract,         n, @e & 0 addr_list = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 & list & data
-off, cmd, fast, null, apps/cacheMan, extract_list,    n, @l & extract & data
-off, cmd, fast, null, apps/cacheMan, truncate_unused, n, truncate 1001001
-off, cmd, fast, null, apps/cacheMan, skip_unused,     n, skip
+on, cmd, fast, null, apps/cacheMan, README,          n, @th
+on, cmd, fast, null, apps/cacheMan, help,            n, @h
+on, cmd, fast, null, apps/cacheMan, help_long,       n, help
+
+on, cmd, fast, null, apps/cacheMan, no_params,       n,
+on, cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
+on, cmd, fast, null, apps/cacheMan, invalid_param_2, n, @l & junk
+on, cmd, fast, null, apps/cacheMan, noFile,          n, stats
+
+on, cmd, fast, null, apps/cacheMan, copy_1,          n, COPYFILE -f ./testing_data/0x1111122222111112222211111222221111122222.history ./0x1111122222111112222211111222221111122222.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_2,          n, COPYFILE -f ./testing_data/0x5555533333555553333355555333335555533333.history ./0x5555533333555553333355555333335555533333.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_3,          n, COPYFILE -f ./testing_data/0x9876543210987654321098765432109876543210.history ./0x9876543210987654321098765432109876543210.acct.bin
+on, cmd, fast, null, apps/cacheMan, copy_4,          n, COPYFILE -f ./testing_data/*.txt ./
+
+on, cmd, fast, null, apps/cacheMan, list_0x9,        n, @l & addrs = 0x9876543210987654321098765432109876543210
+on, cmd, fast, null, apps/cacheMan, check_0x9,       n, @c & addrs = 0x9876543210987654321098765432109876543210
+on, cmd, fast, null, apps/cacheMan, fix_0x9,         n, fix & addrs = 0x9876543210987654321098765432109876543210
+on, cmd, fast, null, apps/cacheMan, check2_0x9,      n, @c & addrs = 0x9876543210987654321098765432109876543210
+on, cmd, fast, null, apps/cacheMan, list2_0x9,       n, @l & addrs = 0x9876543210987654321098765432109876543210
+
+on, cmd, fast, null, apps/cacheMan, list_0x5,        n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = txt & no_header
+on, cmd, fast, null, apps/cacheMan, check_0x5,       n, check & addrs = 0x5555533333555553333355555333335555533333
+on, cmd, fast, null, apps/cacheMan, fix_0x5,         n, fix & addrs = 0x5555533333555553333355555333335555533333
+on, cmd, fast, null, apps/cacheMan, check2_0x5,      n, check & addrs = 0x5555533333555553333355555333335555533333
+on, cmd, fast, null, apps/cacheMan, list2_0x5,       n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = csv
+
+on, cmd, slow, null, apps/cacheMan, list_x01,        n, @l & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, check_x01,       n, @c & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, fix_x01,         n, fix & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, txt_x01,         n, fmt = txt & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, csv_x01,         n, fmt = csv & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, json_x01,        n, fmt = json & addrs = 0x1111122222111112222211111222221111122222
+
+on, cmd, slow, null, apps/cacheMan, merge,           n, @md & addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210
+on, cmd, slow, null, apps/cacheMan, copy_merge,      n, MOVEFILE ./merged.bin ./0x1111111111111111111111111111111111111111.acct.bin
+on, cmd, slow, null, apps/cacheMan, merge2,          n, @md & addrs = 0x1111111111111111111111111111111111111111 0x1111122222111112222211111222221111122222
+on, cmd, slow, null, apps/cacheMan, copy_merge2,     n, MOVEFILE ./merged.bin ./0x1111111111111111111111111111111111111111.acct.bin
+on, cmd, slow, null, apps/cacheMan, merge_list,      n, @l & addrs = 0x1111111111111111111111111111111111111111
+on, cmd, slow, null, apps/cacheMan, merge_remove,    n, @r & addrs = 0x1111111111111111111111111111111111111111
+on, cmd, slow, null, apps/cacheMan, merge_rlist,     n, @l & addrs = 0x1111111111111111111111111111111111111111
+on, cmd, slow, null, apps/cacheMan, merge_import,    n, @i & addrs = 0x1111111111111111111111111111111111111111
+on, cmd, slow, null, apps/cacheMan, merge_ilist,     n, @l & addrs = 0x1111111111111111111111111111111111111111
+
+on, cmd, fast, null, apps/cacheMan, extract,         n, @e & 0 addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 & list & data
+on, cmd, fast, null, apps/cacheMan, extract_list,    n, @l & extract & data
+on, cmd, fast, null, apps/cacheMan, truncate_unused, n, truncate 1001001
+on, cmd, fast, null, apps/cacheMan, skip_unused,     n, skip
+
+on, cmd, fast, null, apps/cacheMan, rm_0x9,          n, RMFILE -f ./0x*.*
+on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./merged.*
+on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./import.*
+on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./remove.*

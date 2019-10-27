@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -20,12 +20,12 @@ void COptions::handle_display(void) {
 
     string_q format = getGlobalConfig("grabABI")->getConfigStr("display", "format", STR_DISPLAY_ABIFUNCTION);
     string_q header = toLower(substitute(substitute(format, "[{", ""), "}]", ""));
-    if (asData)
+    if (data)
         cout << header << "\n";
     replace(format, "[{address}]", toLower("")); //primaryAddr));
 
     for (auto abi : abi_specs) {
-        if (asData) {
+        if (data) {
             HIDE_FIELD(CFunction, "inputs");
             HIDE_FIELD(CFunction, "outputs");
             for (auto interface : abi.interfaces) {

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -35,7 +35,7 @@ namespace qblocks {
     //--------------------------------------------------------------------------------
     size_t explode(CStringArray& result, const string& input, char needle) {
 
-        result.reserve(result.size() + countOf(input, needle) + 1); // maybe an append
+        result.reserve(result.size() + countOf(input, needle) + 1);  // maybe an append
 
         string_q buffer{""};
         for (auto ch : input) {
@@ -54,7 +54,7 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     size_t explode(CUintArray& result, const string& input, char needle) {
-        result.reserve(result.size() + countOf(input, needle) + 1); // maybe an append
+        result.reserve(result.size() + countOf(input, needle) + 1);  // maybe an append
 
         string_q buffer{""};
         for (auto ch : input) {
@@ -351,7 +351,7 @@ namespace qblocks {
             else if (*it == '\r') res += "\\r";
             else if (*it == '"' ) res += "\\\"";
             else if (*it == '\\') res += "\\\\";
-            else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {
+            else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {  // NOLINT
                 res += "\\u";
                 stringstream ss;
                 ss << hex << static_cast<uint32_t>(*it);
@@ -372,34 +372,34 @@ namespace qblocks {
             switch (state) {
                 case OUT:
                     switch (ch) {
-                        case '\t': break; // skip it
-                        case '\r': if (!isCode) str[pos++] = ch;    break;
-                        case '\n': if (isCode)  str[pos++] = ' ';   else str[pos++] = ch; break;
+                        case '\t': break;  // skip it
+                        case '\r': if (!isCode) str[pos++] = ch;    break;  // NOLINT
+                        case '\n': if (isCode)  str[pos++] = ' ';   else str[pos++] = ch; break;  // NOLINT
                         case ' ' :              state = IN_SPACE;   break;
-                        case '-' : if (!isCode) state = IN_DASH;    else str[pos++] = ch; break;
+                        case '-' : if (!isCode) state = IN_DASH;    else str[pos++] = ch; break;  // NOLINT
                         case '\\':              state = IN_NL;      break;
-                        case '/' : if (isCode)  state = COMM_START; break;
+                        case '/' : if (isCode)  state = COMM_START; break;  // NOLINT
                         default: str[pos++] = ch;
                     }
                     break;
                 case IN_SPACE:
                     if (isCode && ch == '\n') {
                         str[pos++] = ' ';
-                    } else switch (ch) {
-                        case ' ':                                                 break; // skip it
+                    } else switch (ch) {  // NOLINT
+                        case ' ':                                                 break;  // skip it
                         default : str[pos++] = ' '; str[pos++] = ch; state = OUT; break;
                     }
                     break;
                 case IN_DASH:
                     switch (ch) {
                         case 'v':
-                        case 'h':                                                 break; // skip it
+                        case 'h':                                                 break;  // skip it
                         default : str[pos++] = '-'; str[pos++] = ch; state = OUT; break;
                     }
                     break;
                 case IN_NL:
                     switch (ch) {
-                        case '\n':                                                 break; // skip it
+                        case '\n':                                                 break;  // skip it
                         default : str[pos++] = '\\'; str[pos++] = ch; state = OUT; break;
                     }
                     break;

@@ -1,32 +1,118 @@
-grabABI argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:--noconst] [4:--generate] [5:--code] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose --noconst --generate --code 
-
-  Invalid option: --code
-
-  Usage:    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-
-  Where:  
-	addr_list             list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
-	-d  (--data)          export the display as data
-	-e  (--encode)        generate the encodings for the functions / events in the ABI
-	-j  (--json)          print the ABI to the screen as json
-	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-l  (--sol <path>)    create the ABI file from a .sol file in the local directory
-
-#### Hidden options (shown during testing only)
-	-o  (--open)          open the ABI file for editing, download if not already present
-	-s  (--silent)        if ABI cannot be acquired, fail silently (useful for scripting)
-	-n  (--nodec)         do not decorate duplicate names
-	-k  (--known)         load common 'known' ABIs from cache
-#### Hidden options (shown during testing only)
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Notes:
-	- Use the --silent option, which displays fewer messages, for scripting.
-
-  Powered by QBlocks
+grabABI argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:--noconst] [4:--generate] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose --noconst --generate 
+Reading ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 from --Generating class for derived transaction type: 'CApprove'
+	makeClass argc: 3 [1:-r] [2:approve] 
+makeClass -r approve 
+Would run class definition file: approve (not run, testing)
+Generating class for derived transaction type: 'CChangeAllowedRecipients'
+	makeClass argc: 3 [1:-r] [2:changeallowedrecipients] 
+makeClass -r changeallowedrecipients 
+Would run class definition file: changeallowedrecipients (not run, testing)
+Generating class for derived transaction type: 'CChangeProposalDeposit'
+	makeClass argc: 3 [1:-r] [2:changeproposaldeposit] 
+makeClass -r changeproposaldeposit 
+Would run class definition file: changeproposaldeposit (not run, testing)
+Generating class for derived transaction type: 'CCreateTokenProxy'
+	makeClass argc: 3 [1:-r] [2:createtokenproxy] 
+makeClass -r createtokenproxy 
+Would run class definition file: createtokenproxy (not run, testing)
+Generating class for derived transaction type: 'CExecuteProposal'
+	makeClass argc: 3 [1:-r] [2:executeproposal] 
+makeClass -r executeproposal 
+Would run class definition file: executeproposal (not run, testing)
+Generating class for derived transaction type: 'CGetMyReward'
+	makeClass argc: 3 [1:-r] [2:getmyreward] 
+makeClass -r getmyreward 
+Would run class definition file: getmyreward (not run, testing)
+Generating class for derived transaction type: 'CHalveMinQuorum'
+	makeClass argc: 3 [1:-r] [2:halveminquorum] 
+makeClass -r halveminquorum 
+Would run class definition file: halveminquorum (not run, testing)
+Generating class for derived transaction type: 'CNewContract'
+	makeClass argc: 3 [1:-r] [2:newcontract] 
+makeClass -r newcontract 
+Would run class definition file: newcontract (not run, testing)
+Generating class for derived transaction type: 'CNewProposal'
+	makeClass argc: 3 [1:-r] [2:newproposal] 
+makeClass -r newproposal 
+Would run class definition file: newproposal (not run, testing)
+Generating class for derived transaction type: 'CReceiveEther'
+	makeClass argc: 3 [1:-r] [2:receiveether] 
+makeClass -r receiveether 
+Would run class definition file: receiveether (not run, testing)
+Generating class for derived transaction type: 'CRefund'
+	makeClass argc: 3 [1:-r] [2:refund] 
+makeClass -r refund 
+Would run class definition file: refund (not run, testing)
+Generating class for derived transaction type: 'CRetrieveDAOReward'
+	makeClass argc: 3 [1:-r] [2:retrievedaoreward] 
+makeClass -r retrievedaoreward 
+Would run class definition file: retrievedaoreward (not run, testing)
+Generating class for derived transaction type: 'CSplitDAO'
+	makeClass argc: 3 [1:-r] [2:splitdao] 
+makeClass -r splitdao 
+Would run class definition file: splitdao (not run, testing)
+Generating class for derived transaction type: 'CTransfer'
+	makeClass argc: 3 [1:-r] [2:transfer] 
+makeClass -r transfer 
+Would run class definition file: transfer (not run, testing)
+Generating class for derived transaction type: 'CTransferFrom'
+	makeClass argc: 3 [1:-r] [2:transferfrom] 
+makeClass -r transferfrom 
+Would run class definition file: transferfrom (not run, testing)
+Generating class for derived transaction type: 'CTransferFromWithoutReward'
+	makeClass argc: 3 [1:-r] [2:transferfromwithoutreward] 
+makeClass -r transferfromwithoutreward 
+Would run class definition file: transferfromwithoutreward (not run, testing)
+Generating class for derived transaction type: 'CTransferWithoutReward'
+	makeClass argc: 3 [1:-r] [2:transferwithoutreward] 
+makeClass -r transferwithoutreward 
+Would run class definition file: transferwithoutreward (not run, testing)
+Generating class for derived transaction type: 'CUnblockMe'
+	makeClass argc: 3 [1:-r] [2:unblockme] 
+makeClass -r unblockme 
+Would run class definition file: unblockme (not run, testing)
+Generating class for derived transaction type: 'CVote'
+	makeClass argc: 3 [1:-r] [2:vote] 
+makeClass -r vote 
+Would run class definition file: vote (not run, testing)
+Generating class for derived event type: 'CAllowedRecipientChangedEvent'
+	makeClass argc: 3 [1:-r] [2:allowedrecipientchangedevent] 
+makeClass -r allowedrecipientchangedevent 
+Would run class definition file: allowedrecipientchangedevent (not run, testing)
+Generating class for derived event type: 'CApprovalEvent'
+	makeClass argc: 3 [1:-r] [2:approvalevent] 
+makeClass -r approvalevent 
+Would run class definition file: approvalevent (not run, testing)
+Generating class for derived event type: 'CCreatedTokenEvent'
+	makeClass argc: 3 [1:-r] [2:createdtokenevent] 
+makeClass -r createdtokenevent 
+Would run class definition file: createdtokenevent (not run, testing)
+Generating class for derived event type: 'CFuelingToDateEvent'
+	makeClass argc: 3 [1:-r] [2:fuelingtodateevent] 
+makeClass -r fuelingtodateevent 
+Would run class definition file: fuelingtodateevent (not run, testing)
+Generating class for derived event type: 'CNewCuratorEvent'
+	makeClass argc: 3 [1:-r] [2:newcuratorevent] 
+makeClass -r newcuratorevent 
+Would run class definition file: newcuratorevent (not run, testing)
+Generating class for derived event type: 'CProposalAddedEvent'
+	makeClass argc: 3 [1:-r] [2:proposaladdedevent] 
+makeClass -r proposaladdedevent 
+Would run class definition file: proposaladdedevent (not run, testing)
+Generating class for derived event type: 'CProposalTalliedEvent'
+	makeClass argc: 3 [1:-r] [2:proposaltalliedevent] 
+makeClass -r proposaltalliedevent 
+Would run class definition file: proposaltalliedevent (not run, testing)
+Generating class for derived event type: 'CRefundEvent'
+	makeClass argc: 3 [1:-r] [2:refundevent] 
+makeClass -r refundevent 
+Would run class definition file: refundevent (not run, testing)
+Generating class for derived event type: 'CTransferEvent'
+	makeClass argc: 3 [1:-r] [2:transferevent] 
+makeClass -r transferevent 
+Would run class definition file: transferevent (not run, testing)
+Generating class for derived event type: 'CVotedEvent'
+	makeClass argc: 3 [1:-r] [2:votedevent] 
+makeClass -r votedevent 
+Would run class definition file: votedevent (not run, testing)

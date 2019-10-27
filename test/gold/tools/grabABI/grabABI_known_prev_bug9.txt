@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:0xef638b4305b8a1620f4e0e562e127f1181ae16d2] [2:--raw] 
-grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --raw 
+grabABI argc: 2 [1:0xef638b4305b8a1620f4e0e562e127f1181ae16d2] 
+grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 
 ABI for address 0xef638b4305b8a1620f4e0e562e127f1181ae16d2
 	function addOwner                   (address _owner)
 	function changeOwner                (address _from,address _to)

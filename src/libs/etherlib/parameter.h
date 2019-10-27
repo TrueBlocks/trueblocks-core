@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -58,7 +58,7 @@ public:
 
     // EXISTING_CODE
     explicit CParameter(string_q& txtIn);
-    explicit CParameter(const string_q& n, const string_q& type, const string_q& val="");
+    explicit CParameter(const string_q& n, const string_q& type, const string_q& val = "");
     explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
     explicit CParameter(const string_q& n, const string_q& type, int64_t val);
     explicit CParameter(const string_q& n, const string_q& type, bool val);

@@ -1,5 +1,6 @@
-getBlock argc: 3 [1:4001001] [2:--hash_only] 
-getBlock 4001001 --hash_only 
+getBlock argc: 3 [1:4001001] [2:--hashes_only] 
+getBlock 4001001 --hashes_only 
+{ "data": [
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "blockNumber": 4001001,
@@ -285,4 +286,4 @@ getBlock 4001001 --hash_only
       "hash": "0xa600632d3a6b343ecd51795291818dbd8c59e4588c08c0cfc5a9f2614edfe567"
     }
   ]
-}
+}] }

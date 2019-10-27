@@ -1,6 +1,5 @@
-getAccounts argc: 2 [1:--owned] 
-getAccounts --owned 
-group	subgroup	address	name	symbol
+getAccounts argc: 3 [1:--owned] [2:--no_header] 
+getAccounts --owned --no_header 
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002
 0x0000000000000000000000000000000000000003

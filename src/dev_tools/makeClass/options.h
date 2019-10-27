@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,31 +11,35 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "etherlib.h"
+#include "optiondef.h"
 
+typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    bool isAll;
-    bool isRun;
-    bool isEdit;
-    bool isRemove;
-    bool isList;
-    bool silent;
-    string_q namesp;
-    bool writeHeader;
-    bool writeSource;
-
-    string_q classNames;
+// BEG_CODE_DECLARE
+    bool all;
+    string_q nspace;
     string_q filter;
+// END_CODE_DECLARE
+
+    runmode_t mode;
+    string_q classNames;
     CToml classFile;
+    ostringstream warnings;
 
     COptions(void);
     ~COptions(void);
 
+    string_q postProcess(const string_q& which, const string_q& str) const;
     bool parseArguments(string_q& command);
     void Init(void);
 
     bool exportJson(const string_q& cl);
+    bool handle_options(void);
+    bool check_option(const COptionDef& option);
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="");
 };
 
 //-------------------------------------------------------------------

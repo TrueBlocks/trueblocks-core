@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -59,7 +59,7 @@ cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << "\n"; \
 #define PRINTQ(msg) \
 if (data->debugging) { cerr << string_q(120, '-') << "\n" << "." << msg << "\n"; }
 #define PRINTL(msg) \
-if (debugging) { cerr << string_q(120,'-') << "\n"; \
+if (debugging) { cerr << string_q(120, '-') << "\n"; \
 PRINT(msg); }
 #else  // DEBUG_RPC
 #define PRINTQ(msg)
@@ -76,13 +76,6 @@ PRINT(msg); }
         postData +=  quote("params")  + ":"  + params + ",";
         postData +=  quote("id")      + ":"  + quote(getCurlContext()->getCurlID());
         postData += "}";
-#ifdef PROVING
-        if (expContext().proving) {
-            if (expContext().proof.str().length() > 1)
-                expContext().proof << ",";
-            expContext().proof << postData;
-        }
-#endif
 
 PRINT("postData: " + postData);
 
@@ -126,7 +119,7 @@ PRINT("postData: " + postData);
 
     //-------------------------------------------------------------------------
     CURL *CCurlContext::getCurl(void) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         if (!curlHandle) {
             curlHandle = curl_easy_init();
             if (!curlHandle) {
@@ -138,7 +131,7 @@ PRINT("postData: " + postData);
             CStringArray heads;
             explode(heads, "Content-Type: application/json\n", '\n');
             for (auto head : heads)
-                headerPtr = curl_slist_append(headerPtr, (char*)head.c_str());
+                headerPtr = curl_slist_append(headerPtr, (char*)head.c_str());  // NOLINT
             curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headerPtr);
             curl_easy_setopt(curlHandle, CURLOPT_URL, baseURL.c_str());
         }

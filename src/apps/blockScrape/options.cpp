@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -8,9 +8,9 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("nBlocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("nBlockProcs", "b", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("nAddrProcs", "a", "<uint>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
+    COption("n_block_procs", "p", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_addr_procs", "a", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
 // END_CODE_OPTIONS
 };
@@ -22,31 +22,42 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-n:") || startsWith(arg, "--nBlocks:")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--nBlocks:", "");
-            if (!isUnsigned(arg))
-                return usage("--nBlocks must be a non-negative number. Quitting...");
-            nBlocks = str_2_Uint(arg);
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+// END_CODE_AUTO
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--nBlockProcs:")) {
-            arg = substitute(substitute(arg, "--nBlockProcs:", ""), "-b:", "");
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
+            arg = substitute(substitute(arg, "-n:", ""), "--n_blocks:", "");
             if (!isUnsigned(arg))
-                return usage("--nBlockProcs must be a non-negative number. Quitting...");
-            nBlockProcs = str_2_Uint(arg);
+                return usage("--n_blocks must be a non-negative number. Quitting...");
+            n_blocks = str_2_Uint(arg);
 
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--nAddrProcs:")) {
-            arg = substitute(substitute(arg, "--nAddrProcs:", ""), "-a:", "");
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--n_block_procs:")) {
+            arg = substitute(substitute(arg, "--n_block_procs:", ""), "-p:", "");
             if (!isUnsigned(arg))
-                return usage("--nAddrProcs must be a non-negative number. Quitting...");
-            nAddrProcs = str_2_Uint(arg);
+                return usage("--n_block_procs must be a non-negative number. Quitting...");
+            n_block_procs = str_2_Uint(arg);
+
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
+            arg = substitute(substitute(arg, "--n_addr_procs:", ""), "-a:", "");
+            if (!isUnsigned(arg))
+                return usage("--n_addr_procs must be a non-negative number. Quitting...");
+            n_addr_procs = str_2_Uint(arg);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+        } else {
+            return usage("Invalid option: " + arg);
         }
     }
 
@@ -62,6 +73,31 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
+    if (isTestMode()) {
+        if (isApiMode()) {
+const char* STR_ERROR_MSG =
+"{\n"
+"  \"message\": \"Reporting for test mode only\",\n"
+"  \"errors\": [\n"
+"    \"n_blocks [N_BLOCKS]\",\n"
+"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
+"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
+"  ]\n"
+"}\n";
+            string_q msg = STR_ERROR_MSG;
+            replace(msg, "[N_BLOCKS]", uint_2_Str(n_blocks));
+            replace(msg, "[N_BLOCK_PROCS]", uint_2_Str(n_block_procs));
+            replace(msg, "[N_ADDR_PROCS]", uint_2_Str(n_addr_procs));
+            cout << msg << endl;
+        } else {
+            cout << "Reporting for test mode only:" << endl;
+            cout << "\tn_blocks: " << n_blocks << endl;
+            cout << "\tn_block_procs: " << n_block_procs << endl;
+            cout << "\tn_addr_procs: " << n_addr_procs << endl;
+        }
+        return false;
+    }
+
     LOG4("indexPath: " + indexPath);
     LOG4("finalized: " + indexFolder_finalized);
     LOG4("blooms: " + indexFolder_blooms);
@@ -75,10 +111,10 @@ bool COptions::parseArguments(string_q& command) {
     latestBlockTs = latest.timestamp;
     latestBlockNum = latest.blockNumber;
 
-    string_q zeroBin = indexFolder_finalized + padNum9(0) + "-" + padNum9(0) + ".bin";
+    string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        ASSERT(prefunds.size() == 8893);  // This is a known value
-        cerr << "\tBuilding origin block index" << endl;
+        LOG_INFO("Origin block index (" + zeroBin + ") not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
+        ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
             // The prefund transactions have a zero for thier block numbers and an index
@@ -88,7 +124,9 @@ bool COptions::parseArguments(string_q& command) {
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());
         }
+        LOG_INFO("Writing index...");
         writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
+        LOG_INFO("Done...");
     }
 
     const CToml *config = getGlobalConfig("blockScrape");
@@ -108,9 +146,9 @@ bool COptions::parseArguments(string_q& command) {
     if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
-    nBlocks     = config->getConfigInt("settings", "nBlocks",     (nBlocks     == NOPOS ? 2000 : nBlocks    ));
-    nBlockProcs = config->getConfigInt("settings", "nBlockProcs", (nBlockProcs == NOPOS ?   10 : nBlockProcs));
-    nAddrProcs  = config->getConfigInt("settings", "nAddrProcs",  (nAddrProcs  == NOPOS ?   20 : nAddrProcs ));
+    n_blocks      = config->getConfigInt("settings", "n_blocks",      (n_blocks      == NOPOS ? 2000 : n_blocks     ));
+    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ?   10 : n_block_procs));
+    n_addr_procs  = config->getConfigInt("settings", "n_addr_procs",  (n_addr_procs  == NOPOS ?   20 : n_addr_procs ));
 
     return true;
 }
@@ -119,15 +157,19 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RUNONCE | OPT_PREFUND);
+    optionOff(OPT_FMT);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     if (getEnvStr("DOCKER_MODE") == "true") {
-        nBlocks     = 100;
-        nBlockProcs = 5;
-        nAddrProcs  = 10;
+        n_blocks      = 100;
+        n_block_procs = 5;
+        n_addr_procs  = 10;
     } else {
-        nBlocks     = NOPOS;
-        nBlockProcs = NOPOS;
-        nAddrProcs  = NOPOS;
+        n_blocks      = NOPOS;
+        n_block_procs = NOPOS;
+        n_addr_procs  = NOPOS;
     }
 
     minArgs     = 0;
@@ -135,6 +177,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 

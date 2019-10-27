@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:1001001] [2:--force] 
 getBlock 1001001 --force 
+{ "data": [
 {
   "gasLimit": 3141592,
   "gasUsed": 84000,
@@ -101,4 +102,4 @@ getBlock 1001001 --force
       "gasUsed": 21000
     }
   ]
-}
+}] }

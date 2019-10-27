@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,13 +16,16 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-    COptionsTransList transList;
-    bool option1;
+// BEG_CODE_DECLARE
     bool articulate;
+    bool count_only;
+    bool skip_ddos;
+    uint32_t max_traces;
+// END_CODE_DECLARE
+
+    COptionsTransList transList;
     CAbi abi_spec;
     bool first;
-    bool skipDdos;
-    CStringArray errors;
 
     COptions(void);
     ~COptions(void);

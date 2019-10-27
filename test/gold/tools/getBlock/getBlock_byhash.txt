@@ -1,5 +1,6 @@
 getBlock argc: 2 [1:0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39] 
 getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39 
+{ "data": [
 {
   "gasLimit": 6712392,
   "gasUsed": 337966,
@@ -376,4 +377,4 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasUsed": 21000
     }
   ]
-}
+}] }

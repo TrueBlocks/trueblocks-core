@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -56,8 +56,20 @@ public:
     bool articulateTrace(CTrace *t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     friend class CAccountWatch;
-    size_t nFunctions(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "function") cnt++; return cnt; }
-    size_t nEvents(void) const { size_t cnt = 0; for (auto i : interfaces) if (i.type == "event") cnt++; return cnt; }
+    size_t nFunctions(void) const {
+        size_t cnt = 0;
+        for (auto i : interfaces)
+            if (i.type == "function")
+                cnt++;
+        return cnt;
+    }
+    size_t nEvents(void) const {
+        size_t cnt = 0;
+        for (auto i : interfaces)
+            if (i.type == "event")
+                cnt++;
+        return cnt;
+    }
     size_t nOther(void) const { return interfaces.size() - nFunctions() - nEvents(); }
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
@@ -167,7 +179,7 @@ extern const char* STR_DISPLAY_ABI;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
-extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decNames);
+extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decorate);
 // EXISTING_CODE
 }  // namespace qblocks
 

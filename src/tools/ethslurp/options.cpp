@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,13 +15,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("addr_list", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp"),
-    COption("block_list", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "extract either [ext*|int|token|miner|all] type of transactions"),
-    COption("blocks", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
-    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data&#44; do not display it)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "pretty print&#44; optionally add ':txt&#44;' ':csv&#44;' or ':html'"),
-    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address. Formats the output to your specification."),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
+    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
+    COption("block_range", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
+    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
+    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -32,19 +31,25 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
+            if (!confirmEnum("type", type, arg))
+                return false;
 
-        if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
-            type = substitute(substitute(arg, "-t:", ""), "--type:", "");
-            if (type == "all")
-                return usage("Type 'all' is currently disabled. Quitting...");
+        } else if (arg == "-s" || arg == "--silent") {
+            silent = true;
 
-            if (type != "int" && type != "ext" && type != "token" && type != "miner")
-                return usage("Type must be either 'int', 'ext', 'token', 'miner' or 'all'. Quitting...");
+// END_CODE_AUTO
 
         } else if (arg == "-f") {
             exportFormat = "json";
@@ -54,8 +59,8 @@ bool COptions::parseArguments(string_q& command) {
             if (exportFormat.empty())
                 return usage("Please provide a formatting option with " + orig + ". Quitting...");
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--blocks:")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--blocks:", "");
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_range:")) {
+            arg = substitute(substitute(arg, "-b:", ""), "--block_range:", "");
             string_q ret = blocks.parseBlockList(arg, latestBlock);
             if (endsWith(ret, "\n")) {
                 cerr << "\n  " << ret << "\n";
@@ -64,21 +69,20 @@ bool COptions::parseArguments(string_q& command) {
                 return usage(ret);
             }
 
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else {
-
             if (!isAddress(arg))
                  return usage("Please provide a valid Ethereum address. Quitting...");
             addrs.push_back(str_2_Addr(toLower(arg)));
         }
     }
+
+    if (type == "all")
+        return usage("Type 'all' is currently disabled. Quitting...");
 
     // Note this may not return if user chooses to quit
     api.checkKey();
@@ -113,19 +117,22 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
+// BEG_CODE_INIT
     type = "";
+    silent = false;
+// END_CODE_INIT
+
     blocks.Init();
     exportFormat = "json";
     addrs.clear();
-    silent = false;
     fromFile = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
-//    CAccount::registerClass();
     UNHIDE_FIELD(CTransaction, "isError");
     UNHIDE_FIELD(CTransaction, "isInternal");
     UNHIDE_FIELD(CTransaction, "date");
@@ -144,7 +151,7 @@ COptions::~COptions(void) {
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
     if (which == "options") {
-        return substitute(str, "addr_list block_list", "<address> [address...] [block...]");
+        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 

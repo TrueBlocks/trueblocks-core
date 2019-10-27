@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,7 +17,7 @@ namespace testing {  // NOLINT
     typedef bool (*PF)(uint64_t testID);
     class Test {
     public:
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static PF funcs[100];
         static uint64_t nFuncs;
         Test(void)  { memset(funcs, '\0', sizeof(funcs)); }
@@ -94,7 +94,7 @@ namespace testing {  // NOLINT
         (a); \
         cout << " --> Test did not throw\n"; \
     } catch (exception& e) { \
-        cout << " --> Test threw with message: " << string_q(e.what()).substr(0,12) << "\n"; \
+        cout << " --> Test threw with message: " << string_q(e.what()).substr(0, 12) << "\n"; \
     }
 
 #define SHOULD_NOT_THROW(msg, a) \
@@ -103,7 +103,7 @@ namespace testing {  // NOLINT
         (a); \
         cout << " --> Test did not throw\n"; \
     } catch (exception& e) { \
-        cout << " --> Test threw with message: " << string_q(e.what()).substr(0,12) << "\n"; \
+        cout << " --> Test threw with message: " << string_q(e.what()).substr(0, 12) << "\n"; \
     }
 
 inline int RUN_ALL_TESTS(void) {

@@ -1,0 +1,6 @@
+blockScrape argc: 3 [1:--nBlockProcs] [2:12] 
+blockScrape --nBlockProcs 12 
+Reporting for test mode only:
+	nBlocks: 18446744073709551615
+	nBlockProcs: 12
+	nAddrProcs: 18446744073709551615

@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--raw] 
-grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --raw 
+grabABI argc: 2 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 ABI for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	function DAOpaidOut                 (address val_0)
 	function DAOrewardAccount           ()

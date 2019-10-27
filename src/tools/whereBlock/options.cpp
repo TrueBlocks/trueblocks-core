@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,9 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("block_list", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache&#44; at a local&#44; or at a remote node."),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
+    COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -29,37 +28,39 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool no_header = false;
-    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
-    Init();
-    blknum_t latestBlock = getLastBlock_client();
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
+    blknum_t latest = getLastBlock_client();
     if (!isNodeRunning()) // it's okay if it's not
-        latestBlock = NOPOS;
+        latest = NOPOS;
+
+    Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (startsWith(arg, '-')) {  // do not collapse
 
-        if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
+        } else if (!parseBlockList2(this, blocks, arg, latest)) {
+            return false;
+
+// END_CODE_AUTO
         }
     }
 
-    // Data verifictions
+    // Data verifiction
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number. Quitting...");
 
     // Display formatting
+    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
     switch (exportFmt) {
         case NONE1: format = STR_DISPLAY_WHERE; break;
         case API1:
@@ -72,7 +73,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // collect together results for later display
@@ -83,8 +84,11 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    optionOff(OPT_DENOM);
     registerOptions(nParams, params);
+    optionOff(OPT_DENOM);
+
+// BEG_CODE_INIT
+// END_CODE_INIT
 
     items.clear();
     blocks.Init();
@@ -95,11 +99,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
-
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 
@@ -110,7 +110,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "block_list", "<block> [block...]");
+        return substitute(str, "blocks", "<block> [block...]");
 
     } else if (which == "notes") {
         string_q ret = str;

@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:0x851b7f3ab81bd8df354f0d7640efcd7288553419] [2:--raw] 
-grabABI 0x851b7f3ab81bd8df354f0d7640efcd7288553419 --raw 
+grabABI argc: 2 [1:0x851b7f3ab81bd8df354f0d7640efcd7288553419] 
+grabABI 0x851b7f3ab81bd8df354f0d7640efcd7288553419 
 ABI for address 0x851b7f3ab81bd8df354f0d7640efcd7288553419
 	function MAX_OWNER_COUNT            ()
 	function addOwner                   (address owner)

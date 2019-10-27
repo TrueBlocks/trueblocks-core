@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,11 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("freshen", "f", "", OPT_SWITCH, "Freshen database (append new data)"),
-    COption("period", "p", "enum[5|15|30|120*|240|1440]", OPT_FLAG, "Display prices in this increment. One of [5|15|30|120*|240|1440]"),
-    COption("pair", "p", "<pair>", OPT_FLAG, "Which price pair to freshen or list (see Poloniex)"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data and other purposes."),
+    COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (append new data)"),
+    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "display prices in this increment"),
+    COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
+    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -30,35 +29,48 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool no_header = false;
+// BEG_CODE_LOCAL_INIT
+    string_q period = "";
+    string_q pair = "";
+// END_CODE_LOCAL_INIT
+
     string_q format;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-
-        if (arg == "-f" || arg == "--freshen") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
-            arg = substitute(substitute(orig, "-p:", ""), "--period:", "");
-            freq = str_2_Uint(arg);
-            if (!isUnsigned(arg) || freq % 5)
-                return usage("Positive multiple of 5 expected: " + orig);
+            if (!confirmEnum("period", period, arg))
+                return false;
 
-        } else if (startsWith(arg, "--pair:")) {
-            arg = substitute(orig, "--pair:", "");
-            source.pair = arg;
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
+            pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
 
-        } else {
+        } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+// END_CODE_AUTO
+        } else {
+            return usage("Invalid option: " + arg);
+
         }
     }
 
     // Data wrangling
-    // None
+    if (!pair.empty())
+        source.pair = pair;
+
+    if (!period.empty())
+        freq = str_2_Uint(period);
 
     // Display formatting
     switch (exportFmt) {
@@ -74,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     string_q unused;
@@ -91,7 +103,10 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
+// BEG_CODE_INIT
     freshen = false;
+// END_CODE_INIT
+
     freq = 120;
     first = true;
     if (isApiMode())
@@ -100,7 +115,9 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     needsOption = true;
+
     Init();
 }
 

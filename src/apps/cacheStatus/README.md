@@ -4,14 +4,14 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 
 #### Usage
 
-`Usage:`    cacheStatus [-d|-l|-v|-h] mode_list  
+`Usage:`    cacheStatus [-d|-l|-v|-h] &lt;mode&gt; [mode...]
 `Purpose:`  Report on status of one or more TrueBlocks caches.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode_list | one or more of [index&#124;monitors&#124;names&#124;abis&#124;blocks&#124;txs&#124;traces&#124;slurps&#124;prices&#124;some*&#124;all] |
+|  | modes | which data to retreive, one or more of [index&#124;monitors&#124;names&#124;abis&#124;blocks&#124;transactions&#124;traces&#124;slurps&#124;prices&#124;some*&#124;all] |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |
 | -l | --list | display results in Linux ls -l format (assumes --detail) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
@@ -29,7 +29,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

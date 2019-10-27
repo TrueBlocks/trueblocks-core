@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,19 +16,16 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("className", "", "", OPT_REQUIRED | OPT_POSITIONAL, "name of C++ class(es) to process"),
-    COption("open", "o", "", OPT_SWITCH, "edit <className(s)> definition file in local folder"),
-    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <className(s)>"),
-    COption("js", "j", "<class>", OPT_FLAG, "export javaScript components for 'class'"),
-    COption("filter", "f", "<string>", OPT_FLAG, "process only files with :filter in their names"),
-    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local folder"),
-    COption("header", "h", "", OPT_SWITCH, "write headers files only"),
-    COption("source", "c", "", OPT_SWITCH, "write source files only"),
-    COption("namespace", "n", "<string>", OPT_FLAG, "surround the code with a --namespace:ns"),
-    COption("silent", "s", "", OPT_SWITCH, "on error (no classDefinition file) exit silently"),
-    COption("all", "a", "", OPT_SWITCH, "clear, edit, list, or run all class definitions found in the local folder"),
-    COption("edit", "e", "", OPT_SWITCH | OPT_HIDDEN, "edit <className(s)> definition file in local folder"),
-    COption("", "", "", OPT_DESCRIPTION, "Creates C++ code based on definition file at ./classDefinition/<className>.\n"),
+    COption("classes", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
+    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
+    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
+    COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
+    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),
+    COption("options", "o", "", OPT_SWITCH, "export options code (check data, generate code) and quit"),
+    COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
+    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+    COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -39,108 +36,92 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool didJs = false;
+// BEG_CODE_LOCAL_INIT
+    bool list = false;
+    bool run = false;
+    bool edit = false;
+    string_q js = "";
+    bool options = false;
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if ((arg == "-e" || arg == "--edit" || arg == "-o" || arg == "--open")) {
-            if (isRun)
-                return usage("Incompatible options '-r' and '-e'. Choose one or the other.");
-            isEdit = true;
-            isRemove = isList = false;  // last in wins
-
-        } else if (arg == "-c" || arg == "--source") {
-            writeSource = true;
-
-        } else if (arg == "-h" || arg == "--header") {
-            writeHeader = true;
-
-        } else if (startsWith(arg, "--js:")) {
-            arg = substitute(arg, "--js:", "");
-            if (!exportJson(arg))
-                return false;
-            didJs = true;
-
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
-            if (isRun)
-                return usage("Incompatible options '-r' and '-l'. Choose one or the other.");
-            isList = true;
-            isRemove = isEdit = false;  // last in wins
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
-
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--namespace:")) {
-
-            namesp = substitute(substitute(arg, "-n:", ""), ".--namespace:", "");
-
-        } else if (contains(arg, "-f")) {
-            string_q orig = arg;
-            string_q arg1 = nextTokenClear(arg, ':');
-            if (arg1 != "-f" && arg1 != "--filter")
-                return usage("Unknown parameter: " + orig);
-            filter = arg;
+            list = true;
 
         } else if (arg == "-r" || arg == "--run") {
-            if (isEdit || isRemove || isList)
-                return usage("Incompatible options with '-r'. Only '-a' option works with '-r'.");
-            isRun = true;
+            run = true;
+
+        } else if (arg == "-e" || arg == "--edit") {
+            edit = true;
 
         } else if (arg == "-a" || arg == "--all") {
-            isAll = true;
+            all = true;
 
-        } else if (!startsWith(arg, '-')) {
+        } else if (startsWith(arg, "-j:") || startsWith(arg, "--js:")) {
+            js = substitute(substitute(arg, "-j:", ""), "--js:", "");
+
+        } else if (arg == "-o" || arg == "--options") {
+            options = true;
+
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
+            nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
+
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
+            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+
+        } else if (startsWith(arg, '-')) {  // do not collapse
+
+            if (!builtInCmd(arg)) {
+                return usage("Invalid option: " + arg);
+            }
+
+// END_CODE_AUTO
+        } else {
             if (!classNames.empty())
                 classNames += "|";
             classNames += substitute(substitute(arg, "classDefinitions/", ""), ".txt", "");
 
-        } else if (arg != "-t" && arg != "-h" && !contains(arg, "-v")) {
-            return usage("Unknown parameter: " + arg);
         }
     }
 
-    string_q errMsg;
+    if (options)
+        return !handle_options();
+
+    if (!js.empty())
+        return exportJson(js);
+
+    if (contains(command, "-j") && js.empty())
+        return usage("Cannot export javscript for an empty class. Quitting...");
+
     if (!folderExists("./classDefinitions/"))
-        errMsg = "./classDefinitions folder does not exist. Quitting...";
+        return usage("./classDefinitions folder does not exist. Quitting...");
 
     if (!folderExists(configPath("makeClass/")))
-        errMsg = (configPath("makeClass/") + " folder does not exist. Quitting...");
+        return usage(configPath("makeClass/") + " folder does not exist. Quitting...");
 
-    if (isAll || isList) {
+    if ((run + list + edit) > 1)
+        return usage("Please chose only one of --run, --list, or --edit. Quitting...");
+
+    if (!run && !list && !edit)
+        return usage("Please chose one of --run, --list, or --edit. Quitting...");
+
+    mode = (run ? RUN : edit ? EDIT : LIST);
+    LOG4("run: ", run, " edit: ", edit, " list: ", list, " mode: ", mode);
+    if (list || all) {
         classNames = "";  // rebuild the class list from the classDefinitions folder
         forEveryFileInFolder("./classDefinitions/", listClasses, this);
     }
 
     if (classNames.empty()) {
         if (!filter.empty())
-            errMsg = "Found no classes that matched the filter: " + filter;
+            return usage("Found no classes that matched the filter: " + filter + ". Quitting...");
         else
-            errMsg = "You must specify at least one className (or -a or -l)";
-    }
-
-    if (!isList && !isEdit && !isRemove && !isRun) {
-        if (didJs)
-            return true;
-        errMsg = "You must specify at least one of --run, --list, --open, or --clear";
-    }
-
-    if (silent && !errMsg.empty()) {
-        return false;
-    }
-
-    if (!errMsg.empty()) {
-        return usage(errMsg);
-    }
-
-    if (getEnvStr("NO_HEADER") == "true")
-        writeSource = true;
-
-    if (getEnvStr("NO_SOURCE") == "true")
-        writeHeader = true;
-
-    // If neither is lit, light them both
-    if (!writeHeader && !writeSource) {
-        writeHeader = writeSource = true;
+            return usage("You must specify at least one className (or -a or -l). Quitting...");
     }
 
     return true;
@@ -149,27 +130,38 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOff(OPT_FMT);
 
-    isEdit = false;
-    isRemove = false;
-    isRun = false;
-    isList = false;
-    isAll = false;
-    silent = false;
-    namesp = "";
-    classNames = "";
+// BEG_CODE_INIT
+    all = false;
+    nspace = "";
     filter = "";
-    writeHeader = false;
-    writeSource = false;
+// END_CODE_INIT
+
+    mode = NONE;
+    classNames = "";
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : classFile("") {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "options") {
+        return substitute(str, "classes", "<class_name> [class_name...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        return "";
+
+    }
+    return str;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -186,7 +178,7 @@ bool listClasses(const string_q& path, void *data) {
             if (!opts->filter.empty()) {
                 string_q contents;
                 asciiFileToString(path, contents);
-                include = contains(contents, opts->filter);
+                include = (file == opts->filter) || contains(contents, opts->filter);
             }
             if (include) {
                 if (!opts->classNames.empty())
@@ -213,9 +205,6 @@ bool visitField(const CFieldData& field, void *data) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::exportJson(const string_q& cl) {
-    if (cl.empty())
-        return usage("Cannot export js for empty class.");
-
     CBaseNode *item = createObjectOfType(cl);
     if (!item)
         return usage("Class " + cl + " not found.");

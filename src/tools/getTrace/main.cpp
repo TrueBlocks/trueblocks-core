@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -60,7 +60,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
     }
 
     //////////////////////////////////////////////////////
-    if (opt->option1) {
+    if (opt->count_only) {
         uint64_t cnt = getTraceCount(trans.hash);
         if (isText) {
             cout << trans.hash << "\t" << cnt << endl;
@@ -73,7 +73,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         return true;
     }
 
-    loadTraces(trans, trans.blockNumber, trans.transactionIndex, true, (opt->skipDdos && excludeTrace(&trans, 250))); //maxTraces)));
+    loadTraces(trans, trans.blockNumber, trans.transactionIndex, true, (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
 
     //////////////////////////////////////////////////////
 

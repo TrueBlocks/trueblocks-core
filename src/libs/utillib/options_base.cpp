@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -23,14 +23,14 @@ namespace qblocks {
 
     //--------------------------------------------------------------------------------
     void COptionsBase::registerOptions(size_t nP, COption const *pP) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         arguments.clear();
         cntParams = nP;
         pParams = pP;
     }
 
     //--------------------------------------------------------------------------------
-    //TODO(tjayrush): global data - but okay, a program only has one name
+    // TODO(tjayrush): global data - but okay, a program only has one name
     string_q COptionsBase::g_progName = "quickBlocks";
 
     //--------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ namespace qblocks {
                 }
             }
 
-            if (!combine && (arg == "-v" || arg == "-verbose")) {
+            if (!combine && (arg == "-v" || arg == "-verbose" || arg == "--verbose")) {
                 if (i < nArgs-1) {
                     uint64_t n = str_2_Uint(args[i+1]);
                     if (n > 0 && n <= 10) {
@@ -166,10 +166,14 @@ namespace qblocks {
                 }
             }
 
+            if (!combine && arg == "--fmt") {
+                if (i < nArgs-1)
+                    combine = true;
+            }
+
             if (combine && i < (nArgs-1)) {
                 args[curArg++] = arg + ":" + args[i+1];
                 i++;
-
             } else {
                 args[curArg++] = arg;
             }
@@ -193,6 +197,7 @@ namespace qblocks {
                     if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
+
             } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
                 verbose = true;
                 arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
@@ -202,13 +207,14 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
-                arg = substitute(substitute(arg, "-x:", ""), "--fmt:", "");
+            } else if (startsWith(arg, "--fmt:")) {
+                arg = substitute(arg, "--fmt:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  }
-                else if ( arg == "csv" ) { exportFmt = CSV1; }
-                else if ( arg == "json") { exportFmt = JSON1; }
-                else if ( arg == "api" ) { exportFmt = API1; }
-                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
+                else if ( arg == "csv" ) { exportFmt = CSV1; }  // NOLINT
+                else if ( arg == "json") { exportFmt = JSON1; }  // NOLINT
+                else if ( arg == "api" ) { exportFmt = API1; }  // NOLINT
+                else return usage("Export format (" + arg +  // NOLINT
+                    ") must be one of [ json | txt | csv | api ]. Quitting...");
                 args[i] = "";
             }
         }
@@ -273,6 +279,7 @@ namespace qblocks {
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
         replace(cmdLine, "--output ", "--output:");
+        replace(cmdLine, "--fmt ", "--fmt:");
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -289,23 +296,16 @@ namespace qblocks {
             colorsOff();
         }
 
+        if (contains(cmdLine, "--no_header ")) {
+            replaceAll(cmdLine, "--no_header ", "");
+            isNoHeader = true;
+        }
+
         if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
             exit(0);
 
         }
-
-#ifdef PROVING
-        if (isEnabled(OPT_PROVE) && contains(cmdLine, "--prove ")) {
-            replaceAll(cmdLine, "--prove ", "");
-            expContext().proving = true;
-        }
-
-        if (isEnabled(OPT_VERIFY) && contains(cmdLine, "--verify ")) {
-            replaceAll(cmdLine, "--verify ", "");
-            expContext().verifying = true;
-        }
-#endif
 
         if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
             replaceAll(cmdLine, "--ether ", "");
@@ -314,8 +314,8 @@ namespace qblocks {
             expContext().asWei = false;
         }
 
-        if (isEnabled(OPT_RAW) && contains(cmdLine, "--veryRaw ")) {
-            replaceAll(cmdLine, "--veryRaw ", "");
+        if (isEnabled(OPT_RAW) && contains(cmdLine, "--very_raw ")) {
+            replaceAll(cmdLine, "--very_raw ", "");
             isRaw = true;
             isVeryRaw = true;
         }
@@ -400,19 +400,13 @@ namespace qblocks {
                 return true;
         }
 
-#ifdef PROVING
-        if (isEnabled(OPT_PROVE) && arg == "--prove")
-            return true;
-        if (isEnabled(OPT_VERIFY) && arg == "--verify")
-            return true;
-#endif
         if (isEnabled(OPT_ETHER) && arg == "--ether")
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")
             return true;
         if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
             return true;
-        if (isEnabled(OPT_RAW) && arg == "--veryRaw")
+        if (isEnabled(OPT_RAW) && arg == "--very_raw")
             return true;
         if (isEnabled(OPT_WEI) && arg == "--wei")
             return true;
@@ -420,7 +414,7 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
-        if (startsWith(arg, "--fmt:"))
+        if (isEnabled(OPT_FMT) && startsWith(arg, "--fmt:"))
             return true;
         if (arg == "--version")
             return true;
@@ -429,6 +423,79 @@ namespace qblocks {
         if (arg == "--noop")
             return true;
         return false;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmUint(const string_q&name, uint64_t& value, const string_q& argIn) const {
+
+        value = NOPOS;
+
+        const COption *param = findParam(name);
+        if (!param)
+            return usage("Unknown parameter `" + name + "'. Quitting...");
+        if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
+            return true;
+
+        string_q arg = argIn;
+        replace(arg, param->shortName + ":", "");
+        replace(arg, name + ":", "");
+        replaceAll(arg, "-", "");
+
+        if (!isNumeral(arg))
+            return usage("Value to --" + name + " parameter (" + arg +
+                ") must be a valid unsigned integer. Quitting...");
+        value = str_2_Uint(arg);
+        return true;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmBlockNum(const string_q&name, blknum_t& value,
+                                        const string_q& argIn, blknum_t latest) const {
+
+        if (!confirmUint(name, value, argIn))
+            return false;
+        if (value > latest)
+            return usage("Block number (" + argIn + ") is greater than the latest block. Quitting...");
+        return true;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    bool COptionsBase::confirmEnum(const string_q&name, string_q& value, const string_q& argIn) const {
+        const COption *param = findParam(name);
+        if (!param)
+            return usage("Unknown parameter `" + name + "'. Quitting...");
+        if (param->type.empty() || !contains(param->type, "enum["))
+            return true;
+
+        string_q type = param->type;
+        replace(type, "*", "");
+        replace(type, "enum", "");
+        replace(type, "list<", "");
+        replace(type, ">", "");
+        replace(type, "[", "|");
+        replace(type, "]", "|");
+
+        string_q arg = argIn;
+        replace(arg, param->shortName + ":", "");
+        replace(arg, name + ":", "");
+        replaceAll(arg, "-", "");
+
+        if (!contains(type, "|" + arg + "|")) {
+            string_q desc = substitute(substitute(param->description, ", one ", "| One "), "*", "");
+            nextTokenClear(desc, '|');
+            return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required. Quitting...");
+        }
+
+        value = arg;
+        return true;
+    }
+
+    //---------------------------------------------------------------------------------------------------
+    const COption *COptionsBase::findParam(const string_q& name) const {
+        for (size_t i = 0 ; i < cntParams ; i++)
+            if (startsWith(pParams[i].longName, "--" + name))
+                return &pParams[i];
+        return NULL;
     }
 
     //--------------------------------------------------------------------------------
@@ -457,7 +524,7 @@ namespace qblocks {
 
         if (!is_positional) {
             longName = "--" + shortName;
-            shortName = "-" + (contains(shortName,"fmt") ? "x" : extract(shortName, 0, 1));
+            shortName = "-" + (contains(shortName, "fmt") ? "x" : extract(shortName, 0, 1));
         } else {
             longName = shortName;
         }
@@ -465,8 +532,13 @@ namespace qblocks {
         if (contains(longName, ":")) {
             permitted = longName;
             longName = nextTokenClear(permitted, ':');
+            type = permitted;
             replaceAny(permitted, "<>", "");
-            if (permitted != "range" && permitted != "list" && permitted != "fn" && permitted != "mode" && permitted != "on/off")
+            if (permitted != "range" &&
+                permitted != "list" &&
+                permitted != "fn" &&
+                permitted != "mode" &&
+                permitted != "on/off")
                 permitted = "val";
             longName += (" " + permitted);
         }
@@ -481,7 +553,7 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    COption::COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d) {
+    COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size_t opts, const string_q& d) {
         description = substitute(d, "&#44;", ",");
         if (ln.empty())
             return;
@@ -490,9 +562,17 @@ namespace qblocks {
         is_hidden = (opts & OPT_HIDDEN);
         is_optional = !(opts & OPT_REQUIRED);
 
-        permitted = type;
-        permitted = substitute(permitted, "enum[none|json*|txt|csv|api]", "<fmt>");
+        type = t;
+        permitted = t;
+        permitted = substitute(permitted, "<uint32>", "<num>");
+        permitted = substitute(permitted, "<uint64>", "<num>");
         permitted = substitute(permitted, "<blknum>", "<num>");
+        permitted = substitute(permitted, "<string>", "<str>");
+        if (contains(type, "enum")) {
+            description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
+            replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
+            permitted = "<val>";
+        }
 
         longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
         shortName = (sn.empty() ? "" : "-" + sn);
@@ -552,9 +632,6 @@ const char *STR_ERROR_JSON =
 
             } else if (!pParams[i].shortName.empty()) {
                 os << pParams[i].shortName << "|";
-
-            } else if (!pParams[i].shortName.empty()) {
-                os << pParams[i].shortName << "|";
             }
         }
         if (isEnabled(OPT_VERBOSE))
@@ -577,7 +654,7 @@ const char *STR_ERROR_JSON =
         os << hiUp1 << "Purpose:" << hiDown << "  ";
         string_q purpose;
         for (size_t p = 0 ; p < cntParams ; p++)
-            if (pParams[p].longName.empty()) // program description
+            if (pParams[p].longName.empty())  // program description
                 purpose = pParams[p].description;
         os << substitute(purpose, "\n", "\n        ") << "\n";
         if (!endsWith(purpose, "\n"))
@@ -588,7 +665,8 @@ const char *STR_ERROR_JSON =
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional, bool required) const {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
+                                            bool isPositional, bool required) const {
         ostringstream os;
         if (isReadme) {
 
@@ -669,6 +747,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             }
             if (pParams[i].is_hidden)
                 nHidden++;
+            if (isTestMode() && isEnabled(OPT_FMT))
+                nHidden++;
         }
 
         // For testing purposes, we show the hidden options
@@ -681,18 +761,22 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 bool isPositional = pParams[i].is_positional;
                 if (pParams[i].is_hidden && !sName.empty()) {
                     bool isReq = !pParams[i].is_optional;
-                    lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
+                    lName = substitute(substitute((isPositional ? substitute(lName, "-", "")
+                                 : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
                     sName = (isPositional ? "" : pParams[i].shortName);
                     os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
+            if (isEnabled(OPT_FMT))
+                os << oneDescription(" ", "--fmt <val>",
+                    "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
         if (isEnabled(OPT_VERBOSE))
             os << oneDescription("-v", "--verbose",
-                    "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
+                "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen", false, false);
         return postProcess("description", os.str().c_str());
@@ -894,7 +978,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //-----------------------------------------------------------------------
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     CNameValueArray COptionsBase::specials;
 
     //-----------------------------------------------------------------------
@@ -944,10 +1028,11 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isReadme = false;
         isRaw = false;
         isVeryRaw = false;
+        isNoHeader = false;
         exportFmt = (isApiMode() ? API1 : TXT1);
         needsOption = false;
         enableBits = OPT_DEFAULT;
-        scanRange = make_pair(0,NOPOS);
+        scanRange = make_pair(0, NOPOS);
         for (int i = 0 ; i < 5 ; i++)
             sorts[i] = NULL;
         hiUp1  = (isTestMode() ? "" : cYellow) + "  ";
@@ -960,12 +1045,19 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         cntParams = 0;
         coutBackup = NULL;
         redirFilename = "";
-        //redirStream
+        // redirStream
     }
 
     //--------------------------------------------------------------------------------
     COptionsBase::~COptionsBase(void) {
         closeRedirect();
+    }
+
+    //-----------------------------------------------------------------------
+    void COptionsBase::setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3) {
+        sorts[0] = c1;
+        sorts[1] = c2;
+        sorts[2] = c3;
     }
 
     //--------------------------------------------------------------------------------
@@ -976,7 +1068,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     void COptionsBase::closeRedirect(void) {
         if (coutBackup != NULL) {
-            cout.rdbuf( coutBackup ); // restore cout's original streambuf
+            cout.rdbuf( coutBackup );  // restore cout's original streambuf
             redirStream.close();
             coutBackup = NULL;
             cout << redirFilename;
@@ -990,7 +1082,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             uint64_t save = verbose;
             verbose = false;
             if (!contains(namesFile.getFullPath(), "names.txt"))
-                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));
+                ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));  // NOLINT
             ((COptionsBase*)this)->loadNames();  // NOLINT
             verbose = save;
         }

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -264,7 +264,7 @@ ostream& operator<<(ostream& os, const CPriceQuote& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PRICEQUOTE = 
+const char* STR_DISPLAY_PRICEQUOTE =
 "[{TIMESTAMP}]\t"
 "[{DATE}]\t"
 "[{CLOSE}]";
@@ -294,15 +294,15 @@ string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
     if (weiIn == 0)
         return "";
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static CPriceQuoteArray quotes;
-    if (quotes.size()) // leave early if we can
+    if (quotes.size())  // leave early if we can
         return getWeiQuote(quotes, ts, weiIn);
 
-    { // give ourselves a frame to make the mutex
+    {  // give ourselves a frame to make the mutex
         mutex aMutex;
         lock_guard<mutex> lock(aMutex);
-        if (quotes.size()) // leave early if we can (another thread may have filled the array while we were waiting
+        if (quotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
             return getWeiQuote(quotes, ts, weiIn);
 
         string_q message;

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -294,7 +294,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void *dataPtr) 
                 if ( fieldIn % "isBuiltIn" ) {
                     return int_2_Str(fun->isBuiltIn);
 
-                } else if ( fieldIn % "input_names") {
+                } else if ( fieldIn % "input_names" ) {
                     string_q ret;
                     for (size_t i = 0 ; i < fun->inputs.size() ; i++) {
                         ret += fun->inputs[i].name;
@@ -438,7 +438,7 @@ const CBaseNode *CFunction::getObjectAt(const string_q& fieldName, size_t index)
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_FUNCTION = 
+const char* STR_DISPLAY_FUNCTION =
 "[{NAME}]\t"
 "[{TYPE}]\t"
 "[{ANONYMOUS}]\t"
@@ -502,7 +502,7 @@ bool CFunction::checkTypes(void) const {
 string_q CFunction::encodeItem(void) const {
     if (encoding == "()")  // optimization
         return "0x861731d5";
-    if (!encoding.empty()) // optimization
+    if (!encoding.empty())  // optimization
         return encoding;
 extern string_q getSha3(const string_q& hexIn);
     string_q ret = getSha3(chr_2_HexStr(signature));
@@ -518,15 +518,15 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
     uint64_t iCnt = 0, oCnt = 0;
 
     string_q line = lineIn;
-    line = substitute(line,"(","|");  // clean up
-    line = substitute(line,")","|");  // clean up
-    line = substitute(line,", ",","); // clean up
-    line = substitute(line,"\t","");  // clean up
+    line = substitute(line, "(", "|");   // clean up
+    line = substitute(line, ")", "|");   // clean up
+    line = substitute(line, ", ", ",");  // clean up
+    line = substitute(line, "\t", "");   // clean up
     while (contains(line, " [")) replace(line, " [", "[");  // clean up
     while (contains(line, " ]")) replace(line, " ]", "]");  // clean up
     this->constant = (contains(line, "constant") || contains(line, "view"));
-    this->type = trim(nextTokenClear(line,' '));
-    this->name = trim(nextTokenClear(line,'|'));
+    this->type = trim(nextTokenClear(line, ' '));
+    this->name = trim(nextTokenClear(line, '|'));
 
     string_q inputStr = trim(nextTokenClear(line, '|'));
     CStringArray inputArray;
@@ -541,7 +541,7 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
 
     CStringArray parts;
     explode(parts, line, '|');
-    if (parts.size()>1 && contains(parts[0], "returns")) {
+    if (parts.size() > 1 && contains(parts[0], "returns")) {
         string_q outputStr = trim(nextTokenClear(parts[1], '|'));
         CStringArray outputArray;
         explode(outputArray, outputStr, ',');

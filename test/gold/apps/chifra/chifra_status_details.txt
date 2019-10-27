@@ -1,8 +1,9 @@
-chifra argc: 4 [1:status] [2:all] [3:--details] 
-chifra status all --details 
-TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details
-cacheStatus argc: 3 [1:all] [2:--details] 
-cacheStatus all --details 
+chifra argc: 8 [1:status] [2:all] [3:--details] [4:--start] [5:1400000] [6:--end] [7:2000000] 
+chifra status all --details --start 1400000 --end 2000000 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus all --details --start:1400000 --end:2000000
+cacheStatus argc: 5 [1:all] [2:--details] [3:--start:1400000] [4:--end:2000000] 
+cacheStatus all --details --start:1400000 --end:2000000 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
@@ -13,23 +14,563 @@ cacheStatus all --details
   "is_scraping": false,
   "caches": [
     {
-      "items": [],
+      "items": [
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1374186,
+          "latestAppearance": 1411435,
+          "firstTs": 1461197934,
+          "lastestTs": 1461733191,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001374186-001411435.bloom",
+          "sizeInBytes": 131080,
+          "hash": "Qma5...EYcZ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1411436,
+          "latestAppearance": 1444289,
+          "firstTs": 1461733198,
+          "lastestTs": 1462204326,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001411436-001444289.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmTQ...hnjJ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1444290,
+          "latestAppearance": 1475866,
+          "firstTs": 1462204334,
+          "lastestTs": 1462656545,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001444290-001475866.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmfA...xd3V"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1475867,
+          "latestAppearance": 1506480,
+          "firstTs": 1462656563,
+          "lastestTs": 1463095784,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001475867-001506480.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmR5...zdq8"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1506481,
+          "latestAppearance": 1534852,
+          "firstTs": 1463095790,
+          "lastestTs": 1463504029,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001506481-001534852.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmXp...S9P1"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1534853,
+          "latestAppearance": 1563637,
+          "firstTs": 1463504046,
+          "lastestTs": 1463915310,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001534853-001563637.bloom",
+          "sizeInBytes": 131080,
+          "hash": "Qmcz...hxUj"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1563638,
+          "latestAppearance": 1592752,
+          "firstTs": 1463915332,
+          "lastestTs": 1464333491,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001563638-001592752.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmcU...agci"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1592753,
+          "latestAppearance": 1617001,
+          "firstTs": 1464333492,
+          "lastestTs": 1464681713,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001592753-001617001.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmVb...TW6k"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1617002,
+          "latestAppearance": 1649656,
+          "firstTs": 1464681719,
+          "lastestTs": 1465150569,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001617002-001649656.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmY4...JHfn"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1649657,
+          "latestAppearance": 1680548,
+          "firstTs": 1465150624,
+          "lastestTs": 1465593072,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001649657-001680548.bloom",
+          "sizeInBytes": 131080,
+          "hash": "Qmbd...baKj"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1680549,
+          "latestAppearance": 1710537,
+          "firstTs": 1465593077,
+          "lastestTs": 1466020841,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001680549-001710537.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmNT...KbTZ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1710538,
+          "latestAppearance": 1733043,
+          "firstTs": 1466020853,
+          "lastestTs": 1466345983,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001710538-001733043.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmX1...AJEZ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1733044,
+          "latestAppearance": 1759951,
+          "firstTs": 1466346016,
+          "lastestTs": 1466731886,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001733044-001759951.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmYv...2rQh"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1759952,
+          "latestAppearance": 1792950,
+          "firstTs": 1466731892,
+          "lastestTs": 1467203855,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001759952-001792950.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmPg...R7zW"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1792951,
+          "latestAppearance": 1819796,
+          "firstTs": 1467203862,
+          "lastestTs": 1467587903,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001792951-001819796.bloom",
+          "sizeInBytes": 131080,
+          "hash": "Qmea...qTzN"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1819797,
+          "latestAppearance": 1853185,
+          "firstTs": 1467587937,
+          "lastestTs": 1468066361,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001819797-001853185.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmWH...ADFy"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1853186,
+          "latestAppearance": 1886600,
+          "firstTs": 1468066368,
+          "lastestTs": 1468543762,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001853186-001886600.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmSh...vLTp"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1886601,
+          "latestAppearance": 1920120,
+          "firstTs": 1468543771,
+          "lastestTs": 1469023272,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001886601-001920120.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmWV...RHwP"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1920121,
+          "latestAppearance": 1946117,
+          "firstTs": 1469023288,
+          "lastestTs": 1469396717,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001920121-001946117.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmWQ...Viw9"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1946118,
+          "latestAppearance": 1968540,
+          "firstTs": 1469396725,
+          "lastestTs": 1469718883,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001946118-001968540.bloom",
+          "sizeInBytes": 262156,
+          "hash": "QmQJ...DVWB"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1968541,
+          "latestAppearance": 1994173,
+          "firstTs": 1469718888,
+          "lastestTs": 1470088077,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001968541-001994173.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmeV...HKtF"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 4294967295,
+          "nAppearances": 4294967295,
+          "firstAppearance": 1994174,
+          "latestAppearance": 2019948,
+          "firstTs": 1470088090,
+          "lastestTs": 1470457376,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001994174-002019948.bloom",
+          "sizeInBytes": 131080,
+          "hash": "QmTy...sGNA"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 30368,
+          "nAppearances": 500009,
+          "firstAppearance": 1374186,
+          "latestAppearance": 1411435,
+          "firstTs": 1461197934,
+          "lastestTs": 1461733191,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001374186-001411435.bin",
+          "sizeInBytes": 4850420,
+          "hash": "QmfZ...2qiS"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 37922,
+          "nAppearances": 500043,
+          "firstAppearance": 1411436,
+          "latestAppearance": 1444289,
+          "firstTs": 1461733198,
+          "lastestTs": 1462204326,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001411436-001444289.bin",
+          "sizeInBytes": 5062204,
+          "hash": "QmNu...MHH6"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 35721,
+          "nAppearances": 500001,
+          "firstAppearance": 1444290,
+          "latestAppearance": 1475866,
+          "firstTs": 1462204334,
+          "lastestTs": 1462656545,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001444290-001475866.bin",
+          "sizeInBytes": 5000240,
+          "hash": "QmZe...DAct"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 36815,
+          "nAppearances": 500021,
+          "firstAppearance": 1475867,
+          "latestAppearance": 1506480,
+          "firstTs": 1462656563,
+          "lastestTs": 1463095784,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001475867-001506480.bin",
+          "sizeInBytes": 5031032,
+          "hash": "QmNj...sHsS"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 42967,
+          "nAppearances": 500034,
+          "firstAppearance": 1506481,
+          "latestAppearance": 1534852,
+          "firstTs": 1463095790,
+          "lastestTs": 1463504029,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001506481-001534852.bin",
+          "sizeInBytes": 5203392,
+          "hash": "QmbW...eWxU"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 47769,
+          "nAppearances": 500019,
+          "firstAppearance": 1534853,
+          "latestAppearance": 1563637,
+          "firstTs": 1463504046,
+          "lastestTs": 1463915310,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001534853-001563637.bin",
+          "sizeInBytes": 5337728,
+          "hash": "QmXB...ZDLF"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 48241,
+          "nAppearances": 500003,
+          "firstAppearance": 1563638,
+          "latestAppearance": 1592752,
+          "firstTs": 1463915332,
+          "lastestTs": 1464333491,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001563638-001592752.bin",
+          "sizeInBytes": 5350816,
+          "hash": "Qmct...7HuJ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 52807,
+          "nAppearances": 500348,
+          "firstAppearance": 1592753,
+          "latestAppearance": 1617001,
+          "firstTs": 1464333492,
+          "lastestTs": 1464681713,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001592753-001617001.bin",
+          "sizeInBytes": 5481424,
+          "hash": "QmXF...Ax3x"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 40907,
+          "nAppearances": 500003,
+          "firstAppearance": 1617002,
+          "latestAppearance": 1649656,
+          "firstTs": 1464681719,
+          "lastestTs": 1465150569,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001617002-001649656.bin",
+          "sizeInBytes": 5145464,
+          "hash": "QmSx...pYwk"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 46875,
+          "nAppearances": 500012,
+          "firstAppearance": 1649657,
+          "latestAppearance": 1680548,
+          "firstTs": 1465150624,
+          "lastestTs": 1465593072,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001649657-001680548.bin",
+          "sizeInBytes": 5312640,
+          "hash": "QmdJ...utL5"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 51559,
+          "nAppearances": 500024,
+          "firstAppearance": 1680549,
+          "latestAppearance": 1710537,
+          "firstTs": 1465593077,
+          "lastestTs": 1466020841,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001680549-001710537.bin",
+          "sizeInBytes": 5443888,
+          "hash": "Qmed...ofv4"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 74696,
+          "nAppearances": 500405,
+          "firstAppearance": 1710538,
+          "latestAppearance": 1733043,
+          "firstTs": 1466020853,
+          "lastestTs": 1466345983,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001710538-001733043.bin",
+          "sizeInBytes": 6094772,
+          "hash": "QmUF...dTiN"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 57305,
+          "nAppearances": 500008,
+          "firstAppearance": 1733044,
+          "latestAppearance": 1759951,
+          "firstTs": 1466346016,
+          "lastestTs": 1466731886,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001733044-001759951.bin",
+          "sizeInBytes": 5604648,
+          "hash": "QmWh...c966"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 49548,
+          "nAppearances": 500004,
+          "firstAppearance": 1759952,
+          "latestAppearance": 1792950,
+          "firstTs": 1466731892,
+          "lastestTs": 1467203855,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001759952-001792950.bin",
+          "sizeInBytes": 5387420,
+          "hash": "QmfE...aS2M"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 41968,
+          "nAppearances": 500000,
+          "firstAppearance": 1792951,
+          "latestAppearance": 1819796,
+          "firstTs": 1467203862,
+          "lastestTs": 1467587903,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001792951-001819796.bin",
+          "sizeInBytes": 5175148,
+          "hash": "Qmbv...t8EQ"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 50450,
+          "nAppearances": 500024,
+          "firstAppearance": 1819797,
+          "latestAppearance": 1853185,
+          "firstTs": 1467587937,
+          "lastestTs": 1468066361,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001819797-001853185.bin",
+          "sizeInBytes": 5412836,
+          "hash": "QmdU...pgad"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 48039,
+          "nAppearances": 500081,
+          "firstAppearance": 1853186,
+          "latestAppearance": 1886600,
+          "firstTs": 1468066368,
+          "lastestTs": 1468543762,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001853186-001886600.bin",
+          "sizeInBytes": 5345784,
+          "hash": "QmZ8...TQ8G"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 57062,
+          "nAppearances": 500165,
+          "firstAppearance": 1886601,
+          "latestAppearance": 1920120,
+          "firstTs": 1468543771,
+          "lastestTs": 1469023272,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001886601-001920120.bin",
+          "sizeInBytes": 5599100,
+          "hash": "QmUo...CTus"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 54110,
+          "nAppearances": 500110,
+          "firstAppearance": 1920121,
+          "latestAppearance": 1946117,
+          "firstTs": 1469023288,
+          "lastestTs": 1469396717,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001920121-001946117.bin",
+          "sizeInBytes": 5516004,
+          "hash": "QmYS...nzj1"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 60761,
+          "nAppearances": 500034,
+          "firstAppearance": 1946118,
+          "latestAppearance": 1968540,
+          "firstTs": 1469396725,
+          "lastestTs": 1469718883,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001946118-001968540.bin",
+          "sizeInBytes": 5701624,
+          "hash": "QmTX...sLBf"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 46524,
+          "nAppearances": 500115,
+          "firstAppearance": 1968541,
+          "latestAppearance": 1994173,
+          "firstTs": 1469718888,
+          "lastestTs": 1470088077,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001968541-001994173.bin",
+          "sizeInBytes": 5303636,
+          "hash": "QmQ7...mPpk"
+        },
+        {
+          "type": "CIndexCacheItem",
+          "nAddresses": 47965,
+          "nAppearances": 500033,
+          "firstAppearance": 1994174,
+          "latestAppearance": 2019948,
+          "firstTs": 1470088090,
+          "lastestTs": 1470457376,
+          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001994174-002019948.bin",
+          "sizeInBytes": 5343328,
+          "hash": "Qmb9...Q4ig"
+        }
+      ],
       "type": "CIndexCache",
       "path": "IndexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "addrs": [],
-      "items": [],
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "curBalance": 10000,
+          "enabled": true,
+          "address": "---address---",
+          "firstAppearance": 18446744073709551615,
+          "latestAppearance": 18446744073709551615,
+          "nRecords": 18446744073709551615,
+          "sizeInBytes": 18446744073709551615
+        }
+      ],
       "type": "CMonitorCache",
       "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CNameCache",
@@ -37,16 +578,25 @@ cacheStatus all --details
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
-      "items": [],
+      "items": [
+        {
+          "type": "CAbiCacheItem",
+          "nFunctions": 36963,
+          "nEvents": 36963,
+          "nOther": 36963,
+          "address": "---address---",
+          "sizeInBytes": 36963
+        }
+      ],
       "type": "CAbiCache",
       "path": "CachePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -54,7 +604,7 @@ cacheStatus all --details
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -62,7 +612,7 @@ cacheStatus all --details
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "type": "CChainCache",
@@ -70,7 +620,7 @@ cacheStatus all --details
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
       "addrs": [],
@@ -80,16 +630,23 @@ cacheStatus all --details
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     },
     {
-      "items": [],
+      "items": [
+        {
+          "type": "CPriceCacheItem",
+          "pair": "---pair---",
+          "nRecords": 36910963,
+          "sizeInBytes": 36910963
+        }
+      ],
       "type": "CPriceCache",
       "path": "PricePath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "valid_counts": true
     }
   ]
 }

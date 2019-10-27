@@ -9,11 +9,11 @@ blockScrape -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -n | --nBlocks <num> | maximum number of blocks to process (defaults to 5000) |
+| -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
 
 #### Hidden options (shown during testing only)
-| -b | --nBlockProcs <uint> | number of block channels for blaze |
-| -a | --nAddrProcs <uint> | number of address channels for blaze |
+| -p | --n_block_procs <num> | number of block channels for blaze |
+| -a | --n_addr_procs <num> | number of address channels for blaze |
 #### Hidden options (shown during testing only)
 
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

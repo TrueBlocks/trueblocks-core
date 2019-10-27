@@ -2,7 +2,7 @@ cacheStatus argc: 2 [1:monitors]
 cacheStatus monitors 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.5.8-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
@@ -10,7 +10,11 @@ cacheStatus monitors
   "is_scraping": false,
   "caches": [
     {
-      "addrs": [],
+      "addrs": [
+        "--address--",
+        "--address--",
+        "--address--"
+      ],
       "type": "CMonitorCache",
       "path": "CachePath",
       "nFiles": 0,

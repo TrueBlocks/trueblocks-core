@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,9 +14,9 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("mode", "m", "enum[encoding|generation]", OPT_REQUIRED | OPT_POSITIONAL, "Mode of operation. One or more of 'encoding' or 'generation'.\n"),
+    COption("modes", "m", "list<enum[encoding|generation]>", OPT_REQUIRED | OPT_POSITIONAL, "mode of operation"),
     COption("sub", "s", "<num>", OPT_FLAG, "sub mode"),
-    COption("", "", "", OPT_DESCRIPTION, "Simple program to illustrate how to encode function and event signatures.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Simple program to illustrate how to encode function and event signatures."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
             arg == "eth_test") {
             mode += (arg + "|");
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sub:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--sub:","");
+            arg = substitute(substitute(arg, "-s:", ""), "--sub:", "");
             if (!isUnsigned(arg))
                 return usage("--sub must be a non-negative number. Quitting...");
             sub = str_2_Uint(arg);
@@ -54,6 +54,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOff(OPT_FMT);
 
     mode = "";
     sub = 0;
@@ -67,4 +68,16 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+    if (which == "options") {
+        return substitute(str, "modes", "<mode> [mode...]");
+
+    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+        // do nothing
+
+    }
+    return str;
 }

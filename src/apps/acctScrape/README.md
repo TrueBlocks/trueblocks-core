@@ -13,8 +13,7 @@
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more Ethereum addresses (required) |
-| -o | --no_header | do not show the header row |
+|  | addrs | one or more Ethereum addresses (required) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -22,7 +21,7 @@
 
 - `addresses` must start with '0x' and be forty two characters long.
 
-account scraper is finished.                 
+                                                                                                                        
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
@@ -35,7 +34,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

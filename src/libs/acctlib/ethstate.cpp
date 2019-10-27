@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -299,7 +299,7 @@ ostream& operator<<(ostream& os, const CEthState& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ETHSTATE = 
+const char* STR_DISPLAY_ETHSTATE =
 "[{BLOCKNUMBER}]\t"
 "[{ADDRESS}]\t"
 "[{BALANCE}]\t"
@@ -319,7 +319,7 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]",  uint_2_Hex(num));
     string_q ret = callRPC("eth_getBalance", params, false);
-    if (contains(ret,"error"))
+    if (contains(ret, "error"))
         return 0;
     return str_2_Wei(ret);
 }
@@ -330,7 +330,7 @@ bool nodeHasBalances(bool showErrors) {
     // at block zero. If the node is holding balances (i.e. its an archive node), then it will
     // return that value for block 1 as well. Otherwise, it will return a zero balance.
     // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
-    uint64_t save = verbose; // silence the warning from the node since we know this may fail
+    uint64_t save = verbose;  // silence the warning from the node since we know this may fail
     verbose = 0;
     getCurlContext()->reportErrors = showErrors;
     bool ret = getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
@@ -390,34 +390,41 @@ string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
     //
     // Retrieving the value of pos0 is straight forward:
     //
-    // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
+    // curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params":
+    //               ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"],
     //      "id": 1}' localhost:8545
     //
-    // returns {"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
+    // returns {"jsonrpc":"2.0","id":1,"result":
+    //                 "0x00000000000000000000000000000000000000000000000000000000000004d2"}
     //
-    // Retrieving an element of the map is harder. The position of an element in the map is calculated with:
+    // Retrieving an element of the map is harder. The position of an element in the map
+    // is calculated with:
     //
     //      keccack(LeftPad32(key, 0), LeftPad32(map_position, 0))
     //
-    // This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"] we need to calculate
-    // the position with:
+    // This means to retrieve the storage on pos1["0x391694e7e0b0cce554cb130d723a9d27458f9298"]
+    // we need to calculate the position with:
     //
     //      keccak(decodeHex("000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" +
     //                       "0000000000000000000000000000000000000000000000000000000000000001"))
     //
     // The geth console which comes with the web3 library can be used to make the calculation:
     //
-    //      > var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" + "0000000000000000000000000000000000000000000000000000000000000001"
+    //      > var key = "000000000000000000000000391694e7e0b0cce554cb130d723a9d27458f9298" +
+    //                    "0000000000000000000000000000000000000000000000000000000000000001"
     //      undefined
     //      > web3.sha3(key, {"encoding": "hex"})
     //      "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9"
     //
     // Now to fetch the storage:
     //
-    //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
-    //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"], "id": 1}' localhost:8545
+    //      curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_get StorageAt", "params":
+    //                  ["0x295a70b2de5e3953354a6a8344e616ed314d7251",
+    //                  "0x6661e9d6d8b923d5bbaab1b96e1dd51ff6ea2a93520fdc9eb75d059238b8c5e9", "latest"],
+    //                  "id": 1}' localhost:8545
     //
-    // returns: {"jsonrpc":"2.0","id":1,"result":"0x000000000000000000000000000000000000000000000000000000000000162e"}
+    // returns: {"jsonrpc":"2.0","id":1,"result":
+    //        "0x000000000000000000000000000000000000000000000000000000000000162e"}
     //
 }
 

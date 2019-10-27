@@ -1,0 +1,4 @@
+getBlock argc: 6 [1:3982128] [2:--addrs] [3:--count_only] [4:--fmt] [5:csv] 
+getBlock 3982128 --addrs --count_only --fmt csv 
+"blocknumber","transactionscnt","addr_count"
+"3982128","91","509"

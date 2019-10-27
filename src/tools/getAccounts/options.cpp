@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,17 +15,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("term_list", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name&#44; address&#44; and symbol only)"),
-    COption("matchCase", "m", "", OPT_SWITCH, "do case-sensitive search"),
-    COption("owned", "o", "", OPT_SWITCH, "Include personal accounts in the search"),
-    COption("custom", "c", "", OPT_SWITCH, "Include your custom named accounts"),
-    COption("prefund", "p", "", OPT_SWITCH, "Include prefund accounts"),
-    COption("named", "n", "", OPT_SWITCH, "Include well know token and airdrop addresses in the search"),
-    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
+    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
+    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
+    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
+    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts.\n"),
+    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
+    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -37,57 +37,90 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+    bool expand = false;
+    bool owned = false;
+    bool custom = false;
+    bool prefund = false;
+    bool named = false;
+    bool other = false;
+    bool addr = false;
+    string_q add = "";
+// END_CODE_LOCAL_INIT
+
     string_q format;
-    bool no_header = false;
     bool deflt = true;
     bool addr_only = false;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-e" || arg == "--expand") {
-            searchFields = STR_DISPLAY_ACCOUNTNAME;
-            format = searchFields;
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-e" || arg == "--expand") {
+            expand = true;
 
-        } else if (arg == "-m" || arg == "--matchCase") {
-            matchCase = true;
-
-        } else if (arg == "-n" || arg == "--named") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= NAMED;
-
-        } else if (arg == "-p" || arg == "--prefund") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= PREFUND;
-
-        } else if (arg == "-c" || arg == "--custom") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= CUSTOM;
+        } else if (arg == "-m" || arg == "--match_case") {
+            match_case = true;
 
         } else if (arg == "-o" || arg == "--owned") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= OWNED;
+            owned = true;
+
+        } else if (arg == "-c" || arg == "--custom") {
+            custom = true;
+
+        } else if (arg == "-p" || arg == "--prefund") {
+            prefund = true;
+
+        } else if (arg == "-n" || arg == "--named") {
+            named = true;
 
         } else if (arg == "-t" || arg == "--other") {
-            if (deflt) { types = 0; deflt = false; }
-            types |= OTHER;
+            other = true;
 
         } else if (arg == "-a" || arg == "--addr") {
-            addr_only = true;
-            no_header = true;
-            format = "[{ADDRESS}]";
-            searchFields = "[{ADDRESS}]\t[{NAME}]";
+            addr = true;
+
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
+            add = substitute(substitute(arg, "-d:", ""), "--add:", "");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+// END_CODE_AUTO
         } else {
             searches.push_back(arg);
 
         }
     }
+
+    if (!add.empty()) {
+        cout << add << endl;
+        return false;
+    }
+
+    if (expand) {
+        searchFields = STR_DISPLAY_ACCOUNTNAME;
+        format = searchFields;
+    }
+
+    if (named)   { if (deflt) { types = 0; deflt = false; } types |= NAMED;   }
+    if (prefund) { if (deflt) { types = 0; deflt = false; } types |= PREFUND; }
+    if (custom)  { if (deflt) { types = 0; deflt = false; } types |= CUSTOM;  }
+    if (owned)   { if (deflt) { types = 0; deflt = false; } types |= OWNED;   }
+    if (other)   { if (deflt) { types = 0; deflt = false; } types |= OTHER;   }
+
+    if (addr) {
+        addr_only = true;
+        isNoHeader = true;
+        format = "[{ADDRESS}]";
+        searchFields = "[{ADDRESS}]\t[{NAME}]";
+    }
+
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
@@ -112,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (no_header)
+    if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // Collect results for later display
@@ -140,20 +173,20 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
+// BEG_CODE_INIT
+    match_case = false;
+// END_CODE_INIT
+
     items.clear();
     searches.clear();
     searchFields = shortenFormat(STR_DISPLAY_ACCOUNTNAME);
-    matchCase = false;
     types = NAMED;
     minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
     // If you need the names file, you have to add it in the constructor
     namesFile = CFilename(configPath("names/names.txt"));
@@ -169,14 +202,14 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "term_list", "<term> [term...]");
+        return substitute(str, "terms", "<term> [term...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
         string_q ret;
         ret += "With a single search term, the tool searches both [{name}] and [{address}].\n";
         ret += "With two search terms, the first term must match the [{address}] field, and the second term must match the [{name}] field.\n";
         ret += "When there are two search terms, both must match.\n";
-        ret += "The [{--matchCase}] option requires case sensitive matching. It works with all other options.\n";
+        ret += "The [{--match_case}] option requires case sensitive matching. It works with all other options.\n";
         ret += "To customize the list of names add a [{custom}] section to the config file (see documentation).\n";
         ret += "Name file: [{" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
         return ret;
@@ -198,7 +231,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return false;
     }
 
-    if (!matchCase)
+    if (!match_case)
         for (size_t i = 0 ; i < searches.size() ; i++)
             searches[i] = toLower(searches[i]);
 
@@ -207,7 +240,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
     string_q search3 = searches.size() > 2 ? searches[2] : "";
 
     string_q str = item.Format(searchFields);
-    if (!matchCase)
+    if (!match_case)
         str = toLower(str);
 
     if ((search1.empty() || search1 == "*" || contains(str, search1)) &&

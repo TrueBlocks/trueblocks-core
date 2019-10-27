@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,11 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("trans_list", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)"),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
-    COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_HIDDEN | OPT_FLAG, "export format (one of [none|json*|txt|csv|api])"),
-    COption("force", "", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
 // END_CODE_OPTIONS
 };
@@ -31,16 +30,22 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+// BEG_CODE_LOCAL_INIT
+// END_CODE_LOCAL_INIT
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-a" || arg == "--articulate") {
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
         } else if (arg == "-t" || arg == "--trace") {
-            useTrace = true;
+            trace = true;
 
-        } else if (arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -49,14 +54,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else {
+        } else if (!parseTransList2(this, transList, arg)) {
+            return false;
 
-            string_q errorMsg;
-            if (!wrangleTxId(arg, errorMsg))
-                return usage(errorMsg);
-            string_q ret = transList.parseTransList(arg);
-            if (!ret.empty())
-                return usage(ret);
+// END_CODE_AUTO
         }
     }
 
@@ -64,7 +65,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (useTrace)
+    if (trace)
         SHOW_FIELD(CTransaction, "traces");
 
     if (isRaw)
@@ -89,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         case TXT1:
         case CSV1:
             format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
-            if (useTrace)
+            if (trace)
                 format += "\t[{TRACESCNT}]";
             manageFields("CTransaction:" + cleanFmt(format, exportFmt));
             break;
@@ -99,6 +100,8 @@ bool COptions::parseArguments(string_q& command) {
             break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    if (isNoHeader)
+        expContext().fmtMap["header"] = "";
 
     return true;
 }
@@ -108,18 +111,18 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
 
-    transList.Init();
-    useTrace = false;
-    force = false;
+// BEG_CODE_INIT
     articulate = false;
+    trace = false;
+    force = false;
+// END_CODE_INIT
+
+    transList.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    // will sort the fields in these classes if --parity is given
-    sorts[0] = GETRUNTIME_CLASS(CBlock);
-    sorts[1] = GETRUNTIME_CLASS(CTransaction);
-    sorts[2] = GETRUNTIME_CLASS(CReceipt);
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
 }
@@ -131,12 +134,12 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
     if (which == "options") {
-        return substitute(str, "trans_list", "<tx_id> [tx_id...]");
+        return substitute(str, "transactions", "<tx_id> [tx_id...]");
 
     } else if (which == "notes" && (verbose || COptions::isReadme)) {
 
         string_q ret;
-        ret += "[{trans_list}] is one or more space-separated identifiers which may be either a transaction hash,|"
+        ret += "[{transactions}] is one or more space-separated identifiers which may be either a transaction hash,|"
                 "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "

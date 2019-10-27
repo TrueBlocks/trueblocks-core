@@ -8,20 +8,21 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    acctExport [-x|-a|-l|-t|-c|-p|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-a|-l|-t|-c|-p|-o|-x|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses (0x...) to export (required) |
-| -x | --fmt <fmt> | export format (one of [json*&#124;txt&#124;csv]) |
+|  | addrs | one or more addresses (0x...) to export (required) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -c | --balances | export balance history instead of transaction list |
 | -p | --appearances | export a list of appearances |
+| -o | --count_only | display only the count of the number of data items requested |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -41,7 +42,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

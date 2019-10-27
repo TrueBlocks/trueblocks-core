@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,34 +16,28 @@
 #include "filenames.h"
 #include "toml.h"
 
-// #define PROVING 1
 // Bit flags to enable / disable various options
 #define OPT_DESCRIPTION (0)
 #define OPT_HELP        (1<<1)
 #define OPT_VERBOSE     (1<<2)
-#define OPT_DOLLARS     (1<<3)
-#define OPT_WEI         (1<<4)
-#define OPT_ETHER       (1<<5)
+#define OPT_FMT         (1<<3)
+#define OPT_DOLLARS     (1<<4)
+#define OPT_WEI         (1<<5)
+#define OPT_ETHER       (1<<6)
 #define OPT_DENOM       (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
-#define OPT_PARITY      (1<<6)
-#ifndef PROVING
-#define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY)
-#else
-#define OPT_PROVE       (1<<7)
-#define OPT_VERIFY      (1<<8)
-#define OPT_TRUEDATA    (OPT_PROVE|OPT_VERIFY)
-#define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_DENOM|OPT_PARITY|OPT_TRUEDATA)
-#endif
-#define OPT_RUNONCE     (1<<9)
-#define OPT_RAW         (1<<10)
-#define OPT_PREFUND     (1<<11)
-#define OPT_OUTPUT      (1<<12)
+#define OPT_PARITY      (1<<7)
+#define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_FMT|OPT_DENOM|OPT_PARITY)
+#define OPT_RUNONCE     (1<<10)
+#define OPT_RAW         (1<<11)
+#define OPT_PREFUND     (1<<12)
+#define OPT_OUTPUT      (1<<13)
 
 #define OPT_REQUIRED    (1<<14)
-#define OPT_POSITIONAL  (1<<16)
-#define OPT_FLAG        (1<<17)
+#define OPT_POSITIONAL  (1<<15)
+#define OPT_FLAG        (1<<16)
 #define OPT_SWITCH      OPT_FLAG
-#define OPT_HIDDEN      (1<<18)
+#define OPT_TOGGLE      OPT_SWITCH
+#define OPT_HIDDEN      (1<<17)
 
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
@@ -53,17 +47,19 @@ namespace qblocks {
     public:
         addr_wei_mp prefundWeiMap;
         CStringArray arguments;
-        //TODO(tjayrush): global data
+        CStringArray errors;
+        // TODO(tjayrush): global data
         uint32_t enableBits;
         bool needsOption;
         bool isReadme;
         bool isRaw;
         bool isVeryRaw;
+        bool isNoHeader;
         format_t exportFmt;
         blkrange_t scanRange;
 
-        streambuf *coutBackup; // saves original cout buffer
-        ofstream redirStream; // the redirected stream (if any)
+        streambuf *coutBackup;  // saves original cout buffer
+        ofstream redirStream;  // the redirected stream (if any)
         string_q redirFilename;
         void closeRedirect(void);
         bool isRedirected(void) const;
@@ -109,9 +105,24 @@ namespace qblocks {
         string_q purpose(void) const;
         string_q options(void) const;
         string_q descriptions(void) const;
-        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
+                                    bool isMode, bool required) const;
         string_q notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
+
+        bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
+        bool confirmBlockNum(const string_q&name, blknum_t& value, const string_q& arg, blknum_t latest) const;
+        bool confirmUint(const string_q&name, uint64_t& value, const string_q& arg) const;
+        inline bool confirmUint(const string_q&name, uint32_t& value, const string_q& arg) const {
+            value = (uint32_t)NOPOS;
+            uint64_t temp;
+            if (!confirmUint(name, temp, arg))
+                return false;
+            value = (uint32_t)temp;
+            return true;
+        }
+        const COption *findParam(const string_q& name) const;
+        void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
 
     protected:
         void registerOptions(size_t nP, COption const *pP);
@@ -138,6 +149,7 @@ namespace qblocks {
         string_q  longName;
         string_q  description;
         string_q  permitted;
+        string_q  type;
         bool      is_hidden;
         bool      is_positional;
         bool      is_optional;

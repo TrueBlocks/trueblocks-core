@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -56,7 +56,7 @@ string_q CBlockOptions::getBlockNumList(void) {
 //--------------------------------------------------------------------------------
 bool CHistoryOptions::requestsHistory(void) const {
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
-    return ! ((newestBlock - oldestBlock) >= n_blocks);
+    return !((newestBlock - oldestBlock) >= n_blocks);
 }
 
 //--------------------------------------------------------------------------------
@@ -98,11 +98,11 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
         return true;
     }
 
-    //txnum_t txid;
+    // txnum_t txid;
     if (parts.size() == 0 ||  // there are not enough
         (parts.size() == 1 && parts[0] != "latest") ||  // there's only one and it's not 'latest'
         ((parts.size() == 2 || parts.size() == 3) && (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
-        parts.size() > 3) { // too many
+        parts.size() > 3) {  // too many
         errorMsg = argOut + " does not appear to be a valid transaction index.";
         return false;
     }
@@ -166,4 +166,35 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
     }
     errorMsg = "Could not find " + dir + " transaction to " + uint_2_Str(bn) + "." + uint_2_Str(txid);
     return false;
+}
+
+//--------------------------------------------------------------------------------
+bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn) {
+    string_q errorMsg;
+    string_q arg = argIn;
+    if (!wrangleTxId(arg, errorMsg))
+        return (opt ? opt->usage(errorMsg) : false);
+    string_q ret = transList.parseTransList(arg);
+    if (!ret.empty())
+        return (opt ? opt->usage(ret) : false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_q& argIn, blknum_t latest) {
+    string_q ret = blocks.parseBlockList(argIn, latest);
+    if (endsWith(ret, "\n")) {
+        cerr << "\n  " << ret << "\n";
+        return false;
+    } else if (!ret.empty()) {
+        return (opt ? opt->usage(ret) : false);
+    }
+    return true;
+}
+
+//----------------------------------------------------------------------------------------------------
+time_q bn_2_Date(const blknum_t& bn) {
+    CBlock block;
+    getBlock_light(block, bn);
+    return ts_2_Date(block.timestamp);
 }

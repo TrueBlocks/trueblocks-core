@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -325,7 +325,7 @@ ostream& operator<<(ostream& os, const CBalanceRecord& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BALANCERECORD = 
+const char* STR_DISPLAY_BALANCERECORD =
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{ADDRESS}]\t"

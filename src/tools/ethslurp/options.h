@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -17,13 +17,16 @@
 
 class COptions : public CBlockOptions {
 public:
+// BEG_CODE_DECLARE
+    string_q type;
+    bool silent;
+// END_CODE_DECLARE
+
     CAddressArray addrs;
     CWebAPI api;
     string_q header;
     string_q displayString;
     string_q exportFormat;
-    string_q type;
-    bool silent;
     bool fromFile;
 
     COptions(void);

@@ -1,0 +1,12 @@
+cacheStatus argc: 4 [1:--report] [2:--fmt] [3:txt] 
+cacheStatus --report --fmt txt 
+  Client version:     --version--
+  Trueblocks version: GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-
+  RPC provider:       --rpc_provider--
+  Cache location:     --cache_dir--
+  Host (user):        --host (user)--
+  Heights:            --final--, --staging--, --ripe--, --unripe--, --client--
+  Previous Heights:   --final--, --staging--, --ripe--, --unripe--, --client--
+  Distances:          --final--, --staging--, --ripe--, --unripe--, --client--
+  Diffs:              --final--, --staging--, --ripe--, --unripe--, --client--
+  Neighbors:          --final--, --staging--, --ripe--, --unripe--, --client--

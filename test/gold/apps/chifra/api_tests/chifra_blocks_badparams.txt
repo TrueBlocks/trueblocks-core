@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getBlock - Invalid option: --not_an_option"
+  ]
+}

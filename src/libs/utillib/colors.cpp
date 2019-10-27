@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -76,7 +76,7 @@ namespace qblocks {
 
     //-----------------------------------------------------------------------
     uint64_t barLen(uint64_t newLen) {
-        //TODO(tjayrush): global data
+        // TODO(tjayrush): global data
         static uint64_t _barLen = 100;
         if (newLen)
             _barLen = newLen;
@@ -103,7 +103,7 @@ namespace qblocks {
         cout.flush();
     }
 
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static double pb_Value = -1.0;
     double getProgBarVal(void) { return pb_Value; }
 

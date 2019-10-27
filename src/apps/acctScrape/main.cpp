@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
@@ -44,13 +44,8 @@ int main(int argc, const char *argv[]) {
 void doMoveFile(const string_q& from, const string_q& to) {
     if (verbose)
         cerr << "Moving " << cTeal << from << cOff << " to " << cTeal << to << cOff << endl;
-    if (isTestMode()) {
-        cerr << "Would have moved " << substitute(from, getCachePath(""), "$BLOCK_CACHE/") << " to ";
-        cerr << substitute(to, getCachePath(""), "$BLOCK_CACHE/") << endl;
-    } else {
-        if (fileExists(from))
-            moveFile(from, to);
-    }
+    if (fileExists(from))
+        moveFile(from, to);
 }
 
 //--------------------------------------------------------------------------------
@@ -58,8 +53,11 @@ void COptions::moveToProduction(void) {
     for (auto acct : monitors) {
         if (acct.fm_mode == FM_STAGING) {
             acct.fm_mode = FM_PRODUCTION;
-            if (acct.tx_cache)
+            if (acct.tx_cache) {
                 acct.tx_cache->Release();
+                delete acct.tx_cache;
+                acct.tx_cache = NULL;
+            }
             lockSection(true);
             doMoveFile(getMonitorPath(acct.address, FM_STAGING), getMonitorPath(acct.address));
             doMoveFile(getMonitorLast(acct.address, FM_STAGING), getMonitorLast(acct.address));

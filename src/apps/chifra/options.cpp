@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -9,8 +9,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "enum[list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]", OPT_REQUIRED | OPT_POSITIONAL, "one of [list|export|slurp|accounts|abi|state|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]"),
-    COption("sleep", "", "<uint>", OPT_FLAG, "for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default 0)"),
+    COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
+    COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
+    COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 // END_CODE_OPTIONS
 };
@@ -20,25 +24,42 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
-    if (!standardOptions(command))
-        return false;
-
     ENTER4("parseArguments");
+    if (!standardOptions(command))
+        EXIT_NOMSG(false);
+
+// BEG_CODE_LOCAL_INIT
+    bool tool_help = false;
+    blknum_t start = 0;
+    blknum_t end = NOPOS;
+// END_CODE_LOCAL_INIT
 
     bool copy_to_tool = false;
+    blknum_t latest = getLastBlock_client();
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--sleep:", "");
-            if (!isUnsigned(arg))
-                return usage("--nBlocks must be a non-negative number. Quitting...");
-            scrapeSleep = (useconds_t)str_2_Uint(arg);
 
-        } else if (arg == "--tool_help" || (isApiMode() && arg == "--help")) {
-            tool_flags += (" --help");
+        if (false) {
+            // do nothing -- make auto code generation easier
+// BEG_CODE_AUTO
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
+            if (!confirmUint("sleep", sleep, arg))
+                return false;
+
+        } else if (arg == "-t" || arg == "--tool_help") {
+            tool_help = true;
+
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmBlockNum("end", end, arg, latest))
+                return false;
+
+// END_CODE_AUTO
 
         } else if (arg == "--set") {
             tool_flags += (arg + " ");
@@ -67,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
                 mode = arg;
 
             } else if (contains(arg, ",") && isAddress(arg.substr(0,42))) {
-                if (contains(arg, ",--start=") && mode == "list") {
+                if (mode == "list") {
                     CStringArray parts;
                     explode(parts, arg, ',');
                     arg = parts[0];
@@ -98,7 +119,7 @@ bool COptions::parseArguments(string_q& command) {
                     if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
-                    } else if (startsWith(arg, "--start")) {
+                    } else if (startsWith(arg, "--start:") || startsWith(arg, "--end:")) {
                         freshen_flags += (arg + " ");
                         tool_flags += (arg + " ");
 
@@ -109,6 +130,8 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
     }
+
+    scrapeSleep = (useconds_t)sleep;
 
     if (mode == "blocks" ||
     	mode == "transactions" ||
@@ -131,17 +154,18 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (verbose) { freshen_flags += (" -v:" + uint_2_Str(verbose)); }
-    freshen_flags += addExportMode(exportFmt);
-    freshen_flags = trim(freshen_flags, ' ');
-
-    if (verbose) { tool_flags += (" -v:" + uint_2_Str(verbose)); }
-    if (expContext().asEther) { tool_flags += " --ether"; }
+    if (tool_help)              { tool_flags += " --help"; }
+    if (isNoHeader)             { tool_flags += " --no_header"; }
+    if (expContext().asEther)   { tool_flags += " --ether"; }
     if (expContext().asDollars) { tool_flags += " --dollars"; }
-    if (expContext().isParity) { tool_flags += " --parity"; }
-    tool_flags += addExportMode(exportFmt);
-    tool_flags = trim(tool_flags, ' ');
+    if (expContext().isParity)  { tool_flags += " --parity"; }
+    if (verbose)      { tool_flags += " -v:"      + uint_2_Str(verbose); freshen_flags += (" -v:"     + uint_2_Str(verbose)); }
+    if (start != 0)   { tool_flags += " --start " + uint_2_Str(start);   freshen_flags += " --start " + uint_2_Str(start); }
+    if (end != NOPOS) { tool_flags += " --end "   + uint_2_Str(end);     freshen_flags += " --end "   + uint_2_Str(end); }
+    if (true)         { tool_flags += addExportMode(exportFmt);          freshen_flags += addExportMode(exportFmt); }
+    if (true)         { tool_flags  = trim(tool_flags, ' ');             freshen_flags  = trim(freshen_flags, ' '); }
 
+    LOG_INFO("Connecting to node...");
     if (isNodeRunning()) {
         blknum_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
@@ -156,9 +180,9 @@ bool COptions::parseArguments(string_q& command) {
             replace(tool_flags, "get", "--get"); // syntactic sugar for command line
         if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
             replace(tool_flags, "set", "--set"); // syntactic sugar for command line
-        replaceAll(tool_flags, "--get", "--config-get");
-        replaceAll(tool_flags, "--set", "--config-set");
-        if (!startsWith(tool_flags, "--config-get") && !startsWith(tool_flags, "--config-set"))
+        replaceAll(tool_flags, "--get", "--get_config");
+        replaceAll(tool_flags, "--set", "--set_config");
+        if (!startsWith(tool_flags, "--get_config") && !startsWith(tool_flags, "--set_config"))
             EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
     }
 
@@ -172,6 +196,10 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
+// BEG_CODE_INIT
+    sleep = 14;
+// END_CODE_INIT
+
     addrs.clear();
     tool_flags    = "";
     freshen_flags = "";
@@ -182,6 +210,7 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 }
 

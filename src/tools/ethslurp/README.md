@@ -13,12 +13,12 @@ While `ethslurp` does have its shortcomings, it also provides some nice features
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addr_list | one or more addresses to slurp (required) |
-|  | block_list | an optional range of blocks to slurp |
-| -t | --type enum[ext*|int|token|miner|all] | extract either [ext*&#124;int&#124;token&#124;miner&#124;all] type of transactions |
+|  | addrs | one or more addresses to slurp (required) |
+|  | blocks | an optional range of blocks to slurp |
+| -t | --type <val> | type of transactions to request, one of [ext*&#124;int&#124;token&#124;miner&#124;all] |
 | -b | --blocks <range> | export records in block range (:0[:max]) |
 | -s | --silent | Run silently (only freshen the data, do not display it) |
-| -x | --fmt <fmt> | pretty print, optionally add ':txt,' ':csv,' or ':html' |
+| -x | --fmt <val> | pretty print, optionally add ':txt,' ':csv,' or ':html', one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -38,7 +38,7 @@ All **QBlocks** command-line tools support the following commands (although in s
     --ether     |   specify value in ether
     --dollars   |   specify value in US dollars
     --raw       |   report JSON data from the node with minimal processing
-    --veryRaw   |   report JSON data from node with zero processing
+    --very_raw  |   report JSON data from node with zero processing
     --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
     --to_file   |   write the results to a temporary file and return the filename
     --output:fn |   write the results to file 'fn' and return the filename

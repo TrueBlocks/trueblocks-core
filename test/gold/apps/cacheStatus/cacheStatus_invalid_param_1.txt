@@ -3,18 +3,21 @@ cacheStatus --junk
 
   Invalid option: --junk
 
-  Usage:    cacheStatus [-d|-l|-v|-h] mode_list  
+  Usage:    cacheStatus [-d|-l|-r|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
-	mode_list             one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
+	modes                 which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-l  (--list)          display results in Linux ls -l format (assumes --detail)
+	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers
 
 #### Hidden options (shown during testing only)
-	-x  (--fmt <fmt>)     export format (one of [none|json*|txt|csv|api])
-	-g  (--config-get)    returns JSON data of the editable configuration file items
-	-s  (--config-set)    accepts JSON in an env variable and writes it to configuration files
+	-g  (--get_config)    returns JSON data of the editable configuration file items
+	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
+	-S  (--start <num>)   first block to process (inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

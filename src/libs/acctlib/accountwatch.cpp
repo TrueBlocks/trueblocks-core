@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -92,7 +92,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
+            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e, fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
@@ -374,19 +374,11 @@ bool CAccountWatch::openCacheFile1(void) {
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastBlock(blknum_t bn) {
-    if (isTestMode()) {
-        cerr << "Would have written to " << address << ".last.txt with " << bn << endl;
-        return;
-    }
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
 void CAccountWatch::writeLastExport(blknum_t bn) {
-    if (isTestMode()) {
-        cerr << "Would have written to " << address << ".expt.txt with " << bn << endl;
-        return;
-    }
     stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 

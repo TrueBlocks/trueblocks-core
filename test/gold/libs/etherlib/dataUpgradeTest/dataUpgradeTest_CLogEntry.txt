@@ -82,7 +82,7 @@ topic1              	1019	0	131132	T_HASH TS_STRING
 topic2              	1020	0	131132	T_HASH TS_STRING
 topic3              	1021	0	131132	T_HASH TS_STRING
 {
-  "schema": 5008,
+  "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "LogEntry",

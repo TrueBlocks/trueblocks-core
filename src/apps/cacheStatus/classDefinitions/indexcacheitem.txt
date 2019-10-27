@@ -1,6 +1,6 @@
 [settings]
 class     = CIndexCacheItem
-fields    = string type|uint32 nAddresses|uint32 nAppearances|uint32 firstAppearance|uint32 latestAppearance|timestamp firstTs|timestamp lastestTs|string path|uint32 sizeInBytes
+fields    = string type|uint32 nAddresses|uint32 nAppearances|uint32 firstAppearance|uint32 latestAppearance|timestamp firstTs|timestamp lastestTs|string path|uint32 sizeInBytes|string hash
 includes  = etherlib.h|accountwatch.h
 cIncs     =
 serialize = true

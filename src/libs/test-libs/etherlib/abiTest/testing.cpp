@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -312,32 +312,32 @@ string_q serp_2_Type(const string_q& serpent) {
     string_q ret;
     for (auto t : types)
         ret += (t + "|");
-    return trim(ret,'|');
+    return trim(ret, '|');
 }
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestSerpent) {
 
-    ASSERT_TRUE("type_2_Serp(bytes) == 'b'",      type_2_Serp("bytes") == "s");
-    ASSERT_TRUE("type_2_Serp(int256) == 'i'",     type_2_Serp("int256") == "i");
-    ASSERT_TRUE("type_2_Serp(int256[]) == 'a'",   type_2_Serp("int256[]") == "a");
-    ASSERT_TRUE("type_2_Serp(bytes8) == 'b8'",    type_2_Serp("bytes8") == "b8");
-    ASSERT_TRUE("type_2_Serp(bytes32) == 'b32'",  type_2_Serp("bytes32") == "b32");
-    ASSERT_TRUE("type_2_Serp(...) == 'sb8ib8a'",  type_2_Serp("bytes|bytes8|int256|bytes8|int256[]") == "sb8ib8a");
-    ASSERT_TRUE("type_2_Serp(int8) == 'unknown'", type_2_Serp("int8") == "unknown");
-    ASSERT_TRUE("type_2_Serp(bool) == 'unknown'", type_2_Serp("bool") == "unknown");
+    ASSERT_TRUE("type_2_Serp(bytes) == 'b'",      type_2_Serp("bytes") == "s");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(int256) == 'i'",     type_2_Serp("int256") == "i");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(int256[]) == 'a'",   type_2_Serp("int256[]") == "a");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(bytes8) == 'b8'",    type_2_Serp("bytes8") == "b8");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(bytes32) == 'b32'",  type_2_Serp("bytes32") == "b32");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(...) == 'sb8ib8a'",  type_2_Serp("bytes|bytes8|int256|bytes8|int256[]") == "sb8ib8a");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(int8) == 'unknown'", type_2_Serp("int8") == "unknown");  // NOLINT
+    ASSERT_TRUE("type_2_Serp(bool) == 'unknown'", type_2_Serp("bool") == "unknown");  // NOLINT
 
-    ASSERT_TRUE("serp_2_Type('s') == 'bytes'",            serp_2_Type("s") == "bytes");
-    ASSERT_TRUE("serp_2_Type('i') == 'int256'",           serp_2_Type("i") == "int256");
-    ASSERT_TRUE("serp_2_Type('a') == 'int256[]'",         serp_2_Type("a") == "int256[]");
-    ASSERT_TRUE("serp_2_Type('b8') == 'bytes8'",          serp_2_Type("b8") == "bytes8");
-    ASSERT_TRUE("serp_2_Type('b8i') == 'bytes8|int256'",  serp_2_Type("b8i") == "bytes8|int256");
-    ASSERT_TRUE("serp_2_Type('b32') == 'bytes32'",        serp_2_Type("b32") == "bytes32");
-    ASSERT_TRUE("serp_2_Type('b32i') == 'bytes32|int256", serp_2_Type("b32i") == "bytes32|int256");
-    ASSERT_TRUE("serp_2_Type('sb8ib8a') == 'bytes|bytes8|int256|bytes8|int256[]",
+    ASSERT_TRUE("serp_2_Type('s') == 'bytes'",            serp_2_Type("s") == "bytes");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('i') == 'int256'",           serp_2_Type("i") == "int256");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('a') == 'int256[]'",         serp_2_Type("a") == "int256[]");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('b8') == 'bytes8'",          serp_2_Type("b8") == "bytes8");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('b8i') == 'bytes8|int256'",  serp_2_Type("b8i") == "bytes8|int256");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('b32') == 'bytes32'",        serp_2_Type("b32") == "bytes32");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('b32i') == 'bytes32|int256", serp_2_Type("b32i") == "bytes32|int256");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('sb8ib8a') == 'bytes|bytes8|int256|bytes8|int256[]",  // NOLINT
                 serp_2_Type("sb8ib8a") == "bytes|bytes8|int256|bytes8|int256[]");
-    ASSERT_TRUE("serp_2_Type('i8') == 'unknown'",         serp_2_Type("i8") == "unknown");
-    ASSERT_TRUE("serp_2_Type('x') == 'unknown'",          serp_2_Type("x") == "unknown");
+    ASSERT_TRUE("serp_2_Type('i8') == 'unknown'",         serp_2_Type("i8") == "unknown");  // NOLINT
+    ASSERT_TRUE("serp_2_Type('x') == 'unknown'",          serp_2_Type("x") == "unknown");  // NOLINT
 
     return true;
 }}
@@ -381,12 +381,12 @@ public:
         if (parts[0] == "signature") {
             expected = parts[4];
             result   = checkTypes() ? encodeItem() : "fail";
-            result   = (type == "function" ? result.substr(0,10) : result);
+            result   = (type == "function" ? result.substr(0, 10) : result);
 
         } else if (parts[0] == "encode" || parts[0] == "encode_raw") {
             expected = parts[4];
             result   = encodeItem();
-            result   = (type == "function" ? result.substr(0,10) : result);
+            result   = (type == "function" ? result.substr(0, 10) : result);
 
         } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
             expected = parts[4];
@@ -397,27 +397,28 @@ public:
                 result += param.value;
             }
             cout << "expected: "  << expected << " : " << result << endl;
-            return true; // debugging
+            return true;  // debugging
 
         } else {
             return false;
         }
         cout << "expected: "  << expected << " : " << result << endl;
         return (expected == result);
-    };
+    }
 };
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestSignatures) {
     string_q contents;
-    asciiFileToString("./signatures.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./signatures.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }
@@ -427,14 +428,15 @@ TEST_F(CThisTest, TestSignatures) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestEncode) {
     string_q contents;
-    asciiFileToString("./encode.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./encode.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }
@@ -444,14 +446,15 @@ TEST_F(CThisTest, TestEncode) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestEncodeRaw) {
     string_q contents;
-    asciiFileToString("./encode_raw.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./encode_raw.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }
@@ -461,14 +464,15 @@ TEST_F(CThisTest, TestEncodeRaw) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestDecode) {
     string_q contents;
-    asciiFileToString("./decode.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./decode.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }
@@ -478,14 +482,15 @@ TEST_F(CThisTest, TestDecode) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestDecodeRaw) {
     string_q contents;
-    asciiFileToString("./decode_raw.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./decode_raw.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }
@@ -495,14 +500,15 @@ TEST_F(CThisTest, TestDecodeRaw) {
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestTight) {
     string_q contents;
-    asciiFileToString("./tight.txt", contents);replaceAll(contents, "\\\n","");
+    asciiFileToString("./tight.txt", contents);
+    replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
     uint64_t cnt = 0;
     for (auto line : lines) {
         if (!line.empty() && !startsWith(line, '#')) {
             CFunctionTester func;
-            cout << string_q(80,'-') << endl;
+            cout << string_q(80, '-') << endl;
             ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
         }
     }

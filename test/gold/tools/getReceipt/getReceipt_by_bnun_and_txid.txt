@@ -1,4 +1,3 @@
-getReceipt argc: 5 [1:4000000.5] [2:--logs] [3:--fmt] [4:txt] 
-getReceipt 4000000.5 --logs --fmt txt 
-blocknumber	transactionindex	hash	gasused	status	iserror	logscnt
+getReceipt argc: 6 [1:4000000.5] [2:--logs] [3:--fmt] [4:txt] [5:--no_header] 
+getReceipt 4000000.5 --logs --fmt txt --no_header 
 4000000	5	0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1	52616	null	0	1

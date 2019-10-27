@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -90,12 +90,12 @@ namespace qblocks {
         cerr << "\tExtracting addresses...";
         CArchive archive(WRITING_ARCHIVE);
         archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
-        archive.Seek(SEEK_SET, 0);  // write the header even though it's not fully detailed to preserve the space
+        archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);
         archive.Write((uint32_t)blockTable.size());  // not accurate yet
-        for (size_t l = 0 ; l < lines.size() ; l++) { //auto line : lines) {
+        for (size_t l = 0 ; l < lines.size() ; l++) {
             string_q line = lines[l];
             ASSERT(countOf(line, '\t') == 2);
             CStringArray parts;
@@ -131,7 +131,7 @@ namespace qblocks {
         }
 
         cerr << "\tExporting data..." << endl;
-        archive.Seek(SEEK_SET, 0);  // re-write the header now that we have full data
+        archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
         archive.Write(MAGIC_NUMBER);
         archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
         archive.Write(nAddrs);

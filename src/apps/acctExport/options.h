@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
@@ -9,28 +9,31 @@
 #include "displayapp.h"
 
 using uint_addr_mp = map<uint32_t,address_t>;
-
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
+// BEG_CODE_DECLARE
+    bool articulate;
+    bool logs;
+    bool traces;
+    bool balances;
+    bool appearances;
+    bool count_only;
+    bool write_blocks;
+    bool write_txs;
+    bool write_traces;
+    bool skip_ddos;
+    uint32_t max_traces;
+    bool grab_abis;
+    bool freshen;
+    bool deltas;
+// END_CODE_DECLARE
+
     CAbi abis;
     CAccountWatchArray monitors;
     CAccountWatchArray named;
     CAppearanceArray_base items;
-    bool writeTxs;
-    bool writeTraces;
-    bool skipDdos;
-    size_t maxTraces;
-    bool articulate;
     size_t nExported;
-    bool doAppearances;
-    bool doLogs;
-    bool doTraces;
-    bool doBalances;
-    bool doABIs;
-    bool freshen_only;
-    bool count_only;
-    bool deltas_only;
     string_q className;
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;

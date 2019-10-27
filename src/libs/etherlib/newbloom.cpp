@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -34,7 +34,7 @@ size_t bloom_nt::nBitsHit(void) const {
 bloom_nt addr_2_Bloom(const address_t& addrIn, CUintArray& litBits) {
     bloom_nt ret;
     if (isAddress(addrIn)) {
-        string_q sha = addrIn; //getSha3(addrIn);
+        string_q sha = addrIn;  // getSha3(addrIn);
         for (size_t k = 0 ; k < K ; k++) {
             string_q dbl_byte = ("0x" + extract(sha, 2 + (k * NIBBLE_WID), NIBBLE_WID));
             uint64_t bit = (str_2_Uint(dbl_byte) % bloom_nt::BIT_SIZE());
@@ -51,7 +51,7 @@ bool addToSet(CNewBloomArray& blooms, const address_t& addr) {
     CUintArray litBits;
     bloom_nt zeroBloom = addr_2_Bloom("0x0", litBits);
     if (blooms.size() == 0)
-        blooms.push_back(zeroBloom); // so we have something to add to
+        blooms.push_back(zeroBloom);  // so we have something to add to
 
     addr_2_Bloom(addr, litBits);
     for (auto bit : litBits)

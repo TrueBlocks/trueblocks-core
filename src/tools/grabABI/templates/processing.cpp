@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * Copyright (c) 2017 by Great Hill Corporation.
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *
  * The LICENSE at the root of this repo details your rights (if any)
@@ -14,7 +14,7 @@
 #include "ncurses.h"
 
 //-----------------------------------------------------------------------
-bool COptions::displayFromCache(uint64_t startBlock) {
+bool COptions::displayFromCache(uint64_t st artBlock) {
 
     // Make sure we have a cache file...
     string_q cacheFileName = getMonitorPath(watches[0].address);
