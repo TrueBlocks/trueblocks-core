@@ -53,9 +53,6 @@ Generating class for derived transaction type: 'CSplitDAO'
 makeClass -r splitdao 
 Would run class definition file: splitdao (not run, testing)
 Generating class for derived transaction type: 'CTransfer'
-	makeClass argc: 3 [1:-r] [2:transfer] 
-makeClass -r transfer 
-Would run class definition file: transfer (not run, testing)
 Generating class for derived transaction type: 'CTransferFrom'
 	makeClass argc: 3 [1:-r] [2:transferfrom] 
 makeClass -r transferfrom 
@@ -109,9 +106,6 @@ Generating class for derived event type: 'CRefundEvent'
 makeClass -r refundevent 
 Would run class definition file: refundevent (not run, testing)
 Generating class for derived event type: 'CTransferEvent'
-	makeClass argc: 3 [1:-r] [2:transferevent] 
-makeClass -r transferevent 
-Would run class definition file: transferevent (not run, testing)
 Generating class for derived event type: 'CVotedEvent'
 	makeClass argc: 3 [1:-r] [2:votedevent] 
 makeClass -r votedevent 
