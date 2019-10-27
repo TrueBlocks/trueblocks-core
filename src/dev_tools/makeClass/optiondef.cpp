@@ -361,7 +361,7 @@ COptionDef::COptionDef(const string_q& line) {
     if (parts.size() > 3)  tool = parts[3];
     if (parts.size() > 4)  command = parts[4];
     if (parts.size() > 5)  hotkey = parts[5];
-    if (parts.size() > 6)  def_val = parts[6];
+    if (parts.size() > 6)  def_val = substitute(substitute(parts[6], "TRUE", "true"), "FALSE", "false");
     if (parts.size() > 7)  is_required = parts[7];
     if (parts.size() > 8)  core_visible = parts[8];
     if (parts.size() > 9)  docs_visible = parts[9];
