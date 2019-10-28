@@ -1,0 +1,4 @@
+ethNames argc: 2 [1:0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC] 
+ethNames 0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC 
+group	subgroup	address	name	symbol
+50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ

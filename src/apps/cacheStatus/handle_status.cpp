@@ -211,7 +211,7 @@ bool noteMonitor(const string_q& path, void *data) {
             mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
         }
         CAccountName item;
-        string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
+        string_q customStr = getGlobalConfig("ethNames")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
             if (mdi.address == item.address) {
                 mdi.group = item.group;

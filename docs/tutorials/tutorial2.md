@@ -4,7 +4,7 @@
 
 QBlocks consists of C++ libraries, applications, and the following 14 tools:
 
-.    .    . [getAccounts](../../src/tools/getAccounts/README.md) [getBloom](../../src/tools/getBloom/README.md) [getTokenBal](../../src/tools/getTokenBal/README.md) [getBalance](../../src/tools/getBalance/README.md) [getTrace](../../src/tools/getTrace/README.md) [getLogs](../../src/tools/getLogs/README.md) [isContract](../../src/tools/isContract/README.md)  
+.    .    . [ethNames](../../src/tools/ethNames/README.md) [getBloom](../../src/tools/getBloom/README.md) [getTokenBal](../../src/tools/getTokenBal/README.md) [getBalance](../../src/tools/getBalance/README.md) [getTrace](../../src/tools/getTrace/README.md) [getLogs](../../src/tools/getLogs/README.md) [isContract](../../src/tools/isContract/README.md)  
 .    .    . [whenBlock](../../src/tools/whenBlock/README.md) [ethName](../../src/tools/ethName/README.md) [getBlock](../../src/tools/getBlock/README.md) [getReceipt](../../src/tools/getReceipt/README.md) [getTrans](../../src/tools/getTrans/README.md) [whereBlock](../../src/tools/whereBlock/README.md)
 
 #### Other Tools

@@ -1,3 +1,0 @@
-getAccounts argc: 6 [1:0x01] [2:torj] [3:--addr] [4:--fmt] [5:txt] 
-getAccounts 0x01 torj --addr --fmt txt 
-No results

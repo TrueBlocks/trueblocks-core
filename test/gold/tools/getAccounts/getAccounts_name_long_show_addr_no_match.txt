@@ -1,3 +1,0 @@
-getAccounts argc: 5 [1:no_torj] [2:--addr] [3:--fmt] [4:txt] 
-getAccounts no_torj --addr --fmt txt 
-No results

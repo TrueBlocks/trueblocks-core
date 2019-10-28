@@ -1,3 +1,0 @@
-getAccounts argc: 5 [1:0xCB1] [2:--addr] [3:--fmt] [4:txt] 
-getAccounts 0xCB1 --addr --fmt txt 
-No results

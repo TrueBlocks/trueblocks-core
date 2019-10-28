@@ -1,12 +1,12 @@
 chifra argc: 3 [1:accounts] [2:--not_an_option] 
 chifra accounts --not_an_option 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
-getAccounts argc: 2 [1:--not_an_option] 
-getAccounts --not_an_option 
+ethNames argc: 2 [1:--not_an_option] 
+ethNames --not_an_option 
 
   Invalid option: --not_an_option
 
-  Usage:    getAccounts [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-o|-c|-p|-n|-a|-v|-h] <term> [term...]  
   Purpose:  Query addresses and/or names of well known accounts.
 
   Where:  

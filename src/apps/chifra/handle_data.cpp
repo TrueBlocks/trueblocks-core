@@ -43,7 +43,7 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--names")) {
         replaceAll(tool_flags, "--names", "");
-        os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList;
+        os << "ethNames " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--blocks")) {
         replaceAll(tool_flags, "--blocks", "");

@@ -1,0 +1,4 @@
+ethNames argc: 5 [1:b64] [2:torj] [3:--fmt] [4:txt] 
+ethNames b64 torj --fmt txt 
+group	subgroup	address	name	symbol
+50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ

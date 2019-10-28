@@ -96,8 +96,8 @@ Found 117 (117) files
 ../tomlTest2/tests/blockScrape.toml
 ../tomlTest2/tests/cacheMan.toml
 ../tomlTest2/tests/chifra.toml
+../tomlTest2/tests/ethNames.toml
 ../tomlTest2/tests/ethslurp.toml
-../tomlTest2/tests/getAccounts.toml
 ../tomlTest2/tests/getBlock.toml
 ../tomlTest2/tests/getState.toml
 ../tomlTest2/tests/getTrans.toml
@@ -109,8 +109,8 @@ Found 117 (117) files
 ../tomlTest2/tomlTest2_blockScrape.txt
 ../tomlTest2/tomlTest2_cacheMan.txt
 ../tomlTest2/tomlTest2_chifra.txt
+../tomlTest2/tomlTest2_ethNames.txt
 ../tomlTest2/tomlTest2_ethslurp.txt
-../tomlTest2/tomlTest2_getAccounts.txt
 ../tomlTest2/tomlTest2_getBlock.txt
 ../tomlTest2/tomlTest2_getState.txt
 ../tomlTest2/tomlTest2_getTrans.txt

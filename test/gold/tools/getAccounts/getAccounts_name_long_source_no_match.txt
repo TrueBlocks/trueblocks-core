@@ -1,3 +1,0 @@
-getAccounts argc: 5 [1:no_ETHER] [2:--verbose] [3:--fmt] [4:txt] 
-getAccounts no_ETHER --verbose --fmt txt 
-No results

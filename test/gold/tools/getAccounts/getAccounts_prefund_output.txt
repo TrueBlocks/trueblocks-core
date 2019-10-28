@@ -1,3 +1,0 @@
-getAccounts argc: 4 [1:--output] [2:test_file] [3:--prefund] 
-getAccounts --output test_file --prefund 
-test_file

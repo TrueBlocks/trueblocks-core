@@ -1,3 +1,0 @@
-getAccounts argc: 5 [1:torJ] [2:--match_case] [3:--fmt] [4:txt] 
-getAccounts torJ --match_case --fmt txt 
-No results
