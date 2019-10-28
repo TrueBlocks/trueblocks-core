@@ -6,8 +6,8 @@ acctScrape --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65
 TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./000000000-000000000.bin
 TIME ~ CLOCK - <INFO>  : Skip blocks ./000000001-000208533.bin                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 cacheMan --fix 0xfb744b951d094b310262c8f986c860df9ab1de65 
-Fixing cache: ${CACHE}/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
-	There was nothing to fix (0).
+TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
+TIME ~ CLOCK - <INFO>  : There was nothing to fix (0).
 acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
 address	blocknumber	transactionindex

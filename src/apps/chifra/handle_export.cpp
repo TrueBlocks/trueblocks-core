@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeRequired();
 
     if (addrs.empty())
@@ -35,5 +35,5 @@ bool COptions::handle_export(void) {
         if (++cnt < addrs.size())
             usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

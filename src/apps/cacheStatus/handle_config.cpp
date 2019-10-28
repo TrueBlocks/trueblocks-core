@@ -18,7 +18,7 @@ bool COptions::handle_config(ostream& os) {
 //--------------------------------------------------------------------------------
 bool COptions::handle_config_get(ostream& os) {
 
-    ENTER("handle_config_get");
+    ENTER8("handle_config_get");
 
     CConfiguration config;
     {
@@ -181,7 +181,7 @@ extern const char* STR_TEST_DATA;
 //--------------------------------------------------------------------------------
 bool COptions::handle_config_set(ostream& os) {
 
-    ENTER("handle_config_set");
+    ENTER8("handle_config_set");
 
     string_q newSettings = getSettingsStr();
     if (newSettings.empty())

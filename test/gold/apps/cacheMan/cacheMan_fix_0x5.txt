@@ -1,6 +1,6 @@
 cacheMan argc: 3 [1:--fix] [2:0x5555533333555553333355555333335555533333] 
 cacheMan --fix 0x5555533333555553333355555333335555533333 
-Fixing cache: 0x5555533333555553333355555333335555533333.acct.bin
+TIME ~ CLOCK - <INFO>  : Fixing cache: 0x5555533333555553333355555333335555533333.acct.bin
 	Reversal skipped at record 33, current 988725	1, previous 1017545	4
 	Reversal skipped at record 34, current 988728	2, previous 1017545	4
 	Reversal skipped at record 35, current 988732	4, previous 1017545	4

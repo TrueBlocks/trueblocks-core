@@ -33,9 +33,9 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
 // BEG_CODE_LOCAL_INIT
     bool all_abis = false;
@@ -298,7 +298,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().fmtMap["header"] = header;
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -362,7 +362,7 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 //-----------------------------------------------------------------------
 bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
 
-    ENTER("loadOneAddress");
+    ENTER8("loadOneAddress");
 
     if (hackAppAddr.empty())
         hackAppAddr = addr;
@@ -399,13 +399,14 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
     } else {
         EXIT_FAIL("Could not allocate memory for address " + addr);
     }
-    EXIT_NOMSG(true);
+
+    EXIT_NOMSG8(true);
 }
 
 //-----------------------------------------------------------------------
 bool COptions::loadAllAppearances(void) {
 
-    ENTER("loadAllAppearances");
+    ENTER8("loadAllAppearances");
 
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
@@ -454,5 +455,5 @@ bool COptions::loadAllAppearances(void) {
     if (!loadTimestampArray(&ts_array, ts_cnt))
         EXIT_FAIL("Could not open timestamp file.");
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

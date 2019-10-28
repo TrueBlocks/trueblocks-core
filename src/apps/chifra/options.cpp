@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
 // BEG_CODE_OPTIONS
-    COption("command", "", "list<enum[list|export|slurp|accounts|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
     COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
@@ -23,9 +23,9 @@ extern bool visitIndexFiles(const string_q& path, void *data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
 // BEG_CODE_LOCAL_INIT
     bool tool_help = false;
@@ -80,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
             if (isTestMode())
                 descr += "where|when|tokens|blooms|";
 
-            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces"));
+            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));
             if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
@@ -135,7 +135,7 @@ bool COptions::parseArguments(string_q& command) {
     if (mode == "blocks" ||
     	mode == "transactions" ||
         mode == "receipts" ||
-        mode == "accounts" ||
+        mode == "names" ||
     	mode == "logs" ||
         mode == "traces" ||
         mode == "state" ||
@@ -188,7 +188,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("tool_flags=", tool_flags);
     LOG4("freshen_flags=", freshen_flags);
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------------------------------

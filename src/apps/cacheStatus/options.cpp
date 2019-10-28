@@ -23,9 +23,9 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
 // BEG_CODE_LOCAL_INIT
     bool report = false;
@@ -120,7 +120,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------------------------------

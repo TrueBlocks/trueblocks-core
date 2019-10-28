@@ -6,14 +6,14 @@
 #include "etherlib.h"
 #include "options.h"
 
-#define RETURN(a) { bool ret = (a); if (!getEnvStr("TEST_MODE").empty()) { EXIT_NOMSG(0); } else { EXIT_NOMSG(ret); } }
+#define RETURN(a) { bool ret = (a); if (!getEnvStr("TEST_MODE").empty()) { EXIT_NOMSG8(0); } else { EXIT_NOMSG8(ret); } }
 //--------------------------------------------------------------
 int main(int argc, const char *argv[]) {
 
     nodeNotRequired(); // not every command needs a node
     acctlib_init(quickQuitHandler);
 
-    ENTER("chifra");
+    ENTER8("chifra");
     COptions options;
     if (!options.prepareArguments(argc, argv))
         RETURN(1);
@@ -52,5 +52,5 @@ int main(int argc, const char *argv[]) {
     }
 
     acctlib_cleanup();
-    EXIT_NOMSG(0);
+    EXIT_NOMSG8(0);
 }

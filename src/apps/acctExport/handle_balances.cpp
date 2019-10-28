@@ -10,7 +10,7 @@ int nn = 0;
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
 
-    ENTER("exportBalances");
+    ENTER8("exportBalances");
 
     // If the node we're running against does not provide balances...
     bool nodeHasBals = nodeHasBalances(false);
@@ -153,7 +153,7 @@ if (isTestMode()) {
         getCurlContext()->getCurl();
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
     // So as to keep the file small, we only write balances where there is a change

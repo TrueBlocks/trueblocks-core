@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
     if (addrs.empty())
@@ -70,5 +70,5 @@ bool COptions::handle_rm(void) {
         cout  << exportPostamble(JSON1, errors, "") << endl;
     }
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

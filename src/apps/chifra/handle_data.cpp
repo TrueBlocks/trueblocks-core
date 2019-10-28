@@ -9,7 +9,7 @@ extern string_q toPrintable_force(const string_q& inHex);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_data(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     LOG4("tool_flags: " + tool_flags);
     nodeNotRequired();
 
@@ -41,8 +41,8 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--nonce", "--mode nonce");
         os << "getState " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
 
-    } else if (contains(tool_flags, "--accounts")) {
-        replaceAll(tool_flags, "--accounts", "");
+    } else if (contains(tool_flags, "--names")) {
+        replaceAll(tool_flags, "--names", "");
         os << "getAccounts " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--blocks")) {
@@ -88,7 +88,7 @@ bool COptions::handle_data(void) {
     LOG4("command: " + os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 //----------------------------------------------------------------------------

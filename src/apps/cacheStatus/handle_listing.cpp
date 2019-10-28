@@ -8,7 +8,7 @@
 //--------------------------------------------------------------------------------
 bool COptions::handle_listing(ostream& os) {
     cout << "List mode" << endl;
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
     os << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
@@ -35,7 +35,7 @@ bool COptions::handle_listing(ostream& os) {
         }
     }
 
-    CAccountNameArray accounts;
+    CAccountNameArray accts;
     for (auto file : files) {
         if (endsWith(file, ".acct.bin")) {
             replace(file, getMonitorPath(""), "");
@@ -49,21 +49,21 @@ bool COptions::handle_listing(ostream& os) {
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
 //            item.lastBalance = 0;
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
-            accounts.push_back(item);
+            accts.push_back(item);
         }
     }
-    if (accounts.size() == 0) {
+    if (accts.size() == 0) {
         if (isApiMode()) {
             CAccountName item;
             item.address = "0x0";
             item.name = "none";
-            accounts.push_back(item);
+            accts.push_back(item);
         } else {
             LOG_WARN("No monitors found.");
-            EXIT_NOMSG4(true);
+            EXIT_NOMSG8(true);
         }
     }
-    sort(accounts.begin(), accounts.end());
+    sort(accts.begin(), accts.end());
 
     if (isApiMode()) {
         SHOW_FIELD(CAccountName, "path");
@@ -72,23 +72,23 @@ bool COptions::handle_listing(ostream& os) {
         SHOW_FIELD(CAccountName, "lastExport");
         SHOW_FIELD(CAccountName, "nRecords");
         ostringstream oss;
-        if (accounts.size() > 1)
+        if (accts.size() > 1)
             oss << "[";
         bool first = true;
-        for (auto acct : accounts) {
+        for (auto acct : accts) {
             if (!first)
                 oss << ",";
             oss << acct.Format();
             first = false;
         }
-        if (accounts.size() > 1)
+        if (accts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        EXIT_NOMSG4(true);
+        EXIT_NOMSG8(true);
     }
 
     if (stats) {
-        for (auto acct : accounts) {
+        for (auto acct : accts) {
             string_q fmt =
             "[Address:  -c1-{ADDRESS}-off-\n]"
             "[\tName:        -c2-{NAME}-off-\n]"
@@ -120,13 +120,13 @@ bool COptions::handle_listing(ostream& os) {
 
         // find the longest name (max 25 chars)
         size_t longest = 0;
-        for (auto acct : accounts)
+        for (auto acct : accts)
             longest = max(longest, acct.name.length() + 3); // two parens
         longest = min(longest, (size_t)23); // max 23
         ncols = max(((size_t)1), (ncols / (size_t(42) + longest)));
 
         uint64_t cnt = 0;
-        for (auto acct : accounts) {
+        for (auto acct : accts) {
             string_q name = acct.name;
             if (!name.empty())
                 name = "(" + name.substr(0,20) + ") ";
@@ -142,5 +142,5 @@ bool COptions::handle_listing(ostream& os) {
 //    else
 //        cout << os.str();
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

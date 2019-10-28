@@ -1048,38 +1048,38 @@ extern void loadParseMap(void);
 
     //-----------------------------------------------------------------------
     void manageFields(const string_q& listIn, bool show) {
-        // LOG5("Entry: manageFields");
+        // LOG4("Entry: manageFields");
         string_q list = substitute(listIn, " ", "");
         while (!list.empty()) {
             string_q fields = nextTokenClear(list, '|');
             string_q cl = nextTokenClear(fields, ':');
-            // LOG5("class: " + cl + " fields: " + fields);
+            // LOG4("class: " + cl + " fields: " + fields);
             CBaseNode *item = createObjectOfType(cl);
             while (item && !fields.empty()) {
                 string_q fieldName = nextTokenClear(fields, ',');
                 if (fieldName == "all") {
                     if (show) {
-                        // LOG5("show " + fieldName);
+                        // LOG4("show " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     } else {
-                        // LOG5("hide " + fieldName);
+                        // LOG4("hide " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     }
                 } else if (fieldName == "none") {
                     if (show) {
-                        // LOG5("show " + fieldName);
+                        // LOG4("show " + fieldName);
                         item->getRuntimeClass()->hideAllFields();
                     } else {
-                        // LOG5("hide " + fieldName);
+                        // LOG4("hide " + fieldName);
                         item->getRuntimeClass()->showAllFields();
                     }
                 } else {
                     CFieldData *f = item->getRuntimeClass()->findField(fieldName);
                     if (f) {
-                        // LOG5((show ? "show " : "hide ") + fieldName);
+                        // LOG4((show ? "show " : "hide ") + fieldName);
                         f->setHidden(!show);
                     } else {
-                        // LOG5("field not found: " + fieldName);
+                        // LOG4("field not found: " + fieldName);
                     }
                 }
             }

@@ -20,9 +20,9 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
 # on, both, fast, blocks,   apps/chifra, blocks2,              y, modes = blocks & blocks = 12 & fmt = csv & no_header
 
-# on, both, fast, accounts, apps/chifra, accounts,             y, modes = accounts & expand & fmt = txt
-# on, both, fast, accounts, apps/chifra, accounts_noparams,    y, modes = accounts & fmt = txt
-# on, both, fast, accounts, apps/chifra, accounts_badparams,   y, modes = accounts & not_an_option
+# on, both, fast, names, apps/chifra, names,             y, modes = names & expand & fmt = txt
+# on, both, fast, names, apps/chifra, names_noparams,    y, modes = names & fmt = txt
+# on, both, fast, names, apps/chifra, names_badparams,   y, modes = names & not_an_option
 
 # on, both, fast, config,   apps/chifra, config_noparms,       y, modes = config
 # on, both, fast, config,   apps/chifra, config_badparms,      y, modes = config & bad-param

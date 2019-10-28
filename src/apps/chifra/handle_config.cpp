@@ -8,10 +8,10 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    LOG5("tool_flags: " + tool_flags);
+    LOG4("tool_flags: " + tool_flags);
 
     ostringstream os;
     os << "cacheStatus " << tool_flags;
@@ -27,7 +27,7 @@ bool COptions::handle_config(void) {
     LOG_INFO("chifra calling: ", os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 #if 0
@@ -43,7 +43,7 @@ bool COptions::handle_config(void) {
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
     tool_flags = trim(substitute(substitute(tool_flags, "--addrs", ""), "--mode", ""));
@@ -75,7 +75,7 @@ bool COptions::handle_config(void) {
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         }
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
-    ENTER4("createConfigFile:" + addr);
+    ENTER8("createConfigFile:" + addr);
 
     string_q fileName = getMonitorPath(addr + ".toml");
     LOG_INFO("Creating configuration file: " + cleanPath(fileName));
@@ -121,7 +121,7 @@ bool COptions::createConfigFile(const address_t& addr) {
         if (verbose > 1)
             cout << config << endl;
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 */
 

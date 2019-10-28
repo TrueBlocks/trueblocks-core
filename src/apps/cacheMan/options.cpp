@@ -28,9 +28,9 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
 // BEG_CODE_LOCAL_INIT
     bool check = false;
@@ -214,7 +214,7 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
-    ENTER("loadMonitorData");
+    ENTER8("loadMonitorData");
     string_q fn = getMonitorPath(addr);
     if (!fileExists(fn)) {
         replace(fn, getMonitorPath(""), "./");
@@ -245,5 +245,5 @@ bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& ad
     } else {
         EXIT_FAIL("Could not allocate memory for address " + addr + "Quitting...\n");
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
                 } else {
                     nOpened++;
                     if (!options.data)
-                        cerr << toProper(mode)+"ing cache: " << substitute(watch->name, getCachePath(""), "${CACHE}/") << "\n";
+                        LOG_INFO(toProper(mode)+"ing cache: ", substitute(watch->name, getCachePath(""), "${CACHE}/"));
                     if (options.exportFmt == JSON1)
                         cout << "[";
 
@@ -196,7 +196,7 @@ int main(int argc, const char *argv[]) {
 
                 } else if (mode == "fix") {
                     if (!isApiMode())
-                        cout << cMagenta << "\tThere was nothing to fix (" << lastItem.blk << ").\n" << cOff;
+                        LOG_INFO(cMagenta, "There was nothing to fix (", lastItem.blk, ").", cOff);
                     // write the last block to file
                     if (lastItem.blk > prevLastBlock || options.stats.nTruncs) {
                         CAccountWatch monitor;
