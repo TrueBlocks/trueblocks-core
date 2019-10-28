@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
-#include "question.h"
 
 #define RETURN(a) { bool ret = (a); if (!getEnvStr("TEST_MODE").empty()) { EXIT_NOMSG(0); } else { EXIT_NOMSG(ret); } }
 //--------------------------------------------------------------

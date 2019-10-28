@@ -13,12 +13,12 @@ using uint_addr_mp = map<uint32_t,address_t>;
 class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
-    bool articulate;
+    bool appearances;
     bool logs;
     bool traces;
     bool balances;
-    bool appearances;
     bool count_only;
+    bool articulate;
     bool write_blocks;
     bool write_txs;
     bool write_traces;

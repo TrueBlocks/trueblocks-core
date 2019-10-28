@@ -1,18 +1,17 @@
 ethslurp argc: 3 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 ethslurp 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
 Processing: 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+	Slurping 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
 
-  Please provide a valid Ethereum address. Quitting...
+  Error: {"status":"0","message":"Result window is too large, PageNo x Offset size must be less than or equal to 10000","result":null}. Quitting...
 
-  Usage:    ethslurp [-t|-b|-s|-v|-h] <address> [address...] [block...]  
+  Usage:    ethslurp [-t|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
 	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
-	-b  (--block_range <range>)export records in block range (:0[:max])
-	-s  (--silent)        Run silently (only freshen the data, do not display it)
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "ethslurp - Type 'all' is currently disabled. Quitting..."
-  ]
-}

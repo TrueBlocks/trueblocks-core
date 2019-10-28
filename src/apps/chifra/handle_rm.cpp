@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {

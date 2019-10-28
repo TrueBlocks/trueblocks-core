@@ -10,12 +10,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 10160,apps,list,acctScrape,,,,FALSE,TRUE,TRUE,na,description,,Index transactions for a given Ethereum address (or series of addresses).
 
 10200,apps,export,acctExport,addrs,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses (0x...) to export
-10220,apps,export,acctExport,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
+10300,apps,export,acctExport,appearances,p,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export a list of appearances
 10240,apps,export,acctExport,logs,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export logs instead of transaction list
 10260,apps,export,acctExport,traces,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export traces instead of transaction list
 10280,apps,export,acctExport,balances,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export balance history instead of transaction list
-10300,apps,export,acctExport,appearances,p,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export a list of appearances
 10320,apps,export,acctExport,count_only,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only the count of the number of data items requested
+10220,apps,export,acctExport,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10340,apps,export,acctExport,write_blocks,w,false,FALSE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing blocks to the binary cache ([{DEF}] by default)
 10360,apps,export,acctExport,write_txs,x,true,FALSE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing transactions to the cache ([{DEF}] by default)
 10380,apps,export,acctExport,write_traces,r,true,FALSE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing traces to the cache ([{DEF}] by default)
@@ -107,9 +107,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 
 12120,tools,slurp,ethslurp,addrs,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,slurp,ethslurp,type,t,,FALSE,TRUE,TRUE,yes,flag,enum[ext*|int|token|miner|all],type of transactions to request
-12180,tools,slurp,ethslurp,block_range,b,,FALSE,TRUE,TRUE,,flag,<range>,export records in block range (:0[:max])
-12200,tools,slurp,ethslurp,silent,s,,FALSE,TRUE,TRUE,yes,switch,<boolean>,Run silently (only freshen the data&#44; do not display it)
+12160,tools,slurp,ethslurp,type,t,,FALSE,TRUE,TRUE,,flag,list<enum[ext*|int|token|miner|all]>,one or more of which type of transaction to request
 12220,tools,slurp,ethslurp,,,,FALSE,TRUE,TRUE,na,description,,Fetches data from EtherScan for an arbitrary address.
 
 12260,tools,accounts,getAccounts,terms,,,TRUE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms

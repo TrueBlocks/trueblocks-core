@@ -4,15 +4,13 @@ Processing: --pink
 
   Invalid option: --pink
 
-  Usage:    ethslurp [-t|-b|-s|-v|-h] <address> [address...] [block...]  
+  Usage:    ethslurp [-t|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
 	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
-	-b  (--block_range <range>)export records in block range (:0[:max])
-	-s  (--silent)        Run silently (only freshen the data, do not display it)
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

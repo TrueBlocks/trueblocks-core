@@ -4,7 +4,6 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {

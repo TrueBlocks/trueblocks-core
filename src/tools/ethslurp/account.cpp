@@ -334,7 +334,6 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dat
                 cerr << "\tExporting record " << cnt << " of " << transactions.size() << " records\r";
                 cerr.flush();
             }
-
             ctx << transactions[i].Format(displayString);
         }
         ctx << "\n";

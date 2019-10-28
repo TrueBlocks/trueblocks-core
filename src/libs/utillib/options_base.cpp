@@ -288,7 +288,7 @@ namespace qblocks {
 
         if (contains(cmdLine, "--version ")) {
             cerr << getProgName() << " " << getVersionStr() << "\n";
-            exit(0);
+            return false;
         }
 
         if (contains(cmdLine, "--nocolor ")) {
@@ -303,8 +303,7 @@ namespace qblocks {
 
         if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
-            exit(0);
-
+            return false;
         }
 
         if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {

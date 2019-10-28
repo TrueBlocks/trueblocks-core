@@ -18,8 +18,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
-    COption("block_range", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
-    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
 };
@@ -42,31 +40,22 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
-            if (!confirmEnum("type", type, arg))
-                return false;
-
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
-
 // END_CODE_AUTO
 
-        } else if (arg == "-f") {
-            exportFormat = "json";
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
-            exportFormat = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-            if (exportFormat.empty())
-                return usage("Please provide a formatting option with " + orig + ". Quitting...");
-
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_range:")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--block_range:", "");
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
+            string_q type;
+            if (!confirmEnum("type", type, arg))
                 return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
+            if (type == "all") {
+                types.clear();
+                types.push_back("ext");
+                types.push_back("int");
+                types.push_back("token");
+//                types.push_back("miner");
+
+            } else {
+                types.push_back(type);
+
             }
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -74,27 +63,35 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else {
-            if (!isAddress(arg))
-                 return usage("Please provide a valid Ethereum address. Quitting...");
+        } else if (isAddress(arg)) {
             addrs.push_back(str_2_Addr(toLower(arg)));
+
+        } else {
+            string_q ret = blocks.parseBlockList(arg, latestBlock);
+            if (endsWith(ret, "\n")) {
+                cerr << "\n  " << ret << "\n";
+                return false;
+            } else if (!ret.empty()) {
+                return usage(ret);
+            }
         }
     }
 
-    if (type == "all")
-        return usage("Type 'all' is currently disabled. Quitting...");
+    if (exportFmt == TXT1)
+        exportFormat = "txt";
+    else if (exportFmt == CSV1)
+        exportFormat = "csv";
+    else
+        exportFormat = "json";
 
-    // Note this may not return if user chooses to quit
-    api.checkKey();
+    if (!api.checkKey())
+        return false;
 
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
     if (!establishFolder(getCachePath("slurps/")))
         return usage("Unable to create data folders at " + getCachePath("slurps/"));
-
-    // Dumps an error message if the fmt_X_file format string is not found.
-    getFormatString("file", false);
 
     // Load per address configurations if any
     string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
@@ -110,6 +107,17 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;
 
+    // Dumps an error message if the fmt_X_file format string is not found.
+    if (!getFormatString("file", false, formatString)) {
+        ostringstream os;
+        for (auto err : errors)
+            os << err << endl;
+        return usage(os.str());
+    }
+
+    if (types.empty())
+        types.push_back("ext");
+
     return true;
 }
 
@@ -118,8 +126,6 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
 // BEG_CODE_INIT
-    type = "";
-    silent = false;
 // END_CODE_INIT
 
     blocks.Init();
@@ -162,21 +168,26 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
     return str;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool buildFieldList(const CFieldData& fld, void *data) {
+    string_q *s = reinterpret_cast<string_q *>(data);
+    *s += (fld.getName() + "|");
+    return true;
+}
+
 //--------------------------------------------------------------------------------
-string_q COptions::getFormatString(const string_q& which, bool ignoreBlank) {
+bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q& fmtOut) {
 
     if (which == "file")
-        buildDisplayStrings();
-
-    string_q errMsg;
+        if (!buildDisplayStrings())
+            return false;
 
     string_q formatName = "fmt_" + exportFormat + "_" + which;
     string_q ret = getGlobalConfig("ethslurp")->getConfigStr("display", formatName, "");
     if (contains(ret, "file:")) {
         string_q file = substitute(ret, "file:", "");
         if (!fileExists(file))
-            errMsg = string_q("Formatting file '") + file +
-            "' for display string '" + formatName + "' not found. Quiting...\n";
+            errors.push_back("Formatting file '" + file + "' for display string '" + formatName + "' not found.\n");
         else
             asciiFileToString(file, ret);
 
@@ -189,45 +200,40 @@ string_q COptions::getFormatString(const string_q& which, bool ignoreBlank) {
 
     // some sanity checks
     if (countOf(ret, '{') != countOf(ret, '}') || countOf(ret, '[') != countOf(ret, ']')) {
-        errMsg = string_q("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
+        errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
         const char *ERR_NO_DISPLAY_STR =
         "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
         "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
         "  Please see the full documentation for more information on display strings.";
-        errMsg = usageStr(substitute(string_q(ERR_NO_DISPLAY_STR), "[{FMT}]", exportFormat));
+        errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
     }
 
-    if (!errMsg.empty()) {
-        cerr << errMsg;
-        exit(0);
-    }
-
-    return ret;
+    fmtOut = ret;
+    return errors.size() == 0;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = reinterpret_cast<string_q *>(data);
-    *s += (fld.getName() + "|");
-    return true;
-}
+bool COptions::buildDisplayStrings(void) {
 
-//---------------------------------------------------------------------------------------------------
-void COptions::buildDisplayStrings(void) {
     // Set the default if it's not set
     if (exportFormat.empty())
         exportFormat = "json";
 
     // This is what we're really after...
-    const string_q fmtForRecords = getFormatString("record", false);
+    string_q fmtForRecords;
+    if (!getFormatString("record", false, fmtForRecords))
+        return false;
+
     ASSERT(!fmtForRecords.empty());
 
     // ...we may need this to build it.
-    const string_q fmtForFields  = getFormatString("field", !contains(fmtForRecords, "{FIELDS}"));
-    ASSERT(!fmtForFields.empty());
+    string_q fmtForFields;
+    if (!getFormatString("field", !contains(fmtForRecords, "{FIELDS}"), fmtForFields))
+        return false;
 
+    ASSERT(!fmtForFields.empty());
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
                                                                    "fmt_" + exportFormat + "_fieldList", defList);
@@ -272,4 +278,5 @@ void COptions::buildDisplayStrings(void) {
         // One little hack to make raw json more readable
         replaceReverse(displayString, "}]\",", "}]\"\n");
     }
+    return true;
 }

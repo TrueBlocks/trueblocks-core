@@ -414,12 +414,14 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
 
-        LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "cache"), "\r");
+        if (!isTestMode())
+            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "cache"), "\r");
         asciiFileToString(fileName, results);
 
     } else {
 
-        LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
+        if (!isTestMode())
+            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
         string_q url = string_q("http:/""/api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
         results = substitute(urlToString(url), "\\", "");
 

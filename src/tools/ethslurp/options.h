@@ -18,8 +18,6 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
-    string_q type;
-    bool silent;
 // END_CODE_DECLARE
 
     CAddressArray addrs;
@@ -28,6 +26,8 @@ public:
     string_q displayString;
     string_q exportFormat;
     bool fromFile;
+    string_q formatString;
+    CStringArray types;
 
     COptions(void);
     ~COptions(void);
@@ -36,6 +36,6 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    string_q getFormatString(const string_q& name, bool ignoreBlank);
-    void buildDisplayStrings(void);
+    bool getFormatString(const string_q& name, bool ignoreBlank, string_q& fmtOut);
+    bool buildDisplayStrings(void);
 };

@@ -1,5 +1,6 @@
 grabABI argc: 4 [1:0x1234567812345678123456781234567812345678] [2:--fmt] [3:txt] 
 grabABI 0x1234567812345678123456781234567812345678 --fmt txt 
+TIME ~ CLOCK - : 4-----Local file copied to cache
 address	encoding	type	constant	name	signature	input_names
 	0x67f01c04	function	true	ETH	ETH(uint256)	_id,,
 	0xd67ae54d	function	true	EUR	EUR(uint256)	_id,,

@@ -9,12 +9,12 @@
 static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
+    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
-    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
     COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
     COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
@@ -51,8 +51,8 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
+        } else if (arg == "-p" || arg == "--appearances") {
+            appearances = true;
 
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
@@ -63,11 +63,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--balances") {
             balances = true;
 
-        } else if (arg == "-p" || arg == "--appearances") {
-            appearances = true;
-
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
+
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
 
         } else if (arg == "-w" || arg == "--write_blocks") {
             write_blocks = !write_blocks;
@@ -309,12 +309,12 @@ void COptions::Init(void) {
     monitors.clear();
 
 // BEG_CODE_INIT
-    articulate = false;
+    appearances = false;
     logs = false;
     traces = false;
     balances = false;
-    appearances = false;
     count_only = false;
+    articulate = false;
     write_blocks = false;
     write_txs = true;
     write_traces = true;

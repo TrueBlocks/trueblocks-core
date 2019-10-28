@@ -4,7 +4,6 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 extern string_q toPrintable_force(const string_q& inHex);
 //------------------------------------------------------------------------------------------------
