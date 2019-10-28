@@ -2,7 +2,7 @@ ethslurp argc: 4 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--type] [3:ju
 ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type junk 
 Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:junk
 
-  Invalid option 'junk' for 'type'. One of [ext|int|token|miner|all] required. Quitting...
+  Invalid option 'junk' for 'type'. One or more of [ext|int|token|miner|all] required. Quitting...
 
   Usage:    ethslurp [-t|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
@@ -10,7 +10,7 @@ Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --type:junk
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
-	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
+	-t  (--type <val>)    which types of transaction to request, one or more of [ext*|int|token|miner|all]
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

@@ -17,7 +17,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
+    COption("type", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "which types of transaction to request"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
 };

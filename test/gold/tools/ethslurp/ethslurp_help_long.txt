@@ -8,7 +8,7 @@ Processing: --help
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
-	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
+	-t  (--type <val>)    which types of transaction to request, one or more of [ext*|int|token|miner|all]
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
