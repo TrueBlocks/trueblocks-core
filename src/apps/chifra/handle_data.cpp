@@ -27,13 +27,13 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--abi")) {
         replaceAll(tool_flags, "--abi", "");
-        if (addrs.size() == 0)
+        if (addrs.size() == 0 && !contains(tool_flags, "help"))
             return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
         os << "grabABI " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--state")) {
         replaceAll(tool_flags, "--state", "");
-        if (addrs.size() == 0)
+        if (addrs.size() == 0 && !contains(tool_flags, "help"))
             return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
 
         replaceAll(tool_flags, "--balance", "--mode balance");

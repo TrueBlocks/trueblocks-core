@@ -11,7 +11,6 @@ static const COption params[] = {
     COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
-    COption("tool_help", "t", "", OPT_HIDDEN | OPT_SWITCH, "call into the underlying tool's help screen"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
@@ -28,11 +27,11 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
 // BEG_CODE_LOCAL_INIT
-    bool tool_help = false;
     blknum_t start = 0;
     blknum_t end = NOPOS;
 // END_CODE_LOCAL_INIT
 
+    bool tool_help = false;
     bool copy_to_tool = false;
     blknum_t latest = getLastBlock_client();
 
@@ -47,9 +46,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("sleep", sleep, arg))
                 return false;
 
-        } else if (arg == "-t" || arg == "--tool_help") {
-            tool_help = true;
-
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
                 return false;
@@ -63,6 +59,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--set") {
             tool_flags += (arg + " ");
             copy_to_tool = true;
+
+        } else if (arg == "-h" || arg == "--help") {
+            if (mode.empty()) {
+                optionOn(OPT_HELP);
+                return usage();
+            }
+            setenv("PROG_NAME", ("chifra " + mode).c_str(), true);
+            tool_help = true;
 
         } else if (mode.empty() && startsWith(arg, '-')) {
 
@@ -145,8 +149,10 @@ bool COptions::parseArguments(string_q& command) {
         mode = "data";
     }
 
-    if (mode.empty())
+    if (mode.empty()) {
+        optionOn(OPT_HELP);
         EXIT_USAGE("Please specify " + params[0].description + ".");
+    }
 
     if (mode != "scrape") {
         establishFolder(getMonitorPath("", FM_PRODUCTION));
@@ -175,6 +181,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (mode == "config") {
+        if (contains(tool_flags, "help")) {
+            ostringstream os;
+            os << "cacheStatus --help";
+            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            return false;
+        }
         if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
             replace(tool_flags, "get", "--get"); // syntactic sugar for command line
         if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
@@ -194,6 +206,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOff(OPT_HELP);
 
 // BEG_CODE_INIT
     sleep = 14;

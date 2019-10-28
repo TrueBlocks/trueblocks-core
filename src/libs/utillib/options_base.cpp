@@ -50,6 +50,9 @@ namespace qblocks {
             colorsOff();
         if (argc > 0)
             COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
+        if (!getEnvStr("PROG_NAME").empty())
+            COptionsBase::g_progName = getEnvStr("PROG_NAME");
+
         return true;
     }
 
@@ -111,7 +114,7 @@ namespace qblocks {
             replace(arg, "--verbose", "-v");
             while (!arg.empty()) {
                 string_q opt = expandOption(arg);  // handles case of -rf for example
-                if (isReadme) {
+                if (isReadme && isEnabled(OPT_HELP)) {
                     if (args)
                         delete [] args;
                     return usage();
@@ -820,6 +823,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             arg = "";
             replaceAll(ret, "-th", "");
             replaceAll(ret, "-ht", "");
+            if (!isEnabled(OPT_HELP))
+                ret = "-h";
             return ret;
         }
 

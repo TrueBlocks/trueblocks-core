@@ -11,6 +11,13 @@ bool COptions::handle_config(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "cacheStatus --help";
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
+
     LOG4("tool_flags: " + tool_flags);
 
     ostringstream os;

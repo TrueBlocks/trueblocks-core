@@ -11,6 +11,13 @@ bool COptions::handle_list(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "acctScrape --help";
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
+
     if (addrs.empty())
         EXIT_USAGE("'chifra list' requires an Ethereum address.");
 

@@ -11,6 +11,13 @@ bool COptions::handle_export(void) {
     ENTER8("handle_" + mode);
     nodeRequired();
 
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "acctExport --help";
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
+
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 

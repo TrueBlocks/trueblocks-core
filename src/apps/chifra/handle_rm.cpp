@@ -14,6 +14,11 @@ bool COptions::handle_rm(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
+    if (contains(tool_flags, "help")) {
+        optionOn(OPT_HELP);
+        return usage();
+    }
+
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 

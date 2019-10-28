@@ -11,6 +11,13 @@ bool COptions::handle_scrape(void) {
     // scrape mode requires a running node
     nodeRequired();
 
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "blockScrape --help";
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        return true;
+    }
+
     // syntactic sugar
     tool_flags = substitute(substitute(" "+tool_flags, "--start", " start"), " start", "");
     bool daemonMode = false;

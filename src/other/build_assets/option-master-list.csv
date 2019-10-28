@@ -62,7 +62,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 11200,apps,,chifra,command,,,TRUE,TRUE,TRUE,,positional,list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>,which command to run
 11220,apps,,chifra,sleep,s,14,FALSE,TRUE,FALSE,yes,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
 11240,apps,,chifra,set,e,,FALSE,FALSE,FALSE,,switch,<boolean>,for status config only&#44; indicates that this is config --sef
-11260,apps,,chifra,tool_help,t,,FALSE,FALSE,FALSE,local,switch,<boolean>,call into the underlying tool's help screen
 11280,apps,,chifra,start,S,0,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,FALSE,TRUE,TRUE,na,description,,Create a TrueBlocks monitor configuration.
