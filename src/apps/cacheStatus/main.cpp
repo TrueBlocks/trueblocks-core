@@ -15,11 +15,10 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    ENTER8("main");
     bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            EXIT_NOMSG8(0);
+            return 0;
 
         if (options.list) {
             if (once)
@@ -42,5 +41,5 @@ int main(int argc, const char *argv[]) {
     cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
     acctlib_cleanup();
-    EXIT_NOMSG8(0);
+    return 0;
 }

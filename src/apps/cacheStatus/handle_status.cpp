@@ -91,7 +91,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_blocks;
-    if (contains(mode, "|blocks|")) {
+    if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
         LOG8("Blocks");
         cd_blocks.type = cd_blocks.getRuntimeClass()->m_ClassName;
         cd_blocks.path = (isTestMode() ? "BlockPath" : getCachePath("blocks/"));
@@ -100,7 +100,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_txs;
-    if (contains(mode, "|transactions|")) {
+    if (contains(mode, "|transactions|") || contains(mode, "|data|")) {
         LOG8("Transactions");
         cd_txs.type = cd_txs.getRuntimeClass()->m_ClassName;
         cd_txs.path = (isTestMode() ? "TxPath" : getCachePath("txs/"));
@@ -109,7 +109,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_traces;
-    if (contains(mode, "|traces|")) {
+    if (contains(mode, "|traces|") || contains(mode, "|data|")) {
         LOG8("Traces");
         cd_traces.type = cd_traces.getRuntimeClass()->m_ClassName;
         cd_traces.path = (isTestMode() ? "TracePath" : getCachePath("traces/"));

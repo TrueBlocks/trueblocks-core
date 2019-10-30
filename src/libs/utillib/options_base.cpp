@@ -336,17 +336,9 @@ namespace qblocks {
         }
 
         // A final set of options that do not have command line options
-        LOG8("PreLoadPrefunds");
-        if (isEnabled(OPT_PREFUND)) {
-            CStringArray lines;
-            asciiFileToLines(configPath("prefunds.txt"), lines);
-            for (auto line : lines) {
-                CStringArray parts;
-                explode(parts, line, '\t');
-                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
-            }
-        }
-        LOG8("PostLoadPrefunds");
+        if (isEnabled(OPT_PREFUND))
+            if (!loadPrefunds())
+                return usage("Could not open prefunds data. Quitting...");
 
         if (isEnabled(OPT_RUNONCE)) {
             if (commandLines.size() > 1)
@@ -1046,6 +1038,49 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << redirFilename;
             redirFilename = "";
         }
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::loadPrefunds(void) {
+        // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
+        // since it will never change. In that sense, the binary file is always right once it's created.
+        string_q binFile = configPath("prefunds.bin");
+        string_q txtFile = configPath("prefunds.txt");
+        if (!fileExists(binFile)) {
+            if (!fileExists(txtFile))
+                return false;
+            CStringArray lines;
+            asciiFileToLines(txtFile, lines);
+            for (auto line : lines) {
+                CStringArray parts;
+                explode(parts, line, '\t');
+                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+            }
+            CArchive archive(WRITING_ARCHIVE);
+            if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
+                return false;
+            addr_wei_mp::iterator it = prefundWeiMap.begin();
+            archive << uint64_t(prefundWeiMap.size());
+            while (it != prefundWeiMap.end()) {
+                archive << it->first << it->second;
+                it++;
+            }
+            archive.Release();
+            return true;
+        }
+        CArchive archive(READING_ARCHIVE);
+        if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT))
+            return false;
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0 ; i < count ; i++) {
+            string_q key;
+            wei_t wei;
+            archive >> key >> wei;
+            prefundWeiMap[key] = wei;
+        }
+        archive.Release();
+        return true;
     }
 
     //-----------------------------------------------------------------------

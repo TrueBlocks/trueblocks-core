@@ -87,6 +87,9 @@ namespace qblocks {
         static bool findSpecial(CNameValue& pair, const string_q& arg);
         static bool forEverySpecialBlock(NAMEVALFUNC func, void *data);
 
+        // prefunds
+        bool loadPrefunds(void);
+
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;

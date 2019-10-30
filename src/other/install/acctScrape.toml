@@ -2,4 +2,4 @@
 current = "0.5.8-alpha"
 
 # [settings]
-# start-when-deployed = false
+# start-when-deployed = true
