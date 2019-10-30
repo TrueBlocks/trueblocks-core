@@ -1,3 +1,20 @@
-acctScrape argc: 2 [1:0x001d14804b399c6ef80e64576f657660804fec0b] 
-acctScrape 0x001d14804b399c6ef80e64576f657660804fec0b 
-                                                                                                                        
+chifra argc: 5 [1:list] [2:0x001d14804b399c6ef80e64576f657660804fec0b] [3:--end] [4:001506480] 
+chifra list 0x001d14804b399c6ef80e64576f657660804fec0b --end 001506480 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+acctScrape argc: 4 [1:--end] [2:1506480] [3:0x001d14804b399c6ef80e64576f657660804fec0b] 
+acctScrape --end 1506480 0x001d14804b399c6ef80e64576f657660804fec0b 
+TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./000000000-000000000.bin
+TIME ~ CLOCK - <INFO>  : Scan blocks ./000000001-000208533.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./000000001-000208533.bin
+TIME ~ CLOCK - <INFO>  : Skip blocks ./000208534-000350319.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000350320-000482926.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000482927-000590888.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000590889-000696187.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000696188-000750166.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000750167-000804296.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000804297-000865707.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000865708-000922337.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000922338-000971931.binTIME ~ CLOCK - <INFO>  : Skip blocks ./000971932-001024630.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001024631-001077915.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001077916-001121333.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001121334-001162350.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001162351-001198370.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001198371-001231075.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001231076-001266948.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001266949-001300043.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001300044-001336925.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001336926-001374185.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001374186-001411435.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001411436-001444289.binTIME ~ CLOCK - <INFO>  : Skip blocks ./001444290-001475866.binTIME ~ CLOCK - <INFO>  : Scan blocks ./001475867-001506480.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./001475867-001506480.bin
+                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0x001d14804b399c6ef80e64576f657660804fec0b] 
+cacheMan --fix 0x001d14804b399c6ef80e64576f657660804fec0b 
+TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin
+TIME ~ CLOCK - <INFO>  : There was nothing to fix (1501459).
+acctExport argc: 5 [1:--appearances] [2:--end] [3:1506480] [4:0x001d14804b399c6ef80e64576f657660804fec0b] 
+acctExport --appearances --end 1506480 0x001d14804b399c6ef80e64576f657660804fec0b 
+address	blocknumber	transactionindex
+0x001d14804b399c6ef80e64576f657660804fec0b	0	2
+0x001d14804b399c6ef80e64576f657660804fec0b	202249	0
+0x001d14804b399c6ef80e64576f657660804fec0b	1501459	2
+TIME ~ CLOCK - <INFO>  :                                                                                                                         
+TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       

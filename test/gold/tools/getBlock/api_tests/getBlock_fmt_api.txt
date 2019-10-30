@@ -1,5 +1,4 @@
 {
-  "type": "CBlock",
   "data": [
     {
       "gasLimit": 4704588,
@@ -854,12 +853,5 @@
       "date": "2016-09-26 21:07:02 UTC",
       "age": "100"
     }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  ]
 }

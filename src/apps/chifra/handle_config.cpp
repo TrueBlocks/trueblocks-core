@@ -14,11 +14,10 @@ bool COptions::handle_config(void) {
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "cacheStatus --help";
+        NOTE_CALL(os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
-
-    LOG4("tool_flags: " + tool_flags);
 
     ostringstream os;
     os << "cacheStatus " << tool_flags;
@@ -31,7 +30,7 @@ bool COptions::handle_config(void) {
         cerr << "Chifra to cacheStatus:\n" << cYellow << settings << cOff << endl;
 
     // both testing and non-testing
-    LOG_INFO("chifra calling: ", os.str());
+    NOTE_CALL(os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);
@@ -78,8 +77,10 @@ bool COptions::handle_config(void) {
             os << "cat " << path;
             if (isTestMode())
                 cout << cleanPath(os.str()) << endl;
-            else
+            else {
+                NOTE_CALL(os.str());
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            }
         }
     }
     EXIT_NOMSG8(true);

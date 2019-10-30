@@ -16,7 +16,6 @@
 #include "namecache.h"
 #include "configuration.h"
 
-typedef map<string_q,string_q> CIndexHashMap;
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
@@ -48,7 +47,6 @@ public:
 };
 
 //-------------------------------------------------------------------------
-extern void loadHashes(CIndexHashMap& map, const string_q& which);
 extern bool countFiles(const string_q& path, void *data);
 extern bool noteMonitor_light(const string_q& path, void *data);
 extern bool noteMonitor(const string_q& path, void *data);

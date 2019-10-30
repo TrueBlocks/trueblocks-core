@@ -8,12 +8,15 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
 
+    ENTER8("handle_" + mode);
+
     // scrape mode requires a running node
     nodeRequired();
 
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "blockScrape --help";
+        NOTE_CALL(os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         return true;
     }
@@ -131,6 +134,7 @@ bool COptions::handle_scrape(void) {
             wasPaused = false;
             ostringstream os;
             os << "blockScrape " << tool_flags;
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
             // always catch the timestamp file up to the scraper
@@ -153,6 +157,7 @@ bool COptions::handle_scrape(void) {
                         for (auto addr : runs) {
                             ostringstream os1;
                             os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
+                            NOTE_CALL(os1.str());
                             if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
                             usleep(250000); // stay responsive to cntrl+C
                             if (shouldQuit())

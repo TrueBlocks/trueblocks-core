@@ -14,6 +14,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 10240,apps,export,acctExport,logs,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export logs instead of transaction list
 10260,apps,export,acctExport,traces,t,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export traces instead of transaction list
 10280,apps,export,acctExport,balances,b,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export balance history instead of transaction list
+10300,apps,export,acctExport,hashes_only,e,,FALSE,TRUE,TRUE,yes,switch,<boolean>,export the IPFS hashes of the index chunks the address appears in
 10320,apps,export,acctExport,count_only,c,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only the count of the number of data items requested
 10220,apps,export,acctExport,articulate,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10340,apps,export,acctExport,write_blocks,w,false,FALSE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing blocks to the binary cache ([{DEF}] by default)

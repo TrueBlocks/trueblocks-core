@@ -49,6 +49,7 @@ bool COptions::handle_rm(void) {
                 ostringstream os;
                 os << "cd " << getMonitorPath("") << " && ";
                 os << "rm -f " << addr << ".*";
+                NOTE_CALL(os.str());
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 

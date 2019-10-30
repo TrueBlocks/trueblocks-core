@@ -1,10 +1,9 @@
-chifra argc: 3 [1:export] [2:--help] 
-chifra export --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
-chifra export argc: 2 [1:--help] 
-chifra export --help 
+acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--receipts] [3:--fmt] [4:csv] [5:--no_header] [6:--end] [7:001506480] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --receipts --fmt csv --no_header --end 001506480 
 
-  Usage:    chifra export [-p|-l|-t|-b|-e|-c|-a|-w|-x|-r|-v|-h] <address> [address...]  
+  Invalid option: --receipts
+
+  Usage:    acctExport [-p|-l|-t|-b|-e|-c|-a|-w|-x|-r|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  

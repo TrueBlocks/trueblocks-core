@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethslurp - Export format (junk) must be one of [ json | txt | csv | api ]. Quitting..."
+    "chifra - Export format (junk) must be one of [ json | txt | csv | api ]. Quitting..."
   ]
 }

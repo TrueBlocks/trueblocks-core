@@ -24,6 +24,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER8("parseArguments");
+
     if (!standardOptions(command))
         EXIT_NOMSG8(false);
 
@@ -218,22 +219,4 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
     }
     return str;
-}
-
-//--------------------------------------------------------------------------------
-void loadHashes(CIndexHashMap& map, const string_q& which) {
-    string_q hashFn = configPath("ipfs-hashes/" + which + ".txt");
-    if (!fileExists(hashFn)) {
-        cerr << "Hash file (" << hashFn << ") not found." << endl;
-    } else {
-        string_q contents = asciiFileToString(hashFn);
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        for (auto line : lines) {
-            line = substitute(substitute(line, ".bin", ""), ".bloom", "");
-            CStringArray parts;
-            explode(parts, line, ' ');
-            map[parts[2]] = parts[1];
-        }
-    }
 }

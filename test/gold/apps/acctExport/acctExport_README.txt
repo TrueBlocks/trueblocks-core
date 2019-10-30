@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-a|-l|-t|-b|-p|-c|-w|-x|-r|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-l|-t|-b|-e|-c|-a|-w|-x|-r|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -10,12 +10,13 @@ acctExport -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
+| -p | --appearances | export a list of appearances |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -b | --balances | export balance history instead of transaction list |
-| -p | --appearances | export a list of appearances |
+| -e | --hashes_only | export the IPFS hashes of the index chunks the address appears in |
 | -c | --count_only | display only the count of the number of data items requested |
+| -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -w | --write_blocks | toggle writing blocks to the binary cache ('off' by default) |
 | -x | --write_txs | toggle writing transactions to the cache ('on' by default) |
 | -r | --write_traces | toggle writing traces to the cache ('on' by default) |
@@ -27,7 +28,7 @@ acctExport -th
 | -g | --grab_abis | using each trace's 'to' address, grab the abi for that address (improves articulation) |
 | -f | --freshen | freshen but do not print the exported data |
 | -D | --deltas | for --balances option only, export only changes in balances |
-| -S | --start <num> | first block to process(inclusive) |
+| -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 #### Hidden options (shown during testing only)

@@ -17,6 +17,7 @@ public:
     bool logs;
     bool traces;
     bool balances;
+    bool hashes_only;
     bool count_only;
     bool articulate;
     bool write_blocks;

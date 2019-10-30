@@ -14,6 +14,7 @@ bool COptions::handle_export(void) {
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "acctExport --help";
+        NOTE_CALL(os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
@@ -28,11 +29,11 @@ bool COptions::handle_export(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "acctExport " << addr << " " << tool_flags;
-        LOG4("Calling " + os.str());
         CStringArray cmds;
         explode(cmds, os.str(), ';');
         bool quit = false;
         for (size_t i = 0; i < cmds.size() && !quit; i++) {
+            NOTE_CALL(cmds[i]);
             int ret = system(cmds[i].c_str());
             quit = (ret != 0);
             if (verbose)

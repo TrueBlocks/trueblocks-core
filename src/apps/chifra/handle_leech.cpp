@@ -52,6 +52,7 @@ bool COptions::handle_leech(void) {
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\"";
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             usleep(500000); // so Ctrl+C works
 
@@ -71,6 +72,7 @@ bool COptions::handle_leech(void) {
             os << "gunzip \"" << filename << "\" && cd - >/dev/null";
 
             cerr << "Leeching " << cTeal << textFile << cOff << endl;
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             usleep(500000); // so Ctrl+C works
 

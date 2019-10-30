@@ -91,9 +91,12 @@ namespace qblocks {
 #define LOG_TIMING true
 #define LOG_THREAD false
                 if (LOG_TIMING) {
+                    static clock_t last_clock = 0;
                     header.fill('0');
                     header.width(7);
-                    header << clock() << " - ";
+                    clock_t now = clock();
+                    header << now << " (" << padNum7T(uint64_t(now-last_clock)) << ")- ";  // NOLINT
+                    last_clock = now;
                 }
                 if (LOG_THREAD) {
                     header.fill('0');

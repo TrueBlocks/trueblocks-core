@@ -13,6 +13,7 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
+    COption("hashes_only", "e", "", OPT_SWITCH, "export the IPFS hashes of the index chunks the address appears in"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
@@ -62,6 +63,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-b" || arg == "--balances") {
             balances = true;
+
+        } else if (arg == "-e" || arg == "--hashes_only") {
+            hashes_only = true;
 
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
@@ -146,7 +150,6 @@ bool COptions::parseArguments(string_q& command) {
             monitors.push_back(watch);
         }
     }
-    LOG4("Finished parsing command line");
 
     if (start != NOPOS) scanRange.first = start;
     if (end != NOPOS) scanRange.second = end;
@@ -313,6 +316,7 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     balances = false;
+    hashes_only = false;
     count_only = false;
     articulate = false;
     write_blocks = false;

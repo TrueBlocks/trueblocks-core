@@ -11,9 +11,9 @@ bool COptions::handle_quotes(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    LOG4("tool_flags: " + tool_flags);
     ostringstream os;
     os << "ethQuote " << tool_flags;
+    NOTE_CALL(os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);

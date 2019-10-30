@@ -44,106 +44,79 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool prepareEnv(int argc, const char *argv[]) {
-        string_q env = getEnvStr("NO_COLOR");
-        if (string_q(env) == "true")
-            colorsOff();
-        if (argc > 0)
-            COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
-        if (!getEnvStr("PROG_NAME").empty())
-            COptionsBase::g_progName = getEnvStr("PROG_NAME");
+    bool COptionsBase::prepareArguments(int argCountIn, const char *argvIn[]) {
 
-        return true;
-    }
+        if ( argCountIn > 0 ) /* always is */    COptionsBase::g_progName = basename((char*)argvIn[0]);  // NOLINT
+        if (!getEnvStr("PROG_NAME").empty() )    COptionsBase::g_progName = getEnvStr("PROG_NAME");
+        if ( getEnvStr("NO_COLOR") == "true" )   colorsOff();
+        if ( getEnvStr("REDIR_CERR") == "true" ) cerr.rdbuf( cout.rdbuf() );
 
-    //--------------------------------------------------------------------------------
-    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
-
-        prepareEnv(argc, argv);
-        if (getEnvStr("REDIR_CERR") == "true")
-            cerr.rdbuf( cout.rdbuf() );
-
-        // send out the environment, if any non-default
-        if (isTestMode() || isLevelOn(sev_debug4)) {
-            size_t save = verbose;
-            verbose = 10;
-            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
-            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
-//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
-            verbose = save;
+        CStringArray separatedArgs;
+        for (int i = 1 ; i < argCountIn ; i++ ) {  // skip argv[0]
+            CStringArray parts;
+            string_q arg = substituteAny(argvIn[i], "\n\r\t", " ");
+            explode(parts, arg, ' ');
+            for (auto part : parts) {
+                if (!part.empty()) {
+                    separatedArgs.push_back(part);
+                }
+            }
         }
 
         if (isTestMode()) {
-            ostringstream argos1;
-            ostringstream argos2;
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                argos1 << "[" << i << ":" << trim(str) << "] ";
-                argos2 << trim(str) << " ";
+            size_t cnt = 0;
+            ostringstream os;
+            cerr << getProgName() << " argc: " << (separatedArgs.size()+1) << " ";
+            for (auto arg : separatedArgs) {
+                cerr << "[" << ++cnt << ":" << trim(arg) << "] ";
+                os << trim(arg) << " ";
             }
-
-            const char* STR_TESTLOAD_TXT = "[{PROGRAM}] argc: [{ARGC}] [{ARGS}]\n";
-            const char* STR_CMD_TXT = "[{PROGRAM}] [{ARGS}]\n";
-
-            string_q out = STR_TESTLOAD_TXT;
-            replace(out, "[{PROGRAM}]", getProgName());
-            replace(out, "[{ARGC}]", int_2_Str(argc));
-            replace(out, "[{ARGS}]", argos1.str());
-            cerr << out;
-
-            out = STR_CMD_TXT;
-            replace(out, "[{PROGRAM}]", getProgName());
-            replace(out, "[{ARGS}]", argos2.str());
-            cerr << out;
+            cerr << endl;
+            cerr << getProgName() << " " << os.str() << endl;
         }
 
-        if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
-            return usage("Not enough arguments presented.");
+//        // send out the environment, if any non-default
+//        if (isTestMode() || isLevelOn(sev_debug4)) {
+//            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
+//            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
+//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
+//        }
 
-        int nChars = 0;
-        for (int i = 0 ; i < argc ; i++) {
-            nChars += string_q(argv[i]).length();
-        }
-        size_t nArgs = 0;
-        string_q *args = new string_q[argc + nChars + 2];
-
-        bool hasStdIn = false;
-        for (int i = 1 ; i < argc ; i++) {
-            string_q str = argv[i];
-            string_q arg = trim(str);
+        CStringArray argumentsIn;
+        for (auto arg : separatedArgs) {
             replace(arg, "--verbose", "-v");
             while (!arg.empty()) {
                 string_q opt = expandOption(arg);  // handles case of -rf for example
-                if (isReadme && isEnabled(OPT_HELP)) {
-                    if (args)
-                        delete [] args;
+                if (isReadme && isEnabled(OPT_HELP))
                     return usage();
-                }
                 if (opt == "-")
-                    hasStdIn = true;
+                    return usage("Raw '-' not supported.");
                 else if (!opt.empty())
-                    args[nArgs++] = opt;
+                    argumentsIn.push_back(opt); //args[nArgs++] = opt;
             }
         }
+        if (argumentsIn.size() < minArgs)  // the first arg is the program's name, so we use <=
+            return usage("Not enough arguments presented.");
 
-        string_q stdInCmds;
-        if (hasStdIn) {
-            // reading from stdin, expect only a list of addresses, one per line.
-            char c = static_cast<char>(getchar());
-            while (c != EOF) {
-                stdInCmds += c;
-                c = static_cast<char>(getchar());
-            }
-            if (!endsWith(stdInCmds, "\n"))
-                stdInCmds += "\n";
-        }
+
+//        string_q stdInCmds;
+//        if (hasStdIn) {
+//            // reading from stdin, expect only a list of addresses, one per line.
+//            char c = static_cast<char>(getchar());
+//            while (c != EOF) {
+//                stdInCmds += c;
+//                c = static_cast<char>(getchar());
+//            }
+//            if (!endsWith(stdInCmds, "\n"))
+//                stdInCmds += "\n";
+//        }
 
         //-----------------------------------------------------------------------------------
         // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
         //-----------------------------------------------------------------------------------
-        size_t curArg = 0;
-        for (size_t i = 0 ; i < nArgs ; i++) {
-            string_q arg = args[i];
+        CStringArray argumentsOut;
+        for (size_t i = 0 ; i < argumentsIn.size() ; i++) {
+            string_q arg = argumentsIn[i];
             bool combine = false;
             for (size_t j = 0 ; j < cntParams && !combine ; j++) {
                 if (!pParams[j].permitted.empty()) {
@@ -157,8 +130,8 @@ namespace qblocks {
             }
 
             if (!combine && (arg == "-v" || arg == "-verbose" || arg == "--verbose")) {
-                if (i < nArgs-1) {
-                    uint64_t n = str_2_Uint(args[i+1]);
+                if (i < argumentsIn.size()-1) {
+                    uint64_t n = str_2_Uint(argumentsIn[i+1]);
                     if (n > 0 && n <= 10) {
                         // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -170,18 +143,17 @@ namespace qblocks {
             }
 
             if (!combine && arg == "--fmt") {
-                if (i < nArgs-1)
+                if (i < argumentsIn.size()-1)
                     combine = true;
             }
 
-            if (combine && i < (nArgs-1)) {
-                args[curArg++] = arg + ":" + args[i+1];
+            if (combine && i < (argumentsIn.size()-1)) {
+                argumentsOut.push_back(arg + ":" + argumentsIn[i+1]);
                 i++;
             } else {
-                args[curArg++] = arg;
+                argumentsOut.push_back(arg);
             }
         }
-        nArgs = curArg;
 
         //-----------------------------------------------------------------------------------
         // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
@@ -191,13 +163,12 @@ namespace qblocks {
         // (2) identify any --file arguments and store them for later use
         //-----------------------------------------------------------------------------------
         string_q cmdFileName = "";
-        for (uint64_t i = 0 ; i < nArgs ; i++) {
-            string_q arg = args[i];
+        for (uint64_t i = 0 ; i < argumentsOut.size() ; i++) {
+            string_q arg = argumentsOut[i];
             if (startsWith(arg, "--file:")) {
                 cmdFileName = substitute(arg, "--file:", "");
                 replace(cmdFileName, "~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
-                    if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
 
@@ -218,24 +189,21 @@ namespace qblocks {
                 else if ( arg == "api" ) { exportFmt = API1; }  // NOLINT
                 else return usage("Export format (" + arg +  // NOLINT
                     ") must be one of [ json | txt | csv | api ]. Quitting...");
-                args[i] = "";
+                argumentsOut[i] = "";
             }
         }
 
         // remove empty arguments
-        curArg = 0;
-        for (size_t i = 0 ; i < nArgs ; i++) {
-            if (!args[i].empty())
-                args[curArg++] = args[i];
-        }
-        nArgs = curArg;
+        CStringArray argumentsOut3;
+        for (auto arg : argumentsOut)
+            if (!arg.empty())
+                argumentsOut3.push_back(arg);
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         string_q commandList = "";
-        for (uint64_t i = 0 ; i < nArgs ; i++) {
-            string_q a = args[i];
-            if (!contains(a, "--file:"))
-                commandList += (a + " ");
+        for (auto arg : argumentsOut3) {
+            if (!contains(arg, "--file:"))
+                commandList += (arg + " ");
         }
         commandList += '\n';
 
@@ -264,14 +232,12 @@ namespace qblocks {
                 }
             }
         }
-        commandList += stdInCmds;
+//        commandList += stdInCmds;
         explode(commandLines, commandList, '\n');
         for (auto& item : commandLines)
             item = trim(item);
         if (commandLines.empty())
             commandLines.push_back("--noop");
-
-        if (args) delete [] args;
 
         return 1;
     }
@@ -370,6 +336,7 @@ namespace qblocks {
         }
 
         // A final set of options that do not have command line options
+        LOG8("PreLoadPrefunds");
         if (isEnabled(OPT_PREFUND)) {
             CStringArray lines;
             asciiFileToLines(configPath("prefunds.txt"), lines);
@@ -379,6 +346,7 @@ namespace qblocks {
                 prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
             }
         }
+        LOG8("PostLoadPrefunds");
 
         if (isEnabled(OPT_RUNONCE)) {
             if (commandLines.size() > 1)

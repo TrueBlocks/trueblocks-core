@@ -184,6 +184,7 @@ bool COptions::parseArguments(string_q& command) {
         if (contains(tool_flags, "help")) {
             ostringstream os;
             os << "cacheStatus --help";
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             return false;
         }
@@ -197,8 +198,8 @@ bool COptions::parseArguments(string_q& command) {
             EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
     }
 
-    LOG4("tool_flags=", tool_flags);
-    LOG4("freshen_flags=", freshen_flags);
+    LOG3("tool_flags=", tool_flags);
+    LOG3("freshen_flags=", freshen_flags);
 
     EXIT_NOMSG8(true);
 }

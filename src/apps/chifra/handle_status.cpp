@@ -11,10 +11,9 @@ bool COptions::handle_status(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    LOG4("tool_flags: " + tool_flags);
     ostringstream os;
     os << "cacheStatus " << tool_flags;
-    LOG_INFO("chifra calling: ", os.str());
+    NOTE_CALL(os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);

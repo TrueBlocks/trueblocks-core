@@ -20,13 +20,11 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q dTabs;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
-    scanRange.first = UINT_MAX;
 
 // BEG_CODE_LOCAL_INIT
     bool finalized = true;
@@ -36,9 +34,10 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t end = NOPOS;
 // END_CODE_LOCAL_INIT
 
-    CBlock lBlock;
-    getBlock_light(lBlock, "latest");
-    blknum_t latest = lBlock.blockNumber;
+    // How far does the system think it is?
+    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
+    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
+    blknum_t latest = clientBlk;
 
     Init();
     explode(arguments, command, ' ');
@@ -91,12 +90,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (monitors.size() == 0)
-        return usage("You must provide at least one Ethereum address. Quitting...");
-
-    if (start != NOPOS) scanRange.first = start;
-    if (end != NOPOS) scanRange.second = end;
-    if (unripe)  visitTypes |= VIS_UNRIPE;
-    if (staging) visitTypes |= VIS_STAGING;
+        return usage("Please provide at least one Ethereum address to scrape. Quitting...");
 
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -105,51 +99,29 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    dTabs = (daemon ? "\t  " : "");
-    string_q endLine = (daemon ? "\r" : "\n");
-    for (auto monitor : monitors) {
-        string_q fn1 = getMonitorPath(monitor.address);
-        if (fileExists(fn1 + ".lck"))
-            return usage("The cache file '" + fn1 + "' is locked. Quitting...");
-        string_q fn2 = getMonitorLast(monitor.address);
-        if (fileExists(fn2 + ".lck"))
-            return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-        string_q fn3 = getMonitorExpt(monitor.address);
-        if (fileExists(fn3 + ".lck"))
-            return usage("The last export file '" + fn3 + "' is locked. Quitting...");
-        string_q fn4 = getMonitorBals(monitor.address);
-        if (fileExists(fn4 + ".lck"))
-            return usage("The last export file '" + fn4 + "' is locked. Quitting...");
-        if (!isTestMode())
-            LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
-        if (scanRange.first == UINT_MAX)
-            scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2))); // If file doesn't exist, this will report '0'
-    }
-
-    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
-    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
-
-    if (scanRange.second == NOPOS) {
-        scanRange.second = finalizedBlk;
-        if (visitTypes & VIS_STAGING)
-            scanRange.second = stagingBlk;
-        if (visitTypes & VIS_UNRIPE)
-            scanRange.second = unripeBlk;
-    }
+    if (unripe)  visitTypes |= VIS_UNRIPE;
+    if (staging) visitTypes |= VIS_STAGING;
 
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
-    // So one of the test cases passes only
-    if (isTestMode() && monitors.size() == 1 && monitors[0].address == "0x001d14804b399c6ef80e64576f657660804fec0b")
-        setenv("TEST_MODE", "false", true);
-
-    // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
-    // cleared the block index cache, but we didn't clear the account monitor cache
-    if (scanRange.first >= scanRange.second) {
-        return false;
+    // Scan the monitors to see if any are locked (fail if yes). While we're at it, find the block the monitors think we
+    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet and
+    // it's a smart contract, or zero).
+    blknum_t earliestBlock = NOPOS;
+    for (auto monitor : monitors) {
+        if (!checkLocks(monitor.address))
+            return false;
+        earliestBlock = min(earliestBlock, nextBlockAsPerMonitor(monitor.address));
     }
+    blknum_t latestBlock = (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
 
+    scanRange = make_pair(earliestBlock, latestBlock);
+    if (start != NOPOS) scanRange.first  = start;  // the user is always right
+    if (end   != NOPOS) scanRange.second = end;    // the user is always right
+
+    if (scanRange.first >= scanRange.second)  // nothing to do?
+        return false;
     return true;
 }
 
@@ -167,6 +139,7 @@ void COptions::Init(void) {
 
     minArgs    = 0;
     visitTypes = VIS_FINAL;
+    monitors.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -197,4 +170,28 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
         return ret;
     }
     return str;
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::checkLocks(const address_t& address) const {
+    string_q fn1 = getMonitorPath(address); if (fileExists(fn1 + ".lck")) return usage("The cache file '" + fn1 + "' is locked. Quitting...");
+    string_q fn2 = getMonitorLast(address); if (fileExists(fn2 + ".lck")) return usage("The last block file '" + fn2 + "' is locked. Quitting...");
+    string_q fn3 = getMonitorExpt(address); if (fileExists(fn3 + ".lck")) return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+    string_q fn4 = getMonitorBals(address); if (fileExists(fn4 + ".lck")) return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
+
+    blknum_t nextBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
+    blknum_t deployed = 0;
+
+    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+        deployed = getDeployBlock(address);  // returns NOPOS if not a contract, block deployed otherwise
+        if (deployed == NOPOS)
+            deployed = 0;
+    }
+
+    return max(nextBlock, deployed);
 }
