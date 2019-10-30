@@ -9,7 +9,7 @@ cacheStatus -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | modes | which data to retrieve, one or more of [index&#124;monitors&#124;names&#124;abis&#124;blocks&#124;transactions&#124;traces&#124;slurps&#124;prices&#124;some*&#124;all] |
+|  | modes | which data to retrieve, one or more of [index&#124;monitors&#124;names&#124;abis&#124;blocks&#124;transactions&#124;traces&#124;data&#124;slurps&#124;prices&#124;some*&#124;all] |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |
 | -l | --list | display results in Linux ls -l format (assumes --detail) |
 | -r | --report | show a summary of the current status of the blockchain and TrueBlocks scrapers |

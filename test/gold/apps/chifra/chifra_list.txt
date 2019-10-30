@@ -3,7 +3,7 @@ chifra list 0xfb744b951d094b310262c8f986c860df9ab1de65 --end 10000
 TIME ~ CLOCK - <INFO>  : Connecting to node...
 acctScrape argc: 4 [1:--end] [2:10000] [3:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctScrape --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
-TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hit at ./000000000-000000000.bin
+TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hits: 0xfb74.. at ./000000000-000000000.bin
 TIME ~ CLOCK - <INFO>  : Skip blocks ./000000001-000208533.bin                                                                                                                        cacheMan argc: 3 [1:--fix] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 cacheMan --fix 0xfb744b951d094b310262c8f986c860df9ab1de65 
 TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0xfb744b951d094b310262c8f986c860df9ab1de65.acct.bin
@@ -12,5 +12,5 @@ acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b3102
 acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
 address	blocknumber	transactionindex
 0xfb744b951d094b310262c8f986c860df9ab1de65	0	8713
-TIME ~ CLOCK - <INFO>  :                                                                                                                         
+
 TIME ~ CLOCK - <INFO>  : exported 1 appearances from 1 transactions                                                       

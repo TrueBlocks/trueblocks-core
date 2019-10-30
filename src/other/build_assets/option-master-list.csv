@@ -36,7 +36,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 10640,apps,scrape,blockScrape,n_addr_procs,a,,FALSE,FALSE,FALSE,,flag,<uint32>,number of address channels for blaze
 10660,apps,scrape,blockScrape,,,,FALSE,TRUE,TRUE,na,description,,Decentralized blockchain scraper and block cache.
 
-10700,apps,status,cacheStatus,modes,,,FALSE,TRUE,TRUE,,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>,which data to retrieve
+10700,apps,status,cacheStatus,modes,,,FALSE,TRUE,TRUE,,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>,which data to retrieve
 10720,apps,status,cacheStatus,details,d,,FALSE,TRUE,TRUE,yes,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10740,apps,status,cacheStatus,list,l,,FALSE,TRUE,TRUE,yes,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
 10760,apps,status,cacheStatus,report,r,,FALSE,TRUE,TRUE,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers

@@ -1,13 +1,13 @@
 cacheStatus argc: 2 [1:config] 
 cacheStatus config 
 
-  Provided value for 'mode' (config) not which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]. Quitting.
+  Provided value for 'mode' (config) not which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]. Quitting.
 
   Usage:    cacheStatus [-d|-l|-r|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
-	modes                 which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]
+	modes                 which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-l  (--list)          display results in Linux ls -l format (assumes --detail)
 	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers
