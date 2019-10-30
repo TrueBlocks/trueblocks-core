@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-p|-l|-t|-b|-e|-c|-a|-w|-x|-r|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-w|-x|-R|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -11,6 +11,7 @@ acctExport -th
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 | -p | --appearances | export a list of appearances |
+| -r | --receipts | export receipts instead of transaction list |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -b | --balances | export balance history instead of transaction list |
@@ -19,7 +20,7 @@ acctExport -th
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -w | --write_blocks | toggle writing blocks to the binary cache ('off' by default) |
 | -x | --write_txs | toggle writing transactions to the cache ('on' by default) |
-| -r | --write_traces | toggle writing traces to the cache ('on' by default) |
+| -R | --write_traces | toggle writing traces to the cache ('on' by default) |
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |

@@ -10,6 +10,7 @@ static const COption params[] = {
 // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
+    COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
@@ -18,7 +19,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
     COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
-    COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
+    COption("write_traces", "R", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
     COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
@@ -55,6 +56,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
+        } else if (arg == "-r" || arg == "--receipts") {
+            receipts = true;
+
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
@@ -79,7 +83,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-x" || arg == "--write_txs") {
             write_txs = !write_txs;
 
-        } else if (arg == "-r" || arg == "--write_traces") {
+        } else if (arg == "-R" || arg == "--write_traces") {
             write_traces = !write_traces;
 
         } else if (arg == "-s" || arg == "--skip_ddos") {
@@ -157,8 +161,8 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((appearances + logs + traces + balances) > 1)
-        EXIT_USAGE("Please export only one of list, logs, traces, or balances. Quitting...");
+    if ((appearances + receipts + logs + traces + balances) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
@@ -227,13 +231,17 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-        format = toml.getConfigStr("formats", "trace_fmt", deflt);
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_LOGENTRY);
+        format = toml.getConfigStr("formats", "receipt_fmt", deflt);
+        expContext().fmtMap["receipt_fmt"] = cleanFmt(format, exportFmt);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
+        format = toml.getConfigStr("formats", "trace_fmt", deflt);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
         // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future reference.
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
@@ -271,6 +279,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNoHeader) {
         if (traces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
+        } else if (receipts) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"], exportFmt);
         } else if (logs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
         } else if (appearances) {
@@ -313,6 +323,7 @@ void COptions::Init(void) {
 
 // BEG_CODE_INIT
     appearances = false;
+    receipts = false;
     logs = false;
     traces = false;
     balances = false;

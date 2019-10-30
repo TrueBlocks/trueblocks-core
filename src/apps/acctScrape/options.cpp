@@ -120,8 +120,11 @@ bool COptions::parseArguments(string_q& command) {
     if (start != NOPOS) scanRange.first  = start;  // the user is always right
     if (end   != NOPOS) scanRange.second = end;    // the user is always right
 
-    if (scanRange.first >= scanRange.second)  // nothing to do?
+    if (scanRange.first >= scanRange.second) {  // nothing to do?
+        for (auto watch : monitors)
+            LOG_INFO("Nothing to do for ", watch.address, "\r");
         return false;
+    }
     return true;
 }
 

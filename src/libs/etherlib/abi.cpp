@@ -293,11 +293,9 @@ const char* STR_DISPLAY_ABI =
 bool visitABI(const qblocks::string_q& path, void *data) {
     if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
-    if (!isTestMode()) {
-        qblocks::eLogger->setEndline('\r');
-        LOG_INFO("Loading ABI: ", path);
-        qblocks::eLogger->setEndline('\n');
-    }
+//    if (!isTestMode()) {
+//        LOG_INFO("Loading ABI: ", path, "\r");
+//    }
     CAbi *abi = (CAbi*)data;  // NOLINT
     if (!abi->loadAbiFromFile(path, true))
         return false;
@@ -312,8 +310,8 @@ bool CAbi::loadAbiKnown(const string_q& which) {
     } else {
         ret = loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
     }
-    if (!isTestMode())
-        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+//    if (!isTestMode())
+//        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -327,7 +325,7 @@ bool CAbi::loadCachedAbis(const string_q& which) {
     } else {
         ret = loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
     }
-    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+//    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;

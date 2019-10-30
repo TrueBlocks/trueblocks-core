@@ -23,9 +23,10 @@ int main(int argc, const char *argv[]) {
         options.className =
         (options.appearances ? "CAppearance" :
          (options.traces ? GETRUNTIME_CLASS(CTrace)->m_ClassName :
-          (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
-           (options.balances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
-            (options.count_only ? "CCounts" : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+          (options.receipts ? GETRUNTIME_CLASS(CReceipt)->m_ClassName :
+           (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName :
+            (options.balances ? GETRUNTIME_CLASS(CEthState)->m_ClassName :
+             (options.count_only ? "CCounts" : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
 
         if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], options.className);

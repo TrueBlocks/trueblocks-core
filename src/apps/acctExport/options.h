@@ -14,6 +14,7 @@ class COptions : public COptionsBase {
 public:
 // BEG_CODE_DECLARE
     bool appearances;
+    bool receipts;
     bool logs;
     bool traces;
     bool balances;

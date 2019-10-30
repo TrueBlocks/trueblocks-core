@@ -139,7 +139,19 @@ bool COptions::exportData(void) {
 
                 } else {
 
-                    if (logs) {
+                    if (receipts) {
+
+                        // acctExport --receipts
+                        if (articulate)
+                            abis.articulateTransaction(&trans);
+                        if (isJson && shouldDisplay && !first)
+                            cout << ", ";
+                        nExported++;
+                        if (shouldDisplay)
+                            cout << trans.receipt.Format() << endl;
+                        first = false;
+
+                    } else if (logs) {
 
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
@@ -185,9 +197,8 @@ bool COptions::exportData(void) {
         }
     }
 
-    qblocks::eLogger->setEndline('\r');
-    LOG_INFO(string_q(120,' '));
-    qblocks::eLogger->setEndline('\n');
+    if (!isTestMode() && shouldDisplay)
+        LOG_INFO(string_q(120,' '), "\r");
 
     if (grab_abis) {
         // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)

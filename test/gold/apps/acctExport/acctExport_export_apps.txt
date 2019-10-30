@@ -16,5 +16,5 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --fmt json -
   "blockNumber": 1501459,
   "transactionIndex": 2
 }
-TIME ~ CLOCK - <INFO>  :                                                                                                                         ]
+]
 ] }TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       
