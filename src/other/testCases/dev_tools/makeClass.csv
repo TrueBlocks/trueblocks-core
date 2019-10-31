@@ -5,10 +5,10 @@ on, cmd, fast, null, dev_tools/makeClass, help_long, n, @help
 
 on, cmd, fast, null, dev_tools/makeClass, noparams1, n,
 on, cmd, fast, null, dev_tools/makeClass, noparams2, n, x
-on, cmd, fast, null, dev_tools/makeClass, nonexist,  n, @e & x
-on, cmd, fast, null, dev_tools/makeClass, conflict1, n, @e & run
-on, cmd, fast, null, dev_tools/makeClass, conflict2, n, @l & run
-on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @r & edit
+on, cmd, fast, null, dev_tools/makeClass, nonexist,  n, @ e & x
+on, cmd, fast, null, dev_tools/makeClass, conflict1, n, @ e & run
+on, cmd, fast, null, dev_tools/makeClass, conflict2, n, @ l & run
+on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @ r & edit
 
 on, cmd, fast, null, dev_tools/makeClass, list,      n, list & classes = function
 on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & classes = function & verbose

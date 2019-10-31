@@ -15,19 +15,19 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "optiondef.h"
+#include "commandoption.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(COptionDef, CBaseNode);
+IMPLEMENT_NODE(CCommandOption, CBaseNode);
 
 //---------------------------------------------------------------------------
 static string_q nextOptiondefChunk(const string_q& fieldIn, const void *dataPtr);
 static string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
-void COptionDef::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
     if (!m_showing)
         return;
 
@@ -50,7 +50,7 @@ void COptionDef::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
 //---------------------------------------------------------------------------
 string_q nextOptiondefChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const COptionDef *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCommandOption *>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,7 +59,7 @@ string_q nextOptiondefChunk(const string_q& fieldIn, const void *dataPtr) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -106,13 +106,13 @@ bool COptionDef::setValueByName(const string_q& fieldNameIn, const string_q& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void COptionDef::finishParse() {
+void CCommandOption::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptionDef::Serialize(CArchive& archive) {
+bool CCommandOption::Serialize(CArchive& archive) {
 
     if (archive.isWriting())
         return SerializeC(archive);
@@ -144,7 +144,7 @@ bool COptionDef::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptionDef::SerializeC(CArchive& archive) const {
+bool CCommandOption::SerializeC(CArchive& archive) const {
 
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
@@ -170,7 +170,7 @@ bool COptionDef::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, COptionDefArray& array) {
+CArchive& operator>>(CArchive& archive, CCommandOptionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -182,7 +182,7 @@ CArchive& operator>>(CArchive& archive, COptionDefArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const COptionDefArray& array) {
+CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0 ; i < array.size() ; i++)
@@ -191,37 +191,37 @@ CArchive& operator<<(CArchive& archive, const COptionDefArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void COptionDef::registerClass(void) {
+void CCommandOption::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(COptionDef, "schema")) return;
+    if (HAS_FIELD(CCommandOption, "schema")) return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(COptionDef, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(COptionDef, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(COptionDef, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(COptionDef, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(COptionDef, "num", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "group", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "api_route", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "tool", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "command", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "hotkey", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "def_val", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "is_required", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "core_visible", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "docs_visible", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "generate", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "option_kind", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "data_type", T_TEXT, ++fieldNum);
-    ADD_FIELD(COptionDef, "description", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "schema",  T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCommandOption, "deleted", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CCommandOption, "showing", T_BOOL,  ++fieldNum);
+    ADD_FIELD(CCommandOption, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CCommandOption, "num", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "group", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "api_route", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "tool", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "command", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "hotkey", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "def_val", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_required", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "core_visible", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "docs_visible", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "generate", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "option_kind", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "data_type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "description", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(COptionDef, "schema");
-    HIDE_FIELD(COptionDef, "deleted");
-    HIDE_FIELD(COptionDef, "showing");
-    HIDE_FIELD(COptionDef, "cname");
+    HIDE_FIELD(CCommandOption, "schema");
+    HIDE_FIELD(CCommandOption, "deleted");
+    HIDE_FIELD(CCommandOption, "showing");
+    HIDE_FIELD(CCommandOption, "cname");
 
-    builtIns.push_back(_biCOptionDef);
+    builtIns.push_back(_biCCommandOption);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -229,7 +229,7 @@ void COptionDef::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const COptionDef *opt = reinterpret_cast<const COptionDef *>(dataPtr);
+    const CCommandOption *opt = reinterpret_cast<const CCommandOption *>(dataPtr);
     if (opt) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -277,7 +277,7 @@ string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool COptionDef::readBackLevel(CArchive& archive) {
+bool CCommandOption::readBackLevel(CArchive& archive) {
 
     bool done = false;
     // EXISTING_CODE
@@ -286,7 +286,7 @@ bool COptionDef::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-string_q COptionDef::getValueByName(const string_q& fieldName) const {
+string_q CCommandOption::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
     string_q ret = nextOptiondefChunk_custom(fieldName, this);
@@ -337,7 +337,7 @@ string_q COptionDef::getValueByName(const string_q& fieldName) const {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const COptionDef& item) {
+ostream& operator<<(ostream& os, const CCommandOption& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -352,7 +352,7 @@ const char* STR_DISPLAY_OPTIONDEF = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-COptionDef::COptionDef(const string_q& line) {
+CCommandOption::CCommandOption(const string_q& line) {
     CStringArray parts;
     explode(parts, line, ',');
     if (parts.size() > 0)  num = parts[0];

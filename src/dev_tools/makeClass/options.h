@@ -12,7 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
-#include "optiondef.h"
+#include "commandoption.h"
 
 typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
@@ -38,7 +38,7 @@ public:
 
     bool exportJson(const string_q& cl);
     bool handle_options(void);
-    bool check_option(const COptionDef& option);
+    bool check_option(const CCommandOption& option);
     bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="");
 };
 

@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class COptionDef : public CBaseNode {
+class CCommandOption : public CBaseNode {
 public:
     string_q num;
     string_q group;
@@ -41,25 +41,25 @@ public:
     string_q description;
 
 public:
-    COptionDef(void);
-    COptionDef(const COptionDef& op);
-    virtual ~COptionDef(void);
-    COptionDef& operator=(const COptionDef& op);
+    CCommandOption(void);
+    CCommandOption(const CCommandOption& op);
+    virtual ~CCommandOption(void);
+    CCommandOption& operator=(const CCommandOption& op);
 
-    DECLARE_NODE(COptionDef);
+    DECLARE_NODE(CCommandOption);
 
     // EXISTING_CODE
-    COptionDef(const string_q& line);
+    CCommandOption(const string_q& line);
     // EXISTING_CODE
-    bool operator==(const COptionDef& item) const;
-    bool operator!=(const COptionDef& item) const { return !operator==(item); }
-    friend bool operator<(const COptionDef& v1, const COptionDef& v2);
-    friend ostream& operator<<(ostream& os, const COptionDef& item);
+    bool operator==(const CCommandOption& item) const;
+    bool operator!=(const CCommandOption& item) const { return !operator==(item); }
+    friend bool operator<(const CCommandOption& v1, const CCommandOption& v2);
+    friend ostream& operator<<(ostream& os, const CCommandOption& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const COptionDef& op);
+    void duplicate(const CCommandOption& op);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -67,14 +67,14 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline COptionDef::COptionDef(void) {
+inline CCommandOption::CCommandOption(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline COptionDef::COptionDef(const COptionDef& op) {
+inline CCommandOption::CCommandOption(const CCommandOption& op) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(op);
@@ -84,20 +84,20 @@ inline COptionDef::COptionDef(const COptionDef& op) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline COptionDef::~COptionDef(void) {
+inline CCommandOption::~CCommandOption(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void COptionDef::clear(void) {
+inline void CCommandOption::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void COptionDef::initialize(void) {
+inline void CCommandOption::initialize(void) {
     CBaseNode::initialize();
 
     num = "";
@@ -120,7 +120,7 @@ inline void COptionDef::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void COptionDef::duplicate(const COptionDef& op) {
+inline void CCommandOption::duplicate(const CCommandOption& op) {
     clear();
     CBaseNode::duplicate(op);
 
@@ -144,7 +144,7 @@ inline void COptionDef::duplicate(const COptionDef& op) {
 }
 
 //--------------------------------------------------------------------------
-inline COptionDef& COptionDef::operator=(const COptionDef& op) {
+inline CCommandOption& CCommandOption::operator=(const CCommandOption& op) {
     duplicate(op);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -152,7 +152,7 @@ inline COptionDef& COptionDef::operator=(const COptionDef& op) {
 }
 
 //-------------------------------------------------------------------------
-inline bool COptionDef::operator==(const COptionDef& item) const {
+inline bool CCommandOption::operator==(const CCommandOption& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -160,7 +160,7 @@ inline bool COptionDef::operator==(const COptionDef& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const COptionDef& v1, const COptionDef& v2) {
+inline bool operator<(const CCommandOption& v1, const CCommandOption& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -168,9 +168,9 @@ inline bool operator<(const COptionDef& v1, const COptionDef& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<COptionDef> COptionDefArray;
-extern CArchive& operator>>(CArchive& archive, COptionDefArray& array);
-extern CArchive& operator<<(CArchive& archive, const COptionDefArray& array);
+typedef vector<CCommandOption> CCommandOptionArray;
+extern CArchive& operator>>(CArchive& archive, CCommandOptionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_OPTIONDEF;

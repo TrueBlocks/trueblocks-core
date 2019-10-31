@@ -189,7 +189,7 @@ static const char *STR_ERROR_NODEREQUIRED =
     //-------------------------------------------------------------------------
     string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
 
-PRINTL("perform:\n\tmethod:\t\t" + method + params + "\n\tsource:\t\t" + provider);
+PRINTL("perform:\n\tmethod:\t\t" + method + "\n\tparams:\t\t" + params + "\n\tsource:\t\t" + provider);
 //        getCurlContext()->methodMap[method]++;
         getCurlContext()->methodCnt++;
         getCurlContext()->setPostData(method, params);

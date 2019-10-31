@@ -11,7 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "optiondef.h"
+#include "commandoption.h"
 
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
@@ -26,7 +26,7 @@ extern const char* STR_TX_PROCESSOR;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
-    COptionDef::registerClass();
+    CCommandOption::registerClass();
 
     string_q contents = asciiFileToString("../src/other/build_assets/option-master-list.csv");
 
@@ -34,9 +34,9 @@ bool COptions::handle_options(void) {
     explode(lines, contents, '\n');
 
     map<string, bool> tools;
-    COptionDefArray optionArray;
+    CCommandOptionArray optionArray;
     for (auto line : lines) {
-        COptionDef optDef(line);
+        CCommandOption optDef(line);
         if (!optDef.tool.empty() && optDef.tool != "all" && optDef.tool != "tool" && optDef.tool != "templates") {
             optionArray.push_back(optDef);
             tools[optDef.group + "/" + optDef.tool] = true;
@@ -183,7 +183,7 @@ bool COptions::handle_options(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::check_option(const COptionDef& option) {
+bool COptions::check_option(const CCommandOption& option) {
 
     // Check valid data types
     CStringArray validTypes = {
