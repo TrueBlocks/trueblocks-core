@@ -5,13 +5,14 @@ chifra slurp argc: 2 [1:--help]
 chifra slurp --help 
 Processing: --help
 
-  Usage:    chifra slurp [-t|-v|-h] <address> [address...] [block...]  
+  Usage:    chifra slurp [-t|-a|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
 	-t  (--type <val>)    which types of transaction to request, one or more of [ext*|int|token|miner|all]
+	-a  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
 
 #### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

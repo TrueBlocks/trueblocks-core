@@ -44,7 +44,7 @@ public:
     // EXISTING_CODE
     string_q displayString;
     bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *data = NULL) const;
-    bool isNewTrans(const CTransaction& trans);
+    void markLatest(const CTransaction& trans);
     // EXISTING_CODE
     bool operator==(const CAccount& item) const;
     bool operator!=(const CAccount& item) const { return !operator==(item); }

@@ -46,5 +46,6 @@ public:
 //-----------------------------------------------------------------------
 extern bool saveAndCopy(const string_q& path, void *data);
 extern bool replaceFile(const string_q& path, void *data);
+extern double verySlow;
 extern double tooSlow;
 extern double fastEnough;

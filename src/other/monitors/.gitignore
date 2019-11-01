@@ -1,0 +1,7 @@
+*/cache/*.acct.bin
+*/cache/lastBlock.txt
+*/bin/*
+*.lck
+*.bak
+*.gz
+*.json

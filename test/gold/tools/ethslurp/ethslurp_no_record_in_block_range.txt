@@ -2,5 +2,4 @@ ethslurp argc: 3 [1:0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0] [2:0-1]
 ethslurp 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 0-1 
 Processing: 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 0-1
 	Slurping 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0
-
-Finished.
+                                                                                                                        

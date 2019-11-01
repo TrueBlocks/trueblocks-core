@@ -18,6 +18,7 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "which types of transaction to request"),
+    COption("appearances", "a", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 // END_CODE_OPTIONS
 };
@@ -40,6 +41,9 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
 // BEG_CODE_AUTO
+        } else if (arg == "-a" || arg == "--appearances") {
+            appearances = true;
+
 // END_CODE_AUTO
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
@@ -124,14 +128,15 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_OUTPUT);
 
 // BEG_CODE_INIT
+    appearances = false;
 // END_CODE_INIT
 
     blocks.Init();
     exportFormat = "json";
     addrs.clear();
-    fromFile = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -220,6 +225,22 @@ bool COptions::buildDisplayStrings(void) {
     // Set the default if it's not set
     if (exportFormat.empty())
         exportFormat = "json";
+
+    if (appearances) {
+        if (exportFormat == "txt" || exportFormat == "csv") {
+            displayString = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t1\n";
+            header = "blocknumber\ttransactionindex\t1\n";
+            if (exportFormat == "csv") {
+                replace(displayString, "\t", ",");
+                replace(header, "\t", ",");
+            }
+        } else {
+            manageFields("CTransaction:all", false);
+            UNHIDE_FIELD(CTransaction, "blockNumber");
+            UNHIDE_FIELD(CTransaction, "transactionIndex");
+        }
+        return true;
+    }
 
     // This is what we're really after...
     string_q fmtForRecords;

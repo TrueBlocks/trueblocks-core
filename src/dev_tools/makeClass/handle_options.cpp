@@ -166,15 +166,15 @@ bool COptions::handle_options(void) {
                 auto_stream << STR_TX_PROCESSOR << endl;
         }
 
-        string_q fn = "../src/" + tool.first + "/options.cpp";
-        writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str());
-        writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
-
         if (!warnings.str().empty()) {
             CStringArray w;
             explode(w, warnings.str(), '|');
             for (auto warning : w)
                 LOG_WARN(warning);
+        } else {
+            string_q fn = "../src/" + tool.first + "/options.cpp";
+            writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str());
+            writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
         }
     }
     cerr << cGreen << "makeClass --options: processed " << nFiles << " files (changed " << nChanges << ")." << string_q(50, ' ') << cOff << endl;

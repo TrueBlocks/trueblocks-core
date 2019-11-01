@@ -15,6 +15,7 @@
 #include "test_case.h"
 
 ostringstream perf;
+ostringstream slow;
 uint32_t totalTests = 0;
 uint32_t totalPassed = 0;
 double totalTime = 0.0;
@@ -112,6 +113,7 @@ int main(int argc, const char *argv[]) {
             cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
             appendToAsciiFile(configPath("performance.txt"), perf.str());
         }
+        appendToAsciiFile(configPath("performance_slow.txt"), slow.str());
     }
 
     return 0;
@@ -224,6 +226,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                 reverse(test.filename);
                 cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName) << " ";
                 cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0,90) << endl;
+                if (thisTime > verySlow) {
+                    slow << "   " << double_2_Str(thisTime) << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName) << " ";
+                    slow << trim(test.filename) << " " << trim(test.options).substr(0,90) << endl;
+                }
             }
 
             if (!no_quit && (result == redX))
@@ -292,5 +298,6 @@ bool replaceFile(const string_q& customFile, void *data) {
 }
 
 //-----------------------------------------------------------------------
+double verySlow = .6;
 double tooSlow = .4;
 double fastEnough = .2;

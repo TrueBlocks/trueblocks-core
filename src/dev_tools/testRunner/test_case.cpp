@@ -380,13 +380,13 @@ CTestCase::CTestCase(const string_q& line) {
     fileName = tool + "_" + filename + ".txt";
 
     replaceAll(post, "n", "");
-    replaceAll(post, "y", "jq");
+    replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq"));
 
     builtin = prepareBuiltIn(options);
     if (!builtin) {
-        replaceAll(options, " = ", "=");
-        replaceAll(options, " & ", "&");
-        replaceAll(options, " @ ", "@");
+        replaceAll(options, " = ", "="); replaceAll(options, "= ", "=");
+        replaceAll(options, " & ", "&"); replaceAll(options, "& ", "&");
+        replaceAll(options, " @ ", "@"); replaceAll(options, "@ ", "@");
     }
 }
 

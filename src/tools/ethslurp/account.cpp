@@ -343,21 +343,19 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dat
     return true;
 }
 
-//---------------------------------------------------------------------------
-bool CAccount::isNewTrans(const CTransaction& trans) {
-    // If the block is strictly less than the latest one we've seen...
+void CAccount::markLatest(const CTransaction& trans) {
     if (trans.blockNumber < latestTx.blockNumber)
-        return false;  // we've seen this already
-
-    // Or, if the block is the same, but the tx id is strictly less than one we've seen...
-    if (trans.blockNumber == latestTx.blockNumber)
-        if (trans.transactionIndex <= latestTx.transactionIndex)
-            return false;  // we've seen this already
-
-    // Note that we've seen this and return true
-    latestTx.blockNumber = trans.blockNumber;
-    latestTx.transactionIndex = trans.transactionIndex;
-    return true;
+        return;
+    if (trans.blockNumber > latestTx.blockNumber) {
+        latestTx.blockNumber = trans.blockNumber;
+        latestTx.transactionIndex = trans.transactionIndex;
+        return;
+    }
+    if (trans.transactionIndex > latestTx.transactionIndex) {
+        latestTx.blockNumber = trans.blockNumber;
+        latestTx.transactionIndex = trans.transactionIndex;
+    }
+    return;
 }
 // EXISTING_CODE
 }  // namespace qblocks

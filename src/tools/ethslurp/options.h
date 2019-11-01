@@ -18,6 +18,7 @@
 class COptions : public CBlockOptions {
 public:
 // BEG_CODE_DECLARE
+    bool appearances;
 // END_CODE_DECLARE
 
     CAddressArray addrs;
@@ -25,7 +26,6 @@ public:
     string_q header;
     string_q displayString;
     string_q exportFormat;
-    bool fromFile;
     string_q formatString;
     CStringArray types;
 
@@ -39,3 +39,20 @@ public:
     bool getFormatString(const string_q& name, bool ignoreBlank, string_q& fmtOut);
     bool buildDisplayStrings(void);
 };
+
+//--------------------------------------------------------------------------------
+inline string_q toEtherscan(const string_q& type) {
+    if (type == "token") return "tokentx";
+    else if (type == "miner") return "getminedblocks&blocktype=blocks";
+    else if (type == "int") return "txlistinternal";
+    return "txlist";
+}
+
+//-------------------------------------------------------------------------
+inline bool sortByBlockNumTxId(const CTransaction& v1, const CTransaction& v2) {
+    if (v1.blockNumber != v2.blockNumber)
+        return v1.blockNumber < v2.blockNumber;
+    else if (v1.transactionIndex != v2.transactionIndex)
+        return v1.transactionIndex < v2.transactionIndex;
+    return false;
+}

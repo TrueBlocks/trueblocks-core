@@ -109,6 +109,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,core_visible,docs_vi
 12120,tools,slurp,ethslurp,addrs,,,TRUE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,slurp,ethslurp,type,t,,FALSE,TRUE,TRUE,,flag,list<enum[ext*|int|token|miner|all]>,which types of transaction to request
+12180,tools,slurp,ethslurp,appearances,a,,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
 12220,tools,slurp,ethslurp,,,,FALSE,TRUE,TRUE,na,description,,Fetches data from EtherScan for an arbitrary address.
 
 12260,tools,names,ethNames,terms,,,TRUE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms

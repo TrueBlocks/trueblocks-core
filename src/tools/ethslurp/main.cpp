@@ -29,53 +29,38 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q message;
-        if (!Slurp(theAccount, options, message)) {
-            if (contains(message, "transactions")) {
-                cerr << cRed << "\t" << message << cOff << "\n";
-            } else {
-                return options.usage(message);
+        if (!Slurp(theAccount, options)) {
+            for (auto err : options.errors) {
+                LOG_WARN(err);
             }
-        }
 
-        for (size_t i = 0 ; i < theAccount.transactions.size() ; i++) {
-            CTransaction *trans = &theAccount.transactions[i];
-            trans->m_showing = inRange(trans->blockNumber, options.blocks.start, options.blocks.stop);
+        } else {
+
+            sort(theAccount.transactions.begin(), theAccount.transactions.end(), sortByBlockNumTxId);
+            blknum_t lastBlock = NOPOS;
+            blknum_t lastTxId = NOPOS;
+            for (auto& trans : theAccount.transactions) {
+                bool show1 = inRange(trans.blockNumber, options.blocks.start, options.blocks.stop);
+                bool show2 = (trans.blockNumber != lastBlock || trans.transactionIndex != lastTxId);
+                trans.m_showing = (show1 && show2);
+                lastBlock = trans.blockNumber;
+                lastTxId = trans.transactionIndex;
+            }
+            theAccount.displayString = options.displayString;
+            ostringstream os;
+            theAccount.Format(os, options.formatString);
+            if (options.exportFmt == TXT1 || options.exportFmt == CSV1)
+                cout << trim(trim(os.str(), '\n'), ',') << endl;
+            else
+                cout << "[" << trim(trim(substitute(os.str(), "\n", " "), ' '), ',') << "]" << endl;
         }
-        theAccount.displayString = options.displayString;
-        ostringstream os;
-        theAccount.Format(os, options.formatString);
-        if (options.exportFmt == TXT1 || options.exportFmt == CSV1)
-            cout << trim(trim(os.str(), '\n'), ',') << endl;
-        else
-            cout << "[" << trim(trim(substitute(os.str(), "\n", " "), ' '), ',') << "]" << endl;
     }
-    cerr << "Finished." << endl;
 
     return 0;
 }
 
 //--------------------------------------------------------------------------------
-inline void screenMsg(const string_q& msg) {
-    if (isTestMode())
-        return;
-    cerr << "\t" << setw(85) << msg << "\r";
-    cerr.flush();
-}
-
-//--------------------------------------------------------------------------------
-string_q getEthscanAction(const string_q& type) {
-    if (type == "token")
-        return "tokentx";
-    else if (type == "miner")
-        return "getminedblocks&blocktype=blocks";
-    else if (type == "int")
-        return "txlistinternal";
-    return "txlist";
-}
-
-//--------------------------------------------------------------------------------
-bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
+bool Slurp(CAccount& theAccount, COptions& options) {
 
     theAccount.transactions.clear();
     theAccount = CAccount();
@@ -85,81 +70,80 @@ bool Slurp(CAccount& theAccount, COptions& options, string_q& message) {
     bool first = true;
     for (auto type : options.types) {
         string_q cacheFilename = getCachePath("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "."+type) + ".bin");
-        CArchive inArchive(READING_ARCHIVE);
         if (fileExists(cacheFilename)) {
-            if (!inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
-                message = "Could not open file: '" + cacheFilename + "'\n";
-                return options.fromFile;
+            CArchive inArchive(READING_ARCHIVE);
+            if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
+                theAccount.Serialize(inArchive);
+                inArchive.Close();
+            } else {
+                options.errors.push_back("Could not open file: '" + cacheFilename + "'");
             }
-            theAccount.Serialize(inArchive);
-            inArchive.Close();
         }
 
         // Keep reading until we get less than a full page
         bool done = false;
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
-            "&action="  + getEthscanAction(type) +
-            "&address=" + theAccount.addr +
-            "&page="    + uint_2_Str(theAccount.latestPage) +
-            "&offset="  + uint_2_Str(5000) +
-            "&apikey="  + options.api.getKey();
+                                        "&action="  + toEtherscan(type) +
+                                        "&address=" + theAccount.addr +
+                                        "&page="    + uint_2_Str(theAccount.latestPage) +
+                                        "&offset="  + uint_2_Str(5000) +
+                                        "&apikey="  + options.api.getKey();
 
             string_q responseStr = urlToString(url);
             if (!contains(responseStr, "\"message\":\"OK\"")) {
-                message = "Error: " + responseStr + ". Quitting...";
-                return false;
-            }
-            CESResult response;
-            response.parseJson3(responseStr);
-            uint64_t nRecords = countOf(response.result, '}');
-            screenMsg("Downloaded " + uint_2_Str(nRecords) + " records from EtherScan.");
+                options.errors.push_back("Error: " + responseStr + ".");
+                done = true;
 
-            // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
-            theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
+            } else {
+                CESResult response;
+                response.parseJson3(responseStr);
+                uint64_t nRecords = countOf(response.result, '}');
+                LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
 
-            uint64_t nAdded = 0;
-            CTransaction trans;
-            while (trans.parseJson3(response.result)) {
-                if (theAccount.isNewTrans(trans)) {
+                // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
+                theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
+
+                uint64_t nAdded = 0;
+                CTransaction trans;
+                while (trans.parseJson3(response.result)) {
                     if (type == "int")
                         findInternalTxIndex(trans);
                     theAccount.transactions.push_back(trans);
-                    screenMsg("Adding records from block " + uint_2_Str(trans.blockNumber) + "...");
+                    theAccount.markLatest(trans);
                     trans = CTransaction();  // reset
                     nAdded++;
-                } else {
-                    screenMsg("Scanning " + uint_2_Str(trans.blockNumber) + "." + uint_2_Str(trans.transactionIndex));
+                    LOG4("Adding records from block ", trans.blockNumber, "...\r");
+                }
+
+                // We're done if we got a page of less than 5,000 records, otherwise we will process the next page
+                done = (nRecords < 5000);
+                if (!done)
+                    theAccount.latestPage++;
+
+                if (nAdded) {
+                    LOG4("Appending ", nAdded, " new records, total ", theAccount.transactions.size(), "\r");
+                    CArchive outArchive(WRITING_ARCHIVE);
+                    if (outArchive.Lock(cacheFilename, (first ? modeWriteCreate : modeWriteAppend), LOCK_CREATE)) {
+                        lockSection(true);
+                        theAccount.Serialize(outArchive);
+                        outArchive.Close();
+                        lockSection(false);
+                        first = false;
+
+                    } else {
+                        options.errors.push_back("\tCould not open file: " + cacheFilename);
+                        continue;
+                    }
                 }
             }
-
-            // We're done if we got a page of less than 5,000 records, otherwise we will process the next page
-            done = (nRecords < 5000);
-            if (!done)
-                theAccount.latestPage++;
-
-            if (nAdded) {
-                screenMsg("Appending " + uint_2_Str(nAdded) + " new records, total " + uint_2_Str(theAccount.transactions.size()));
-                CArchive outArchive(WRITING_ARCHIVE);
-                if (outArchive.Lock(cacheFilename, (first ? modeWriteCreate : modeWriteAppend), LOCK_CREATE)) {
-                    lockSection(true);
-                    theAccount.Serialize(outArchive);
-                    outArchive.Close();
-                    lockSection(false);
-                    first = false;
-
-                } else {
-                    message = "\tCould not open file: '" + cacheFilename + "'                 \n";
-                    return false;
-                }
-            }
-            //            if (options.types.size() > 1)
-            //                ::sleep(100000);
         }
         if (shouldQuit())
-            return options.fromFile;
+            break;
+        LOG4("Processed transaction of type ", type, ". nTrans: ", theAccount.transactions.size());
     }
-    return (options.fromFile || theAccount.transactions.size() > 0);
+    cerr << string_q(120, ' ') << "\r";
+    return (theAccount.transactions.size() > 0);
 }
 
 //---------------------------------------------------------------------------
