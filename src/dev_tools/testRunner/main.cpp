@@ -175,8 +175,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             nTests++;
-//            int ret =
-                system(theCmd.c_str());
+            int ret = system(theCmd.c_str());  { if (ret) { printf("%s",""); } }  // do not remove, squelches warning
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 

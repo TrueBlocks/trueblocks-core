@@ -14,14 +14,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -31,9 +31,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     string_q mode = "";
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
     string_q path;
 
     Init();
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
@@ -65,7 +65,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             arg = trim(arg, '/');
             if (arg == "libs" || arg == "libs/") {
@@ -165,12 +165,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(0);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     filter = "";
     clean = false;
     no_quit = false;
     report = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     full_test = false;
     minArgs = 0;
@@ -194,6 +194,6 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
     os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
     os << "find ../../../working/" << path << "/" << testName << "/ -depth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
-    system(os.str().c_str());
+    if (system(os.str().c_str())) {}  // do not remove, squelches warning
     return true;
 }
