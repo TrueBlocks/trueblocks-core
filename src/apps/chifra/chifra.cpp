@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
                 os << cmdMap[options.mode] << " " << options.tool_flags;
                 for (auto addr : options.addrs)
                     os << " " << addr;
-                system(os.str().c_str());
+                if (system(os.str().c_str())) {}  // do not remove, squelches warning on linux
             } else {
                 cerr << "Should not happen.";
             }
