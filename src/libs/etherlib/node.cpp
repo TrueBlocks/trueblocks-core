@@ -230,7 +230,7 @@ extern void loadParseMap(void);
     //-----------------------------------------------------------------------
     bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos) {
         string_q trcFilename = getBinaryCacheFilename(CT_TRACES, bn, txid, "");
-        if (fileExists(trcFilename)) {
+        if (useCache && fileExists(trcFilename)) {
             CArchive traceCache(READING_ARCHIVE);
             if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
                 traceCache >> trans.traces;

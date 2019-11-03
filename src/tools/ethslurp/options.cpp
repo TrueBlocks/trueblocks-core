@@ -14,13 +14,13 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "which types of transaction to request"),
     COption("appearances", "a", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -30,8 +30,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     blknum_t latestBlock = getLastBlock_client();
@@ -40,11 +40,11 @@ bool COptions::parseArguments(string_q& command) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--appearances") {
             appearances = true;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
 
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
             string_q type;
@@ -55,7 +55,7 @@ bool COptions::parseArguments(string_q& command) {
                 types.push_back("ext");
                 types.push_back("int");
                 types.push_back("token");
-//                types.push_back("miner");
+                //                types.push_back("miner");
 
             } else {
                 types.push_back(type);
@@ -130,9 +130,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     appearances = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     blocks.Init();
     exportFormat = "json";

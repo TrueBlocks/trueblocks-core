@@ -19,12 +19,12 @@
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool details;
     bool list;
     blknum_t start;
     blknum_t end;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CStatus status;
     string_q mode;

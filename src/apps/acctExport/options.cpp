@@ -7,7 +7,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
@@ -21,7 +21,7 @@ static const COption params[] = {
     COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
     COption("write_traces", "R", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
-    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -39,11 +39,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG8(false);
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
 
@@ -52,7 +52,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
@@ -119,7 +119,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             if (!startsWith(arg, "0x"))
                 return usage("Invalid option: " + arg + ". Quitting...");
@@ -136,9 +136,9 @@ bool COptions::parseArguments(string_q& command) {
 
             if (fileExists(fn + ".lck"))
                 EXIT_USAGE("The cache lock file is present. The program is either already "
-                             "running or it did not end cleanly the\n\tlast time it ran. "
-                             "Quit the already running program or, if it is not running, "
-                             "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
+                           "running or it did not end cleanly the\n\tlast time it ran. "
+                           "Quit the already running program or, if it is not running, "
+                           "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
 
             //if (fileSize(fn) == 0)
             //    EXIT_USAGE("Nothing to export. Quitting...");
@@ -212,12 +212,6 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
     }
-
-    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", write_blocks);;
-    write_txs    = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", write_txs);;
-    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", write_traces);;
-    skip_ddos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
-    max_traces   = getGlobalConfig("acctExport")->getConfigBool("settings", "max_traces", max_traces);;
 
     if (exportFmt != JSON1 && exportFmt != API1) {
         string_q deflt, format;
@@ -299,8 +293,8 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen)
         exportFmt = NONE1;
 
-//    if (count_only && !doAppearances)
-//        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
+    //    if (count_only && !doAppearances)
+    //        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
 
     if (count_only) {
         string_q header;
@@ -321,7 +315,7 @@ void COptions::Init(void) {
 
     monitors.clear();
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     appearances = false;
     receipts = false;
     logs = false;
@@ -330,15 +324,15 @@ void COptions::Init(void) {
     hashes_only = false;
     count_only = false;
     articulate = false;
-    write_blocks = false;
-    write_txs = true;
-    write_traces = true;
-    skip_ddos = true;
-    max_traces = 250;
+    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", false);
+    write_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", true);
+    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", true);
+    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
+    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     grab_abis = false;
     freshen = false;
     deltas = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     nExported = 0;
     scanRange.second = getLastBlock_cache_ripe();

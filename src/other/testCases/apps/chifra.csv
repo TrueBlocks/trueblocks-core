@@ -10,8 +10,8 @@ on, cmd,  fast, seed,     apps/chifra, no_params,            n,
 on, cmd,  fast, leech,    apps/chifra, invalid_option,       n, modes = not_a_mode
 
 on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-#on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
-#on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
+# on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+# on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
 
 on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & yes & verbose = 10
 
@@ -20,9 +20,9 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
 # on, both, fast, blocks,   apps/chifra, blocks2,              y, modes = blocks & blocks = 12 & fmt = csv & no_header
 
-# on, both, fast, names, apps/chifra, names,             y, modes = names & expand & fmt = txt
-# on, both, fast, names, apps/chifra, names_noparams,    y, modes = names & fmt = txt
-# on, both, fast, names, apps/chifra, names_badparams,   y, modes = names & not_an_option
+# on, both, fast, names,    apps/chifra, names,                y, modes = names & expand & fmt = txt
+# on, both, fast, names,    apps/chifra, names_noparams,       y, modes = names & fmt = txt
+# on, both, fast, names,    apps/chifra, names_badparams,      y, modes = names & not_an_option
 
 # on, both, fast, config,   apps/chifra, config_noparms,       y, modes = config
 # on, both, fast, config,   apps/chifra, config_badparms,      y, modes = config & bad-param

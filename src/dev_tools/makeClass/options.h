@@ -18,11 +18,11 @@ typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool all;
     string_q nspace;
     string_q filter;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     runmode_t mode;
     string_q classNames;

@@ -14,12 +14,12 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
     COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
     COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -30,8 +30,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
@@ -42,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
             list = true;
 
@@ -52,7 +52,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
 
         } else if (arg == "UTC") {
             // do nothing
@@ -124,20 +124,20 @@ bool COptions::parseArguments(string_q& command) {
 
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
-            
+
     // Data verifictions
     if (requests.size() == 0)
         return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY_WHEN; break;
-        case API1:
-        case JSON1: format = ""; break;
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
-            break;
+    case NONE1: format = STR_DISPLAY_WHEN; break;
+    case API1:
+    case JSON1: format = ""; break;
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
+        break;
     }
     manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
@@ -155,9 +155,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_DENOM);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     list = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     items.clear();
     requests.clear();

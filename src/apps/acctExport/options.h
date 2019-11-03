@@ -12,7 +12,7 @@ using uint_addr_mp = map<uint32_t,address_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool appearances;
     bool receipts;
     bool logs;
@@ -25,11 +25,11 @@ public:
     bool write_txs;
     bool write_traces;
     bool skip_ddos;
-    uint32_t max_traces;
+    uint64_t max_traces;
     bool grab_abis;
     bool freshen;
     bool deltas;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CAbi abis;
     CAccountWatchArray monitors;

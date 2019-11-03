@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
     COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
     COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -37,11 +37,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool addrs = false;
     bool uniq = false;
     bool uniq_tx = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         // do not collapse
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-s" || arg == "--hashes_only") {
             hashes_only = true;
 
@@ -76,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
 
             string_q ret = blocks.parseBlockList(arg, latest.blockNumber);
@@ -146,24 +146,24 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     string_q format;
     switch (exportFmt) {
-        case NONE1:
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("getBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_BLOCK : format);
-            if (count_only)
-                format = STR_FORMAT_COUNT_TXT;
-            else if (!filterType.empty())
-                format = STR_FORMAT_FILTER_TXT;
-            manageFields("CBlock:" + cleanFmt(format, exportFmt));
-            break;
-        case API1:
-        case JSON1:
-            format = "";
-            if (count_only)
-                format = STR_FORMAT_COUNT_JSON;
-            else if (!filterType.empty())
-                format = STR_FORMAT_FILTER_JSON;
-            break;
+    case NONE1:
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("getBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_BLOCK : format);
+        if (count_only)
+            format = STR_FORMAT_COUNT_TXT;
+        else if (!filterType.empty())
+            format = STR_FORMAT_FILTER_TXT;
+        manageFields("CBlock:" + cleanFmt(format, exportFmt));
+        break;
+    case API1:
+    case JSON1:
+        format = "";
+        if (count_only)
+            format = STR_FORMAT_COUNT_JSON;
+        else if (!filterType.empty())
+            format = STR_FORMAT_FILTER_JSON;
+        break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (isNoHeader)
@@ -177,11 +177,11 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     hashes_only = false;
     count_only = false;
     force = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     filterType  = "";
     secsFinal   = (60 * 5);
@@ -217,9 +217,9 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
         string_q ret;
         ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
-                    "or any combination.\n";
+        "or any combination.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
-                    "(see documentation).\n";
+        "(see documentation).\n";
         ret += "[{special}] blocks are detailed under [{whenBlock --list}].\n";
         return ret;
     }

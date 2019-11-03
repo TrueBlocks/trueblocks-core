@@ -16,9 +16,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool freshen;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CPriceSource source;
     uint64_t     freq;

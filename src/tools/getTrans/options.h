@@ -16,11 +16,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool articulate;
     bool trace;
     bool force;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     COptionsTransList transList;
     CAbi abi_spec;

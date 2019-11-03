@@ -16,12 +16,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool articulate;
     bool count_only;
     bool skip_ddos;
-    uint32_t max_traces;
-// END_CODE_DECLARE
+    uint64_t max_traces;
+    // END_CODE_DECLARE
 
     COptionsTransList transList;
     CAbi abi_spec;

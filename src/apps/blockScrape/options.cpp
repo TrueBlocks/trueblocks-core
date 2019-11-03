@@ -7,31 +7,32 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "p", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_ERROR_MSG;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
-// END_CODE_AUTO
+            // BEG_CODE_AUTO
+            // END_CODE_AUTO
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             arg = substitute(substitute(arg, "-n:", ""), "--n_blocks:", "");
@@ -75,15 +76,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isTestMode()) {
         if (isApiMode()) {
-const char* STR_ERROR_MSG =
-"{\n"
-"  \"message\": \"Reporting for test mode only\",\n"
-"  \"errors\": [\n"
-"    \"n_blocks [N_BLOCKS]\",\n"
-"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
-"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
-"  ]\n"
-"}\n";
             string_q msg = STR_ERROR_MSG;
             replace(msg, "[N_BLOCKS]", uint_2_Str(n_blocks));
             replace(msg, "[N_BLOCK_PROCS]", uint_2_Str(n_block_procs));
@@ -159,8 +151,8 @@ void COptions::Init(void) {
     optionOn(OPT_RUNONCE | OPT_PREFUND);
     optionOff(OPT_FMT);
 
-// BEG_CODE_INIT
-// END_CODE_INIT
+    // BEG_CODE_INIT
+    // END_CODE_INIT
 
     if (getEnvStr("DOCKER_MODE") == "true") {
         n_blocks      = 100;
@@ -184,3 +176,14 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+//--------------------------------------------------------------------------------
+const char* STR_ERROR_MSG =
+"{\n"
+"  \"message\": \"Reporting for test mode only\",\n"
+"  \"errors\": [\n"
+"    \"n_blocks [N_BLOCKS]\",\n"
+"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
+"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
+"  ]\n"
+"}\n";

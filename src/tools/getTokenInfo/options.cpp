@@ -14,14 +14,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "retreive information about the token"),
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -32,8 +32,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     CAddressArray addrs;
@@ -42,14 +42,14 @@ bool COptions::parseArguments(string_q& command) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-b" || arg == "--by_acct") {
             by_acct = true;
 
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
             string_q unused;
@@ -144,10 +144,10 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     optionOff(OPT_FMT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     by_acct = false;
     no_zero = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     watches.clear();
     holders.clear();

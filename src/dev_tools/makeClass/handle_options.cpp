@@ -23,6 +23,7 @@ extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCK_PROCESSOR;
 extern const char* STR_TX_PROCESSOR;
+extern const char* STR_CUSTOM_INIT;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
@@ -55,6 +56,7 @@ bool COptions::handle_options(void) {
                 check_option(option);
 
                 bool isEnum = contains(option.data_type, "enum");
+                bool isBool = contains(option.data_type, "boolean");
                 bool isBlockNum = contains(option.data_type, "blknum");
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
@@ -62,16 +64,13 @@ bool COptions::handle_options(void) {
 
                 if (!option.generate.empty()) {
 
-                    string_q type = substitute(substitute(substitute(option.data_type, "boolean", "bool"), "<", ""), ">", "");
+                    string_q type = substituteAny(substitute(option.data_type, "boolean", "bool"), "<>", "");
                     if (contains(option.data_type, "enum"))
                         type = "string";
                     replace(type, "blknum", "blknum_t");
                     replace(type, "string", "string_q");
                     replace(type, "uint32", "uint32_t");
                     replace(type, "uint64", "uint64_t");
-                    string_q def = (type == "bool" ? "false" : (type == "string_q" ? "\"\"" : "NOPOS"));
-                    if (!option.def_val.empty())
-                        def = option.def_val;
 
                     if (option.generate == "local") {
 
@@ -79,17 +78,17 @@ bool COptions::handle_options(void) {
                         hasTxList = (hasTxList || (option.option_kind == "positional" && option.data_type == "list<tx_id>"));
                         if (option.option_kind == "switch") {
 
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
 
                         } else if (option.option_kind == "toggle") {
 
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
                             auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
 
                         } else if (option.option_kind == "flag") {
 
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = " + def + ";") << endl;
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
                             if (isEnum)
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
                             else if (isBlockNum)
@@ -105,21 +104,25 @@ bool COptions::handle_options(void) {
 
                     } else if (option.generate == "yes") {
 
+                        string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+                        if (option.is_customizable == "TRUE")
+                            initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]", (isEnum ? "String" : (isBool) ? "Bool" : "Int"));
+
                         if (option.option_kind == "switch") {
 
-                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            init_stream << option.Format(initFmt) << endl;
                             declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
 
                         } else if (option.option_kind == "toggle") {
 
-                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            init_stream << option.Format(initFmt) << endl;
                             declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
                             auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
 
                         } else if (option.option_kind == "flag") {
 
-                            init_stream << option.Format("    [{COMMAND}] = " + def + ";") << endl;
+                            init_stream << option.Format(initFmt) << endl;
                             declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
                             if (isEnum)
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
@@ -137,6 +140,7 @@ bool COptions::handle_options(void) {
                     } else {
                         // do nothing
                     }
+
                 } else {
                     if (option.option_kind == "toggle" || option.option_kind == "switch" || option.option_kind == "flag")
                         allAuto = false;
@@ -215,10 +219,13 @@ bool COptions::check_option(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
     string_q converted = orig;
-    converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
-    converted = substitute(converted, "// END_" + which, "</remove>\n// END_" + which);
+    converted = substitute(converted, "/""/ BEG_" + which, "/""/ BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
+    converted = substitute(converted, "\n    /""/ END_" + which, "</remove>\n+/""/ END_" + which);
+    converted = substitute(converted, "\n            /""/ END_" + which, "</remove>\n-/""/ END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
+    replaceAll(converted, "+/""/", "    /""/");
+    replaceAll(converted, "-/""/", "            /""/");
     return converted;
 }
 //---------------------------------------------------------------------------------------------------
@@ -299,3 +306,7 @@ const char* STR_BLOCK_PROCESSOR =
 const char* STR_TX_PROCESSOR =
 "        } else if (!parseTransList2(this, transList, arg)) {\n"
 "            return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_CUSTOM_INIT =
+"    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", [{DEF_VAL}]);";

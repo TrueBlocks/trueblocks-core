@@ -16,9 +16,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool list;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CBlockMap items;
     CNameValueArray requests;

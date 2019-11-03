@@ -33,6 +33,7 @@ public:
     string_q hotkey;
     string_q def_val;
     string_q is_required;
+    string_q is_customizable;
     string_q core_visible;
     string_q docs_visible;
     string_q generate;
@@ -42,9 +43,9 @@ public:
 
 public:
     CCommandOption(void);
-    CCommandOption(const CCommandOption& op);
+    CCommandOption(const CCommandOption& co);
     virtual ~CCommandOption(void);
-    CCommandOption& operator=(const CCommandOption& op);
+    CCommandOption& operator=(const CCommandOption& co);
 
     DECLARE_NODE(CCommandOption);
 
@@ -59,7 +60,7 @@ public:
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CCommandOption& op);
+    void duplicate(const CCommandOption& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,10 +75,10 @@ inline CCommandOption::CCommandOption(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CCommandOption::CCommandOption(const CCommandOption& op) {
+inline CCommandOption::CCommandOption(const CCommandOption& co) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(op);
+    duplicate(co);
 }
 
 // EXISTING_CODE
@@ -108,6 +109,7 @@ inline void CCommandOption::initialize(void) {
     hotkey = "";
     def_val = "";
     is_required = "";
+    is_customizable = "";
     core_visible = "";
     docs_visible = "";
     generate = "";
@@ -120,32 +122,33 @@ inline void CCommandOption::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CCommandOption::duplicate(const CCommandOption& op) {
+inline void CCommandOption::duplicate(const CCommandOption& co) {
     clear();
-    CBaseNode::duplicate(op);
+    CBaseNode::duplicate(co);
 
-    num = op.num;
-    group = op.group;
-    api_route = op.api_route;
-    tool = op.tool;
-    command = op.command;
-    hotkey = op.hotkey;
-    def_val = op.def_val;
-    is_required = op.is_required;
-    core_visible = op.core_visible;
-    docs_visible = op.docs_visible;
-    generate = op.generate;
-    option_kind = op.option_kind;
-    data_type = op.data_type;
-    description = op.description;
+    num = co.num;
+    group = co.group;
+    api_route = co.api_route;
+    tool = co.tool;
+    command = co.command;
+    hotkey = co.hotkey;
+    def_val = co.def_val;
+    is_required = co.is_required;
+    is_customizable = co.is_customizable;
+    core_visible = co.core_visible;
+    docs_visible = co.docs_visible;
+    generate = co.generate;
+    option_kind = co.option_kind;
+    data_type = co.data_type;
+    description = co.description;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CCommandOption& CCommandOption::operator=(const CCommandOption& op) {
-    duplicate(op);
+inline CCommandOption& CCommandOption::operator=(const CCommandOption& co) {
+    duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
@@ -173,7 +176,7 @@ extern CArchive& operator>>(CArchive& archive, CCommandOptionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_OPTIONDEF;
+extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

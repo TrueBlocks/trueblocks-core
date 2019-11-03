@@ -7,14 +7,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -26,10 +26,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG8(false);
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     blknum_t start = 0;
     blknum_t end = NOPOS;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     bool tool_help = false;
     bool copy_to_tool = false;
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
 
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmUint("sleep", sleep, arg))
                 return false;
@@ -54,7 +54,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
 
         } else if (arg == "--set") {
             tool_flags += (arg + " ");
@@ -137,10 +137,10 @@ bool COptions::parseArguments(string_q& command) {
     scrapeSleep = (useconds_t)sleep;
 
     if (mode == "blocks" ||
-    	mode == "transactions" ||
+        mode == "transactions" ||
         mode == "receipts" ||
         mode == "names" ||
-    	mode == "logs" ||
+        mode == "logs" ||
         mode == "traces" ||
         mode == "state" ||
         mode == "message" ||
@@ -209,9 +209,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_HELP);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     sleep = 14;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     addrs.clear();
     tool_flags    = "";
@@ -238,13 +238,13 @@ string_q addExportMode(format_t fmt) {
     if (!isApiMode() && fmt == TXT1)
         return "";
     switch (fmt) {
-        case NONE1: return " --fmt none";
-        case JSON1: return " --fmt json";
-        case TXT1:  return " --fmt txt";
-        case CSV1:  return " --fmt csv";
-        case API1:  return " --fmt api";
-        default:
-            break;
+    case NONE1: return " --fmt none";
+    case JSON1: return " --fmt json";
+    case TXT1:  return " --fmt txt";
+    case CSV1:  return " --fmt csv";
+    case API1:  return " --fmt api";
+    default:
+        break;
     }
     return "";
 }

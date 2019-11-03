@@ -15,7 +15,7 @@ public:
     uint64_t nRecords;
     uint64_t nTruncs;
     CStats(void) : nDups(0), nReversals(0), nFixed(0), nRecords(0), nTruncs(0)
-        {}
+    {}
 };
 
 //-------------------------------------------------------------------------
@@ -25,13 +25,13 @@ typedef bool (*APPEARANCEFILTERFUNC)(CAppearanceArray_base& dataArray, const CAp
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool data;
     blknum_t truncate;
     uint32_t skip;
     blknum_t start;
     blknum_t end;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     string_q mode;
     CStats stats;

@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
@@ -26,7 +26,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool expand = false;
     bool owned = false;
     bool custom = false;
@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
     bool other = false;
     bool addr = false;
     string_q add = "";
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     string_q format;
     bool deflt = true;
@@ -57,7 +57,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-e" || arg == "--expand") {
             expand = true;
 
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             searches.push_back(arg);
 
@@ -126,17 +126,17 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1:
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("ethNames")->getConfigStr("display", "format", format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
-            if (verbose && !contains(format, "{SOURCE}"))
-                format += "\t[{SOURCE}]";
-            break;
-        case API1:
-        case JSON1:
-            format = "";
-            break;
+    case NONE1:
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("ethNames")->getConfigStr("display", "format", format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
+        if (verbose && !contains(format, "{SOURCE}"))
+            format += "\t[{SOURCE}]";
+        break;
+    case API1:
+    case JSON1:
+        format = "";
+        break;
     }
     manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ACCOUNTNAME : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
@@ -173,9 +173,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     match_case = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     items.clear();
     searches.clear();
@@ -356,11 +356,11 @@ void COptions::applyFilter() {
 //-----------------------------------------------------------------------
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
-//    replace(ret, "[{GROUP}]", "");
-//    replace(ret, "[{SUBGROUP}]", "");
-//    replace(ret, "[{ADDRESS}]", "");
-//    replace(ret, "[{NAME}]", "");
-//    replace(ret, "[{SYMBOL}]", "");
+    //    replace(ret, "[{GROUP}]", "");
+    //    replace(ret, "[{SUBGROUP}]", "");
+    //    replace(ret, "[{ADDRESS}]", "");
+    //    replace(ret, "[{NAME}]", "");
+    //    replace(ret, "[{SYMBOL}]", "");
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{LOGO}]", "");

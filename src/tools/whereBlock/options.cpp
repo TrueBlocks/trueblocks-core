@@ -14,10 +14,10 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
     COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -28,8 +28,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
     if (!isNodeRunning()) // it's okay if it's not
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (!parseBlockList2(this, blocks, arg, latest)) {
             return false;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         }
     }
 
@@ -62,13 +62,13 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
     switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY_WHERE; break;
-        case API1:
-        case JSON1: format = ""; break;
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHERE : format);
-            break;
+    case NONE1: format = STR_DISPLAY_WHERE; break;
+    case API1:
+    case JSON1: format = ""; break;
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHERE : format);
+        break;
     }
     manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
@@ -87,8 +87,8 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_DENOM);
 
-// BEG_CODE_INIT
-// END_CODE_INIT
+    // BEG_CODE_INIT
+    // END_CODE_INIT
 
     items.clear();
     blocks.Init();

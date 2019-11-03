@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool block_only;
     bool receipt_only;
     bool bits;
@@ -24,7 +24,7 @@ public:
     bool bitbars;
     bool pctbars;
     bool bitcount;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     uint64_t bitBound;
 

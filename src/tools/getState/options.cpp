@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
     COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
@@ -22,7 +22,7 @@ static const COption params[] = {
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -32,17 +32,17 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     string_q mode = "";
     bool no_history = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
@@ -62,7 +62,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else if (isAddress(arg)) {
             addrs.push_back(toLower(arg));
 
@@ -108,16 +108,16 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     switch (exportFmt) {
-        case NONE1:
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-            manageFields("CEthState:" + cleanFmt(format, exportFmt));
-            break;
-        case API1:
-        case JSON1:
-            format = "";
-            break;
+    case NONE1:
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHSTATE : format);
+        manageFields("CEthState:" + cleanFmt(format, exportFmt));
+        break;
+    case API1:
+    case JSON1:
+        format = "";
+        break;
     }
     if (expContext().asEther)
         format = substitute(format, "{BALANCE}", "{ETHER}");
@@ -152,10 +152,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     changes = false;
     no_zero = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     prevBal = 0;
     modes = ST_BALANCE;

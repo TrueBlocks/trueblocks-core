@@ -17,9 +17,9 @@
 
 class COptions : public CBlockOptions {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool appearances;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CAddressArray addrs;
     CWebAPI api;

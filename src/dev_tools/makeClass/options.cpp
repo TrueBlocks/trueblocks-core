@@ -15,7 +15,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("classes", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
     COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
@@ -26,7 +26,7 @@ static const COption params[] = {
     COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
     COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -36,20 +36,20 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool list = false;
     bool run = false;
     bool edit = false;
     string_q js = "";
     bool options = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
             list = true;
 
@@ -80,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             if (!classNames.empty())
                 classNames += "|";
@@ -132,11 +132,11 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_FMT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     all = false;
     nspace = "";
     filter = "";
-// END_CODE_INIT
+    // END_CODE_INIT
 
     mode = NONE;
     classNames = "";

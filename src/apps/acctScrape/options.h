@@ -9,9 +9,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool daemon;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CAccountWatchArray monitors;
     blknum_t lastBlockInFile;

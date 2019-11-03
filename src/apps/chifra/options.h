@@ -9,9 +9,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     uint32_t sleep;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     string_q   mode;
     useconds_t scrapeSleep;

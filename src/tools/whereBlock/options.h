@@ -16,8 +16,9 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-// BEG_CODE_DECLARE
-// END_CODE_DECLARE
+
+    // BEG_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CCacheEntryMap items;
     cache_t type;

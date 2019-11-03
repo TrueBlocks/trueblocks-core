@@ -84,7 +84,7 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             if ( fieldName % "origLine" ) { origLine = fieldValue; return true; }
             if ( fieldName % "onOff" ) { onOff = fieldValue; return true; }
             if ( fieldName % "options" ) { options = fieldValue; return true; }
-            if ( fieldName % "optTool" ) { optTool = fieldValue; return true; }
+            if ( fieldName % "extra" ) { extra = fieldValue; return true; }
             break;
         case 'p':
             if ( fieldName % "post" ) { post = fieldValue; return true; }
@@ -138,7 +138,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> filename;
     archive >> post;
     archive >> options;
-    archive >> optTool;
+    archive >> extra;
     archive >> path;
     archive >> goldPath;
     archive >> workPath;
@@ -165,7 +165,7 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << filename;
     archive << post;
     archive << options;
-    archive << optTool;
+    archive << extra;
     archive << path;
     archive << goldPath;
     archive << workPath;
@@ -215,7 +215,7 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "filename", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "post", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "options", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTestCase, "optTool", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTestCase, "extra", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "path", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "goldPath", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "workPath", T_TEXT, ++fieldNum);
@@ -292,7 +292,7 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "origLine" ) return origLine;
             if ( fieldName % "onOff" ) return onOff;
             if ( fieldName % "options" ) return options;
-            if ( fieldName % "optTool" ) return optTool;
+            if ( fieldName % "extra" ) return extra;
             break;
         case 'p':
             if ( fieldName % "post" ) return post;
@@ -371,7 +371,7 @@ CTestCase::CTestCase(const string_q& line) {
     filename = parts.size() > 5 ? trim(parts[5]) : "";
     post     = parts.size() > 6 ? trim(parts[6]) : "";
     options  = parts.size() > 7 ? trim(parts[7]) : "";
-    optTool  = parts.size() > 8 ? trim(parts[8]) : "";
+    extra    = parts.size() > 8 ? trim(parts[8]) : "";
 
     path     = nextTokenClear(tool, '/');
     if (endsWith(path, "lib"))
@@ -433,8 +433,10 @@ void CTestCase::prepareTest(bool cmdLine) {
     if (fileExists(removePath))
         ::remove(removePath.c_str());
 
-    if (!optTool.empty()) // order matters
-        tool = optTool;
+    if (!extra.empty() && !contains(extra,"=")) { // order matters
+        tool = extra;
+        extra = "";
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -15,7 +15,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -35,10 +35,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool canonical = false;
     bool known = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     bool from_sol = false;
@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--canonical") {
             canonical = true;
 
@@ -59,7 +59,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--sol:")) {
             string_q orig = arg;
             arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
@@ -204,10 +204,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     generate = false;
     noconst = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     parts = (SIG_DEFAULT|SIG_ENCODE);
     addrs.clear();

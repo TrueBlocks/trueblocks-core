@@ -19,9 +19,9 @@ enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool match_case;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CAccountNameMap items;
     CStringArray    searches;

@@ -16,11 +16,11 @@
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool hashes_only;
     bool count_only;
     bool force;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CBlock latest;
     uint64_t addrCounter;

@@ -14,14 +14,14 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
-    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -31,15 +31,15 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
@@ -62,7 +62,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (!parseTransList2(this, transList, arg)) {
             return false;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         }
     }
 
@@ -88,27 +88,25 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     string_q format;
     switch (exportFmt) {
-        case NONE1:
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("getTrace")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
-            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-            manageFields("CTrace:" + cleanFmt(format, exportFmt));
-            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
-            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
-            break;
-        case API1:
-        case JSON1:
-            format = "";
-            break;
+    case NONE1:
+    case TXT1:
+    case CSV1:
+        format = getGlobalConfig("getTrace")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
+        manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+        manageFields("CTrace:" + cleanFmt(format, exportFmt));
+        manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
+        manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+        break;
+    case API1:
+    case JSON1:
+        format = "";
+        break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (count_only)
         expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
-
-    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
 
     return true;
 }
@@ -118,12 +116,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     articulate = false;
     count_only = false;
-    skip_ddos = true;
-    max_traces = 250;
-// END_CODE_INIT
+    skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);
+    max_traces = getGlobalConfig("getTrace")->getConfigInt("settings", "max_traces", 250);
+    // END_CODE_INIT
 
     transList.Init();
 }
@@ -148,10 +146,10 @@ string_q COptions::postProcess(const string_q& which, const string_q& str) const
 
         string_q ret;
         ret += "[{transactions}] is one or more space-separated identifiers which may be either a transaction hash,|"
-                "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+        "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
         ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
         ret += "This tool retrieves information from the local node or rpcProvider if configured "
-                    "(see documentation).\n";
+        "(see documentation).\n";
         ret += "If the queried node does not store historical state, the results may be undefined.\n";
         return ret;
     }

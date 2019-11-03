@@ -15,10 +15,10 @@
 
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool generate;
     bool noconst;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     bool first;
     uint64_t parts;

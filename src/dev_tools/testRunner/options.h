@@ -21,12 +21,12 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     string_q filter;
     bool clean;
     bool no_quit;
     bool report;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     int modes = CMD;
     bool ignoreOff = false;

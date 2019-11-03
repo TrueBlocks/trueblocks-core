@@ -23,8 +23,8 @@ namespace qblocks {
 IMPLEMENT_NODE(CCommandOption, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextOptiondefChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr);
+static string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
 void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
@@ -34,7 +34,7 @@ void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["optiondef_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["commandoption_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -44,11 +44,11 @@ void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextOptiondefChunk, this);
+        ctx << getNextChunk(fmt, nextCommandoptionChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextOptiondefChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr) {
     if (dataPtr)
         return reinterpret_cast<const CCommandOption *>(dataPtr)->getValueByName(fieldIn);
 
@@ -75,7 +75,7 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             if ( fieldName % "core_visible" ) { core_visible = fieldValue; return true; }
             break;
         case 'd':
-            if ( fieldName % "deft_val" ) { def_val = fieldValue; return true; }
+            if ( fieldName % "def_val" ) { def_val = fieldValue; return true; }
             if ( fieldName % "docs_visible" ) { docs_visible = fieldValue; return true; }
             if ( fieldName % "data_type" ) { data_type = fieldValue; return true; }
             if ( fieldName % "description" ) { description = fieldValue; return true; }
@@ -89,6 +89,7 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             break;
         case 'i':
             if ( fieldName % "is_required" ) { is_required = fieldValue; return true; }
+            if ( fieldName % "is_customizable" ) { is_customizable = fieldValue; return true; }
             break;
         case 'n':
             if ( fieldName % "num" ) { num = fieldValue; return true; }
@@ -133,6 +134,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> hotkey;
     archive >> def_val;
     archive >> is_required;
+    archive >> is_customizable;
     archive >> core_visible;
     archive >> docs_visible;
     archive >> generate;
@@ -159,6 +161,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << hotkey;
     archive << def_val;
     archive << is_required;
+    archive << is_customizable;
     archive << core_visible;
     archive << docs_visible;
     archive << generate;
@@ -208,6 +211,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "hotkey", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "def_val", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_required", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_customizable", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "core_visible", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "docs_visible", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "generate", T_TEXT, ++fieldNum);
@@ -228,31 +232,31 @@ void CCommandOption::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CCommandOption *opt = reinterpret_cast<const CCommandOption *>(dataPtr);
-    if (opt) {
+string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
+    const CCommandOption *com = reinterpret_cast<const CCommandOption *>(dataPtr);
+    if (com) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
                 if ( fieldIn % "datatype" )
-                    return ((opt->option_kind == "switch" || opt->option_kind == "toggle") ? "" : opt->data_type);
+                    return ((com->option_kind == "switch" || com->option_kind == "toggle") ? "" : com->data_type);
                 break;
             case 'o':
                 if ( fieldIn % "opts" ) {
                     string_q ret;
-                    if (opt->is_required == "TRUE")
+                    if (com->is_required == "TRUE")
                         ret += ("|OPT_REQUIRED");
 
-                    if (opt->core_visible != "TRUE")
+                    if (com->core_visible != "TRUE")
                         ret += ("|OPT_HIDDEN");
 
-                    if (opt->option_kind == "switch")
+                    if (com->option_kind == "switch")
                         ret += ("|OPT_SWITCH");
-                    else if (opt->option_kind == "toggle")
+                    else if (com->option_kind == "toggle")
                         ret += ("|OPT_TOGGLE");
-                    else if (opt->option_kind == "flag")
+                    else if (com->option_kind == "flag")
                         ret += ("|OPT_FLAG");
-                    else if (opt->option_kind == "positional")
+                    else if (com->option_kind == "positional")
                         ret += ("|OPT_POSITIONAL");
                     else
                         ret += ("|OPT_DESCRIPTION");
@@ -263,7 +267,7 @@ string_q nextOptiondefChunk_custom(const string_q& fieldIn, const void *dataPtr)
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, opt);
+                    return nextBasenodeChunk(fieldIn, com);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -289,7 +293,7 @@ bool CCommandOption::readBackLevel(CArchive& archive) {
 string_q CCommandOption::getValueByName(const string_q& fieldName) const {
 
     // Give customized code a chance to override first
-    string_q ret = nextOptiondefChunk_custom(fieldName, this);
+    string_q ret = nextCommandoptionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -317,6 +321,7 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if ( fieldName % "is_required" ) return is_required;
+            if ( fieldName % "is_customizable" ) return is_customizable;
             break;
         case 'n':
             if ( fieldName % "num" ) return num;
@@ -347,7 +352,7 @@ ostream& operator<<(ostream& os, const CCommandOption& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_OPTIONDEF = "";
+const char* STR_DISPLAY_COMMANDOPTION ="";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -363,13 +368,23 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 5)  hotkey = parts[5];
     if (parts.size() > 6)  def_val = substitute(substitute(parts[6], "TRUE", "true"), "FALSE", "false");
     if (parts.size() > 7)  is_required = parts[7];
-    if (parts.size() > 8)  core_visible = parts[8];
-    if (parts.size() > 9)  docs_visible = parts[9];
-    if (parts.size() > 10) generate = parts[10];
-    if (parts.size() > 11) option_kind = parts[11];
-    if (parts.size() > 12) data_type = parts[12];
-    if (parts.size() > 13) description = substitute(parts[13], "&#44;", ",");
+    if (parts.size() > 8)  is_customizable = parts[8];
+    if (parts.size() > 9)  core_visible = parts[9];
+    if (parts.size() > 10) docs_visible = parts[10];
+    if (parts.size() > 11) generate = parts[11];
+    if (parts.size() > 12) option_kind = parts[12];
+    if (parts.size() > 13) data_type = parts[13];
+    if (parts.size() > 14) description = substitute(parts[14], "&#44;", ",");
     description = substitute(description, "[{DEF}]", (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
+    if (def_val.empty() && !generate.empty()) {
+        if (data_type == "<boolean>") {
+            def_val = "false";
+        } else if (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")) {
+            def_val = "\"\"";
+        } else {
+            def_val = "NOPOS";
+        }
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks

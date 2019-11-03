@@ -154,8 +154,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             ostringstream cmd;
             if (cmdTests) {
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
-                cmd << "env TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
-
+                string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+                cmd << e << c;
             } else {
                 cmd << "curl -s \"http:/""/localhost:8080/" << test.route;
                 if (!test.builtin && !test.options.empty())

@@ -7,7 +7,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
@@ -16,7 +16,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -26,13 +26,13 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool finalized = true;
     bool staging = false;
     bool unripe = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
     blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
@@ -44,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-f" || arg == "--finalized") {
             finalized = !finalized;
 
@@ -71,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             if (!startsWith(arg, "0x"))
                 return usage("Invalid option: " + arg);
@@ -136,9 +136,9 @@ void COptions::Init(void) {
     // This app never actually writes to standard out, so we don't really need this
     // optionOn(OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     daemon = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     minArgs    = 0;
     visitTypes = VIS_FINAL;

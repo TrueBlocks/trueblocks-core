@@ -7,7 +7,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("filenames", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
@@ -22,7 +22,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         EXIT_NOMSG8(false);
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool check = false;
     bool sort = false;
     bool fix = false;
@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     bool import = false;
     bool remove = false;
     bool merge = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
 
@@ -49,7 +49,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
@@ -96,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         } else {
             address_t addr = toLower(substitute(arg, ".acct.bin", ""));
             if (!isAddress(addr))
@@ -190,13 +190,13 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     data = false;
     truncate = 0;
     skip = 1;
     start = NOPOS;
     end = NOPOS;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     monitors.clear();
     mode = "";

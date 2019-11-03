@@ -35,7 +35,7 @@ public:
     string_q filename;
     string_q post;
     string_q options;
-    string_q optTool;
+    string_q extra;
     string_q path;
     string_q goldPath;
     string_q workPath;
@@ -112,7 +112,7 @@ inline void CTestCase::initialize(void) {
     filename = "";
     post = "";
     options = "";
-    optTool = "";
+    extra = "";
     path = "";
     goldPath = "";
     workPath = "";
@@ -137,7 +137,7 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     filename = te.filename;
     post = te.post;
     options = te.options;
-    optTool = te.optTool;
+    extra = te.extra;
     path = te.path;
     goldPath = te.goldPath;
     workPath = te.workPath;
