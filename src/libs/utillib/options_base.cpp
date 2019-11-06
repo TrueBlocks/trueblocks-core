@@ -599,32 +599,25 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (!isReadme && !verbose)
             return "";
 
-        ostringstream os;
-        string_q ret = postProcess("notes", "");
-        if (ret.empty())
-            ret = notes;
-        if (!ret.empty()) {
-            string_q tick = "- ";
-            string_q lead = "\t";
-            string_q trail = "\n";
-            if (isReadme) {
-                lead = "";
-                trail = "\n";
-            }
-            replaceAll(ret, "[{", hiUp2);
-            replaceAll(ret, "}]", hiDown);
+        if (notes.empty())
+            return "";
 
-            os << hiUp1 << "Notes:" << hiDown << "\n";
-            os << (isReadme ? "\n" : "");
-            while (!ret.empty()) {
-                string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
-                os << lead << tick << line << "\n";
-            }
-            os << "\n";
-            ret = os.str().c_str();
-            replaceAll(ret, "-   ", "  - ");
+        string_q nn = notes;
+        string_q lead  = (isReadme ? "" : "\t");
+        string_q trail = (isReadme ? "\n" : "\n");
+        while (!isReadme && contains(nn, '`')) {
+            replace(nn, "`", hiUp2);
+            replace(nn, "`", hiDown);
         }
-        return ret;
+
+        ostringstream os;
+        os << hiUp1 << "Notes:" << hiDown << "\n" << (isReadme ? "\n" : "");
+        while (!nn.empty()) {
+            string_q line = substitute(nextTokenClear(nn, '\n'), "|", "\n" + lead + "  ");
+            os << lead << "- " << line << "\n";
+        }
+        os << "\n";
+        return substitute(os.str(), "-   ", "  - ");
     }
 
     //--------------------------------------------------------------------------------

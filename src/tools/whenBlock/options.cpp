@@ -183,6 +183,10 @@ COptions::COptions(void) {
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
     if (!isApiMode())
         exportFmt = TXT1;
+
+    notes = "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
+    notes += "Use the following names to represent `special` blocks:\n  ";
+    notes += listSpecials(NONE1);
 }
 
 //--------------------------------------------------------------------------------
@@ -191,18 +195,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "blocks dates", "< block | date > [ block... | date... ]");
-
-    } else if (which == "notes") {
-        string_q ret = str;
-        if (verbose || COptions::isReadme) {
-            ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
-        }
-        ret += "Use the following names to represent `special` blocks:\n  ";
-        ret += listSpecials(NONE1);
-        return ret;
-    }
     return str;
 }
 
@@ -259,13 +253,13 @@ string_q COptions::listSpecials(format_t fmt) const {
             } else if (COptionsBase::isReadme) {
                 bn = "--";
             } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
-                extra = iWhite + " (syncing)" + cOff;
+                extra = " (syncing)";
             }
         }
 
 #define N_PER_LINE 4
         os << name;
-        os << " (" << cTeal << bn << extra << cOff << ")";
+        os << " (`" << bn << extra << "`)";
         if (!((i+1) % N_PER_LINE)) {
             if (i < specials.size()-1)
                 os << "\n  ";

@@ -117,25 +117,13 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     needsOption = true;
-
     Init();
+    notes = "Valid pairs include any pair from the public Poloniex's API here:|";
+    notes += "https://poloniex.com/public?command=returnCurrencies.\n";
+    notes += "`Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data|";
+    notes += "at a time. You must repeatedly run this command until the data is up-to-date.\n";
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        string_q ret;
-        ret += "Valid pairs include any pair from the public Poloniex's API here:|"
-        "https://poloniex.com/public?command=returnCurrencies.\n";
-        ret += "[{Note}]: Due to restrictions from Poloniex, this tool retrieves only 30 days of data|"
-        "at a time. You must repeatedly run this command until the data is up-to-date.\n";
-        return ret;
-    }
-    return str;
 }

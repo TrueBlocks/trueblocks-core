@@ -145,6 +145,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -158,16 +159,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "addrs", "<address> [address...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        return ret;
-    }
     return str;
 }
 

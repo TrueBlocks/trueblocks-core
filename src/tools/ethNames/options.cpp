@@ -193,6 +193,12 @@ COptions::COptions(void) {
     establishFolder(namesFile.getPath());
     loadNames();
     Init();
+    notes = "With a single search term, the tool searches both `name` and `address`.\n";
+    notes += "With two search terms, the first term must match the `address` field, and the second term must match the `name` field.\n";
+    notes += "When there are two search terms, both must match.\n";
+    notes += "The `--match_case` option requires case sensitive matching. It works with all other options.\n";
+    notes += "To customize the list of names add a `custom` section to the config file (see documentation).\n";
+    notes += "Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -201,19 +207,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "terms", "<term> [term...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        string_q ret;
-        ret += "With a single search term, the tool searches both [{name}] and [{address}].\n";
-        ret += "With two search terms, the first term must match the [{address}] field, and the second term must match the [{name}] field.\n";
-        ret += "When there are two search terms, both must match.\n";
-        ret += "The [{--match_case}] option requires case sensitive matching. It works with all other options.\n";
-        ret += "To customize the list of names add a [{custom}] section to the config file (see documentation).\n";
-        ret += "Name file: [{" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "}] (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
-        return ret;
-    }
     return str;
 }
 

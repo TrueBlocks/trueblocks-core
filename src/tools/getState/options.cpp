@@ -172,6 +172,13 @@ COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
+    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
+    notes += "`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.\n";
+    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
+    notes += "If the queried node does not store historical state, the results are undefined.\n";
+    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
+    notes += "`balance` is the default mode. To select a single mode use `none` first, followed by that mode.\n";
+    notes += "You may specify multiple `modes` on a single line.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -180,19 +187,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "addrs blocks", "<address> [address...] [block...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{blocks}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-        ret += "If the queried node does not store historical state, the results are undefined.\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        ret += "[{balance}] is the default mode. To select a single mode use [{none}] first, followed by that mode.\n";
-        ret += "You may specify multiple modes on a single line.\n";
-        return ret;
-    }
     return str;
 }

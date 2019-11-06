@@ -163,6 +163,12 @@ void COptions::Init(void) {
 COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
+    notes += "`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.\n";
+    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
+    notes += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
+    notes += "If the queried node does not store historical state, the results are undefined.\n";
+    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -171,19 +177,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "addrs blocks", "<address> <address> [address...] [block...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{blocks}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
-        ret += "If the queried node does not store historical state, the results are undefined.\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        return ret;
-    }
     return str;
 }
 

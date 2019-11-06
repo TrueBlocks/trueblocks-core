@@ -21,7 +21,7 @@ whenBlock 1000 --verbose:j
 
   Notes:
 	- Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.
-	- Use the following names to represent `special` blocks:
+	- Use the following names to represent special blocks:
 	  - first (0), firstTrans (46147), iceage (200000), devcon1 (543626)
 	  - homestead (1150000), daofund (1428756), daohack (1718497), daofork (1920000)
 	  - devcon2 (2286910), tangerine (2463000), spurious (2675000), stateclear (2717576)

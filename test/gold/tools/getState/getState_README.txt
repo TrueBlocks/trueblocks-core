@@ -31,5 +31,5 @@ getState -th
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.
 - `balance` is the default mode. To select a single mode use `none` first, followed by that mode.
-- You may specify multiple modes on a single line.
+- You may specify multiple `modes` on a single line.
 

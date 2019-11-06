@@ -154,13 +154,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "classes", "<class_name> [class_name...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        return "";
-
-    }
     return str;
 }
 

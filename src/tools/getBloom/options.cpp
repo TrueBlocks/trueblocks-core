@@ -163,6 +163,9 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CBlock, "blockNumber");
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
+    notes = "`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.\n";
+    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
+    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -176,20 +179,7 @@ bool COptions::isMulti(void) const {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
-        return
-        substitute(substitute(str, "blocks", "<block> [block...]"), "-l|", "-l fn|");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
-        "or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if "
-        "configured (see documentation).\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        return ret;
-    }
+    if (which == "options")
+        return substitute(substitute(str, "blocks", "<block> [block...]"), "-l|", "-l fn|");
     return str;
 }

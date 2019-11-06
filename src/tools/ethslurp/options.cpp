@@ -152,6 +152,8 @@ COptions::COptions(void) {
     HIDE_FIELD  (CTransaction, "toContract");
     HIDE_FIELD  (CTransaction, "receipt");
     HIDE_FIELD  (CTransaction, "traces");
+
+    notes = "Portions of this software are Powered by Etherscan.io APIs.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -161,15 +163,8 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
 
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "addrs blocks", "<address> [address...] [block...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
-        return ret;
-    }
     return str;
 }
 

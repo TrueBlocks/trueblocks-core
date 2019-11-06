@@ -90,4 +90,4 @@ on, cmd,  fast, null, utillib/tomlTest2,    whenBlock,      n, val = whenBlock.t
 on, cmd,  fast, null, utillib/typesTest,    README,         n, @th
 on, cmd,  fast, null, utillib/typesTest,    01,             n, val = 0
 
-on, cmd,  fast, null, utillib/runningTest,  01,             n, val = 0
+# on, cmd,  fast, null, utillib/runningTest,  01,             n, val = 0

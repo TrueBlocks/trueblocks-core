@@ -125,6 +125,11 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
+    notes = "`transactions` is one or more space-separated identifiers which may be either a transaction hash,|";
+    notes += "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
+    notes += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
+    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
+    notes += "If the queried node does not store historical state, the results may be undefined.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -133,19 +138,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "transactions", "<tx_id> [tx_id...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "[{transactions}] is one or more space-separated identifiers which may be either a transaction hash,|"
-        "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
-        ret += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if configured "
-        "(see documentation).\n";
-        ret += "If the queried node does not store historical state, the results may be undefined.\n";
-        return ret;
-    }
     return str;
 }
