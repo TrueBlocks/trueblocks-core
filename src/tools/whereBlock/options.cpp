@@ -101,6 +101,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    notes = "You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.\n";
 }
 
 //--------------------------------------------------------------------------------
@@ -109,16 +110,8 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
+    if (which == "options")
         return substitute(str, "blocks", "<block> [block...]");
-
-    } else if (which == "notes") {
-        string_q ret = str;
-        if (verbose || COptions::isReadme) {
-            ret += "You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.\n";
-        }
-        return ret;
-    }
     return str;
 }
 

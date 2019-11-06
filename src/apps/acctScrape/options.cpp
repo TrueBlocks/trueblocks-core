@@ -131,10 +131,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    // We want to be able to run this more than once
-    // optionOn(OPT_RUNONCE);
-    // This app never actually writes to standard out, so we don't really need this
-    // optionOn(OPT_OUTPUT);
 
     // BEG_CODE_INIT
     daemon = false;

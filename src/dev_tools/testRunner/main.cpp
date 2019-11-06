@@ -148,9 +148,6 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
 
         } else {
 
-            if (endsWith(test.path, "lib"))
-                test.workPath = "../" + test.workPath;
-
             ostringstream cmd;
             if (cmdTests) {
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";

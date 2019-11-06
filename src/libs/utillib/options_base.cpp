@@ -340,14 +340,6 @@ namespace qblocks {
             if (!loadPrefunds())
                 return usage("Could not open prefunds data. Quitting...");
 
-        if (isEnabled(OPT_RUNONCE)) {
-            if (commandLines.size() > 1)
-                return usage("You may not use the --file with this application. Quitting...");
-            // protect ourselves from running twice over
-            if (isRunning(getProgName(), true))
-                return usage("Warning: the command " + getProgName() + " is already running. Quitting...");
-        }
-
         cmdLine = trim(cmdLine);
         return true;
     }
@@ -461,60 +453,6 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    // If nameIn starts with (modes are required -- unless noted. --options are optional):
-    //      -    ==> regular option
-    //      @    ==> hidden option
-    //      ~    ==> mode (no leading --option needed)
-    //      ~!   ==> non-required mode
-    //      empty nameIn means description is for the whole program (not the option)
-    //--------------------------------------------------------------------------------
-    COption::COption(const string_q& nameIn, const string_q& descr) {
-
-        longName      = nameIn;
-        shortName     = nameIn;
-        is_hidden     = startsWith(nameIn, "@");
-        is_positional = startsWith(nameIn, "~");
-        is_optional   = contains  (nameIn, "!");
-        description   = substitute(descr, "&#44;", ",");
-        if (nameIn.empty())
-            return;
-
-        replaceAll(shortName, "-", "");
-        replaceAll(shortName, "~", "");
-        replaceAll(shortName, "@", "");
-        replaceAll(shortName, "!", "");
-
-        if (!is_positional) {
-            longName = "--" + shortName;
-            shortName = "-" + (contains(shortName, "fmt") ? "x" : extract(shortName, 0, 1));
-        } else {
-            longName = shortName;
-        }
-
-        if (contains(longName, ":")) {
-            permitted = longName;
-            longName = nextTokenClear(permitted, ':');
-            type = permitted;
-            replaceAny(permitted, "<>", "");
-            if (permitted != "range" &&
-                permitted != "list" &&
-                permitted != "fn" &&
-                permitted != "mode" &&
-                permitted != "on/off")
-                permitted = "val";
-            longName += (" " + permitted);
-        }
-
-        if (contains(longName, "(") && contains(longName, ")")) {
-            string_q hotKey = longName;
-            nextTokenClear(hotKey, '(');
-            hotKey = nextTokenClear(hotKey, ')');
-            replaceAny(longName, "()", "");
-            shortName = "-" + hotKey;
-        }
-    }
-
-    //--------------------------------------------------------------------------------
     COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size_t opts, const string_q& d) {
         description = substitute(d, "&#44;", ",");
         if (ln.empty())
@@ -569,7 +507,7 @@ const char *STR_ERROR_JSON =
         os << hiUp1 << "Usage:" << hiDown << "    " << getProgName() << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        os << notes();
+        os << get_notes();
         if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
             os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
@@ -656,10 +594,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     }
 
     //--------------------------------------------------------------------------------
-    string_q COptionsBase::notes(void) const {
+    string_q COptionsBase::get_notes(void) const {
+
+        if (!isReadme && !verbose)
+            return "";
 
         ostringstream os;
         string_q ret = postProcess("notes", "");
+        if (ret.empty())
+            ret = notes;
         if (!ret.empty()) {
             string_q tick = "- ";
             string_q lead = "\t";

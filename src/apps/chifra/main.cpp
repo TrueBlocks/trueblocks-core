@@ -22,17 +22,17 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             RETURN(1);
 
-             if (options.mode == "list")      RETURN(options.handle_list())
-        else if (options.mode == "export")    RETURN(options.handle_export())
+             if (options.mode == "list")      RETURN(options.handle_list())  //
+        else if (options.mode == "export")    RETURN(options.handle_export())  //
         else if (options.mode == "leech")     RETURN(options.handle_leech())
-        else if (options.mode == "scrape")    RETURN(options.handle_scrape())
-        else if (options.mode == "slurp")     RETURN(options.handle_slurp())
+        else if (options.mode == "scrape")    RETURN(options.handle_scrape())  //
+        else if (options.mode == "slurp")     RETURN(options.handle_slurp())  //
         else if (options.mode == "quotes")    RETURN(options.handle_quotes())
         else if (options.mode == "status")    RETURN(options.handle_status())
-        else if (options.mode == "rm")        RETURN(options.handle_rm())
+        else if (options.mode == "rm")        RETURN(options.handle_rm())  //
         else if (options.mode == "data")      RETURN(options.handle_data())
         else if (options.mode == "state")     RETURN(options.handle_data())
-        else if (options.mode == "config")    RETURN(options.handle_config())
+        else if (options.mode == "config")    RETURN(options.handle_config())  //
         else if (isTestMode()) {
             map<string,string> cmdMap;
             cmdMap["where"]  = "whereBlock";

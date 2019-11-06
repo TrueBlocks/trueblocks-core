@@ -392,8 +392,10 @@ CTestCase::CTestCase(const string_q& line) {
 
 //---------------------------------------------------------------------------------------------
 void CTestCase::prepareTest(bool cmdLine) {
-    goldPath = "../../../gold/" + path + "/" + tool + "/";
+    goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(goldPath, "/gold/", "/working/");
+    establishFolder(goldPath);
+    establishFolder(workPath);
 
     if (!builtin) { // order matters
         if (cmdLine) {

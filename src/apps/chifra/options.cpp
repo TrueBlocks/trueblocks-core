@@ -180,24 +180,6 @@ bool COptions::parseArguments(string_q& command) {
             LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
     }
 
-    if (mode == "config") {
-        if (contains(tool_flags, "help")) {
-            ostringstream os;
-            os << "cacheStatus --help";
-            NOTE_CALL(os.str());
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            return false;
-        }
-        if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
-            replace(tool_flags, "get", "--get"); // syntactic sugar for command line
-        if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
-            replace(tool_flags, "set", "--set"); // syntactic sugar for command line
-        replaceAll(tool_flags, "--get", "--get_config");
-        replaceAll(tool_flags, "--set", "--set_config");
-        if (!startsWith(tool_flags, "--get_config") && !startsWith(tool_flags, "--set_config"))
-            EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
-    }
-
     LOG3("tool_flags=", tool_flags);
     LOG3("freshen_flags=", freshen_flags);
 

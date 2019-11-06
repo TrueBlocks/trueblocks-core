@@ -256,19 +256,38 @@ namespace qblocks {
     }
 
     //----------------------------------------------------------------------------
-    bool isRunning(const string_q& progName, bool excludeSelf) {
+    bool isRunning(const string_q& progName) {
+        if (isTestMode()) {
+            string_q cmd1 = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
+            cerr << endl << doCommand(cmd1) << endl;
+        }
         string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
         string_q result = doCommand(cmd);
         uint64_t cnt = str_2_Uint(result);
         if (!cnt || !contains(result, getEffectiveUserName()))  // not running or not running by this user
             return false;
-        return (!excludeSelf || cnt > 1);
+        return (cnt > 1);
     }
 
     //----------------------------------------------------------------------------
     size_t nRunning(const string_q& progName) {
-        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
+        if (isTestMode()) {
+            string_q cmd1 = "pgrep -lf " + progName;
+            cerr << endl << doCommand(cmd1) << endl;
+        }
+        string_q cmd = "pgrep -lf " + progName + " | wc -l";
         string_q result = doCommand(cmd);
         return str_2_Uint(result);
     }
+
+    //----------------------------------------------------------------------------
+    bool isRunning_better(const string_q& progName) {
+        if (isTestMode()) {
+            string_q cmd1 = "pgrep -lf " + progName;
+            cerr << endl << cmd1 << endl << doCommand(cmd1) << " " << !doCommand(cmd1).empty() << endl;
+        }
+        string_q cmd = "pgrep -lf " + progName;
+        return !doCommand(cmd).empty();
+    }
+
 }  // namespace qblocks

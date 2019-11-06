@@ -27,7 +27,6 @@
 #define OPT_DENOM       (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
 #define OPT_PARITY      (1<<7)
 #define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_FMT|OPT_DENOM|OPT_PARITY)
-#define OPT_RUNONCE     (1<<10)
 #define OPT_RAW         (1<<11)
 #define OPT_PREFUND     (1<<12)
 #define OPT_OUTPUT      (1<<13)
@@ -57,6 +56,7 @@ namespace qblocks {
         bool isNoHeader;
         format_t exportFmt;
         blkrange_t scanRange;
+        string_q notes;
 
         streambuf *coutBackup;  // saves original cout buffer
         ofstream redirStream;  // the redirected stream (if any)
@@ -108,9 +108,8 @@ namespace qblocks {
         string_q purpose(void) const;
         string_q options(void) const;
         string_q descriptions(void) const;
-        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
-                                    bool isMode, bool required) const;
-        string_q notes(void) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q get_notes(void) const;
         virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
         bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
@@ -157,8 +156,6 @@ namespace qblocks {
         bool      is_positional;
         bool      is_optional;
         COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    private:
-        COption(const string_q& name, const string_q& descr);
     };
 
     //--------------------------------------------------------------------------------

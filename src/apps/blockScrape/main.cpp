@@ -17,10 +17,10 @@ int main(int argc, const char *argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        options.handle_scrape();
+        if (!options.handle_scrape())
+            return 0;
     }
     cerr << scraperStatus(true);
-
     acctlib_cleanup();
 
     return 0;
@@ -30,8 +30,10 @@ int main(int argc, const char *argv[]) {
 bool COptions::handle_scrape(void) {
 
     // Do not run if the index is being searched...
-    if (isRunning("acctScrape", false))
+    if (isRunning_better("acctScrape")) {
+        LOG_WARN("Refusing to run while acctScrape is running. Will restart shortly...");
         return false;
+    }
 
     // Remove anything that may be residule from the last run. (For example, if the user hit control+c)
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
@@ -47,9 +49,7 @@ bool COptions::handle_scrape(void) {
     // index) and, therefore, the index may be ahead of tip of the chain. In this case, we
     // return without doing anything...
     if (startBlock > client) {
-        cerr << cTeal << "INFO: " << cOff;
-        cerr << "The index (" << startBlock << ") is caught up to the tip of the chain (" << client << ").";
-        cerr << endl;
+        LOG_INFO("The index (", startBlock, ") is caught up to the chain (", client, ").");
         return false;
     }
 
@@ -104,9 +104,8 @@ bool COptions::handle_scrape(void) {
     // may use them. acctScrape is responsible to report to the user that the unripe data may be
     // unsafe to use. Here, we quit if acctScrape is running. We can quit safely without cleaning
     // up. The next run will pick up where we left off.
-    bool mustQuit = isRunning("acctScrape", false);
-    if (mustQuit) {
-        cerr << cRed << "\tacctScrape is running. blockScrape will re-run in a moment." << cOff << endl;
+    if (isRunning_better("acctScrape")) {
+        LOG_WARN("acctScrape is running. blockScrape will re-run in a moment.");
         return false;
     }
 
