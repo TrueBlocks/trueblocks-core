@@ -11,7 +11,7 @@ ethslurp
 	blocks                an optional range of blocks to slurp
 	-t  (--type <val>)    which types of transaction to request, one or more of [ext*|int|token|miner|all]
 	-p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

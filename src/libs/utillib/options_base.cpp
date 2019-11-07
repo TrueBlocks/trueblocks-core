@@ -142,7 +142,7 @@ namespace qblocks {
                 }
             }
 
-            if (!combine && arg == "--fmt") {
+            if (!combine && (arg == "-x" || arg == "--fmt")) {
                 if (i < argumentsIn.size()-1)
                     combine = true;
             }
@@ -181,8 +181,8 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (startsWith(arg, "--fmt:")) {
-                arg = substitute(arg, "--fmt:", "");
+            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
+                arg = substitute(substitute(arg, "--fmt:", ""), "-x:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  }
                 else if ( arg == "csv" ) { exportFmt = CSV1; }  // NOLINT
                 else if ( arg == "json") { exportFmt = JSON1; }  // NOLINT
@@ -247,7 +247,6 @@ namespace qblocks {
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
         replace(cmdLine, "--output ", "--output:");
-        replace(cmdLine, "--fmt ", "--fmt:");
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -353,6 +352,11 @@ namespace qblocks {
                 return true;
         }
 
+        if (isEnabled(OPT_FMT)) {
+            if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:"))
+            return true;
+        }
+
         if (isEnabled(OPT_ETHER) && arg == "--ether")
             return true;
         if (isEnabled(OPT_RAW) && arg == "--raw")
@@ -366,8 +370,6 @@ namespace qblocks {
         if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
-            return true;
-        if (isEnabled(OPT_FMT) && startsWith(arg, "--fmt:"))
             return true;
         if (arg == "--version")
             return true;
@@ -672,7 +674,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
-        if (isEnabled(OPT_FMT) && (verbose || isTestMode())) os << oneDescription(" ", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
+        if (isEnabled(OPT_FMT) && (verbose || isTestMode())) os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
         if (isEnabled(OPT_VERBOSE)) os << oneDescription("-v", "--verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level");
         if (isEnabled(OPT_HELP)) os << oneDescription("-h", "--help", "display this help screen");
         return os.str();

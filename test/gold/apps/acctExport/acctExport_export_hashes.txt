@@ -31,7 +31,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --hashes --fmt csv --end 0
 	-E  (--end <num>)     last block to process (inclusive)
 #### Hidden options (shown during testing only)
 
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

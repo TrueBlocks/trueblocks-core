@@ -17,7 +17,7 @@ getTrans -th
 | -o | --force | force the results into the tx cache |
 #### Hidden options (shown during testing only)
 
-|   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -8,7 +8,7 @@ whereBlock --junk1
 
   Where:  
 	blocks                a space-separated list of one or more blocks to search for (required)
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

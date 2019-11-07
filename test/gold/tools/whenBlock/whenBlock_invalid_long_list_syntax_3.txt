@@ -11,7 +11,7 @@ whenBlock 2016-03-02 --list --k
 	blocks                one or more block numbers (or a 'special' block), or
 	dates                 one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 	-l  (--list)          export all the named blocks
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
