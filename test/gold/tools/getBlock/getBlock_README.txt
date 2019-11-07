@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-s|-a|-u|-n|-o|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-e|-a|-u|-n|-c|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  
@@ -10,17 +10,17 @@ getBlock -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | blocks | a space-separated list of one or more blocks to retrieve (required) |
-| -s | --hashes_only | display only transaction hashes, default is to display full transaction detail |
+| -e | --hashes_only | display only transaction hashes, default is to display full transaction detail |
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
-| -o | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
+| -c | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
 
 #### Hidden options (shown during testing only)
-| -e | --force | force a re-write of the block to the cache |
+| -o | --force | force a re-write of the block to the cache |
+#### Hidden options (shown during testing only)
+
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
-#### Hidden options (shown during testing only)
-
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

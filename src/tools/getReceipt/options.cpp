@@ -130,10 +130,3 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "transactions", "<tx_id> [tx_id...]");
-    return str;
-}

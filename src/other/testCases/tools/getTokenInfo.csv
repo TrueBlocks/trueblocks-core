@@ -110,3 +110,10 @@ on, cmd, slow, tokens, tools/getTokenInfo, fmt_junk,                      y, add
 # run_state_test("getTokenInfo_top_three_swarm2"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
 # run_state_test("getTokenInfo_top_three_swarm3"              "${SWT}" " ${BITREX}" " ${EA2}"      " ${EA3}"   " 4285364" " 3510999" " 2510010")
 # run_state_test("getTokenInfo_wei"                           "${OMG}" " ${EA1}"    " ${BITREX}"   " 4150000"  " --wei")
+
+# ./tools/getTokenInfo/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
+# ./tools/getTokenInfo/options.cpp:    COption("addrs2", "", "list<addr2>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+# ./tools/getTokenInfo/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+# ./tools/getTokenInfo/options.cpp:    COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+# ./tools/getTokenInfo/options.cpp:    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "retreive information about the token"),
+# ./tools/getTokenInfo/options.cpp:    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),

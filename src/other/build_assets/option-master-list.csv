@@ -19,7 +19,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10320,apps,export,acctExport,count_only,c,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only the count of the number of data items requested
 10220,apps,export,acctExport,articulate,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10340,apps,export,acctExport,write_blocks,w,false,FALSE,TRUE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing blocks to the binary cache ([{DEF}] by default)
-10360,apps,export,acctExport,write_txs,x,true,FALSE,TRUE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing transactions to the cache ([{DEF}] by default)
+10360,apps,export,acctExport,write_txs,i,true,FALSE,TRUE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing transactions to the cache ([{DEF}] by default)
 10380,apps,export,acctExport,write_traces,R,true,FALSE,TRUE,TRUE,FALSE,yes,toggle,<boolean>,toggle writing traces to the cache ([{DEF}] by default)
 10400,apps,export,acctExport,skip_ddos,s,true,FALSE,TRUE,FALSE,FALSE,yes,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10420,apps,export,acctExport,max_traces,m,250,FALSE,TRUE,FALSE,FALSE,yes,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
@@ -109,7 +109,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12120,tools,slurp,ethslurp,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,slurp,ethslurp,type,t,,FALSE,FALSE,TRUE,TRUE,,flag,list<enum[ext*|int|token|miner|all]>,which types of transaction to request
-12180,tools,slurp,ethslurp,appearances,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
+12180,tools,slurp,ethslurp,appearances,p,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
 12220,tools,slurp,ethslurp,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Fetches data from EtherScan for an arbitrary address.
 
 12260,tools,names,ethNames,terms,,,TRUE,FALSE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms
@@ -125,12 +125,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12460,tools,names,ethNames,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Query addresses and/or names of well known accounts.
 
 12500,tools,blocks,getBlock,blocks,,,TRUE,FALSE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
-12520,tools,blocks,getBlock,hashes_only,s,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
+12520,tools,blocks,getBlock,hashes_only,e,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12540,tools,blocks,getBlock,addrs,a,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,display all addresses included in the block
 12560,tools,blocks,getBlock,uniq,u,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per block
 12580,tools,blocks,getBlock,uniq_tx,n,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,display only uniq addresses found per transaction
-12600,tools,blocks,getBlock,count_only,o,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
-12620,tools,blocks,getBlock,force,e,,FALSE,FALSE,FALSE,FALSE,yes,switch,<boolean>,force a re-write of the block to the cache
+12600,tools,blocks,getBlock,count_only,c,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
+12620,tools,blocks,getBlock,force,o,,FALSE,FALSE,FALSE,FALSE,yes,switch,<boolean>,force a re-write of the block to the cache
 12640,tools,blocks,getBlock,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Returns block(s) from local cache or directly from a running node.
 
 12680,tools,blooms,getBloom,blocks,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
@@ -142,7 +142,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12800,tools,blooms,getBloom,bitbars,s,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display nBits as a bar chart
 12820,tools,blooms,getBloom,pctbars,p,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display nBits as a percentage of bloom space
 12840,tools,blooms,getBloom,bitcount,t,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the number of bits lit per bloom
-12860,tools,blooms,getBloom,force,f,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,force a re-write of the bloom to the cache
+12860,tools,blooms,getBloom,force,o,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,force a re-write of the bloom to the cache
 12880,tools,blooms,getBloom,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
 
 12920,tools,logs,getLogs,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
@@ -162,7 +162,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13200,tools,state,getState,no_history,s,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,for testing only&#44; hide the server's historical state
 13220,tools,state,getState,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
 
-13260,tools,tokens,getTokenInfo,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
+13260,tools,tokens,getTokenInfo,addrs2,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr2>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,tokens,getTokenInfo,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
 13300,tools,tokens,getTokenInfo,info,i,,FALSE,FALSE,TRUE,TRUE,,flag,enum[name|decimals|totalSupply|version|symbol|all],retreive information about the token
 13320,tools,tokens,getTokenInfo,by_acct,b,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
@@ -197,22 +197,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 14020,tools,where,whereBlock,blocks,,,TRUE,FALSE,TRUE,FALSE,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 14040,tools,where,whereBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
-
-14080,tools,,templates,parse,p,,FALSE,FALSE,TRUE,TRUE,,switch,<boolean>,display parsed input data
-14100,tools,,templates,logs,l,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,display smart contract lo(g)s or events
-14120,tools,,templates,trace,t,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,display smart contract internal traces
-14140,tools,,templates,accounting,a,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,display credits and debits per account and reconcile at each block
-14160,tools,,templates,no_check,n,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,do not do balance check at each block
-14180,tools,,templates,debug,d,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,enter debug mode (pause after each transaction)
-14200,tools,,templates,single,s,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,if debugging is enable&#44; single step through transactions
-14220,tools,,templates,export,e,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,export the transactions to export file
-14240,tools,,templates,json,j,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,ignore export format and export as json
-14260,tools,,templates,balances,b,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,if a balance does not reconcile&#44; export a message to a file
-14280,tools,,templates,list,i,,FALSE,FALSE,TRUE,TRUE,no,switch,<boolean>,display list of monitored accounts
-14300,tools,,templates,offset,o,,FALSE,FALSE,TRUE,TRUE,no,flag,<blknum>,offset to kBlock
-14320,tools,,templates,start,S,,FALSE,FALSE,FALSE,FALSE,no,flag,<blknum>,first block to process(inclusive)
-14340,tools,,templates,end,E,,FALSE,FALSE,FALSE,FALSE,no,flag,<blknum>,last block to process (inclusive)
-14360,tools,,templates,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Index transactions for a given Ethereum address (or series of addresses).
 
 14400,all,all,all,version,,,FALSE,FALSE,TRUE,FALSE,na,switch,<boolean>,display the current version of the tool
 14420,all,all,all,nocolor,,,FALSE,FALSE,TRUE,FALSE,na,switch,<boolean>,turn off colored display

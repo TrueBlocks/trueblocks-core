@@ -116,7 +116,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-    needsOption = true;
     Init();
     notes = "Valid pairs include any pair from the public Poloniex's API here:|";
     notes += "https://poloniex.com/public?command=returnCurrencies.\n";

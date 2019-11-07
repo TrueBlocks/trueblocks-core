@@ -68,3 +68,10 @@ on, both, fast, traces, tools/getTrace, fmt_junk,           y, transactions = 22
 on, cmd,  fast, traces, tools/getTrace, by_filebad,         n, bad & file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file,            n, file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file_long_v,     y, file:cmd_file & verbose & parity & fmt = api
+
+# ./tools/getTrace/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
+# ./tools/getTrace/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+# ./tools/getTrace/options.cpp:    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+# ./tools/getTrace/options.cpp:    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+# ./tools/getTrace/options.cpp:    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
+# ./tools/getTrace/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

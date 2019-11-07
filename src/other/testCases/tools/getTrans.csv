@@ -59,3 +59,9 @@ on, cmd,  fast, transactions, tools/getTrans, by_file,             n, file:cmd_f
 on, cmd,  fast, transactions, tools/getTrans, by_file_1,           n, file:cmd_file & fmt = csv
 on, cmd,  fast, transactions, tools/getTrans, by_file_v,           n, file:cmd_file & fmt = json
 on, cmd,  fast, transactions, tools/getTrans, by_file_long_v,      n, file:cmd_file & fmt = json & parity
+
+# ./tools/getTrans/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
+# ./tools/getTrans/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+# ./tools/getTrans/options.cpp:    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+# ./tools/getTrans/options.cpp:    COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
+# ./tools/getTrans/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

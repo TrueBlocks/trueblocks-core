@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 #### Usage
 
-`Usage:`    makeClass [-l|-r|-a|-j|-o|-n|-f|-v|-h] &lt;class_name&gt; [class_name...]  
+`Usage:`    makeClass [-l|-r|-a|-j|-o|-n|-f|-v|-h] &lt;class&gt; [class...]  
 `Purpose:`  Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>.
 
 `Where:`  

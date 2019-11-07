@@ -44,3 +44,8 @@ on, cmd,  fast, receipts, tools/getReceipt, by_filebad,          n, file:cmd_fil
 on, cmd,  fast, receipts, tools/getReceipt, by_file,             n, file:cmd_file
 on, cmd,  fast, receipts, tools/getReceipt, by_file_long_v,      n, file:cmd_file & verbose & parity & fmt = json
 on, cmd,  fast, receipts, tools/getReceipt, by_file_v,           n, file:cmd_file & fmt = api & verbose
+
+# ./tools/getReceipt/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the local cache or a running node."),
+# ./tools/getReceipt/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+# ./tools/getReceipt/options.cpp:    COption("logs", "l", "", OPT_SWITCH, "display the receipt's logs"),
+# ./tools/getReceipt/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

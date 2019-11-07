@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
-    COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
+    COption("write_txs", "i", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
     COption("write_traces", "R", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
@@ -80,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-w" || arg == "--write_blocks") {
             write_blocks = !write_blocks;
 
-        } else if (arg == "-x" || arg == "--write_txs") {
+        } else if (arg == "-i" || arg == "--write_txs") {
             write_txs = !write_txs;
 
         } else if (arg == "-R" || arg == "--write_traces") {
@@ -352,13 +352,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "addrs", "<address> [address...]");
-    return str;
 }
 
 //-----------------------------------------------------------------------

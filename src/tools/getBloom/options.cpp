@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
     COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
     COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
-    COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
+    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
     // END_CODE_OPTIONS
 };
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--bitcount") {
             bitcount = true;
 
-        } else if (arg == "-f" || arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -175,11 +175,4 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
     return ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(substitute(str, "blocks", "<block> [block...]"), "-l|", "-l fn|");
-    return str;
 }

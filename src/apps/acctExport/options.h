@@ -49,7 +49,6 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
-    string_q postProcess(const string_q& which, const string_q& str) const;
 
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);

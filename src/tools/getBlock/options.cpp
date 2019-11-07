@@ -16,12 +16,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
-    COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
+    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // END_CODE_OPTIONS
 };
@@ -52,7 +52,7 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-s" || arg == "--hashes_only") {
+        } else if (arg == "-e" || arg == "--hashes_only") {
             hashes_only = true;
 
         } else if (arg == "-a" || arg == "--addrs") {
@@ -64,10 +64,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--uniq_tx") {
             uniq_tx = true;
 
-        } else if (arg == "-o" || arg == "--count_only") {
+        } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
-        } else if (arg == "-e" || arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -208,13 +208,6 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
     return isApiMode() || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "blocks", "<block> [block...]");
-    return str;
 }
 
 //--------------------------------------------------------------------------------

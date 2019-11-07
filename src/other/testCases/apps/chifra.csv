@@ -71,3 +71,10 @@ on, cmd,  fast, null,     apps/chifra, chifra_help_rm,       n, modes = rm & hel
 on, cmd,  fast, null,     apps/chifra, chifra_help_message,  n, modes = message & help
 on, cmd,  fast, null,     apps/chifra, chifra_help_leech,    n, modes = leech & help
 on, cmd,  fast, null,     apps/chifra, chifra_help_seed,     n, modes = seed & help
+
+# ./apps/chifra/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
+# ./apps/chifra/options.cpp:    COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+# ./apps/chifra/options.cpp:    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+# ./apps/chifra/options.cpp:    COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
+# ./apps/chifra/options.cpp:    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
+# ./apps/chifra/options.cpp:    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),

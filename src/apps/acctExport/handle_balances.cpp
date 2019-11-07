@@ -66,7 +66,6 @@ if (isTestMode()) {
 HERE("data")
         wei_t priorBalance = 0;
         bool first = true;
-//        uint64_t cnt = 0;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
 
             const CAppearance_base *item = &apps[i];

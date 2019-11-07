@@ -109,13 +109,6 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "blocks", "<block> [block...]");
-    return str;
-}
-
-//--------------------------------------------------------------------------------
 void COptions::applyFilter() {
     string_q list = getBlockNumList();
     CStringArray blockStrs;

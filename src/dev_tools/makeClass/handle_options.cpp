@@ -147,6 +147,12 @@ bool COptions::handle_options(void) {
                 }
 
                 if (!option.hotkey.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
+                    if (option.hotkey == "v")
+                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with --verbose hotkey|";
+                    if (option.hotkey == "h")
+                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with --help hotkey|";
+                    if (option.hotkey == "x")
+                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with --fmt hotkey|";
                     if (!shortCmds[option.hotkey].empty())
                         warnings << "Hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with existing '" << cRed << shortCmds[option.hotkey] << cOff << "'|";
                     shortCmds[option.hotkey] = option.command + "-" + option.hotkey;

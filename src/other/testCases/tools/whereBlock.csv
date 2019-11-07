@@ -23,3 +23,6 @@ on, both, fast, where, tools/whereBlock, fmt_csv,          n, blocks = 1001001 &
 on, both, fast, where, tools/whereBlock, fmt_api,          y, blocks = 1001001 & fmt = api
 on, both, fast, where, tools/whereBlock, fmt_json,         y, blocks = 1001001 & fmt = json
 on, both, fast, where, tools/whereBlock, fmt_junk,         y, blocks = 1001001 & fmt = junk
+
+# ./tools/whereBlock/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
+# ./tools/whereBlock/options.cpp:    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),

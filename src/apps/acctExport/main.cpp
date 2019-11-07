@@ -37,6 +37,7 @@ int main(int argc, const char *argv[]) {
         } else if (options.balances) {
             options.loadAllAppearances(); // allow the balance query to continue even with no appearances
             options.exportBalances();
+
         } else {
             if (!options.loadAllAppearances())
                 return 0;

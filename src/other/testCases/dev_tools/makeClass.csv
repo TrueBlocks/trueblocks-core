@@ -17,3 +17,14 @@ on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, list @ a @ f = CFunc
 on, cmd, fast, null, dev_tools/makeClass, run,       n, run & classes = block
 on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & classes = function
 on, cmd, fast, null, dev_tools/makeClass, js,        n, js & classes = CBlock
+
+# ./dev_tools/makeClass/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at # ./classDefinition/<class_name>."),
+# ./dev_tools/makeClass/options.cpp:    COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
+# ./dev_tools/makeClass/options.cpp:    COption("classes", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+# ./dev_tools/makeClass/options.cpp:    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
+# ./dev_tools/makeClass/options.cpp:    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+# ./dev_tools/makeClass/options.cpp:    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),
+# ./dev_tools/makeClass/options.cpp:    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local # ./classDefinitions folder"),
+# ./dev_tools/makeClass/options.cpp:    COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
+# ./dev_tools/makeClass/options.cpp:    COption("options", "o", "", OPT_SWITCH, "export options code (check data, generate code) and quit"),
+# ./dev_tools/makeClass/options.cpp:    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),

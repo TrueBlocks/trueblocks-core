@@ -10,8 +10,6 @@ bool COptions::exportCounts(void) {
 
     ENTER8("exportCounts");
 
-//    enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
-
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
     if (isJson)
         cout << "[";

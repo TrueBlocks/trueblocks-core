@@ -24,3 +24,8 @@ on, both, slow, quotes, tools/ethQuote, fmt_junk,          y, fmt = junk
 off, cmd, unkn, quotes, tools/ethQuote, usd_bitcoin,       n, pair:USDT_BTC
 off, cmd, unkn, quotes, tools/ethQuote, custom_btc_eth,    n, pair:BTC_ETH
 off, cmd, unkn, quotes, tools/ethQuote, custom_usd_ltc,    n, pair:USDT_LTC
+
+# ./tools/ethQuote/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
+# ./tools/ethQuote/options.cpp:    COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (append new data)"),
+# ./tools/ethQuote/options.cpp:    COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
+# ./tools/ethQuote/options.cpp:    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "display prices in this increment"),

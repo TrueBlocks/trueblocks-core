@@ -61,3 +61,8 @@ on, both, fast, when, tools/whenBlock, fmt_csv,                     n, blocks = 
 on, both, fast, when, tools/whenBlock, fmt_api,                     y, blocks = 1001001 & fmt = api
 on, both, fast, when, tools/whenBlock, fmt_json,                    y, blocks = 1001001 & fmt = json
 on, both, fast, when, tools/whenBlock, fmt_junk,                    y, blocks = 1001001 & fmt = junk
+
+# ./tools/whenBlock/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
+# ./tools/whenBlock/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
+# ./tools/whenBlock/options.cpp:    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+# ./tools/whenBlock/options.cpp:    COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),

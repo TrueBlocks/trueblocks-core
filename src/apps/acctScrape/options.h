@@ -22,7 +22,6 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
-    string_q postProcess(const string_q& which, const string_q& str) const;
 
     bool visitBinaryFile(const string_q& path, void *data);
     void moveToProduction(void);

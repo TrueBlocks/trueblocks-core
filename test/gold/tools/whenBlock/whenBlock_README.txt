@@ -13,11 +13,7 @@ whenBlock -th
 |  | blocks | one or more block numbers (or a 'special' block), or |
 |  | dates | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
 | -l | --list | export all the named blocks |
-
-#### Hidden options (shown during testing only)
 |   | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
-#### Hidden options (shown during testing only)
-
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

@@ -184,10 +184,3 @@ COptions::COptions(void) : CHistoryOptions() {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
-    return str;
-}

@@ -51,3 +51,12 @@ on, both, fast, blocks, tools/getBlock, fmt_csv,            n, blocks = 2222222 
 on, both, fast, blocks, tools/getBlock, fmt_api,            y, blocks = 2222222 2332332 & fmt = api
 on, both, fast, blocks, tools/getBlock, fmt_json,           y, blocks = 2222222 2332332 & fmt = json
 on, both, fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk
+
+# ./tools/getBlock/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
+# ./tools/getBlock/options.cpp:    COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
+# ./tools/getBlock/options.cpp:    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
+# ./tools/getBlock/options.cpp:    COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+# ./tools/getBlock/options.cpp:    COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
+# ./tools/getBlock/options.cpp:    COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+# ./tools/getBlock/options.cpp:    COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
+# ./tools/getBlock/options.cpp:    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),

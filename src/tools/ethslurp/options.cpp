@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("type", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "which types of transaction to request"),
-    COption("appearances", "a", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
+    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
     // END_CODE_OPTIONS
 };
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-a" || arg == "--appearances") {
+        } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
             // END_CODE_AUTO
@@ -158,14 +158,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options")
-        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
-    return str;
 }
 
 //---------------------------------------------------------------------------------------------------

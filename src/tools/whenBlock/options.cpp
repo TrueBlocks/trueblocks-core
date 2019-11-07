@@ -194,13 +194,6 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options")
-        return substitute(str, "blocks dates", "< block | date > [ block... | date... ]");
-    return str;
-}
-
-//--------------------------------------------------------------------------------
 void COptions::applyFilter() {
     for (auto request : requests) {
         CBlock block;

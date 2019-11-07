@@ -43,3 +43,11 @@ on, both, fast, abi, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d0
 
 # on, both, fast, abi, tools/grabABI, generation,          n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
 # on, both, fast, abi, tools/grabABI, verbose5,            n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
+
+# ./tools/grabABI/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
+# ./tools/grabABI/options.cpp:    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
+# ./tools/grabABI/options.cpp:    COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
+# ./tools/grabABI/options.cpp:    COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
+# ./tools/grabABI/options.cpp:    COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
+# ./tools/grabABI/options.cpp:    COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
+# ./tools/grabABI/options.cpp:    COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),

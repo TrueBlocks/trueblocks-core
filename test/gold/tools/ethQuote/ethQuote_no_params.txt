@@ -3,18 +3,14 @@ ethQuote
 
   Not enough arguments presented.
 
-  Usage:    ethQuote -f|-p|-a|-v|-h  
+  Usage:    ethQuote [-f|-p|-a|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.
 
   Where:  
 	-f  (--freshen)       Freshen price database (append new data)
 	-p  (--period <val>)  display prices in this increment, one of [5|15|30|60|120*|240|1440]
 	-a  (--pair <str>)    which price pair to freshen or list (see Poloniex)
-
-#### Hidden options (shown during testing only)
 	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-#### Hidden options (shown during testing only)
-
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

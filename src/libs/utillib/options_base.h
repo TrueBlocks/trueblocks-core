@@ -49,7 +49,6 @@ namespace qblocks {
         CStringArray errors;
         // TODO(tjayrush): global data
         uint32_t enableBits;
-        bool needsOption;
         bool isReadme;
         bool isRaw;
         bool isVeryRaw;
@@ -108,9 +107,8 @@ namespace qblocks {
         string_q purpose(void) const;
         string_q options(void) const;
         string_q descriptions(void) const;
-        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode, bool required) const;
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode=false, bool required=false) const;
         string_q get_notes(void) const;
-        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
 
         bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
         bool confirmBlockNum(const string_q&name, blknum_t& value, const string_q& arg, blknum_t latest) const;

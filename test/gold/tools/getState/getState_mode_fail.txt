@@ -15,9 +15,9 @@ getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --mode junk 2500000
 
 #### Hidden options (shown during testing only)
 	-s  (--no_history)    for testing only, hide the server's historical state
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
+	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

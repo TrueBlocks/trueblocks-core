@@ -120,3 +120,15 @@ on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file
 on, cmd,  fast, names, tools/ethNames, prefund_output,                   n, output = test_file & prefund
 
 on, cmd,  fast, names, tools/ethNames, fmt_add,                          y, add = G+S+A+N+S+Y+D
+
+# ./tools/ethNames/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
+# ./tools/ethNames/options.cpp:    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
+# ./tools/ethNames/options.cpp:    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+# ./tools/ethNames/options.cpp:    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
+# ./tools/ethNames/options.cpp:    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
+# ./tools/ethNames/options.cpp:    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
+# ./tools/ethNames/options.cpp:    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
+# ./tools/ethNames/options.cpp:    COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
+# ./tools/ethNames/options.cpp:    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
+# ./tools/ethNames/options.cpp:    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
+# ./tools/ethNames/options.cpp:    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),

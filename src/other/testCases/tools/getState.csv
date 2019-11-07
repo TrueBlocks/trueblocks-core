@@ -101,3 +101,11 @@ on, cmd,  fast, state, tools/getState, from_file,                      y, file:c
 # run_state_test("getState_verbose" "${TIP}"                " 4000000" " -v")
 # run_state_test("getState_verbose_long"                    "${TIP}" " 4000000" " --verbose")
 # run_state_test("getState_wei"                             "${TIP}" " 4000000" " --wei")
+
+# ./tools/getState/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+# ./tools/getState/options.cpp:    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
+# ./tools/getState/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+# ./tools/getState/options.cpp:    COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
+# ./tools/getState/options.cpp:    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
+# ./tools/getState/options.cpp:    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
+# ./tools/getState/options.cpp:    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),

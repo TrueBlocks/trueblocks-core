@@ -187,8 +187,7 @@ namespace qblocks {
                 else if ( arg == "csv" ) { exportFmt = CSV1; }  // NOLINT
                 else if ( arg == "json") { exportFmt = JSON1; }  // NOLINT
                 else if ( arg == "api" ) { exportFmt = API1; }  // NOLINT
-                else return usage("Export format (" + arg +  // NOLINT
-                    ") must be one of [ json | txt | csv | api ]. Quitting...");
+                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");  // NOLINT
                 argumentsOut[i] = "";
             }
         }
@@ -513,19 +512,18 @@ const char *STR_ERROR_JSON =
             os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
-        return postProcess("usage", ret);
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::options(void) const {
-        string_q required;
+        string_q positional;
 
         ostringstream os;
-        if (!needsOption)
-            os << "[";
+        os << "[";
         for (uint64_t i = 0 ; i < cntParams ; i++) {
             if (pParams[i].is_positional) {
-                required += (pParams[i].longName.empty() ? "" : (" " + pParams[i].longName));
+                positional += (" " + pParams[i].longName);
 
             } else if (pParams[i].is_hidden) {
                 // invisible option
@@ -538,14 +536,22 @@ const char *STR_ERROR_JSON =
             os << "-v|";
         if (isEnabled(OPT_HELP))
             os << "-h";
-        if (!needsOption)
-            os << "]";
-        os << required;
+        os << "]";
 
-        string_q ret = postProcess("options", os.str());
+        replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
+        replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
+        replaceAll(positional, "blocks dates", "< block | date > [ block... | date... ]");
+        replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
+        replaceAll(positional, "blocks", "<block> [block...]");
+        replaceAll(positional, "addrs", "<address> [address...]");
+        replaceAll(positional, "classes", "<class> [class...]");
+        replaceAll(positional, "terms", "<term> [term...]");
+        replaceAll(positional, "modes", "<mode> [mode...]");
         if (isReadme)
-            ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
-        return ret;
+            positional = substitute(substitute(positional, "<", "&lt;"), ">", "&gt;");
+        os << positional;
+
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -559,14 +565,13 @@ const char *STR_ERROR_JSON =
         os << substitute(purpose, "\n", "\n        ") << "\n";
         if (!endsWith(purpose, "\n"))
             os << "\n";
-        return postProcess("purpose", os.str());
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
-                                            bool isPositional, bool required) const {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional, bool required) const {
         ostringstream os;
         if (isReadme) {
 
@@ -590,7 +595,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replace(line, "{D}", d + (required && isPositional ? " (required)" : ""));
             os << line;
         }
-        return postProcess("oneDescription", os.str().c_str());
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -634,7 +639,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         size_t nHidden = 0;
         for (uint64_t i = 0 ; i < cntParams ; i++) {
             string_q sName = pParams[i].shortName;
-            string_q lName = pParams[i].longName;
+            string_q lName = substitute(pParams[i].longName, "addrs2", "addrs");
             string_q descr = trim(pParams[i].description);
             bool isPositional = pParams[i].is_positional;
             if (!pParams[i].is_hidden && !sName.empty()) {
@@ -644,8 +649,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 os << oneDescription(sName, lName, descr, isPositional, isReq);
             }
             if (pParams[i].is_hidden)
-                nHidden++;
-            if (isTestMode() && isEnabled(OPT_FMT))
                 nHidden++;
         }
 
@@ -666,18 +669,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
-            if (isEnabled(OPT_FMT))
-                os << oneDescription(" ", "--fmt <val>",
-                    "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
-        if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose",
-                "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        if (isEnabled(OPT_HELP))
-            os << oneDescription("-h", "--help", "display this help screen", false, false);
-        return postProcess("description", os.str().c_str());
+        if (isEnabled(OPT_FMT) && (verbose || isTestMode())) os << oneDescription(" ", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
+        if (isEnabled(OPT_VERBOSE)) os << oneDescription("-v", "--verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level");
+        if (isEnabled(OPT_HELP)) os << oneDescription("-h", "--help", "display this help screen");
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -930,7 +928,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isVeryRaw = false;
         isNoHeader = false;
         exportFmt = (isApiMode() ? API1 : TXT1);
-        needsOption = false;
         enableBits = OPT_DEFAULT;
         scanRange = make_pair(0, NOPOS);
         for (int i = 0 ; i < 5 ; i++)
