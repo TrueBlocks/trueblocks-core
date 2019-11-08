@@ -4,15 +4,15 @@ whenBlock -th
 
 `Usage:`    whenBlock [-l|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
-            Alternatively, search for one of special 'named' blocks.
+            Alternatively, search for one of 'special' blocks.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | blocks | one or more block numbers (or a 'special' block), or |
+|  | blocks | one or more block numbers, block hashes, or a 'special' block, or |
 |  | dates | one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]] |
-| -l | --list | export all the named blocks |
+| -l | --list | export a list of the 'special' blocks |
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

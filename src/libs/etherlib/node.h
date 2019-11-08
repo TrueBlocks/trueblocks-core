@@ -149,8 +149,6 @@ namespace qblocks {
     extern biguint_t weiPerEther(void);
 
     //-------------------------------------------------------------------------
-    extern void manageFields(const string_q& formatStr);
-    extern void manageFields(const string_q& listIn, bool show);
     extern const string_q defHide;
     extern const string_q defShow;
 

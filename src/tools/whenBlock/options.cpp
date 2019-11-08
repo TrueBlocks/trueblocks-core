@@ -15,10 +15,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers, block hashes, or a 'special' block, or"),
     COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
+    COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -130,21 +130,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     // Display formatting
-    switch (exportFmt) {
-    case NONE1: format = STR_DISPLAY_WHEN; break;
-    case API1:
-    case JSON1: format = ""; break;
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
-        break;
-    }
-    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("whenBlock", "CBlock", STR_DISPLAY_WHEN);
 
-    // collect together results for later display
+    // Collect together results for later display
     applyFilter();
 
     return true;
@@ -184,9 +172,11 @@ COptions::COptions(void) {
     if (!isApiMode())
         exportFmt = TXT1;
 
-    notes = "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
-    notes += "Use the following names to represent `special` blocks:\n  ";
-    notes += listSpecials(NONE1);
+    // BEG_CODE_NOTES
+    notes2.push_back("Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.");
+    notes2.push_back("Use any of the following names to represent `special` blocks:");
+    // END_CODE_NOTES
+    notes2.push_back("  " + listSpecials(NONE1));
 }
 
 //--------------------------------------------------------------------------------
@@ -260,8 +250,6 @@ string_q COptions::listSpecials(format_t fmt) const {
             os << ", ";
         }
     }
-    if (specials.size() % N_PER_LINE)
-        os << "\n";
     return os.str().c_str();
 }
 

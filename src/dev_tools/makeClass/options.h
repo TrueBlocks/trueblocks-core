@@ -38,7 +38,7 @@ public:
     bool exportJson(const string_q& cl);
     bool handle_options(void);
     bool check_option(const CCommandOption& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="");
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="");
 };
 
 //-------------------------------------------------------------------

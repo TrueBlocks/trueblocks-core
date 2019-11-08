@@ -99,4 +99,8 @@ namespace qblocks {
         friend class CBaseNode;
     };
     typedef vector<CFieldData> CFieldDataArray;
+
+    //-----------------------------------------------------------------------
+    extern void manageFields(const string_q& formatStr);
+    extern void manageFields(const string_q& listIn, bool show);
 }  // namespace qblocks

@@ -175,28 +175,39 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13460,tools,traces,getTrace,skip_ddos,s,true,FALSE,TRUE,FALSE,FALSE,yes,toggle,<boolean>,toggle skipping over 2018 ddos transactions during export ([{DEF}] by default)
 13480,tools,traces,getTrace,max_traces,m,250,FALSE,TRUE,FALSE,FALSE,yes,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
 13500,tools,traces,getTrace,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's traces from the local cache or a running node.
+13622,tools,traces,getTrace,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,traces,getTrace,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13626,tools,traces,getTrace,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+13629,tools,traces,getTrace,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results are undefined.
 
 13540,tools,transactions,getTrans,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13560,tools,transactions,getTrans,articulate,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 13580,tools,transactions,getTrans,trace,t,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the transaction's trace
 13600,tools,transactions,getTrans,force,o,,FALSE,FALSE,FALSE,FALSE,yes,switch,<boolean>,force the results into the tx cache
 13620,tools,transactions,getTrans,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve an Ethereum transaction from the local cache or a running node.
+13622,tools,transactions,getTrans,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,transactions,getTrans,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13626,tools,transactions,getTrans,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+13629,tools,transactions,getTrans,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results are undefined.
 
-13660,tools,abi,grabABI,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
+13660,tools,abi,grabABI,addrs,,,TRUE,FALSE,TRUE,TRUE,yes,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,abi,grabABI,canonical,c,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
 13700,tools,abi,grabABI,generate,g,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
 13740,tools,abi,grabABI,noconst,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
-13760,tools,abi,grabABI,sol,s,,FALSE,FALSE,TRUE,TRUE,,flag,<path>,create the ABI file from a .sol file in the local directory
 13840,tools,abi,grabABI,known,k,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,load common 'known' ABIs from cache
 13880,tools,abi,grabABI,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+13885,tools,abi,grabABI,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
-13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
+13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers&#44; block hashes&#44; or a 'special' block&#44; or
 13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,export all the named blocks
-13980,tools,when,whenBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
+13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,export a list of the 'special' blocks
+13980,tools,when,whenBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
+13982,tools,when,whenBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.
+13983,tools,when,whenBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Use any of the following names to represent `special` blocks:
 
 14020,tools,where,whereBlock,blocks,,,TRUE,FALSE,TRUE,FALSE,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 14040,tools,where,whereBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
+14050,tools,where,whereBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
 
 14400,all,all,all,version,,,FALSE,FALSE,TRUE,FALSE,na,switch,<boolean>,display the current version of the tool
 14420,all,all,all,nocolor,,,FALSE,FALSE,TRUE,FALSE,na,switch,<boolean>,turn off colored display

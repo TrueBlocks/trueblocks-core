@@ -23,6 +23,7 @@ extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCK_PROCESSOR;
 extern const char* STR_TX_PROCESSOR;
+extern const char* STR_ADDR_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
@@ -48,9 +49,9 @@ bool COptions::handle_options(void) {
         warnings.clear();
         warnings.str("");
 
-        bool allAuto = true, hasBlockList = false, hasTxList = false;
+        bool allAuto = true, hasBlockList = false, hasTxList = false, hasAddrList = false;
         map<string, string> shortCmds;
-        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream;
+        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream;
         for (auto option : optionArray) {
             if ((option.group + "/" + option.tool) == tool.first) {
                 check_option(option);
@@ -60,7 +61,11 @@ bool COptions::handle_options(void) {
                 bool isBlockNum = contains(option.data_type, "blknum");
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
-                opt_stream << option.Format(STR_OPTION_STR) << endl;
+                bool isNote = option.option_kind == "note";
+                if (!isNote)
+                    opt_stream << option.Format(STR_OPTION_STR) << endl;
+                else
+                    notes_stream << option.Format("    notes2.push_back(\"[{OPTS}]\");") << endl;
 
                 if (!option.generate.empty()) {
 
@@ -76,6 +81,7 @@ bool COptions::handle_options(void) {
 
                         hasBlockList = (hasBlockList || (option.option_kind == "positional" && option.data_type == "list<blknum>"));
                         hasTxList = (hasTxList || (option.option_kind == "positional" && option.data_type == "list<tx_id>"));
+                        hasAddrList = (hasAddrList || (option.option_kind == "positional" && option.data_type == "list<addr>"));
                         if (option.option_kind == "switch") {
 
                             local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
@@ -104,6 +110,7 @@ bool COptions::handle_options(void) {
 
                     } else if (option.generate == "yes") {
 
+                        hasAddrList = (hasAddrList || (option.option_kind == "positional" && option.data_type == "list<addr>"));
                         string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                         if (option.is_customizable == "TRUE")
                             initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]", (isEnum ? "String" : (isBool) ? "Bool" : "Int"));
@@ -146,7 +153,10 @@ bool COptions::handle_options(void) {
                         allAuto = false;
                 }
 
-                if (!option.hotkey.empty() && !contains(option.option_kind, "positional") && !contains(option.option_kind, "description")) {
+                if (!option.hotkey.empty() &&
+                    !contains(option.option_kind, "positional") &&
+                    !contains(option.option_kind, "description") &&
+                    !contains(option.option_kind, "note")) {
                     if (option.hotkey == "v")
                         warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with --verbose hotkey|";
                     if (option.hotkey == "h")
@@ -174,6 +184,10 @@ bool COptions::handle_options(void) {
                 auto_stream << STR_BLOCK_PROCESSOR << endl;
             if (hasTxList)
                 auto_stream << STR_TX_PROCESSOR << endl;
+            if (hasAddrList) {
+                auto_stream << STR_ADDR_PROCESSOR << endl;
+                declare_stream << "    CAddressArray addrs;" << endl;
+            }
         }
 
         if (!warnings.str().empty()) {
@@ -183,7 +197,7 @@ bool COptions::handle_options(void) {
                 LOG_WARN(warning);
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
-            writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str());
+            writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str(), notes_stream.str());
             writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
         }
     }
@@ -210,13 +224,13 @@ bool COptions::check_option(const CCommandOption& option) {
         if (startsWith(option.data_type, "enum")) valid_type = true;
         if (startsWith(option.data_type, "list")) valid_type = true;
     }
-    if (!valid_type && option.option_kind == "description" && option.data_type.empty()) valid_type = true;
+    if (!valid_type && (option.option_kind == "description" || option.option_kind == "note") && option.data_type.empty()) valid_type = true;
 
     if (!valid_type)
         warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command << cOff << "'|";
-    if (option.option_kind == "description" && !endsWith(option.description, "."))
-        warnings << "Description '" << cRed << option.description << cOff << "' should end with a period.|";
-    if (option.option_kind != "description" && endsWith(option.description, "."))
+    if ((option.option_kind == "description" || option.option_kind == "note") && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
+        warnings << "Description '" << cRed << option.description << cOff << "' should end with a period or colon.|";
+    if ((option.option_kind != "description" && option.option_kind != "note") && endsWith(option.description, "."))
         warnings << "Option '" << cRed << option.description << cOff << "' should not end with a period.|";
 
     return true;
@@ -235,7 +249,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     return converted;
 }
 //---------------------------------------------------------------------------------------------------
-bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local, const string_q& init) {
+bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local, const string_q& init, const string_q& notes) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
@@ -243,6 +257,7 @@ bool COptions::writeCode(const string_q& fn, const string_q& code, const string_
         converted = replaceCode(converted, "CODE_OPTIONS", opt);
         converted = replaceCode(converted, "CODE_LOCAL_INIT", local);
         converted = replaceCode(converted, "CODE_INIT", init);
+        converted = replaceCode(converted, "CODE_NOTES", notes);
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", code);
     }
@@ -311,6 +326,11 @@ const char* STR_BLOCK_PROCESSOR =
 //---------------------------------------------------------------------------------------------------
 const char* STR_TX_PROCESSOR =
 "        } else if (!parseTransList2(this, transList, arg)) {\n"
+"            return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_ADDR_PROCESSOR =
+"        } else if (!parseAddressList2(this, addrs, arg)) {\n"
 "            return false;\n";
 
 //---------------------------------------------------------------------------------------------------

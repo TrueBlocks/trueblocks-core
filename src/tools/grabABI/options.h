@@ -18,12 +18,12 @@ public:
     // BEG_CODE_DECLARE
     bool generate;
     bool noconst;
+    CAddressArray addrs;
     // END_CODE_DECLARE
 
     bool first;
     uint64_t parts;
     CAbiArray abis;
-    CAddressArray addrs;
     string_q classDir;
     string_q prefix;
 

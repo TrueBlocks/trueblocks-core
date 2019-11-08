@@ -20,7 +20,6 @@ static const COption params[] = {
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
-    COption("sol", "s", "<path>", OPT_FLAG, "create the ABI file from a .sol file in the local directory"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
     // END_CODE_OPTIONS
@@ -41,7 +40,6 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    bool from_sol = false;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -59,57 +57,29 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
-            // END_CODE_AUTO
-        } else if (startsWith(arg, "-l:") || startsWith(arg, "--sol:")) {
-            string_q orig = arg;
-            arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
-            if (!fileExists(arg))
-                arg += ".sol";
-            if (!fileExists(arg))
-                EXIT_USAGE("Solidity file " + orig + " not found in local folder.");
-            from_sol = true;
-            addrs.push_back(substitute(arg, ".sol", ""));
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else {
-            if (!isAddress(arg))
-                return usage("Invalid address '" + arg + "'. Length (" + uint_2_Str(arg.length()) + ") is not equal to 40 characters (20 bytes).\n");
-            if (!isTestMode() && !isContractAt(arg)) {
-                cerr << "Address " << arg << " is not a smart contract. Skipping...";
+        } else if (!parseAddressList2(this, addrs, arg)) {
+            return false;
 
-            } else {
-                addrs.push_back(toLower(str_2_Addr(arg)));
-            }
+            // END_CODE_AUTO
         }
     }
 
     if (!addrs.size() && !known)
         return usage("Please supply at least one Ethereum address.\n");
 
-    if (generate) {
-        classDir = getCWD();
-        prefix = getPrefix(classDir);
-    }
+    for (auto addr : addrs) {
+        if (!isContractAt(addr) && addr != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to ignore during testing
+            cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
 
-    if (canonical)
-        parts |= SIG_CANONICAL;
-
-    if (parts == 0)
-        parts = SIG_DEFAULT;
-
-    if (parts != SIG_CANONICAL && verbose)
-        parts |= SIG_DETAILS;
-
-    if (from_sol) {
-        for (auto addr : addrs) {
+        } else if (fileExists(addr + ".sol")) {
             CAbi abi;
-            if (!sol_2_Abi(abi, addr))
-                return usage("Could not find solidity file '" + addr + ".sol' in order to convert to ABI. Quitting...");
+            sol_2_Abi(abi, addr);
             bool first1 = true;
             expContext().spcs = 2;
             ostringstream os;
@@ -124,12 +94,25 @@ bool COptions::parseArguments(string_q& command) {
             }
             decIndent();
             os << endl << "]" << endl;
-
             ::remove((addr + ".json").c_str());
             stringToAsciiFile(addr + ".json", os.str());
             isRaw = false;
         }
     }
+
+    if (generate) {
+        classDir = getCWD();
+        prefix = getPrefix(classDir);
+    }
+
+    if (canonical)
+        parts |= SIG_CANONICAL;
+
+    if (parts == 0)
+        parts = SIG_DEFAULT;
+
+    if (parts != SIG_CANONICAL && verbose)
+        parts |= SIG_DETAILS;
 
     if (isRaw) {
         for (auto addr : addrs) {
@@ -179,22 +162,7 @@ bool COptions::parseArguments(string_q& command) {
         handle_generate();
 
     // Display formatting
-    string_q format = "";  // \t[{TYPE}] [{NAME}]\t[{DECLARATION}]\t+[{ENCODING}]+";
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("grabABI")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ABI : format);
-        manageFields("CAbi:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
-    }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("grabABI", "CAbi", STR_DISPLAY_ABI);
 
     return true;
 }
@@ -218,6 +186,9 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     first = true;
     Init();
+    // BEG_CODE_NOTES
+    notes2.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

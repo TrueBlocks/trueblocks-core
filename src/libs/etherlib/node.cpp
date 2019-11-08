@@ -1047,58 +1047,6 @@ extern void loadParseMap(void);
     }
 
     //-----------------------------------------------------------------------
-    void manageFields(const string_q& listIn, bool show) {
-        // LOG4("Entry: manageFields");
-        string_q list = substitute(listIn, " ", "");
-        while (!list.empty()) {
-            string_q fields = nextTokenClear(list, '|');
-            string_q cl = nextTokenClear(fields, ':');
-            // LOG4("class: " + cl + " fields: " + fields);
-            CBaseNode *item = createObjectOfType(cl);
-            while (item && !fields.empty()) {
-                string_q fieldName = nextTokenClear(fields, ',');
-                if (fieldName == "all") {
-                    if (show) {
-                        // LOG4("show " + fieldName);
-                        item->getRuntimeClass()->showAllFields();
-                    } else {
-                        // LOG4("hide " + fieldName);
-                        item->getRuntimeClass()->hideAllFields();
-                    }
-                } else if (fieldName == "none") {
-                    if (show) {
-                        // LOG4("show " + fieldName);
-                        item->getRuntimeClass()->hideAllFields();
-                    } else {
-                        // LOG4("hide " + fieldName);
-                        item->getRuntimeClass()->showAllFields();
-                    }
-                } else {
-                    CFieldData *f = item->getRuntimeClass()->findField(fieldName);
-                    if (f) {
-                        // LOG4((show ? "show " : "hide ") + fieldName);
-                        f->setHidden(!show);
-                    } else {
-                        // LOG4("field not found: " + fieldName);
-                    }
-                }
-            }
-            delete item;
-        }
-    }
-
-    //-----------------------------------------------------------------------
-    void manageFields(const string_q& formatIn) {
-        string_q fields;
-        string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
-        string_q cl = nextTokenClear(format, ':');
-        while (contains(format, "<field>"))
-            fields += toLower(snagFieldClear(format, "field") + ",");
-        manageFields(cl + ":all", false);
-        manageFields(cl + ":" + fields, true);
-    }
-
-    //-----------------------------------------------------------------------
     string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
         string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
         string_q ret;

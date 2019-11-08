@@ -62,7 +62,12 @@ on, both, fast, when, tools/whenBlock, fmt_api,                     y, blocks = 
 on, both, fast, when, tools/whenBlock, fmt_json,                    y, blocks = 1001001 & fmt = json
 on, both, fast, when, tools/whenBlock, fmt_junk,                    y, blocks = 1001001 & fmt = junk
 
-# ./tools/whenBlock/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
-# ./tools/whenBlock/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
-# ./tools/whenBlock/options.cpp:    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-# ./tools/whenBlock/options.cpp:    COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
+# 13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
+# 13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
+# 13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,export all the named blocks
+# 13980,tools,when,whenBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of special 'named' blocks.
+
+# COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
+# COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
+# COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+# COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),

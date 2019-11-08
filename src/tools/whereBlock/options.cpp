@@ -60,21 +60,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must enter a valid block number. Quitting...");
 
     // Display formatting
-    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
-    switch (exportFmt) {
-    case NONE1: format = STR_DISPLAY_WHERE; break;
-    case API1:
-    case JSON1: format = ""; break;
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHERE : format);
-        break;
-    }
-    manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
+    configureDisplay("whereBlock", "CCacheEntry", STR_DISPLAY_WHERE);
+
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
 
     // collect together results for later display
     applyFilter();
@@ -101,7 +89,9 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-    notes = "You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

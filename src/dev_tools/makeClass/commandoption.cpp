@@ -258,6 +258,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *data
                         ret += ("|OPT_FLAG");
                     else if (com->option_kind == "positional")
                         ret += ("|OPT_POSITIONAL");
+                    else if (com->option_kind == "note")
+                        ret = com->description;
                     else
                         ret += ("|OPT_DESCRIPTION");
                     return substitute(trim(ret,'|'), "|", " | ");

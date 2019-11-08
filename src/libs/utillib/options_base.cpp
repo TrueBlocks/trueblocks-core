@@ -380,6 +380,28 @@ namespace qblocks {
         return false;
     }
 
+    //-----------------------------------------------------------------------
+    void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat) {
+        string_q format;
+        switch (exportFmt) {
+            case NONE1:
+                format = defFormat;
+                break;
+            case TXT1:
+            case CSV1:
+                format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
+                break;
+            case API1:
+            case JSON1:
+                format = "";
+                break;
+        }
+        manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format), exportFmt));
+        expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+        if (isNoHeader)
+            expContext().fmtMap["header"] = "";
+    }
+
     //---------------------------------------------------------------------------------------------------
     bool COptionsBase::confirmUint(const string_q&name, uint64_t& value, const string_q& argIn) const {
 
@@ -606,10 +628,15 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         if (!isReadme && !verbose)
             return "";
 
-        if (notes.empty())
+        if (notes.empty() && notes2.size() == 0)
             return "";
 
         string_q nn = notes;
+        if (nn.empty()) {
+            for (auto n : notes2) {
+                nn += (n + "\n");
+            }
+        }
         string_q lead  = (isReadme ? "" : "\t");
         string_q trail = (isReadme ? "\n" : "\n");
         while (!isReadme && contains(nn, '`')) {
@@ -620,7 +647,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         ostringstream os;
         os << hiUp1 << "Notes:" << hiDown << "\n" << (isReadme ? "\n" : "");
         while (!nn.empty()) {
-            string_q line = substitute(nextTokenClear(nn, '\n'), "|", "\n" + lead + "  ");
+            string_q line = substitute(nextTokenClear(nn, '\n'), "|", "\n" + lead + " ");
             os << lead << "- " << line << "\n";
         }
         os << "\n";

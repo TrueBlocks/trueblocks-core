@@ -86,18 +86,20 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     string_q format;
     switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
-        if (trace)
-            format += "\t[{TRACESCNT}]";
-        manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
+        case NONE1:
+            format = STR_DISPLAY_TRANSACTION;
+            break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
+            if (trace)
+                format += "\t[{TRACESCNT}]";
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (isNoHeader)
@@ -125,11 +127,12 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
-    notes = "`transactions` is one or more space-separated identifiers which may be either a transaction hash,|";
-    notes += "a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.\n";
-    notes += "This tool checks for valid input syntax, but does not check that the transaction requested exists.\n";
-    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-    notes += "If the queried node does not store historical state, the results may be undefined.\n";
+    // BEG_CODE_INIT
+    notes2.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
+    notes2.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
+    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
+    // END_CODE_INIT
 }
 
 //--------------------------------------------------------------------------------
