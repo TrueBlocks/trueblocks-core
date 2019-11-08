@@ -172,13 +172,15 @@ COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
-    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
-    notes += "`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.\n";
-    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-    notes += "If the queried node does not store historical state, the results are undefined.\n";
-    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
-    notes += "`balance` is the default mode. To select a single mode use `none` first, followed by that mode.\n";
-    notes += "You may specify multiple `modes` on a single line.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes2.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes2.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
+    notes2.push_back("You may specify multiple `modes` on a single line.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

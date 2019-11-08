@@ -18,7 +18,7 @@ getReceipt -th
 
 `Notes:`
 
-- `transactions` is one or more space-separated identifiers which may be either a transaction hash,
+- `transactions` is one or more space-separated identifiers which may be either a transaction hash, 
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - This tool retrieves information from the local node or rpcProvider if configured (see documentation).

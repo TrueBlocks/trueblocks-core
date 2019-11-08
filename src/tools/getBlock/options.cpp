@@ -196,9 +196,11 @@ COptions::COptions(void) {
     Init();
     first = true;
     exportFmt = NONE1;
-    notes = "`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.\n";
-    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

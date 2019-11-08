@@ -146,6 +146,9 @@ void COptions::Init(void) {
 COptions::COptions(void) : classFile("") {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

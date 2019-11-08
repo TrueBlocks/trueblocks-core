@@ -8,6 +8,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10120,apps,list,acctScrape,start,S,,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process (inclusive)
 10140,apps,list,acctScrape,end,E,,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
 10160,apps,list,acctScrape,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Index transactions for a given Ethereum address (or series of addresses).
+10162,apps,list,acctScrape,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`addresses` must start with '0x' and be forty two characters long.
 
 10200,apps,export,acctExport,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses (0x...) to export
 10300,apps,export,acctExport,appearances,p,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,export a list of appearances
@@ -30,6 +31,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10520,apps,export,acctExport,start,S,,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process (inclusive)
 10540,apps,export,acctExport,end,E,,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
 10560,apps,export,acctExport,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Export full detail of transactions for one or more Ethereum addresses.
+10562,apps,export,acctExport,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`addresses` must start with '0x' and be forty two characters long.
 
 10600,apps,scrape,blockScrape,n_blocks,n,,FALSE,FALSE,TRUE,TRUE,,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
 10620,apps,scrape,blockScrape,n_block_procs,p,,FALSE,FALSE,FALSE,FALSE,,flag,<uint32>,number of block channels for blaze
@@ -105,12 +107,15 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12040,tools,quotes,ethQuote,period,p,,FALSE,FALSE,TRUE,TRUE,local,flag,enum[5|15|30|60|120*|240|1440],display prices in this increment
 12060,tools,quotes,ethQuote,pair,a,,FALSE,FALSE,TRUE,TRUE,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12080,tools,quotes,ethQuote,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Freshen and/or display Ethereum price data.
+12082,tools,quotes,ethQuote,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
+12082,tools,quotes,ethQuote,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
 
 12120,tools,slurp,ethslurp,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,slurp,ethslurp,type,t,,FALSE,FALSE,TRUE,TRUE,,flag,list<enum[ext*|int|token|miner|all]>,which types of transaction to request
 12180,tools,slurp,ethslurp,appearances,p,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
 12220,tools,slurp,ethslurp,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Fetches data from EtherScan for an arbitrary address.
+12222,tools,slurp,ethslurp,,,,FALSE,FALSE,FALSE,FALSE,na,note,,Portions of this software are Powered by Etherscan.io APIs.
 
 12260,tools,names,ethNames,terms,,,TRUE,FALSE,TRUE,TRUE,,positional,list<string>,a space separated list of one or more search terms
 12280,tools,names,ethNames,expand,e,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
@@ -123,6 +128,11 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12420,tools,names,ethNames,addr,a,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12440,tools,names,ethNames,add,d,,FALSE,FALSE,FALSE,FALSE,local,flag,<string>,add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
 12460,tools,names,ethNames,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Query addresses and/or names of well known accounts.
+12462,tools,names,ethNames,,,,FALSE,FALSE,FALSE,FALSE,na,note,,With a single search term&#44; the tool searches both `name` and `address`.
+12464,tools,names,ethNames,,,,FALSE,FALSE,FALSE,FALSE,na,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.
+12466,tools,names,ethNames,,,,FALSE,FALSE,FALSE,FALSE,na,note,,When there are two search terms&#44; both must match.
+12468,tools,names,ethNames,,,,FALSE,FALSE,FALSE,FALSE,na,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
+12470,tools,names,ethNames,,,,FALSE,FALSE,FALSE,FALSE,na,note,,To customize the list of names add a `custom` section to the config file (see documentation).
 
 12500,tools,blocks,getBlock,blocks,,,TRUE,FALSE,TRUE,TRUE,,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12520,tools,blocks,getBlock,hashes_only,e,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
@@ -132,6 +142,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12600,tools,blocks,getBlock,count_only,c,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
 12620,tools,blocks,getBlock,force,o,,FALSE,FALSE,FALSE,FALSE,yes,switch,<boolean>,force a re-write of the block to the cache
 12640,tools,blocks,getBlock,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Returns block(s) from local cache or directly from a running node.
+12882,tools,blocks,getBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12884,tools,blocks,getBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+12886,tools,blocks,getBlock,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`special` blocks are detailed under `whenBlock --list`.
 
 12680,tools,blooms,getBloom,blocks,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
 12700,tools,blooms,getBloom,eab,e,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,pull the enhanced adaptive blooms from QBlocks cache
@@ -144,15 +157,26 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12840,tools,blooms,getBloom,bitcount,t,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the number of bits lit per bloom
 12860,tools,blooms,getBloom,force,o,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,force a re-write of the bloom to the cache
 12880,tools,blooms,getBloom,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
+12882,tools,blooms,getBloom,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12884,tools,blooms,getBloom,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+12886,tools,blooms,getBloom,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`special` blocks are detailed under `whenBlock --list`.
 
 12920,tools,logs,getLogs,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 12940,tools,logs,getLogs,articulate,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 12960,tools,logs,getLogs,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's logs from the local cache or a running node.
+12960,tools,logs,getLogs,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+12964,tools,logs,getLogs,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+12966,tools,logs,getLogs,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+12968,tools,logs,getLogs,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
 13000,tools,receipts,getReceipt,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13020,tools,receipts,getReceipt,articulate,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 13040,tools,receipts,getReceipt,logs,l,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display the receipt's logs
 13060,tools,receipts,getReceipt,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve a transaction's receipt from the local cache or a running node.
+13062,tools,receipts,getReceipt,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13066,tools,receipts,getReceipt,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13068,tools,receipts,getReceipt,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+13070,tools,receipts,getReceipt,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
 13100,tools,state,getState,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,state,getState,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
@@ -161,6 +185,13 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13180,tools,state,getState,no_zero,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
 13200,tools,state,getState,no_history,s,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,for testing only&#44; hide the server's historical state
 13220,tools,state,getState,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
+13222,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`addresses` must start with '0x' and be forty two characters long.
+13224,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13226,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+13228,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results are undefined.
+13230,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`special` blocks are detailed under `whenBlock --list`.
+13232,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
+13234,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,na,note,,You may specify multiple `modes` on a single line.
 
 13260,tools,tokens,getTokenInfo,addrs2,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr2>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,tokens,getTokenInfo,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
@@ -168,6 +199,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13320,tools,tokens,getTokenInfo,by_acct,b,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,tokens,getTokenInfo,no_zero,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,tokens,getTokenInfo,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
+13362,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`addresses` must start with '0x' and be forty two characters long.
+13364,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13366,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
+13368,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
+13370,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,If the queried node does not store historical state&#44; the results are undefined.
+13372,tools,tokens,getTokenInfo,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`special` blocks are detailed under `whenBlock --list`.
 
 13400,tools,traces,getTrace,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,traces,getTrace,articulate,a,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address

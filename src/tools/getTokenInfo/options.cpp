@@ -163,12 +163,14 @@ void COptions::Init(void) {
 COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
-    notes += "`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.\n";
-    notes += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-    notes += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
-    notes += "If the queried node does not store historical state, the results are undefined.\n";
-    notes += "`special` blocks are detailed under `whenBlock --list`.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes2.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes2.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");
+    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

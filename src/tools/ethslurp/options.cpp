@@ -153,7 +153,9 @@ COptions::COptions(void) {
     HIDE_FIELD  (CTransaction, "receipt");
     HIDE_FIELD  (CTransaction, "traces");
 
-    notes = "Portions of this software are Powered by Etherscan.io APIs.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("Portions of this software are Powered by Etherscan.io APIs.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

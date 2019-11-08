@@ -203,6 +203,9 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CAccountName, "latestAppearance");
 
     minArgs = 0;
+
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

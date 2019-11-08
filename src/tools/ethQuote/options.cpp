@@ -72,29 +72,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!period.empty())
         freq = str_2_Uint(period);
 
-    // Display formatting
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("ethQuote")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_PRICEQUOTE : format);
-        manageFields("CAccountName:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
-    }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
-
     string_q unused;
-    if (!fileExists(source.getDatabasePath(unused))) {
-        if (verbose)
-            cerr << "Establishing price database cache.\n";
-        establishFolder(source.getDatabasePath(unused));
-    }
+    establishFolder(source.getDatabasePath(unused));
+
+    // Display formatting
+    configureDisplay("ethQuote", "CAccountName", STR_DISPLAY_PRICEQUOTE);
 
     return true;
 }
@@ -117,10 +99,10 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-    notes = "Valid pairs include any pair from the public Poloniex's API here:|";
-    notes += "https://poloniex.com/public?command=returnCurrencies.\n";
-    notes += "`Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data|";
-    notes += "at a time. You must repeatedly run this command until the data is up-to-date.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("Valid pairs include any pair from the public Poloniex's API here: | https://poloniex.com/public?command=returnCurrencies.");
+    notes2.push_back("`Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data | at a time. You must repeatedly run this command until the data is up-to-date.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------

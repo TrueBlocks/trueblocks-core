@@ -193,12 +193,14 @@ COptions::COptions(void) {
     establishFolder(namesFile.getPath());
     loadNames();
     Init();
-    notes = "With a single search term, the tool searches both `name` and `address`.\n";
-    notes += "With two search terms, the first term must match the `address` field, and the second term must match the `name` field.\n";
-    notes += "When there are two search terms, both must match.\n";
-    notes += "The `--match_case` option requires case sensitive matching. It works with all other options.\n";
-    notes += "To customize the list of names add a `custom` section to the config file (see documentation).\n";
-    notes += "Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("With a single search term, the tool searches both `name` and `address`.");
+    notes2.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");
+    notes2.push_back("When there are two search terms, both must match.");
+    notes2.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
+    notes2.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    // END_CODE_NOTES
+    notes2.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
 }
 
 //--------------------------------------------------------------------------------

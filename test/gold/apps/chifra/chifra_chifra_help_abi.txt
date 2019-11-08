@@ -4,7 +4,7 @@ TIME ~ CLOCK - <INFO>  : Connecting to node...
 chifra abi argc: 2 [1:--help] 
 chifra abi --help 
 
-  Usage:    chifra abi [-c|-g|-n|-s|-v|-h] <address> [address...]  
+  Usage:    chifra abi [-c|-g|-n|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
   Where:  
@@ -12,7 +12,6 @@ chifra abi --help
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
 	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-s  (--sol <path>)    create the ABI file from a .sol file in the local directory
 
 #### Hidden options (shown during testing only)
 	-k  (--known)         load common 'known' ABIs from cache

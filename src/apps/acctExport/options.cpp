@@ -347,7 +347,9 @@ COptions::COptions(void) {
     ts_cnt = 0;
     Init();
     CDisplayApp::registerClass();
-    notes = "`addresses` must start with '0x' and be forty two characters long.\n";
+    // BEG_CODE_NOTES
+    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    // END_CODE_NOTES
 }
 
 //--------------------------------------------------------------------------------
