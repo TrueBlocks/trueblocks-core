@@ -27,35 +27,31 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-            // END_CODE_AUTO
-
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--n_blocks:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_blocks must be a non-negative number. Quitting...");
-            n_blocks = str_2_Uint(arg);
+            if (!confirmBlockNum("n_blocks", n_blocks, arg, latest))
+                return false;
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--n_block_procs:")) {
-            arg = substitute(substitute(arg, "--n_block_procs:", ""), "-p:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_block_procs must be a non-negative number. Quitting...");
-            n_block_procs = str_2_Uint(arg);
+            if (!confirmUint("n_block_procs", n_block_procs, arg))
+                return false;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
-            arg = substitute(substitute(arg, "--n_addr_procs:", ""), "-a:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_addr_procs must be a non-negative number. Quitting...");
-            n_addr_procs = str_2_Uint(arg);
+            if (!confirmUint("n_addr_procs", n_addr_procs, arg))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+            // END_CODE_AUTO
 
         } else {
             return usage("Invalid option: " + arg);
@@ -98,10 +94,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("ripe: " + indexFolder_ripe);
     LOG4("tmp: " + configPath("cache/tmp/"));
 
-    CBlock latest;
-    getBlock_light(latest, "latest");
-    latestBlockTs = latest.timestamp;
-    latestBlockNum = latest.blockNumber;
+    CBlock latestBlock;
+    getBlock_light(latestBlock, "latest");
+    latestBlockTs = latestBlock.timestamp;
+    latestBlockNum = latestBlock.blockNumber;
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
@@ -157,16 +153,14 @@ void COptions::Init(void) {
     optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
+    n_blocks = NOPOS;
+    n_block_procs = NOPOS;
+    n_addr_procs = NOPOS;
     // END_CODE_INIT
-
     if (getEnvStr("DOCKER_MODE") == "true") {
         n_blocks      = 100;
         n_block_procs = 5;
         n_addr_procs  = 10;
-    } else {
-        n_blocks      = NOPOS;
-        n_block_procs = NOPOS;
-        n_addr_procs  = NOPOS;
     }
 
     minArgs     = 0;

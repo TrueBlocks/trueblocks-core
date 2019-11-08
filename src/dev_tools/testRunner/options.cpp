@@ -192,10 +192,10 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     if (!clean)
         return true;
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {}  // do not remove, squelches warning
     return true;
 }

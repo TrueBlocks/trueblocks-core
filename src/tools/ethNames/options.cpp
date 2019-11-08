@@ -31,6 +31,7 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 string_q shortenFormat(const string_q& fmtIn);
+string_q getSearchFields(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
@@ -124,29 +125,16 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
+    // Prepare formatting
+    string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
+    if (verbose && !contains(format, "{SOURCE}"))
+        str += "\t[{SOURCE}]";
+    string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
+
     // Display formatting
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("ethNames")->getConfigStr("display", "format", format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
-        if (verbose && !contains(format, "{SOURCE}"))
-            format += "\t[{SOURCE}]";
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
-    }
-    manageFields("CAccountName:" + cleanFmt((format.empty() ? STR_DISPLAY_ACCOUNTNAME : format), exportFmt));
-    expContext().fmtMap["meta"] = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
-    if (expContext().asEther)
-        format = substitute(format, "{BALANCE}", "{ETHER}");
-    if (expContext().asDollars)
-        format = substitute(format, "{BALANCE}", "{DOLLARS}");
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("ethNames", "CAccountName", str, meta);
+    if (exportFmt == API1 || exportFmt == JSON1)
+        manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME, exportFmt));
 
     // Collect results for later display
     applyFilter();
@@ -179,7 +167,7 @@ void COptions::Init(void) {
 
     items.clear();
     searches.clear();
-    searchFields = shortenFormat(STR_DISPLAY_ACCOUNTNAME);
+    searchFields = getSearchFields(STR_DISPLAY_ACCOUNTNAME);
     types = NAMED;
     minArgs = 0;
 }
@@ -194,13 +182,13 @@ COptions::COptions(void) {
     loadNames();
     Init();
     // BEG_CODE_NOTES
-    notes2.push_back("With a single search term, the tool searches both `name` and `address`.");
-    notes2.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");
-    notes2.push_back("When there are two search terms, both must match.");
-    notes2.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
-    notes2.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    notes.push_back("With a single search term, the tool searches both `name` and `address`.");
+    notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");
+    notes.push_back("When there are two search terms, both must match.");
+    notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
+    notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // END_CODE_NOTES
-    notes2.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
+    notes.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
 }
 
 //--------------------------------------------------------------------------------
@@ -346,11 +334,22 @@ void COptions::applyFilter() {
 //-----------------------------------------------------------------------
 string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
-    //    replace(ret, "[{GROUP}]", "");
-    //    replace(ret, "[{SUBGROUP}]", "");
-    //    replace(ret, "[{ADDRESS}]", "");
-    //    replace(ret, "[{NAME}]", "");
-    //    replace(ret, "[{SYMBOL}]", "");
+    replace(ret, "[{SOURCE}]", "");
+    replace(ret, "[{DESCRIPTION}]", "");
+    replace(ret, "[{LOGO}]", "");
+    replace(ret, "[{IS_CONTRACT}]", "");
+    replace(ret, "[{IS_PRIVATE}]", "");
+    replace(ret, "[{IS_SHARED}]", "");
+    while (startsWith(ret, "\t"))
+        replace(ret, "\t", "");
+    while (endsWith(ret, "\t"))
+        replaceReverse(ret, "\t", "");
+    return ret;
+}
+
+//-----------------------------------------------------------------------
+string_q getSearchFields(const string_q& fmtIn) {
+    string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{LOGO}]", "");

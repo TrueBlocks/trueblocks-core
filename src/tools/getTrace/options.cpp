@@ -89,6 +89,12 @@ bool COptions::parseArguments(string_q& command) {
     string_q format;
     switch (exportFmt) {
     case NONE1:
+        format = STR_DISPLAY_TRACE;
+        manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+        manageFields("CTrace:" + cleanFmt(format, exportFmt));
+        manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
+        manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+        break;
     case TXT1:
     case CSV1:
         format = getGlobalConfig("getTrace")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
@@ -132,10 +138,10 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_NOTES
-    notes2.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
-    notes2.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("If the queried node does not store historical state, the results are undefined.");
     // END_CODE_NOTES
 }
 

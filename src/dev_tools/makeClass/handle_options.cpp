@@ -65,7 +65,7 @@ bool COptions::handle_options(void) {
                 if (!isNote)
                     opt_stream << option.Format(STR_OPTION_STR) << endl;
                 else
-                    notes_stream << option.Format("    notes2.push_back(\"[{OPTS}]\");") << endl;
+                    notes_stream << option.Format("    notes.push_back(\"[{OPTS}]\");") << endl;
 
                 if (!option.generate.empty()) {
 

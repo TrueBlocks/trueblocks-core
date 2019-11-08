@@ -30,14 +30,13 @@ private:
 class COptions : public COptionsBase {
 public:
     // BEG_CODE_DECLARE
+    blknum_t n_blocks;
+    uint64_t n_block_procs;
+    uint64_t n_addr_procs;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
-
-    blknum_t    n_blocks;
-    size_t      n_block_procs;
-    size_t      n_addr_procs;
 
     COptions(void);
     ~COptions(void);

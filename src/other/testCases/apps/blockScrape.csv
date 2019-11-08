@@ -7,15 +7,15 @@ on, cmd,  fast, scrape, apps/blockScrape, help_long,       n, help
 # which has some live code (for example to update the timestamp file). Make sure you're not
 # damaging data in API mode before making these tests 'both'
 #
-# off, cmd,  fast, scrape, apps/blockScrape, invalid,         n, junk
-# off, cmd,  fast, scrape, apps/blockScrape, nBlocks_invalid, n, n_blocks = -12
-# off, cmd,  fast, scrape, apps/blockScrape, nBProcs_invalid, n, n_block_procs = -12
-# off, cmd,  fast, scrape, apps/blockScrape, nAProcs_invalid, n, n_addr_procs = -12
+on, cmd,  fast, scrape, apps/blockScrape, invalid,         n, junk
+on, cmd,  fast, scrape, apps/blockScrape, nBlocks_invalid, n, n_blocks = -12
+on, cmd,  fast, scrape, apps/blockScrape, nBProcs_invalid, n, n_block_procs = -12
+on, cmd,  fast, scrape, apps/blockScrape, nAProcs_invalid, n, n_addr_procs = -12
 
-# off, cmd,  fast, scrape, apps/blockScrape, nBlocks,         n, n_blocks = 12
-# off, cmd,  fast, scrape, apps/blockScrape, nBlockProcs,     n, n_block_procs = 12
-# off, cmd,  fast, scrape, apps/blockScrape, nAddrProcs,      n, n_addr_procs = 12
-# off, cmd,  fast, scrape, apps/blockScrape, all,             n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
+on, cmd,  fast, scrape, apps/blockScrape, nBlocks,         n, n_blocks = 12
+on, cmd,  fast, scrape, apps/blockScrape, nBlockProcs,     n, n_block_procs = 12
+on, cmd,  fast, scrape, apps/blockScrape, nAddrProcs,      n, n_addr_procs = 12
+on, cmd,  fast, scrape, apps/blockScrape, all,             n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
 
 # 10600, apps, scrape, blockScrape, n_blocks,      n, , FALSE, FALSE, TRUE,  TRUE, ,   flag,        <blknum>, maximum number of blocks to process (defaults to 5000)
 # 10620, apps, scrape, blockScrape, n_block_procs, p, , FALSE, FALSE, FALSE, FALSE,,   flag,        <uint32>, number of block channels for blaze

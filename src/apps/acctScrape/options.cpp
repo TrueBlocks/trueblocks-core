@@ -146,7 +146,7 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
-    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
     // END_CODE_NOTES
 }
 

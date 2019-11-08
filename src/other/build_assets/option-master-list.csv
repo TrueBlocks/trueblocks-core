@@ -33,9 +33,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10560,apps,export,acctExport,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Export full detail of transactions for one or more Ethereum addresses.
 10562,apps,export,acctExport,,,,FALSE,FALSE,FALSE,FALSE,na,note,,`addresses` must start with '0x' and be forty two characters long.
 
-10600,apps,scrape,blockScrape,n_blocks,n,,FALSE,FALSE,TRUE,TRUE,,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
-10620,apps,scrape,blockScrape,n_block_procs,p,,FALSE,FALSE,FALSE,FALSE,,flag,<uint32>,number of block channels for blaze
-10640,apps,scrape,blockScrape,n_addr_procs,a,,FALSE,FALSE,FALSE,FALSE,,flag,<uint32>,number of address channels for blaze
+10600,apps,scrape,blockScrape,n_blocks,n,,FALSE,FALSE,TRUE,TRUE,yes,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
+10620,apps,scrape,blockScrape,n_block_procs,p,,FALSE,FALSE,FALSE,FALSE,yes,flag,<uint32>,number of block channels for blaze
+10640,apps,scrape,blockScrape,n_addr_procs,a,,FALSE,FALSE,FALSE,FALSE,yes,flag,<uint32>,number of address channels for blaze
 10660,apps,scrape,blockScrape,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Decentralized blockchain scraper and block cache.
 
 10700,apps,status,cacheStatus,modes,,,FALSE,FALSE,TRUE,TRUE,,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>,which data to retrieve

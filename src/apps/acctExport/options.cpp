@@ -121,9 +121,6 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         } else {
-            if (!startsWith(arg, "0x"))
-                return usage("Invalid option: " + arg + ". Quitting...");
-
             arg = toLower(arg);
             if (!isAddress(arg))
                 EXIT_USAGE(arg + " does not appear to be a valid address. Quitting...");
@@ -139,9 +136,6 @@ bool COptions::parseArguments(string_q& command) {
                            "running or it did not end cleanly the\n\tlast time it ran. "
                            "Quit the already running program or, if it is not running, "
                            "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
-
-            //if (fileSize(fn) == 0)
-            //    EXIT_USAGE("Nothing to export. Quitting...");
 
             CAccountWatch watch;
             // below - don't change, sets bloom value also
@@ -348,7 +342,7 @@ COptions::COptions(void) {
     Init();
     CDisplayApp::registerClass();
     // BEG_CODE_NOTES
-    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
     // END_CODE_NOTES
 }
 

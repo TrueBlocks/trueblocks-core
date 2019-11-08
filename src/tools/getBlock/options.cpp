@@ -144,30 +144,20 @@ bool COptions::parseArguments(string_q& command) {
         exportFmt = (filterType.empty() ? JSON1 : TXT1);
 
     // Display formatting
-    string_q format;
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("getBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_BLOCK : format);
+    if (count_only)
+        configureDisplay("", "CBlock", STR_FORMAT_COUNT_TXT);
+    else if (!filterType.empty())
+        configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
+    else
+        configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
+    if (exportFmt == API1 || exportFmt == JSON1) {
         if (count_only)
-            format = STR_FORMAT_COUNT_TXT;
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_COUNT_JSON, exportFmt);
         else if (!filterType.empty())
-            format = STR_FORMAT_FILTER_TXT;
-        manageFields("CBlock:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        if (count_only)
-            format = STR_FORMAT_COUNT_JSON;
-        else if (!filterType.empty())
-            format = STR_FORMAT_FILTER_JSON;
-        break;
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON, exportFmt);
+        if (isNoHeader)
+            expContext().fmtMap["header"] = "";
     }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
 
     return true;
 }
@@ -197,9 +187,9 @@ COptions::COptions(void) {
     first = true;
     exportFmt = NONE1;
     // BEG_CODE_NOTES
-    notes2.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // END_CODE_NOTES
 }
 

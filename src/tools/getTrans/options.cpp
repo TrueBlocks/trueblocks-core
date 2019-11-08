@@ -84,26 +84,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Display formatting
-    string_q format;
-    switch (exportFmt) {
-        case NONE1:
-            format = STR_DISPLAY_TRANSACTION;
-            break;
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("getTrans")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRANSACTION : format);
-            if (trace)
-                format += "\t[{TRACESCNT}]";
-            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-            break;
-        case API1:
-        case JSON1:
-            format = "";
-            break;
-    }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
+    configureDisplay("getTrans", "CTransaction", fmt);
 
     return true;
 }
@@ -128,10 +110,10 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_INIT
-    notes2.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
-    notes2.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("If the queried node does not store historical state, the results are undefined.");
     // END_CODE_INIT
 }
 

@@ -131,6 +131,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("whenBlock", "CBlock", STR_DISPLAY_WHEN);
+    if (exportFmt == API1 || exportFmt == JSON1)
+        manageFields("CBlock:" + string_q(STR_DISPLAY_WHEN));
 
     // Collect together results for later display
     applyFilter();
@@ -173,10 +175,10 @@ COptions::COptions(void) {
         exportFmt = TXT1;
 
     // BEG_CODE_NOTES
-    notes2.push_back("Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.");
-    notes2.push_back("Use any of the following names to represent `special` blocks:");
+    notes.push_back("Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.");
+    notes.push_back("Use any of the following names to represent `special` blocks:");
     // END_CODE_NOTES
-    notes2.push_back("  " + listSpecials(NONE1));
+    notes.push_back("  " + listSpecials(NONE1));
 }
 
 //--------------------------------------------------------------------------------

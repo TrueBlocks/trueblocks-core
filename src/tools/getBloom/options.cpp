@@ -164,9 +164,9 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
     // BEG_CODE_NOTES
-    notes2.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // END_CODE_NOTES
 }
 

@@ -381,23 +381,28 @@ namespace qblocks {
     }
 
     //-----------------------------------------------------------------------
-    void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat) {
+    void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat, const string_q& meta) {
         string_q format;
         switch (exportFmt) {
             case NONE1:
                 format = defFormat;
+                manageFields(dataType + ":" + cleanFmt(format, exportFmt));
                 break;
             case TXT1:
             case CSV1:
                 format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
+                manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format), exportFmt));
                 break;
             case API1:
             case JSON1:
                 format = "";
                 break;
         }
-        manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format), exportFmt));
-        expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+        if (expContext().asEther)   format = substitute(format, "{BALANCE}", "{ETHER}");
+        if (expContext().asDollars) format = substitute(format, "{BALANCE}", "{DOLLARS}");
+        expContext().fmtMap["meta"]   = meta;
+        expContext().fmtMap["format"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
         if (isNoHeader)
             expContext().fmtMap["header"] = "";
     }
@@ -625,18 +630,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
     //--------------------------------------------------------------------------------
     string_q COptionsBase::get_notes(void) const {
 
-        if (!isReadme && !verbose)
+        if ((!isReadme && !verbose) || (notes.size() == 0))
             return "";
 
-        if (notes.empty() && notes2.size() == 0)
-            return "";
+        string_q nn;
+        for (auto n : notes)
+            nn += (n + "\n");
 
-        string_q nn = notes;
-        if (nn.empty()) {
-            for (auto n : notes2) {
-                nn += (n + "\n");
-            }
-        }
         string_q lead  = (isReadme ? "" : "\t");
         string_q trail = (isReadme ? "\n" : "\n");
         while (!isReadme && contains(nn, '`')) {

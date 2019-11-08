@@ -84,22 +84,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Display formatting
-    string_q format;
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("getLogs")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_LOGENTRY : format);
-        manageFields("CLogEntry:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
-    }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("getLogs", "CLogEntry", STR_DISPLAY_LOGENTRY);
 
     return true;
 }
@@ -123,10 +108,10 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_NOTES
-    notes2.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
-    notes2.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("If the queried node does not store historical state, the results may be undefined.");
+    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("If the queried node does not store historical state, the results may be undefined.");
     // END_CODE_NOTES
 }
 

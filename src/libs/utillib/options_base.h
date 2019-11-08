@@ -55,8 +55,7 @@ namespace qblocks {
         bool isNoHeader;
         format_t exportFmt;
         blkrange_t scanRange;
-        string_q notes;
-        CStringArray notes2;
+        CStringArray notes;
 
         streambuf *coutBackup;  // saves original cout buffer
         ofstream redirStream;  // the redirected stream (if any)
@@ -126,7 +125,7 @@ namespace qblocks {
         void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
 
     protected:
-        void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat);
+        void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat, const string_q& meta="");
         void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
         const COption *pParams;

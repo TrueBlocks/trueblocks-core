@@ -10,7 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include <algorithm>
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -187,7 +186,7 @@ COptions::COptions(void) {
     first = true;
     Init();
     // BEG_CODE_NOTES
-    notes2.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");
+    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");
     // END_CODE_NOTES
 }
 

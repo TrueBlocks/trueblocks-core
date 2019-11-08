@@ -41,6 +41,8 @@ int main(int argc, const char *argv[]) {
             string_q path = nextTokenClear(testName, '/');
             LOG1("Processing file: ", path);
             options.cleanTest(path, testName);
+            if (options.modes & API)
+                options.cleanTest(path, testName + "/api_tests");
 
             string_q testFile = getCWD() + "../../../../src/other/testCases/" + path + "/" + testName + ".csv";
             if (!fileExists(testFile))

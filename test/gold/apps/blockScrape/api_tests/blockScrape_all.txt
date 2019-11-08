@@ -1,1 +1,0 @@
-blockScrape --nBlocks 12 --nBlockProcs 12 --nAddrProcs 12  ; 

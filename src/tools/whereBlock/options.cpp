@@ -90,7 +90,7 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
-    notes2.push_back("Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.");
+    notes.push_back("Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.");
     // END_CODE_NOTES
 }
 

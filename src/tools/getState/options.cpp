@@ -107,25 +107,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!(modes & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
-    switch (exportFmt) {
-    case NONE1:
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("getState")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-        manageFields("CEthState:" + cleanFmt(format, exportFmt));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
-    }
-    if (expContext().asEther)
-        format = substitute(format, "{BALANCE}", "{ETHER}");
-    if (expContext().asDollars)
-        format = substitute(format, "{BALANCE}", "{DOLLARS}");
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     if (!requestsHistory()) // if the user did not request historical state, we can return safely
         return true;
@@ -173,13 +155,13 @@ COptions::COptions(void) : CHistoryOptions() {
     Init();
     first = true;
     // BEG_CODE_NOTES
-    notes2.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes2.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes2.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes2.push_back("If the queried node does not store historical state, the results are undefined.");
-    notes2.push_back("`special` blocks are detailed under `whenBlock --list`.");
-    notes2.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
-    notes2.push_back("You may specify multiple `modes` on a single line.");
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
+    notes.push_back("You may specify multiple `modes` on a single line.");
     // END_CODE_NOTES
 }
 
