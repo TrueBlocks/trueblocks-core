@@ -2,7 +2,7 @@ echo "============================ $1 ==========================="
 cd ..
 export QUICKBLOCKS=`pwd`
 
-find $QUICKBLOCKS/test/gold    -name "*$1*"  >/tmp/f1
-find $QUICKBLOCKS/test/working -name "*$1*" >>/tmp/f1
+find $QUICKBLOCKS/test/gold    -name "*$1*" | grep -v api_tests  >/tmp/f1
+find $QUICKBLOCKS/test/working -name "*$1*" | grep -v api_tests >>/tmp/f1
 colordiff `cat /tmp/f1 | xargs`
 rm -f /tmp/f1
