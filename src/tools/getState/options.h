@@ -17,11 +17,11 @@
 class COptions : public CHistoryOptions {
 public:
     // BEG_CODE_DECLARE
+    CAddressArray addrs;
     bool changes;
     bool no_zero;
     // END_CODE_DECLARE
 
-    CAddressArray addrs;
     address_t current;
     ethstate_t modeBits;
     biguint_t prevBal;

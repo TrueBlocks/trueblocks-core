@@ -18,10 +18,10 @@
 class COptions : public CBlockOptions {
 public:
     // BEG_CODE_DECLARE
+    CAddressArray addrs;
     bool appearances;
     // END_CODE_DECLARE
 
-    CAddressArray addrs;
     CWebAPI api;
     CStringArray typesList;
     string_q header;

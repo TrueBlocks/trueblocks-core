@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 #### Usage
 
-`Usage:`    makeClass [-l|-r|-a|-j|-o|-n|-f|-v|-h] &lt;class&gt; [class...]  
+`Usage:`    makeClass [-l|-r|-a|-j|-o|-n|-f|-t|-v|-h] &lt;class&gt; [class...]  
 `Purpose:`  Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>.
 
 `Where:`  
@@ -17,6 +17,7 @@ makeClass -th
 | -o | --options | export options code (check data, generate code) and quit |
 | -n | --nspace <str> | surround the code with a namespace |
 | -f | --filter <str> | process only files whose filename or contents contain 'filter' |
+| -t | --test | for both code generation and options generation, test only - don't write the changes |
 
 #### Hidden options (shown during testing only)
 | -e | --edit | edit <class_name(s)> definition file in local folder |

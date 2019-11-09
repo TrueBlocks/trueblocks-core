@@ -22,6 +22,7 @@ public:
     bool all;
     string_q nspace;
     string_q filter;
+    bool test;
     // END_CODE_DECLARE
 
     runmode_t mode;

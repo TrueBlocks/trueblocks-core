@@ -38,6 +38,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -64,20 +65,15 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
-        } else {
-            if (isAddress(arg)) {
-                addrs.push_back(toLower(arg));
+        } else if (isAddress(arg)) {
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
-            } else {
-                string_q ret = blocks.parseBlockList(arg, newestBlock);
-                if (endsWith(ret, "\n")) {
-                    cerr << "\n  " << ret << "\n";
-                    return false;
-                } else if (!ret.empty()) {
-                    return usage(ret);
-                }
-            }
+        } else {
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
+
+            // END_CODE_AUTO
         }
     }
 

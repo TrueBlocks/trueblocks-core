@@ -53,13 +53,15 @@ bool COptions::handle_options(void) {
         warnings.str("");
 
         map<string, string> shortCmds;
-        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream, pos_stream;
+        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream;
+        CStringArray positionals;
         bool allAuto = true;
         for (auto option : optionArray) {
 
             if ((option.group + "/" + option.tool) == tool.first) {
                 check_option(option);
 
+                if (option.tool == "chifra") allAuto = false;
                 bool isEnumList = contains(option.data_type, "list<enum");
                 bool isEnum = contains(option.data_type, "enum") && !isEnumList;
                 bool isBool = contains(option.data_type, "boolean");
@@ -113,12 +115,9 @@ bool COptions::handle_options(void) {
                             }
 
                         } else if (option.option_kind == "positional") {
-
-                            if (option.tool == "cacheStatus" && option.command == "modes")
-                                printf("");
-
+                            ostringstream pos_stream;
                             if (option.data_type == "list<addr>") {
-                                local_stream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+                                local_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
                                 pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
@@ -136,13 +135,17 @@ bool COptions::handle_options(void) {
                             } else if (option.data_type == "list<tx_id>") {
                                 //local_stream << "    CStringArray strings;" << endl;
                                 pos_stream << STR_TX_PROCESSOR << endl;
+                            } else {
+                                // don't know type
                             }
+                            if (!pos_stream.str().empty())
+                                positionals.push_back(pos_stream.str());
 
                         } else {
                             cerr << "skipping option_kind " << option.option_kind << endl;
                         }
 
-                    } else if (option.generate == "yes") {
+                    } else if (option.generate == "header") {
 
                         string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                         if (option.is_customizable == "TRUE")
@@ -181,9 +184,9 @@ bool COptions::handle_options(void) {
                             }
 
                         } else if (option.option_kind == "positional") {
-
+                            ostringstream pos_stream;
                             if (option.data_type == "list<addr>") {
-                                declare_stream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+                                declare_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
                                 pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
@@ -200,7 +203,11 @@ bool COptions::handle_options(void) {
                             } else if (option.data_type == "list<tx_id>") {
                                 //declare_stream << "    CStringArray strings;" << endl;
                                 pos_stream << STR_TX_PROCESSOR << endl;
+                            } else {
+                                // unknown type
                             }
+                            if (!pos_stream.str().empty())
+                                positionals.push_back(pos_stream.str());
 
                         } else {
                             cerr << "skipping option_kind " << option.option_kind << endl;
@@ -242,11 +249,30 @@ bool COptions::handle_options(void) {
 
         if (allAuto) {
             auto_stream << STR_CHECK_BUILTIN << endl;
-            if (!pos_stream.str().empty()) {
-                auto_stream << "        } else {" << endl;
-                string_q pos = pos_stream.str();
-                replace(pos, "} else if", "if");  // the first one doesn't have an else
-                auto_stream << pos;
+            size_t cnt = 0;
+            for (auto pos : positionals) {
+                auto_stream << "        } else {" << endl; // positionals live in their own frame
+                if (positionals.size() > 1) {
+                    if (cnt == 0) {
+                        // adjust the first positional to seperate addresses or dates from blocks
+                        string_q str = auto_stream.str();
+                        if (contains(pos, "Address"))
+                            replaceReverse(str, "else {\n", "else if (isAddress(arg)) {\n            if (!parseAddressList2(this, addrs, arg))\n                return false;\n\n");
+                        else
+                            replaceReverse(pos, "} else if", "if");
+                        auto_stream.str("");
+                        auto_stream.clear();
+                        auto_stream << str;
+                        pos = "";
+                    } else {
+                        replace(pos, "} else if", "if");
+                        auto_stream << pos;
+                    }
+                    cnt++;
+                } else {
+                    replace(pos, "} else if", "if");
+                    auto_stream << pos;
+                }
             }
         }
 
@@ -257,11 +283,18 @@ bool COptions::handle_options(void) {
                 LOG_WARN(warning);
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
-            writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str(), notes_stream.str());
-            writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
+            if (!test) {
+                writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str(), notes_stream.str());
+                writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
+            }
         }
     }
-    cerr << cGreen << "makeClass --options: processed " << nFiles << " files (changed " << nChanges << ")." << string_q(50, ' ') << cOff << endl;
+
+    if (test) {
+        nChanges = 0;
+        LOG_WARN("Testing only - no files written");
+    }
+    LOG_INFO("makeClass --options: processed ", nFiles, " files (changed ", nChanges, ").", string_q(50, ' '));
 
     return true;
 }

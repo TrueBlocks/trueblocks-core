@@ -25,6 +25,7 @@ static const COption params[] = {
     COption("options", "o", "", OPT_SWITCH, "export options code (check data, generate code) and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
     COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, test only - don't write the changes"),
     COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>."),
     // END_CODE_OPTIONS
 };
@@ -74,6 +75,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+
+        } else if (arg == "-t" || arg == "--test") {
+            test = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -142,6 +146,7 @@ void COptions::Init(void) {
     all = false;
     nspace = "";
     filter = "";
+    test = false;
     // END_CODE_INIT
 
     mode = NONE;

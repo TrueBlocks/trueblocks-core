@@ -17,6 +17,7 @@
 class COptions : public CHistoryOptions {
 public:
     // BEG_CODE_DECLARE
+    CAddressArray addrs;
     string_q parts;
     bool by_acct;
     bool no_zero;

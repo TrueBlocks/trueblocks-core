@@ -282,7 +282,10 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
     replaceAll(headSource, "public:\n\npublic:", "public:");
 
-    writeTheCode(headerFile, headSource, ns);
+    if (!options.test)
+        writeTheCode(headerFile, headSource, ns);
+    else
+        cerr << "Testing only: would have written " << headerFile << endl;
 
     //------------------------------------------------------------------------------------------------
     string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
@@ -332,7 +335,10 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(srcSource, "[{FN}]",              fnBase);
-    writeTheCode(srcFile, srcSource, ns);
+    if (!options.test)
+        writeTheCode(srcFile, srcSource, ns);
+    else
+        cerr << "Testing only: would have written " << srcFile << endl;
 }
 
 //------------------------------------------------------------------------------------------------
