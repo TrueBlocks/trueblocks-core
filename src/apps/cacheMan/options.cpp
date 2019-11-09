@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("filenames", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption("filenames", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
     COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
@@ -33,6 +33,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray strings;
     bool check = false;
     bool sort = false;
     bool fix = false;
@@ -96,19 +97,25 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            address_t addr = toLower(substitute(arg, ".acct.bin", ""));
-            if (!isAddress(addr))
-                EXIT_USAGE("Option '" + arg + "' does not appear to be an address.");
+            if (!parseStringList2(this, strings, arg))
+                return false;
 
-            // Command line and chifra send in straight addresses, some test cases may send a local file...
-            string_q path = (fileExists(arg + ".acct.bin") ? (arg + ".acct.bin") : getMonitorPath(addr));
-            if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
-                EXIT_USAGE("Monitor file for '" + arg + "' does not exist.");
-
-            monitors.push_back(CAccountWatch(addr, path));
+            // END_CODE_AUTO
         }
+    }
+
+    for (auto string : strings) {
+        address_t addr = toLower(substitute(string, ".acct.bin", ""));
+        if (!isAddress(addr))
+            EXIT_USAGE("Option '" + string + "' does not appear to be an address.");
+
+        // Command line and chifra send in straight addresses, some test cases may send a local file...
+        string_q path = (fileExists(string + ".acct.bin") ? (string + ".acct.bin") : getMonitorPath(addr));
+        if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
+            EXIT_USAGE("Monitor file for '" + string + "' does not exist.");
+
+        monitors.push_back(CAccountWatch(addr, path));
     }
 
     if (list) {

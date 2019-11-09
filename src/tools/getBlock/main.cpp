@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
 
     // We want to get the latestBlock prior to turning on --prove for example
     COptions options;
-    getBlock_light(options.latest, "latest");
+    getBlock_light(options.latestBlock, "latest");
     if (!options.prepareArguments(argc, argv))
         return 0;
 
@@ -62,7 +62,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                 generic.parseJson3(result);
                 result = generic.result;
                 if (gold.parseJson3(result)) {
-                    gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
+                    gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
                     writeBlockToBinary(gold, fileName);
                 }
             }
@@ -73,7 +73,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         queryBlock(gold, uint_2_Str(num), (isApiMode() ? false : true));
         if (gold.blockNumber == 0 && gold.timestamp == 0)
             gold.timestamp = blockZeroTs;
-        gold.finalized = isBlockFinal(gold.timestamp, opt.latest.timestamp, opt.secsFinal);
+        gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
         if (opt.force) {  // turn this on to force a write of the block to the disc
             LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
             writeBlockToBinary(gold, fileName);

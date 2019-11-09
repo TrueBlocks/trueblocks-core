@@ -46,8 +46,9 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (!parseTransList2(this, transList, arg)) {
-            return false;
+        } else {
+            if (!parseTransList2(this, transList, arg))
+                return false;
 
             // END_CODE_AUTO
         }

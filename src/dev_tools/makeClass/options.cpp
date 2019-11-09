@@ -16,7 +16,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("classes", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+    COption("classes", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
     COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
@@ -37,6 +37,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray strings;
     bool list = false;
     bool run = false;
     bool edit = false;
@@ -80,13 +81,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            if (!classNames.empty())
-                classNames += "|";
-            classNames += substitute(substitute(arg, "classDefinitions/", ""), ".txt", "");
+            if (!parseStringList2(this, strings, arg))
+                return false;
 
+            // END_CODE_AUTO
         }
+    }
+
+    for (auto string : strings) {
+        if (!classNames.empty())
+            classNames += "|";
+        classNames += substitute(substitute(string, "classDefinitions/", ""), ".txt", "");
     }
 
     if (options)

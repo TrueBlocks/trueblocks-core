@@ -48,8 +48,9 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (!parseBlockList2(this, blocks, arg, latest)) {
-            return false;
+        } else {
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
 
             // END_CODE_AUTO
         }

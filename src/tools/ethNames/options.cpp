@@ -39,6 +39,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray strings;
     bool expand = false;
     bool owned = false;
     bool custom = false;
@@ -92,12 +93,16 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            searches.push_back(arg);
+            if (!parseStringList2(this, strings, arg))
+                return false;
 
+            // END_CODE_AUTO
         }
     }
+
+    for (auto str : strings)
+        searches.push_back(str);
 
     if (!add.empty()) {
         cout << add << endl;

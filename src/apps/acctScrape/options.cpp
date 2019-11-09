@@ -27,6 +27,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    CAddressArray addrs;
     bool finalized = true;
     bool staging = false;
     bool unripe = false;
@@ -71,22 +72,22 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            if (!startsWith(arg, "0x"))
-                return usage("Invalid option: " + arg);
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid address. Quitting...");
-
-            CAccountWatch watch;
-            watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
-            watch.setValueByName("name", toLower(arg));
-            watch.extra_data = getVersionStr() + "/" + watch.address;
-            watch.color = cBlue;
-            watch.finishParse();
-            monitors.push_back(watch);
+            // END_CODE_AUTO
         }
+    }
+
+    for (auto addr : addrs) {
+        CAccountWatch watch;
+        watch.setValueByName("address", toLower(addr)); // don't change, sets bloom value also
+        watch.setValueByName("name", toLower(addr));
+        watch.extra_data = getVersionStr() + "/" + watch.address;
+        watch.color = cBlue;
+        watch.finishParse();
+        monitors.push_back(watch);
     }
 
     if (monitors.size() == 0)

@@ -200,6 +200,12 @@ bool parseAddressList2(COptionsBase *opt, CAddressArray& addrs, const string_q& 
     return true;
 }
 
+//--------------------------------------------------------------------------------
+bool parseStringList2(COptionsBase *opt, CStringArray& strings, const string& argIn) {
+    strings.push_back(argIn);
+    return true;
+}
+
 //----------------------------------------------------------------------------------------------------
 time_q bn_2_Date(const blknum_t& bn) {
     CBlock block;

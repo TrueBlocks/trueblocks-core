@@ -44,6 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -76,16 +77,11 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-
-            string_q ret = blocks.parseBlockList(arg, latest.blockNumber);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
+            if (!parseBlockList2(this, blocks, arg, latest))
                 return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
+
+            // END_CODE_AUTO
         }
     }
 

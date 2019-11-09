@@ -24,6 +24,7 @@ extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCK_PROCESSOR;
 extern const char* STR_TX_PROCESSOR;
 extern const char* STR_ADDR_PROCESSOR;
+extern const char* STR_STRING_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
 uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ bool COptions::handle_options(void) {
         warnings.clear();
         warnings.str("");
 
-        bool allAuto = true, hasBlockList = false, hasTxList = false, hasAddrList = false;
+        bool allAuto = true, hasBlockList = false, hasTxList = false, hasAddrList = false, hasStrList = false;
         map<string, string> shortCmds;
         ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream;
         for (auto option : optionArray) {
@@ -62,6 +63,8 @@ bool COptions::handle_options(void) {
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
                 bool isNote = option.option_kind == "note";
+                bool isStrList = option.data_type == "list<string>" ;
+                bool isAddrList = option.data_type == "list<addr>";
                 if (!isNote)
                     opt_stream << option.Format(STR_OPTION_STR) << endl;
                 else
@@ -79,9 +82,10 @@ bool COptions::handle_options(void) {
 
                     if (option.generate == "local") {
 
-                        hasBlockList = (hasBlockList || (option.option_kind == "positional" && option.data_type == "list<blknum>"));
-                        hasTxList = (hasTxList || (option.option_kind == "positional" && option.data_type == "list<tx_id>"));
-                        hasAddrList = (hasAddrList || (option.option_kind == "positional" && option.data_type == "list<addr>"));
+                        hasBlockList = ( hasBlockList || (option.option_kind == "positional" && option.data_type == "list<blknum>" ));
+                        hasTxList    = ( hasTxList    || (option.option_kind == "positional" && option.data_type == "list<tx_id>"  ));
+                        hasAddrList  = ( hasAddrList  || (option.option_kind == "positional" && option.data_type == "list<addr>"   ));
+                        hasStrList   = ( hasStrList   || (option.option_kind == "positional" && option.data_type == "list<string>" ));
                         if (option.option_kind == "switch") {
 
                             local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
@@ -104,13 +108,19 @@ bool COptions::handle_options(void) {
                             else
                                 auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
 
+                        } else if (isStrList) {
+                            local_stream << "    CStringArray strings;" << endl;
+
+                        } else if (isAddrList) {
+                            local_stream << "    CAddressArray addrs;" << endl;
+
                         } else {
                             // do nothing
                         }
 
                     } else if (option.generate == "yes") {
 
-                        hasAddrList = (hasAddrList || (option.option_kind == "positional" && option.data_type == "list<addr>"));
+                        hasAddrList  = ( hasAddrList  || (option.option_kind == "positional" && option.data_type == "list<addr>"   ));
                         string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                         if (option.is_customizable == "TRUE")
                             initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]", (isEnum ? "String" : (isBool) ? "Bool" : "Int"));
@@ -140,12 +150,18 @@ bool COptions::handle_options(void) {
                             else
                                 auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )", "substitute(arg") << endl;
 
+                        } else if (isStrList) {
+                            declare_stream << "    CStringArray strings;" << endl;
+
+                        } else if (isAddrList) {
+                            declare_stream << "    CAddressArray addrs;" << endl;
+
                         } else {
                             // do nothing
                         }
 
                     } else {
-                        // do nothing
+                        // do nothing (ignore 'na' for example)
                     }
 
                 } else {
@@ -184,10 +200,10 @@ bool COptions::handle_options(void) {
                 auto_stream << STR_BLOCK_PROCESSOR << endl;
             if (hasTxList)
                 auto_stream << STR_TX_PROCESSOR << endl;
-            if (hasAddrList) {
+            if (hasAddrList)
                 auto_stream << STR_ADDR_PROCESSOR << endl;
-                declare_stream << "    CAddressArray addrs;" << endl;
-            }
+            if (hasStrList)
+                auto_stream << STR_STRING_PROCESSOR << endl;
         }
 
         if (!warnings.str().empty()) {
@@ -331,6 +347,11 @@ const char* STR_TX_PROCESSOR =
 //---------------------------------------------------------------------------------------------------
 const char* STR_ADDR_PROCESSOR =
 "        } else if (!parseAddressList2(this, addrs, arg)) {\n"
+"            return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_STRING_PROCESSOR =
+"        } else if (!parseStringList2(this, strings, arg)) {\n"
 "            return false;\n";
 
 //---------------------------------------------------------------------------------------------------

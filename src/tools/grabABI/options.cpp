@@ -62,8 +62,9 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (!parseAddressList2(this, addrs, arg)) {
-            return false;
+        } else {
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
             // END_CODE_AUTO
         }

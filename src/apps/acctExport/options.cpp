@@ -40,6 +40,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
     // BEG_CODE_LOCAL_INIT
+    CAddressArray addrs;
     bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
@@ -119,34 +120,36 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            arg = toLower(arg);
-            if (!isAddress(arg))
-                EXIT_USAGE(arg + " does not appear to be a valid address. Quitting...");
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
-            string_q fn = getMonitorPath(arg);
-            if (!fileExists(fn)) {
-                fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
-                EXIT_USAGE("File not found '" + fn + ". Quitting...");
-            }
-
-            if (fileExists(fn + ".lck"))
-                EXIT_USAGE("The cache lock file is present. The program is either already "
-                           "running or it did not end cleanly the\n\tlast time it ran. "
-                           "Quit the already running program or, if it is not running, "
-                           "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
-
-            CAccountWatch watch;
-            // below - don't change, sets bloom value also
-            watch.setValueByName("address", toLower(arg));
-            // above - don't change, sets bloom value also
-            watch.setValueByName("name", toLower(arg));
-            watch.extra_data = getVersionStr() + "/" + watch.address;
-            watch.color = cTeal;
-            watch.finishParse();
-            monitors.push_back(watch);
+            // END_CODE_AUTO
         }
+    }
+
+    for (auto addr : addrs) {
+        string_q fn = getMonitorPath(addr);
+        if (!fileExists(fn)) {
+            fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
+            EXIT_USAGE("File not found '" + fn + ". Quitting...");
+        }
+
+        if (fileExists(fn + ".lck"))
+            EXIT_USAGE("The cache lock file is present. The program is either already "
+                       "running or it did not end cleanly the\n\tlast time it ran. "
+                       "Quit the already running program or, if it is not running, "
+                       "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
+
+        CAccountWatch watch;
+        // below - don't change, sets bloom value also
+        watch.setValueByName("address", toLower(addr));
+        // above - don't change, sets bloom value also
+        watch.setValueByName("name", toLower(addr));
+        watch.extra_data = getVersionStr() + "/" + watch.address;
+        watch.color = cTeal;
+        watch.finishParse();
+        monitors.push_back(watch);
     }
 
     if (start != NOPOS) scanRange.first = start;

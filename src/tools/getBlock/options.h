@@ -22,7 +22,7 @@ public:
     bool force;
     // END_CODE_DECLARE
 
-    CBlock latest;
+    CBlock latestBlock;
     uint64_t addrCounter;
     string_q filterType;
     timestamp_t secsFinal;
