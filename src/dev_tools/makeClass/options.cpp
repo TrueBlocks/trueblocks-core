@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray strings;
+    CStringArray classes;
     bool list = false;
     bool run = false;
     bool edit = false;
@@ -82,17 +82,17 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseStringList2(this, strings, arg))
+            if (!parseStringList2(this, classes, arg))
                 return false;
 
             // END_CODE_AUTO
         }
     }
 
-    for (auto string : strings) {
+    for (auto cl : classes) {
         if (!classNames.empty())
             classNames += "|";
-        classNames += substitute(substitute(string, "classDefinitions/", ""), ".txt", "");
+        classNames += substitute(substitute(cl, "classDefinitions/", ""), ".txt", "");
     }
 
     if (options)

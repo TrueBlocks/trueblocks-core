@@ -68,7 +68,7 @@ bool Slurp(CAccount& theAccount, COptions& options) {
     cerr << "\t" << "Slurping " << theAccount.addr << "\n";
 
     bool first = true;
-    for (auto type : options.types) {
+    for (auto type : options.typesList) {
         string_q cacheFilename = getCachePath("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "."+type) + ".bin");
         if (fileExists(cacheFilename)) {
             CArchive inArchive(READING_ARCHIVE);

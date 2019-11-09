@@ -17,7 +17,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("type", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "which types of transaction to request"),
+    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
     COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
     // END_CODE_OPTIONS
@@ -31,6 +31,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray types;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -41,45 +42,53 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
+            string_q types_tmp;
+            if (!confirmEnum("types", types_tmp, arg))
+              return false;
+            types.push_back(types_tmp);
+
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
-            // END_CODE_AUTO
-
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
-            string_q type;
-            if (!confirmEnum("type", type, arg))
-                return false;
-            if (type == "all") {
-                types.clear();
-                types.push_back("ext");
-                types.push_back("int");
-                types.push_back("token");
-                //                types.push_back("miner");
-
-            } else {
-                types.push_back(type);
-
-            }
-
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (isAddress(arg)) {
-            addrs.push_back(str_2_Addr(toLower(arg)));
+            // END_CODE_AUTO
 
         } else {
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
+            if (isAddress(arg)) {
+                addrs.push_back(str_2_Addr(toLower(arg)));
+
+            } else {
+                string_q ret = blocks.parseBlockList(arg, latestBlock);
+                if (endsWith(ret, "\n")) {
+                    cerr << "\n  " << ret << "\n";
+                    return false;
+                } else if (!ret.empty()) {
+                    return usage(ret);
+                }
             }
         }
     }
+
+    for (auto type : types) {
+        if (type == "all") {
+            typesList.clear();
+            typesList.push_back("ext");
+            typesList.push_back("int");
+            typesList.push_back("token");
+            //typesList.push_back("miner");
+        } else {
+            typesList.push_back(type);
+        }
+    }
+    if (typesList.empty())
+        typesList.push_back("ext");
+
 
     if (exportFmt == TXT1)
         exportFormat = "txt";
@@ -118,9 +127,6 @@ bool COptions::parseArguments(string_q& command) {
             os << err << endl;
         return usage(os.str());
     }
-
-    if (types.empty())
-        types.push_back("ext");
 
     return true;
 }

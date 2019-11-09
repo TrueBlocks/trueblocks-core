@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
+    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more types of data to retrieve"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
@@ -29,6 +29,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray modes;
     bool report = false;
     bool get_config = false;
     bool set_config = false;
@@ -71,15 +72,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
         } else {
-            string_q permitted = params[0].description;
-            replaceAny(permitted, "[]*", "|");
-            if (!contains(permitted, "|" + arg + "|"))
-                return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
-            mode += (arg + "|");
+            string_q modes_tmp;
+            if (!confirmEnum("modes", modes_tmp, arg))
+                return false;
+            modes.push_back(modes_tmp);
+
+            // END_CODE_AUTO
         }
     }
+
+    for (auto m : modes)
+        mode += (m + "|");
 
     if (start == NOPOS)
         start = 0;

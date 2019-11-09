@@ -474,9 +474,12 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------------------
     const COption *COptionsBase::findParam(const string_q& name) const {
-        for (size_t i = 0 ; i < cntParams ; i++)
-            if (startsWith(pParams[i].longName, "--" + name))
+        for (size_t i = 0 ; i < cntParams ; i++) {
+            if (startsWith(pParams[i].longName, "--" + name))  // flags, toggles, switches
                 return &pParams[i];
+            if (startsWith(pParams[i].longName, name))  // positionals
+                return &pParams[i];
+        }
         return NULL;
     }
 
@@ -569,7 +572,7 @@ const char *STR_ERROR_JSON =
 
         replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
         replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
-        replaceAll(positional, "blocks dates", "< block | date > [ block... | date... ]");
+        replaceAll(positional, "dates blocks", "< date | block > [ date... | block... ]");
         replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
         replaceAll(positional, "blocks", "<block> [block...]");
         replaceAll(positional, "addrs", "<address> [address...]");

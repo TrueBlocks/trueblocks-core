@@ -33,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray strings;
+    CStringArray filenames;
     bool check = false;
     bool sort = false;
     bool fix = false;
@@ -98,22 +98,22 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseStringList2(this, strings, arg))
+            if (!parseStringList2(this, filenames, arg))
                 return false;
 
             // END_CODE_AUTO
         }
     }
 
-    for (auto string : strings) {
-        address_t addr = toLower(substitute(string, ".acct.bin", ""));
+    for (auto file : filenames) {
+        address_t addr = toLower(substitute(file, ".acct.bin", ""));
         if (!isAddress(addr))
-            EXIT_USAGE("Option '" + string + "' does not appear to be an address.");
+            EXIT_USAGE("Option '" + file + "' does not appear to be an address.");
 
         // Command line and chifra send in straight addresses, some test cases may send a local file...
-        string_q path = (fileExists(string + ".acct.bin") ? (string + ".acct.bin") : getMonitorPath(addr));
+        string_q path = (fileExists(file + ".acct.bin") ? (file + ".acct.bin") : getMonitorPath(addr));
         if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
-            EXIT_USAGE("Monitor file for '" + string + "' does not exist.");
+            EXIT_USAGE("Monitor file for '" + file + "' does not exist.");
 
         monitors.push_back(CAccountWatch(addr, path));
     }

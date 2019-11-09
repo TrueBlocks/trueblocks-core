@@ -28,15 +28,15 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (!options.tokenInfo.empty()) {
+        if (!options.parts.empty()) {
             if (options.watches.size() > 1)
                 cout << "[\n";
-            address_t holder = (options.tokenInfo == "balanceOf" ? options.holders[0] : "");
+            address_t holder = (options.parts == "balanceOf" ? options.holders[0] : "");
             for (auto watch : options.watches) {
                 string_q blocks = options.getBlockNumList();
                 while (!blocks.empty()) {
                     blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-                    cout << getERC20State(options.tokenInfo, watch, holder, blockNum) << "\n";
+                    cout << getERC20State(options.parts, watch, holder, blockNum) << "\n";
                     if (cnt++ < options.watches.size() - 1)
                         cout << ",";
                     cout << "\n";

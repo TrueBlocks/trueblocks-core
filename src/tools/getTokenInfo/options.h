@@ -17,13 +17,13 @@
 class COptions : public CHistoryOptions {
 public:
     // BEG_CODE_DECLARE
+    string_q parts;
     bool by_acct;
     bool no_zero;
     // END_CODE_DECLARE
 
     CTokenState_erc20Array watches;
     CAddressArray holders;
-    string_q tokenInfo;
 
     COptions(void);
     ~COptions(void);

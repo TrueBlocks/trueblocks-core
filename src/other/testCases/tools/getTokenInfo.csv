@@ -42,24 +42,24 @@ on, both, slow, tokens, tools/getTokenInfo, wei,                           n, ad
 on, both, slow, tokens, tools/getTokenInfo, special_and_block_combination, n, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & blocks = 4225341 stateclear daofund
 on, both, slow, tokens, tools/getTokenInfo, blockByHash,                   n, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xcfb98637bcae43c13323eaa1731ced2b716962fd & blocks = 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1 0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87
 
-on, both, slow, tokens, tools/getTokenInfo, info_name,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = name
-on, both, slow, tokens, tools/getTokenInfo, info_totalSupply,              y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = totalSupply
-on, both, slow, tokens, tools/getTokenInfo, info_decimals,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = decimals
-on, both, slow, tokens, tools/getTokenInfo, info_version,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = version
-on, both, slow, tokens, tools/getTokenInfo, info_symbol,                   y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = symbol
-on, both, slow, tokens, tools/getTokenInfo, info_all,                      y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & info = all
-on, both, slow, tokens, tools/getTokenInfo, info_name2,                    y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = name
-on, both, slow, tokens, tools/getTokenInfo, info_totalSupply2,             y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = totalSupply
-on, both, slow, tokens, tools/getTokenInfo, info_decimals2,                y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = decimals
-on, both, slow, tokens, tools/getTokenInfo, info_version2,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = version
-on, both, slow, tokens, tools/getTokenInfo, info_symbol2,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = symbol
-on, both, slow, tokens, tools/getTokenInfo, info_all2,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = all
-on, both, slow, tokens, tools/getTokenInfo, info_name3,                    y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = name & blocks = 4001001-4001002
-on, both, slow, tokens, tools/getTokenInfo, info_totalSupply3,             y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = totalSupply & blocks = 4001001-4001002
-on, both, slow, tokens, tools/getTokenInfo, info_decimals3,                y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = decimals & blocks = 4001001-4001002
-on, both, slow, tokens, tools/getTokenInfo, info_version3,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = version & blocks = 4001001-4001002
-on, both, slow, tokens, tools/getTokenInfo, info_symbol3,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = symbol & blocks = 4001001-4001002
-on, both, slow, tokens, tools/getTokenInfo, info_all3,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & info = all & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_name,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = name
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply,              y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = totalSupply
+on, both, slow, tokens, tools/getTokenInfo, info_decimals,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = decimals
+on, both, slow, tokens, tools/getTokenInfo, info_version,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = version
+on, both, slow, tokens, tools/getTokenInfo, info_symbol,                   y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = symbol
+on, both, slow, tokens, tools/getTokenInfo, info_all,                      y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = all
+on, both, slow, tokens, tools/getTokenInfo, info_name2,                    y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = name
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply2,             y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = totalSupply
+on, both, slow, tokens, tools/getTokenInfo, info_decimals2,                y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = decimals
+on, both, slow, tokens, tools/getTokenInfo, info_version2,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = version
+on, both, slow, tokens, tools/getTokenInfo, info_symbol2,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = symbol
+on, both, slow, tokens, tools/getTokenInfo, info_all2,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = all
+on, both, slow, tokens, tools/getTokenInfo, info_name3,                    y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = name & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_totalSupply3,             y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = totalSupply & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_decimals3,                y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = decimals & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_version3,                 y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = version & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_symbol3,                  y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = symbol & blocks = 4001001-4001002
+on, both, slow, tokens, tools/getTokenInfo, info_all3,                     y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = all & blocks = 4001001-4001002
 
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_txt,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = txt & blocks = 2000000
 on, cmd, slow, tokens, tools/getTokenInfo, fmt_csv,                       y, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = csv & blocks = 2000000 & no_header

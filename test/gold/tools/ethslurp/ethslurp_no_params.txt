@@ -9,7 +9,7 @@ ethslurp
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
-	-t  (--type <val>)    which types of transaction to request, one or more of [ext*|int|token|miner|all]
+	-t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|miner|all]
 	-p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

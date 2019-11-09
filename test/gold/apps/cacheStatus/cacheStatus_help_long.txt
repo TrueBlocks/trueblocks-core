@@ -5,7 +5,7 @@ cacheStatus --help
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
-	modes                 which data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]
+	modes                 one or more types of data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-l  (--list)          display results in Linux ls -l format (assumes --detail)
 	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers

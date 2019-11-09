@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers, block hashes, or a 'special' block, or"),
     COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers, block hashes, or a 'special' block, or"),
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
     // END_CODE_OPTIONS

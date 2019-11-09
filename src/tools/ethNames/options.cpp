@@ -39,7 +39,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray strings;
+    CStringArray terms;
     bool expand = false;
     bool owned = false;
     bool custom = false;
@@ -94,15 +94,15 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseStringList2(this, strings, arg))
+            if (!parseStringList2(this, terms, arg))
                 return false;
 
             // END_CODE_AUTO
         }
     }
 
-    for (auto str : strings)
-        searches.push_back(str);
+    for (auto term : terms)
+        searches.push_back(term);
 
     if (!add.empty()) {
         cout << add << endl;

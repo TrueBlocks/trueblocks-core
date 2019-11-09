@@ -2,11 +2,11 @@ chifra argc: 3 [1:rm] [2:--help]
 chifra rm --help 
 TIME ~ CLOCK - <INFO>  : Connecting to node...
 
-  Usage:    chifra [-s|-v|-h] command  
+  Usage:    chifra [-s|-v|-h] commands  
   Purpose:  Create a TrueBlocks monitor configuration.
 
   Where:  
-	command               which command to run, one or more of [list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
+	commands              which command to run, one or more of [list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)

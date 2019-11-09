@@ -17,7 +17,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
+    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
@@ -33,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    string_q mode = "";
+    CStringArray parts;
     bool no_history = false;
     // END_CODE_LOCAL_INIT
 
@@ -43,9 +43,11 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
-            if (!confirmEnum("mode", mode, arg))
-                return false;
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--parts:")) {
+            string_q parts_tmp;
+            if (!confirmEnum("parts", parts_tmp, arg))
+              return false;
+            parts.push_back(parts_tmp);
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -63,29 +65,32 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             // END_CODE_AUTO
-        } else if (isAddress(arg)) {
-            addrs.push_back(toLower(arg));
-
         } else {
+            if (isAddress(arg)) {
+                addrs.push_back(toLower(arg));
 
-            string_q ret = blocks.parseBlockList(arg, newestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
+            } else {
+                string_q ret = blocks.parseBlockList(arg, newestBlock);
+                if (endsWith(ret, "\n")) {
+                    cerr << "\n  " << ret << "\n";
+                    return false;
+                } else if (!ret.empty()) {
+                    return usage(ret);
+                }
             }
         }
+    }
 
-        if (mode == "none") modes = ST_NONE;
-        if (mode == "balance") modes = ethstate_t(modes|ST_BALANCE);
-        if (mode == "nonce") modes = ethstate_t(modes|ST_NONCE);
-        if (mode == "code") modes = ethstate_t(modes|ST_CODE);
-        if (mode == "storage") modes = ethstate_t(modes|ST_STORAGE);
-        if (mode == "deployed") modes = ethstate_t(modes|ST_DEPLOYED);
-        if (mode == "accttype") modes = ethstate_t(modes|ST_ACCTTYPE);
-        if (mode == "some") modes = ethstate_t(modes|ST_SOME);
-        if (mode == "all") modes = ethstate_t(modes|ST_ALL);
+    for (auto part : parts) {
+        if (part == "none") modeBits = ST_NONE;
+        if (part == "balance") modeBits = ethstate_t(modeBits|ST_BALANCE);
+        if (part == "nonce") modeBits = ethstate_t(modeBits|ST_NONCE);
+        if (part == "code") modeBits = ethstate_t(modeBits|ST_CODE);
+        if (part == "storage") modeBits = ethstate_t(modeBits|ST_STORAGE);
+        if (part == "deployed") modeBits = ethstate_t(modeBits|ST_DEPLOYED);
+        if (part == "accttype") modeBits = ethstate_t(modeBits|ST_ACCTTYPE);
+        if (part == "some") modeBits = ethstate_t(modeBits|ST_SOME);
+        if (part == "all") modeBits = ethstate_t(modeBits|ST_ALL);
     }
 
     // Data wrangling
@@ -99,12 +104,12 @@ bool COptions::parseArguments(string_q& command) {
 
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(modes & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
-    if (!(modes & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
-    if (!(modes & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
-    if (!(modes & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
-    if (!(modes & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
-    if (!(modes & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
+    if (!(modeBits & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
+    if (!(modeBits & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
+    if (!(modeBits & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
+    if (!(modeBits & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
+    if (!(modeBits & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
+    if (!(modeBits & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
 
     // Display formatting
     configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
@@ -140,7 +145,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     prevBal = 0;
-    modes = ST_BALANCE;
+    modeBits = ST_BALANCE;
 
     addrs.clear();
     current = "";

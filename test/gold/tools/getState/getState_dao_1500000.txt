@@ -3,13 +3,13 @@ getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --fmt txt --no_histo
 
   Request asks for historical state, but the RPC server does not have historical state. Quitting...
 
-  Usage:    getState [-m|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).
 
   Where:  
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
 	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-m  (--mode <val>)    control which state to export, one of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
+	-p  (--parts <val>)   control which state to export, one or more of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
 	-c  (--changes)       only report a balance when it changes from one block to the next
 	-n  (--no_zero)       suppress the display of zero balance accounts
 

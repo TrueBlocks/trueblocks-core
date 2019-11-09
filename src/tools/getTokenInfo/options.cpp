@@ -15,9 +15,9 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("addrs2", "", "list<addr2>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+    COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "retreive information about the token"),
+    COption("parts", "p", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "one or more parts of the token information to retreive"),
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
@@ -43,25 +43,23 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--parts:")) {
+            if (!confirmEnum("parts", parts, arg))
+                return false;
+
         } else if (arg == "-b" || arg == "--by_acct") {
             by_acct = true;
 
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
-            // END_CODE_AUTO
-        } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
-            arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
-            string_q unused;
-            if (!isValidInfo(arg, unused))
-                return usage(arg + " does not appear to be a valid tokenInfo option.\n");
-            tokenInfo = arg;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+            // END_CODE_AUTO
         } else if (isAddress(arg)) {
             addrs.push_back(toLower(arg));
 
@@ -80,11 +78,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
-    if ((tokenInfo.empty() || tokenInfo == "balanceOf") && addrs.size() < 2)
+    if ((parts.empty() || parts == "balanceOf") && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
 
-    if (!tokenInfo.empty()) {
-        // if tokenInfo is not empty, all addresses are tokens
+    if (!parts.empty()) {
+        // if parts is not empty, all addresses are tokens
         by_acct = true;
     }
 
@@ -109,8 +107,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // if tokenInfo is not empty, all addresses are tokens
-    if (by_acct && (tokenInfo.empty() || tokenInfo == "balanceOf")) {
+    // if parts is not empty, all addresses are tokens
+    if (by_acct && (parts.empty() || parts == "balanceOf")) {
         // remove the last one and push it on the holders array
         watches.pop_back();
         holders.push_back(lastItem);
@@ -145,6 +143,7 @@ void COptions::Init(void) {
     optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
+    parts = "";
     by_acct = false;
     no_zero = false;
     // END_CODE_INIT
@@ -153,7 +152,6 @@ void COptions::Init(void) {
     holders.clear();
 
     optionOff(OPT_DOLLARS|OPT_ETHER);
-    tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();

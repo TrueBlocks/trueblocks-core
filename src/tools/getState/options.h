@@ -23,7 +23,7 @@ public:
 
     CAddressArray addrs;
     address_t current;
-    ethstate_t modes;
+    ethstate_t modeBits;
     biguint_t prevBal;
     wei_t deminimus;
     bool first;

@@ -38,7 +38,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10640,apps,scrape,blockScrape,n_addr_procs,a,,FALSE,FALSE,FALSE,FALSE,yes,flag,<uint64>,number of address channels for blaze
 10660,apps,scrape,blockScrape,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Decentralized blockchain scraper and block cache.
 
-10700,apps,status,cacheStatus,modes,,,FALSE,FALSE,TRUE,TRUE,,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>,which data to retrieve
+10700,apps,status,cacheStatus,modes,,,FALSE,FALSE,TRUE,TRUE,local,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>,one or more types of data to retrieve
 10720,apps,status,cacheStatus,details,d,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10740,apps,status,cacheStatus,list,l,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
 10760,apps,status,cacheStatus,report,r,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
@@ -56,16 +56,16 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11000,apps,rm,,addrs,,,TRUE,FALSE,TRUE,TRUE,--,positional,list<addr>,remove one or more monitors
 11020,apps,rm,,yes,,,FALSE,FALSE,TRUE,TRUE,--,switch,<boolean>,must be present for remove to occur
 
-11060,apps,message,,bytes,b,,FALSE,FALSE,TRUE,TRUE,--,positional,<string>,convert the given bytes into an ascii string
-11080,apps,message,,chars,c,,FALSE,FALSE,TRUE,TRUE,--,positional,<string>,convert the given string into bytes
+11060,apps,message,,bytes,b,,FALSE,FALSE,TRUE,TRUE,--,positional,list<string>,convert the given bytes into an ascii string
+11080,apps,message,,chars,c,,FALSE,FALSE,TRUE,TRUE,--,positional,list<string>,convert the given string into bytes
 
 11120,apps,leech,,,,,FALSE,FALSE,TRUE,TRUE,--,flag,<string>,leech the address index from IPFS
 
 11160,apps,seed,,,,,FALSE,FALSE,TRUE,TRUE,--,flag,<string>,seed the address index to IPFS
 
-11200,apps,,chifra,command,,,TRUE,FALSE,TRUE,TRUE,,positional,list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>,which command to run
+11200,apps,,chifra,commands,,,TRUE,FALSE,TRUE,TRUE,--weird,positional,list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>,which command to run
 11220,apps,,chifra,sleep,s,14,FALSE,FALSE,TRUE,FALSE,yes,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
-11240,apps,,chifra,set,e,,FALSE,FALSE,FALSE,FALSE,,switch,<boolean>,for status config only&#44; indicates that this is config --sef
+11240,apps,,chifra,set,e,,FALSE,FALSE,FALSE,FALSE,--weird,switch,<boolean>,for status config only&#44; indicates that this is config --sef
 11280,apps,,chifra,start,S,0,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,FALSE,FALSE,FALSE,FALSE,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Create a TrueBlocks monitor configuration.
@@ -112,7 +112,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 12120,tools,slurp,ethslurp,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,slurp,ethslurp,type,t,,FALSE,FALSE,TRUE,TRUE,,flag,list<enum[ext*|int|token|miner|all]>,which types of transaction to request
+12160,tools,slurp,ethslurp,types,t,,FALSE,FALSE,TRUE,TRUE,local,flag,list<enum[ext*|int|token|miner|all]>,one or more types of transactions to request
 12180,tools,slurp,ethslurp,appearances,p,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
 12220,tools,slurp,ethslurp,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Fetches data from EtherScan for an arbitrary address.
 12222,tools,slurp,ethslurp,,,,FALSE,FALSE,FALSE,FALSE,--,note,,Portions of this software are Powered by Etherscan.io APIs.
@@ -180,7 +180,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 13100,tools,state,getState,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,state,getState,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13140,tools,state,getState,mode,m,,FALSE,FALSE,TRUE,TRUE,local,flag,enum[none|some*|all|balance|nonce|code|storage|deployed|accttype],control which state to export
+13140,tools,state,getState,parts,p,,FALSE,FALSE,TRUE,TRUE,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
 13160,tools,state,getState,changes,c,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,state,getState,no_zero,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
 13200,tools,state,getState,no_history,s,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,for testing only&#44; hide the server's historical state
@@ -193,9 +193,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13232,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 13234,tools,state,getState,,,,FALSE,FALSE,FALSE,FALSE,--,note,,You may specify multiple `modes` on a single line.
 
-13260,tools,tokens,getTokenInfo,addrs2,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr2>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
+13260,tools,tokens,getTokenInfo,addrs2,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,tokens,getTokenInfo,blocks,,,FALSE,FALSE,TRUE,TRUE,,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,tokens,getTokenInfo,info,i,,FALSE,FALSE,TRUE,TRUE,,flag,enum[name|decimals|totalSupply|version|symbol|all],retreive information about the token
+13300,tools,tokens,getTokenInfo,parts,p,,FALSE,FALSE,TRUE,TRUE,yes,flag,enum[name|decimals|totalSupply|version|symbol|all],one or more parts of the token information to retreive
 13320,tools,tokens,getTokenInfo,by_acct,b,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,tokens,getTokenInfo,no_zero,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,tokens,getTokenInfo,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
@@ -235,8 +235,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13880,tools,abi,grabABI,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 13885,tools,abi,grabABI,,,,FALSE,FALSE,FALSE,FALSE,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
-13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers&#44; block hashes&#44; or a 'special' block&#44; or
 13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
+13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers&#44; block hashes&#44; or a 'special' block&#44; or
 13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,export a list of the 'special' blocks
 13980,tools,when,whenBlock,,,,FALSE,FALSE,TRUE,FALSE,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
 13982,tools,when,whenBlock,,,,FALSE,FALSE,FALSE,FALSE,--,note,,Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.

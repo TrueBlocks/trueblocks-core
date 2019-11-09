@@ -23,11 +23,11 @@ public:
 
     CAddressArray addrs;
     CWebAPI api;
+    CStringArray typesList;
     string_q header;
     string_q displayString;
     string_q exportFormat;
     string_q formatString;
-    CStringArray types;
 
     COptions(void);
     ~COptions(void);

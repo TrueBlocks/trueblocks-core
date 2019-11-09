@@ -1,5 +1,5 @@
-ethslurp argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--type] [3:token] [4:1428756-1428758] 
-ethslurp 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --type token 1428756-1428758 
-Processing: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --type:token 1428756-1428758
+ethslurp argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--types] [3:token] [4:1428756-1428758] 
+ethslurp 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --types token 1428756-1428758 
+Processing: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --types:token 1428756-1428758
 	Slurping 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
                                                                                                                         
