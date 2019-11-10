@@ -236,8 +236,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13880,tools,abi,grabABI,,,,FALSE,FALSE,TRUE,TRUE,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 13885,tools,abi,grabABI,,,,FALSE,FALSE,FALSE,FALSE,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
-13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
-13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers&#44; block hashes&#44; or a 'special' block&#44; or
+13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,header,positional,list<string>,one or more block numbers&#44; block hashes&#44; or a 'special' block&#44; or\n    one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,header,switch,<boolean>,export a list of the 'special' blocks
 13980,tools,when,whenBlock,,,,FALSE,FALSE,TRUE,FALSE,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
 13982,tools,when,whenBlock,,,,FALSE,FALSE,FALSE,FALSE,--,note,,Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.

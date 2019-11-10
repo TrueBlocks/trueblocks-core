@@ -476,8 +476,16 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool isAddress(const address_t& addrIn) {
+    bool isAddress(const string_q& addrIn) {
         return (addrIn.length() == 42 && isHexStr(addrIn));
+    }
+
+    //--------------------------------------------------------------------------------
+    bool isDate(const string_q& date) {
+        // this is hokey, but it works for our purposes
+        if (str_2_Uint(date) < 2015 || str_2_Uint(date) > 2050)
+            return false;
+        return (containsAny(date, ":- ") && countOf(date, '-'));
     }
 
     //--------------------------------------------------------------------------------

@@ -572,7 +572,7 @@ const char *STR_ERROR_JSON =
 
         replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
         replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
-        replaceAll(positional, "dates blocks", "< date | block > [ date... | block... ]");
+        replaceAll(positional, "block_list", "< block | date > [ block... | date... ]");
         replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
         replaceAll(positional, "blocks", "<block> [block...]");
         replaceAll(positional, "addrs", "<address> [address...]");

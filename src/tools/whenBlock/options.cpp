@@ -12,11 +12,11 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+bool parseRequestDates(COptionsBase *opt, CNameValueArray& blocks, const string_q& arg);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers, block hashes, or a 'special' block, or"),
+    COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
     // END_CODE_OPTIONS
@@ -31,11 +31,11 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    CStringArray block_list;
     // END_CODE_LOCAL_INIT
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
-    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -52,68 +52,35 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else {
+            if (!parseStringList2(this, block_list, arg))
+                return false;
+
             // END_CODE_AUTO
+        }
+    }
 
-        } else if (arg == "UTC") {
-            // do nothing
+    blknum_t latest = getLastBlock_client();
+    for (auto item : block_list) {
+        if (isDate(item)) {
+            if (!parseRequestDates(this, requests, item))
+                return false;
 
-        } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
-
-            // a json formatted date
-            ASSERT(!startsWith(arg, "-"));
-            time_q date = str_2_Date(arg);
-            if (date == earliestDate) {
-                return usage("Invalid date: '" + orig + "'.");
-
-            } else if (date > Now()) {
-                ostringstream os;
-                if (isApiMode())
-                    colorsOff();
-                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is in the future. No such block.";
-                if (!isApiMode()) {
-                    LOG_WARN(os.str());
-                    return false;
-                }
-                return usage(os.str());
-
-            } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-                ostringstream os;
-                if (isApiMode())
-                    colorsOff();
-                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is before the first block.";
-                if (!isApiMode()) {
-                    LOG_WARN(os.str());
-                    return false;
-                }
-                return usage(os.str());
-
-            } else {
-                requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
-            }
+        } else if (!parseBlockList2(this, blocks, item, latest)) {
+            return false;
 
         } else {
-
-            // if we're here, we better have a good block, assume we don't
             CNameValue spec;
-            if (findSpecial(spec, arg)) {
+            if (findSpecial(spec, item)) {
                 if (spec.first == "latest")
-                    spec.second = uint_2_Str(latestBlock);
+                    spec.second = uint_2_Str(latest);
                 requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
 
-            } else  {
-
-                string_q ret = blocks.parseBlockList(arg, latestBlock);
-                if (endsWith(ret, "\n")) {
-                    LOG_WARN(substitute(ret,"\n",""));
-                    return false;
-
-                } else if (!ret.empty()) {
-                    return usage(ret);
-                }
-
-                // Now we transfer the list of blocks to the requests array
-                string_q blockList = getBlockNumList();  // get the list from blocks
+            } else {
                 blocks.Init();  // clear out blocks
+                if (!parseBlockList2(this, blocks, item, latest))
+                    return false;
+                string_q blockList = getBlockNumList();  // get the list from blocks
                 CStringArray blks;
                 explode(blks, blockList, '|');
                 for (auto blk : blks)
@@ -175,8 +142,10 @@ COptions::COptions(void) {
         exportFmt = TXT1;
 
     // BEG_CODE_NOTES
-    notes.push_back("Customize the list of special blocks by editing ~/.quickBlocks/whenBlock.toml.");
-    notes.push_back("Use any of the following names to represent `special` blocks:");
+    notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks");
+    notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]]");
+    notes.push_back("You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.");
+    notes.push_back("The following `named` blocks are provided are currently configured:");
     // END_CODE_NOTES
     notes.push_back("  " + listSpecials(NONE1));
 }
@@ -261,3 +230,24 @@ const char* STR_DISPLAY_WHEN =
 "[{TIMESTAMP}]\t"
 "[{DATE}]"
 "[\t{NAME}]";
+
+//-----------------------------------------------------------------------
+bool parseRequestDates(COptionsBase *opt, CNameValueArray& requests, const string_q& arg) {
+    time_q date = str_2_Date(arg);
+    if (date == earliestDate) {
+        return opt->usage("Invalid date: '" + arg + "'.");
+
+    } else if (date > Now()) {
+        ostringstream os;
+        os << "The date you specified (" << arg << ") " << "is in the future. No such block.";
+        return opt->usage(os.str());
+
+    } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
+        ostringstream os;
+        os << "The date you specified (" << arg << ") " << "is before the first block.";
+        return opt->usage(os.str());
+
+    }
+    requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
+    return true;
+}

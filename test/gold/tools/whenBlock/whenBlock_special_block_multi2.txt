@@ -1,3 +1,5 @@
 whenBlock argc: 6 [1:stateclear] [2:iceage] [3:4001001] [4:junk] [5:--verbose] 
 whenBlock stateclear iceage 4001001 junk --verbose 
-TIME ~ CLOCK - <WARNG> : The given value 'junk' is not a numeral or a special named block.
+
+  The given value 'junk' is not a numeral or a special named block.
+
