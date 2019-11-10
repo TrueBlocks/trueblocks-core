@@ -79,10 +79,10 @@ int main(int argc, const char *argv[]) {
                 }
             }
 
-            if (!options.doTests(testArray, testName, CMD))
+            if (!options.doTests(testArray, path, testName, API))
                 return 1;
 
-            if (!options.doTests(testArray, testName, API))
+            if (!options.doTests(testArray, path, testName, CMD))
                 return 1;
 
             if (shouldQuit())
@@ -104,7 +104,8 @@ int main(int argc, const char *argv[]) {
         if (options.full_test && options.report) {
             perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
             perf << Now().Format(FMT_EXPORT) << ",";
-            perf << "allTests" << ",";
+            perf << "all" << ",";
+            perf << "all" << ",";
             perf << "all" << ",";
             perf << options.filter << ",";
             perf << totalTests << ",";
@@ -122,7 +123,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int whichTest) {
+bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
 
     if (!(modes & whichTest))
         return true;
@@ -250,6 +251,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
         ostringstream os;
         os << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
         os << Now().Format(FMT_EXPORT) << ",";
+        os << testPath << ",";
         os << testName << ",";
         os << (cmdTests ? "cmd" : "api") << ",";
         os << filter << ",";
