@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "fromtransferfrom.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(QFromTransferFrom, QTransferFrom);
 
@@ -237,4 +239,5 @@ const char* STR_DISPLAY_FROMTRANSFERFROM = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

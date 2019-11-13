@@ -244,10 +244,10 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *data
             case 'o':
                 if ( fieldIn % "opts" ) {
                     string_q ret;
-                    if (com->is_required == "TRUE")
+                    if (com->is_required % "true")
                         ret += ("|OPT_REQUIRED");
 
-                    if (com->core_visible != "TRUE")
+                    if ( ! (com->core_visible % "true") )
                         ret += ("|OPT_HIDDEN");
 
                     if (com->option_kind == "switch")
@@ -259,6 +259,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *data
                     else if (com->option_kind == "positional")
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_kind == "note")
+                        ret = com->description;
+                    else if (com->option_kind == "error")
                         ret = com->description;
                     else
                         ret += ("|OPT_DESCRIPTION");
@@ -354,7 +356,7 @@ ostream& operator<<(ostream& os, const CCommandOption& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_COMMANDOPTION ="";
+const char* STR_DISPLAY_COMMANDOPTION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

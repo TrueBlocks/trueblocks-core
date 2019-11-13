@@ -1,7 +1,6 @@
 [settings]
-class     = CConfigGroup
-baseClass = CBaseNode
-fields    = string section|string name|CConfigItemArray keys
-includes  = etherlib.h|configitem.h
-cIncs     = 
+class = CConfigGroup
+base_class = CBaseNode
+fields = string section|string name|CConfigItemArray keys
+includes = etherlib.h|configitem.h
 serialize = true

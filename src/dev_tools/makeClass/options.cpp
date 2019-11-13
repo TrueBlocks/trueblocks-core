@@ -16,17 +16,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("classes", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+    COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),
-    COption("options", "o", "", OPT_SWITCH, "export options code (check data, generate code) and quit"),
-    COption("nspace", "n", "<string>", OPT_FLAG, "surround the code with a namespace"),
+    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code from the class definition"),
+    COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, test only - don't write the changes"),
-    COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at ./classDefinition/<class_name>."),
+    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),
+    COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -38,7 +38,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray classes;
+    CStringArray files;
     bool list = false;
     bool run = false;
     bool edit = false;
@@ -86,53 +86,60 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseStringList2(this, classes, arg))
+            if (!parseStringList2(this, files, arg))
                 return false;
 
             // END_CODE_AUTO
         }
     }
 
-    for (auto cl : classes) {
-        if (!classNames.empty())
-            classNames += "|";
-        classNames += substitute(substitute(cl, "classDefinitions/", ""), ".txt", "");
+    for (auto file : files) {
+        CClassDefinition cl;
+        if (fileExists(file)) {
+            cl.className = substitute(substitute(file, "./classDefinitions/", ""), ".txt", "");
+            cl.inputPath = file;
+        } else {
+            cl.className = file;
+            cl.inputPath = "./classDefinitions/" + file + ".txt";
+        }
+        classDefs.push_back(cl);
     }
 
     if (options)
         return !handle_options();
 
     if (!js.empty())
-        return exportJson(js);
+        return handle_json_export(js);
 
-    if (contains(command, "-j") && js.empty())
-        return usage("Cannot export javscript for an empty class. Quitting...");
+    if (contains(command, "-j"))
+        return usage(errStrs[ERR_EMPTYJSFILE]);
 
-    if (!folderExists("./classDefinitions/"))
-        return usage("./classDefinitions folder does not exist. Quitting...");
+    if (!all && !folderExists("./classDefinitions/"))
+        return usage(errStrs[ERR_CLASSDEFNOTEXIST]);
 
     if (!folderExists(configPath("makeClass/")))
-        return usage(configPath("makeClass/") + " folder does not exist. Quitting...");
+        return usage(errStrs[ERR_CONFIGMISSING]);
 
     if ((run + list + edit) > 1)
-        return usage("Please chose only one of --run, --list, or --edit. Quitting...");
+        return usage(errStrs[ERR_CHOOSEONE]);
 
-    if (!run && !list && !edit)
-        return usage("Please chose one of --run, --list, or --edit. Quitting...");
+    if (!run && !list && !edit && !all)
+        return usage(errStrs[ERR_CHOOSEONE]);
 
     mode = (run ? RUN : edit ? EDIT : LIST);
-    LOG4("run: ", run, " edit: ", edit, " list: ", list, " mode: ", mode);
+    LOG8("run: ", run, " edit: ", edit, " list: ", list, " classes: ", all, " mode: ", mode);
     if (list || all) {
-        classNames = "";  // rebuild the class list from the classDefinitions folder
-        forEveryFileInFolder("./classDefinitions/", listClasses, this);
+        classDefs.clear();
+        if (!folderExists("./classDefinitions")) {  // if not in a folder with one class def, try to produce all classDefs
+            nspace = "qblocks";
+            forEveryFileInFolder("../", listClasses, this);
+        }  else {
+            forEveryFileInFolder("./classDefinitions/", listClasses, this);
+        }
     }
 
-    if (classNames.empty()) {
-        if (!filter.empty())
-            return usage("Found no classes that matched the filter: " + filter + ". Quitting...");
-        else
-            return usage("You must specify at least one className (or -a or -l). Quitting...");
-    }
+    if (classDefs.empty())
+            return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
 
     return true;
 }
@@ -150,7 +157,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     mode = NONE;
-    classNames = "";
+    classDefs.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -159,7 +166,20 @@ COptions::COptions(void) : classFile("") {
     Init();
 
     // BEG_CODE_NOTES
+    notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
+    notes.push_back("The `--class` flag generates c++ code for each definition found in the local folder.");
+    notes.push_back("More information on class definition files is found in the documentation.");
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    errStrs[ERR_NOERROR] = "No error";
+    errStrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist. Quitting...";
+    errStrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist. Quitting...";
+    errStrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class. Quitting...";
+    errStrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit. Quitting...";
+    errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}]. Quitting...";
+    errStrs[ERR_NEEDONECLASS] = "Please specify at least one className. Quitting...";
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
@@ -168,50 +188,34 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool listClasses(const string_q& path, void *data) {
+    if (contains(path, "/test/"))
+        return true;
+
     if (endsWith(path, "/")) {
         forEveryFileInFolder(path + "*", listClasses, data);
 
     } else {
-        if (contains(path, ".txt")) {
-            string_q file = path;
-            file = substitute(nextTokenClearReverse(file, '/'), ".txt", "");
+        if (contains(path, "classDefinitions/") && contains(path, ".txt")) {
             COptions *opts = reinterpret_cast<COptions*>(data);
+
+            string_q class_name = path;
+            class_name = substitute(nextTokenClearReverse(class_name, '/'), ".txt", "");
+
             bool include = true;
             if (!opts->filter.empty()) {
                 string_q contents;
                 asciiFileToString(path, contents);
-                include = (file == opts->filter) || contains(contents, opts->filter);
+                include = (class_name == opts->filter) || contains(contents, opts->filter);
             }
+
             if (include) {
-                if (!opts->classNames.empty())
-                    opts->classNames += "|";
-                opts->classNames += file;
+                CClassDefinition cl;
+                cl.className = class_name;
+                cl.inputPath = path;
+                LOG8("Adding: ", cl.className, " ", cl.inputPath, " ", cl.outputPath(".cpp"));
+                opts->classDefs.push_back(cl);
             }
         }
     }
     return true;
 }
-
-//---------------------------------------------------------------------------------------------------
-bool visitField(const CFieldData& field, void *data) {
-    ostream *pOs = (ostream*)data;
-    *pOs << "<Row ";
-    *pOs << "name=\"" << field.getName() << "\" ";
-    *pOs << "type=\"string\" ";
-    *pOs << "value={item." << field.getName() << "} ";
-    *pOs << "display={item." << field.getName() << "} ";
-    *pOs << "route=\"\" ";
-    *pOs << "/>" << endl;
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::exportJson(const string_q& cl) {
-    CBaseNode *item = createObjectOfType(cl);
-    if (!item)
-        return usage("Class " + cl + " not found.");
-    CRuntimeClass *pClass = item->getRuntimeClass();
-    pClass->forEveryField(visitField, &cout);
-    return true;
-}
-

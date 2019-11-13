@@ -328,11 +328,11 @@ const char* STR_FACTORY2 =
 //-----------------------------------------------------------------------
 const char* STR_CLASSDEF =
 "[settings]\n"
-"class     = [{CLASS}]\n"
-"baseClass = C[{BASE}]\n"
-"fields    = [{FIELDS}]\n"
-"includes  = [{BASE_LOWER}].h\n"
-"cIncs     = #include \"etherlib.h\"\n";
+"class = [{CLASS}]\n"
+"base_class = C[{BASE}]\n"
+"fields = [{FIELDS}]\n"
+"includes = [{BASE_LOWER}].h\n"
+"cpp_includes = #include \"etherlib.h\"\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADERFILE =

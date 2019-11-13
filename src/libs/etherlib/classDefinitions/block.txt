@@ -1,32 +1,10 @@
 [settings]
-class       = CBlock
-fields      = gas gasLimit|gas gasUsed|hash hash|blknum blockNumber|hash parentHash|address miner|uint64 difficulty|double price|bool finalized|timestamp timestamp|CTransactionArray transactions|string name (nowrite)|bool light (nowrite)
+class = CBlock
+fields = gas gasLimit|gas gasUsed|hash hash|blknum blockNumber|hash parentHash|address miner|uint64 difficulty|double price|bool finalized|timestamp timestamp|CTransactionArray transactions|string name (nowrite)|bool light (nowrite)
 backfields1 = gas gasLimit|gas gasUsed|hash hash|blknum blockNumber|hash parentHash|address miner|uint64 difficulty|double price|timestamp timestamp|CTransactionArray transactions
 backfields2 = gas gasLimit|gas gasUsed|hash hash|bloom logsBloom|blknum blockNumber|hash parentHash|timestamp timestamp|CTransactionArray transactions
-includes    = etherlib.h|transaction.h
-cIncs       = appearance.h
-scope       = extern
-serialize   = true
+includes = etherlib.h|transaction.h
+cpp_includes = appearance.h
+scope = extern
+serialize = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, miner, hash, parentHash, transactionsCnt, finalized
-
-;
-; full block definition from around Jan 2017
-; number: Quantity - The block number. null when its pending block
-; hash: Hash - 32 Bytes - hash of the block. null when its pending block
-; parentHash: Hash - 32 Bytes - hash of the parent block
-; nonce: Data - 8 Bytes - hash of the generated proof-of-work. null when its pending block
-; sha3Uncles: Data - 32 Bytes - SHA3 of the uncles data in the block
-; logsBloom: Data - 256 Bytes - the bloom filter for the logs of the block. null when its pending block
-; transactionsRoot: Data - 32 Bytes - the root of the transaction trie of the block
-; stateRoot: Data - 32 Bytes - the root of the final state trie of the block
-; receiptsRoot: Data - 32 Bytes - the root of the receipts trie of the block
-; miner: Address - 20 Bytes - the address of the beneficiary to whom the mining rewards were given
-; difficulty: Quantity - integer of the difficulty for this block
-; totalDifficulty: Quantity - integer of the total difficulty of the chain until this block
-; extraData: Data - the 'extra data' field of this block
-; size: Quantity - integer the size of this block in bytes
-; gasLimit: Quantity - the maximum gas allowed in this block
-; gasUsed: Quantity - the total used gas by all transactions in this block
-; timestamp: Quantity - the unix timestamp for when the block was collated
-; transactions: Array - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter
-; uncles: Array - Array of uncle hashes

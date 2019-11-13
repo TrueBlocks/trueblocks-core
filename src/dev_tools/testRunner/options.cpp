@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
+    COption("no_post", "o", "", OPT_SWITCH, "do not complete the post processing step"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
     // END_CODE_OPTIONS
@@ -55,6 +56,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;
+
+        } else if (arg == "-o" || arg == "--no_post") {
+            no_post = true;
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -157,6 +161,14 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chifra");
     }
 
+    // If there are tests in libs, we do not need to sleep here to allow the API to set up, otherwise, we do need to sleep
+    bool hasLibs = false;
+    for (auto test : tests)
+        if (contains(test, "/libs/"))
+            hasLibs = true;
+    if (!hasLibs)
+        sleep(1.);  
+
     return true;
 }
 
@@ -169,6 +181,7 @@ void COptions::Init(void) {
     filter = "";
     clean = false;
     no_quit = false;
+    no_post = false;
     report = false;
     // END_CODE_INIT
 

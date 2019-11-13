@@ -1,7 +1,6 @@
 [settings]
-class     = CConfigItem
-baseClass = CBaseNode
-fields    = string name|string value|string type|string tip|bool required|bool read_only|CAccountNameArray named (nowrite)
-includes  = etherlib.h|
-cIncs     = 
+class = CConfigItem
+base_class = CBaseNode
+fields = string name|string value|string type|string tip|bool required|bool read_only|CAccountNameArray named (nowrite)
+includes = etherlib.h|
 serialize = true

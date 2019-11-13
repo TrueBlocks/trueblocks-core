@@ -92,7 +92,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
             break;
         case 'f':
-            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e, fieldValue); return true; }
+            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
             break;
         case 's':
             if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
@@ -274,7 +274,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
             break;
         case 'e':
-            if ( fieldName % "enabled" ) return bool_2_Str(enabled);
+            if ( fieldName % "enabled" ) return bool_2_Str_t(enabled);
             break;
         case 'f':
             if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);

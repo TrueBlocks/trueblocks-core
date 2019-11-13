@@ -13,7 +13,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern void handle_generate(const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     nodeNotRequired();
@@ -32,42 +31,42 @@ int main(int argc, const char *argv[]) {
         if (options.mode & LIST)
             cout << "Classes found in the classDefinitions folder:\n";
 
-        while (!options.classNames.empty()) {
+        for (auto classDef : options.classDefs) {
 
-            string_q className = nextTokenClear(options.classNames, '|');
-            string_q fileName = "./classDefinitions/" + toLower(className) + ".txt";
-            if (!fileExists(fileName)) {
-                return options.usage("No class definition file found at " + fileName + "\n");
+            if (!fileExists(classDef.inputPath)) {
+                return options.usage("No class definition file found at " + classDef.inputPath + "\n");
 
             } else {
-                CToml toml(fileName);
-                toml.readFile(fileName);
+                CToml toml(classDef.inputPath);
+                toml.readFile(classDef.inputPath);
 
                 if (options.mode & LIST) {
                     if (verbose) {
-                        cout << string_q(80, '-') << "\nFile (dest): " << fileName << "\n";
+                        cout << string_q(80, '-') << "\nFile (dest): " << classDef.inputPath << "\n";
                         cout << toml << "\n";
 
-                    } else if (!toml.getConfigBool("settings", "disabled", false)) {
+                    } else {
                         cout << "\t" << toml.getConfigStr("settings", "class", "") << "\n";
+
                     }
 
                 } else if (options.mode & EDIT) {
-                    editFile(fileName);
+                    editFile(classDef.inputPath);
 
                 } else {
                     ASSERT(options.mode & RUN);
                     if (isTestMode())
-                        cout << "Would run class definition file: " << className << " (not run, testing)\n";
+                        cout << "Would run class definition file: " << classDef.className << " (not run, testing)\n";
                     else if (verbose)
-                        cerr << "Running class definition file '" << className << "'\n";
+                        cerr << "Running class definition file '" << classDef.className << "'\n";
 
                     if (!isTestMode()) {
                         if (toml.getConfigBool("settings", "disabled", false)) {
                             if (verbose)
-                                cerr << "Disabled class not processed " << className << "\n";
+                                cerr << "Disabled class not processed " << classDef.className << "\n";
                         } else {
-                            handle_generate(options, toml, fileName, options.nspace);
+                            options.handle_generate(toml, classDef, options.nspace);
+
                         }
                     }
                 }

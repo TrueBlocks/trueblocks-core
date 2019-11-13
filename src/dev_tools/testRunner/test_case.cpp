@@ -70,6 +70,9 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'b':
             if ( fieldName % "builtin" ) { builtin = str_2_Bool(fieldValue); return true; }
             break;
+        case 'e':
+            if ( fieldName % "extra" ) { extra = fieldValue; return true; }
+            break;
         case 'f':
             if ( fieldName % "filename" ) { filename = fieldValue; return true; }
             if ( fieldName % "fileName" ) { fileName = fieldValue; return true; }
@@ -84,7 +87,6 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             if ( fieldName % "origLine" ) { origLine = fieldValue; return true; }
             if ( fieldName % "onOff" ) { onOff = fieldValue; return true; }
             if ( fieldName % "options" ) { options = fieldValue; return true; }
-            if ( fieldName % "extra" ) { extra = fieldValue; return true; }
             break;
         case 'p':
             if ( fieldName % "post" ) { post = fieldValue; return true; }
@@ -278,6 +280,9 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
         case 'b':
             if ( fieldName % "builtin" ) return bool_2_Str_t(builtin);
             break;
+        case 'e':
+            if ( fieldName % "extra" ) return extra;
+            break;
         case 'f':
             if ( fieldName % "filename" ) return filename;
             if ( fieldName % "fileName" ) return fileName;
@@ -292,7 +297,6 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "origLine" ) return origLine;
             if ( fieldName % "onOff" ) return onOff;
             if ( fieldName % "options" ) return options;
-            if ( fieldName % "extra" ) return extra;
             break;
         case 'p':
             if ( fieldName % "post" ) return post;
@@ -402,8 +406,10 @@ void CTestCase::prepareTest(bool cmdLine) {
             CStringArray opts = {
                 "val",
                 "addrs",
+                "addrs2",
                 "blocks",
-                "classes",
+                "block_list",
+                "files",
                 "dates",
                 "transactions",
                 "terms",

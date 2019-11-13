@@ -53,7 +53,7 @@ bool COptions::handle_options(void) {
         warnings.str("");
 
         map<string, string> shortCmds;
-        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream;
+        ostringstream opt_stream, init_stream, local_stream, auto_stream, declare_stream, notes_stream, errors_stream;
         CStringArray positionals;
         bool allAuto = true;
         for (auto option : optionArray) {
@@ -69,10 +69,13 @@ bool COptions::handle_options(void) {
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
                 bool isNote = option.option_kind == "note";
-                if (!isNote)
-                    opt_stream << option.Format(STR_OPTION_STR) << endl;
-                else
+                bool isError = option.option_kind == "error";
+                if (isNote)
                     notes_stream << option.Format("    notes.push_back(\"[{OPTS}]\");") << endl;
+                else if (isError)
+                    errors_stream << option.Format("    errorStrs[[{COMMAND}]] = \"[{OPTS}]\";") << endl;
+                else
+                    opt_stream << option.Format(STR_OPTION_STR) << endl;
 
                 if (!option.generate.empty()) {
 
@@ -122,7 +125,7 @@ bool COptions::handle_options(void) {
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<string>") {
+                            } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
                                 local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
 
@@ -148,7 +151,7 @@ bool COptions::handle_options(void) {
                     } else if (option.generate == "header") {
 
                         string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-                        if (option.is_customizable == "TRUE")
+                        if (option.is_customizable % "true")
                             initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]", ((isEnum||isEnumList) ? "String" : (isBool) ? "Bool" : "Int"));
 
                         if (option.option_kind == "switch") {
@@ -191,7 +194,7 @@ bool COptions::handle_options(void) {
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<string>") {
+                            } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
                                 declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
 
@@ -225,7 +228,8 @@ bool COptions::handle_options(void) {
                 if (!option.hotkey.empty() &&
                     !contains(option.option_kind, "positional") &&
                     !contains(option.option_kind, "description") &&
-                    !contains(option.option_kind, "note")) {
+                    !contains(option.option_kind, "note") &&
+                    !contains(option.option_kind, "error")) {
                     if (option.hotkey == "v")
                         warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff << "' conflicts with --verbose hotkey|";
                     if (option.hotkey == "h")
@@ -284,7 +288,7 @@ bool COptions::handle_options(void) {
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
             if (!test) {
-                writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str(), notes_stream.str());
+                writeCode(fn, auto_stream.str(), opt_stream.str(), local_stream.str(), init_stream.str(), notes_stream.str(), errors_stream.str());
                 writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
             }
         }
@@ -304,7 +308,7 @@ bool COptions::check_option(const CCommandOption& option) {
 
     // Check valid data types
     CStringArray validTypes = {
-        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint32>", "<uint64>", "<boolean>",
+        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint32>", "<uint64>", "<boolean>", "<path>",
     };
 
     bool valid_type = false;
@@ -317,13 +321,19 @@ bool COptions::check_option(const CCommandOption& option) {
         if (startsWith(option.data_type, "enum")) valid_type = true;
         if (startsWith(option.data_type, "list")) valid_type = true;
     }
-    if (!valid_type && (option.option_kind == "description" || option.option_kind == "note") && option.data_type.empty()) valid_type = true;
+    if (!valid_type && (option.option_kind == "description" || option.option_kind == "note" || option.option_kind == "error") && option.data_type.empty()) valid_type = true;
 
     if (!valid_type)
         warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command << cOff << "'|";
-    if ((option.option_kind == "description" || option.option_kind == "note") && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
+
+    if (option.option_kind == "description" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
         warnings << "Description '" << cRed << option.description << cOff << "' should end with a period or colon.|";
-    if ((option.option_kind != "description" && option.option_kind != "note") && endsWith(option.description, "."))
+    if (option.option_kind == "note" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
+        warnings << "Note '" << cRed << option.description << cOff << "' should end with a period or colon.|";
+    if (option.option_kind == "error" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
+        warnings << "Error string '" << cRed << option.description << cOff << "' should end with a period or colon.|";
+
+    if ((option.option_kind != "description" && option.option_kind != "note" && option.option_kind != "error") && endsWith(option.description, "."))
         warnings << "Option '" << cRed << option.description << cOff << "' should not end with a period.|";
 
     return true;
@@ -342,7 +352,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     return converted;
 }
 //---------------------------------------------------------------------------------------------------
-bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local, const string_q& init, const string_q& notes) {
+bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local, const string_q& init, const string_q& notes, const string_q& errors) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
@@ -351,6 +361,7 @@ bool COptions::writeCode(const string_q& fn, const string_q& code, const string_
         converted = replaceCode(converted, "CODE_LOCAL_INIT", local);
         converted = replaceCode(converted, "CODE_INIT", init);
         converted = replaceCode(converted, "CODE_NOTES", notes);
+        converted = replaceCode(converted, "CODE_ERROR_MSG", errors);
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", code);
     }

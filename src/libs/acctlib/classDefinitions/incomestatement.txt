@@ -1,5 +1,5 @@
 [settings]
-class     = CIncomeStatement
-fields    = int256 begBal|int256 inflow|int256 outflow|int256 gasCostInWei|int256 endBal|blknum blockNum
-includes  = etherlib.h
+class = CIncomeStatement
+fields = int256 begBal|int256 inflow|int256 outflow|int256 gasCostInWei|int256 endBal|blknum blockNum
+includes = etherlib.h
 serialize = true

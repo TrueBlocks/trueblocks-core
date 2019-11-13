@@ -10,17 +10,17 @@ on, cmd, fast, null, dev_tools/makeClass, conflict1, n, @ e & run
 on, cmd, fast, null, dev_tools/makeClass, conflict2, n, @ l & run
 on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @ r & edit
 
-on, cmd, fast, null, dev_tools/makeClass, list,      n, list & classes = function
-on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & classes = function & verbose
+on, cmd, fast, null, dev_tools/makeClass, list,      n, list & files = function
+on, cmd, fast, null, dev_tools/makeClass, list_v,    n, list & files = function & verbose
 on, cmd, fast, null, dev_tools/makeClass, edit,      n, edit @ a & filter = function
 on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, list @ a @ f = CFunc
-on, cmd, fast, null, dev_tools/makeClass, run,       n, run & classes = block
-on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & classes = function
-on, cmd, fast, null, dev_tools/makeClass, js,        n, js & classes = CBlock
+on, cmd, fast, null, dev_tools/makeClass, run,       n, run & files = block
+on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & files = function
+on, cmd, fast, null, dev_tools/makeClass, js,        n, js & files = CBlock
 
 # ./dev_tools/makeClass/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Creates one or more C++ classes based on the definition file at # ./classDefinition/<class_name>."),
 # ./dev_tools/makeClass/options.cpp:    COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-# ./dev_tools/makeClass/options.cpp:    COption("classes", "", "list(<string>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
+# ./dev_tools/makeClass/options.cpp:    COption("files", "", "list(<path>)", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files to process"),
 # ./dev_tools/makeClass/options.cpp:    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
 # ./dev_tools/makeClass/options.cpp:    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
 # ./dev_tools/makeClass/options.cpp:    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code and quit"),

@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "newblock.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CNewBlock, CBaseNode);
 
@@ -336,7 +338,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return bool_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
@@ -438,4 +440,5 @@ bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName) {
     return block.parseJson3(contents);
 }
 // EXISTING_CODE
+}  // namespace qblocks
 

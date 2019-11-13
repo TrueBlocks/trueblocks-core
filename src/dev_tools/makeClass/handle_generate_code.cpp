@@ -21,22 +21,22 @@ extern string_q checkType      (const string_q& typeIn);
 extern string_q convertTypes   (const string_q& inStr);
 static string_q tab = string_q("\t");
 //------------------------------------------------------------------------------------------------------------
-void handle_generate(const COptions& options, CToml& toml, const string_q& dataFile, const string_q& ns) {
+bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns) {
 
     //------------------------------------------------------------------------------------------------
     string_q className   = toml.getConfigStr ("settings", "class", "");
     string_q classBase   = toProper(extract(className, 1));
     string_q classUpper  = toUpper(classBase);
-    string_q baseClass   = toml.getConfigStr ("settings", "baseClass", "CBaseNode");
+    string_q base_class  = toml.getConfigStr ("settings", "base_class", "CBaseNode");
     string_q scope       = toml.getConfigStr ("settings", "scope", "static");     //TODO(tjayrush): global data
     string_q hIncludes   = toml.getConfigStr ("settings", "includes", "");
-    string_q sIncludes   = toml.getConfigStr ("settings", "cIncs", "");
+    string_q sIncludes   = toml.getConfigStr ("settings", "cpp_includes", "");
     bool     serialize   = toml.getConfigBool("settings", "serialize", false);
-    bool     useExport   = toml.getConfigBool("settings", "useExport", false);
+    bool     use_export  = toml.getConfigBool("settings", "use_export", false);
     string_q display_str = toml.getConfigStr ("settings", "display_str", "");
 
     //------------------------------------------------------------------------------------------------
-    string_q baseBase   = toProper(extract(baseClass, 1));
+    string_q baseBase   = toProper(extract(base_class, 1));
     string_q baseName   = extract(className, 1);
     string_q baseProper = toProper(baseName);
     string_q baseLower  = toLower(baseName);
@@ -69,7 +69,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     }
 
     //------------------------------------------------------------------------------------------------
-    bool isBase = (baseClass == "CBaseNode");
+    bool isBase = (base_class == "CBaseNode");
     string_q parSer2 = isBase ?
                         "\t[{BASE_CLASS}]::SerializeC(archive);\n" :
                         "\t[{BASE_CLASS}]::SerializeC(archive);\n\n";
@@ -242,8 +242,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     string_q eqStr   = substitute(toml.getConfigStr("settings", "equals", ""), "&&", "&&\n\t\t\t");
 
     //------------------------------------------------------------------------------------------------
-    string_q fnBase = substitute(substitute(dataFile, ".txt", ""), "./classDefinitions/", "");
-    string_q headerFile = "./" + fnBase + ".h";
+    string_q headerFile = classDef.outputPath(".h");
     string_q headSource;
     asciiFileToString(configPath("makeClass/blank.h"), headSource);
     replaceAll(headSource, "[{GET_OBJ}]",        (hasObjGetter ? string_q(STR_GETOBJ_HEAD)+(hasStrGetter?"":"\n") : ""));
@@ -254,7 +253,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(headSource, "[FIELD_CLEAR]",      fieldClear);
     replaceAll(headSource, "[H_INCLUDES]",       headerIncs);
     replaceAll(headSource, "[{OPERATORS}]",      operatorH);
-    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_CLASS}]",     base_class);
     replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
     replaceAll(headSource, "[{BASE}]",           baseUpper);
     replaceAll(headSource, "[{CLASS_NAME}]",     className);
@@ -262,7 +261,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(headSource, "[{LONG}]",           baseLower);
     replaceAll(headSource, "[{PROPER}]",         baseProper);
     replaceAll(headSource, "[{SHORT}]",          short2(baseLower));
-    replaceAll(headSource, "[{BASE_CLASS}]",     baseClass);
+    replaceAll(headSource, "[{BASE_CLASS}]",     base_class);
     replaceAll(headSource, "[{BASE_BASE}]",      baseBase);
     replaceAll(headSource, "[{BASE}]",           baseUpper);
     replaceAll(headSource, "[{CLASS_NAME}]",     className);
@@ -282,7 +281,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(headSource, "[{NAMESPACE2}]",     (ns.empty() ? "" : "}  /""/ namespace qblocks\n"));
     replaceAll(headSource, "public:\n\npublic:", "public:");
 
-    if (!options.test)
+    if (!test)
         writeTheCode(headerFile, headSource, ns);
     else
         cerr << "Testing only: would have written " << headerFile << endl;
@@ -290,10 +289,10 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     //------------------------------------------------------------------------------------------------
     string_q fieldStr = fieldList.size() ? substitute(getCaseCode(fieldCase, ""), "[{PTR}]", "") : "// No fields";
 
-    string_q srcFile    = "./" + fnBase + ".cpp";
+    string_q srcFile = classDef.outputPath(".cpp");
     string_q srcSource;
     asciiFileToString(configPath("makeClass/blank.cpp"), srcSource);
-    if (useExport)
+    if (use_export)
         replace(srcSource, "ctx << toJson();", "doExport(ctx);");
     if ((startsWith(className, "CNew") || className == "CPriceQuote") && !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
@@ -311,7 +310,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(srcSource, "[{PARENT_REG}]",      parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n",   parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n",    parSet);
-    replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
+    replaceAll(srcSource, "[{BASE_CLASS}]",      base_class);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
     replaceAll(srcSource, "[{CLASS_NAME}]",      className);
@@ -319,7 +318,7 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(srcSource, "[{LONG}]",            baseLower);
     replaceAll(srcSource, "[{PROPER}]",          baseProper);
     replaceAll(srcSource, "[{SHORT}]",           short2(baseLower));
-    replaceAll(srcSource, "[{BASE_CLASS}]",      baseClass);
+    replaceAll(srcSource, "[{BASE_CLASS}]",      base_class);
     replaceAll(srcSource, "[{BASE_BASE}]",       baseBase);
     replaceAll(srcSource, "[{BASE}]",            baseUpper);
     replaceAll(srcSource, "[{CLASS_NAME}]",      className);
@@ -334,11 +333,13 @@ void handle_generate(const COptions& options, CToml& toml, const string_q& dataF
     replaceAll(srcSource, "[{SCOPE}]",           scope);
     replaceAll(srcSource, "[{NAMESPACE1}]",      (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]",      (ns.empty() ? "" : "}  // namespace qblocks\n"));
-    replaceAll(srcSource, "[{FN}]",              fnBase);
-    if (!options.test)
+    replaceAll(srcSource, "[{FN}]",              classDef.className);
+    if (!test)
         writeTheCode(srcFile, srcSource, ns);
     else
         cerr << "Testing only: would have written " << srcFile << endl;
+
+    return true;
 }
 
 //------------------------------------------------------------------------------------------------

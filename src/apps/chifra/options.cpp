@@ -90,17 +90,21 @@ bool COptions::parseArguments(string_q& command) {
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
 
-            } else if (contains(arg, ",") && isAddress(arg.substr(0,42))) {
-                if (mode == "list") {
-                    CStringArray parts;
-                    explode(parts, arg, ',');
-                    arg = parts[0];
-                    freshen_flags = substitute(parts[1], "=", ":");
+            } else if (contains(arg, ",")) {
+                if (isAddress(arg.substr(0,42))) {
+                    if (mode == "list") {
+                        CStringArray parts;
+                        explode(parts, arg, ',');
+                        arg = parts[0];
+                        freshen_flags = substitute(parts[1], "=", ":");
 
-                } else if (!isAddress(arg)) {
-                    EXIT_USAGE("Invalid address: " + arg);
+                    } else if (!isAddress(arg)) {
+                        EXIT_USAGE("Invalid address: " + arg);
+                    }
+                    addrs.push_back(toLower(arg));
+                } else {
+                    tool_flags += substitute(arg, ",", " ");
                 }
-                addrs.push_back(toLower(arg));
 
             } else if (isAddress(arg) || arg == "--known") {
                 addrs.push_back(toLower(arg));
@@ -170,8 +174,8 @@ bool COptions::parseArguments(string_q& command) {
     if (true)         { tool_flags += addExportMode(exportFmt);          freshen_flags += addExportMode(exportFmt); }
     if (true)         { tool_flags  = trim(tool_flags, ' ');             freshen_flags  = trim(freshen_flags, ' '); }
 
-    LOG_INFO("Connecting to node...");
     if (isNodeRunning()) {
+        LOG_INFO("Connecting to node...");
         blknum_t unripe, ripe, staging, finalized, client;
         getLastBlocks(unripe, ripe, staging, finalized, client);
         if ((client - finalized) > 2500)

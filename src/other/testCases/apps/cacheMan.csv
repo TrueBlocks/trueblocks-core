@@ -57,7 +57,7 @@ on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./merged.*
 on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./import.*
 on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./remove.*
 
-# 11360,apps,,cacheMan,filenames,,,TRUE,FALSE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
+# 11360,apps,,cacheMan,files,,,TRUE,FALSE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
 # 11380,apps,,cacheMan,check,c,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,check for duplicates and other problems in the cache
 # 11400,apps,,cacheMan,data,d,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
 # 11420,apps,,cacheMan,sort,s,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)
@@ -72,7 +72,7 @@ on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./remove.*
 # 11600,apps,,cacheMan,end,E,,FALSE,FALSE,FALSE,FALSE,yes,flag,<blknum>,last block to process (inclusive)
 # 11620,apps,,cacheMan,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
-# COption("filenames", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+# COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
 # COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
 # COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
 # COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),

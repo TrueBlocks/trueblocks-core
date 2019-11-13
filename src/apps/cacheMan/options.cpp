@@ -8,7 +8,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("filenames", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
     COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
@@ -33,7 +33,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG8(false);
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray filenames;
+    CStringArray files;
     bool check = false;
     bool sort = false;
     bool fix = false;
@@ -98,14 +98,14 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseStringList2(this, filenames, arg))
+            if (!parseStringList2(this, files, arg))
                 return false;
 
             // END_CODE_AUTO
         }
     }
 
-    for (auto file : filenames) {
+    for (auto file : files) {
         address_t addr = toLower(substitute(file, ".acct.bin", ""));
         if (!isAddress(addr))
             EXIT_USAGE("Option '" + file + "' does not appear to be an address.");

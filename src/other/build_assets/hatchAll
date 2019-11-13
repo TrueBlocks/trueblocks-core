@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-#
-# Traverses source tree and, using makeClass and grabABI, re-generates classes from classDefinition files
-#
-make -f hatch.mak

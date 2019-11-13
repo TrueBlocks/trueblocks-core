@@ -1,5 +1,5 @@
 [settings]
-class     = CApiSpec
-fields    = string method|string uri|string headers
-includes  = utillib.h
+class = CApiSpec
+fields = string method|string uri|string headers
+includes = utillib.h
 serialize = true

@@ -1,7 +1,6 @@
 [settings]
-class     = CPriceCacheItem
-baseClass = CAccountName
-fields    = string type|string pair
-includes  = etherlib.h
-cIncs     = 
+class = CPriceCacheItem
+base_class = CAccountName
+fields = string type|string pair
+includes = etherlib.h
 serialize = true

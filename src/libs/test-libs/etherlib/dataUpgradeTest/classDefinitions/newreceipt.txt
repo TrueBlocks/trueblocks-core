@@ -1,6 +1,6 @@
 [settings]
-class     = CNewReceipt
-fields    = address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|bool isError
-includes  = etherlib.h|logentry.h
-scope     = extern
+class = CNewReceipt
+fields = address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|bool isError
+includes = etherlib.h|logentry.h
+scope = extern
 serialize = true

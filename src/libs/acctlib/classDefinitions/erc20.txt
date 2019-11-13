@@ -1,7 +1,7 @@
 [settings]
-class       = CTokenState_erc20
-baseClass   = CAccountWatch
-fields      = address address|wei totalSupply|uint64 decimals|string version|string symbol|CAddressArray holders (nowrite)
-includes    = acctlib.h
-scope       = extern
-serialize   = true
+class = CTokenState_erc20
+base_class = CAccountWatch
+fields = address address|wei totalSupply|uint64 decimals|string version|string symbol|CAddressArray holders (nowrite)
+includes = acctlib.h
+scope = extern
+serialize = true

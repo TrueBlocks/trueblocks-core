@@ -576,7 +576,7 @@ const char *STR_ERROR_JSON =
         replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
         replaceAll(positional, "blocks", "<block> [block...]");
         replaceAll(positional, "addrs", "<address> [address...]");
-        replaceAll(positional, "classes", "<class> [class...]");
+        replaceAll(positional, "files", "<file> [file...]");
         replaceAll(positional, "terms", "<term> [term...]");
         replaceAll(positional, "modes", "<mode> [mode...]");
         if (isReadme)

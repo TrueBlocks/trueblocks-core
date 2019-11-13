@@ -14,6 +14,25 @@
 #include "etherlib.h"
 #include "commandoption.h"
 
+// BEG_ERROR_STRINGS
+#define ERR_CLASSDEFNOTEXIST 1
+#define ERR_CONFIGMISSING 2
+#define ERR_EMPTYJSFILE 3
+#define ERR_CHOOSEONE 4
+#define ERR_NOFILTERMATCH 5
+#define ERR_NEEDONECLASS 6
+// END_ERROR_STRINGS
+
+//-------------------------------------------------------------------
+class CClassDefinition {
+public:
+    string_q className;
+    string_q inputPath;
+    string_q outputPath(const string_q& t) const {
+        return substitute(substitute(inputPath, "classDefinitions/", ""), ".txt", t);
+    }
+};
+
 typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -26,7 +45,7 @@ public:
     // END_CODE_DECLARE
 
     runmode_t mode;
-    string_q classNames;
+    vector<CClassDefinition> classDefs;
     CToml classFile;
     ostringstream warnings;
 
@@ -36,10 +55,12 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool exportJson(const string_q& cl);
     bool handle_options(void);
+    bool handle_json_export(const string_q& cl);
+    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
+
     bool check_option(const CCommandOption& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="");
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="", const string_q& errors="");
 };
 
 //-------------------------------------------------------------------

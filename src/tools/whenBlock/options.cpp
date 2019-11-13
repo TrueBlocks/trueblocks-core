@@ -142,8 +142,8 @@ COptions::COptions(void) {
         exportFmt = TXT1;
 
     // BEG_CODE_NOTES
-    notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks");
-    notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]]");
+    notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
+    notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
     notes.push_back("You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.");
     notes.push_back("The following `named` blocks are provided are currently configured:");
     // END_CODE_NOTES

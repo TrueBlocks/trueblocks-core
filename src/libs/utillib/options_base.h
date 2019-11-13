@@ -38,12 +38,16 @@
 #define OPT_TOGGLE      OPT_SWITCH
 #define OPT_HIDDEN      (1<<17)
 
+typedef map<size_t,qblocks::string_q> CErrorStringMap;
+#define ERR_NOERROR 0
+
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
 namespace qblocks {
     class COption;
     class COptionsBase {
     public:
+        CErrorStringMap errStrs;
         addr_wei_mp prefundWeiMap;
         CStringArray arguments;
         CStringArray errors;

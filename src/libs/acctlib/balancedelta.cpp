@@ -286,7 +286,7 @@ ostream& operator<<(ostream& os, const CBalanceDelta& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_BALANCEDELTA =
+const char* STR_DISPLAY_BALANCEDELTA = 
 "[{BLOCKNUMBER}]\t"
 "[{ADDRESS}]\t"
 "[{BALANCE}]\t"

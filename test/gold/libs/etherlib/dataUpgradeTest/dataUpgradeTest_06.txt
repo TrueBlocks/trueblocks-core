@@ -449,7 +449,6 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
   "price": 0,
-  "finalized": false,
   "timestamp": 1442749586,
   "transactions": [
     {

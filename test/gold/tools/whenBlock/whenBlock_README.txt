@@ -18,8 +18,8 @@ whenBlock -th
 
 `Notes:`
 
-- The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks
-- Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]]
+- The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.
+- Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 - You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
 - The following `named` blocks are provided are currently configured:
   - first (`0`), firstTrans (`46147`), iceage (`200000`), devcon1 (`543626`)

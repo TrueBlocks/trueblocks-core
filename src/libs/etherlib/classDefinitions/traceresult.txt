@@ -1,7 +1,7 @@
 [settings]
-class     = CTraceResult
-fields    = address address|string code|gas gasUsed|string output
-includes  = abilib.h
-cIncs     = trace.h
+class = CTraceResult
+fields = address address|string code|gas gasUsed|string output
+includes = abilib.h
+cpp_includes = trace.h
 serialize = true
-equals    = ((address == item.address) && (code == item.code) && (gasUsed == item.gasUsed) && (output == item.output))
+equals = ((address == item.address) && (code == item.code) && (gasUsed == item.gasUsed) && (output == item.output))

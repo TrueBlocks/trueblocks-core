@@ -129,9 +129,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         return true;
 
     resetClock();
-    double testTime = 0;
-    uint32_t nTests = 0;
-    uint32_t nPassed = 0;
+    double testTime1 = 0;
+    uint32_t nTests1 = 0;
+    uint32_t nPassed1 = 0;
 
     bool cmdTests = whichTest & CMD;
 
@@ -161,7 +161,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 if (!test.builtin && !test.options.empty())
                     cmd << "?" << test.options;
                 cmd << "\"";
-                if (!test.post.empty())
+                if (!no_post && !test.post.empty())
                     cmd << " | " <<  test.post << " ";
                 cmd << " >" << test.workPath + test.fileName;
             }
@@ -174,18 +174,21 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            nTests++;
+            if (test.mode == "both")
+                nTests1++;
             int ret = system(theCmd.c_str());  { if (ret) { printf("%s",""); } }  // do not remove, squelches warning
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             if (test.builtin) {
-                nPassed++;
+                if (test.mode == "both")
+                    nPassed1++;
                 continue;
             }
 
             double thisTime = str_2_Double(TIC());
-            testTime += thisTime;
+            if (test.mode == "both")
+                testTime1 += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
             if (endsWith(test.path, "lib"))
@@ -199,7 +202,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
-                nPassed++;
+                if (test.mode == "both")
+                    nPassed1++;
 
             } else {
                 ostringstream os;
@@ -243,11 +247,11 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         }
     }
 
-    totalTests += nTests;
-    totalPassed += nPassed;
-    totalTime += testTime;
+    totalTests += nTests1;
+    totalPassed += nPassed1;
+    totalTime += testTime1;
 
-    if (nTests) {
+    if (nTests1) {
         ostringstream os;
         os << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
         os << Now().Format(FMT_EXPORT) << ",";
@@ -255,20 +259,20 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         os << testName << ",";
         os << (cmdTests ? "cmd" : "api") << ",";
         os << filter << ",";
-        os << nTests << ",";
-        os << nPassed << ",";
-        os << (nTests - nPassed) << ",";
-        os << double_2_Str(testTime, 5) << ",";
-        os << double_2_Str(testTime / nTests, 5) << endl;
+        os << nTests1 << ",";
+        os << nPassed1 << ",";
+        os << (nTests1 - nPassed1) << ",";
+        os << double_2_Str(testTime1, 5) << ",";
+        os << double_2_Str(testTime1 / nTests1, 5) << endl;
         perf << os.str();
 
         cerr << "   " << testName << "(" << (cmdTests ? "cmd" : "api") << "," << filter << "): ";
-        cerr << cYellow << nTests << " tests " << cOff ;
-        cerr << cGreen << nPassed << " passed " << greenCheck << cOff << " ";
-        if (nTests != nPassed)
-            cerr << cRed << (nTests - nPassed) << " failed " << cOff << "in ";
-        cerr << cTeal << double_2_Str(testTime, 5) << " seconds " << cOff;
-        cerr << cBlue << double_2_Str(testTime / nTests, 5) << " avg." << cOff << endl;
+        cerr << cYellow << nTests1 << " tests " << cOff ;
+        cerr << cGreen << nPassed1 << " passed " << greenCheck << cOff << " ";
+        if (nTests1 != nPassed1)
+            cerr << cRed << (nTests1 - nPassed1) << " failed " << cOff << "in ";
+        cerr << cTeal << double_2_Str(testTime1, 5) << " seconds " << cOff;
+        cerr << cBlue << double_2_Str(testTime1 / nTests1, 5) << " avg." << cOff << endl;
         cerr << endl;
     }
 

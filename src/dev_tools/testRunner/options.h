@@ -25,6 +25,7 @@ public:
     string_q filter;
     bool clean;
     bool no_quit;
+    bool no_post;
     bool report;
     // END_CODE_DECLARE
 

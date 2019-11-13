@@ -1,5 +1,5 @@
 [settings]
-class     = QFromTransferFrom
-baseClass = QTransferFrom
-fields    = address whop|address werp
-includes  = etherlib.h|transferfrom.h
+class = QFromTransferFrom
+base_class = QTransferFrom
+fields = address whop|address werp
+includes = etherlib.h|transferfrom.h
