@@ -1,10 +1,12 @@
+#!/usr/bin/env bash
+
 cd ..
 export QUICKBLOCKS=`pwd`
 
 colorEcho -t "----- from working ----------------------"
-find $QUICKBLOCKS/test/working -name "*$1*"
-find $QUICKBLOCKS/test/working -name "*$1*" -exec cat '{}' ';'
+find $QUICKBLOCKS/test/working -name "/$1*"
+find $QUICKBLOCKS/test/working -name "/$1*" -exec cat '{}' ';'
 
 colorEcho -t "----- from gold  ----------------------"
-find $QUICKBLOCKS/test/gold -name "*$1*"
-find $QUICKBLOCKS/test/gold -name "*$1*" -exec cat '{}' ';'
+find $QUICKBLOCKS/test/gold -name "/$1*"
+find $QUICKBLOCKS/test/gold -name "/$1*" -exec cat '{}' ';'
