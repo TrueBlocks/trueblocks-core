@@ -75,7 +75,7 @@ bool CBalanceDelta::setValueByName(const string_q& fieldNameIn, const string_q& 
             if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
             break;
         case 'd':
-            if ( fieldName % "diff" ) { diff = str_2_BigInt(fieldValue); return true; }
+            if ( fieldName % "diff" ) { diff = str_2_Wei(fieldValue); return true; }
             break;
         default:
             break;
