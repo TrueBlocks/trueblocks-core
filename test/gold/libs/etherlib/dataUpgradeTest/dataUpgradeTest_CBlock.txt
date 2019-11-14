@@ -30,7 +30,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 0,
   "transactions": []
@@ -95,7 +95,7 @@ age                 	1019	0	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 0,
   "transactions": [],

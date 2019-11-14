@@ -155,7 +155,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
-    nspace = "";
+    nspace = "qblocks";
     filter = "";
     test = false;
     // END_CODE_INIT

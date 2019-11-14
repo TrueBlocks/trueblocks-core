@@ -9,7 +9,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "parentHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 1097113993909745,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1499633571,
   "transactions": [
@@ -386,7 +386,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "parentHash": "0xe8ba231ac8fd0d4834d4ef2889949d375ff5ec5da0244fb7c8069a38edfbca92",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 41857221373863,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1464293714,
   "transactions": [
@@ -453,7 +453,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "parentHash": "0x96810a6076e621e311a232468bfd3dcfac08f4803b255af0f00300f47981c10f",
   "miner": "0x0c729be7c39543c3d549282a40395299d987cec2",
   "difficulty": 12468438268070,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1455421883,
   "transactions": [
@@ -555,7 +555,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "parentHash": "0xacc1728d558f47fc847b749e0972097fd7e95c6c96eadef06bd356c0cf248710",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 22349600794407,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1459194277,
   "transactions": []

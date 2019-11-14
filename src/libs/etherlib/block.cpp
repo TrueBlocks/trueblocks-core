@@ -433,7 +433,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
-            if ( fieldName % "price" ) return double_2_Str(price);
+            if ( fieldName % "price" ) return double_2_Str(price, 5);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);

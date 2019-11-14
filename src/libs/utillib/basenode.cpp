@@ -485,7 +485,7 @@ namespace qblocks {
                 } else if (field.m_fieldType & TS_NUMERAL) {
                     if (expContext().quoteNums)
                         ret += "\"";
-                    ret += (expContext().hexNums && !contains(val, ".") ? str_2_Hex(val) : val);
+                    ret += (expContext().hexNums && ((isNumeral(val)||isHexStr(val)) && !contains(val, ".")) ? str_2_Hex(val) : val);
                     if (expContext().quoteNums)
                         ret += "\"";
 

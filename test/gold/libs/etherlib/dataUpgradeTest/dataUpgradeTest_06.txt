@@ -31,7 +31,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 1442749586,
   "transactions": [
@@ -91,7 +91,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 1442749586,
   "transactions": [
@@ -128,7 +128,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 1442749586,
   "transactions": [
@@ -188,7 +188,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 1442749586,
   "transactions": [
@@ -243,7 +243,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
@@ -299,7 +299,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
@@ -336,7 +336,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
@@ -392,7 +392,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": true,
   "timestamp": 1442749586,
   "transactions": [
@@ -448,7 +448,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0xd2c56db29797324c22d9808cc58d80fc0c53f034f1e215fb077abb223e3bdd9b",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
-  "price": 0,
+  "price": 0.00000,
   "timestamp": 1442749586,
   "transactions": [
     {

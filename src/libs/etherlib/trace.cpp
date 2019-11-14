@@ -295,12 +295,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) {
-                if (articulatedTrace == CFunction())
-                    return "";
-                expContext().noFrst = true;
-                return articulatedTrace.Format();
-            }
+            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
             if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':

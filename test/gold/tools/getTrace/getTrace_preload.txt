@@ -9,7 +9,7 @@ getBlock 3657480 --force
   "parentHash": "0x87d11cb2945eaa3e9db07729717f8aa03f8b00a94f55e44016474267a2033e9d",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 344967138397389,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1494031419,
   "transactions": [

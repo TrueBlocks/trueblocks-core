@@ -9,7 +9,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "parentHash": "0x1fa2fd84ee6d2cd02212350aa2e38b7117e20ba8a66aefdaad08637d29f96261",
   "miner": "0x1e9939daaad6924ad004c2560e90804164900341",
   "difficulty": 75086032611208,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1481190424,
   "transactions": [
@@ -199,7 +199,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "parentHash": "0x906210a8d171cef355632314ac1e8f196b17bc9a4875e9df311ab2aec5791339",
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 81881924985250,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1481621074,
   "transactions": []
@@ -212,7 +212,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "parentHash": "0x206a8a664c2d026e5301accac15cf1a12b623da1cd16dbccb0557152a076279d",
   "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
   "difficulty": 77217903307043,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1482663926,
   "transactions": []
@@ -225,7 +225,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "parentHash": "0x3ab4b421b943b5401a40a2fcad52782194d6f788afed587a3d9518bec57f50e9",
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 112182607379608,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1485564456,
   "transactions": []

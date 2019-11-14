@@ -537,12 +537,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) {
-                if (articulatedTx == CFunction())
-                    return "";
-                expContext().noFrst = true;
-                return articulatedTx.Format();
-            }
+            if ( fieldName % "articulatedTx" ) { if (articulatedTx == CFunction()) return ""; expContext().noFrst=true; return articulatedTx.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);

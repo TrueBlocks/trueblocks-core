@@ -10,7 +10,7 @@ getBlock 728708 --parity
   "miner": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
   "number": "0xb1e84",
   "parentHash": "0x7fc5c22134193cb181054c9388b527da6546e2a279579f219b7bd95420c16de1",
-  "price": "0x0",
+  "price": "0.00000",
   "timestamp": "0x5678c231",
   "transactions": []
 }] }

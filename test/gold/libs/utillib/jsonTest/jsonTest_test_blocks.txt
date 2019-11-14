@@ -9,7 +9,7 @@ tests/blocks.json
   "parentHash": "0xa467c1dc6bb0556826ea34c91b0cc08ec8e348abfcc906d813dbdd5e8eb7720a",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 1504726529,
   "transactions": [

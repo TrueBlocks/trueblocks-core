@@ -1,4 +1,4 @@
 [settings]
 class = CTestCase
-fields = string origLine|bool builtin|string onOff|string mode|string speed|string route|string tool|string filename|string post|string options|string extra|string path|string goldPath|string workPath|string fileName
+fields = string origLine|sbool builtin|string onOff|string mode|string speed|string route|string tool|string filename|string post|string options|string extra|string path|string goldPath|string workPath|string fileName
 includes = etherlib.h

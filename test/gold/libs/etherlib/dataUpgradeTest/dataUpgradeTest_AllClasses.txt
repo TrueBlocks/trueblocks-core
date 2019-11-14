@@ -316,7 +316,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 0,
   "transactions": []
@@ -381,7 +381,7 @@ age                 	1019	0	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 0,
   "timestamp": 0,
   "transactions": [],
@@ -1160,7 +1160,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": []
 }
@@ -1216,7 +1216,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": []
 }

@@ -130,6 +130,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         } else if (fld.type == "uint64")          { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "uint256")         { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "bool")            { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
+        } else if (fld.type == "sbool")           { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
         } else if (fld.type == "double")          { setFmt = "\t[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "\t[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))      { setFmt = "\t[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -372,6 +373,9 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += ptrCase;
 
                     } else if (type == "bool") {
+                        caseCode += " return bool_2_Str([{PTR}]" + field + ");";
+
+                    } else if (type == "sbool") {
                         caseCode += " return bool_2_Str_t([{PTR}]" + field + ");";
 
                     } else if (type == "bloom") {
@@ -411,7 +415,7 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += " return bni_2_Str([{PTR}]" + field + ");";
 
                     } else if (type == "double") {
-                        caseCode += " return double_2_Str([{PTR}]" + field + ");";
+                        caseCode += " return double_2_Str([{PTR}]" + field + ", 5);";
 
                     } else if (endsWith(type,"_e")) {
                         caseCode +=  " return uint_2_Str(" + field + ");";
@@ -490,6 +494,9 @@ string_q getCaseSetCode(const string_q& fieldCase) {
                         caseCode += ptrCase;
 
                     } else if (type == "bool") {
+                        caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
+
+                    } else if (type == "sbool") {
                         caseCode +=  " { " + field + " = str_2_Bool(fieldValue); return true; }";
 
                     } else if (type == "bloom") {
@@ -790,7 +797,7 @@ string_q checkType(const string_q& typeIn) {
     if (endsWith(typeIn, "Array")) return typeIn;
 
     string_q keywords[] = {
-        "address", "bloom",  "bool",
+        "address", "bloom",  "bool",      "sbool",
         "bytes",   "bytes4", "bytes8",    "bytes16",   "bytes32",
         "double",  "gas",    "hash",      "int256",    "int32",
         "int64",   "string", "timestamp", "uint256",
@@ -822,6 +829,7 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "blknum ",    "blknum_t "   );
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "bool ",      "bool "       );
+    replaceAll(outStr, "sbool ",     "bool "       );
 
     replaceAll(outStr, "hash ",      "hash_t "     );
     replaceAll(outStr, "bloom ",     "bloom_t "    );

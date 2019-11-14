@@ -9,7 +9,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x85f082ce9d5cb8b3c16e0eb8ba5152927a02d1a2c9dc5ddf49a643f48bbe6d15",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 17542881926868,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1458022602,
   "transactions": [
@@ -67,7 +67,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x5e48c48213ede8ed9b7e9f5411564f4f996015c2d93636d7b2b7c60b230b0c20",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 17892132636370,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1458213990,
   "transactions": [
@@ -675,7 +675,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0xeb35ba146384965b444191fa6354bdddbe0dcdc89319b2ab202422591213b24d",
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 25439949491768,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1459980885,
   "transactions": [
@@ -711,7 +711,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x85bd2983043a4b717893f96407a24dda3af899e100ca65a5efc62e5859bd50bc",
   "miner": "0xd34da389374caad1a048fbdc4569aae33fd5a375",
   "difficulty": 30027571242885,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1461564158,
   "transactions": []
@@ -724,7 +724,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x1adf11a3b8d0c2e75605a34a9adb883268ad48531c541ce3c98a42dce8f688b3",
   "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
   "difficulty": 56077548725667,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1467296018,
   "transactions": [
@@ -1075,7 +1075,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x5e26bd3cb18e0775d13d460868d328642bf51f4d989a3a13a0f43c6401edb8ad",
   "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
   "difficulty": 59717402562065,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1468865843,
   "transactions": []
@@ -1088,7 +1088,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x6ca269d02245567d73e81cd959b9ed079e3f483fd5916976863610b49d78618b",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 53448351719689,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1470422063,
   "transactions": []
@@ -1101,7 +1101,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0xd6f07877d475d957c7d2154db7b2b6e769ec4428be56e0690a7ead297aa7cd39",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 66020860576800,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1471990847,
   "transactions": [
@@ -1676,7 +1676,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0xf482445c37a2b92cf4dc1507b3e8661f600dcd0980a79c910df6eaf6d7f9e555",
   "miner": "0xf3b9d2c81f2b24b0fa0acaaa865b7d9ced5fc2fb",
   "difficulty": 73061282707179,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1473930294,
   "transactions": [
@@ -1712,7 +1712,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x5e58ba96ebc9c4cfce21733bdf243a8dd090b881ac233c0e0fe08ef16e8f02ac",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 72381051935584,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1474007546,
   "transactions": [
@@ -1748,7 +1748,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x4c2f8369342b33445927fd1bba6f34d5f7c84e2903df18db56503df2ffde99c7",
   "miner": "0xeda325e43332ed9b5b731a07746df48e442e04b0",
   "difficulty": 76779916678771,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1475329719,
   "transactions": [
@@ -1894,7 +1894,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0xffd3fd40d63430db65c335f592c6bfcc88f091fa0684ddb67c38969486a19e52",
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 106947037494033,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1477523292,
   "transactions": []
@@ -1907,7 +1907,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0xbad0aa3ba8fdfa7d205627a2b8fded3427f030fa1427076c47acf04ee33334af",
   "miner": "0xf3b9d2c81f2b24b0fa0acaaa865b7d9ced5fc2fb",
   "difficulty": 61116427441017,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1478169571,
   "transactions": [
@@ -1943,7 +1943,7 @@ getBlock --file:cmd_file1 --force
   "parentHash": "0x474c65a602268ccbddc6c1386c686db6523fa6172073bd07218ed27238441548",
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 70209084255676,
-  "price": 0,
+  "price": 0.00000,
   "finalized": 1,
   "timestamp": 1480604456,
   "transactions": []

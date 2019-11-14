@@ -379,6 +379,10 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 12) option_kind = parts[12];
     if (parts.size() > 13) data_type = parts[13];
     if (parts.size() > 14) description = substitute(parts[14], "&#44;", ",");
+
+    if (!def_val.empty() && (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")))
+        def_val = "\"" + def_val + "\"";
+
     description = substitute(description, "[{DEF}]", (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
     if (def_val.empty() && !generate.empty()) {
         if (data_type == "<boolean>") {

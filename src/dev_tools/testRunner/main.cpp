@@ -157,20 +157,20 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            if (test.mode == "both")
+            if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.nTests++;
             int ret = system(theCmd.c_str());  { if (ret) { printf("%s",""); } }  // do not remove, squelches warning
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             if (test.builtin) {
-                if (test.mode == "both")
+                if (test.mode == "both" || contains(test.tool, "lib"))
                     measure.nPassed++;
                 continue;
             }
 
             double thisTime = str_2_Double(TIC());
-            if (test.mode == "both")
+            if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.totSecs += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
@@ -185,7 +185,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
-                if (test.mode == "both")
+                if (test.mode == "both" || contains(test.tool, "lib"))
                     measure.nPassed++;
 
             } else {
