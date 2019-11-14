@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -164,6 +168,9 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
     notes.push_back("You may specify multiple `modes` on a single line.");
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

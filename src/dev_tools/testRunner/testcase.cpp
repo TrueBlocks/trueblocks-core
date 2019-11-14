@@ -15,7 +15,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "test_case.h"
+#include "testcase.h"
 
 namespace qblocks {
 

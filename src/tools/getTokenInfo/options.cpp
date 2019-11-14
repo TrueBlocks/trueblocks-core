@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -165,6 +169,9 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

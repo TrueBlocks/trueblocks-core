@@ -3,6 +3,10 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -210,6 +214,9 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

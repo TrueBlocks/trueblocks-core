@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -110,12 +114,15 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
-    // BEG_CODE_INIT
+    // BEG_CODE_NOTES
     notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
     notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
-    // END_CODE_INIT
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

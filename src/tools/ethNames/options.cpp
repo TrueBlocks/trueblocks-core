@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -194,6 +198,9 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // END_CODE_NOTES
     notes.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

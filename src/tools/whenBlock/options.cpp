@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 bool parseRequestDates(COptionsBase *opt, CNameValueArray& blocks, const string_q& arg);
@@ -148,6 +152,9 @@ COptions::COptions(void) {
     notes.push_back("The following `named` blocks are provided are currently configured:");
     // END_CODE_NOTES
     notes.push_back("  " + listSpecials(NONE1));
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

@@ -5,6 +5,10 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "main.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -197,6 +201,11 @@ tBuffer(),
 transFmt(""), traceFmt(""), esc_hit(false) {
     Init();
     barLen(80);
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -103,6 +107,9 @@ COptions::COptions(void) {
     notes.push_back("Valid pairs include any pair from the public Poloniex's API here: | https://poloniex.com/public?command=returnCurrencies.");
     notes.push_back("`Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data | at a time. You must repeatedly run this command until the data is up-to-date.");
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

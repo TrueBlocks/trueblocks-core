@@ -10,7 +10,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
+#include "measure.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -169,6 +174,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!hasLibs)
         sleep(1.);  
 
+    perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE, CSV1), "\"", "");
+
     return true;
 }
 
@@ -192,8 +199,12 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
+    CMeasure::registerClass();
     // BEG_CODE_NOTES
     // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //---------------------------------------------------------------------------------------------------

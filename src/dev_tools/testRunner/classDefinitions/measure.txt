@@ -1,0 +1,5 @@
+[settings]
+class = CMeasure
+fields = string git_hash|string date|uint64 epoch|string group|string cmd|string type|uint64 nTests|uint64 nPassed|double totSecs
+includes = etherlib.h
+display_str = git_hash, date, epoch, group, cmd, type, nTests, nPassed, totSecs, avgSecs

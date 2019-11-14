@@ -4,8 +4,11 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "acctlib.h"
-
 #include "status.h"
 #include "chaincache.h"
 #include "pricecache.h"
@@ -15,6 +18,9 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {

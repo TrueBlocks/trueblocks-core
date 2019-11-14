@@ -11,7 +11,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
 enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4), OTHER = (1<<5) };

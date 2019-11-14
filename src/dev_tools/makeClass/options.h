@@ -11,17 +11,21 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
 #include "commandoption.h"
 
-// BEG_ERROR_STRINGS
+// BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
 #define ERR_EMPTYJSFILE 3
 #define ERR_CHOOSEONE 4
 #define ERR_NOFILTERMATCH 5
 #define ERR_NEEDONECLASS 6
-// END_ERROR_STRINGS
+// END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
 class CClassDefinition {
