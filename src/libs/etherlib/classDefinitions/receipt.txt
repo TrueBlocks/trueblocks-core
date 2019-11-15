@@ -1,13 +1,13 @@
 [settings]
-class       = CReceipt
-fields      = hash blockHash (nowrite-min)|blknum blockNumber (nowrite-min)|address contractAddress|wei cumulativeGasUsed (nowrite)|address from (nowrite-min)|gas gasUsed|CLogEntryArray logs|string logsBloom (nowrite)|bytes32 root (nowrite)|uint32 status=NO_STATUS|address to (nowrite-min)|hash transactionHash (nowrite-min)|blknum transactionIndex (nowrite-min)|
+class = CReceipt
+fields = hash blockHash (nowrite-min)|blknum blockNumber (nowrite-min)|address contractAddress|wei cumulativeGasUsed (nowrite)|address from (nowrite-min)|gas gasUsed|CLogEntryArray logs|string logsBloom (nowrite)|bytes32 root (nowrite)|uint32 status=NO_STATUS|address to (nowrite-min)|hash transactionHash (nowrite-min)|blknum transactionIndex (nowrite-min)|
 backfields1 = address contractAddress|wei cumulativeGasUsed (nowrite)|gas gasUsed|CLogEntryArray logs|string logsBloom (nowrite)|bytes32 root (nowrite)|uint32 status=NO_STATUS
 backfields2 = address contractAddress|gas gasUsed|CLogEntryArray logs|uint32 status=NO_STATUS
 backfields3 = version_030|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom|uint32 status=NO_STATUS
 backfields4 = version_020|address contractAddress|gas gasUsed|CLogEntryArray logs|bloom logsBloom
-includes    = abilib.h|logentry.h
-cIncs       = etherlib.h
-scope       = extern
-serialize   = true
+includes = abilib.h|logentry.h
+cpp_includes = etherlib.h
+scope = extern
+serialize = true
 display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
 

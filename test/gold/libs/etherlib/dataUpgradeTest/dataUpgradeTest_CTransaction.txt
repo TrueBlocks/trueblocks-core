@@ -166,7 +166,6 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "logs": [],
     "status": null
   },
-  "finalized": 0,
   "traces": [],
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,

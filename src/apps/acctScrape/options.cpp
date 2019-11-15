@@ -3,11 +3,15 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
@@ -16,36 +20,36 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-string_q dTabs;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
-    scanRange.first = UINT_MAX;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    CAddressArray addrs;
     bool finalized = true;
     bool staging = false;
     bool unripe = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
-    CBlock lBlock;
-    getBlock_light(lBlock, "latest");
-    blknum_t latest = lBlock.blockNumber;
+    // How far does the system think it is?
+    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
+    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
+    blknum_t latest = clientBlk;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-f" || arg == "--finalized") {
             finalized = !finalized;
 
@@ -72,31 +76,26 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
         } else {
-            if (!startsWith(arg, "0x"))
-                return usage("Invalid option: " + arg);
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid address. Quitting...");
-
-            CAccountWatch watch;
-            watch.setValueByName("address", toLower(arg)); // don't change, sets bloom value also
-            watch.setValueByName("name", toLower(arg));
-            watch.extra_data = getVersionStr() + "/" + watch.address;
-            watch.color = cBlue;
-            watch.finishParse();
-            monitors.push_back(watch);
+            // END_CODE_AUTO
         }
     }
 
-    if (monitors.size() == 0)
-        return usage("You must provide at least one Ethereum address. Quitting...");
+    for (auto addr : addrs) {
+        CAccountWatch watch;
+        watch.setValueByName("address", toLower(addr)); // don't change, sets bloom value also
+        watch.setValueByName("name", toLower(addr));
+        watch.extra_data = getVersionStr() + "/" + watch.address;
+        watch.color = cBlue;
+        watch.finishParse();
+        monitors.push_back(watch);
+    }
 
-    if (start != NOPOS) scanRange.first = start;
-    if (end != NOPOS) scanRange.second = end;
-    if (unripe)  visitTypes |= VIS_UNRIPE;
-    if (staging) visitTypes |= VIS_STAGING;
+    if (monitors.size() == 0)
+        return usage("Please provide at least one Ethereum address to scrape. Quitting...");
 
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -105,74 +104,58 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    dTabs = (daemon ? "\t  " : "");
-    string_q endLine = (daemon ? "\r" : "\n");
-    for (auto monitor : monitors) {
-        string_q fn1 = getMonitorPath(monitor.address);
-        if (fileExists(fn1 + ".lck"))
-            return usage("The cache file '" + fn1 + "' is locked. Quitting...");
-        string_q fn2 = getMonitorLast(monitor.address);
-        if (fileExists(fn2 + ".lck"))
-            return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-        string_q fn3 = getMonitorExpt(monitor.address);
-        if (fileExists(fn3 + ".lck"))
-            return usage("The last export file '" + fn3 + "' is locked. Quitting...");
-        string_q fn4 = getMonitorBals(monitor.address);
-        if (fileExists(fn4 + ".lck"))
-            return usage("The last export file '" + fn4 + "' is locked. Quitting...");
-        if (!isTestMode())
-            LOG_INFO("freshening: ", cYellow, monitor.address, cOff, "...");
-        if (scanRange.first == UINT_MAX)
-            scanRange.first = min(scanRange.first, str_2_Uint(asciiFileToString(fn2))); // If file doesn't exist, this will report '0'
-    }
-
-    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
-    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
-
-    if (scanRange.second == NOPOS) {
-        scanRange.second = finalizedBlk;
-        if (visitTypes & VIS_STAGING)
-            scanRange.second = stagingBlk;
-        if (visitTypes & VIS_UNRIPE)
-            scanRange.second = unripeBlk;
-    }
+    if (unripe)  visitTypes |= VIS_UNRIPE;
+    if (staging) visitTypes |= VIS_STAGING;
 
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
-    // So one of the test cases passes only
-    if (isTestMode() && monitors.size() == 1 && monitors[0].address == "0x001d14804b399c6ef80e64576f657660804fec0b")
-        setenv("TEST_MODE", "false", true);
+    // Scan the monitors to see if any are locked (fail if yes). While we're at it, find the block the monitors think we
+    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet and
+    // it's a smart contract, or zero).
+    blknum_t earliestBlock = NOPOS;
+    for (auto monitor : monitors) {
+        if (!checkLocks(monitor.address))
+            return false;
+        earliestBlock = min(earliestBlock, nextBlockAsPerMonitor(monitor.address));
+    }
+    blknum_t latestBlock = (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
 
-    // This would fail, for example, if the accounts are scraped further than the blocks (i.e. we
-    // cleared the block index cache, but we didn't clear the account monitor cache
-    if (scanRange.first >= scanRange.second) {
+    scanRange = make_pair(earliestBlock, latestBlock);
+    if (start != NOPOS) scanRange.first  = start;  // the user is always right
+    if (end   != NOPOS) scanRange.second = end;    // the user is always right
+
+    if (scanRange.first >= scanRange.second) {  // nothing to do?
+        for (auto watch : monitors)
+            LOG_INFO("Nothing to do for ", watch.address, "\r");
         return false;
     }
-
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    // We want to be able to run this more than once
-    // optionOn(OPT_RUNONCE);
-    // This app never actually writes to standard out, so we don't really need this
-    // optionOn(OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     daemon = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     minArgs    = 0;
     visitTypes = VIS_FINAL;
+    monitors.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    // BEG_CODE_NOTES
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
@@ -185,16 +168,25 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
+bool COptions::checkLocks(const address_t& address) const {
+    string_q fn1 = getMonitorPath(address); if (fileExists(fn1 + ".lck")) return usage("The cache file '" + fn1 + "' is locked. Quitting...");
+    string_q fn2 = getMonitorLast(address); if (fileExists(fn2 + ".lck")) return usage("The last block file '" + fn2 + "' is locked. Quitting...");
+    string_q fn3 = getMonitorExpt(address); if (fileExists(fn3 + ".lck")) return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+    string_q fn4 = getMonitorBals(address); if (fileExists(fn4 + ".lck")) return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    return true;
+}
 
-    if (which == "options") {
-        return substitute(str, "addrs", "<address> [address...]");
+//--------------------------------------------------------------------------------
+blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
 
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
+    blknum_t nextBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
+    blknum_t deployed = 0;
 
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        return ret;
+    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+        deployed = getDeployBlock(address);  // returns NOPOS if not a contract, block deployed otherwise
+        if (deployed == NOPOS)
+            deployed = 0;
     }
-    return str;
+
+    return max(nextBlock, deployed);
 }

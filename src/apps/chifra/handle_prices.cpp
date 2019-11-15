@@ -8,13 +8,13 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_quotes(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    LOG5("tool_flags: " + tool_flags);
     ostringstream os;
-    os << "ethQuote " << tool_flags << " ; ";
+    os << "ethQuote " << tool_flags;
+    NOTE_CALL(os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

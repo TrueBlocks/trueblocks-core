@@ -18,7 +18,7 @@ on, both, fast, traces, tools/getTrace, bad_hash,           y, transactions = 0x
 on, both, fast, traces, tools/getTrace, invalid_param_3,    y, transactions = 1233123
 
 on, both, fast, traces, tools/getTrace, three_ways,         n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & verbose & fmt = csv
-on, both, medi, traces, tools/getTrace, suicidesend_1,      n, transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = txt
+on, cmd,  medi, traces, tools/getTrace, suicidesend_1,      n, transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = txt, SETTINGS_SKIP_DDOS=false NO_CACHE=true
 on, both, slow, traces, tools/getTrace, articulate,         y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
 on, both, slow, traces, tools/getTrace, articulate_2,       n, transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
 on, both, slow, traces, tools/getTrace, articulate_arrays,  y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = api & verbose
@@ -49,6 +49,9 @@ on, both, fast, traces, tools/getTrace, fmt_json,           y, transactions = 22
 on, both, fast, traces, tools/getTrace, from_node,          y, transactions = 4000000.5 & fmt = json
 on, cmd,  fast, traces, tools/getTrace, redir_output,       y, transactions = 3657480.79 & verbose & output = test_file
 
+on, both, fast, traces, tools/getTrace, ddos_supress,       y, transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
+on, cmd,  fast, traces, tools/getTrace, ddos_show,          n, transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json, SETTINGS_SKIP_DDOS=false NO_CACHE=true
+
 on, both, fast, traces, tools/getTrace, first,              y, transactions = 40500.0.next
 on, both, fast, traces, tools/getTrace, nav_prev1,          y, transactions = 1001001.1.prev
 on, both, medi, traces, tools/getTrace, nav_prev2,          y, transactions = 1001001.0.prev
@@ -65,3 +68,10 @@ on, both, fast, traces, tools/getTrace, fmt_junk,           y, transactions = 22
 on, cmd,  fast, traces, tools/getTrace, by_filebad,         n, bad & file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file,            n, file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file_long_v,     y, file:cmd_file & verbose & parity & fmt = api
+
+# ./tools/getTrace/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
+# ./tools/getTrace/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+# ./tools/getTrace/options.cpp:    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+# ./tools/getTrace/options.cpp:    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+# ./tools/getTrace/options.cpp:    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
+# ./tools/getTrace/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

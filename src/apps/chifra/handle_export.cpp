@@ -8,8 +8,16 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeRequired();
+
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "acctExport --help";
+        NOTE_CALL(os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
 
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
@@ -21,11 +29,11 @@ bool COptions::handle_export(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "acctExport " << addr << " " << tool_flags;
-        LOG4("Calling " + os.str());
         CStringArray cmds;
         explode(cmds, os.str(), ';');
         bool quit = false;
-        for (size_t i = 0 ; i < cmds.size() && !quit ; i++) {
+        for (size_t i = 0; i < cmds.size() && !quit; i++) {
+            NOTE_CALL(cmds[i]);
             int ret = system(cmds[i].c_str());
             quit = (ret != 0);
             if (verbose)
@@ -35,5 +43,5 @@ bool COptions::handle_export(void) {
         if (++cnt < addrs.size())
             usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

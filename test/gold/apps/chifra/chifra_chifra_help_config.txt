@@ -1,0 +1,27 @@
+chifra argc: 3 [1:config] [2:--help] 
+chifra config --help 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+chifra config argc: 2 [1:--help] 
+chifra config --help 
+
+  Usage:    chifra config [-d|-l|-r|-v|-h] <mode> [mode...]  
+  Purpose:  Report on status of one or more TrueBlocks caches.
+
+  Where:  
+	modes                 one or more types of data to retrieve, one or more of [index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]
+	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
+	-l  (--list)          display results in Linux ls -l format (assumes --detail)
+	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers
+
+#### Hidden options (shown during testing only)
+	-g  (--get_config)    returns JSON data of the editable configuration file items
+	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
+	-S  (--start <num>)   first block to process (inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
+#### Hidden options (shown during testing only)
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

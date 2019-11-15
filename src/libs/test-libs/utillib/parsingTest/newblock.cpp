@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "newblock.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CNewBlock, CBaseNode);
 
@@ -281,7 +283,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return bool_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
@@ -295,7 +297,7 @@ string_q CNewBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'p':
             if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
-            if ( fieldName % "price" ) return double_2_Str(price);
+            if ( fieldName % "price" ) return double_2_Str(price, 5);
             break;
         case 't':
             if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
@@ -344,4 +346,5 @@ const char* STR_DISPLAY_NEWBLOCK = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

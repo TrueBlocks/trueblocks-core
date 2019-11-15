@@ -3,14 +3,14 @@ getBlock 0x2e7721 --force --parity
 { "data": [
 {
   "difficulty": "0x62f79fffb26f",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x3d4629",
   "gasUsed": "0x4eb38",
   "hash": "0x662bd2bfc5ccbff1712f38354bba6075242fd3d0ef20ffafa2221ca03a56bfff",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "number": "0x2e7721",
   "parentHash": "0x74a7b7ed731f1a1ff41e97de97ec255908e6ca341ff1f7498e4df55e792d163d",
-  "price": "0x0",
+  "price": "0.00000",
   "timestamp": "0x58852147",
   "transactions": [
     {

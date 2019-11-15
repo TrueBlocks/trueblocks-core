@@ -16,8 +16,7 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0",
-  "isError": false
+  "logsBloom": "0x0"
 }
 
 --------------------------------------------------------------------------------
@@ -55,7 +54,6 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0",
-  "isError": false
+  "logsBloom": "0x0"
 }
 

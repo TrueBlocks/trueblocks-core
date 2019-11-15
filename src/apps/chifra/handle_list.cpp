@@ -8,8 +8,16 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
+
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "acctScrape --help";
+        NOTE_CALL(os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
 
     if (addrs.empty())
         EXIT_USAGE("'chifra list' requires an Ethereum address.");
@@ -19,11 +27,11 @@ bool COptions::handle_list(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cacheMan " << " --fix " << addr << " >&2 ; ";
-        os << "acctExport --appearances " << tool_flags << " " << addr << " ; ";
-        LOG4("Calling " + os.str());
+        os << "cacheMan " << " --fix " << addr << " >&2 && ";
+        os << "acctExport --appearances " << tool_flags << " " << addr;
+        NOTE_CALL(os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

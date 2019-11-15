@@ -10,16 +10,20 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
+bool parseRequestDates(COptionsBase *opt, CNameValueArray& blocks, const string_q& arg);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "one or more block numbers (or a 'special' block), or"),
-    COption("dates", "", "list<date>", OPT_POSITIONAL, "one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]"),
-    COption("list", "l", "", OPT_SWITCH, "export all the named blocks"),
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of special 'named' blocks."),
-// END_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
+    COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),
+    COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -30,19 +34,19 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    CStringArray block_list;
+    // END_CODE_LOCAL_INIT
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
-    blknum_t latestBlock = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
 
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
             list = true;
 
@@ -52,68 +56,35 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
+        } else {
+            if (!parseStringList2(this, block_list, arg))
+                return false;
 
-        } else if (arg == "UTC") {
-            // do nothing
+            // END_CODE_AUTO
+        }
+    }
 
-        } else if (containsAny(arg, ":- ") && countOf(arg, '-') > 1) {
+    blknum_t latest = getLastBlock_client();
+    for (auto item : block_list) {
+        if (isDate(item)) {
+            if (!parseRequestDates(this, requests, item))
+                return false;
 
-            // a json formatted date
-            ASSERT(!startsWith(arg, "-"));
-            time_q date = str_2_Date(arg);
-            if (date == earliestDate) {
-                return usage("Invalid date: '" + orig + "'.");
-
-            } else if (date > Now()) {
-                ostringstream os;
-                if (isApiMode())
-                    colorsOff();
-                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is in the future. No such block.";
-                if (!isApiMode()) {
-                    LOG_WARN(os.str());
-                    return false;
-                }
-                return usage(os.str());
-
-            } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-                ostringstream os;
-                if (isApiMode())
-                    colorsOff();
-                os << "The date you specified (" << cTeal << orig << cOff << ") " << "is before the first block.";
-                if (!isApiMode()) {
-                    LOG_WARN(os.str());
-                    return false;
-                }
-                return usage(os.str());
-
-            } else {
-                requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
-            }
+        } else if (!parseBlockList2(this, blocks, item, latest)) {
+            return false;
 
         } else {
-
-            // if we're here, we better have a good block, assume we don't
             CNameValue spec;
-            if (findSpecial(spec, arg)) {
+            if (findSpecial(spec, item)) {
                 if (spec.first == "latest")
-                    spec.second = uint_2_Str(latestBlock);
+                    spec.second = uint_2_Str(latest);
                 requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
 
-            } else  {
-
-                string_q ret = blocks.parseBlockList(arg, latestBlock);
-                if (endsWith(ret, "\n")) {
-                    LOG_WARN(substitute(ret,"\n",""));
-                    return false;
-
-                } else if (!ret.empty()) {
-                    return usage(ret);
-                }
-
-                // Now we transfer the list of blocks to the requests array
-                string_q blockList = getBlockNumList();  // get the list from blocks
+            } else {
                 blocks.Init();  // clear out blocks
+                if (!parseBlockList2(this, blocks, item, latest))
+                    return false;
+                string_q blockList = getBlockNumList();  // get the list from blocks
                 CStringArray blks;
                 explode(blks, blockList, '|');
                 for (auto blk : blks)
@@ -124,27 +95,17 @@ bool COptions::parseArguments(string_q& command) {
 
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
-            
+
     // Data verifictions
     if (requests.size() == 0)
         return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     // Display formatting
-    switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY_WHEN; break;
-        case API1:
-        case JSON1: format = ""; break;
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHEN : format);
-            break;
-    }
-    manageFields("CBlock:" + cleanFmt((format.empty() ? STR_DISPLAY_WHEN : format), exportFmt));
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
+    configureDisplay("whenBlock", "CBlock", STR_DISPLAY_WHEN);
+    if (exportFmt == API1 || exportFmt == JSON1)
+        manageFields("CBlock:" + string_q(STR_DISPLAY_WHEN));
 
-    // collect together results for later display
+    // Collect together results for later display
     applyFilter();
 
     return true;
@@ -155,9 +116,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_DENOM);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     list = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     items.clear();
     requests.clear();
@@ -183,27 +144,21 @@ COptions::COptions(void) {
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
     if (!isApiMode())
         exportFmt = TXT1;
+
+    // BEG_CODE_NOTES
+    notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
+    notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
+    notes.push_back("You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.");
+    notes.push_back("The following `named` blocks are provided are currently configured:");
+    // END_CODE_NOTES
+    notes.push_back("  " + listSpecials(NONE1));
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
-        return substitute(str, "blocks dates", "< block | date > [ block... | date... ]");
-
-    } else if (which == "notes") {
-        string_q ret = str;
-        if (verbose || COptions::isReadme) {
-            ret += "Add custom special blocks by editing ~/.quickBlocks/whenBlock.toml.\n";
-        }
-        ret += "Use the following names to represent `special` blocks:\n  ";
-        ret += listSpecials(NONE1);
-        return ret;
-    }
-    return str;
 }
 
 //--------------------------------------------------------------------------------
@@ -259,13 +214,13 @@ string_q COptions::listSpecials(format_t fmt) const {
             } else if (COptionsBase::isReadme) {
                 bn = "--";
             } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
-                extra = iWhite + " (syncing)" + cOff;
+                extra = " (syncing)";
             }
         }
 
 #define N_PER_LINE 4
         os << name;
-        os << " (" << cTeal << bn << extra << cOff << ")";
+        os << " (`" << bn << extra << "`)";
         if (!((i+1) % N_PER_LINE)) {
             if (i < specials.size()-1)
                 os << "\n  ";
@@ -273,8 +228,6 @@ string_q COptions::listSpecials(format_t fmt) const {
             os << ", ";
         }
     }
-    if (specials.size() % N_PER_LINE)
-        os << "\n";
     return os.str().c_str();
 }
 
@@ -284,3 +237,24 @@ const char* STR_DISPLAY_WHEN =
 "[{TIMESTAMP}]\t"
 "[{DATE}]"
 "[\t{NAME}]";
+
+//-----------------------------------------------------------------------
+bool parseRequestDates(COptionsBase *opt, CNameValueArray& requests, const string_q& arg) {
+    time_q date = str_2_Date(arg);
+    if (date == earliestDate) {
+        return opt->usage("Invalid date: '" + arg + "'.");
+
+    } else if (date > Now()) {
+        ostringstream os;
+        os << "The date you specified (" << arg << ") " << "is in the future. No such block.";
+        return opt->usage(os.str());
+
+    } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
+        ostringstream os;
+        os << "The date you specified (" << arg << ") " << "is before the first block.";
+        return opt->usage(os.str());
+
+    }
+    requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
+    return true;
+}

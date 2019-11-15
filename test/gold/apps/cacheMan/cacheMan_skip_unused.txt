@@ -3,11 +3,11 @@ cacheMan --skip
 
   Invalid option: --skip
 
-  Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] filenames  
+  Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] <file> [file...]  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
 
   Where:  
-	filenames             path(s) of files to check, merge, fix or display (default=display) (required)
+	files                 path(s) of files to check, merge, fix or display (default=display) (required)
 	-c  (--check)         check for duplicates and other problems in the cache
 	-d  (--data)          in 'list' mode, render results as data (i.e export mode)
 	-s  (--sort)          sort the list of transactions and re-write (precludes other modes, other than --dedup)
@@ -22,9 +22,9 @@ cacheMan --skip
 	-k  (--skip <num>)    skip value for testing
 	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

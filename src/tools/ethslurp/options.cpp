@@ -10,18 +10,21 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("type", "t", "enum[ext*|int|token|miner|all]", OPT_FLAG, "type of transactions to request"),
-    COption("block_range", "b", "<range>", OPT_FLAG, "export records in block range (:0[:max])"),
-    COption("silent", "s", "", OPT_SWITCH, "Run silently (only freshen the data, do not display it)"),
+    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
+    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -31,70 +34,75 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    CStringArray types;
+    // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latestBlock = getLastBlock_client();
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--type:")) {
-            if (!confirmEnum("type", type, arg))
-                return false;
+            // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
+            string_q types_tmp;
+            if (!confirmEnum("types", types_tmp, arg))
+              return false;
+            types.push_back(types_tmp);
 
-        } else if (arg == "-s" || arg == "--silent") {
-            silent = true;
-
-// END_CODE_AUTO
-
-        } else if (arg == "-f") {
-            exportFormat = "json";
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--fmt:")) {
-            exportFormat = substitute(substitute(arg, "-f:", ""), "--fmt:", "");
-            if (exportFormat.empty())
-                return usage("Please provide a formatting option with " + orig + ". Quitting...");
-
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--block_range:")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--block_range:", "");
-            string_q ret = blocks.parseBlockList(arg, latestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
-                return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
+        } else if (arg == "-p" || arg == "--appearances") {
+            appearances = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
+        } else if (isAddress(arg)) {
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
+
         } else {
-            if (!isAddress(arg))
-                 return usage("Please provide a valid Ethereum address. Quitting...");
-            addrs.push_back(str_2_Addr(toLower(arg)));
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
+
+            // END_CODE_AUTO
         }
     }
 
-    if (type == "all")
-        return usage("Type 'all' is currently disabled. Quitting...");
+    for (auto type : types) {
+        if (type == "all") {
+            typesList.clear();
+            typesList.push_back("ext");
+            typesList.push_back("int");
+            typesList.push_back("token");
+            //typesList.push_back("miner");
+        } else {
+            typesList.push_back(type);
+        }
+    }
+    if (typesList.empty())
+        typesList.push_back("ext");
 
-    // Note this may not return if user chooses to quit
-    api.checkKey();
+
+    if (exportFmt == TXT1)
+        exportFormat = "txt";
+    else if (exportFmt == CSV1)
+        exportFormat = "csv";
+    else
+        exportFormat = "json";
+
+    if (!api.checkKey())
+        return false;
 
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");
 
     if (!establishFolder(getCachePath("slurps/")))
         return usage("Unable to create data folders at " + getCachePath("slurps/"));
-
-    // Dumps an error message if the fmt_X_file format string is not found.
-    getFormatString("file", false);
 
     // Load per address configurations if any
     string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
@@ -110,22 +118,29 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;
 
+    // Dumps an error message if the fmt_X_file format string is not found.
+    if (!getFormatString("file", false, formatString)) {
+        ostringstream os;
+        for (auto err : errors)
+            os << err << endl;
+        return usage(os.str());
+    }
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_OUTPUT);
 
-// BEG_CODE_INIT
-    type = "";
-    silent = false;
-// END_CODE_INIT
+    // BEG_CODE_INIT
+    appearances = false;
+    // END_CODE_INIT
 
     blocks.Init();
     exportFormat = "json";
     addrs.clear();
-    fromFile = false;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -141,42 +156,39 @@ COptions::COptions(void) {
     HIDE_FIELD  (CTransaction, "toContract");
     HIDE_FIELD  (CTransaction, "receipt");
     HIDE_FIELD  (CTransaction, "traces");
+
+    // BEG_CODE_NOTES
+    notes.push_back("Portions of this software are Powered by Etherscan.io APIs.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
 
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
-        return substitute(str, "addrs blocks", "<address> [address...] [block...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "Portions of this software are Powered by Etherscan.io APIs.\n";
-        return ret;
-    }
-    return str;
+//---------------------------------------------------------------------------------------------------
+bool buildFieldList(const CFieldData& fld, void *data) {
+    string_q *s = reinterpret_cast<string_q *>(data);
+    *s += (fld.getName() + "|");
+    return true;
 }
 
 //--------------------------------------------------------------------------------
-string_q COptions::getFormatString(const string_q& which, bool ignoreBlank) {
+bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q& fmtOut) {
 
     if (which == "file")
-        buildDisplayStrings();
-
-    string_q errMsg;
+        if (!buildDisplayStrings())
+            return false;
 
     string_q formatName = "fmt_" + exportFormat + "_" + which;
     string_q ret = getGlobalConfig("ethslurp")->getConfigStr("display", formatName, "");
     if (contains(ret, "file:")) {
         string_q file = substitute(ret, "file:", "");
         if (!fileExists(file))
-            errMsg = string_q("Formatting file '") + file +
-            "' for display string '" + formatName + "' not found. Quiting...\n";
+            errors.push_back("Formatting file '" + file + "' for display string '" + formatName + "' not found.\n");
         else
             asciiFileToString(file, ret);
 
@@ -189,45 +201,56 @@ string_q COptions::getFormatString(const string_q& which, bool ignoreBlank) {
 
     // some sanity checks
     if (countOf(ret, '{') != countOf(ret, '}') || countOf(ret, '[') != countOf(ret, ']')) {
-        errMsg = string_q("Mismatched brackets in display string '") + formatName + "': '" + ret + "'. Quiting...\n";
+        errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
         const char *ERR_NO_DISPLAY_STR =
         "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
         "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
         "  Please see the full documentation for more information on display strings.";
-        errMsg = usageStr(substitute(string_q(ERR_NO_DISPLAY_STR), "[{FMT}]", exportFormat));
+        errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
     }
 
-    if (!errMsg.empty()) {
-        cerr << errMsg;
-        exit(0);
-    }
-
-    return ret;
+    fmtOut = ret;
+    return errors.size() == 0;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = reinterpret_cast<string_q *>(data);
-    *s += (fld.getName() + "|");
-    return true;
-}
+bool COptions::buildDisplayStrings(void) {
 
-//---------------------------------------------------------------------------------------------------
-void COptions::buildDisplayStrings(void) {
     // Set the default if it's not set
     if (exportFormat.empty())
         exportFormat = "json";
 
+    if (appearances) {
+        if (exportFormat == "txt" || exportFormat == "csv") {
+            displayString = "[{BLOCKNUMBER}]\t[{TRANSACTIONINDEX}]\t1\n";
+            header = "blocknumber\ttransactionindex\t1\n";
+            if (exportFormat == "csv") {
+                replace(displayString, "\t", ",");
+                replace(header, "\t", ",");
+            }
+        } else {
+            manageFields("CTransaction:all", false);
+            UNHIDE_FIELD(CTransaction, "blockNumber");
+            UNHIDE_FIELD(CTransaction, "transactionIndex");
+        }
+        return true;
+    }
+
     // This is what we're really after...
-    const string_q fmtForRecords = getFormatString("record", false);
+    string_q fmtForRecords;
+    if (!getFormatString("record", false, fmtForRecords))
+        return false;
+
     ASSERT(!fmtForRecords.empty());
 
     // ...we may need this to build it.
-    const string_q fmtForFields  = getFormatString("field", !contains(fmtForRecords, "{FIELDS}"));
-    ASSERT(!fmtForFields.empty());
+    string_q fmtForFields;
+    if (!getFormatString("field", !contains(fmtForRecords, "{FIELDS}"), fmtForFields))
+        return false;
 
+    ASSERT(!fmtForFields.empty());
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
     string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
                                                                    "fmt_" + exportFormat + "_fieldList", defList);
@@ -272,4 +295,5 @@ void COptions::buildDisplayStrings(void) {
         // One little hack to make raw json more readable
         replaceReverse(displayString, "}]\",", "}]\"\n");
     }
+    return true;
 }

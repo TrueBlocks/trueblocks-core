@@ -3,23 +3,29 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
+    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
+    COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
-    COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
+    COption("hashes_only", "e", "", OPT_SWITCH, "export the IPFS hashes of the index chunks the address appears in"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
+    COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_blocks", "w", "", OPT_TOGGLE, "toggle writing blocks to the binary cache ('off' by default)"),
-    COption("write_txs", "x", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
-    COption("write_traces", "r", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
+    COption("write_txs", "i", "", OPT_TOGGLE, "toggle writing transactions to the cache ('on' by default)"),
+    COption("write_traces", "R", "", OPT_TOGGLE, "toggle writing traces to the cache ('on' by default)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
-    COption("max_traces", "m", "<uint32>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
+    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -27,21 +33,22 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    CAddressArray addrs;
     bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
 
@@ -50,9 +57,12 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
-        } else if (arg == "-a" || arg == "--articulate") {
-            articulate = true;
+            // BEG_CODE_AUTO
+        } else if (arg == "-p" || arg == "--appearances") {
+            appearances = true;
+
+        } else if (arg == "-r" || arg == "--receipts") {
+            receipts = true;
 
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
@@ -63,19 +73,22 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--balances") {
             balances = true;
 
-        } else if (arg == "-p" || arg == "--appearances") {
-            appearances = true;
+        } else if (arg == "-e" || arg == "--hashes_only") {
+            hashes_only = true;
 
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
 
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+
         } else if (arg == "-w" || arg == "--write_blocks") {
             write_blocks = !write_blocks;
 
-        } else if (arg == "-x" || arg == "--write_txs") {
+        } else if (arg == "-i" || arg == "--write_txs") {
             write_txs = !write_txs;
 
-        } else if (arg == "-r" || arg == "--write_traces") {
+        } else if (arg == "-R" || arg == "--write_traces") {
             write_traces = !write_traces;
 
         } else if (arg == "-s" || arg == "--skip_ddos") {
@@ -111,42 +124,37 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
         } else {
-            if (!startsWith(arg, "0x"))
-                return usage("Invalid option: " + arg + ". Quitting...");
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
-            arg = toLower(arg);
-            if (!isAddress(arg))
-                EXIT_USAGE(arg + " does not appear to be a valid address. Quitting...");
-
-            string_q fn = getMonitorPath(arg);
-            if (!fileExists(fn)) {
-                fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
-                EXIT_USAGE("File not found '" + fn + ". Quitting...");
-            }
-
-            if (fileExists(fn + ".lck"))
-                EXIT_USAGE("The cache lock file is present. The program is either already "
-                             "running or it did not end cleanly the\n\tlast time it ran. "
-                             "Quit the already running program or, if it is not running, "
-                             "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
-
-            //if (fileSize(fn) == 0)
-            //    EXIT_USAGE("Nothing to export. Quitting...");
-
-            CAccountWatch watch;
-            // below - don't change, sets bloom value also
-            watch.setValueByName("address", toLower(arg));
-            // above - don't change, sets bloom value also
-            watch.setValueByName("name", toLower(arg));
-            watch.extra_data = getVersionStr() + "/" + watch.address;
-            watch.color = cTeal;
-            watch.finishParse();
-            monitors.push_back(watch);
+            // END_CODE_AUTO
         }
     }
-    LOG4("Finished parsing command line");
+
+    for (auto addr : addrs) {
+        string_q fn = getMonitorPath(addr);
+        if (!fileExists(fn)) {
+            fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
+            EXIT_USAGE("File not found '" + fn + ". Quitting...");
+        }
+
+        if (fileExists(fn + ".lck"))
+            EXIT_USAGE("The cache lock file is present. The program is either already "
+                       "running or it did not end cleanly the\n\tlast time it ran. "
+                       "Quit the already running program or, if it is not running, "
+                       "remove the lock\n\tfile: " + fn + ".lck'. Quitting...");
+
+        CAccountWatch watch;
+        // below - don't change, sets bloom value also
+        watch.setValueByName("address", toLower(addr));
+        // above - don't change, sets bloom value also
+        watch.setValueByName("name", toLower(addr));
+        watch.extra_data = getVersionStr() + "/" + watch.address;
+        watch.color = cTeal;
+        watch.finishParse();
+        monitors.push_back(watch);
+    }
 
     if (start != NOPOS) scanRange.first = start;
     if (end != NOPOS) scanRange.second = end;
@@ -154,8 +162,8 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((appearances + logs + traces + balances) > 1)
-        EXIT_USAGE("Please export only one of list, logs, traces, or balances. Quitting...");
+    if ((appearances + receipts + logs + traces + balances) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, traces, or balances. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
@@ -206,12 +214,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", write_blocks);;
-    write_txs    = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", write_txs);;
-    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", write_traces);;
-    skip_ddos    = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", skip_ddos);;
-    max_traces   = getGlobalConfig("acctExport")->getConfigBool("settings", "max_traces", max_traces);;
-
     if (exportFmt != JSON1 && exportFmt != API1) {
         string_q deflt, format;
 
@@ -224,13 +226,17 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-        format = toml.getConfigStr("formats", "trace_fmt", deflt);
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_LOGENTRY);
+        format = toml.getConfigStr("formats", "receipt_fmt", deflt);
+        expContext().fmtMap["receipt_fmt"] = cleanFmt(format, exportFmt);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
+
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
+        format = toml.getConfigStr("formats", "trace_fmt", deflt);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
 
         // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future reference.
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
@@ -268,6 +274,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNoHeader) {
         if (traces) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
+        } else if (receipts) {
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"], exportFmt);
         } else if (logs) {
             expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
         } else if (appearances) {
@@ -286,8 +294,8 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen)
         exportFmt = NONE1;
 
-//    if (count_only && !doAppearances)
-//        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
+    //    if (count_only && !doAppearances)
+    //        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
 
     if (count_only) {
         string_q header;
@@ -298,7 +306,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().fmtMap["header"] = header;
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -308,22 +316,24 @@ void COptions::Init(void) {
 
     monitors.clear();
 
-// BEG_CODE_INIT
-    articulate = false;
+    // BEG_CODE_INIT
+    appearances = false;
+    receipts = false;
     logs = false;
     traces = false;
     balances = false;
-    appearances = false;
+    hashes_only = false;
     count_only = false;
-    write_blocks = false;
-    write_txs = true;
-    write_traces = true;
-    skip_ddos = true;
-    max_traces = 250;
+    articulate = false;
+    write_blocks = getGlobalConfig("acctExport")->getConfigBool("settings", "write_blocks", false);
+    write_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "write_txs", true);
+    write_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "write_traces", true);
+    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
+    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     grab_abis = false;
     freshen = false;
     deltas = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     nExported = 0;
     scanRange.second = getLastBlock_cache_ripe();
@@ -338,31 +348,22 @@ COptions::COptions(void) {
     ts_cnt = 0;
     Init();
     CDisplayApp::registerClass();
+    // BEG_CODE_NOTES
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
 
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
-        return substitute(str, "addrs", "<address> [address...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        return ret;
-    }
-    return str;
-}
-
 //-----------------------------------------------------------------------
 bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
 
-    ENTER("loadOneAddress");
+    ENTER8("loadOneAddress");
 
     if (hackAppAddr.empty())
         hackAppAddr = addr;
@@ -399,13 +400,14 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
     } else {
         EXIT_FAIL("Could not allocate memory for address " + addr);
     }
-    EXIT_NOMSG(true);
+
+    EXIT_NOMSG8(true);
 }
 
 //-----------------------------------------------------------------------
 bool COptions::loadAllAppearances(void) {
 
-    ENTER("loadAllAppearances");
+    ENTER8("loadAllAppearances");
 
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
@@ -454,5 +456,5 @@ bool COptions::loadAllAppearances(void) {
     if (!loadTimestampArray(&ts_array, ts_cnt))
         EXIT_FAIL("Could not open timestamp file.");
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

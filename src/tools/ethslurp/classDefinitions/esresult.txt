@@ -1,4 +1,4 @@
 [settings]
-class     = CESResult
-fields    = string status|string message|string result
-includes  = utillib.h
+class = CESResult
+fields = string status|string message|string result
+includes = utillib.h

@@ -232,7 +232,7 @@ cacheStatus --get_config
       ]
     },
     {
-      "name": "getAccounts.toml",
+      "name": "ethNames.toml",
       "groups": [
         {
           "section": "Names",

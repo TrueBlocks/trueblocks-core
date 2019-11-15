@@ -1,9 +1,20 @@
-acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances 
-address	blocknumber	transactionindex
-0x001d14804b399c6ef80e64576f657660804fec0b	0	2
-0x001d14804b399c6ef80e64576f657660804fec0b	202249	0
-0x001d14804b399c6ef80e64576f657660804fec0b	1501459	2
-TIME ~ CLOCK - <INFO>  :                                                                                                                         
-Would have written to 0x001d14804b399c6ef80e64576f657660804fec0b.expt.txt with 1501459
-TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       
+acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] [3:--fmt] [4:json] [5:--end] [6:001506480] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --fmt json --end 001506480 
+{ "data": [
+[{
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "blockNumber": 0,
+  "transactionIndex": 2
+}
+, {
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "blockNumber": 202249,
+  "transactionIndex": 0
+}
+, {
+  "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+  "blockNumber": 1501459,
+  "transactionIndex": 2
+}
+]
+] }TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       

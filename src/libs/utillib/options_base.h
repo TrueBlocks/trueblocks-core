@@ -27,7 +27,6 @@
 #define OPT_DENOM       (OPT_DOLLARS|OPT_WEI|OPT_ETHER)
 #define OPT_PARITY      (1<<7)
 #define OPT_DEFAULT     (OPT_HELP|OPT_VERBOSE|OPT_FMT|OPT_DENOM|OPT_PARITY)
-#define OPT_RUNONCE     (1<<10)
 #define OPT_RAW         (1<<11)
 #define OPT_PREFUND     (1<<12)
 #define OPT_OUTPUT      (1<<13)
@@ -39,24 +38,28 @@
 #define OPT_TOGGLE      OPT_SWITCH
 #define OPT_HIDDEN      (1<<17)
 
+typedef map<size_t,qblocks::string_q> CErrorStringMap;
+#define ERR_NOERROR 0
+
 //-----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
 namespace qblocks {
     class COption;
     class COptionsBase {
     public:
+        CErrorStringMap errStrs;
         addr_wei_mp prefundWeiMap;
         CStringArray arguments;
         CStringArray errors;
         // TODO(tjayrush): global data
         uint32_t enableBits;
-        bool needsOption;
         bool isReadme;
         bool isRaw;
         bool isVeryRaw;
         bool isNoHeader;
         format_t exportFmt;
         blkrange_t scanRange;
+        CStringArray notes;
 
         streambuf *coutBackup;  // saves original cout buffer
         ofstream redirStream;  // the redirected stream (if any)
@@ -87,6 +90,9 @@ namespace qblocks {
         static bool findSpecial(CNameValue& pair, const string_q& arg);
         static bool forEverySpecialBlock(NAMEVALFUNC func, void *data);
 
+        // prefunds
+        bool loadPrefunds(void);
+
         // supporting named accounts
         CAccountNameArray namedAccounts;
         CFilename namesFile;
@@ -105,10 +111,8 @@ namespace qblocks {
         string_q purpose(void) const;
         string_q options(void) const;
         string_q descriptions(void) const;
-        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
-                                    bool isMode, bool required) const;
-        string_q notes(void) const;
-        virtual string_q postProcess(const string_q& which, const string_q& str) const { return str; }
+        string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode=false, bool required=false) const;
+        string_q get_notes(void) const;
 
         bool confirmEnum(const string_q&name, string_q& value, const string_q& arg) const;
         bool confirmBlockNum(const string_q&name, blknum_t& value, const string_q& arg, blknum_t latest) const;
@@ -125,6 +129,7 @@ namespace qblocks {
         void setSorts(CRuntimeClass *c1, CRuntimeClass *c2, CRuntimeClass *c3);
 
     protected:
+        void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat, const string_q& meta="");
         void registerOptions(size_t nP, COption const *pP);
         virtual void Init(void) = 0;
         const COption *pParams;
@@ -154,8 +159,6 @@ namespace qblocks {
         bool      is_positional;
         bool      is_optional;
         COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    private:
-        COption(const string_q& name, const string_q& descr);
     };
 
     //--------------------------------------------------------------------------------

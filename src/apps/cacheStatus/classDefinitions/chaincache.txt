@@ -1,7 +1,6 @@
 [settings]
-class     = CChainCache
-baseClass = CCache
-fields    = 
-includes  = cache.h
-cIncs     = 
+class = CChainCache
+base_class = CCache
+fields = 
+includes = cache.h
 serialize = true

@@ -3,22 +3,22 @@ getBlock 1590000 4000001-4000002 1001001-1001100 1234567
 
   Specify only a single block range at a time.
 
-  Usage:    getBlock [-s|-a|-u|-n|-o|-v|-h] <block> [block...]  
+  Usage:    getBlock [-e|-a|-u|-n|-c|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
 
   Where:  
 	blocks                a space-separated list of one or more blocks to retrieve (required)
-	-s  (--hashes_only)   display only transaction hashes, default is to display full transaction detail
+	-e  (--hashes_only)   display only transaction hashes, default is to display full transaction detail
 	-a  (--addrs)         display all addresses included in the block
 	-u  (--uniq)          display only uniq addresses found per block
 	-n  (--uniq_tx)       display only uniq addresses found per transaction
-	-o  (--count_only)    display counts of appearances (for --addrs, --uniq, or --uniq_tx only)
+	-c  (--count_only)    display counts of appearances (for --addrs, --uniq, or --uniq_tx only)
 
 #### Hidden options (shown during testing only)
-	-e  (--force)         force a re-write of the block to the cache
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-o  (--force)         force a re-write of the block to the cache
 #### Hidden options (shown during testing only)
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

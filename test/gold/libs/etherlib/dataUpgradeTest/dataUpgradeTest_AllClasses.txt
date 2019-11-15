@@ -62,6 +62,7 @@ message             	1012	1	131122	T_TEXT TS_STRING
 inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	1	131122	T_TEXT TS_STRING
+declaration         	1016	1	131122	T_TEXT TS_STRING
 {
   "inputs": [],
   "outputs": []
@@ -85,6 +86,7 @@ message             	1012	1	131122	T_TEXT TS_STRING
 inputs              	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	1	131122	T_TEXT TS_STRING
+declaration         	1016	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -106,13 +108,15 @@ message             	1012	0	131122	T_TEXT TS_STRING
 inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	0	131122	T_TEXT TS_STRING
+declaration         	1016	0	131122	T_TEXT TS_STRING
 {
   "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "Function",
   "inputs": [],
-  "outputs": []
+  "outputs": [],
+  "declaration": "	 ()"
 }
 
 --------------------------------------------------------------------------------
@@ -312,8 +316,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
-  "finalized": 0,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": []
 }
@@ -377,8 +380,7 @@ age                 	1019	0	262149	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
-  "finalized": 0,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": [],
   "date": "1970-01-01 00:00:00 UTC",
@@ -544,7 +546,8 @@ topic3              	1021	0	131132	T_HASH TS_STRING
     "showing": 1,
     "cname": "Function",
     "inputs": [],
-    "outputs": []
+    "outputs": [],
+    "declaration": "	 ()"
   },
   "transactionLogIndex": 0
 }
@@ -1116,7 +1119,6 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "logs": [],
     "status": null
   },
-  "finalized": 0,
   "traces": [],
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,
@@ -1155,8 +1157,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
-  "finalized": false,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": []
 }
@@ -1212,8 +1213,7 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0,
-  "finalized": false,
+  "price": 0.00000,
   "timestamp": 0,
   "transactions": []
 }
@@ -1234,8 +1234,7 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0",
-  "isError": false
+  "logsBloom": "0x0"
 }
 
 --------------------------------------------------------------------------------
@@ -1273,7 +1272,6 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
   "contractAddress": "0x0",
   "gasUsed": 0,
   "logs": [],
-  "logsBloom": "0x0",
-  "isError": false
+  "logsBloom": "0x0"
 }
 

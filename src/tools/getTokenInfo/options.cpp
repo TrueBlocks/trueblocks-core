@@ -10,18 +10,22 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
+    // BEG_CODE_OPTIONS
+    COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("info", "i", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "retreive information about the token"),
+    COption("parts", "p", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "one or more parts of the token information to retreive"),
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -32,59 +36,53 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
-    CAddressArray addrs;
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--parts:")) {
+            if (!confirmEnum("parts", parts, arg))
+                return false;
+
         } else if (arg == "-b" || arg == "--by_acct") {
             by_acct = true;
 
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
-// END_CODE_AUTO
-        } else if (startsWith(arg, "-i:") || startsWith(arg, "--info:")) {
-            arg = substitute(substitute(arg, "-i:", ""), "--info:", "");
-            string_q unused;
-            if (!isValidInfo(arg, unused))
-                return usage(arg + " does not appear to be a valid tokenInfo option.\n");
-            tokenInfo = arg;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
         } else if (isAddress(arg)) {
-            addrs.push_back(toLower(arg));
+            if (!parseAddressList2(this, addrs, arg))
+                return false;
 
         } else {
-
-            string_q ret = blocks.parseBlockList(arg, newestBlock);
-            if (endsWith(ret, "\n")) {
-                cerr << "\n  " << ret << "\n";
+            if (!parseBlockList2(this, blocks, arg, latest))
                 return false;
-            } else if (!ret.empty()) {
-                return usage(ret);
-            }
+
+            // END_CODE_AUTO
         }
     }
 
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
-    if ((tokenInfo.empty() || tokenInfo == "balanceOf") && addrs.size() < 2)
+    if ((parts.empty() || parts == "balanceOf") && addrs.size() < 2)
         return usage("You must provide both a token contract and an account. Quitting...");
 
-    if (!tokenInfo.empty()) {
-        // if tokenInfo is not empty, all addresses are tokens
+    if (!parts.empty()) {
+        // if parts is not empty, all addresses are tokens
         by_acct = true;
     }
 
@@ -109,8 +107,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // if tokenInfo is not empty, all addresses are tokens
-    if (by_acct && (tokenInfo.empty() || tokenInfo == "balanceOf")) {
+    // if parts is not empty, all addresses are tokens
+    if (by_acct && (parts.empty() || parts == "balanceOf")) {
         // remove the last one and push it on the holders array
         watches.pop_back();
         holders.push_back(lastItem);
@@ -144,16 +142,16 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
     optionOff(OPT_FMT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
+    parts = "";
     by_acct = false;
     no_zero = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     watches.clear();
     holders.clear();
 
     optionOff(OPT_DOLLARS|OPT_ETHER);
-    tokenInfo = "";
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getLastBlock_client();
@@ -163,28 +161,21 @@ void COptions::Init(void) {
 COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    // BEG_CODE_NOTES
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");
+    notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
-        return substitute(str, "addrs blocks", "<address> <address> [address...] [block...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        string_q ret;
-        ret += "[{addresses}] must start with '0x' and be forty two characters long.\n";
-        ret += "[{blocks}] may be a space-separated list of values, a start-end range, a [{special}], or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if configured (see documentation).\n";
-        ret += "If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.\n";
-        ret += "If the queried node does not store historical state, the results are undefined.\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        return ret;
-    }
-    return str;
 }
 
 //--------------------------------------------------------------------------------

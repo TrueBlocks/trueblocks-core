@@ -13,7 +13,7 @@ include_directories(${BASE_INCLUDE})
 # Compilation order of the src subdirectories
 add_subdirectory(ethslurp)
 add_subdirectory(ethQuote)
-add_subdirectory(getAccounts)
+add_subdirectory(ethNames)
 add_subdirectory(getBlock)
 add_subdirectory(getLogs)
 add_subdirectory(getReceipt)

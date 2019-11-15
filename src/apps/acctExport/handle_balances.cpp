@@ -10,7 +10,7 @@ int nn = 0;
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
 
-    ENTER("exportBalances");
+    ENTER8("exportBalances");
 
     // If the node we're running against does not provide balances...
     bool nodeHasBals = nodeHasBalances(false);
@@ -66,7 +66,6 @@ if (isTestMode()) {
 HERE("data")
         wei_t priorBalance = 0;
         bool first = true;
-//        uint64_t cnt = 0;
         for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
 
             const CAppearance_base *item = &apps[i];
@@ -153,7 +152,7 @@ if (isTestMode()) {
         getCurlContext()->getCurl();
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
     // So as to keep the file small, we only write balances where there is a change

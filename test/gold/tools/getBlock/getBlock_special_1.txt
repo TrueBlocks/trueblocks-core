@@ -9,8 +9,8 @@ getBlock stateclear --force
   "parentHash": "0xaf5e47294f25063ba6064b810a51a6c003a2676cef8df6cb57802a9da6da03d9",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 71421066479733,
-  "price": 0,
-  "finalized": 1,
+  "price": 0.00000,
+  "finalized": true,
   "timestamp": 1480448309,
   "transactions": [
     {

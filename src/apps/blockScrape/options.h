@@ -4,7 +4,14 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "acctlib.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 //--------------------------------------------------------------------------
 class CConsolidator {
@@ -12,15 +19,15 @@ public:
     ofstream tmp_file;
     string_q tmp_fn;
 
-// TS_SCRAPER
-//    string_q ts_fn;
-//    ofstream ts_file;
-//    blknum_t ts_bn;
+    // TS_SCRAPER
+    //    string_q ts_fn;
+    //    ofstream ts_file;
+    //    blknum_t ts_bn;
 
     blknum_t prevBlock;
     CConsolidator(blknum_t p);
-// TS_SCRAPER
-//    bool checkTimestamps(void);
+    // TS_SCRAPER
+    //    bool checkTimestamps(void);
 
 private:
     CConsolidator(void) {}
@@ -29,15 +36,14 @@ private:
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
-// END_CODE_DECLARE
+    // BEG_CODE_DECLARE
+    blknum_t n_blocks;
+    uint64_t n_block_procs;
+    uint64_t n_addr_procs;
+    // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;
     blknum_t    latestBlockNum;
-
-    blknum_t    n_blocks;
-    size_t      n_block_procs;
-    size_t      n_addr_procs;
 
     COptions(void);
     ~COptions(void);

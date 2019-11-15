@@ -1,8 +1,7 @@
 [settings]
-class     = CIndexCache
-baseClass = CCache
-fields    = CIndexCacheItemArray items
-includes  = cache.h|indexcacheitem.h
-cIncs     = 
+class = CIndexCache
+base_class = CCache
+fields = CIndexCacheItemArray items
+includes = cache.h|indexcacheitem.h
 serialize = true
-useExport = true
+use_export = true

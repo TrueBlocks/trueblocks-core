@@ -11,8 +11,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
-#include "test_case.h"
+#include "testcase.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 #define API (1<<0)
 #define CMD (1<<1)
@@ -21,17 +28,19 @@
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     string_q filter;
     bool clean;
     bool no_quit;
+    bool no_post;
     bool report;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     int modes = CMD;
     bool ignoreOff = false;
     CStringArray tests;
     bool full_test;
+    string_q perf_format;
 
     COptions(void);
     ~COptions(void);
@@ -39,12 +48,13 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool doTests(CTestCaseArray& testArray, const string_q& testName, int which);
+    bool doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 
 //-----------------------------------------------------------------------
 extern bool saveAndCopy(const string_q& path, void *data);
 extern bool replaceFile(const string_q& path, void *data);
+extern double verySlow;
 extern double tooSlow;
 extern double fastEnough;

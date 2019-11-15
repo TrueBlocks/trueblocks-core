@@ -10,11 +10,15 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
@@ -24,9 +28,9 @@ static const COption params[] = {
     COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
     COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
     COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
-    COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
+    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -36,10 +40,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
     bool eab = false;
     bool force = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     blknum_t latest = getLastBlock_client();
@@ -47,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-e" || arg == "--eab") {
             eab = true;
 
@@ -72,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--bitcount") {
             bitcount = true;
 
-        } else if (arg == "-f" || arg == "--force") {
+        } else if (arg == "-o" || arg == "--force") {
             force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -81,10 +85,11 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (!parseBlockList2(this, blocks, arg, latest)) {
-            return false;
+        } else {
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         }
     }
 
@@ -137,7 +142,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_RAW);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     block_only = false;
     receipt_only = false;
     bits = false;
@@ -145,7 +150,7 @@ void COptions::Init(void) {
     bitbars = false;
     pctbars = false;
     bitcount = false;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     isRaw        = true; // unusual, but true
     bitBound     = 200;
@@ -163,6 +168,14 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CBlock, "blockNumber");
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
+    // BEG_CODE_NOTES
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
@@ -172,24 +185,4 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool COptions::isMulti(void) const {
     return ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-
-    if (which == "options") {
-        return
-            substitute(substitute(str, "blocks", "<block> [block...]"), "-l|", "-l fn|");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-
-        string_q ret;
-        ret += "[{blocks}] is a space-separated list of values, a start-end range, a [{special}], "
-                        "or any combination.\n";
-        ret += "This tool retrieves information from the local node or rpcProvider if "
-                        "configured (see documentation).\n";
-        ret += "[{special}] blocks are detailed under " + cTeal + "[{whenBlock --list}]" + cOff + ".\n";
-        return ret;
-    }
-    return str;
 }

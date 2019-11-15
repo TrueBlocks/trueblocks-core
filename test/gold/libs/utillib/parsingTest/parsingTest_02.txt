@@ -9,7 +9,7 @@ parsingTest 2
   "parentHash": "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242",
   "miner": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
   "difficulty": 17179844608,
-  "price": 0,
+  "price": 0.00000,
   "finalized": true,
   "timestamp": 1438270144,
   "transactions": []

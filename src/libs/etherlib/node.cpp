@@ -230,7 +230,7 @@ extern void loadParseMap(void);
     //-----------------------------------------------------------------------
     bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos) {
         string_q trcFilename = getBinaryCacheFilename(CT_TRACES, bn, txid, "");
-        if (fileExists(trcFilename)) {
+        if (useCache && fileExists(trcFilename)) {
             CArchive traceCache(READING_ARCHIVE);
             if (traceCache.Lock(trcFilename, modeReadOnly, LOCK_NOWAIT)) {
                 traceCache >> trans.traces;
@@ -787,8 +787,6 @@ extern void loadParseMap(void);
         if (!func)
             return false;
 
-        //        cout << "Visiting " << trans.receipt.logs.size() << " logs\n";
-        //        cout.flush();
         for (size_t i = 0 ; i < trans.receipt.logs.size() ; i++) {
             CLogEntry log = trans.receipt.logs[i];
             if (!(*func)(log, data))
@@ -799,8 +797,6 @@ extern void loadParseMap(void);
 
     //-------------------------------------------------------------------------
     bool forEveryLogInBlock(LOGVISITFUNC func, void *data, const CBlock& block) {
-        //        cout << "Visiting " << block.transactions.size() << " transactions\n";
-        //        cout.flush();
         for (size_t i = 0 ; i < block.transactions.size() ; i++) {
             if (!forEveryLogInTransaction(func, data, block.transactions[i]))
                 return false;
@@ -879,6 +875,17 @@ extern void loadParseMap(void);
             if (!(*func)(trans, data))
                 return false;
 
+        }
+        return true;
+    }
+
+    //-------------------------------------------------------------------------
+    bool forEveryAbiInArray(ABIVISITFUNC func, void *data, const CAbiArray& abis) {
+        if (!func)
+            return false;
+        for (auto abi : abis) {
+            if (!(*func)(abi, data))
+                return false;
         }
         return true;
     }
@@ -1037,58 +1044,6 @@ extern void loadParseMap(void);
     //--------------------------------------------------------------------------
     biguint_t weiPerEther(void) {
         return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));
-    }
-
-    //-----------------------------------------------------------------------
-    void manageFields(const string_q& listIn, bool show) {
-        // LOG5("Entry: manageFields");
-        string_q list = substitute(listIn, " ", "");
-        while (!list.empty()) {
-            string_q fields = nextTokenClear(list, '|');
-            string_q cl = nextTokenClear(fields, ':');
-            // LOG5("class: " + cl + " fields: " + fields);
-            CBaseNode *item = createObjectOfType(cl);
-            while (item && !fields.empty()) {
-                string_q fieldName = nextTokenClear(fields, ',');
-                if (fieldName == "all") {
-                    if (show) {
-                        // LOG5("show " + fieldName);
-                        item->getRuntimeClass()->showAllFields();
-                    } else {
-                        // LOG5("hide " + fieldName);
-                        item->getRuntimeClass()->hideAllFields();
-                    }
-                } else if (fieldName == "none") {
-                    if (show) {
-                        // LOG5("show " + fieldName);
-                        item->getRuntimeClass()->hideAllFields();
-                    } else {
-                        // LOG5("hide " + fieldName);
-                        item->getRuntimeClass()->showAllFields();
-                    }
-                } else {
-                    CFieldData *f = item->getRuntimeClass()->findField(fieldName);
-                    if (f) {
-                        // LOG5((show ? "show " : "hide ") + fieldName);
-                        f->setHidden(!show);
-                    } else {
-                        // LOG5("field not found: " + fieldName);
-                    }
-                }
-            }
-            delete item;
-        }
-    }
-
-    //-----------------------------------------------------------------------
-    void manageFields(const string_q& formatIn) {
-        string_q fields;
-        string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
-        string_q cl = nextTokenClear(format, ':');
-        while (contains(format, "<field>"))
-            fields += toLower(snagFieldClear(format, "field") + ",");
-        manageFields(cl + ":all", false);
-        manageFields(cl + ":" + fields, true);
     }
 
     //-----------------------------------------------------------------------

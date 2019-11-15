@@ -18,6 +18,8 @@
 #include "etherlib.h"
 #include "transaction.h"
 
+namespace qblocks {
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -176,4 +178,5 @@ extern const char* STR_DISPLAY_NEWBLOCK;
 bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName);
 bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName);
 // EXISTING_CODE
+}  // namespace qblocks
 

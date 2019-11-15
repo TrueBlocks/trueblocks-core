@@ -8,10 +8,28 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    LOG5("tool_flags: " + tool_flags);
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "cacheStatus --help";
+        NOTE_CALL(os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
+
+    if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
+        replace(tool_flags, "get", "--get"); // syntactic sugar for command line
+
+    if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
+        replace(tool_flags, "set", "--set"); // syntactic sugar for command line
+
+    replaceAll(tool_flags, "--get", "--get_config");
+    replaceAll(tool_flags, "--set", "--set_config");
+
+    if (!startsWith(tool_flags, "--get_config") && !startsWith(tool_flags, "--set_config"))
+        EXIT_MSG8("chifra config 'mode' must be either '--get' or '--set'.", false);
 
     ostringstream os;
     os << "cacheStatus " << tool_flags;
@@ -24,10 +42,10 @@ bool COptions::handle_config(void) {
         cerr << "Chifra to cacheStatus:\n" << cYellow << settings << cOff << endl;
 
     // both testing and non-testing
-    LOG_INFO("chifra calling: ", os.str());
+    NOTE_CALL(os.str());
     if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 #if 0
@@ -38,13 +56,12 @@ bool COptions::handle_config(void) {
  * All Rights Reserved
  *------------------------------------------------------------------------* /
 #include "options.h"
-#include "question.h"
 
 #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
 
     tool_flags = trim(substitute(substitute(tool_flags, "--addrs", ""), "--mode", ""));
@@ -72,11 +89,13 @@ bool COptions::handle_config(void) {
             os << "cat " << path;
             if (isTestMode())
                 cout << cleanPath(os.str()) << endl;
-            else
+            else {
+                NOTE_CALL(os.str());
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            }
         }
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -93,7 +112,7 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
-    ENTER4("createConfigFile:" + addr);
+    ENTER8("createConfigFile:" + addr);
 
     string_q fileName = getMonitorPath(addr + ".toml");
     LOG_INFO("Creating configuration file: " + cleanPath(fileName));
@@ -122,7 +141,7 @@ bool COptions::createConfigFile(const address_t& addr) {
         if (verbose > 1)
             cout << config << endl;
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }
 */
 

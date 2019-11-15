@@ -40,17 +40,17 @@ on, both, fast, state, tools/getState, e_dao_1500000,                  n, addrs 
 on, both, fast, state, tools/getState, e_two_accts,                    n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8 & blocks = 1500000 & ether & fmt = txt
 on, both, fast, state, tools/getState, e_tip_4,                        n, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000 & ether & fmt = txt
 
-on, both, fast, state, tools/getState, mode_bal,                       y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = balance & blocks = 2500000
-on, both, fast, state, tools/getState, mode_nonce,                     y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = nonce & blocks = 2500000
-on, both, fast, state, tools/getState, mode_code,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = code & blocks = 2500000
-on, both, fast, state, tools/getState, mode_storage,                   y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = storage & blocks = 2500000
-on, both, slow, state, tools/getState, mode_deployed,                  y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = deployed & blocks = 2500000
-on, both, fast, state, tools/getState, mode_accttype,                  y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = accttype & blocks = 2500000
-on, both, fast, state, tools/getState, mode_some,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = some & blocks = 2500000
-on, both, medi, state, tools/getState, mode_all,                       y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = all & blocks = 2500000
-on, both, fast, state, tools/getState, mode_none,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = none & blocks = 2500000
-on, both, fast, state, tools/getState, mode_nonce_only,                y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = none*nonce & blocks = 2500000
-on, both, fast, state, tools/getState, mode_fail,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & mode = junk & blocks = 2500000
+on, both, fast, state, tools/getState, mode_bal,                       y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = balance & blocks = 2500000
+on, both, fast, state, tools/getState, mode_nonce,                     y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = nonce & blocks = 2500000
+on, both, fast, state, tools/getState, mode_code,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = code & blocks = 2500000
+on, both, fast, state, tools/getState, mode_storage,                   y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = storage & blocks = 2500000
+on, both, slow, state, tools/getState, mode_deployed,                  y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = deployed & blocks = 2500000
+on, both, fast, state, tools/getState, mode_accttype,                  y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = accttype & blocks = 2500000
+on, both, fast, state, tools/getState, mode_some,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = some & blocks = 2500000
+on, both, medi, state, tools/getState, mode_all,                       y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = all & blocks = 2500000
+on, both, fast, state, tools/getState, mode_none,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = none & blocks = 2500000
+on, both, fast, state, tools/getState, mode_nonce_only,                y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = none & parts = nonce & blocks = 2500000
+on, both, fast, state, tools/getState, mode_fail,                      y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & parts = junk & blocks = 2500000
 
 on, both, fast, state, tools/getState, fmt_txt,                        n, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = txt & blocks = 2000000 & ether
 on, both, fast, state, tools/getState, fmt_csv,                        n, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = csv & blocks = 2000000
@@ -101,3 +101,11 @@ on, cmd,  fast, state, tools/getState, from_file,                      y, file:c
 # run_state_test("getState_verbose" "${TIP}"                " 4000000" " -v")
 # run_state_test("getState_verbose_long"                    "${TIP}" " 4000000" " --verbose")
 # run_state_test("getState_wei"                             "${TIP}" " 4000000" " --wei")
+
+# ./tools/getState/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+# ./tools/getState/options.cpp:    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
+# ./tools/getState/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
+# ./tools/getState/options.cpp:    COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
+# ./tools/getState/options.cpp:    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
+# ./tools/getState/options.cpp:    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
+# ./tools/getState/options.cpp:    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),

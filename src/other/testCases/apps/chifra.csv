@@ -10,8 +10,8 @@ on, cmd,  fast, seed,     apps/chifra, no_params,            n,
 on, cmd,  fast, leech,    apps/chifra, invalid_option,       n, modes = not_a_mode
 
 on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-#on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
-#on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
+# on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+# on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
 
 on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & yes & verbose = 10
 
@@ -20,9 +20,9 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
 # on, both, fast, blocks,   apps/chifra, blocks2,              y, modes = blocks & blocks = 12 & fmt = csv & no_header
 
-# on, both, fast, accounts, apps/chifra, accounts,             y, modes = accounts & expand & fmt = txt
-# on, both, fast, accounts, apps/chifra, accounts_noparams,    y, modes = accounts & fmt = txt
-# on, both, fast, accounts, apps/chifra, accounts_badparams,   y, modes = accounts & not_an_option
+# on, both, fast, names,    apps/chifra, names,                y, modes = names & expand & fmt = txt
+# on, both, fast, names,    apps/chifra, names_noparams,       y, modes = names & fmt = txt
+# on, both, fast, names,    apps/chifra, names_badparams,      y, modes = names & not_an_option
 
 # on, both, fast, config,   apps/chifra, config_noparms,       y, modes = config
 # on, both, fast, config,   apps/chifra, config_badparms,      y, modes = config & bad-param
@@ -48,3 +48,33 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # off, both, fast, null,    apps/chifra, config_show_tip,     n, config show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 # off, both, fast, null,    apps/chifra, config_edit,         n, config edit & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 # off, both, fast, null,    apps/chifra, config_show_tip_v,   n, config show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & verbose:3
+
+on, cmd,  fast, null,     apps/chifra, chifra_help,          n, help
+on, cmd,  fast, null,     apps/chifra, chifra_help_list,     n, modes = list & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_export,   n, modes = export & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_slurp,    n, modes = slurp & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_names,    n, modes = names & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_abi,      n, modes = abi & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_state,    n, modes = state & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_tokens,   n, modes = tokens & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_data,     n, modes = data & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_blocks,   n, modes = blocks & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_transactions, n, modes = transactions & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_receipts, n, modes = receipts & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_logs,     n, modes = logs & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_traces,   n, modes = traces & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_quotes,   n, modes = quotes & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_scrape,   n, modes = scrape & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_status,   n, modes = status & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_config,   n, modes = config & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_rm,       n, modes = rm & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_message,  n, modes = message & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_leech,    n, modes = leech & help
+on, cmd,  fast, null,     apps/chifra, chifra_help_seed,     n, modes = seed & help
+
+# ./apps/chifra/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
+# ./apps/chifra/options.cpp:    COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+# ./apps/chifra/options.cpp:    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+# ./apps/chifra/options.cpp:    COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
+# ./apps/chifra/options.cpp:    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
+# ./apps/chifra/options.cpp:    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),

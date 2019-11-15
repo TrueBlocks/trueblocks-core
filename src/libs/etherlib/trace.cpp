@@ -205,7 +205,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "traceAddress", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "traceAddress", T_TEXT|TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionIndex", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
@@ -228,6 +228,8 @@ void CTrace::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CTrace, "date");
+    CFieldData *f = GETRUNTIME_CLASS(CTrace)->findField("traceAddress");
+    if (f) f->setType(T_TEXT);
     // EXISTING_CODE
 }
 
@@ -238,26 +240,43 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void *dataPtr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
-                if ( fieldIn % "compressedTrace" ) return tra->articulatedTrace.compressed();
-                break;
+               if ( fieldIn % "compressedTrace" ) return tra->articulatedTrace.compressed();
+               break;
             case 'd':
-                if (tra->pTrans) {
-                    if (fieldIn % "date" || fieldIn % "datesh")
-                        return nextTransactionChunk(fieldIn, tra->pTrans);
-                }
-                break;
+               if (tra->pTrans) {
+                   if (fieldIn % "date" || fieldIn % "datesh")
+                       return nextTransactionChunk(fieldIn, tra->pTrans);
+               }
+               break;
             case 'f':
-                if (tra->pTrans) {
-                    if (fieldIn % "function") {
-                        string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
-                        if (ret.empty())
-                            return "";
-                        CFunction func;
-                        func.parseJson3(ret);
-                        return func.name;
-                    }
-                }
-                break;
+               if (tra->pTrans) {
+                   if (fieldIn % "function") {
+                       string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
+                       if (ret.empty())
+                           return "";
+                       CFunction func;
+                       func.parseJson3(ret);
+                       return func.name;
+                   }
+               }
+               break;
+            case 't':
+               // Normally, we don't have to do this, but traceAddress is a weird case. It's an array, but we don't really want to present it that way.
+               if ( fieldIn % "traceAddress" || fieldIn % "traceAddressCnt" ) {
+                   size_t cnt = tra->traceAddress.size();
+                   if (endsWith(toLower(fieldIn), "cnt"))
+                       return uint_2_Str(max((size_t)1, cnt));
+                   string_q retS;
+                   for (size_t i = 0 ; i < cnt ; i++) {
+                       if (!retS.empty())
+                           retS += "-";
+                       retS += tra->traceAddress[i];
+                   }
+                   if (retS.empty())
+                       retS = "null";
+                   return retS;
+               }
+               break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -295,12 +314,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTrace" ) {
-                if (articulatedTrace == CFunction())
-                    return "";
-                expContext().noFrst = true;
-                return articulatedTrace.Format();
-            }
+            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
             if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
             break;
         case 'b':
@@ -323,15 +337,13 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
                 size_t cnt = traceAddress.size();
                 if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(max((size_t)1, cnt));
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
                 string_q retS;
                 for (size_t i = 0 ; i < cnt ; i++) {
-                    if (!retS.empty())
-                        retS += "-";
-                    retS += traceAddress[i];
+                    retS += ("\"" + traceAddress[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
                 }
-                if (retS.empty())
-                    retS = "null";
                 return retS;
             }
             if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
@@ -341,6 +353,7 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
+    // Weird note here -- the above case for traceAddress is not used because it's overridden further up.
     // EXISTING_CODE
 
     string_q s;
@@ -401,7 +414,7 @@ const string_q CTrace::getStringAt(const string_q& fieldName, size_t i) const {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRACE =
+const char* STR_DISPLAY_TRACE = 
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{TRACEADDRESS}]\t"

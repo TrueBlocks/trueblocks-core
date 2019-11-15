@@ -1,15 +1,15 @@
 grabABI argc: 2 [1:0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5] 
 grabABI 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5 
-ABI for address 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5
-	function changeTokenContract        (address _newToken)
-	function currentEpoch               ()
-	function expectedPayout             (address _tokenHolder)
-	function initEpochBalance           ()
-	function owner                      ()
-	function tokenCtr                   ()
-	function transferOwnership          (address _newOwner)
-	function withdrawalProfit           ()
-	event ProfitWithdrawn               (address tokenHolder,uint256 amountPaidOut)
-	event TokenContractChanged          (address newTokenContractAddr)
-	event WithdrawalEnabled             ()
-
+address	encoding	type	constant	name	signature	input_names
+	0x45fd0674	constructor			(address)	_token,,
+	0x523aee69	function		changeTokenContract	changeTokenContract(address)	_newToken,,
+	0x76671808	function	true	currentEpoch	currentEpoch()	,
+	0x36bc32a2	function	true	expectedPayout	expectedPayout(address)	_tokenHolder,,
+	0x50148ed2	function	true	initEpochBalance	initEpochBalance()	,
+	0x8da5cb5b	function	true	owner	owner()	,
+	0xaef251a7	function	true	tokenCtr	tokenCtr()	,
+	0xf2fde38b	function		transferOwnership	transferOwnership(address)	_newOwner,,
+	0x2ebec916	function		withdrawalProfit	withdrawalProfit()	,
+	0x016e128b6bdadd9e9068abd0b18db2fc8b27ed3dbced50e4aa6cc0a6934251ab	event		ProfitWithdrawn	ProfitWithdrawn(address,uint256)	tokenHolder,amountPaidOut,,
+	0xe89f98a27789c8313baa22de83cdb921b7026d66af0ee02973c97d45f952b6be	event		TokenContractChanged	TokenContractChanged(address)	newTokenContractAddr,,
+	0x66f7d730c9ba098beec19ac6c1d94380c4f8b016455b36cb348ca4c646a075bc	event		WithdrawalEnabled	WithdrawalEnabled()	

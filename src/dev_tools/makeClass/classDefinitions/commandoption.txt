@@ -1,0 +1,4 @@
+[settings]
+class = CCommandOption
+fields = string num|string group|string api_route|string tool|string command|string hotkey|string def_val|string is_required|string is_customizable|string core_visible|string docs_visible|string generate|string option_kind|string data_type|string description|
+includes = etherlib.h

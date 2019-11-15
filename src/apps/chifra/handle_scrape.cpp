@@ -8,83 +8,92 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
 
+    ENTER8("handle_" + mode);
+
     // scrape mode requires a running node
     nodeRequired();
+
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "blockScrape --help";
+        NOTE_CALL(os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        return true;
+    }
 
     // syntactic sugar
     tool_flags = substitute(substitute(" "+tool_flags, "--start", " start"), " start", "");
     bool daemonMode = false;
 
-    // The presence of 'waitFile' will either pause of kill the scraper. If 'waitFile'
-    // disappears, the scraper will resume
+    // The presence of 'waitFile' will either pause or kill the scraper. If 'waitFile'
+    // disappears and the scraper is paused, the scraper will resume
     string_q waitFile = configPath("cache/tmp/scraper-off.txt");
     bool wasPaused = fileExists(waitFile);
     if (wasPaused)
-        cerr << cYellow << "The scraper is currently paused" << cOff << endl;
+        LOG_INFO("The scraper is currently paused");
 
     if (contains(tool_flags, "restart")) {
         //---------------------------------------------------------------------------------
-        // If it's not running, we can't restart it
+        // If a seperate instance is not running, we can't restart it
         if (nRunning("chifra scrape") < 2) {
-            cerr << cYellow << "Scraper is not running. Cannot restart..." << cOff << endl;
+            LOG_WARN("Scraper is not running. Cannot restart...");
             return true;
         }
 
-        // It's running, so we can restart it (even if it's not currently paused -- won't hurt)
-        ::remove(waitFile.c_str());
-
-        // If it's not paused, let the user know
+        // If it's not paused, let the user know...
         if (!wasPaused) {
-            cerr << cYellow << "Scraper is not paused. Cannot restart..." << cOff << endl;
+            LOG_WARN("Scraper is not paused. Cannot restart...");
             return true;
         }
 
-        // We will restart pause the next time we get a chance
-        cerr << cYellow << "Scraper will restart shortly..." << cOff << endl;
+        // A seperate instance is running, removing the file will restart the scraper
+        ::remove(waitFile.c_str());
+        LOG_INFO("Scraper will restart shortly...");
         return true;
 
     } else if (contains(tool_flags, "pause")) {
         //---------------------------------------------------------------------------------
-        // If it's not running, we can't pause it
+        // If a seperate instance is not running, we can't pause it
         if (nRunning("chifra scrape") < 2) {
-            cerr << cYellow << "Scraper is not running. Cannot pause..." << cOff << endl;
+            LOG_WARN("Scraper is not running. Cannot pause...");
             return true;
         }
 
-        // It's running, so we can pause it (even if it's already paused -- won't hurt)
-        stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
-
-        // If it's paused already, let the user know
+        // If it's already paused, let the user know...
         if (wasPaused) {
-            cerr << cYellow << "Scraper is aleardy paused..." << cOff << endl;
+            LOG_WARN("Scraper is already paused...");
             return true;
         }
 
-        // We will pause the next time we get a chance
-        cerr << cYellow << "Scraper will pause shortly..." << cOff << endl;
+        // It's running, so we can pause it
+        stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
+        LOG_INFO("Scraper will pause shortly...");
         return true;
 
     } else if (contains(tool_flags, "quit")) {
         //---------------------------------------------------------------------------------
-        // If it's not running, we can't kill it
+        // If a seperate instance is not running, we can't kill it
         if (nRunning("chifra scrape") < 2) {
-            cerr << cYellow << "Scraper is not running. Cannot quit..." << cOff << endl;
+            LOG_WARN("Scraper is not running. Cannot quit...");
             return true;
         }
 
         // Kill it whether it's currently paused or not
         stringToAsciiFile(waitFile, "quit");
-
-        // We will pause the next time we get a chance
-        cerr << cYellow << "Scraper will quit shortly..." << cOff << endl;
+        LOG_INFO("Scraper will quit shortly...");
         return true;
 
     } else {
         //---------------------------------------------------------------------------------
-        // Look for options that we don't pass on to blockScrape...
+        // If it's already running, don't start it again...
+        if (nRunning("chifra scrape") > 1) {
+            LOG_WARN("Scraper is alreary running. Cannot start it again...");
+            return false;
+        }
+
+        // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
-        explode(optList, tool_flags, ' ');
-        tool_flags = "";
+        explode(optList, tool_flags, ' '); tool_flags = "";  // reset tool_flag
         for (auto opt : optList) {
             if (opt == "--daemon") {
                 opt = "";
@@ -96,11 +105,6 @@ bool COptions::handle_scrape(void) {
             }
             if (!opt.empty())
                 tool_flags += (opt + " ");
-        }
-
-        if (nRunning("chifra scrape") > 1) {
-            cerr << "'chifra scrape' is already running." << endl;
-            return false;
         }
 
         cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
@@ -123,7 +127,8 @@ bool COptions::handle_scrape(void) {
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
             wasPaused = false;
             ostringstream os;
-            os << "blockScrape " << tool_flags << " ; ";
+            os << "blockScrape " << tool_flags;
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
 
             // always catch the timestamp file up to the scraper
@@ -146,6 +151,7 @@ bool COptions::handle_scrape(void) {
                         for (auto addr : runs) {
                             ostringstream os1;
                             os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
+                            NOTE_CALL(os1.str());
                             if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
                             usleep(250000); // stay responsive to cntrl+C
                             if (shouldQuit())

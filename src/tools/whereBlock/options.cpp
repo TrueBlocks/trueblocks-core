@@ -10,14 +10,18 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
     COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -28,8 +32,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
     if (!isNodeRunning()) // it's okay if it's not
@@ -41,17 +45,18 @@ bool COptions::parseArguments(string_q& command) {
         string_q orig = arg;
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else if (!parseBlockList2(this, blocks, arg, latest)) {
-            return false;
+        } else {
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
 
-// END_CODE_AUTO
+            // END_CODE_AUTO
         }
     }
 
@@ -60,21 +65,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must enter a valid block number. Quitting...");
 
     // Display formatting
-    string_q format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", STR_DISPLAY_WHERE);
-    switch (exportFmt) {
-        case NONE1: format = STR_DISPLAY_WHERE; break;
-        case API1:
-        case JSON1: format = ""; break;
-        case TXT1:
-        case CSV1:
-            format = getGlobalConfig("whereBlock")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_WHERE : format);
-            break;
-    }
-    manageFields("CCacheEntry:" + cleanFmt((format.empty() ? STR_DISPLAY_WHERE : format), exportFmt));
+    configureDisplay("whereBlock", "CCacheEntry", STR_DISPLAY_WHERE);
+
     expContext().fmtMap["meta"] = ", \"cachePath\": \"" + (isTestMode() ? "--" : getCachePath("")) + "\"";
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
-    if (isNoHeader)
-        expContext().fmtMap["header"] = "";
 
     // collect together results for later display
     applyFilter();
@@ -87,8 +80,8 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_DENOM);
 
-// BEG_CODE_INIT
-// END_CODE_INIT
+    // BEG_CODE_INIT
+    // END_CODE_INIT
 
     items.clear();
     blocks.Init();
@@ -101,25 +94,16 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    // BEG_CODE_NOTES
+    notes.push_back("Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.");
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
-        return substitute(str, "blocks", "<block> [block...]");
-
-    } else if (which == "notes") {
-        string_q ret = str;
-        if (verbose || COptions::isReadme) {
-            ret += "You may customize the location of your cache in the file ~/.quickBlocks/quickBlocks.toml.\n";
-        }
-        return ret;
-    }
-    return str;
 }
 
 //--------------------------------------------------------------------------------

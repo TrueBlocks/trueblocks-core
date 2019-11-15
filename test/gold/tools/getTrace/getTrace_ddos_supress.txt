@@ -1,0 +1,31 @@
+getTrace argc: 4 [1:0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4] [2:--fmt] [3:json] 
+getTrace 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 --fmt json 
+{ "data": [
+  {
+    "blockHash": "0x0",
+    "blockNumber": 2597783,
+    "subtraces": 0,
+    "traceAddress": "s",
+    "transactionHash": "0x3c7bfe4878",
+    "transactionIndex": 24,
+    "type": "",
+    "error": "",
+    "action": {
+      "address": "0x0",
+      "balance": 0,
+      "callType": "ddos",
+      "from": "0xdd05dd05dd05dd05dd05dd05dd05dd05",
+      "gas": 0,
+      "init": "",
+      "input": "0xdd05",
+      "refundAddress": "0x0",
+      "to": "0xdd05dd05dd05dd05dd05dd05dd05dd05",
+      "value": 0
+    },
+    "result": {
+      "address": "0x0",
+      "code": "",
+      "gasUsed": 0,
+      "output": ""
+    }
+  }] }

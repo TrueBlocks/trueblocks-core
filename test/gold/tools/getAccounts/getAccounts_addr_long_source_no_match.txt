@@ -1,3 +1,0 @@
-getAccounts argc: 6 [1:Ether] [2:1e17] [3:--verbose] [4:--fmt] [5:txt] 
-getAccounts Ether 1e17 --verbose --fmt txt 
-No results

@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "blockHash": "0x0",
+      "blockNumber": 2597783,
+      "subtraces": 0,
+      "traceAddress": "s",
+      "transactionHash": "0x3c7bfe4878",
+      "transactionIndex": 24,
+      "type": "",
+      "error": "",
+      "action": {
+        "address": "0x0",
+        "balance": 0,
+        "callType": "ddos",
+        "from": "0xdd05dd05dd05dd05dd05dd05dd05dd05",
+        "gas": 0,
+        "init": "",
+        "input": "0xdd05",
+        "refundAddress": "0x0",
+        "to": "0xdd05dd05dd05dd05dd05dd05dd05dd05",
+        "value": 0
+      },
+      "result": {
+        "address": "0x0",
+        "code": "",
+        "gasUsed": 0,
+        "output": ""
+      }
+    }
+  ]
+}

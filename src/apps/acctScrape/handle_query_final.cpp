@@ -113,6 +113,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     uint32_t nAddrs = 0;
 
     bool indexHit = false;
+    string_q hits;
     for (size_t ac = 0 ; ac < monitors.size() && !shouldQuit() ; ac++) {
 
         CAccountWatch *acct = &monitors[ac];
@@ -163,6 +164,7 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
 
         if (found) {
             indexHit = true;
+            hits += (acct->address.substr(0,6)+"..");
             CAddressRecord_base *addrsOnFile = (CAddressRecord_base *)(rawData+sizeof(CHeaderRecord_base));
             CAppearance_base *blocksOnFile = (CAppearance_base *)&addrsOnFile[nAddrs];
             for (size_t i = found->offset ; i < found->offset + found->cnt ; i++) {
@@ -194,7 +196,10 @@ bool COptions::visitBinaryFile(const string_q& path, void *data) {
     }
 
     ostringstream os;
-    os << cBlue << "    bloom file hit " << (indexHit ? cGreen : cRed) << (indexHit ? "index file hit" : "false positive") << cOff << " at " << cTeal << substitute(path, indexFolder_finalized, "./") << cOff;
+    os << cBlue << "    bloom file hit ";
+    os << (indexHit ? cGreen : cRed) << (indexHit ? ("index file hits: " + hits) : "false positive") << cOff;
+    os << " at " << cTeal << substitute(path, indexFolder_finalized, "./");
+    os << cOff;
     LOG_INFO(os.str());
 
     return !shouldQuit();

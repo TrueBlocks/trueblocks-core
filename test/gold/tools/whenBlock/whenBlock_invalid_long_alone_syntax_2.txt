@@ -1,3 +1,17 @@
 whenBlock argc: 2 [1:2015-03-02] 
 whenBlock 2015-03-02 
-TIME ~ CLOCK - <WARNG> : The date you specified (2015-03-02) is before the first block.
+
+  The date you specified (2015-03-02) is before the first block.
+
+  Usage:    whenBlock [-l|-v|-h] < block | date > [ block... | date... ]  
+  Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
+            Alternatively, search for one of 'special' blocks.
+
+  Where:  
+	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)
+	-l  (--list)          export a list of the 'special' blocks
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

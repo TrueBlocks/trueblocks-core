@@ -1,7 +1,7 @@
 fileTest argc: 2 [1:recurse] 
 fileTest recurse 
 Recursive from ../
-Found 117 (117) files
+Found 118 (118) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -48,6 +48,7 @@ Found 117 (117) files
 ../parsingTest/parsingTest_03.txt
 ../parsingTest/parsingTest_04.txt
 ../parsingTest/parsingTest_README.txt
+../runningTest/runningTest_01.txt
 ../sizeofTest/sizeofTest_00.txt
 ../sizeofTest/sizeofTest_README.txt
 ../stringTest/solidity_code.sol
@@ -96,8 +97,8 @@ Found 117 (117) files
 ../tomlTest2/tests/blockScrape.toml
 ../tomlTest2/tests/cacheMan.toml
 ../tomlTest2/tests/chifra.toml
+../tomlTest2/tests/ethNames.toml
 ../tomlTest2/tests/ethslurp.toml
-../tomlTest2/tests/getAccounts.toml
 ../tomlTest2/tests/getBlock.toml
 ../tomlTest2/tests/getState.toml
 ../tomlTest2/tests/getTrans.toml
@@ -109,8 +110,8 @@ Found 117 (117) files
 ../tomlTest2/tomlTest2_blockScrape.txt
 ../tomlTest2/tomlTest2_cacheMan.txt
 ../tomlTest2/tomlTest2_chifra.txt
+../tomlTest2/tomlTest2_ethNames.txt
 ../tomlTest2/tomlTest2_ethslurp.txt
-../tomlTest2/tomlTest2_getAccounts.txt
 ../tomlTest2/tomlTest2_getBlock.txt
 ../tomlTest2/tomlTest2_getState.txt
 ../tomlTest2/tomlTest2_getTrans.txt

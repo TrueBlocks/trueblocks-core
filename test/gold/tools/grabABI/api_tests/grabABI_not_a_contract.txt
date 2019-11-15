@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "grabABI - Could not get the ABI for 0xf1aa581f353005ba3765b81bf52d6b1c488c2101. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0xf1aa581f353005ba3765b81bf52d6b1c488c2101.json in the current folder and re-run."
+  ]
+}

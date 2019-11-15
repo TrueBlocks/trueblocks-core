@@ -97,3 +97,7 @@ on, cmd,  fast, logs, tools/getLogs, by_file_long_v,      y, file:cmd_file & ver
 # queryRawLogs(string_q& results, const hash_t& hash, const address_t& addr, const CTopicArray& topics);
 # queryRawLogs(string_q& results, const hash_t& hash, const address_t& addr) { CTopicArray unused2; return queryRawLogs(results, hash, addr, unused2); }
 # queryRawLogs(string_q& results, const hash_t& hash) { address_t unused1; CTopicArray unused2; return queryRawLogs(results, hash, unused1, unused2); }
+
+# ./tools/getLogs/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
+# ./tools/getLogs/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+# ./tools/getLogs/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

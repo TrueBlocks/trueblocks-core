@@ -17,14 +17,4 @@
 #include "esresult.h"
 #include "options.h"
 
-////---------------------------------------------------------------------------------------------------
-//class CSlurperApp {
-//public:
-//    CAccount theAccount;
-//
-//x    CSlurperApp(void) { }
-//    ~CSlurperApp(void) { }
-//
-//    bool Slurp(COptions& options, string_q& message);
-//};
-bool Slurp(CAccount& theAccount, COptions& options, string_q& message);
+bool Slurp(CAccount& theAccount, COptions& options);

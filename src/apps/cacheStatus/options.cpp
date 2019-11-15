@@ -3,12 +3,16 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
-    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
+    // BEG_CODE_OPTIONS
+    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more types of data to retrieve"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
     COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
@@ -17,21 +21,23 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
-    if (!standardOptions(command))
-        EXIT_NOMSG(false);
+    ENTER8("parseArguments");
 
-// BEG_CODE_LOCAL_INIT
+    if (!standardOptions(command))
+        EXIT_NOMSG8(false);
+
+    // BEG_CODE_LOCAL_INIT
+    CStringArray modes;
     bool report = false;
     bool get_config = false;
     bool set_config = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
 
@@ -40,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-d" || arg == "--details") {
             details = true;
 
@@ -70,15 +76,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
         } else {
-            string_q permitted = params[0].description;
-            replaceAny(permitted, "[]*", "|");
-            if (!contains(permitted, "|" + arg + "|"))
-                return usage("Provided value for 'mode' (" + arg + ") not " + substitute(params[0].description, "enum", "") + ". Quitting.");
-            mode += (arg + "|");
+            string_q modes_tmp;
+            if (!confirmEnum("modes", modes_tmp, arg))
+                return false;
+            modes.push_back(modes_tmp);
+
+            // END_CODE_AUTO
         }
     }
+
+    for (auto m : modes)
+        mode += (m + "|");
 
     if (start == NOPOS)
         start = 0;
@@ -120,7 +129,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -128,12 +137,12 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     details = false;
     list = false;
     start = NOPOS;
     end = NOPOS;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     isConfig = false;
     mode = "";
@@ -202,38 +211,14 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CAccountName, "latestAppearance");
 
     minArgs = 0;
+
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::postProcess(const string_q& which, const string_q& str) const {
-    if (which == "options") {
-        return substitute(str, "modes", "<mode> [mode...]");
-
-    } else if (which == "notes" && (verbose || COptions::isReadme)) {
-        // do nothing
-
-    }
-    return str;
-}
-
-//--------------------------------------------------------------------------------
-void loadHashes(CIndexHashMap& map, const string_q& which) {
-    string_q hashFn = configPath("ipfs-hashes/" + which + ".txt");
-    if (!fileExists(hashFn)) {
-        cerr << "Hash file (" << hashFn << ") not found." << endl;
-    } else {
-        string_q contents = asciiFileToString(hashFn);
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        for (auto line : lines) {
-            line = substitute(substitute(line, ".bin", ""), ".bloom", "");
-            CStringArray parts;
-            explode(parts, line, ' ');
-            map[parts[2]] = parts[1];
-        }
-    }
 }

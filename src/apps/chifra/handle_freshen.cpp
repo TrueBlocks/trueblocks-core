@@ -4,12 +4,11 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {
 
-    ENTER4("freshen_internal");
+    ENTER8("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
@@ -30,10 +29,10 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
     while (!groupsOfFive.empty()) {
         string_q thisGroup = nextTokenClear(groupsOfFive, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
-        LOG4("Calling " + cmd);
+        NOTE_CALL(cmd);
         if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
         if (!groupsOfFive.empty())
            usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

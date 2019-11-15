@@ -1,4 +1,4 @@
 [settings]
-class    = CTreeRoot
-fields   = CTreeNode *root
+class = CTreeRoot
+fields = CTreeNode *root
 includes = etherlib.h|treenode.h|leaf.h|branch.h|infix.h

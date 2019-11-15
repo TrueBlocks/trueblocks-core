@@ -110,7 +110,8 @@ namespace qblocks {
     extern bool        isZeroAddr   (const address_t& addr);
     extern bool        isNumeral    (const string_q& test);
     extern bool        isHexStr     (const string_q& str);
-    extern bool        isAddress    (const address_t& addr);
+    extern bool        isAddress    (const string_q& addr);
+    extern bool        isDate       (const string_q& date);
     extern bool        isHash       (const hash_t& hashIn);
     extern bool        isUnsigned   (const string_q& in);
 

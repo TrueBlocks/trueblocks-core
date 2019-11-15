@@ -8,9 +8,7 @@
 //-----------------------------------------------------------------------
 bool COptions::exportCounts(void) {
 
-    ENTER("exportCounts");
-
-//    enum format_t { NONE1 = 0, JSON1 = (1<<1), TXT1 = (1<<2), CSV1 = (1<<3), API1 = (1<<4) };
+    ENTER8("exportCounts");
 
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
     if (isJson)
@@ -40,5 +38,5 @@ bool COptions::exportCounts(void) {
     if (isJson)
         cout << "]";
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

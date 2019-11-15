@@ -44,103 +44,79 @@ namespace qblocks {
     }
 
     //--------------------------------------------------------------------------------
-    bool prepareEnv(int argc, const char *argv[]) {
-        string_q env = getEnvStr("NO_COLOR");
-        if (string_q(env) == "true")
-            colorsOff();
-        if (argc > 0)
-            COptionsBase::g_progName = basename((char*)argv[0]);  // NOLINT
-        return true;
-    }
+    bool COptionsBase::prepareArguments(int argCountIn, const char *argvIn[]) {
 
-    //--------------------------------------------------------------------------------
-    bool COptionsBase::prepareArguments(int argc, const char *argv[]) {
+        if ( argCountIn > 0 ) /* always is */    COptionsBase::g_progName = basename((char*)argvIn[0]);  // NOLINT
+        if (!getEnvStr("PROG_NAME").empty() )    COptionsBase::g_progName = getEnvStr("PROG_NAME");
+        if ( getEnvStr("NO_COLOR") == "true" )   colorsOff();
+        if ( getEnvStr("REDIR_CERR") == "true" ) cerr.rdbuf( cout.rdbuf() );
 
-        prepareEnv(argc, argv);
-        if (getEnvStr("REDIR_CERR") == "true")
-            cerr.rdbuf( cout.rdbuf() );
-
-        // send out the environment, if any non-default
-        if (isTestMode() || isLevelOn(sev_debug4)) {
-            size_t save = verbose;
-            verbose = 10;
-            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
-            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
-//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
-            verbose = save;
+        CStringArray separatedArgs;
+        for (int i = 1 ; i < argCountIn ; i++ ) {  // skip argv[0]
+            CStringArray parts;
+            string_q arg = substituteAny(argvIn[i], "\n\r\t", " ");
+            explode(parts, arg, ' ');
+            for (auto part : parts) {
+                if (!part.empty()) {
+                    separatedArgs.push_back(part);
+                }
+            }
         }
 
         if (isTestMode()) {
-            ostringstream argos1;
-            ostringstream argos2;
-            for (int i = 1 ; i < argc ; i++) {
-                string_q str = argv[i];
-                argos1 << "[" << i << ":" << trim(str) << "] ";
-                argos2 << trim(str) << " ";
+            size_t cnt = 0;
+            ostringstream os;
+            cerr << getProgName() << " argc: " << (separatedArgs.size()+1) << " ";
+            for (auto arg : separatedArgs) {
+                cerr << "[" << ++cnt << ":" << trim(arg) << "] ";
+                os << trim(arg) << " ";
             }
-
-            const char* STR_TESTLOAD_TXT = "[{PROGRAM}] argc: [{ARGC}] [{ARGS}]\n";
-            const char* STR_CMD_TXT = "[{PROGRAM}] [{ARGS}]\n";
-
-            string_q out = STR_TESTLOAD_TXT;
-            replace(out, "[{PROGRAM}]", getProgName());
-            replace(out, "[{ARGC}]", int_2_Str(argc));
-            replace(out, "[{ARGS}]", argos1.str());
-            cerr << out;
-
-            out = STR_CMD_TXT;
-            replace(out, "[{PROGRAM}]", getProgName());
-            replace(out, "[{ARGS}]", argos2.str());
-            cerr << out;
+            cerr << endl;
+            cerr << getProgName() << " " << os.str() << endl;
         }
 
-        if ((uint64_t)argc <= minArgs)  // the first arg is the program's name
-            return usage("Not enough arguments presented.");
+//        // send out the environment, if any non-default
+//        if (isTestMode() || isLevelOn(sev_debug4)) {
+//            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
+//            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
+//            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
+//        }
 
-        int nChars = 0;
-        for (int i = 0 ; i < argc ; i++) {
-            nChars += string_q(argv[i]).length();
-        }
-        size_t nArgs = 0;
-        string_q *args = new string_q[argc + nChars + 2];
-
-        bool hasStdIn = false;
-        for (int i = 1 ; i < argc ; i++) {
-            string_q str = argv[i];
-            string_q arg = trim(str);
+        CStringArray argumentsIn;
+        for (auto arg : separatedArgs) {
             replace(arg, "--verbose", "-v");
             while (!arg.empty()) {
                 string_q opt = expandOption(arg);  // handles case of -rf for example
-                if (isReadme) {
-                    if (args)
-                        delete [] args;
+                if (isReadme && isEnabled(OPT_HELP))
                     return usage();
-                }
                 if (opt == "-")
-                    hasStdIn = true;
+                    return usage("Raw '-' not supported.");
                 else if (!opt.empty())
-                    args[nArgs++] = opt;
+                    argumentsIn.push_back(opt); //args[nArgs++] = opt;
             }
         }
+        if (argumentsIn.size() < minArgs)  // the first arg is the program's name, so we use <=
+            return usage("Not enough arguments presented.");
 
-        string_q stdInCmds;
-        if (hasStdIn) {
-            // reading from stdin, expect only a list of addresses, one per line.
-            char c = static_cast<char>(getchar());
-            while (c != EOF) {
-                stdInCmds += c;
-                c = static_cast<char>(getchar());
-            }
-            if (!endsWith(stdInCmds, "\n"))
-                stdInCmds += "\n";
-        }
+
+//        string_q stdInCmds;
+//        if (hasStdIn) {
+//            // reading from stdin, expect only a list of addresses, one per line.
+//            char c = static_cast<char>(getchar());
+//            while (c != EOF) {
+//                stdInCmds += c;
+//                c = static_cast<char>(getchar());
+//            }
+//            if (!endsWith(stdInCmds, "\n"))
+//                stdInCmds += "\n";
+//        }
 
         //-----------------------------------------------------------------------------------
         // Collapse commands that have 'permitted' sub options (i.e. colon ":" args)
         //-----------------------------------------------------------------------------------
-        size_t curArg = 0;
-        for (size_t i = 0 ; i < nArgs ; i++) {
-            string_q arg = args[i];
+        CStringArray argumentsOut;
+        for (size_t i = 0 ; i < argumentsIn.size() ; i++) {
+            string_q arg = argumentsIn[i];
             bool combine = false;
             for (size_t j = 0 ; j < cntParams && !combine ; j++) {
                 if (!pParams[j].permitted.empty()) {
@@ -154,8 +130,8 @@ namespace qblocks {
             }
 
             if (!combine && (arg == "-v" || arg == "-verbose" || arg == "--verbose")) {
-                if (i < nArgs-1) {
-                    uint64_t n = str_2_Uint(args[i+1]);
+                if (i < argumentsIn.size()-1) {
+                    uint64_t n = str_2_Uint(argumentsIn[i+1]);
                     if (n > 0 && n <= 10) {
                         // We want to pull the next parameter into this one since it's a ':' param
                         combine = true;
@@ -166,19 +142,18 @@ namespace qblocks {
                 }
             }
 
-            if (!combine && arg == "--fmt") {
-                if (i < nArgs-1)
+            if (!combine && (arg == "-x" || arg == "--fmt")) {
+                if (i < argumentsIn.size()-1)
                     combine = true;
             }
 
-            if (combine && i < (nArgs-1)) {
-                args[curArg++] = arg + ":" + args[i+1];
+            if (combine && i < (argumentsIn.size()-1)) {
+                argumentsOut.push_back(arg + ":" + argumentsIn[i+1]);
                 i++;
             } else {
-                args[curArg++] = arg;
+                argumentsOut.push_back(arg);
             }
         }
-        nArgs = curArg;
 
         //-----------------------------------------------------------------------------------
         // We now have 'nArgs' command line arguments stored in the array 'args.'  We spin
@@ -188,13 +163,12 @@ namespace qblocks {
         // (2) identify any --file arguments and store them for later use
         //-----------------------------------------------------------------------------------
         string_q cmdFileName = "";
-        for (uint64_t i = 0 ; i < nArgs ; i++) {
-            string_q arg = args[i];
+        for (uint64_t i = 0 ; i < argumentsOut.size() ; i++) {
+            string_q arg = argumentsOut[i];
             if (startsWith(arg, "--file:")) {
                 cmdFileName = substitute(arg, "--file:", "");
                 replace(cmdFileName, "~/", getHomeFolder());
                 if (!fileExists(cmdFileName)) {
-                    if (args) delete [] args;
                     return usage("--file: '" + cmdFileName + "' not found. Quitting.");
                 }
 
@@ -207,32 +181,28 @@ namespace qblocks {
                     verbose = str_2_Uint(arg);
                 }
 
-            } else if (startsWith(arg, "--fmt:")) {
-                arg = substitute(arg, "--fmt:", "");
+            } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
+                arg = substitute(substitute(arg, "--fmt:", ""), "-x:", "");
                      if ( arg == "txt" ) { exportFmt = TXT1;  }
                 else if ( arg == "csv" ) { exportFmt = CSV1; }  // NOLINT
                 else if ( arg == "json") { exportFmt = JSON1; }  // NOLINT
                 else if ( arg == "api" ) { exportFmt = API1; }  // NOLINT
-                else return usage("Export format (" + arg +  // NOLINT
-                    ") must be one of [ json | txt | csv | api ]. Quitting...");
-                args[i] = "";
+                else return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");  // NOLINT
+                argumentsOut[i] = "";
             }
         }
 
         // remove empty arguments
-        curArg = 0;
-        for (size_t i = 0 ; i < nArgs ; i++) {
-            if (!args[i].empty())
-                args[curArg++] = args[i];
-        }
-        nArgs = curArg;
+        CStringArray argumentsOut3;
+        for (auto arg : argumentsOut)
+            if (!arg.empty())
+                argumentsOut3.push_back(arg);
 
         // If we have a command file, we will use it, if not we will creat one and pretend we have one.
         string_q commandList = "";
-        for (uint64_t i = 0 ; i < nArgs ; i++) {
-            string_q a = args[i];
-            if (!contains(a, "--file:"))
-                commandList += (a + " ");
+        for (auto arg : argumentsOut3) {
+            if (!contains(arg, "--file:"))
+                commandList += (arg + " ");
         }
         commandList += '\n';
 
@@ -261,14 +231,12 @@ namespace qblocks {
                 }
             }
         }
-        commandList += stdInCmds;
+//        commandList += stdInCmds;
         explode(commandLines, commandList, '\n');
         for (auto& item : commandLines)
             item = trim(item);
         if (commandLines.empty())
             commandLines.push_back("--noop");
-
-        if (args) delete [] args;
 
         return 1;
     }
@@ -279,7 +247,6 @@ namespace qblocks {
         // Note: check each item individual in case more than one appears on the command line
         cmdLine += " ";
         replace(cmdLine, "--output ", "--output:");
-        replace(cmdLine, "--fmt ", "--fmt:");
 
         if (contains(cmdLine, "--noop ")) {
             // do nothing
@@ -288,7 +255,7 @@ namespace qblocks {
 
         if (contains(cmdLine, "--version ")) {
             cerr << getProgName() << " " << getVersionStr() << "\n";
-            exit(0);
+            return false;
         }
 
         if (contains(cmdLine, "--nocolor ")) {
@@ -303,8 +270,7 @@ namespace qblocks {
 
         if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
             usage();
-            exit(0);
-
+            return false;
         }
 
         if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether " )) {
@@ -368,23 +334,9 @@ namespace qblocks {
         }
 
         // A final set of options that do not have command line options
-        if (isEnabled(OPT_PREFUND)) {
-            CStringArray lines;
-            asciiFileToLines(configPath("prefunds.txt"), lines);
-            for (auto line : lines) {
-                CStringArray parts;
-                explode(parts, line, '\t');
-                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
-            }
-        }
-
-        if (isEnabled(OPT_RUNONCE)) {
-            if (commandLines.size() > 1)
-                return usage("You may not use the --file with this application. Quitting...");
-            // protect ourselves from running twice over
-            if (isRunning(getProgName(), true))
-                return usage("Warning: the command " + getProgName() + " is already running. Quitting...");
-        }
+        if (isEnabled(OPT_PREFUND))
+            if (!loadPrefunds())
+                return usage("Could not open prefunds data. Quitting...");
 
         cmdLine = trim(cmdLine);
         return true;
@@ -398,6 +350,11 @@ namespace qblocks {
         if (isEnabled(OPT_VERBOSE)) {
             if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:"))
                 return true;
+        }
+
+        if (isEnabled(OPT_FMT)) {
+            if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:"))
+            return true;
         }
 
         if (isEnabled(OPT_ETHER) && arg == "--ether")
@@ -414,8 +371,6 @@ namespace qblocks {
             return true;
         if (isEnabled(OPT_PARITY) && (arg == "--parity"))
             return true;
-        if (isEnabled(OPT_FMT) && startsWith(arg, "--fmt:"))
-            return true;
         if (arg == "--version")
             return true;
         if (arg == "--nocolor")
@@ -423,6 +378,33 @@ namespace qblocks {
         if (arg == "--noop")
             return true;
         return false;
+    }
+
+    //-----------------------------------------------------------------------
+    void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat, const string_q& meta) {
+        string_q format;
+        switch (exportFmt) {
+            case NONE1:
+                format = defFormat;
+                manageFields(dataType + ":" + cleanFmt(format, exportFmt));
+                break;
+            case TXT1:
+            case CSV1:
+                format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
+                manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format), exportFmt));
+                break;
+            case API1:
+            case JSON1:
+                format = "";
+                break;
+        }
+        if (expContext().asEther)   format = substitute(format, "{BALANCE}", "{ETHER}");
+        if (expContext().asDollars) format = substitute(format, "{BALANCE}", "{DOLLARS}");
+        expContext().fmtMap["meta"]   = meta;
+        expContext().fmtMap["format"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+        if (isNoHeader)
+            expContext().fmtMap["header"] = "";
     }
 
     //---------------------------------------------------------------------------------------------------
@@ -492,64 +474,13 @@ namespace qblocks {
 
     //---------------------------------------------------------------------------------------------------
     const COption *COptionsBase::findParam(const string_q& name) const {
-        for (size_t i = 0 ; i < cntParams ; i++)
-            if (startsWith(pParams[i].longName, "--" + name))
+        for (size_t i = 0 ; i < cntParams ; i++) {
+            if (startsWith(pParams[i].longName, "--" + name))  // flags, toggles, switches
                 return &pParams[i];
+            if (startsWith(pParams[i].longName, name))  // positionals
+                return &pParams[i];
+        }
         return NULL;
-    }
-
-    //--------------------------------------------------------------------------------
-    // If nameIn starts with (modes are required -- unless noted. --options are optional):
-    //      -    ==> regular option
-    //      @    ==> hidden option
-    //      ~    ==> mode (no leading --option needed)
-    //      ~!   ==> non-required mode
-    //      empty nameIn means description is for the whole program (not the option)
-    //--------------------------------------------------------------------------------
-    COption::COption(const string_q& nameIn, const string_q& descr) {
-
-        longName      = nameIn;
-        shortName     = nameIn;
-        is_hidden     = startsWith(nameIn, "@");
-        is_positional = startsWith(nameIn, "~");
-        is_optional   = contains  (nameIn, "!");
-        description   = substitute(descr, "&#44;", ",");
-        if (nameIn.empty())
-            return;
-
-        replaceAll(shortName, "-", "");
-        replaceAll(shortName, "~", "");
-        replaceAll(shortName, "@", "");
-        replaceAll(shortName, "!", "");
-
-        if (!is_positional) {
-            longName = "--" + shortName;
-            shortName = "-" + (contains(shortName, "fmt") ? "x" : extract(shortName, 0, 1));
-        } else {
-            longName = shortName;
-        }
-
-        if (contains(longName, ":")) {
-            permitted = longName;
-            longName = nextTokenClear(permitted, ':');
-            type = permitted;
-            replaceAny(permitted, "<>", "");
-            if (permitted != "range" &&
-                permitted != "list" &&
-                permitted != "fn" &&
-                permitted != "mode" &&
-                permitted != "on/off")
-                permitted = "val";
-            longName += (" " + permitted);
-        }
-
-        if (contains(longName, "(") && contains(longName, ")")) {
-            string_q hotKey = longName;
-            nextTokenClear(hotKey, '(');
-            hotKey = nextTokenClear(hotKey, ')');
-            replaceAny(longName, "()", "");
-            shortName = "-" + hotKey;
-        }
     }
 
     //--------------------------------------------------------------------------------
@@ -607,25 +538,24 @@ const char *STR_ERROR_JSON =
         os << hiUp1 << "Usage:" << hiDown << "    " << getProgName() << " " << options() << "  \n";
         os << purpose();
         os << descriptions() << "\n";
-        os << notes();
+        os << get_notes();
         if (!isReadme) {
             os << bBlue << "  Powered by QBlocks";
             os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
         }
         string_q ret = os.str().c_str();
-        return postProcess("usage", ret);
+        return ret;
     }
 
     //--------------------------------------------------------------------------------
     string_q COptionsBase::options(void) const {
-        string_q required;
+        string_q positional;
 
         ostringstream os;
-        if (!needsOption)
-            os << "[";
+        os << "[";
         for (uint64_t i = 0 ; i < cntParams ; i++) {
             if (pParams[i].is_positional) {
-                required += (pParams[i].longName.empty() ? "" : (" " + pParams[i].longName));
+                positional += (" " + pParams[i].longName);
 
             } else if (pParams[i].is_hidden) {
                 // invisible option
@@ -638,14 +568,22 @@ const char *STR_ERROR_JSON =
             os << "-v|";
         if (isEnabled(OPT_HELP))
             os << "-h";
-        if (!needsOption)
-            os << "]";
-        os << required;
+        os << "]";
 
-        string_q ret = postProcess("options", os.str());
+        replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
+        replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
+        replaceAll(positional, "block_list", "< block | date > [ block... | date... ]");
+        replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
+        replaceAll(positional, "blocks", "<block> [block...]");
+        replaceAll(positional, "addrs", "<address> [address...]");
+        replaceAll(positional, "files", "<file> [file...]");
+        replaceAll(positional, "terms", "<term> [term...]");
+        replaceAll(positional, "modes", "<mode> [mode...]");
         if (isReadme)
-            ret = substitute(substitute(ret, "<", "&lt;"), ">", "&gt;");
-        return ret;
+            positional = substitute(substitute(positional, "<", "&lt;"), ">", "&gt;");
+        os << positional;
+
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -659,14 +597,13 @@ const char *STR_ERROR_JSON =
         os << substitute(purpose, "\n", "\n        ") << "\n";
         if (!endsWith(purpose, "\n"))
             os << "\n";
-        return postProcess("purpose", os.str());
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
 const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
 
-    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d,
-                                            bool isPositional, bool required) const {
+    string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional, bool required) const {
         ostringstream os;
         if (isReadme) {
 
@@ -690,36 +627,34 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             replace(line, "{D}", d + (required && isPositional ? " (required)" : ""));
             os << line;
         }
-        return postProcess("oneDescription", os.str().c_str());
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
-    string_q COptionsBase::notes(void) const {
+    string_q COptionsBase::get_notes(void) const {
+
+        if ((!isReadme && !verbose) || (notes.size() == 0))
+            return "";
+
+        string_q nn;
+        for (auto n : notes)
+            nn += (n + "\n");
+
+        string_q lead  = (isReadme ? "" : "\t");
+        string_q trail = (isReadme ? "\n" : "\n");
+        while (!isReadme && contains(nn, '`')) {
+            replace(nn, "`", hiUp2);
+            replace(nn, "`", hiDown);
+        }
 
         ostringstream os;
-        string_q ret = postProcess("notes", "");
-        if (!ret.empty()) {
-            string_q tick = "- ";
-            string_q lead = "\t";
-            string_q trail = "\n";
-            if (isReadme) {
-                lead = "";
-                trail = "\n";
-            }
-            replaceAll(ret, "[{", hiUp2);
-            replaceAll(ret, "}]", hiDown);
-
-            os << hiUp1 << "Notes:" << hiDown << "\n";
-            os << (isReadme ? "\n" : "");
-            while (!ret.empty()) {
-                string_q line = substitute(nextTokenClear(ret, '\n'), "|", "\n" + lead + "  ");
-                os << lead << tick << line << "\n";
-            }
-            os << "\n";
-            ret = os.str().c_str();
-            replaceAll(ret, "-   ", "  - ");
+        os << hiUp1 << "Notes:" << hiDown << "\n" << (isReadme ? "\n" : "");
+        while (!nn.empty()) {
+            string_q line = substitute(nextTokenClear(nn, '\n'), "|", "\n" + lead + " ");
+            os << lead << "- " << line << "\n";
         }
-        return ret;
+        os << "\n";
+        return substitute(os.str(), "-   ", "  - ");
     }
 
     //--------------------------------------------------------------------------------
@@ -736,7 +671,7 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         size_t nHidden = 0;
         for (uint64_t i = 0 ; i < cntParams ; i++) {
             string_q sName = pParams[i].shortName;
-            string_q lName = pParams[i].longName;
+            string_q lName = substitute(pParams[i].longName, "addrs2", "addrs");
             string_q descr = trim(pParams[i].description);
             bool isPositional = pParams[i].is_positional;
             if (!pParams[i].is_hidden && !sName.empty()) {
@@ -746,8 +681,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                 os << oneDescription(sName, lName, descr, isPositional, isReq);
             }
             if (pParams[i].is_hidden)
-                nHidden++;
-            if (isTestMode() && isEnabled(OPT_FMT))
                 nHidden++;
         }
 
@@ -768,18 +701,13 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
                     os << oneDescription(sName, lName, descr, isPositional, isReq);
                 }
             }
-            if (isEnabled(OPT_FMT))
-                os << oneDescription(" ", "--fmt <val>",
-                    "export format, one of [none|json*|txt|csv|api]", false, false);
             os << "#### Hidden options (shown during testing only)\n\n";
         }
 
-        if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose",
-                "set verbose level. Either -v, --verbose or -v:n where 'n' is level", false, false);
-        if (isEnabled(OPT_HELP))
-            os << oneDescription("-h", "--help", "display this help screen", false, false);
-        return postProcess("description", os.str().c_str());
+        if (isEnabled(OPT_FMT) && (verbose || isTestMode())) os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
+        if (isEnabled(OPT_VERBOSE)) os << oneDescription("-v", "--verbose", "set verbose level. Either -v, --verbose or -v:n where 'n' is level");
+        if (isEnabled(OPT_HELP)) os << oneDescription("-h", "--help", "display this help screen");
+        return os.str();
     }
 
     //--------------------------------------------------------------------------------
@@ -821,6 +749,8 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             arg = "";
             replaceAll(ret, "-th", "");
             replaceAll(ret, "-ht", "");
+            if (!isEnabled(OPT_HELP))
+                ret = "-h";
             return ret;
         }
 
@@ -1030,7 +960,6 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
         isVeryRaw = false;
         isNoHeader = false;
         exportFmt = (isApiMode() ? API1 : TXT1);
-        needsOption = false;
         enableBits = OPT_DEFAULT;
         scanRange = make_pair(0, NOPOS);
         for (int i = 0 ; i < 5 ; i++)
@@ -1074,6 +1003,49 @@ const char *STR_ONE_LINE = "| {S} | {L} | {D} |\n";
             cout << redirFilename;
             redirFilename = "";
         }
+    }
+
+    //-----------------------------------------------------------------------
+    bool COptionsBase::loadPrefunds(void) {
+        // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
+        // since it will never change. In that sense, the binary file is always right once it's created.
+        string_q binFile = configPath("prefunds.bin");
+        string_q txtFile = configPath("prefunds.txt");
+        if (!fileExists(binFile)) {
+            if (!fileExists(txtFile))
+                return false;
+            CStringArray lines;
+            asciiFileToLines(txtFile, lines);
+            for (auto line : lines) {
+                CStringArray parts;
+                explode(parts, line, '\t');
+                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+            }
+            CArchive archive(WRITING_ARCHIVE);
+            if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
+                return false;
+            addr_wei_mp::iterator it = prefundWeiMap.begin();
+            archive << uint64_t(prefundWeiMap.size());
+            while (it != prefundWeiMap.end()) {
+                archive << it->first << it->second;
+                it++;
+            }
+            archive.Release();
+            return true;
+        }
+        CArchive archive(READING_ARCHIVE);
+        if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT))
+            return false;
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0 ; i < count ; i++) {
+            string_q key;
+            wei_t wei;
+            archive >> key >> wei;
+            prefundWeiMap[key] = wei;
+        }
+        archive.Release();
+        return true;
     }
 
     //-----------------------------------------------------------------------

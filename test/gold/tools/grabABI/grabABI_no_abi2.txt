@@ -1,3 +1,24 @@
 grabABI argc: 3 [1:0x1728039ce0d18a799c081c5c7fa2090dd365a8d0] [2:--raw] 
 grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --raw 
-ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting...
+Address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract. Skipping...
+
+  ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting...
+
+  Usage:    grabABI [-c|-g|-n|-v|-h] <address> [address...]  
+  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+
+  Where:  
+	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
+	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
+	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
+	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
+
+#### Hidden options (shown during testing only)
+	-k  (--known)         load common 'known' ABIs from cache
+#### Hidden options (shown during testing only)
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks

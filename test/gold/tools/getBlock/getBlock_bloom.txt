@@ -9,8 +9,8 @@ getBlock 4000001
   "parentHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 1097113993909745,
-  "price": 0,
-  "finalized": 1,
+  "price": 0.00000,
+  "finalized": true,
   "timestamp": 1499633571,
   "transactions": [
     {

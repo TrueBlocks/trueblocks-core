@@ -1,5 +1,5 @@
-getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--info] [3:symbol] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --info symbol 
+getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:symbol] 
+getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts symbol 
 {
     "symbol": "OMG"
 }

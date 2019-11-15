@@ -4,7 +4,6 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_leech(void) {
@@ -49,10 +48,11 @@ bool COptions::handle_leech(void) {
             ostringstream os;
 
             // go to the zips folder
-            os << "cd \"" << indexFolder_zips << "\" ; ";
+            os << "cd \"" << indexFolder_zips << "\" && ";
 
             // get the zip file from the IPFS cache
-            os << ipfs_cmd.str() << " \"" << zipFile << "\" ; ";
+            os << ipfs_cmd.str() << " \"" << zipFile << "\"";
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             usleep(500000); // so Ctrl+C works
 
@@ -65,13 +65,14 @@ bool COptions::handle_leech(void) {
             ostringstream os;
 
             // go to the production folder
-            os << "cd \"" << indexFolder_sorted << "\" ; ";
+            os << "cd \"" << indexFolder_sorted << "\" && ";
 
             // copy the new zip locally and unzip it
-            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted << filename << "\" ; ";
-            os << "gunzip \"" << filename << "\" ; cd - >/dev/null";
+            os << "cp -p \"" << zipFile << "\" \"" << indexFolder_sorted << filename << "\" && ";
+            os << "gunzip \"" << filename << "\" && cd - >/dev/null";
 
             cerr << "Leeching " << cTeal << textFile << cOff << endl;
+            NOTE_CALL(os.str());
             if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
             usleep(500000); // so Ctrl+C works
 

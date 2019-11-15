@@ -47,3 +47,15 @@ on, cmd,  slow, blooms, tools/getBloom, cmd_file2,       y, file:cmd_file2
 # core dumps
 off,both, slow, blooms, tools/getBloom, badopt10,        y, blocks = 4501030 & receipt_only & bits
 off,both, slow, blooms, tools/getBloom, badopt11,        y, blocks = 4501030 & receipt_only & bits
+
+# ./tools/getBloom/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+# ./tools/getBloom/options.cpp:    COption("bars", "a", "", OPT_SWITCH, "display blooms as bar chart instead of hex"),
+# ./tools/getBloom/options.cpp:    COption("bitbars", "s", "", OPT_SWITCH, "display nBits as a bar chart"),
+# ./tools/getBloom/options.cpp:    COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
+# ./tools/getBloom/options.cpp:    COption("bits", "i", "", OPT_SWITCH, "display blooms as bits instead of hex"),
+# ./tools/getBloom/options.cpp:    COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
+# ./tools/getBloom/options.cpp:    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
+# ./tools/getBloom/options.cpp:    COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
+# ./tools/getBloom/options.cpp:    COption("force", "f", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
+# ./tools/getBloom/options.cpp:    COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
+# ./tools/getBloom/options.cpp:    COption("receipt_only", "r", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),

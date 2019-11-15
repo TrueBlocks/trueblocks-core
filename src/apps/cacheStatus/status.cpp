@@ -286,7 +286,7 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "host" ) return host;
             break;
         case 'i':
-            if ( fieldName % "is_scraping" ) return bool_2_Str(is_scraping);
+            if ( fieldName % "is_scraping" ) return bool_2_Str_t(is_scraping);
             break;
         case 'r':
             if ( fieldName % "rpc_provider" ) return rpc_provider;

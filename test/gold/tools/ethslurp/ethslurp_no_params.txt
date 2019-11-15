@@ -3,20 +3,15 @@ ethslurp
 
   Not enough arguments presented.
 
-  Usage:    ethslurp [-t|-b|-s|-v|-h] <address> [address...] [block...]  
+  Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
 	blocks                an optional range of blocks to slurp
-	-t  (--type <val>)    type of transactions to request, one of [ext*|int|token|miner|all]
-	-b  (--block_range <range>)export records in block range (:0[:max])
-	-s  (--silent)        Run silently (only freshen the data, do not display it)
-
-#### Hidden options (shown during testing only)
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-#### Hidden options (shown during testing only)
-
+	-t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|miner|all]
+	-p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

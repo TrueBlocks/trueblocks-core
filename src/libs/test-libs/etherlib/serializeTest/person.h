@@ -17,6 +17,8 @@
  */
 #include "etherlib.h"
 
+namespace qblocks {
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -149,4 +151,5 @@ extern const char* STR_DISPLAY_PERSON;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

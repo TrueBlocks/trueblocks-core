@@ -46,7 +46,7 @@ void COptions::handle_generate(void) {
     if (!isWallet()) headers += ("#include \"walletlib.h\"\n");
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
-    for (auto abi : abi_specs) {
+    for (auto abi : abis) {
         for (auto interface : abi.interfaces) {
             if (!interface.isBuiltIn) {
                 string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
@@ -328,11 +328,11 @@ const char* STR_FACTORY2 =
 //-----------------------------------------------------------------------
 const char* STR_CLASSDEF =
 "[settings]\n"
-"class     = [{CLASS}]\n"
-"baseClass = C[{BASE}]\n"
-"fields    = [{FIELDS}]\n"
-"includes  = [{BASE_LOWER}].h\n"
-"cIncs     = #include \"etherlib.h\"\n";
+"class = [{CLASS}]\n"
+"base_class = C[{BASE}]\n"
+"fields = [{FIELDS}]\n"
+"includes = [{BASE_LOWER}].h\n"
+"cpp_includes = #include \"etherlib.h\"\n";
 
 //-----------------------------------------------------------------------
 const char* STR_HEADERFILE =

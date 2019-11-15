@@ -68,7 +68,7 @@ fixProj
 fixProj.1
 fixProj2
 freshen
-getAccounts
+ethNames
 getState
 getBlock
 getBloom

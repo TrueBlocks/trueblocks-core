@@ -141,37 +141,37 @@ bool testDisplayStr(COptions& options) {
 
 #if 0
 
-class     = CBranch
-baseClass = CTreeNode
-fields    = string branchValue
-includes  = etherlib.h|treenode.h
-cIncs     = #include "treeroot.h"
+class        = CBranch
+base_class   = CTreeNode
+fields       = string branchValue
+includes     = etherlib.h|treenode.h
+cpp_includes = #include "treeroot.h"
 
-class     = CInfix
-baseClass = CTreeNode
-fields    = CTreeNode *next
-includes  = etherlib.h|treenode.h
-cIncs     = #include "treeroot.h"
+class        = CInfix
+base_class   = CTreeNode
+fields       = CTreeNode *next
+includes     = etherlib.h|treenode.h
+cpp_includes = #include "treeroot.h"
 
-class     = CLeaf
-baseClass = CTreeNode
-fields    = CBlockNumArray blocks|uint64 counter
-includes  = etherlib.h|treenode.h
-cIncs     = #include "treeroot.h"
+class        = CLeaf
+base_class   = CTreeNode
+fields       = CBlockNumArray blocks|uint64 counter
+includes     = etherlib.h|treenode.h
+cpp_includes = #include "treeroot.h"
 
-class    = CTreeNode
-fields   = uint64 index|string prefixS
-includes = etherlib.h
-cIncs    = #include "treeroot.h"
-scope    = extern
+class        = CTreeNode
+fields       = uint64 index|string prefixS
+includes     = etherlib.h
+cpp_includes = #include "treeroot.h"
+scope        = extern
 
-class    = CTreeRoot
-fields   = CTreeNode *root
-includes = etherlib.h|treenode.h|leaf.h|branch.h|infix.h
+class        = CTreeRoot
+fields       = CTreeNode *root
+includes     = etherlib.h|treenode.h|leaf.h|branch.h|infix.h
 
-class     = CPriceQuote
-fields    = timestamp timestamp|double close
-includes  = abilib.h
-cIncs     = #include "etherlib.h"|#include "pricesource.h"
+class        = CPriceQuote
+fields       = timestamp timestamp|double close
+includes     = abilib.h
+cpp_includes = #include "etherlib.h"|#include "pricesource.h"
 
 #endif

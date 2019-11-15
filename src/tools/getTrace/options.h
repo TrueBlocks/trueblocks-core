@@ -11,17 +11,24 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool articulate;
     bool count_only;
     bool skip_ddos;
-    uint32_t max_traces;
-// END_CODE_DECLARE
+    uint64_t max_traces;
+    // END_CODE_DECLARE
 
     COptionsTransList transList;
     CAbi abi_spec;
@@ -30,7 +37,6 @@ public:
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };

@@ -34,6 +34,7 @@ namespace qblocks {
     extern void reverse    (string_q& target);
 
     //---------------------------------------------------------------------------------------
+    extern string_q substituteAny(const string_q& strIn, const string_q& what, const string_q& with);
     inline string_q substitute(const string_q& strIn, const string_q& what, const string_q& with) {
         string_q ret;
         ret = strIn;

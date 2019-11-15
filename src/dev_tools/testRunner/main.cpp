@@ -12,13 +12,15 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
-#include "test_case.h"
+#include "testcase.h"
+#include "measure.h"
 
 ostringstream perf;
-uint32_t totalTests = 0;
-uint32_t totalPassed = 0;
-double totalTime = 0.0;
+ostringstream slow;
+CMeasure total("all", "all", "all");
 CStringArray fails;
+extern const char* STR_SCREEN_REPORT;
+
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -31,6 +33,7 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0,10);
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -40,6 +43,8 @@ int main(int argc, const char *argv[]) {
             string_q path = nextTokenClear(testName, '/');
             LOG1("Processing file: ", path);
             options.cleanTest(path, testName);
+            if (options.modes & API)
+                options.cleanTest(path, testName + "/api_tests");
 
             string_q testFile = getCWD() + "../../../../src/other/testCases/" + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
@@ -76,10 +81,10 @@ int main(int argc, const char *argv[]) {
                 }
             }
 
-            if (!options.doTests(testArray, testName, CMD))
+            if (!options.doTests(testArray, path, testName, API))
                 return 1;
 
-            if (!options.doTests(testArray, testName, API))
+            if (!options.doTests(testArray, path, testName, CMD))
                 return 1;
 
             if (shouldQuit())
@@ -87,50 +92,33 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    cerr << "   allTests (all): ";
-    cerr << cYellow << totalTests << " tests " << cOff ;
-    cerr << cGreen << totalPassed << " passed " << greenCheck << cOff << " ";
-    if (totalTests != totalPassed)
-        cerr << cRed << (totalTests - totalPassed) << " failed " << cOff << "in ";
-    cerr << cTeal << double_2_Str(totalTime, 5) << " seconds " << cOff;
-    cerr << cBlue << double_2_Str(totalTime / totalTests, 5) << " avg." << cOff << endl;
+    cerr << total.Format(STR_SCREEN_REPORT) << endl;
     for (auto fail : fails)
         cerr << fail;
     cerr << endl;
-    if (totalTests == totalPassed) {
-        if (options.full_test && options.report) {
-            perf << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
-            perf << Now().Format(FMT_EXPORT) << ",";
-            perf << "allTests" << ",";
-            perf << "all" << ",";
-            perf << options.filter << ",";
-            perf << totalTests << ",";
-            perf << totalPassed << ",";
-            perf << (totalTests - totalPassed) << ",";
-            perf << double_2_Str(totalTime, 5) << ",";
-            perf << double_2_Str(totalTime / totalTests, 5) << endl;
-            cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-            appendToAsciiFile(configPath("performance.txt"), perf.str());
-        }
+
+    if (total.nTests == total.nPassed) {
+        perf << total.Format(options.perf_format) << endl;
+        cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+        if (options.full_test && options.report)
+            appendToAsciiFile(configPath("performance.csv"), perf.str());
+        appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
     }
 
     return 0;
 }
 
 //-----------------------------------------------------------------------
-bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int whichTest) {
+bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
 
     if (!(modes & whichTest))
         return true;
 
     resetClock();
-    double testTime = 0;
-    uint32_t nTests = 0;
-    uint32_t nPassed = 0;
-
     bool cmdTests = whichTest & CMD;
 
-    cerr << "Testing " << testName << " (" << (cmdTests ? "cmd" : "api") << " mode):" << endl;
+    CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
+    cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test: testArray) {
 
@@ -146,20 +134,17 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
 
         } else {
 
-            if (endsWith(test.path, "lib"))
-                test.workPath = "../" + test.workPath;
-
             ostringstream cmd;
             if (cmdTests) {
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
-                cmd << "TEST_MODE=true NO_COLOR=true REDIR_CERR=true " << c;
-
+                string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+                cmd << e << c;
             } else {
                 cmd << "curl -s \"http:/""/localhost:8080/" << test.route;
                 if (!test.builtin && !test.options.empty())
                     cmd << "?" << test.options;
                 cmd << "\"";
-                if (!test.post.empty())
+                if (!no_post && !test.post.empty())
                     cmd << " | " <<  test.post << " ";
                 cmd << " >" << test.workPath + test.fileName;
             }
@@ -172,19 +157,21 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
             string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
-            nTests++;
-//            int ret =
-                system(theCmd.c_str());
+            if (test.mode == "both" || contains(test.tool, "lib"))
+                measure.nTests++;
+            int ret = system(theCmd.c_str());  { if (ret) { printf("%s",""); } }  // do not remove, squelches warning
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
             if (test.builtin) {
-                nPassed++;
+                if (test.mode == "both" || contains(test.tool, "lib"))
+                    measure.nPassed++;
                 continue;
             }
 
             double thisTime = str_2_Double(TIC());
-            testTime += thisTime;
+            if (test.mode == "both" || contains(test.tool, "lib"))
+                measure.totSecs += thisTime;
             string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
             if (endsWith(test.path, "lib"))
@@ -198,12 +185,13 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
 
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {
-                nPassed++;
+                if (test.mode == "both" || contains(test.tool, "lib"))
+                    measure.nPassed++;
 
             } else {
                 ostringstream os;
-                os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : testName) << " ";
-                os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":testName) << " " << trim(test.options) << ")" << cRed;
+                os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
+                os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":measure.cmd) << " " << trim(test.options) << ")" << cRed;
 //                if (newText.empty())    os << " working file is empty ";
 //                if (ret)                os << " system call returned non-zero ";
 //                if (newText != oldText) {
@@ -222,8 +210,12 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
                 reverse(test.filename);
                 test.filename = substitute(padLeft(test.filename, 30).substr(0,30), " ", ".");
                 reverse(test.filename);
-                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : testName) << " ";
+                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
                 cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0,90) << endl;
+                if (thisTime > verySlow) {
+                    slow << "   " << double_2_Str(thisTime) << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
+                    slow << trim(test.filename) << " " << trim(test.options).substr(0,90) << endl;
+                }
             }
 
             if (!no_quit && (result == redX))
@@ -238,32 +230,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testName, int 
         }
     }
 
-    totalTests += nTests;
-    totalPassed += nPassed;
-    totalTime += testTime;
-
-    if (nTests) {
-        ostringstream os;
-        os << string_q(GIT_COMMIT_HASH).substr(0,10) << ",";
-        os << Now().Format(FMT_EXPORT) << ",";
-        os << testName << ",";
-        os << (cmdTests ? "cmd" : "api") << ",";
-        os << filter << ",";
-        os << nTests << ",";
-        os << nPassed << ",";
-        os << (nTests - nPassed) << ",";
-        os << double_2_Str(testTime, 5) << ",";
-        os << double_2_Str(testTime / nTests, 5) << endl;
-        perf << os.str();
-
-        cerr << "   " << testName << "(" << (cmdTests ? "cmd" : "api") << "," << filter << "): ";
-        cerr << cYellow << nTests << " tests " << cOff ;
-        cerr << cGreen << nPassed << " passed " << greenCheck << cOff << " ";
-        if (nTests != nPassed)
-            cerr << cRed << (nTests - nPassed) << " failed " << cOff << "in ";
-        cerr << cTeal << double_2_Str(testTime, 5) << " seconds " << cOff;
-        cerr << cBlue << double_2_Str(testTime / nTests, 5) << " avg." << cOff << endl;
-        cerr << endl;
+    total += measure;
+    if (measure.nTests) {
+        cerr << measure.Format(STR_SCREEN_REPORT) << endl;
+        perf << measure.Format(perf_format) << endl;
     }
 
     return true;
@@ -292,5 +262,10 @@ bool replaceFile(const string_q& customFile, void *data) {
 }
 
 //-----------------------------------------------------------------------
+double verySlow = .6;
 double tooSlow = .4;
 double fastEnough = .2;
+
+//-----------------------------------------------------------------------
+const char* STR_SCREEN_REPORT =
+"   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in [{TOTSECS}] seconds [{AVGSECS}] avg.";

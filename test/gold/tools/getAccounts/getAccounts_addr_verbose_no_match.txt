@@ -1,3 +1,0 @@
-getAccounts argc: 5 [1:0xCB1] [2:--verbose] [3:--fmt] [4:txt] 
-getAccounts 0xCB1 --verbose --fmt txt 
-No results

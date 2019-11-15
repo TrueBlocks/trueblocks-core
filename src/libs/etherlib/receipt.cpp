@@ -394,7 +394,7 @@ const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RECEIPT =
+const char* STR_DISPLAY_RECEIPT = 
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{HASH}]\t"

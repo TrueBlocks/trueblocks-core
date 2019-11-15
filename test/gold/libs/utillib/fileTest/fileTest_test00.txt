@@ -1,7 +1,7 @@
 fileTest argc: 1 
 fileTest 
 Non-recursive from ../
-Found 15 (15) files
+Found 16 (16) files
 ../arrayTest/
 ../bigIntTest/
 ../cmdLineTest/
@@ -11,6 +11,7 @@ Found 15 (15) files
 ../fileTest/
 ../jsonTest/
 ../parsingTest/
+../runningTest/
 ../sizeofTest/
 ../stringTest/
 ../timeTest/

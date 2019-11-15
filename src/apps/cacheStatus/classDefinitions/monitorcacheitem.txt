@@ -1,7 +1,6 @@
 [settings]
-class     = CMonitorCacheItem
-baseClass = CAccountWatch
-fields    = string type
-includes  = etherlib.h|accountwatch.h
-cIncs     = 
+class = CMonitorCacheItem
+base_class = CAccountWatch
+fields = string type
+includes = etherlib.h|accountwatch.h
 serialize = true

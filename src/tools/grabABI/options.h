@@ -11,34 +11,38 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "acctlib.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
+    CAddressArray addrs;
     bool generate;
     bool noconst;
-    bool silent;
-    bool data;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
+    bool first;
     uint64_t parts;
-    CAbiArray abi_specs;
-    CAddressArray addrs;
+    CAbiArray abis;
     string_q classDir;
     string_q prefix;
 
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
     bool isToken(void) const { return prefix % "tokenlib"; }
     bool isWallet(void) const { return prefix % "walletlib"; }
     bool isBuiltIn(void) const { return isToken() || isWallet(); }
-    void handle_display(void);
     void handle_generate(void);
 };
 

@@ -443,4 +443,10 @@ namespace qblocks {
         return find_nth(haystack, 0, needle, nth);
     }
 
+    string_q substituteAny(const string_q& strIn, const string_q& what, const string_q& with) {
+        string_q ret = strIn;
+        for (auto ch : what)
+            ret = substitute(ret, string_q(1,ch), with);
+        return ret;
+    }
 }  // namespace qblocks

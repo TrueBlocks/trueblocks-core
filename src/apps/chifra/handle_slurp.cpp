@@ -8,18 +8,26 @@
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_slurp(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
+
+    if (contains(tool_flags, "help")) {
+        ostringstream os;
+        os << "ethslurp --help";
+        NOTE_CALL(os.str());
+        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        EXIT_NOMSG8(true);
+    }
 
     if (addrs.empty())
         EXIT_USAGE("'chifra slurp' requires an Ethereum address.");
 
-    LOG5("tool_flags: " + tool_flags);
     for (auto addr : addrs) {
         ostringstream os;
-        os << "ethslurp " << tool_flags << " " << addr << " ; ";
+        os << "ethslurp " << tool_flags << " " << addr;
+        NOTE_CALL(os.str());
         if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
     }
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

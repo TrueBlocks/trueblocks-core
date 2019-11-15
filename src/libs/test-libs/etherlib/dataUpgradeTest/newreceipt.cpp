@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "newreceipt.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CNewReceipt, CBaseNode);
 
@@ -249,7 +251,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
             break;
         case 'i':
-            if ( fieldName % "isError" ) return bool_2_Str(isError);
+            if ( fieldName % "isError" ) return bool_2_Str_t(isError);
             break;
         case 'l':
             if ( fieldName % "logs" || fieldName % "logsCnt" ) {
@@ -298,4 +300,5 @@ const char* STR_DISPLAY_NEWRECEIPT = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

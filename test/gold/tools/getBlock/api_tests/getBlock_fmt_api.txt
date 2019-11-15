@@ -1,5 +1,4 @@
 {
-  "type": "CBlock",
   "data": [
     {
       "gasLimit": 4704588,
@@ -10,7 +9,7 @@
       "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
       "difficulty": 67778199271167,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1473348165,
       "transactions": [
         {
@@ -431,7 +430,7 @@
       "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
       "difficulty": 74071927411516,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1474924022,
       "transactions": [
         {
@@ -854,12 +853,5 @@
       "date": "2016-09-26 21:07:02 UTC",
       "age": "100"
     }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  ]
 }

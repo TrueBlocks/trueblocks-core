@@ -537,12 +537,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) {
-                if (articulatedTx == CFunction())
-                    return "";
-                expContext().noFrst = true;
-                return articulatedTx.Format();
-            }
+            if ( fieldName % "articulatedTx" ) { if (articulatedTx == CFunction()) return ""; expContext().noFrst=true; return articulatedTx.Format(); }
             break;
         case 'b':
             if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
@@ -553,7 +548,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
             break;
         case 'g':
             if ( fieldName % "gas" ) return gas_2_Str(gas);
@@ -649,7 +644,7 @@ const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRANSACTION =
+const char* STR_DISPLAY_TRANSACTION = 
 "[{BLOCKNUMBER}]\t"
 "[{TRANSACTIONINDEX}]\t"
 "[{DATE}]\t"

@@ -49,7 +49,7 @@ bool CWebAPI::checkKey(void) {
         cin >> buffer;
     key = buffer;
     if (key % "exit" || key % "quit" || key.empty())
-        exit(0);
+        return false;
 
     // Save the key for later
     CToml toml(configPath("ethslurp.toml"));

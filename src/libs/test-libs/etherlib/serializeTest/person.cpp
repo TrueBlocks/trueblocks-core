@@ -17,6 +17,8 @@
 #include <algorithm>
 #include "person.h"
 
+namespace qblocks {
+
 //---------------------------------------------------------------------------
 IMPLEMENT_NODE(CPerson, CBaseNode);
 
@@ -267,4 +269,5 @@ const char* STR_DISPLAY_PERSON = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

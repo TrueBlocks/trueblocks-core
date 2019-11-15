@@ -11,19 +11,26 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "acctlib.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
+    CAddressArray addrs;
     bool changes;
     bool no_zero;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
-    CAddressArray addrs;
     address_t current;
-    ethstate_t modes;
+    ethstate_t modeBits;
     biguint_t prevBal;
     wei_t deminimus;
     bool first;
@@ -31,7 +38,6 @@ public:
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 };

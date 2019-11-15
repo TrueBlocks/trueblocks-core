@@ -14,6 +14,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool visitAbi(CAbi& abi, void *data);
 //-----------------------------------------------------------------------
 int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
@@ -22,15 +23,38 @@ int main(int argc, const char *argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        if (once)
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CAbi));
+        if (!options.generate)
+            forEveryAbiInArray(visitAbi, &options, options.abis);
+        once = false;
+    }
+    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
 
-        if (options.generate) {
-            options.handle_generate();
-        } else {
-            options.handle_display();
+    return 0;
+}
+
+//-----------------------------------------------------------------------
+bool visitAbi(CAbi& abi, void *data) {
+    COptions *opt = (COptions*)data;  // NOLINT
+    bool isText = (opt->exportFmt == (TXT1|CSV1));
+    if (isText && !opt->isNoHeader)
+        cout << expContext().fmtMap["header"] << endl;
+
+    for (auto interface : abi.interfaces) {
+        if (!interface.constant || !opt->noconst) {
+            if (!opt->first) {
+                if (!isText)
+                    cout << ",";
+                cout << endl;
+            }
+            cout << interface.Format(expContext().fmtMap["format"]);
+            opt->first = false;
         }
     }
-    return 0;
+    return true;
 }

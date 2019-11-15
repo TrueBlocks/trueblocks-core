@@ -7,13 +7,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "options.h"
-#include "question.h"
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
 
-    ENTER4("handle_" + mode);
+    ENTER8("handle_" + mode);
     nodeNotRequired();
+
+    if (contains(tool_flags, "help")) {
+        optionOn(OPT_HELP);
+        return usage();
+    }
 
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
@@ -43,8 +47,9 @@ bool COptions::handle_rm(void) {
 
             if (ch == 'y' || ch == 'Y' || hasYes) {
                 ostringstream os;
-                os << "cd " << getMonitorPath("") << " ; ";
-                os << "rm -f " << addr << ".* ; ";
+                os << "cd " << getMonitorPath("") << " && ";
+                os << "rm -f " << addr << ".*";
+                NOTE_CALL(os.str());
                 if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 
@@ -71,5 +76,5 @@ bool COptions::handle_rm(void) {
         cout  << exportPostamble(JSON1, errors, "") << endl;
     }
 
-    EXIT_NOMSG4(true);
+    EXIT_NOMSG8(true);
 }

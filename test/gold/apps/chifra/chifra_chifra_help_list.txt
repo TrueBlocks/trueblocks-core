@@ -1,0 +1,27 @@
+chifra argc: 3 [1:list] [2:--help] 
+chifra list --help 
+TIME ~ CLOCK - <INFO>  : Connecting to node...
+chifra list argc: 2 [1:--help] 
+chifra list --help 
+
+  Usage:    chifra list [-v|-h] <address> [address...]  
+  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+
+  Where:  
+	addrs                 one or more Ethereum addresses (required)
+
+#### Hidden options (shown during testing only)
+	-f  (--finalized)     toggle search of finalized folder ('on' by default)
+	-s  (--staging)       toggle search of staging (not yet finalized) folder ('off' by default)
+	-u  (--unripe)        toggle search of unripe (neither staged nor finalized) folder ('off' by default)
+	-d  (--daemon)        we are being called in daemon mode which causes us to print results differently
+	-S  (--start <num>)   first block to process (inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
+#### Hidden options (shown during testing only)
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by QBlocks
+                                                                                                                        

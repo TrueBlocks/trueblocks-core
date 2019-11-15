@@ -21,9 +21,9 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     bool CAbi::articulateTransaction(CTransaction *p) const {
 
-        ENTER("articulateTransaction");
+        ENTER8("articulateTransaction");
         if (!p)
-            EXIT_NOMSG(false);
+            EXIT_NOMSG8(false);
 
         // articulate the events, so we can return with a fully articulated object
         for (size_t i = 0 ; i < p->receipt.logs.size() ; i++)
@@ -48,7 +48,7 @@ namespace qblocks {
                     p->articulatedTx.showOutput = false;
                     bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
                     bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
-                    EXIT_NOMSG(ret1 || ret2);
+                    EXIT_NOMSG8(ret1 || ret2);
                 }
             }
 
@@ -56,7 +56,7 @@ namespace qblocks {
                 p->articulatedTx.message = "";
         }
 
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
     }
 
     // Significant speed improvement if we handle these items without regular processing
@@ -200,9 +200,9 @@ namespace qblocks {
     //-----------------------------------------------------------------------
     bool CAbi::articulateTrace(CTrace *p) const {
 
-        ENTER("articulateTrace");
+        ENTER8("articulateTrace");
         if (!p)
-            EXIT_NOMSG(false);
+            EXIT_NOMSG8(false);
 
         if (p->action.input.length() >= 10 || p->action.input == "0x") {
             string_q encoding = extract(p->action.input, 0, 10);
@@ -213,25 +213,25 @@ namespace qblocks {
                     p->articulatedTrace.showOutput = false;
                     bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
                     bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
-                    EXIT_NOMSG(ret1 || ret2);
+                    EXIT_NOMSG8(ret1 || ret2);
                 }
             }
         }
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
     }
 
     //-----------------------------------------------------------------------
     bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, CFunction& ret) const {
-        ENTER("articulateOutputs");
+        ENTER8("articulateOutputs");
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 ret = CFunction(interface);
                 ret.showOutput = false;
                 bool bRet = decodeRLP(ret.outputs, "", output);
-                EXIT_NOMSG(bRet);
+                EXIT_NOMSG8(bRet);
             }
         }
-        EXIT_NOMSG(true);
+        EXIT_NOMSG8(true);
     }
 
     //----------------------------------------------------------------------------

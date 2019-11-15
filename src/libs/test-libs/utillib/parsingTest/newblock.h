@@ -18,6 +18,8 @@
 #include "etherlib.h"
 #include "transaction.h"
 
+namespace qblocks {
+
 // EXISTING_CODE
 // EXISTING_CODE
 
@@ -173,4 +175,5 @@ extern const char* STR_DISPLAY_NEWBLOCK;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
+}  // namespace qblocks
 

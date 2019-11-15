@@ -9,7 +9,7 @@
       "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
       "difficulty": 41857221373863,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1464293714,
       "transactions": [
         {
@@ -88,7 +88,7 @@
       "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
       "difficulty": 1097113993909745,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1499633571,
       "transactions": [
         {
@@ -547,7 +547,7 @@
       "miner": "0x829bd824b016326a401d083b33d092293333a830",
       "difficulty": 1097924572009027,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1499633574,
       "transactions": [
         {

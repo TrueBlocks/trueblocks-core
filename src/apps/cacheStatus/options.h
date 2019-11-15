@@ -4,8 +4,11 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "acctlib.h"
-
 #include "status.h"
 #include "chaincache.h"
 #include "pricecache.h"
@@ -16,16 +19,18 @@
 #include "namecache.h"
 #include "configuration.h"
 
-typedef map<string_q,string_q> CIndexHashMap;
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
+
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool details;
     bool list;
     blknum_t start;
     blknum_t end;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CStatus status;
     string_q mode;
@@ -36,7 +41,6 @@ public:
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const override;
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
@@ -48,7 +52,6 @@ public:
 };
 
 //-------------------------------------------------------------------------
-extern void loadHashes(CIndexHashMap& map, const string_q& which);
 extern bool countFiles(const string_q& path, void *data);
 extern bool noteMonitor_light(const string_q& path, void *data);
 extern bool noteMonitor(const string_q& path, void *data);

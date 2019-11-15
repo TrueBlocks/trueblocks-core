@@ -8,8 +8,11 @@
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
 
+    ENTER8("handle_status");
+
     CIndexCache aid;
     if (contains(mode, "|index|")) {
+        LOG8("Index");
         aid.type = aid.getRuntimeClass()->m_ClassName;
         aid.path = (isTestMode() ? "IndexPath" : getIndexPath(""));
         forEveryFileInFolder(getIndexPath(""), countFiles, &aid);
@@ -29,6 +32,7 @@ bool COptions::handle_status(ostream& os) {
 
     CMonitorCache md;
     if (contains(mode, "|monitors|")) {
+        LOG8("Monitors");
         if (expContext().asEther) {
             SHOW_FIELD(CAccountWatch, "curEther");
             HIDE_FIELD(CAccountWatch, "curBalance");
@@ -54,6 +58,7 @@ bool COptions::handle_status(ostream& os) {
 
     CNameCache nc;
     if (contains(mode, "|names|")) {
+        LOG8("Names");
         nc.type = nc.getRuntimeClass()->m_ClassName;
         nc.path = (isTestMode() ? "CachePath" : getCachePath("monitors/"));
         forEveryFileInFolder(getCachePath("monitors/"), countFiles, &nc);
@@ -72,6 +77,7 @@ bool COptions::handle_status(ostream& os) {
 
     CAbiCache abi;
     if (contains(mode, "|abis|")) {
+        LOG8("abis");
         abi.type = abi.getRuntimeClass()->m_ClassName;
         abi.path = (isTestMode() ? "CachePath" : getCachePath("abis/"));
         forEveryFileInFolder(getCachePath("abis/"), countFiles, &abi);
@@ -85,7 +91,8 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_blocks;
-    if (contains(mode, "|blocks|")) {
+    if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
+        LOG8("Blocks");
         cd_blocks.type = cd_blocks.getRuntimeClass()->m_ClassName;
         cd_blocks.path = (isTestMode() ? "BlockPath" : getCachePath("blocks/"));
         forEveryFileInFolder(getCachePath("blocks/"), countFiles, &cd_blocks);
@@ -93,7 +100,8 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_txs;
-    if (contains(mode, "|transactions|")) {
+    if (contains(mode, "|transactions|") || contains(mode, "|data|")) {
+        LOG8("Transactions");
         cd_txs.type = cd_txs.getRuntimeClass()->m_ClassName;
         cd_txs.path = (isTestMode() ? "TxPath" : getCachePath("txs/"));
         forEveryFileInFolder(getCachePath("txs/"), countFiles, &cd_txs);
@@ -101,7 +109,8 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache cd_traces;
-    if (contains(mode, "|traces|")) {
+    if (contains(mode, "|traces|") || contains(mode, "|data|")) {
+        LOG8("Traces");
         cd_traces.type = cd_traces.getRuntimeClass()->m_ClassName;
         cd_traces.path = (isTestMode() ? "TracePath" : getCachePath("traces/"));
         forEveryFileInFolder(getCachePath("traces/"), countFiles, &cd_traces);
@@ -110,6 +119,7 @@ bool COptions::handle_status(ostream& os) {
 
     CSlurpCache slurps;
     if (contains(mode, "|slurps|")) {
+        LOG8("Slurps");
         slurps.type = slurps.getRuntimeClass()->m_ClassName;
         slurps.path = (isTestMode() ? "SlurpPath" : getCachePath("slurps/"));
         forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
@@ -128,6 +138,7 @@ bool COptions::handle_status(ostream& os) {
 
     CPriceCache pd;
     if (contains(mode, "|prices|")) {
+        LOG8("Prices");
         pd.type = pd.getRuntimeClass()->m_ClassName;
         pd.path = (isTestMode() ? "PricePath" : getCachePath("prices/"));
         forEveryFileInFolder(getCachePath("prices/"), countFiles, &pd);
@@ -141,7 +152,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     os << status;
-    return true;
+    EXIT_NOMSG8(true);
 }
 
 //---------------------------------------------------------------------------
@@ -211,7 +222,7 @@ bool noteMonitor(const string_q& path, void *data) {
             mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
         }
         CAccountName item;
-        string_q customStr = getGlobalConfig("getAccounts")->getConfigJson("custom", "list", "");
+        string_q customStr = getGlobalConfig("ethNames")->getConfigJson("custom", "list", "");
         while (item.parseJson3(customStr)) {
             if (mdi.address == item.address) {
                 mdi.group = item.group;
@@ -306,12 +317,12 @@ bool noteIndex(const string_q& path, void *data) {
             aci.latestAppearance = (uint32_t)tmp;
             CStringArray parts;
             explode(parts, path, '/');
-            string_q blks = substitute(substitute(parts[parts.size()-1], ".bloom", ""), ".bin", "");
+            blknum_t num = str_2_Uint(nextTokenClear(parts[parts.size()-1], '-'));
             if (contains(path, "blooms")) {
-                aci.hash = counter->options->bloomHashes[blks];
+                aci.hash = counter->options->bloomHashes[num].hash;
             } else {
                 ASSERT(contains(path, "finalized"));
-                aci.hash = counter->options->indexHashes[blks];
+                aci.hash = counter->options->indexHashes[num].hash;
             }
             size_t len = aci.hash.length();
             if (len)

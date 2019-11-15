@@ -192,6 +192,20 @@ bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_
     return true;
 }
 
+//--------------------------------------------------------------------------------
+bool parseAddressList2(COptionsBase *opt, CAddressArray& addrs, const string_q& argIn) {
+    if (!isAddress(argIn))
+        return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) + ") is not equal to 40 characters (20 bytes).");
+    addrs.push_back(toLower(str_2_Addr(argIn)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool parseStringList2(COptionsBase *opt, CStringArray& strings, const string& argIn) {
+    strings.push_back(argIn);
+    return true;
+}
+
 //----------------------------------------------------------------------------------------------------
 time_q bn_2_Date(const blknum_t& bn) {
     CBlock block;

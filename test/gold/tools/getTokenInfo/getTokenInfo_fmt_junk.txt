@@ -3,13 +3,13 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getTokenInfo [-i|-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    getTokenInfo [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 
   Where:  
 	addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
 	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-i  (--info <val>)    retreive information about the token, one of [name|decimals|totalSupply|version|symbol|all]
+	-p  (--parts <val>)   one or more parts of the token information to retreive, one of [name|decimals|totalSupply|version|symbol|all]
 	-b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
 	-n  (--no_zero)       suppress the display of zero balance accounts
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

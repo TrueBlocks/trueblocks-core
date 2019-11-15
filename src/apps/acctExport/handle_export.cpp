@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------
 bool COptions::exportData(void) {
 
-    ENTER("exportData");
+    ENTER8("exportData");
 
     bool shouldDisplay = !freshen;
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
@@ -139,7 +139,19 @@ bool COptions::exportData(void) {
 
                 } else {
 
-                    if (logs) {
+                    if (receipts) {
+
+                        // acctExport --receipts
+                        if (articulate)
+                            abis.articulateTransaction(&trans);
+                        if (isJson && shouldDisplay && !first)
+                            cout << ", ";
+                        nExported++;
+                        if (shouldDisplay)
+                            cout << trans.receipt.Format() << endl;
+                        first = false;
+
+                    } else if (logs) {
 
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
@@ -169,32 +181,27 @@ bool COptions::exportData(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (isRedirected()) {  // we are in --output mode
-                    qblocks::eLogger->setEndline('\r');
-                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
-                    qblocks::eLogger->setEndline('\n');
+                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ", "\r");
 
                 } else {
                     static size_t cnt = 0;
                     if (!(++cnt % 71)) { // not reporting every tx is way faster
-                        qblocks::eLogger->setEndline('\r');
-                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ");
-                        qblocks::eLogger->setEndline('\n');
+                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ", "\r");
                     }
                 }
             }
         }
     }
 
-    qblocks::eLogger->setEndline('\r');
-    LOG_INFO(string_q(120,' '));
-    qblocks::eLogger->setEndline('\n');
+    if (!isTestMode() && shouldDisplay)
+        LOG_INFO(string_q(120,' '), "\r");
 
     if (grab_abis) {
         // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
         for (pair<address_t,bool> item : abiMap) {
             if (isContractAt(item.first)) {
                 CAbi unused;
-                loadAbiAndCache(unused, item.first, false, true, false);
+                loadAbiAndCache(unused, item.first, false, errors);
                 cout << "ABI for " << item.first << " ";
                 cout << (fileExists(getCachePath("abis/" + item.first + ".json")) ? "cached" : "not cached") << endl;
             }
@@ -210,5 +217,5 @@ bool COptions::exportData(void) {
         if (items.size() > 0)
             watch.writeLastExport(items[items.size()-1].blk);
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

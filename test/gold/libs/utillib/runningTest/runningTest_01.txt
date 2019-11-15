@@ -1,0 +1,17 @@
+runningTest argc: 2 [1:0] 
+runningTest 0 
+pgrep -i acctScrape: 
+pgrep -f acctScrape: 
+pgrep -l acctScrape: 
+pgrep -fl acctScrape: 
+pgrep -fl acctscrape: 
+pgrep -fil acctscrape: 
+ps -ef | grep -i acctscrape | grep -v grep: 
+
+pgrep -i runningTest: 
+pgrep -f runningTest: 
+pgrep -l runningTest: 
+pgrep -fl runningTest: 
+pgrep -fl runningtest: 
+pgrep -fil runningtest: 
+ps -ef | grep -i runningtest | grep -v grep:   501 49735 49734   0 10:13PM ttys010    0:00.02 runningTest 0

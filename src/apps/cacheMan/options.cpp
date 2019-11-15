@@ -3,12 +3,16 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
-    COption("filenames", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    // BEG_CODE_OPTIONS
+    COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
     COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
@@ -22,17 +26,18 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER4("parseArguments");
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        EXIT_NOMSG8(false);
 
-// BEG_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    CStringArray files;
     bool check = false;
     bool sort = false;
     bool fix = false;
@@ -40,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     bool import = false;
     bool remove = false;
     bool merge = false;
-// END_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
 
@@ -49,7 +54,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
+            // BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
@@ -96,19 +101,25 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-// END_CODE_AUTO
         } else {
-            address_t addr = toLower(substitute(arg, ".acct.bin", ""));
-            if (!isAddress(addr))
-                EXIT_USAGE("Option '" + arg + "' does not appear to be an address.");
+            if (!parseStringList2(this, files, arg))
+                return false;
 
-            // Command line and chifra send in straight addresses, some test cases may send a local file...
-            string_q path = (fileExists(arg + ".acct.bin") ? (arg + ".acct.bin") : getMonitorPath(addr));
-            if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
-                EXIT_USAGE("Monitor file for '" + arg + "' does not exist.");
-
-            monitors.push_back(CAccountWatch(addr, path));
+            // END_CODE_AUTO
         }
+    }
+
+    for (auto file : files) {
+        address_t addr = toLower(substitute(file, ".acct.bin", ""));
+        if (!isAddress(addr))
+            EXIT_USAGE("Option '" + file + "' does not appear to be an address.");
+
+        // Command line and chifra send in straight addresses, some test cases may send a local file...
+        string_q path = (fileExists(file + ".acct.bin") ? (file + ".acct.bin") : getMonitorPath(addr));
+        if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
+            EXIT_USAGE("Monitor file for '" + file + "' does not exist.");
+
+        monitors.push_back(CAccountWatch(addr, path));
     }
 
     if (list) {
@@ -190,13 +201,13 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
 
-// BEG_CODE_INIT
+    // BEG_CODE_INIT
     data = false;
     truncate = 0;
     skip = 1;
     start = NOPOS;
     end = NOPOS;
-// END_CODE_INIT
+    // END_CODE_INIT
 
     monitors.clear();
     mode = "";
@@ -206,6 +217,11 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
@@ -214,7 +230,7 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& addr) {
-    ENTER("loadMonitorData");
+    ENTER8("loadMonitorData");
     string_q fn = getMonitorPath(addr);
     if (!fileExists(fn)) {
         replace(fn, getMonitorPath(""), "./");
@@ -245,5 +261,5 @@ bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& ad
     } else {
         EXIT_FAIL("Could not allocate memory for address " + addr + "Quitting...\n");
     }
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }

@@ -20,10 +20,26 @@
 namespace qblocks {
 
     //-----------------------------------------------------------------------
+    class CIndexChunk {
+    public:
+        hash_t hash;
+        uint64_t cnt;
+        CIndexChunk(const hash_t& h) { hash = h; cnt = 0; }
+        CIndexChunk& operator=(const CIndexChunk& ic) { hash = ic.hash; cnt = ic.cnt; return *this; }
+        CIndexChunk() { hash = ""; cnt = 0; }
+        CIndexChunk(const CIndexChunk& ic) { hash = ic.hash; cnt = ic.cnt; }
+    };
+
+
+    //-----------------------------------------------------------------------
+    typedef map<blknum_t, CIndexChunk> CIndexHashMap;
+
+    //-----------------------------------------------------------------------
     #define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
     extern hash_t versionHash;
     extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
     extern void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+    extern void loadHashes(CIndexHashMap& map, const string_q& which);
 
 }  // namespace qblocks
 

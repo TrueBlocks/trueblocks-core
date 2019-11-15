@@ -1,4 +1,4 @@
 [settings]
-class    = CPerson
-fields   = string name|uint64 age|CPerson *next
+class = CPerson
+fields = string name|uint64 age|CPerson *next
 includes = etherlib.h

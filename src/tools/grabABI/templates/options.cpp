@@ -5,11 +5,15 @@
  *
  * The LICENSE at the root of this repo details your rights (if any)
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "main.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("parse", "p", "", OPT_SWITCH, "display parsed input data"),
     COption("logs", "g", "", OPT_SWITCH, "display smart contract lo(g)s or events"),
     COption("trace", "t", "", OPT_SWITCH, "display smart contract internal traces"),
@@ -24,7 +28,7 @@ static const COption params[] = {
     COpt ion("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
     COption("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -37,16 +41,16 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
-// END_CODE_AUTO
+            // BEG_CODE_AUTO
+            // END_CODE_AUTO
 
         } else if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
 
@@ -168,8 +172,8 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-// BEG_CODE_INIT
-// END_CODE_INIT
+    // BEG_CODE_INIT
+    // END_CODE_INIT
 
     no_check = false;
     single_on = false;
@@ -190,13 +194,18 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : transStats(), blockStats(),
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
+setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 #ifdef DEBUGGER_ON
 tBuffer(),
 #endif
 transFmt(""), traceFmt(""), esc_hit(false) {
     Init();
     barLen(80);
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------

@@ -99,6 +99,7 @@ namespace qblocks {
     typedef bool (*TRANSVISITFUNC)          (CTransaction& trans, void *data);
     typedef bool (*LOGVISITFUNC)            (CLogEntry& log, void *data);
     typedef bool (*TRACEVISITFUNC)          (CTrace& trace, void *data);
+    typedef bool (*ABIVISITFUNC)            (CAbi& trace, void *data);
 
     //-------------------------------------------------------------------------
     // forEvery functions
@@ -117,6 +118,10 @@ namespace qblocks {
     extern bool forEveryTraceInBlock         (TRACEVISITFUNC func, void *data, const CBlock& block);
     extern bool forEveryLogInTransaction     (LOGVISITFUNC func,   void *data, const CTransaction& trans);
     extern bool forEveryLogInBlock           (LOGVISITFUNC func,   void *data, const CBlock& block);
+
+    //-------------------------------------------------------------------------
+    // forEvery functions
+    extern bool forEveryAbiInArray           (ABIVISITFUNC func, void *data, const CAbiArray& abis);
 
     //-------------------------------------------------------------------------
     extern blknum_t getLastBlock_client       (void);
@@ -144,8 +149,6 @@ namespace qblocks {
     extern biguint_t weiPerEther(void);
 
     //-------------------------------------------------------------------------
-    extern void manageFields(const string_q& formatStr);
-    extern void manageFields(const string_q& listIn, bool show);
     extern const string_q defHide;
     extern const string_q defShow;
 

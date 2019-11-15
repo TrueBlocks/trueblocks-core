@@ -18,7 +18,7 @@ int main(int argc, const char *argv[]) {
 
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            return 0;
+            continue;
 
         // Clean the staging folder since we want to start with clean scrapes for both
         // never scraped or unfinished (partial) scrapes

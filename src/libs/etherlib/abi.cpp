@@ -278,7 +278,14 @@ const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ABI = "";
+const char* STR_DISPLAY_ABI = 
+"[{ADDRESS}]\t"
+"[{ENCODING}]\t"
+"[{TYPE}]\t"
+"[{CONSTANT}]\t"
+"[{NAME}]\t"
+"[{SIGNATURE}]\t"
+"[{INPUT_NAMES}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -286,11 +293,9 @@ const char* STR_DISPLAY_ABI = "";
 bool visitABI(const qblocks::string_q& path, void *data) {
     if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
-    if (!isTestMode()) {
-        qblocks::eLogger->setEndline('\r');
-        LOG_INFO("Loading ABI: ", path);
-        qblocks::eLogger->setEndline('\n');
-    }
+//    if (!isTestMode()) {
+//        LOG_INFO("Loading ABI: ", path, "\r");
+//    }
     CAbi *abi = (CAbi*)data;  // NOLINT
     if (!abi->loadAbiFromFile(path, true))
         return false;
@@ -305,8 +310,8 @@ bool CAbi::loadAbiKnown(const string_q& which) {
     } else {
         ret = loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
     }
-    if (!isTestMode())
-        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+//    if (!isTestMode())
+//        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -320,7 +325,7 @@ bool CAbi::loadCachedAbis(const string_q& which) {
     } else {
         ret = loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
     }
-    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
+//    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -386,47 +391,42 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
 }
 
 //-----------------------------------------------------------------------
-void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decorate) {
+void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors) {
 
     if (isZeroAddr(addr))
         return;
 
-    bool debug = (verbose || getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false));
-    if (debug)
-        silent = false;
+    uint64_t saveVerbose = verbose;
+    if (getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false))
+        verbose = 10;
 
     string_q results;
     string_q fileName = getCachePath("abis/" + addr + ".json");
 
     string_q localFile("./" + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
-        cerr << "Local file copied to cache\n";
+        LOG4("Local file copied to cache");
         copyFile(localFile, fileName);
     }
 
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
 
-        if (debug) {
-            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "cache") << "\r";
-            cerr.flush();
-        }
+        if (!isTestMode())
+            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "cache"), "\r");
         asciiFileToString(fileName, results);
 
     } else {
 
-        if (debug) {
-            cerr << "Reading ABI for address " << addr << " from " << (isTestMode() ? "--" : "EtherScan") << "\r";
-            cerr.flush();
-        }
+        if (!isTestMode())
+            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
         string_q url = string_q("http:/""/api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
         results = substitute(urlToString(url), "\\", "");
 
         if (!contains(results, "NOTOK")) {
             if (!isTestMode()) {
-                if (debug)
-                    cerr << results << endl;
-                cerr << "Caching abi in " << dispName << endl;
+                LOG4(results);
+                LOG4("Caching abi in ", dispName);
             }
             replace(results, "\"result\":\"", "<extract>");
             replaceReverse(results, "\"}", "</extract>");
@@ -436,41 +436,44 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bo
 
         } else if (contains(toLower(results), "source code not verified")) {
 
-            if (!silent) {
-                LOG_WARN("Could not get the ABI for address ", addr, ". Etherscan returned: ");
-                LOG_WARN(results);
-                LOG_WARN("If you copy the ABI to the current folder, QBlocks will use it.");
-                // quickQuitHandler(0);
-            }
-            return;
+            ostringstream os;
+            os << "Could not get the ABI for " << addr << ". Etherscan returned: ";
+            os << substitute(substitute(results, "\"", "'"), "\n", " ") << ". ";
+            os << "Copy the ABI to " << addr << ".json in the current folder and re-run.";
+            errors.push_back(os.str());
+            results = "";
 
         } else {
 
-            if (!silent) {
-                cerr << "Etherscan returned " << results << "\n";
-                cerr << "Could not grab ABI for " + addr + " from etherscan.io.\n";
-                // quickQuitHandler(0);
-            }
-
             // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
             // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
+
+            ostringstream os;
+            os << "Etherscan returned: " << results << ". ";
+            os << "Could not grab ABI for " + addr + " from etherscan.io.";
+            errors.push_back(os.str());
+
             establishFolder(fileName);
             stringToAsciiFile(fileName, "[]");
-            return;
+            results = "";
         }
     }
 
-    CFunction func;
-    while (func.parseJson3(results)) {
-        abi.addIfUnique(addr, func, decorate);
-        func = CFunction();  // reset
+    if (!results.empty()) {
+        CFunction func;
+        while (func.parseJson3(results)) {
+            abi.addIfUnique(addr, func, false);
+            func = CFunction();  // reset
+        }
     }
+
+    verbose = saveVerbose;
     return;
 }
 
 //-----------------------------------------------------------------------
 bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames) {
-    if (func.name.empty())  // && func.type != "constructor")
+    if (func.name.empty() && func.type != "constructor")
         return false;
 
     for (auto f : interfaces) {

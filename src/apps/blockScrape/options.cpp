@@ -3,58 +3,59 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-// BEG_CODE_OPTIONS
+    // BEG_CODE_OPTIONS
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "p", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("n_addr_procs", "a", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("n_block_procs", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
-// END_CODE_OPTIONS
+    // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern const char* STR_ERROR_MSG;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
 
     if (!standardOptions(command))
         return false;
 
-// BEG_CODE_LOCAL_INIT
-// END_CODE_LOCAL_INIT
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
 
     Init();
+    blknum_t latest = getLastBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-// BEG_CODE_AUTO
-// END_CODE_AUTO
-
+            // BEG_CODE_AUTO
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--n_blocks:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_blocks must be a non-negative number. Quitting...");
-            n_blocks = str_2_Uint(arg);
+            if (!confirmBlockNum("n_blocks", n_blocks, arg, latest))
+                return false;
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--n_block_procs:")) {
-            arg = substitute(substitute(arg, "--n_block_procs:", ""), "-p:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_block_procs must be a non-negative number. Quitting...");
-            n_block_procs = str_2_Uint(arg);
+            if (!confirmUint("n_block_procs", n_block_procs, arg))
+                return false;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
-            arg = substitute(substitute(arg, "--n_addr_procs:", ""), "-a:", "");
-            if (!isUnsigned(arg))
-                return usage("--n_addr_procs must be a non-negative number. Quitting...");
-            n_addr_procs = str_2_Uint(arg);
+            if (!confirmUint("n_addr_procs", n_addr_procs, arg))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
+
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
+
+            // END_CODE_AUTO
 
         } else {
             return usage("Invalid option: " + arg);
@@ -75,15 +76,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (isTestMode()) {
         if (isApiMode()) {
-const char* STR_ERROR_MSG =
-"{\n"
-"  \"message\": \"Reporting for test mode only\",\n"
-"  \"errors\": [\n"
-"    \"n_blocks [N_BLOCKS]\",\n"
-"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
-"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
-"  ]\n"
-"}\n";
             string_q msg = STR_ERROR_MSG;
             replace(msg, "[N_BLOCKS]", uint_2_Str(n_blocks));
             replace(msg, "[N_BLOCK_PROCS]", uint_2_Str(n_block_procs));
@@ -106,10 +98,10 @@ const char* STR_ERROR_MSG =
     LOG4("ripe: " + indexFolder_ripe);
     LOG4("tmp: " + configPath("cache/tmp/"));
 
-    CBlock latest;
-    getBlock_light(latest, "latest");
-    latestBlockTs = latest.timestamp;
-    latestBlockNum = latest.blockNumber;
+    CBlock latestBlock;
+    getBlock_light(latestBlock, "latest");
+    latestBlockTs = latestBlock.timestamp;
+    latestBlockNum = latestBlock.blockNumber;
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
@@ -150,26 +142,29 @@ const char* STR_ERROR_MSG =
     n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ?   10 : n_block_procs));
     n_addr_procs  = config->getConfigInt("settings", "n_addr_procs",  (n_addr_procs  == NOPOS ?   20 : n_addr_procs ));
 
+    if (nRunning("blockScrape")) {
+        LOG_WARN("The " + getProgName() + " process may only run once. Quitting...");
+        return false;
+    }
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_RUNONCE | OPT_PREFUND);
+    optionOn(OPT_PREFUND);
     optionOff(OPT_FMT);
 
-// BEG_CODE_INIT
-// END_CODE_INIT
-
+    // BEG_CODE_INIT
+    n_blocks = NOPOS;
+    n_block_procs = NOPOS;
+    n_addr_procs = NOPOS;
+    // END_CODE_INIT
     if (getEnvStr("DOCKER_MODE") == "true") {
         n_blocks      = 100;
         n_block_procs = 5;
         n_addr_procs  = 10;
-    } else {
-        n_blocks      = NOPOS;
-        n_block_procs = NOPOS;
-        n_addr_procs  = NOPOS;
     }
 
     minArgs     = 0;
@@ -179,8 +174,24 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+    // BEG_CODE_NOTES
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+//--------------------------------------------------------------------------------
+const char* STR_ERROR_MSG =
+"{\n"
+"  \"message\": \"Reporting for test mode only\",\n"
+"  \"errors\": [\n"
+"    \"n_blocks [N_BLOCKS]\",\n"
+"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
+"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
+"  ]\n"
+"}\n";

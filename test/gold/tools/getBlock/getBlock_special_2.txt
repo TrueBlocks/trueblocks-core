@@ -9,8 +9,8 @@ getBlock daofork --force
   "parentHash": "0xa218e2c611f21232d857e3c8cecdcdf1f65f25a4477f98f6f47e4063807f2308",
   "miner": "0xbcdfc35b86bedf72f0cda046a3c16829a2ef41d1",
   "difficulty": 62413376722602,
-  "price": 0,
-  "finalized": 1,
+  "price": 0.00000,
+  "finalized": true,
   "timestamp": 1469020840,
   "transactions": [
     {

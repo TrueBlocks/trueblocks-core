@@ -1,0 +1,3 @@
+ethNames argc: 3 [1:--add] [2:G+S+A+N+S+Y+D] 
+ethNames --add G+S+A+N+S+Y+D 
+G+S+A+N+S+Y+D

@@ -1,1 +1,0 @@
-{ "errors": [ "getBlock - Invalid option: --addr" ] }

@@ -11,35 +11,60 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
-#include "optiondef.h"
+#include "commandoption.h"
+
+// BEG_ERROR_DEFINES
+#define ERR_CLASSDEFNOTEXIST 1
+#define ERR_CONFIGMISSING 2
+#define ERR_EMPTYJSFILE 3
+#define ERR_CHOOSEONE 4
+#define ERR_NOFILTERMATCH 5
+#define ERR_NEEDONECLASS 6
+// END_ERROR_DEFINES
+
+//-------------------------------------------------------------------
+class CClassDefinition {
+public:
+    string_q className;
+    string_q inputPath;
+    string_q outputPath(const string_q& t) const {
+        return substitute(substitute(inputPath, "classDefinitions/", ""), ".txt", t);
+    }
+};
 
 typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
+    // BEG_CODE_DECLARE
     bool all;
     string_q nspace;
     string_q filter;
-// END_CODE_DECLARE
+    bool test;
+    // END_CODE_DECLARE
 
     runmode_t mode;
-    string_q classNames;
+    vector<CClassDefinition> classDefs;
     CToml classFile;
     ostringstream warnings;
 
     COptions(void);
     ~COptions(void);
 
-    string_q postProcess(const string_q& which, const string_q& str) const;
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool exportJson(const string_q& cl);
     bool handle_options(void);
-    bool check_option(const COptionDef& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="");
+    bool handle_json_export(const string_q& cl);
+    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
+
+    bool check_option(const CCommandOption& option);
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="", const string_q& errors="");
 };
 
 //-------------------------------------------------------------------

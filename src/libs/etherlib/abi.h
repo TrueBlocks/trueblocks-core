@@ -32,7 +32,6 @@ class CAbi : public CBaseNode {
 public:
     address_t address;
     CFunctionArray interfaces;
-    CFunctionMap interfaceMap;
 
 public:
     CAbi(void);
@@ -45,6 +44,7 @@ public:
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    CFunctionMap interfaceMap;
     bool addIfUnique(const string_q& addr, CFunction& func, bool decorateNames);
     bool loadAbiKnown(const string_q& which);
     bool loadCachedAbis(const string_q& which);
@@ -179,7 +179,7 @@ extern const char* STR_DISPLAY_ABI;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
-extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, bool silent, bool decorate);
+extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
 // EXISTING_CODE
 }  // namespace qblocks
 

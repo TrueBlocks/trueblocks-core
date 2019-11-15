@@ -4,30 +4,39 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass. Edit only those parts of the code
+ * outside of the BEG_CODE/END_CODE sections
+ */
 #include "etherlib.h"
 #include "acctlib.h"
 #include "displayapp.h"
+
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
 
 using uint_addr_mp = map<uint32_t,address_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
 public:
-// BEG_CODE_DECLARE
-    bool articulate;
+    // BEG_CODE_DECLARE
+    bool appearances;
+    bool receipts;
     bool logs;
     bool traces;
     bool balances;
-    bool appearances;
+    bool hashes_only;
     bool count_only;
+    bool articulate;
     bool write_blocks;
     bool write_txs;
     bool write_traces;
     bool skip_ddos;
-    uint32_t max_traces;
+    uint64_t max_traces;
     bool grab_abis;
     bool freshen;
     bool deltas;
-// END_CODE_DECLARE
+    // END_CODE_DECLARE
 
     CAbi abis;
     CAccountWatchArray monitors;
@@ -47,7 +56,6 @@ public:
 
     bool parseArguments(string_q& command);
     void Init(void);
-    string_q postProcess(const string_q& which, const string_q& str) const;
 
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);

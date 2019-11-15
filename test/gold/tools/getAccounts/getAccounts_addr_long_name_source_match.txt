@@ -1,3 +1,0 @@
-getAccounts argc: 7 [1:Humaniq] [2:1e17] [3:Ether] [4:--verbose] [5:--fmt] [6:txt] 
-getAccounts Humaniq 1e17 Ether --verbose --fmt txt 
-No results

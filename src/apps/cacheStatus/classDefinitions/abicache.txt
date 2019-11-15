@@ -1,7 +1,6 @@
 [settings]
-class     = CAbiCache
-baseClass = CCache
-fields    = CAbiCacheItemArray items
-includes  = cache.h|abicacheitem.h
-cIncs     = 
+class = CAbiCache
+base_class = CCache
+fields = CAbiCacheItemArray items
+includes = cache.h|abicacheitem.h
 serialize = true

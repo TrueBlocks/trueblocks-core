@@ -19,10 +19,7 @@ extern void removeComments(string_q& code);
 //-----------------------------------------------------------------------
 bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     string_q solFile = addr + ".sol";
-    if (!fileExists(solFile))
-        return false;
-    string_q contents;
-    asciiFileToString(solFile, contents);
+    string_q contents = asciiFileToString(solFile);
     removeComments(contents);
     replaceAll(contents, "\r", "\n");
     replaceAll(contents, "interface ", "contract ");

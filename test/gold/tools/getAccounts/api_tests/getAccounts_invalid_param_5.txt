@@ -1,1 +1,0 @@
-{ "errors": [ "getAccounts - Invalid option: --pink" ] }

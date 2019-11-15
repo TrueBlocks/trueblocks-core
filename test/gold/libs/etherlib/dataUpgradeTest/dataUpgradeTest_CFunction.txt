@@ -18,6 +18,7 @@ message             	1012	1	131122	T_TEXT TS_STRING
 inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	1	131122	T_TEXT TS_STRING
+declaration         	1016	1	131122	T_TEXT TS_STRING
 {
   "inputs": [],
   "outputs": []
@@ -41,6 +42,7 @@ message             	1012	1	131122	T_TEXT TS_STRING
 inputs              	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	1	131122	T_TEXT TS_STRING
+declaration         	1016	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -62,12 +64,14 @@ message             	1012	0	131122	T_TEXT TS_STRING
 inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 input_names         	1015	0	131122	T_TEXT TS_STRING
+declaration         	1016	0	131122	T_TEXT TS_STRING
 {
   "schema": 6001,
   "deleted": 0,
   "showing": 1,
   "cname": "Function",
   "inputs": [],
-  "outputs": []
+  "outputs": [],
+  "declaration": "	 ()"
 }
 

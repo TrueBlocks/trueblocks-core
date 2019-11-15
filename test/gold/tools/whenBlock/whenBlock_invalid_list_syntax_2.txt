@@ -1,3 +1,5 @@
 whenBlock argc: 3 [1:213123213] [2:--list] 
 whenBlock 213123213 --list 
-TIME ~ CLOCK - <WARNG> : Block 213123213 is later than the last valid block --.
+
+  Block 213123213 is later than the last valid block --.
+

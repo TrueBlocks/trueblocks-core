@@ -20,14 +20,14 @@ namespace qblocks {
     //----------------------------------------------------------------
     typedef enum { sev_na = 0,
                     sev_info = 1, sev_warning, sev_error, sev_fatal,
-                    sev_debug0, sev_debug1, sev_debug2, sev_debug3, sev_debug4, sev_debug5,  } severity_t;
+                    sev_debug0 = 10, sev_debug1, sev_debug2, sev_debug3, sev_debug4, sev_debug8 = 18,  } severity_t;
 
     //----------------------------------------------------------------
     extern uint64_t verbose;
     inline bool isLevelOn(severity_t test) {
         if (test < sev_debug0)
             return true;
-        return (((severity_t)verbose) > (test - sev_debug0));
+        return (((severity_t)verbose) >= (test - sev_debug0));
     }
 
     //----------------------------------------------------------------
@@ -80,19 +80,23 @@ namespace qblocks {
 //           static unsigned log_line_number = 0;
 
             stringstream header;
-//          header.fill('0');header.width(7);
-//           header << bBlack << ++log_line_number << " ";
+//            header.fill('0');
+//            header.width(7);
+//            header << bBlack << ++log_line_number << " ";
             if (isTestMode()) {
                 header << "TIME ~ CLOCK - ";
             } else {
 //                header << Now().Format(FMT_EXPORT) << " ~ ";
-                header << TIC() << " ~ ";
-#define LOG_TIMING false
+//                header << TIC() << " ~ ";
+#define LOG_TIMING true
 #define LOG_THREAD false
                 if (LOG_TIMING) {
+                    static clock_t last_clock = 0;
                     header.fill('0');
                     header.width(7);
-                    header << clock() << " - ";
+                    clock_t now = clock();
+                    header << now << " (" << padNum7T(uint64_t(now-last_clock)) << ")- ";  // NOLINT
+                    last_clock = now;
                 }
                 if (LOG_THREAD) {
                     header.fill('0');
@@ -146,7 +150,7 @@ namespace qblocks {
                 case sev_debug2:  log_stream << ": " << cGreen  << "2" << cOff << "---"; break;
                 case sev_debug3:  log_stream << ": " << cYellow << "3" << cOff << "----"; break;
                 case sev_debug4:  log_stream << ": " << cRed    << "4" << cOff << "-----"; break;
-                case sev_debug5:  log_stream << ": " << cTeal   << "5" << cOff << "------"; break;
+                case sev_debug8:  log_stream << ": " << cTeal   << "8" << cOff << "------"; break;
                 case sev_info:    log_stream << bGreen   << "<INFO>  " << cOff << ": "; break;
                 case sev_warning: log_stream << bYellow  << "<WARNG> " << cOff << ": "; break;
                 case sev_error:   log_stream << bRed     << "<ERROR> " << cOff << ": "; break;
@@ -176,7 +180,7 @@ namespace qblocks {
 #define LOG2       qblocks::dLogger->print<sev_debug2>
 #define LOG3       qblocks::dLogger->print<sev_debug3>
 #define LOG4       qblocks::dLogger->print<sev_debug4>
-#define LOG5       qblocks::dLogger->print<sev_debug5>
+#define LOG8       qblocks::dLogger->print<sev_debug8>
 #define LOG_INFO   qblocks::eLogger->print<sev_info>
 #define LOG_WARN   qblocks::eLogger->print<sev_warning>
 #define LOG_ERR    qblocks::eLogger->print<sev_error>
@@ -185,14 +189,14 @@ namespace qblocks {
 #define SEP2(a)    LOG2(cGreen + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP3(a)    LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP4(a)    LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define SEP5(a)    LOG5(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define SEP8(a)    LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #else
 #define LOG0(...)
 #define LOG1(...)
 #define LOG2(...)
 #define LOG3(...)
 #define LOG4(...)
-#define LOG5(...)
+#define LOG8(...)
 #define LOG_INFO(...)
 #define LOG_WARN(...)
 #define LOG_ERR(...)
@@ -216,6 +220,6 @@ namespace qblocks {
 #define EXIT_MSG(a, b) { LOG2(_logExit(l_funcName)); cerr << (a); return (b); }
 #define EXIT_NOMSG(b)  { LOG2(_logExit(l_funcName)); return (b); }
 
-#define ENTER4(a)       { LOG4(_logEnter(a)); } string_q l_funcName = (a);
-#define EXIT_MSG4(a, b) { LOG4(_logExit(l_funcName)); cerr << a; return (b); }
-#define EXIT_NOMSG4(b)  { LOG4(_logExit(l_funcName)); return (b); }
+#define ENTER8(a)       { LOG8(_logEnter(a)); } string_q l_funcName = (a);
+#define EXIT_MSG8(a, b) { LOG8(_logExit(l_funcName)); cerr << a; return (b); }
+#define EXIT_NOMSG8(b)  { LOG8(_logExit(l_funcName)); return (b); }

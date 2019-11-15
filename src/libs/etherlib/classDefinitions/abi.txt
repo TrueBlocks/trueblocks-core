@@ -1,6 +1,7 @@
 [settings]
-class     = CAbi
-fields    = address address|CFunctionArray interfaces
-includes  = function.h|parameter.h
-cIncs     = node.h
+class = CAbi
+fields = address address|CFunctionArray interfaces
+includes = function.h|parameter.h
+cpp_includes = node.h
 serialize = true
+display_str = address, encoding, type, constant, name, signature, input_names

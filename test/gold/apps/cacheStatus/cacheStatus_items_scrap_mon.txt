@@ -7,7 +7,6 @@ cacheStatus --details index --start 1000000 --end 2200000
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
   "host": "--hostname-- (--username--)",
-  "is_scraping": false,
   "caches": [
     {
       "items": [

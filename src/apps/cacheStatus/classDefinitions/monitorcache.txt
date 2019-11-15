@@ -1,7 +1,6 @@
 [settings]
-class     = CMonitorCache
-baseClass = CCache
-fields    = CAddressArray addrs|CMonitorCacheItemArray items
-includes  = cache.h|monitorcacheitem.h
-cIncs     = 
+class = CMonitorCache
+base_class = CCache
+fields = CAddressArray addrs|CMonitorCacheItemArray items
+includes = cache.h|monitorcacheitem.h
 serialize = true
