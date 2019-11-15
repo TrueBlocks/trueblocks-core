@@ -566,7 +566,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "nonce" ) return uint_2_Str(nonce);
             break;
         case 'r':
-            if ( fieldName % "receipt" ) { expContext().noFrst=true; return receipt.Format(); }
+            if ( fieldName % "receipt" ) { if (receipt == CReceipt()) return ""; expContext().noFrst=true; return receipt.Format(); }
             break;
         case 't':
             if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);

@@ -441,7 +441,8 @@ string_q getCaseCode(const string_q& fieldCase, const string_q& ex) {
                         caseCode += str;
 
                     } else if (isObject) {
-                        caseCode += " { expContext().noFrst=true; return [{PTR}]" + field + ".Format(); }";
+                        caseCode += " { if (" + field + " == " + type + "()) return \"\";";
+                        caseCode += " expContext().noFrst=true; return [{PTR}]" + field + ".Format(); }";
 
                     } else {
                         caseCode += " return [{PTR}]" + field + ";";

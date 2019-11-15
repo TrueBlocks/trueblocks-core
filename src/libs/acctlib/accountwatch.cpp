@@ -268,7 +268,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
+            if ( fieldName % "abi_spec" ) { if (abi_spec == CAbi()) return ""; expContext().noFrst=true; return abi_spec.Format(); }
             break;
         case 'c':
             if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
@@ -280,7 +280,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
             break;
         case 's':
-            if ( fieldName % "statement" ) { expContext().noFrst=true; return statement.Format(); }
+            if ( fieldName % "statement" ) { if (statement == CIncomeStatement()) return ""; expContext().noFrst=true; return statement.Format(); }
             if ( fieldName % "stateHistory" || fieldName % "stateHistoryCnt" ) {
                 size_t cnt = stateHistory.size();
                 if (endsWith(toLower(fieldName), "cnt"))

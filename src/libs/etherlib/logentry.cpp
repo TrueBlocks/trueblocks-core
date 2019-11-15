@@ -310,7 +310,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "articulatedLog" ) { expContext().noFrst=true; return articulatedLog.Format(); }
+            if ( fieldName % "articulatedLog" ) { if (articulatedLog == CFunction()) return ""; expContext().noFrst=true; return articulatedLog.Format(); }
             break;
         case 'c':
             if ( fieldName % "compressedLog" ) return compressedLog;

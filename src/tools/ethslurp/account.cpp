@@ -242,7 +242,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             break;
         case 'l':
             if ( fieldName % "latestPage" ) return uint_2_Str(latestPage);
-            if ( fieldName % "latestTx" ) { expContext().noFrst=true; return latestTx.Format(); }
+            if ( fieldName % "latestTx" ) { if (latestTx == CTransaction()) return ""; expContext().noFrst=true; return latestTx.Format(); }
             break;
         case 't':
             if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {

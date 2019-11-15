@@ -540,15 +540,6 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "address": "0x0",
   "logIndex": 0,
   "topics": [],
-  "articulatedLog": {
-    "schema": 6001,
-    "deleted": 0,
-    "showing": 1,
-    "cname": "Function",
-    "inputs": [],
-    "outputs": [],
-    "declaration": "	 ()"
-  },
   "transactionLogIndex": 0
 }
 
@@ -752,7 +743,20 @@ date                	1017	1	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0
+  "transactionIndex": 0,
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "from": "0x0",
+    "gas": 0,
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
+  },
+  "result": {
+    "address": "0x0",
+    "gasUsed": 0
+  }
 }
 
 --------------------------------------------------------------------------------
@@ -808,7 +812,29 @@ date                	1017	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0
+  "transactionIndex": 0,
+  "articulatedTrace": {
+    "schema": 6001,
+    "deleted": 0,
+    "showing": 1,
+    "cname": "Function",
+    "inputs": [],
+    "outputs": [],
+    "declaration": "	 ()"
+  },
+  "action": {
+    "address": "0x0",
+    "balance": 0,
+    "from": "0x0",
+    "gas": 0,
+    "refundAddress": "0x0",
+    "to": "0x0",
+    "value": 0
+  },
+  "result": {
+    "address": "0x0",
+    "gasUsed": 0
+  }
 }
 
 --------------------------------------------------------------------------------
