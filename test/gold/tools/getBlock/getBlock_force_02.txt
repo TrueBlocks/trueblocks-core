@@ -10,7 +10,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "miner": "0x1e9939daaad6924ad004c2560e90804164900341",
   "difficulty": 75086032611208,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1481190424,
   "transactions": [
     {
@@ -200,7 +200,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 81881924985250,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1481621074,
   "transactions": []
 },
@@ -213,7 +213,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
   "difficulty": 77217903307043,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1482663926,
   "transactions": []
 },
@@ -226,7 +226,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 112182607379608,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1485564456,
   "transactions": []
 }] }

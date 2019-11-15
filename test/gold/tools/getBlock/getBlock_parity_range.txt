@@ -3,7 +3,7 @@ getBlock 358450-0x5785a --force --parity
 { "data": [
 {
   "difficulty": "0x5a5753781c6",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x19a28",
   "hash": "0x6531ec576f15ff4ac5b36643ad333c88e057d923e98edb9d2df9c26948d8cda1",
@@ -117,7 +117,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a4c088dad8",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x9b1d126da7114ae0acde547d73a1cde0a2967cf780394d225ee4f26f0f4d3ce4",
@@ -151,7 +151,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40bf0c9bf",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x7d077aa901df0b73b81dbf9412bbb173ad6f3ef0e047a070efa1f986ba733b08",
@@ -164,7 +164,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3576f4ba8",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x5cfddc32969cd153a5cc4770a4267db0c51e2f845e6324935c4c03c4232041b4",
@@ -198,7 +198,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40bda3993",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x1f94febfedd52c7e96d8bc336b45485d1946cd8ed75a2b56ac769be25a69373b",
@@ -211,7 +211,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a4c05bb4dc",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x54d9b33954a832da1c5d5dfa863983bed661297644960eadb8d71c0f7fc30236",
@@ -245,7 +245,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40bc3a968",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x072d01a6debc9e95fbfb347c8bafee3490d91a4faadfced04e4a35cb66b1982f",
@@ -279,7 +279,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3574230f5",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x2e248",
   "hash": "0xbb2e0d2ba9d2205f01bce949928f7b5d7711a66861225dabd99da3b78d379b7e",
@@ -473,7 +473,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a2d748b1",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xa410",
   "hash": "0x3225c85b6dde1736df295bbb6224938b2b3882afc6298b6338c248aa28f562c9",
@@ -527,7 +527,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3572ba39c",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0xe3dfb69a85a752183259da3d0b0d915461432af702c97a2bccdbed65c40f9627",
@@ -540,7 +540,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40b968912",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x54fdd3dbd8b3e7726662bfe8d26f92eaa7b0f3bcf00111040f4a9e125664f21e",
@@ -553,7 +553,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a357151643",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xf618",
   "hash": "0x4c33f03d5b79dc77a18441798a70dd7849f514f159e427a199ad179ed8aa2aaf",
@@ -627,7 +627,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a2aa33a3",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x0a429ba4341318d4b99d46efd7bb3ada750208fcd816316d08bea15e54e5d34c",
@@ -661,7 +661,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1ee55de5f",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xf618",
   "hash": "0x9ac38e4f18730b1042280660c2eb11dbbf58b78ae1ab808cac5359ec17abdc16",
@@ -735,7 +735,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a13a1813a6",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x8a171f322c4968c10992960d16254554cb7c338bbc45578417830f12382e0276",
@@ -769,7 +769,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1ee3f56aa",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x3769689a077f0d918a211cc554485115424e4f1c427cf5dab55b69c89403ad20",
@@ -782,7 +782,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a27d1e96",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x6549aa784d0398cf2085af909d65e9be25df7102715fb4425039f224fc72cbfa",
@@ -795,7 +795,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a356d16e3b",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x12f7cfae85694bcdc1483881ef4f459a387a2d89738d323d614d83366534bcb3",
@@ -829,7 +829,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a2669410",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x5ed695a339d5856ff9b5c5e1816dd340d0121e48cb084a090149adad6cb750e5",
@@ -863,7 +863,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1ee124740",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xa410",
   "hash": "0x9aa3544900f4361be65c92499c609ffa5ca2309d62354256dc36c8a54989d113",
@@ -917,7 +917,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a250098a",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0xfc2fd216a2a8fc8bdbb41d4f8127c91c9b555ab1f3b1319c3e8dfd43b22c1597",
@@ -930,7 +930,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a356a4538d",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xa410",
   "hash": "0x2f359cd259322814efa861621fd51501f61b5ee2d10ffe4b961763f7e9920361",
@@ -984,7 +984,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a2397f05",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x4de30bc47cb9282c30bb69dc6535a66d4325418f7a86467f78909a00a307b762",
@@ -1018,7 +1018,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3568dc636",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x85afb48ee5c7f2e885f92e53d4071b870f99b46133db5cf1c450fbbc1d3bc738",
@@ -1031,7 +1031,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a222f480",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0xd1835ff03a5bb638f7d606093d70362a4435b2ddf4b6f77f061d2277c498850a",
@@ -1044,7 +1044,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1edceb024",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0xf618",
   "hash": "0xd90737f452530c9c165a5f1c99631cbf2cb2ccb461556b50dca6e059d582144c",
@@ -1118,7 +1118,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a20c69fc",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x47c70",
   "hash": "0x3ca475da20d1ac9533582647eda199a9db9ea655f3ffda1f5fb58f454a293196",
@@ -1412,7 +1412,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a35660ab8b",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x1422b5f5e747f7b652f0ed9892eca0ea4aeaa11dc3cd79831c9de9e5e2a87263",
@@ -1425,7 +1425,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a1f5df78",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x9ad3ebd5ea48fca2e8e4d75c46b03be7e34b354d22070b13532a28447b20c725",
@@ -1438,7 +1438,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3564a1e35",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x3f735",
   "hash": "0x6359558fd302f40c63f70d70b8a9381988b0ac0b0b2ebaa58191c015be06aab7",
@@ -1492,7 +1492,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40ab4e77a",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x14820",
   "hash": "0x7b4e660de30e9b63765c7040d6a07095f7e818071f533eab50253c8576ba7e15",
@@ -1586,7 +1586,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3563390e0",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x73bd430784fb18bf53b3eb0f4c6d85a257ca36bf3a6977be612e0d026e9a9668",
@@ -1599,7 +1599,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a40a9e5754",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x5208",
   "hash": "0x192c3c339a51acbdbe5009bf0ceb78de597c005da23f5ed7ece73ba5dddd0e92",
@@ -1633,7 +1633,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a3561d038c",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x7d9a88393e87c423a4d3821251b0f59b017fbc7a8bc60bebb9833be0bc48e2bb",
@@ -1646,7 +1646,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a2a1b23fee",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0xb329c0b14f19d84f0ef6c23a6ced74f96071a298d0da7f69b67e22ae20d71096",
@@ -1659,7 +1659,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1ed5e09a9",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x14820",
   "hash": "0xbe9793ab691f65d24906b822c71694e288e6bcc70de0745a8149a77693ca40b1",
@@ -1753,7 +1753,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a139205dea",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x23e38",
   "hash": "0x3b134dc8af49c6a66460fd0109b9d9cc9165c579d521629c6ce143f4bead3f64",
@@ -1907,7 +1907,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a084f939e1",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x14820",
   "hash": "0xe756e674394043757e301b0d6039608016469b9ca246c2ecb4ed7f096e1bd658",
@@ -2001,7 +2001,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a13909d90a",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x51ac91f8777a09c8351f05a429015fcc6d7a02e937e1dc240cb29edc823ded72",
@@ -2014,7 +2014,7 @@ getBlock 358450-0x5785a --force --parity
 },
 {
   "difficulty": "0x5a1ed30fa47",
-  "finalized": "0x1",
+  "finalized": "true",
   "gasLimit": "0x2fefd8",
   "gasUsed": "0x0",
   "hash": "0x2e3c4dac5fc5465768e724529623634fe1ad63f048c023c077465ea610ea287c",

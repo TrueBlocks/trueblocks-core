@@ -4,7 +4,7 @@
       "age": "100",
       "date": "2015-12-22 03:23:29 UTC",
       "difficulty": "0x80001821ea8",
-      "finalized": "0x1",
+      "finalized": "true",
       "gasLimit": "0x2fefd8",
       "gasUsed": "0x0",
       "hash": "0x35f5affee17af37d87ddac6644c11ec6d3eeb8aae7e68a7c38d0ece776758e59",

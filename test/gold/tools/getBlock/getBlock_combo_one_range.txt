@@ -10,7 +10,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 1097113993909745,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1499633571,
   "transactions": [
     {
@@ -387,7 +387,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 41857221373863,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1464293714,
   "transactions": [
     {
@@ -454,7 +454,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "miner": "0x0c729be7c39543c3d549282a40395299d987cec2",
   "difficulty": 12468438268070,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455421883,
   "transactions": [
     {
@@ -556,7 +556,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 22349600794407,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1459194277,
   "transactions": []
 }] }

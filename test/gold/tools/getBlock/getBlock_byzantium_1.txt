@@ -10,7 +10,7 @@ getBlock 4369999 4370000 4380101 --force
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 2997274096101735,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1508131303,
   "transactions": [
     {
@@ -2218,7 +2218,7 @@ getBlock 4369999 4370000 4380101 --force
   "miner": "0xf3b9d2c81f2b24b0fa0acaaa865b7d9ced5fc2fb",
   "difficulty": 2994347070619309,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1508131331,
   "transactions": [
     {
@@ -5456,7 +5456,7 @@ getBlock 4369999 4370000 4380101 --force
   "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
   "difficulty": 1427690535689393,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1508286808,
   "transactions": [
     {

@@ -9,7 +9,7 @@
       "miner": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
       "difficulty": 12462338280735,
       "price": 0,
-      "finalized": 1,
+      "finalized": true,
       "timestamp": 1455422019,
       "transactions": [
         {

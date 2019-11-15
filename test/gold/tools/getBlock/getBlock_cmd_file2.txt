@@ -10,7 +10,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x7e6930b63d03e88f5928c5cd6ee3fcee4d714f7f",
   "difficulty": 3535435273529,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1439674369,
   "transactions": []
 },
@@ -23,7 +23,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x580992b51e3925e23280efb93d3047c82f17e038",
   "difficulty": 5027618839306,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1440511996,
   "transactions": []
 },
@@ -36,7 +36,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x3061512be32988b7cae01fabe2daabe55b0a9482",
   "difficulty": 6585165874233,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1440826383,
   "transactions": []
 },
@@ -49,7 +49,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 7089068477500,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1443211927,
   "transactions": []
 },
@@ -62,7 +62,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6494932654393,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1444799304,
   "transactions": []
 },
@@ -75,7 +75,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
   "difficulty": 5792849968684,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1445036868,
   "transactions": []
 },
@@ -88,7 +88,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6510650687506,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1445864379,
   "transactions": []
 },
@@ -101,7 +101,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
   "difficulty": 7828374427132,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1446452690,
   "transactions": []
 },
@@ -114,7 +114,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
   "difficulty": 7588129354316,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1448545183,
   "transactions": [
     {
@@ -150,7 +150,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 7406139158036,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1449158435,
   "transactions": [
     {
@@ -186,7 +186,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x24f03a0786f459be40c38ba1c47714e08f9947e5",
   "difficulty": 7760507970649,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1449247432,
   "transactions": []
 },
@@ -199,7 +199,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x738db714c08b8a32a29e0e68af00215079aa9c5c",
   "difficulty": 8640284807276,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1450655797,
   "transactions": []
 },
@@ -212,7 +212,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xa027231f42c80ca4125b5cb962a21cd4f812e88f",
   "difficulty": 8190827447647,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1451947020,
   "transactions": [
     {
@@ -248,7 +248,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 8886631266194,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1452855767,
   "transactions": [
     {
@@ -284,7 +284,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 12517095426659,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455850443,
   "transactions": [
     {
@@ -342,7 +342,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
   "difficulty": 12607178900885,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455872128,
   "transactions": [
     {
@@ -596,7 +596,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 15032592181868,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1456761851,
   "transactions": [
     {
@@ -729,7 +729,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 17542881926868,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1458022602,
   "transactions": [
     {
@@ -787,7 +787,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12549332509227,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455404053,
   "transactions": [
     {
@@ -854,7 +854,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12573717012075,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455405670,
   "transactions": []
 },
@@ -867,7 +867,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
   "difficulty": 12573567148160,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455407489,
   "transactions": [
     {
@@ -925,7 +925,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
   "difficulty": 12622628253728,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455409384,
   "transactions": [
     {
@@ -1027,7 +1027,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xf8b483dba2c3b7176a3da549ad41a48bb3121069",
   "difficulty": 12610157184222,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455410960,
   "transactions": [
     {
@@ -1085,7 +1085,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 12573117566903,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455412740,
   "transactions": []
 },
@@ -1098,7 +1098,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12597548286229,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455414307,
   "transactions": [
     {
@@ -1222,7 +1222,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x10c3eedde6fbda160041f479fcaf26bb38316fcd",
   "difficulty": 12634358695961,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455416270,
   "transactions": [
     {
@@ -1258,7 +1258,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12597247991954,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455418125,
   "transactions": []
 },
@@ -1271,7 +1271,7 @@ getBlock --file:cmd_file2 --force
   "miner": "0xd34da389374caad1a048fbdc4569aae33fd5a375",
   "difficulty": 12572518150222,
   "price": 0.00000,
-  "finalized": 1,
+  "finalized": true,
   "timestamp": 1455419841,
   "transactions": [
     {

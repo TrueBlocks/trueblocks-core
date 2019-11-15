@@ -22,7 +22,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "sub",
@@ -45,7 +46,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "mul",
@@ -68,7 +70,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "div",
@@ -91,7 +94,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "ETH",
@@ -111,7 +115,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "USD",
@@ -131,7 +136,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "EUR",
@@ -151,7 +157,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "GBP",
@@ -171,7 +178,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "updatedAt",
@@ -191,7 +199,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "affirmStatusAsAccreditedInvestor",
@@ -210,7 +219,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "verifyStatusAsAccreditedInvestor",
@@ -233,7 +243,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "priceOkay",
@@ -252,7 +263,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "permitTransfer",
@@ -267,7 +279,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "sufficientBalance",
@@ -290,7 +303,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "transferX",
@@ -317,7 +331,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "transfer",
@@ -340,7 +355,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "approve",
@@ -363,7 +379,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "transferFrom",
@@ -390,7 +407,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "allowance",
@@ -414,7 +432,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "makeNewAskRequestToSELL",
@@ -432,7 +451,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "makeNewBidRequestToBUY",
@@ -450,7 +470,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "createRequest",
@@ -480,7 +501,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "depositPayment",
@@ -494,7 +516,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "etherEquivalent",
@@ -518,7 +541,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "cancelExistingRequest",
@@ -532,7 +556,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "acceptTheseAskRequestsAndBUY",
@@ -557,7 +582,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "acceptTheseBidRequestsAndSELL",
@@ -582,7 +608,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "isRequestOpen",
@@ -601,7 +628,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "doesRequestMatch",
@@ -632,7 +660,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "releaseCommitment",
@@ -650,7 +679,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "splitEther",
@@ -676,7 +706,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "makeDepositDue",
@@ -690,7 +721,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "acceptRequest",
@@ -712,7 +744,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "withdrawPayment",
@@ -726,7 +759,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "totalSupply",
@@ -741,7 +775,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "balanceOf",
@@ -761,7 +796,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "getHolders",
@@ -777,7 +813,8 @@
         "isArray": true
       }
     ]
-  },
+  }
+,
 
     {
     "name": "getHolderInfo",
@@ -817,7 +854,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "getRequestKeys",
@@ -833,7 +871,8 @@
         "isArray": true
       }
     ]
-  },
+  }
+,
 
     {
     "name": "getRequest",
@@ -885,7 +924,8 @@
         "type": "uint8"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "contractSetting",
@@ -905,7 +945,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "mintTokens",
@@ -924,7 +965,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "burnTokens",
@@ -943,7 +985,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "reclaimMisplacedTokens",
@@ -962,7 +1005,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "toggleTrustedVerifier",
@@ -981,7 +1025,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "changeSetting",
@@ -1004,7 +1049,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "setAdminAddress",
@@ -1023,7 +1069,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "setOwnerAddress",
@@ -1042,7 +1089,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "setFiatContractAddress",
@@ -1061,7 +1109,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "transferAnyERC20Token",
@@ -1084,7 +1133,8 @@
         "type": "bool"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "withdrawExcessEther",
@@ -1098,7 +1148,8 @@
         "type": "uint256"
       }
     ]
-  },
+  }
+,
 
     {
     "name": "togglePause",
@@ -1107,7 +1158,8 @@
     "encoding": "0xc4ae3168",
     "inputs": [],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "AffirmStatus",
@@ -1135,7 +1187,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "VerifyStatus",
@@ -1163,7 +1216,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "Transfer",
@@ -1187,7 +1241,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "TransferX",
@@ -1215,7 +1270,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "Approval",
@@ -1239,7 +1295,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "MakeRequest",
@@ -1274,7 +1331,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "CancelRequest",
@@ -1301,7 +1359,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "AcceptRequest",
@@ -1332,7 +1391,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "WithdrawPayment",
@@ -1351,7 +1411,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "MintTokens",
@@ -1369,7 +1430,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "BurnTokens",
@@ -1387,7 +1449,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "ReclaimMisplacedTokens",
@@ -1406,7 +1469,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "ToggleTrustedVerifier",
@@ -1425,7 +1489,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "SettingChange",
@@ -1447,7 +1512,8 @@
       }
     ],
     "outputs": []
-  },
+  }
+,
 
     {
     "name": "Message",
@@ -1466,4 +1532,5 @@
     ],
     "outputs": []
   }
+
 ]

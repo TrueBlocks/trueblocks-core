@@ -413,7 +413,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
             break;
         case 'f':
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
             break;
         case 'g':
             if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);

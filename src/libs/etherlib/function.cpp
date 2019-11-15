@@ -432,6 +432,7 @@ ostream& operator<<(ostream& os, const CFunction& item) {
     // EXISTING_CODE
 
     item.Format(os, "", nullptr);
+    os << "\n";
     return os;
 }
 

@@ -548,7 +548,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if ( fieldName % "from" ) return addr_2_Str(from);
-            if ( fieldName % "finalized" ) return int_2_Str(finalized);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
             break;
         case 'g':
             if ( fieldName % "gas" ) return gas_2_Str(gas);
