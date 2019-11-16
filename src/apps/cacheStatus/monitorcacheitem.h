@@ -136,10 +136,6 @@ extern CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon);
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MONITORCACHEITEM;
 
 //---------------------------------------------------------------------------

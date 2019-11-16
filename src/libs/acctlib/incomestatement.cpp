@@ -58,6 +58,41 @@ string_q nextIncomestatementChunk(const string_q& fieldIn, const void *dataPtr) 
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextIncomestatementChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "begBal" ) return bni_2_Str(begBal);
+            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
+            break;
+        case 'e':
+            if ( fieldName % "endBal" ) return bni_2_Str(endBal);
+            break;
+        case 'g':
+            if ( fieldName % "gasCostInWei" ) return bni_2_Str(gasCostInWei);
+            break;
+        case 'i':
+            if ( fieldName % "inflow" ) return bni_2_Str(inflow);
+            break;
+        case 'o':
+            if ( fieldName % "outflow" ) return bni_2_Str(outflow);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -229,41 +264,6 @@ CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc) {
 CArchive& operator>>(CArchive& archive, CIncomeStatement& inc) {
     inc.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextIncomestatementChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'b':
-            if ( fieldName % "begBal" ) return bni_2_Str(begBal);
-            if ( fieldName % "blockNum" ) return uint_2_Str(blockNum);
-            break;
-        case 'e':
-            if ( fieldName % "endBal" ) return bni_2_Str(endBal);
-            break;
-        case 'g':
-            if ( fieldName % "gasCostInWei" ) return bni_2_Str(gasCostInWei);
-            break;
-        case 'i':
-            if ( fieldName % "inflow" ) return bni_2_Str(inflow);
-            break;
-        case 'o':
-            if ( fieldName % "outflow" ) return bni_2_Str(outflow);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

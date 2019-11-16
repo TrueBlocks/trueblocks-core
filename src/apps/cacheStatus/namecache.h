@@ -140,10 +140,6 @@ extern CArchive& operator>>(CArchive& archive, CNameCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNameCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNameCache& nam);
-extern CArchive& operator>>(CArchive& archive, CNameCache& nam);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NAMECACHE;
 
 //---------------------------------------------------------------------------

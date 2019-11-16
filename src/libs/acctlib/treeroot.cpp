@@ -58,6 +58,32 @@ string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTreerootChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'r':
+            if ( fieldName % "root" ) {
+                if (root)
+                    return root->Format();
+                return "";
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -211,32 +237,6 @@ bool CTreeRoot::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTreerootChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'r':
-            if ( fieldName % "root" ) {
-                if (root)
-                    return root->Format();
-                return "";
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -58,6 +58,77 @@ string_q nextFunctionChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CFunction::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextFunctionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "anonymous" ) return bool_2_Str_t(anonymous);
+            break;
+        case 'c':
+            if ( fieldName % "constant" ) return bool_2_Str_t(constant);
+            break;
+        case 'e':
+            if ( fieldName % "encoding" ) return encoding;
+            break;
+        case 'i':
+            if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
+                size_t cnt = inputs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += inputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'm':
+            if ( fieldName % "message" ) return message;
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 'o':
+            if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
+                size_t cnt = outputs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += outputs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'p':
+            if ( fieldName % "payable" ) return bool_2_Str_t(payable);
+            break;
+        case 's':
+            if ( fieldName % "signature" ) return signature;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -353,77 +424,6 @@ CArchive& operator<<(CArchive& archive, const CFunction& fun) {
 CArchive& operator>>(CArchive& archive, CFunction& fun) {
     fun.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CFunction::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextFunctionChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "anonymous" ) return bool_2_Str_t(anonymous);
-            break;
-        case 'c':
-            if ( fieldName % "constant" ) return bool_2_Str_t(constant);
-            break;
-        case 'e':
-            if ( fieldName % "encoding" ) return encoding;
-            break;
-        case 'i':
-            if ( fieldName % "inputs" || fieldName % "inputsCnt" ) {
-                size_t cnt = inputs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += inputs[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'm':
-            if ( fieldName % "message" ) return message;
-            break;
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            break;
-        case 'o':
-            if ( fieldName % "outputs" || fieldName % "outputsCnt" ) {
-                size_t cnt = outputs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += outputs[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'p':
-            if ( fieldName % "payable" ) return bool_2_Str_t(payable);
-            break;
-        case 's':
-            if ( fieldName % "signature" ) return signature;
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

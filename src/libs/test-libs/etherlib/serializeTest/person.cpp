@@ -58,6 +58,36 @@ string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CPerson::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextPersonChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "age" ) return uint_2_Str(age);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            if ( fieldName % "next" ) {
+                if (next)
+                    return next->Format();
+                return "";
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CPerson::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -221,36 +251,6 @@ bool CPerson::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CPerson::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextPersonChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "age" ) return uint_2_Str(age);
-            break;
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            if ( fieldName % "next" ) {
-                if (next)
-                    return next->Format();
-                return "";
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

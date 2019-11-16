@@ -58,6 +58,35 @@ string_q nextBalancedeltaChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CBalanceDelta::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextBalancedeltaChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            break;
+        case 'b':
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            if ( fieldName % "balance" ) return wei_2_Str(balance);
+            break;
+        case 'd':
+            if ( fieldName % "diff" ) return bni_2_Str(diff);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CBalanceDelta::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -244,35 +273,6 @@ CArchive& operator<<(CArchive& archive, const CBalanceDelta& bal) {
 CArchive& operator>>(CArchive& archive, CBalanceDelta& bal) {
     bal.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CBalanceDelta::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextBalancedeltaChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            break;
-        case 'b':
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            if ( fieldName % "balance" ) return wei_2_Str(balance);
-            break;
-        case 'd':
-            if ( fieldName % "diff" ) return bni_2_Str(diff);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

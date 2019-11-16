@@ -58,6 +58,79 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextAccountwatchChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "abi_spec" ) {
+                if (abi_spec == CAbi())
+                    return "";
+                expContext().noFrst = true;
+                return abi_spec.Format();
+            }
+            break;
+        case 'c':
+            if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
+            break;
+        case 'e':
+            if ( fieldName % "enabled" ) return bool_2_Str_t(enabled);
+            break;
+        case 'f':
+            if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
+            break;
+        case 's':
+            if ( fieldName % "statement" ) {
+                if (statement == CIncomeStatement())
+                    return "";
+                expContext().noFrst = true;
+                return statement.Format();
+            }
+            if ( fieldName % "stateHistory" || fieldName % "stateHistoryCnt" ) {
+                size_t cnt = stateHistory.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += stateHistory[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("abi_spec")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = abi_spec.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("statement")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = statement.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CAccountName::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -255,69 +328,6 @@ bool CAccountWatch::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextAccountwatchChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "abi_spec" ) { if (abi_spec == CAbi()) return ""; expContext().noFrst=true; return abi_spec.Format(); }
-            break;
-        case 'c':
-            if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
-            break;
-        case 'e':
-            if ( fieldName % "enabled" ) return bool_2_Str_t(enabled);
-            break;
-        case 'f':
-            if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
-            break;
-        case 's':
-            if ( fieldName % "statement" ) { if (statement == CIncomeStatement()) return ""; expContext().noFrst=true; return statement.Format(); }
-            if ( fieldName % "stateHistory" || fieldName % "stateHistoryCnt" ) {
-                size_t cnt = stateHistory.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += stateHistory[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("abi_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = abi_spec.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("statement")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = statement.getValueByName(f);
-        return f;
-    }
-
-    // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -92,11 +92,6 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    cerr << total.Format(STR_SCREEN_REPORT) << endl;
-    for (auto fail : fails)
-        cerr << fail;
-    cerr << endl;
-
     if (total.nTests == total.nPassed) {
         perf << total.Format(options.perf_format) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
@@ -104,6 +99,11 @@ int main(int argc, const char *argv[]) {
             appendToAsciiFile(configPath("performance.csv"), perf.str());
         appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
     }
+
+    cerr << total.Format(STR_SCREEN_REPORT) << endl;
+    for (auto fail : fails)
+        cerr << fail;
+    cerr << endl;
 
     return 0;
 }

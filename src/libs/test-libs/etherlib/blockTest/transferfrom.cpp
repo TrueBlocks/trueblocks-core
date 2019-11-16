@@ -58,6 +58,30 @@ string_q nextTransferfromChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTransferfromChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case '_':
+            if ( fieldName % "_from" ) return addr_2_Str(_from);
+            if ( fieldName % "_to" ) return addr_2_Str(_to);
+            if ( fieldName % "_value" ) return bnu_2_Str(_value);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTransaction::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -202,30 +226,6 @@ bool QTransferFrom::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTransferfromChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case '_':
-            if ( fieldName % "_from" ) return addr_2_Str(_from);
-            if ( fieldName % "_to" ) return addr_2_Str(_to);
-            if ( fieldName % "_value" ) return bnu_2_Str(_value);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CTransaction::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

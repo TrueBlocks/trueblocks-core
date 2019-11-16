@@ -58,6 +58,23 @@ string_q nextChaincacheChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CChainCache::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextChaincacheChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // No fields
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CCache::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CChainCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -188,35 +205,6 @@ bool CChainCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CChainCache& cha) {
-    cha.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CChainCache& cha) {
-    cha.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CChainCache::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextChaincacheChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // No fields
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CCache::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

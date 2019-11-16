@@ -143,10 +143,6 @@ extern CArchive& operator>>(CArchive& archive, CConfigGroupArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigGroupArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CConfigGroup& con);
-extern CArchive& operator>>(CArchive& archive, CConfigGroup& con);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGGROUP;
 
 //---------------------------------------------------------------------------

@@ -59,6 +59,103 @@ string_q nextTraceChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTrace::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTraceChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "articulatedTrace" ) {
+                if (articulatedTrace == CFunction())
+                    return "";
+                expContext().noFrst = true;
+                return articulatedTrace.Format();
+            }
+            if ( fieldName % "action" ) {
+                if (action == CTraceAction())
+                    return "";
+                expContext().noFrst = true;
+                return action.Format();
+            }
+            break;
+        case 'b':
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'c':
+            if ( fieldName % "compressedTrace" ) return compressedTrace;
+            break;
+        case 'e':
+            if ( fieldName % "error" ) return error;
+            break;
+        case 'r':
+            if ( fieldName % "result" ) {
+                if (result == CTraceResult())
+                    return "";
+                expContext().noFrst = true;
+                return result.Format();
+            }
+            break;
+        case 's':
+            if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);
+            break;
+        case 't':
+            if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
+                size_t cnt = traceAddress.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + traceAddress[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    // Weird note here -- the above case for traceAddress is not used because it's overridden further up.
+    // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("articulatedTrace")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTrace.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("action")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = action.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("result")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = result.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -301,88 +398,6 @@ bool CTrace::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CTrace::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTraceChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "articulatedTrace" ) { if (articulatedTrace == CFunction()) return ""; expContext().noFrst=true; return articulatedTrace.Format(); }
-            if ( fieldName % "action" ) { if (action == CTraceAction()) return ""; expContext().noFrst=true; return action.Format(); }
-            break;
-        case 'b':
-            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
-        case 'c':
-            if ( fieldName % "compressedTrace" ) return compressedTrace;
-            break;
-        case 'e':
-            if ( fieldName % "error" ) return error;
-            break;
-        case 'r':
-            if ( fieldName % "result" ) { if (result == CTraceResult()) return ""; expContext().noFrst=true; return result.Format(); }
-            break;
-        case 's':
-            if ( fieldName % "subtraces" ) return uint_2_Str(subtraces);
-            break;
-        case 't':
-            if ( fieldName % "traceAddress" || fieldName % "traceAddressCnt" ) {
-                size_t cnt = traceAddress.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + traceAddress[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "transactionHash" ) return hash_2_Str(transactionHash);
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // Weird note here -- the above case for traceAddress is not used because it's overridden further up.
-    // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("articulatedTrace")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTrace.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("action")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = action.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("result")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = result.getValueByName(f);
-        return f;
-    }
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

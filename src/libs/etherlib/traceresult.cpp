@@ -59,6 +59,37 @@ string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTraceResult::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTraceresultChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            break;
+        case 'c':
+            if ( fieldName % "code" ) return code;
+            break;
+        case 'g':
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            break;
+        case 'o':
+            if ( fieldName % "output" ) return output;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -220,37 +251,6 @@ CArchive& operator<<(CArchive& archive, const CTraceResult& tra) {
 CArchive& operator>>(CArchive& archive, CTraceResult& tra) {
     tra.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CTraceResult::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTraceresultChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            break;
-        case 'c':
-            if ( fieldName % "code" ) return code;
-            break;
-        case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
-            break;
-        case 'o':
-            if ( fieldName % "output" ) return output;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

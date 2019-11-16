@@ -17,6 +17,7 @@
 #include "utillib.h"
 #include "options.h"
 #include "person.h"
+#include "status.h"
 
 CPerson leader("Leader", 100);
 CPerson *lastAdded = &leader;
@@ -25,6 +26,8 @@ int main(int argc, const char *argv[]) {
     etherlib_init(quickQuitHandler);
 
     CPerson::registerClass();
+    CStatus::registerClass();
+    CCache::registerClass();
 
     // Parse command line, allowing for command files
     COptions options;
@@ -78,10 +81,19 @@ int main(int argc, const char *argv[]) {
         }
         cout.flush();
 
-        CPerson::registerClass();
-        cout << leader.Format() << "\n";
+        cout << "\nShow a person\n" << string_q(80, '-') << "\n";
+        cout << leader << "\n";
+
+        cout << "\nShow a status\n" << string_q(80, '-') << "\n";
+        CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
+        cout << status << endl;
+
+        cout << "\nShow a cache\n" << string_q(80, '-') << "\n";
+        CCache cache;  // same with cache
+        cout << cache << endl;
 
         remove("./file.bin");
     }
+
     return 0;
 }

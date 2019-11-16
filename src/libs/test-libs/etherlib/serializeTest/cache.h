@@ -15,8 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "cache.h"
-#include "monitorcacheitem.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -24,33 +23,34 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitorCache : public CCache {
+class CCache : public CBaseNode {
 public:
-    CAddressArray addrs;
-    CMonitorCacheItemArray items;
+    string_q type;
+    string_q path;
+    uint64_t nFiles;
+    uint64_t nFolders;
+    uint64_t sizeInBytes;
+    bool valid_counts;
 
 public:
-    CMonitorCache(void);
-    CMonitorCache(const CMonitorCache& mo);
-    virtual ~CMonitorCache(void);
-    CMonitorCache& operator=(const CMonitorCache& mo);
+    CCache(void);
+    CCache(const CCache& ca);
+    virtual ~CCache(void);
+    CCache& operator=(const CCache& ca);
 
-    DECLARE_NODE(CMonitorCache);
-
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
+    DECLARE_NODE(CCache);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCache& item) const;
-    bool operator!=(const CMonitorCache& item) const { return !operator==(item); }
-    friend bool operator<(const CMonitorCache& v1, const CMonitorCache& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCache& item);
+    bool operator==(const CCache& item) const;
+    bool operator!=(const CCache& item) const { return !operator==(item); }
+    friend bool operator<(const CCache& v1, const CCache& v2);
+    friend ostream& operator<<(ostream& os, const CCache& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CMonitorCache& mo);
+    void duplicate(const CCache& ca);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -58,68 +58,76 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::CMonitorCache(void) {
+inline CCache::CCache(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::CMonitorCache(const CMonitorCache& mo) {
+inline CCache::CCache(const CCache& ca) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(mo);
+    duplicate(ca);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::~CMonitorCache(void) {
+inline CCache::~CCache(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::clear(void) {
+inline void CCache::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::initialize(void) {
-    CCache::initialize();
+inline void CCache::initialize(void) {
+    CBaseNode::initialize();
 
-    addrs.clear();
-    items.clear();
+    type = "";
+    path = "";
+    nFiles = 0;
+    nFolders = 0;
+    sizeInBytes = 0;
+    valid_counts = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::duplicate(const CMonitorCache& mo) {
+inline void CCache::duplicate(const CCache& ca) {
     clear();
-    CCache::duplicate(mo);
+    CBaseNode::duplicate(ca);
 
-    addrs = mo.addrs;
-    items = mo.items;
+    type = ca.type;
+    path = ca.path;
+    nFiles = ca.nFiles;
+    nFolders = ca.nFolders;
+    sizeInBytes = ca.sizeInBytes;
+    valid_counts = ca.valid_counts;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCache& CMonitorCache::operator=(const CMonitorCache& mo) {
-    duplicate(mo);
+inline CCache& CCache::operator=(const CCache& ca) {
+    duplicate(ca);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCache::operator==(const CMonitorCache& item) const {
+inline bool CCache::operator==(const CCache& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -127,7 +135,7 @@ inline bool CMonitorCache::operator==(const CMonitorCache& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CMonitorCache& v1, const CMonitorCache& v2) {
+inline bool operator<(const CCache& v1, const CCache& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -135,12 +143,12 @@ inline bool operator<(const CMonitorCache& v1, const CMonitorCache& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CMonitorCache> CMonitorCacheArray;
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheArray& array);
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheArray& array);
+typedef vector<CCache> CCacheArray;
+extern CArchive& operator>>(CArchive& archive, CCacheArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_MONITORCACHE;
+extern const char* STR_DISPLAY_CACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

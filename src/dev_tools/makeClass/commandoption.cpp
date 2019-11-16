@@ -58,6 +58,58 @@ string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CCommandOption::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextCommandoptionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "api_route" ) return api_route;
+            break;
+        case 'c':
+            if ( fieldName % "command" ) return command;
+            if ( fieldName % "core_visible" ) return core_visible;
+            break;
+        case 'd':
+            if ( fieldName % "def_val" ) return def_val;
+            if ( fieldName % "docs_visible" ) return docs_visible;
+            if ( fieldName % "data_type" ) return data_type;
+            if ( fieldName % "description" ) return description;
+            break;
+        case 'g':
+            if ( fieldName % "group" ) return group;
+            if ( fieldName % "generate" ) return generate;
+            break;
+        case 'h':
+            if ( fieldName % "hotkey" ) return hotkey;
+            break;
+        case 'i':
+            if ( fieldName % "is_required" ) return is_required;
+            if ( fieldName % "is_customizable" ) return is_customizable;
+            break;
+        case 'n':
+            if ( fieldName % "num" ) return num;
+            break;
+        case 'o':
+            if ( fieldName % "option_kind" ) return option_kind;
+            break;
+        case 't':
+            if ( fieldName % "tool" ) return tool;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -291,58 +343,6 @@ bool CCommandOption::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CCommandOption::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextCommandoptionChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "api_route" ) return api_route;
-            break;
-        case 'c':
-            if ( fieldName % "command" ) return command;
-            if ( fieldName % "core_visible" ) return core_visible;
-            break;
-        case 'd':
-            if ( fieldName % "def_val" ) return def_val;
-            if ( fieldName % "docs_visible" ) return docs_visible;
-            if ( fieldName % "data_type" ) return data_type;
-            if ( fieldName % "description" ) return description;
-            break;
-        case 'g':
-            if ( fieldName % "group" ) return group;
-            if ( fieldName % "generate" ) return generate;
-            break;
-        case 'h':
-            if ( fieldName % "hotkey" ) return hotkey;
-            break;
-        case 'i':
-            if ( fieldName % "is_required" ) return is_required;
-            if ( fieldName % "is_customizable" ) return is_customizable;
-            break;
-        case 'n':
-            if ( fieldName % "num" ) return num;
-            break;
-        case 'o':
-            if ( fieldName % "option_kind" ) return option_kind;
-            break;
-        case 't':
-            if ( fieldName % "tool" ) return tool;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

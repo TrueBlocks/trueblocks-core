@@ -351,7 +351,7 @@ namespace qblocks {
     }
 
     //------------------------------------------------------------------------------------------------------------
-    void writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces) {
+    bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces, bool testing) {
         string_q codeOut = codeOutIn;
         string_q orig;
         asciiFileToString(fileName, orig);
@@ -399,11 +399,23 @@ namespace qblocks {
         if (contains(codeOut, "virtual") || contains(codeOut, "override"))
             replace(codeOut, "~", "virtual ~");
 
-        // If we don't write it because it's identical, it won't force a rebuild
-        if (orig != codeOut && !isTestMode()) {
-            LOG_INFO("Writing: ", fileName);
-            stringToAsciiFile(fileName, codeOut);
+        if (isTestMode())
+            testing = true;
+
+        if (orig != codeOut) {
+            // Do the actual writing of the data only if we're not testing or the user has told us not to
+            if (!testing) {
+                LOG_INFO("Writing: ", fileName);
+                stringToAsciiFile(fileName, codeOut);
+            } else {
+                LOG8("Not writing: ", fileName);
+            }
+            // We return 'true' if we WOULD HAVE have written the file (even if we didn't).
+            return true;
         }
+
+        // We return 'false' if we would NOT have written the file (not if we actually did).
+        return false;
     }
 
     //-----------------------------------------------------------------------

@@ -60,6 +60,60 @@ string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CAccount::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextAccountChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "addr" ) return addr_2_Str(addr);
+            break;
+        case 'l':
+            if ( fieldName % "latestPage" ) return uint_2_Str(latestPage);
+            if ( fieldName % "latestTx" ) {
+                if (latestTx == CTransaction())
+                    return "";
+                expContext().noFrst = true;
+                return latestTx.Format();
+            }
+            break;
+        case 't':
+            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
+                size_t cnt = transactions.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += transactions[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("latestTx")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = latestTx.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -225,55 +279,6 @@ bool CAccount::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CAccount::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextAccountChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "addr" ) return addr_2_Str(addr);
-            break;
-        case 'l':
-            if ( fieldName % "latestPage" ) return uint_2_Str(latestPage);
-            if ( fieldName % "latestTx" ) { if (latestTx == CTransaction()) return ""; expContext().noFrst=true; return latestTx.Format(); }
-            break;
-        case 't':
-            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                size_t cnt = transactions.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += transactions[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("latestTx")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = latestTx.getValueByName(f);
-        return f;
-    }
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

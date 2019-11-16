@@ -59,6 +59,71 @@ string_q nextBlockChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CBlock::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextBlockChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'd':
+            if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
+            break;
+        case 'f':
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
+            break;
+        case 'g':
+            if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
+            break;
+        case 'l':
+            if ( fieldName % "light" ) return bool_2_Str_t(light);
+            break;
+        case 'm':
+            if ( fieldName % "miner" ) return addr_2_Str(miner);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 'p':
+            if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
+            if ( fieldName % "price" ) return double_2_Str(price, 5);
+            break;
+        case 't':
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
+            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
+                size_t cnt = transactions.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += transactions[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+    }
+
+    // EXISTING_CODE
+    if ( isTestMode() && fieldName % "blockHash" )
+        return hash_2_Str(hash);
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -394,71 +459,6 @@ CArchive& operator<<(CArchive& archive, const CBlock& blo) {
 CArchive& operator>>(CArchive& archive, CBlock& blo) {
     blo.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CBlock::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextBlockChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'b':
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
-        case 'd':
-            if ( fieldName % "difficulty" ) return uint_2_Str(difficulty);
-            break;
-        case 'f':
-            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
-            break;
-        case 'g':
-            if ( fieldName % "gasLimit" ) return gas_2_Str(gasLimit);
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
-            break;
-        case 'h':
-            if ( fieldName % "hash" ) return hash_2_Str(hash);
-            break;
-        case 'l':
-            if ( fieldName % "light" ) return bool_2_Str_t(light);
-            break;
-        case 'm':
-            if ( fieldName % "miner" ) return addr_2_Str(miner);
-            break;
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            break;
-        case 'p':
-            if ( fieldName % "parentHash" ) return hash_2_Str(parentHash);
-            if ( fieldName % "price" ) return double_2_Str(price, 5);
-            break;
-        case 't':
-            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
-            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
-                size_t cnt = transactions.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += transactions[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    if ( isTestMode() && fieldName % "blockHash" )
-        return hash_2_Str(hash);
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

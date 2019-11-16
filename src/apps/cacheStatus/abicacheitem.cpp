@@ -58,6 +58,35 @@ string_q nextAbicacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CAbiCacheItem::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextAbicacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'n':
+            if ( fieldName % "nFunctions" ) return uint_2_Str(nFunctions);
+            if ( fieldName % "nEvents" ) return uint_2_Str(nEvents);
+            if ( fieldName % "nOther" ) return uint_2_Str(nOther);
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" || fieldName % "nRecords" )
+        return "";
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CAccountName::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CAbiCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -208,47 +237,6 @@ bool CAbiCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi) {
-    abi.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi) {
-    abi.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CAbiCacheItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextAbicacheitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "nFunctions" ) return uint_2_Str(nFunctions);
-            if ( fieldName % "nEvents" ) return uint_2_Str(nEvents);
-            if ( fieldName % "nOther" ) return uint_2_Str(nOther);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" || fieldName % "nRecords" )
-        return "";
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

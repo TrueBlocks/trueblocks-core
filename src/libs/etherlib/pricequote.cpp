@@ -59,6 +59,31 @@ string_q nextPricequoteChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextPricequoteChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "close" ) return double_2_Str(close, 5);
+            break;
+        case 't':
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -226,31 +251,6 @@ bool CPriceQuote::readBackLevel(CArchive& archive) {
     }
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextPricequoteChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "close" ) return double_2_Str(close, 5);
-            break;
-        case 't':
-            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

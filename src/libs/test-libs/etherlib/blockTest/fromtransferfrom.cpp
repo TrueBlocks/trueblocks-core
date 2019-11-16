@@ -58,6 +58,29 @@ string_q nextFromtransferfromChunk(const string_q& fieldIn, const void *dataPtr)
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q QFromTransferFrom::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextFromtransferfromChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'w':
+            if ( fieldName % "whop" ) return addr_2_Str(whop);
+            if ( fieldName % "werp" ) return addr_2_Str(werp);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return QTransferFrom::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool QFromTransferFrom::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -198,29 +221,6 @@ bool QFromTransferFrom::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q QFromTransferFrom::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextFromtransferfromChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'w':
-            if ( fieldName % "whop" ) return addr_2_Str(whop);
-            if ( fieldName % "werp" ) return addr_2_Str(werp);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return QTransferFrom::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

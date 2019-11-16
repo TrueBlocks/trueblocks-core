@@ -58,6 +58,45 @@ string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CEthState::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextEthstateChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            if ( fieldName % "accttype" ) return accttype;
+            break;
+        case 'b':
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            if ( fieldName % "balance" ) return bnu_2_Str(balance);
+            break;
+        case 'c':
+            if ( fieldName % "code" ) return code;
+            break;
+        case 'd':
+            if ( fieldName % "deployed" ) return uint_2_Str(deployed);
+            break;
+        case 'n':
+            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
+            break;
+        case 's':
+            if ( fieldName % "storage" ) return storage;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -247,45 +286,6 @@ bool CEthState::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CEthState::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextEthstateChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "accttype" ) return accttype;
-            break;
-        case 'b':
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            if ( fieldName % "balance" ) return bnu_2_Str(balance);
-            break;
-        case 'c':
-            if ( fieldName % "code" ) return code;
-            break;
-        case 'd':
-            if ( fieldName % "deployed" ) return uint_2_Str(deployed);
-            break;
-        case 'n':
-            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
-            break;
-        case 's':
-            if ( fieldName % "storage" ) return storage;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

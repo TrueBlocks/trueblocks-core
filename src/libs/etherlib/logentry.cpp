@@ -59,6 +59,79 @@ string_q nextLogentryChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CLogEntry::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextLogentryChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            if ( fieldName % "articulatedLog" ) {
+                if (articulatedLog == CFunction())
+                    return "";
+                expContext().noFrst = true;
+                return articulatedLog.Format();
+            }
+            break;
+        case 'c':
+            if ( fieldName % "compressedLog" ) return compressedLog;
+            break;
+        case 'd':
+            if ( fieldName % "data" ) return data;
+            break;
+        case 'l':
+            if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
+            break;
+        case 'r':
+            if ( fieldName % "removed" ) return bool_2_Str_t(removed);
+            break;
+        case 't':
+            if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
+                size_t cnt = topics.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += ("\"" + topic_2_Str(topics[i]) + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "transactionLogIndex" ) return uint_2_Str(transactionLogIndex);
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    // See if this field belongs to the item's container
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+      ret = nextReceiptChunk(fieldName, pReceipt);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
+    // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("articulatedLog")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedLog.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -296,74 +369,6 @@ CArchive& operator<<(CArchive& archive, const CLogEntry& log) {
 CArchive& operator>>(CArchive& archive, CLogEntry& log) {
     log.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CLogEntry::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextLogentryChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "articulatedLog" ) { if (articulatedLog == CFunction()) return ""; expContext().noFrst=true; return articulatedLog.Format(); }
-            break;
-        case 'c':
-            if ( fieldName % "compressedLog" ) return compressedLog;
-            break;
-        case 'd':
-            if ( fieldName % "data" ) return data;
-            break;
-        case 'l':
-            if ( fieldName % "logIndex" ) return uint_2_Str(logIndex);
-            break;
-        case 'r':
-            if ( fieldName % "removed" ) return bool_2_Str_t(removed);
-            break;
-        case 't':
-            if ( fieldName % "topics" || fieldName % "topicsCnt" ) {
-                size_t cnt = topics.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + topic_2_Str(topics[i]) + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "transactionLogIndex" ) return uint_2_Str(transactionLogIndex);
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // See if this field belongs to the item's container
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-      ret = nextReceiptChunk(fieldName, pReceipt);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
-    // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("articulatedLog")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedLog.getValueByName(f);
-        return f;
-    }
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

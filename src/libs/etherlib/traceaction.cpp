@@ -59,6 +59,53 @@ string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTraceAction::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTraceactionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "address" ) return addr_2_Str(address);
+            break;
+        case 'b':
+            if ( fieldName % "balance" ) return wei_2_Str(balance);
+            break;
+        case 'c':
+            if ( fieldName % "callType" ) return callType;
+            break;
+        case 'f':
+            if ( fieldName % "from" ) return addr_2_Str(from);
+            break;
+        case 'g':
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
+            break;
+        case 'i':
+            if ( fieldName % "init" ) return init;
+            if ( fieldName % "input" ) return input;
+            break;
+        case 'r':
+            if ( fieldName % "refundAddress" ) return addr_2_Str(refundAddress);
+            break;
+        case 't':
+            if ( fieldName % "to" ) return addr_2_Str(to);
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return wei_2_Str(value);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -260,53 +307,6 @@ CArchive& operator<<(CArchive& archive, const CTraceAction& tra) {
 CArchive& operator>>(CArchive& archive, CTraceAction& tra) {
     tra.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CTraceAction::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTraceactionChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            break;
-        case 'b':
-            if ( fieldName % "balance" ) return wei_2_Str(balance);
-            break;
-        case 'c':
-            if ( fieldName % "callType" ) return callType;
-            break;
-        case 'f':
-            if ( fieldName % "from" ) return addr_2_Str(from);
-            break;
-        case 'g':
-            if ( fieldName % "gas" ) return gas_2_Str(gas);
-            break;
-        case 'i':
-            if ( fieldName % "init" ) return init;
-            if ( fieldName % "input" ) return input;
-            break;
-        case 'r':
-            if ( fieldName % "refundAddress" ) return addr_2_Str(refundAddress);
-            break;
-        case 't':
-            if ( fieldName % "to" ) return addr_2_Str(to);
-            break;
-        case 'v':
-            if ( fieldName % "value" ) return wei_2_Str(value);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

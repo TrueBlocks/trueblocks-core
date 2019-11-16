@@ -58,6 +58,28 @@ string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void *dataPtr)
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextMonitorcacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CAccountWatch::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -194,40 +216,6 @@ bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon) {
-    mon.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon) {
-    mon.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextMonitorcacheitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CAccountWatch::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

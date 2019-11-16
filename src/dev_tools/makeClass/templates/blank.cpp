@@ -22,7 +22,7 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
-[{SCOPE}] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr);
+[SCOPE_CODE] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr);
 static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr);
 
 //---------------------------------------------------------------------------
@@ -57,6 +57,23 @@ string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = next[{PROPER}]Chunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    [GET_CASE_CODE]
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+[CHILD_OBJ_GETTER]    // Finally, give the parent class a chance
+    return [{BASE_CLASS}]::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -67,7 +84,7 @@ bool [{CLASS_NAME}]::setValueByName(const string_q& fieldNameIn, const string_q&
 
 [{PARENT_SET}]
     switch (tolower(fieldName[0])) {
-[FIELD_SETCASE]    }
+[SET_CASE_CODE]    }
     return false;
 }
 
@@ -137,7 +154,7 @@ void [{CLASS_NAME}]::registerClass(void) {
     ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
     ADD_FIELD([{CLASS_NAME}], "cname", T_TEXT,  ++fieldNum);
-[REGISTER_FIELDS]
+[ADD_FIELDS][HIDE_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD([{CLASS_NAME}], "schema");
@@ -183,25 +200,7 @@ bool [{CLASS_NAME}]::readBackLevel(CArchive& archive) {
     return done;
 }
 
-[{OPERATORS}]
-//---------------------------------------------------------------------------
-string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = next[{PROPER}]Chunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    [{FIELD_CASE}]
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-[{SUBCLASS_FLDS}]    // Finally, give the parent class a chance
-    return [{BASE_CLASS}]::getValueByName(fieldName);
-}
-
-//-------------------------------------------------------------------------
+[OPERATORS_IMPL]//-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
     // EXISTING_CODE
     // EXISTING_CODE

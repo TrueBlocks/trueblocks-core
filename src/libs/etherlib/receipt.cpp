@@ -59,6 +59,65 @@ string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CReceipt::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextReceiptChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
+            if ( fieldName % "cumulativeGasUsed" ) return wei_2_Str(cumulativeGasUsed);
+            break;
+        case 'g':
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            break;
+        case 'l':
+            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
+                size_t cnt = logs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += logs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "logsBloom" ) return logsBloom;
+            break;
+        case 'r':
+            if ( fieldName % "root" ) return root;
+            break;
+        case 's':
+            if ( fieldName % "status" ) return uint_2_Str(status);
+            break;
+    }
+
+    // EXISTING_CODE
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+        string_q tmpName = fieldName;
+        if (tmpName == "transactionHash")
+            tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
+        // See if this field belongs to the item's container
+        ret = nextTransactionChunk(tmpName, pTrans);
+        // LOG4(fieldName, "=", ret, " from parent");
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -315,65 +374,6 @@ CArchive& operator<<(CArchive& archive, const CReceipt& rec) {
 CArchive& operator>>(CArchive& archive, CReceipt& rec) {
     rec.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CReceipt::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextReceiptChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
-            if ( fieldName % "cumulativeGasUsed" ) return wei_2_Str(cumulativeGasUsed);
-            break;
-        case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
-            break;
-        case 'l':
-            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                size_t cnt = logs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += logs[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "logsBloom" ) return logsBloom;
-            break;
-        case 'r':
-            if ( fieldName % "root" ) return root;
-            break;
-        case 's':
-            if ( fieldName % "status" ) return uint_2_Str(status);
-            break;
-    }
-
-    // EXISTING_CODE
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        string_q tmpName = fieldName;
-        if (tmpName == "transactionHash")
-            tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
-        // See if this field belongs to the item's container
-        ret = nextTransactionChunk(tmpName, pTrans);
-        // LOG4(fieldName, "=", ret, " from parent");
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

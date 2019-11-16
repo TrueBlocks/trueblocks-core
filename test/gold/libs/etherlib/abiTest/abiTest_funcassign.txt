@@ -13,11 +13,7 @@ CNewReceipt				a->_val = extract(params, 0*64, 64);
 CNewTransactionArray				a->_val = extract(params, 0*64, 64);
 CBigUintArray				a->_val = str_2_Int(extract(params, 0*64, 64));
 CTopicArray				a->_val = extract(params, 0*64, 64);
-address[]				while (!params.empty()) {
-				string_q val = extract(params, 0, 64);
-				params = extract(params, 64);
-				a->_val.push_back(val);
-			}
+CAddressArray				a->_val = extract(params, 0*64, 64);
 bytes4				a->_val = extract(params, 0*64, 64);
 time				a->_val = extract(params, 0*64, 64);
 uint8				a->_val = (uint32_t)str_2_Uint(extract(params, 0*64, 64));

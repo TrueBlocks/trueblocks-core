@@ -6,5 +6,5 @@ backfields2 = address address|string data|uint64 logIndex|CTopicArray topics|CFu
 includes = abilib.h
 cpp_includes = etherlib.h
 scope = extern
-serialize = true
+serializable = true
 display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog

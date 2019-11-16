@@ -4,5 +4,5 @@ fields = string name|string type|sbool anonymous|sbool constant|sbool payable|st
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % item.encoding
-serialize = true
+serializable = true
 display_str = name, type, anonymous, constant, payable, signature, encoding, inputs, outputs

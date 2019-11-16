@@ -58,6 +58,34 @@ string_q nextApispecChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CApiSpec::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextApispecChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'h':
+            if ( fieldName % "headers" ) return headers;
+            break;
+        case 'm':
+            if ( fieldName % "method" ) return method;
+            break;
+        case 'u':
+            if ( fieldName % "uri" ) return uri;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CApiSpec::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -213,34 +241,6 @@ CArchive& operator<<(CArchive& archive, const CApiSpec& api) {
 CArchive& operator>>(CArchive& archive, CApiSpec& api) {
     api.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CApiSpec::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextApispecChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'h':
-            if ( fieldName % "headers" ) return headers;
-            break;
-        case 'm':
-            if ( fieldName % "method" ) return method;
-            break;
-        case 'u':
-            if ( fieldName % "uri" ) return uri;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

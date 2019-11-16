@@ -140,10 +140,6 @@ extern CArchive& operator>>(CArchive& archive, CConfigFileArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigFileArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CConfigFile& con);
-extern CArchive& operator>>(CArchive& archive, CConfigFile& con);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGFILE;
 
 //---------------------------------------------------------------------------

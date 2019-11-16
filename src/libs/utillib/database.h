@@ -149,8 +149,7 @@ namespace qblocks {
     extern bool shouldQuit(void);
     extern void lockSection(bool lock);
     extern bool isSectionLocked(void);
-    extern void writeTheCode(const string_q& fileName, const string_q& code,
-                                const string_q& ns = "", bool spaces = true);
+    extern bool writeTheCode(const string_q& fileName, const string_q& code, const string_q& ns, bool spaces, bool testing);
 
     //----------------------------------------------------------------------
     extern size_t   asciiFileToString(const string_q& filename, string& contents);

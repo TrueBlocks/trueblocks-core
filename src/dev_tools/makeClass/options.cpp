@@ -184,13 +184,15 @@ COptions::COptions(void) : classFile("") {
     errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}]. Quitting...";
     errStrs[ERR_NEEDONECLASS] = "Please specify at least one className. Quitting...";
     // END_ERROR_MSG
+
+    updateTemplates();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
 
-//---------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 bool listClasses(const string_q& path, void *data) {
     if (contains(path, "/test/"))
         return true;
@@ -222,4 +224,25 @@ bool listClasses(const string_q& path, void *data) {
         }
     }
     return true;
+}
+
+//--------------------------------------------------------------------------------
+void copyIfNewer(const string_q& src, const string_q& dest) {
+    time_q src_time = fileLastModifyDate(src);
+    time_q dest_time = fileLastModifyDate(dest);
+    if (dest_time > src_time)
+        copyFile(dest, src);
+}
+
+//--------------------------------------------------------------------------------
+string_q getSourcePath(const string_q& part) {
+    // TODO(tjayrush) hard coded path
+    return "/Users/jrush/src.GitHub/trueblocks-core/src/" + part;
+}
+
+//--------------------------------------------------------------------------------
+void updateTemplates(void) {
+    // TODO(tjayrush): hard coded path
+    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.cpp"), configPath("makeClass/blank.cpp"));
+    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.h"), configPath("makeClass/blank.h"));
 }

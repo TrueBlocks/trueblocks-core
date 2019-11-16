@@ -58,6 +58,43 @@ string_q nextParameterChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CParameter::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextParameterChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if ( fieldName % "indexed" ) return bool_2_Str_t(indexed);
+            if ( fieldName % "isPointer" ) return bool_2_Str_t(isPointer);
+            if ( fieldName % "isArray" ) return bool_2_Str_t(isArray);
+            if ( fieldName % "isObject" ) return bool_2_Str_t(isObject);
+            break;
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            break;
+        case 's':
+            if ( fieldName % "strDefault" ) return strDefault;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return value;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -227,43 +264,6 @@ bool CParameter::readBackLevel(CArchive& archive) {
     return done;
 }
 
-//---------------------------------------------------------------------------
-string_q CParameter::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextParameterChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'i':
-            if ( fieldName % "indexed" ) return bool_2_Str_t(indexed);
-            if ( fieldName % "isPointer" ) return bool_2_Str_t(isPointer);
-            if ( fieldName % "isArray" ) return bool_2_Str_t(isArray);
-            if ( fieldName % "isObject" ) return bool_2_Str_t(isObject);
-            break;
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            break;
-        case 's':
-            if ( fieldName % "strDefault" ) return strDefault;
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-        case 'v':
-            if ( fieldName % "value" ) return value;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
-}
-
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CParameter& item) {
     // EXISTING_CODE
@@ -282,16 +282,20 @@ const char* STR_DISPLAY_PARAMETER = "";
 //---------------------------------------------------------------------------
 CParameter::CParameter(string_q& textIn) {
     initialize();
+
+    replaceAll(textIn, "address[]", "CAddressArray");
     if (contains(textIn, "nowrite")) {
         noWrite = true;
         noWrite_min = contains(textIn, "-min");
         replace(textIn, " (nowrite)", "");
         replace(textIn, " (nowrite-min)", "");
     }
+
     if (contains(textIn, "=")) {
         strDefault = textIn;
         textIn = nextTokenClear(strDefault, '=');
     }
+
     type       = nextTokenClear(textIn, ' ');
     isPointer  = contains(textIn, "*");
     isArray    = contains(textIn, "Array");
@@ -450,6 +454,17 @@ bool CParameter::isValid(void) const {
         return n > 0 && n <= 32;
     }
     return true;
+}
+
+//--------------------------------------------------------------------------------
+size_t explode(CParameterArray& result, const string& input, char needle) {
+    CStringArray strs;
+    explode(strs, input, needle);
+    for (auto str : strs) {
+        CParameter param(str);
+        result.push_back(param);
+    }
+    return result.size();
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -58,6 +58,49 @@ string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextNewreceiptChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
+            break;
+        case 'g':
+            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            break;
+        case 'i':
+            if ( fieldName % "isError" ) return bool_2_Str_t(isError);
+            break;
+        case 'l':
+            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
+                size_t cnt = logs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += logs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if ( fieldName % "logsBloom" ) return bloom_2_Bytes(logsBloom);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -220,61 +263,6 @@ bool CNewReceipt::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CNewReceipt& newp) {
-    newp.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CNewReceipt& newp) {
-    newp.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextNewreceiptChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
-            break;
-        case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
-            break;
-        case 'i':
-            if ( fieldName % "isError" ) return bool_2_Str_t(isError);
-            break;
-        case 'l':
-            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                size_t cnt = logs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += logs[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "logsBloom" ) return bloom_2_Bytes(logsBloom);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

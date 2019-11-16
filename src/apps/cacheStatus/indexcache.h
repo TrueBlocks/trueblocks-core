@@ -136,10 +136,6 @@ extern CArchive& operator>>(CArchive& archive, CIndexCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CIndexCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CIndexCache& ind);
-extern CArchive& operator>>(CArchive& archive, CIndexCache& ind);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_INDEXCACHE;
 
 //---------------------------------------------------------------------------

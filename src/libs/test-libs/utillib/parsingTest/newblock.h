@@ -166,10 +166,6 @@ extern CArchive& operator>>(CArchive& archive, CNewBlockArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNewBlockArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNewBlock& newp);
-extern CArchive& operator>>(CArchive& archive, CNewBlock& newp);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NEWBLOCK;
 
 //---------------------------------------------------------------------------

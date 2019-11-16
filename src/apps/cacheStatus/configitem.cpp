@@ -66,6 +66,51 @@ string_q nextConfigitemChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CConfigItem::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextConfigitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'n':
+            if ( fieldName % "name" ) return name;
+            if ( fieldName % "named" || fieldName % "namedCnt" ) {
+                size_t cnt = named.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += named[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'r':
+            if ( fieldName % "required" ) return bool_2_Str_t(required);
+            if ( fieldName % "read_only" ) return bool_2_Str_t(read_only);
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            if ( fieldName % "tip" ) return tip;
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return value;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CConfigItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -250,63 +295,6 @@ bool CConfigItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CConfigItem& con) {
-    con.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CConfigItem& con) {
-    con.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CConfigItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextConfigitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            if ( fieldName % "named" || fieldName % "namedCnt" ) {
-                size_t cnt = named.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += named[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'r':
-            if ( fieldName % "required" ) return bool_2_Str_t(required);
-            if ( fieldName % "read_only" ) return bool_2_Str_t(read_only);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            if ( fieldName % "tip" ) return tip;
-            break;
-        case 'v':
-            if ( fieldName % "value" ) return value;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

@@ -59,6 +59,112 @@ string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTransaction::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTransactionChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if ( fieldName % "articulatedTx" ) {
+                if (articulatedTx == CFunction())
+                    return "";
+                expContext().noFrst = true;
+                return articulatedTx.Format();
+            }
+            break;
+        case 'b':
+            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
+            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            break;
+        case 'c':
+            if ( fieldName % "compressedTx" ) return compressedTx;
+            break;
+        case 'f':
+            if ( fieldName % "from" ) return addr_2_Str(from);
+            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
+            break;
+        case 'g':
+            if ( fieldName % "gas" ) return gas_2_Str(gas);
+            if ( fieldName % "gasPrice" ) return gas_2_Str(gasPrice);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return hash_2_Str(hash);
+            break;
+        case 'i':
+            if ( fieldName % "input" ) return input;
+            if ( fieldName % "isError" ) return uint_2_Str(isError);
+            if ( fieldName % "isInternal" ) return uint_2_Str(isInternal);
+            break;
+        case 'n':
+            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
+            break;
+        case 'r':
+            if ( fieldName % "receipt" ) {
+                if (receipt == CReceipt())
+                    return "";
+                expContext().noFrst = true;
+                return receipt.Format();
+            }
+            break;
+        case 't':
+            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
+            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
+            if ( fieldName % "to" ) return addr_2_Str(to);
+            if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
+                size_t cnt = traces.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt) return "";
+                string_q retS;
+                for (size_t i = 0 ; i < cnt ; i++) {
+                    retS += traces[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'v':
+            if ( fieldName % "value" ) return wei_2_Str(value);
+            break;
+    }
+
+    // EXISTING_CODE
+    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+        // See if this field belongs to the item's container
+        ret = nextBlockChunk(fieldName, pBlock);
+        if (contains(ret, "Field not found"))
+            ret = "";
+        if (!ret.empty())
+            return ret;
+    }
+    // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("receipt")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = receipt.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("articulatedTx")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTx.getValueByName(f);
+        return f;
+    }
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -524,102 +630,6 @@ CArchive& operator<<(CArchive& archive, const CTransaction& tra) {
 CArchive& operator>>(CArchive& archive, CTransaction& tra) {
     tra.Serialize(archive);
     return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CTransaction::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTransactionChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "articulatedTx" ) { if (articulatedTx == CFunction()) return ""; expContext().noFrst=true; return articulatedTx.Format(); }
-            break;
-        case 'b':
-            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            break;
-        case 'c':
-            if ( fieldName % "compressedTx" ) return compressedTx;
-            break;
-        case 'f':
-            if ( fieldName % "from" ) return addr_2_Str(from);
-            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
-            break;
-        case 'g':
-            if ( fieldName % "gas" ) return gas_2_Str(gas);
-            if ( fieldName % "gasPrice" ) return gas_2_Str(gasPrice);
-            break;
-        case 'h':
-            if ( fieldName % "hash" ) return hash_2_Str(hash);
-            break;
-        case 'i':
-            if ( fieldName % "input" ) return input;
-            if ( fieldName % "isError" ) return uint_2_Str(isError);
-            if ( fieldName % "isInternal" ) return uint_2_Str(isInternal);
-            break;
-        case 'n':
-            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
-            break;
-        case 'r':
-            if ( fieldName % "receipt" ) { if (receipt == CReceipt()) return ""; expContext().noFrst=true; return receipt.Format(); }
-            break;
-        case 't':
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
-            if ( fieldName % "to" ) return addr_2_Str(to);
-            if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
-                size_t cnt = traces.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += traces[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'v':
-            if ( fieldName % "value" ) return wei_2_Str(value);
-            break;
-    }
-
-    // EXISTING_CODE
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        // See if this field belongs to the item's container
-        ret = nextBlockChunk(fieldName, pBlock);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
-    // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("receipt")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = receipt.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("articulatedTx")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTx.getValueByName(f);
-        return f;
-    }
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

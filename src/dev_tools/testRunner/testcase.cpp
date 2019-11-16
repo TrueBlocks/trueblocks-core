@@ -58,6 +58,62 @@ string_q nextTestcaseChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CTestCase::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextTestcaseChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'b':
+            if ( fieldName % "builtin" ) return bool_2_Str_t(builtin);
+            break;
+        case 'e':
+            if ( fieldName % "extra" ) return extra;
+            break;
+        case 'f':
+            if ( fieldName % "filename" ) return filename;
+            if ( fieldName % "fileName" ) return fileName;
+            break;
+        case 'g':
+            if ( fieldName % "goldPath" ) return goldPath;
+            break;
+        case 'm':
+            if ( fieldName % "mode" ) return mode;
+            break;
+        case 'o':
+            if ( fieldName % "origLine" ) return origLine;
+            if ( fieldName % "onOff" ) return onOff;
+            if ( fieldName % "options" ) return options;
+            break;
+        case 'p':
+            if ( fieldName % "post" ) return post;
+            if ( fieldName % "path" ) return path;
+            break;
+        case 'r':
+            if ( fieldName % "route" ) return route;
+            break;
+        case 's':
+            if ( fieldName % "speed" ) return speed;
+            break;
+        case 't':
+            if ( fieldName % "tool" ) return tool;
+            break;
+        case 'w':
+            if ( fieldName % "workPath" ) return workPath;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -265,62 +321,6 @@ bool CTestCase::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CTestCase::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTestcaseChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'b':
-            if ( fieldName % "builtin" ) return bool_2_Str_t(builtin);
-            break;
-        case 'e':
-            if ( fieldName % "extra" ) return extra;
-            break;
-        case 'f':
-            if ( fieldName % "filename" ) return filename;
-            if ( fieldName % "fileName" ) return fileName;
-            break;
-        case 'g':
-            if ( fieldName % "goldPath" ) return goldPath;
-            break;
-        case 'm':
-            if ( fieldName % "mode" ) return mode;
-            break;
-        case 'o':
-            if ( fieldName % "origLine" ) return origLine;
-            if ( fieldName % "onOff" ) return onOff;
-            if ( fieldName % "options" ) return options;
-            break;
-        case 'p':
-            if ( fieldName % "post" ) return post;
-            if ( fieldName % "path" ) return path;
-            break;
-        case 'r':
-            if ( fieldName % "route" ) return route;
-            break;
-        case 's':
-            if ( fieldName % "speed" ) return speed;
-            break;
-        case 't':
-            if ( fieldName % "tool" ) return tool;
-            break;
-        case 'w':
-            if ( fieldName % "workPath" ) return workPath;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

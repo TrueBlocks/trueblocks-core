@@ -58,6 +58,37 @@ string_q nextCacheentryChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CCacheEntry::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextCacheentryChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "cached" ) return bool_2_Str(cached);
+            break;
+        case 'e':
+            if ( fieldName % "extra" ) return extra;
+            break;
+        case 'p':
+            if ( fieldName % "path" ) return path;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return uint_2_Str(type);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CCacheEntry::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -210,37 +241,6 @@ bool CCacheEntry::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CCacheEntry::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextCacheentryChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "cached" ) return bool_2_Str(cached);
-            break;
-        case 'e':
-            if ( fieldName % "extra" ) return extra;
-            break;
-        case 'p':
-            if ( fieldName % "path" ) return path;
-            break;
-        case 't':
-            if ( fieldName % "type" ) return uint_2_Str(type);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

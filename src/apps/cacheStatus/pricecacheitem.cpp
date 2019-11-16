@@ -58,6 +58,33 @@ string_q nextPricecacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextPricecacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'p':
+            if ( fieldName % "pair" ) return pair;
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" )
+        return "";
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CAccountName::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CPriceCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -200,45 +227,6 @@ bool CPriceCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPriceCacheItem& pri) {
-    pri.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPriceCacheItem& pri) {
-    pri.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextPricecacheitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'p':
-            if ( fieldName % "pair" ) return pair;
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    if ( fieldName % "firstAppearance" || fieldName % "latestAppearance" )
-        return "";
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

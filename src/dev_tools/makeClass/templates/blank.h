@@ -84,7 +84,7 @@ inline void [{CLASS_NAME}]::clear(void) {
 inline void [{CLASS_NAME}]::initialize(void) {
     [{BASE_CLASS}]::initialize();
 
-[FIELD_SET]
+[INIT_DEFAULTS]
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -128,7 +128,7 @@ typedef vector<[{CLASS_NAME}]> [{CLASS_NAME}]Array;
 extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array);
 extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array);
 
-[{OPERATORS}]//---------------------------------------------------------------------------
+[OPERATORS_DECL]//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_[{CLASS_UPPER}];
 
 //---------------------------------------------------------------------------

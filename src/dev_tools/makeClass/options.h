@@ -69,16 +69,36 @@ public:
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void *data);
+extern void updateTemplates(void);
+extern string_q getCaseGetCode(const string_q& fieldCase);
+extern string_q getCaseSetCode(const string_q& fieldCase);
+extern string_q convertTypes(const string_q& inStr);
+
+//------------------------------------------------------------------------------------------------------------
+inline string_q short2(const string_q& str) {
+    string_q ret = extract(str, 0, 2);
+    if (ret == "or")
+        ret = "ord";
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------------------------
+inline string_q short3(const string_q& str) {
+    string_q ret = extract(str, 0, 3);
+    if (ret == "new")
+        ret = "newp";
+    if (ret == "ret")
+        ret = "retp";
+    return ret;
+}
 
 //------------------------------------------------------------------------------------------------------------
 extern const char* STR_COMMENT_LINE;
-extern const char* STR_CLASS_FILE;
 extern const char* STR_CASE_CODE_ARRAY;
 extern const char* STR_CASE_SET_CODE_ARRAY;
 extern const char* STR_CASE_CODE_STRINGARRAY;
-extern const char* STR_OPERATOR_H;
-extern const char* STR_OPERATOR_C;
-extern const char* STR_SUBCLASS;
+extern const char* STR_OPERATOR_DECL;
+extern const char* STR_OPERATOR_IMPL;
 extern const char* PTR_SET_CASE;
 extern const char* PTR_GET_CASE;
 extern const char* STR_GETVALUE1;
@@ -99,3 +119,5 @@ extern const char* STR_READFMT;
 extern const char* STR_PTRWRITEFMT;
 extern const char* STR_WRITEFMT;
 extern const char* STR_UNKOWNTYPE;
+extern const char* STR_CHILD_OBJS;
+extern const char* STR_ARRAY_SET;

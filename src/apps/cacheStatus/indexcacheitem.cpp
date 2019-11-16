@@ -58,6 +58,49 @@ string_q nextIndexcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextIndexcacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'f':
+            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
+            if ( fieldName % "firstTs" ) return ts_2_Str(firstTs);
+            break;
+        case 'h':
+            if ( fieldName % "hash" ) return hash;
+            break;
+        case 'l':
+            if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
+            if ( fieldName % "lastestTs" ) return ts_2_Str(lastestTs);
+            break;
+        case 'n':
+            if ( fieldName % "nAddresses" ) return uint_2_Str(nAddresses);
+            if ( fieldName % "nAppearances" ) return uint_2_Str(nAppearances);
+            break;
+        case 'p':
+            if ( fieldName % "path" ) return path;
+            break;
+        case 's':
+            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -237,61 +280,6 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind) {
-    ind.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind) {
-    ind.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextIndexcacheitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'f':
-            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
-            if ( fieldName % "firstTs" ) return ts_2_Str(firstTs);
-            break;
-        case 'h':
-            if ( fieldName % "hash" ) return hash;
-            break;
-        case 'l':
-            if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
-            if ( fieldName % "lastestTs" ) return ts_2_Str(lastestTs);
-            break;
-        case 'n':
-            if ( fieldName % "nAddresses" ) return uint_2_Str(nAddresses);
-            if ( fieldName % "nAppearances" ) return uint_2_Str(nAppearances);
-            break;
-        case 'p':
-            if ( fieldName % "path" ) return path;
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

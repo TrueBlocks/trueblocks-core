@@ -151,10 +151,6 @@ extern CArchive& operator>>(CArchive& archive, CCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CCache& cac);
-extern CArchive& operator>>(CArchive& archive, CCache& cac);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CACHE;
 
 //---------------------------------------------------------------------------

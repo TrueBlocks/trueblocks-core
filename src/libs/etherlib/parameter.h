@@ -189,6 +189,7 @@ extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+size_t explode(CParameterArray& result, const string& input, char needle);
 // EXISTING_CODE
 }  // namespace qblocks
 

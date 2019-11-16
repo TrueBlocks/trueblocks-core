@@ -58,6 +58,46 @@ string_q nextMeasureChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
+//---------------------------------------------------------------------------
+string_q CMeasure::getValueByName(const string_q& fieldName) const {
+
+    // Give customized code a chance to override first
+    string_q ret = nextMeasureChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if ( fieldName % "cmd" ) return cmd;
+            break;
+        case 'd':
+            if ( fieldName % "date" ) return date;
+            break;
+        case 'e':
+            if ( fieldName % "epoch" ) return uint_2_Str(epoch);
+            break;
+        case 'g':
+            if ( fieldName % "git_hash" ) return git_hash;
+            if ( fieldName % "group" ) return group;
+            break;
+        case 'n':
+            if ( fieldName % "nTests" ) return uint_2_Str(nTests);
+            if ( fieldName % "nPassed" ) return uint_2_Str(nPassed);
+            break;
+        case 't':
+            if ( fieldName % "type" ) return type;
+            if ( fieldName % "totSecs" ) return double_2_Str(totSecs, 5);
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
@@ -246,46 +286,6 @@ bool CMeasure::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CMeasure::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextMeasureChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "cmd" ) return cmd;
-            break;
-        case 'd':
-            if ( fieldName % "date" ) return date;
-            break;
-        case 'e':
-            if ( fieldName % "epoch" ) return uint_2_Str(epoch);
-            break;
-        case 'g':
-            if ( fieldName % "git_hash" ) return git_hash;
-            if ( fieldName % "group" ) return group;
-            break;
-        case 'n':
-            if ( fieldName % "nTests" ) return uint_2_Str(nTests);
-            if ( fieldName % "nPassed" ) return uint_2_Str(nPassed);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            if ( fieldName % "totSecs" ) return double_2_Str(totSecs, 5);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------

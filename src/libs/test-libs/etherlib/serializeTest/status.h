@@ -15,42 +15,48 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+#include "etherlib.h"
 #include "cache.h"
-#include "monitorcacheitem.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+typedef vector<CCache*> CCachePtrArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitorCache : public CCache {
+class CStatus : public CBaseNode {
 public:
-    CAddressArray addrs;
-    CMonitorCacheItemArray items;
+    string_q client_version;
+    string_q trueblocks_version;
+    string_q rpc_provider;
+    string_q api_provider;
+    string_q balance_provider;
+    string_q host;
+    bool is_scraping;
+    CCachePtrArray caches;
 
 public:
-    CMonitorCache(void);
-    CMonitorCache(const CMonitorCache& mo);
-    virtual ~CMonitorCache(void);
-    CMonitorCache& operator=(const CMonitorCache& mo);
+    CStatus(void);
+    CStatus(const CStatus& st);
+    virtual ~CStatus(void);
+    CStatus& operator=(const CStatus& st);
 
-    DECLARE_NODE(CMonitorCache);
+    DECLARE_NODE(CStatus);
 
     const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
-    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCache& item) const;
-    bool operator!=(const CMonitorCache& item) const { return !operator==(item); }
-    friend bool operator<(const CMonitorCache& v1, const CMonitorCache& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCache& item);
+    bool operator==(const CStatus& item) const;
+    bool operator!=(const CStatus& item) const { return !operator==(item); }
+    friend bool operator<(const CStatus& v1, const CStatus& v2);
+    friend ostream& operator<<(ostream& os, const CStatus& item);
 
 protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CMonitorCache& mo);
+    void duplicate(const CStatus& st);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -58,68 +64,80 @@ protected:
 };
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::CMonitorCache(void) {
+inline CStatus::CStatus(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::CMonitorCache(const CMonitorCache& mo) {
+inline CStatus::CStatus(const CStatus& st) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(mo);
+    duplicate(st);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CMonitorCache::~CMonitorCache(void) {
+inline CStatus::~CStatus(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::clear(void) {
+inline void CStatus::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::initialize(void) {
-    CCache::initialize();
+inline void CStatus::initialize(void) {
+    CBaseNode::initialize();
 
-    addrs.clear();
-    items.clear();
+    client_version = "";
+    trueblocks_version = "";
+    rpc_provider = "";
+    api_provider = "";
+    balance_provider = "";
+    host = "";
+    is_scraping = 0;
+    caches.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CMonitorCache::duplicate(const CMonitorCache& mo) {
+inline void CStatus::duplicate(const CStatus& st) {
     clear();
-    CCache::duplicate(mo);
+    CBaseNode::duplicate(st);
 
-    addrs = mo.addrs;
-    items = mo.items;
+    client_version = st.client_version;
+    trueblocks_version = st.trueblocks_version;
+    rpc_provider = st.rpc_provider;
+    api_provider = st.api_provider;
+    balance_provider = st.balance_provider;
+    host = st.host;
+    is_scraping = st.is_scraping;
+    caches = st.caches;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CMonitorCache& CMonitorCache::operator=(const CMonitorCache& mo) {
-    duplicate(mo);
+inline CStatus& CStatus::operator=(const CStatus& st) {
+    duplicate(st);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCache::operator==(const CMonitorCache& item) const {
+inline bool CStatus::operator==(const CStatus& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -127,7 +145,7 @@ inline bool CMonitorCache::operator==(const CMonitorCache& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CMonitorCache& v1, const CMonitorCache& v2) {
+inline bool operator<(const CStatus& v1, const CStatus& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -135,12 +153,12 @@ inline bool operator<(const CMonitorCache& v1, const CMonitorCache& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CMonitorCache> CMonitorCacheArray;
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheArray& array);
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheArray& array);
+typedef vector<CStatus> CStatusArray;
+extern CArchive& operator>>(CArchive& archive, CStatusArray& array);
+extern CArchive& operator<<(CArchive& archive, const CStatusArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_MONITORCACHE;
+extern const char* STR_DISPLAY_STATUS;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

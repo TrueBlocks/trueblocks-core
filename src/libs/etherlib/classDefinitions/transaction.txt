@@ -7,5 +7,5 @@ backfields3 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionInde
 includes = abilib.h|receipt.h|trace.h
 cpp_includes = etherlib.h
 scope = extern
-serialize = true
+serializable = true
 display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx

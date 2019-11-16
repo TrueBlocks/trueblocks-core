@@ -136,10 +136,6 @@ extern CArchive& operator>>(CArchive& archive, CPriceCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPriceCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPriceCache& pri);
-extern CArchive& operator>>(CArchive& archive, CPriceCache& pri);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PRICECACHE;
 
 //---------------------------------------------------------------------------
