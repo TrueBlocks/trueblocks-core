@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CTraceResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTraceResult *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTraceResult*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextTraceresultChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTraceResult::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTraceresultChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,16 +69,20 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
+            if (fieldName % "address")
+                return addr_2_Str(address);
             break;
         case 'c':
-            if ( fieldName % "code" ) return code;
+            if (fieldName % "code")
+                return code;
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            if (fieldName % "gasUsed")
+                return gas_2_Str(gasUsed);
             break;
         case 'o':
-            if ( fieldName % "output" ) return output;
+            if (fieldName % "output")
+                return output;
             break;
     }
 
@@ -100,16 +103,28 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "code" ) { code = fieldValue; return true; }
+            if (fieldName % "code") {
+                code = fieldValue;
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
+            if (fieldName % "gasUsed") {
+                gasUsed = str_2_Gas(fieldValue);
+                return true;
+            }
             break;
         case 'o':
-            if ( fieldName % "output" ) { output = fieldValue; return true; }
+            if (fieldName % "output") {
+                output = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -125,7 +140,6 @@ void CTraceResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -147,7 +161,6 @@ bool CTraceResult::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceResult::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -166,7 +179,7 @@ CArchive& operator>>(CArchive& archive, CTraceResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -177,7 +190,7 @@ CArchive& operator>>(CArchive& archive, CTraceResultArray& array) {
 CArchive& operator<<(CArchive& archive, const CTraceResultArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -185,13 +198,14 @@ CArchive& operator<<(CArchive& archive, const CTraceResultArray& array) {
 //---------------------------------------------------------------------------
 void CTraceResult::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTraceResult, "schema")) return;
+    if (HAS_FIELD(CTraceResult, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTraceResult, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTraceResult, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTraceResult, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTraceResult, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTraceResult, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceResult, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTraceResult, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTraceResult, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceResult, "code", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
@@ -210,15 +224,15 @@ void CTraceResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceResult *tra = reinterpret_cast<const CTraceResult *>(dataPtr);
+string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTraceResult* tra = reinterpret_cast<const CTraceResult*>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -234,7 +248,6 @@ string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void *dataPt
 
 //---------------------------------------------------------------------------
 bool CTraceResult::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -270,4 +283,3 @@ const char* STR_DISPLAY_TRACERESULT = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

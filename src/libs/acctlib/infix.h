@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CInfix : public CTreeNode {
-public:
-    CTreeNode *next;
+  public:
+    CTreeNode* next;
 
-public:
+  public:
     CInfix(void);
     CInfix(const CInfix& in);
     virtual ~CInfix(void);
@@ -43,15 +43,17 @@ public:
     string_q at(const string_q& _key) const override;
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
-    bool visitItems(ACCTVISITOR func, void *data) const override;
+    bool visitItems(ACCTVISITOR func, void* data) const override;
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
     bool operator==(const CInfix& item) const;
-    bool operator!=(const CInfix& item) const { return !operator==(item); }
+    bool operator!=(const CInfix& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CInfix& v1, const CInfix& v2);
     friend ostream& operator<<(ostream& os, const CInfix& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CInfix& in);
@@ -152,7 +154,6 @@ extern const char* STR_DISPLAY_INFIX;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

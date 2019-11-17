@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CDisplayApp, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextDisplayappChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextDisplayappChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CDisplayApp::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CDisplayApp::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CDisplayApp::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextDisplayappChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextDisplayappChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CDisplayApp *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CDisplayApp*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextDisplayappChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CDisplayApp::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextDisplayappChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,13 +68,16 @@ string_q CDisplayApp::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
+            if (fieldName % "address")
+                return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            if (fieldName % "blockNumber")
+                return uint_2_Str(blockNumber);
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
+            if (fieldName % "transactionIndex")
+                return uint_2_Str(transactionIndex);
             break;
     }
 
@@ -96,13 +98,22 @@ bool CDisplayApp::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'b':
-            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -118,7 +129,6 @@ void CDisplayApp::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CDisplayApp::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -139,7 +149,6 @@ bool CDisplayApp::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CDisplayApp::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -157,7 +166,7 @@ CArchive& operator>>(CArchive& archive, CDisplayAppArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -168,7 +177,7 @@ CArchive& operator>>(CArchive& archive, CDisplayAppArray& array) {
 CArchive& operator<<(CArchive& archive, const CDisplayAppArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -176,13 +185,14 @@ CArchive& operator<<(CArchive& archive, const CDisplayAppArray& array) {
 //---------------------------------------------------------------------------
 void CDisplayApp::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CDisplayApp, "schema")) return;
+    if (HAS_FIELD(CDisplayApp, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CDisplayApp, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CDisplayApp, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CDisplayApp, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CDisplayApp, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CDisplayApp, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CDisplayApp, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CDisplayApp, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CDisplayApp, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CDisplayApp, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CDisplayApp, "transactionIndex", T_NUMBER, ++fieldNum);
@@ -200,15 +210,15 @@ void CDisplayApp::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CDisplayApp *dis = reinterpret_cast<const CDisplayApp *>(dataPtr);
+string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CDisplayApp* dis = reinterpret_cast<const CDisplayApp*>(dataPtr);
     if (dis) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, dis);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -224,7 +234,6 @@ string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CDisplayApp::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -242,13 +251,12 @@ ostream& operator<<(ostream& os, const CDisplayApp& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_DISPLAYAPP = 
-"[{ADDRESS}]\t"
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]";
+const char* STR_DISPLAY_DISPLAYAPP =
+    "[{ADDRESS}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

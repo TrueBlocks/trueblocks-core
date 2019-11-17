@@ -21,24 +21,24 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-#define SIG_FTYPE     (1<<1)
-#define SIG_FNAME     (1<<2)
-#define SIG_FSPACE    (1<<3)
-#define SIG_ITYPE     (1<<4)
-#define SIG_INAME     (1<<5)
-#define SIG_IINDEXED  (1<<6)
-#define SIG_ENCODE    (1<<7)
-#define SIG_CONST     (1<<8)
-#define SIG_ANONYMOUS (1<<9)
-#define SIG_PAYABLE   (1<<10)
-#define SIG_CANONICAL (SIG_FNAME|SIG_ITYPE)
-#define SIG_DEFAULT   (SIG_FTYPE|SIG_FNAME|SIG_FSPACE|SIG_ITYPE|SIG_INAME|SIG_IINDEXED)
-#define SIG_DETAILS   (SIG_DEFAULT|SIG_CONST|SIG_ANONYMOUS|SIG_PAYABLE|SIG_ENCODE)
+#define SIG_FTYPE (1 << 1)
+#define SIG_FNAME (1 << 2)
+#define SIG_FSPACE (1 << 3)
+#define SIG_ITYPE (1 << 4)
+#define SIG_INAME (1 << 5)
+#define SIG_IINDEXED (1 << 6)
+#define SIG_ENCODE (1 << 7)
+#define SIG_CONST (1 << 8)
+#define SIG_ANONYMOUS (1 << 9)
+#define SIG_PAYABLE (1 << 10)
+#define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
+#define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
+#define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CParameter : public CBaseNode {
-public:
+  public:
     bool indexed;
     string_q name;
     string_q type;
@@ -48,7 +48,7 @@ public:
     string_q strDefault;
     string_q value;
 
-public:
+  public:
     CParameter(void);
     CParameter(const CParameter& pa);
     virtual ~CParameter(void);
@@ -72,11 +72,13 @@ public:
     bool noWrite_min;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
-    bool operator!=(const CParameter& item) const { return !operator==(item); }
+    bool operator!=(const CParameter& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CParameter& v1, const CParameter& v2);
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CParameter& pa);
@@ -192,4 +194,3 @@ extern const char* STR_DISPLAY_PARAMETER;
 size_t explode(CParameterArray& result, const string& input, char needle);
 // EXISTING_CODE
 }  // namespace qblocks
-

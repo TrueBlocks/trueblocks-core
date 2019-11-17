@@ -14,8 +14,8 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-bool visitField(const CFieldData& field, void *data) {
-    ostream *pOs = (ostream*)data;
+bool visitField(const CFieldData& field, void* data) {
+    ostream* pOs = (ostream*)data;
     *pOs << "<Row ";
     *pOs << "name=\"" << field.getName() << "\" ";
     *pOs << "type=\"string\" ";
@@ -28,10 +28,10 @@ bool visitField(const CFieldData& field, void *data) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_json_export(const string_q& cl) {
-    CBaseNode *item = createObjectOfType(cl);
+    CBaseNode* item = createObjectOfType(cl);
     if (!item)
         return usage("Class " + cl + " not found.");
-    CRuntimeClass *pClass = item->getRuntimeClass();
+    CRuntimeClass* pClass = item->getRuntimeClass();
     pClass->forEveryField(visitField, &cout);
     return true;
 }

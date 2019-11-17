@@ -7,6 +7,6 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitUnripeIndexFiles(const string_q& path, void *data) {
+bool visitUnripeIndexFiles(const string_q& path, void* data) {
     return !shouldQuit();
 }

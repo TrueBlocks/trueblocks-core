@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode);
 
 //---------------------------------------------------------------------------
-static string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextLeafChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextLeafChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CLeaf::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextLeafChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CLeaf *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLeaf*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextLeafChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CLeaf::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextLeafChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,13 +69,14 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blocks" || fieldName % "blocksCnt" ) {
+            if (fieldName % "blocks" || fieldName % "blocksCnt") {
                 size_t cnt = blocks.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += uint_2_Str(blocks[i]);
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -84,7 +84,8 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) return uint_2_Str(counter);
+            if (fieldName % "counter")
+                return uint_2_Str(counter);
             break;
     }
 
@@ -108,7 +109,7 @@ bool CLeaf::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "blocks" ) {
+            if (fieldName % "blocks") {
                 string_q str = fieldValue;
                 while (!str.empty()) {
                     blocks.push_back(str_2_Uint(nextTokenClear(str, ',')));
@@ -117,7 +118,10 @@ bool CLeaf::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
             }
             break;
         case 'c':
-            if ( fieldName % "counter" ) { counter = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "counter") {
+                counter = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -133,7 +137,6 @@ void CLeaf::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -153,7 +156,6 @@ bool CLeaf::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
@@ -170,7 +172,7 @@ CArchive& operator>>(CArchive& archive, CLeafArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -181,7 +183,7 @@ CArchive& operator>>(CArchive& archive, CLeafArray& array) {
 CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -189,16 +191,17 @@ CArchive& operator<<(CArchive& archive, const CLeafArray& array) {
 //---------------------------------------------------------------------------
 void CLeaf::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CLeaf, "schema")) return;
+    if (HAS_FIELD(CLeaf, "schema"))
+        return;
 
     CTreeNode::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CLeaf, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLeaf, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLeaf, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CLeaf, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CLeaf, "blocks", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLeaf, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLeaf, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLeaf, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLeaf, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLeaf, "blocks", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CLeaf, "counter", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -214,15 +217,15 @@ void CLeaf::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CLeaf *lea = reinterpret_cast<const CLeaf *>(dataPtr);
+string_q nextLeafChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CLeaf* lea = reinterpret_cast<const CLeaf*>(dataPtr);
     if (lea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, lea);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -238,7 +241,6 @@ string_q nextLeafChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CLeaf::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -257,7 +259,7 @@ ostream& operator<<(ostream& os, const CLeaf& item) {
 
 //---------------------------------------------------------------------------
 const string_q CLeaf::getStringAt(const string_q& fieldName, size_t i) const {
-    if ( fieldName % "blocks" && i < blocks.size() )
+    if (fieldName % "blocks" && i < blocks.size())
         return uint_2_Str(blocks[i]);
     return "";
 }
@@ -267,101 +269,104 @@ const char* STR_DISPLAY_LEAF = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-    //-----------------------------------------------------------------------------
-    CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
-        counter = 1;
-        prefixS = _key;
-        if (verbose == 2) cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
-    }
+//-----------------------------------------------------------------------------
+CLeaf::CLeaf(const string_q& _key, const string_q& _value) {
+    counter = 1;
+    prefixS = _key;
+    if (verbose == 2)
+        cerr << "\t\tCreating leaf " << _key << " at " << _value << endl;
+}
 
-    //-----------------------------------------------------------------------------
-    string_q CLeaf::at(const string_q& _key) const {
-        if (!contains(_key))
-            return "";
+//-----------------------------------------------------------------------------
+string_q CLeaf::at(const string_q& _key) const {
+    if (!contains(_key))
+        return "";
 
-        string_q ret;
-        ret = uint_2_Str(counter);
-        return ret;
-    }
+    string_q ret;
+    ret = uint_2_Str(counter);
+    return ret;
+}
 
-    //-----------------------------------------------------------------------------
-    bool CLeaf::contains(const string_q& _key) const {
-        size_t l1 = _key.length();
-        size_t l2 = prefixS.length();
-        const char *s1 = _key.c_str();
-        const char *s2 = prefixS.c_str();
-        bool found = !memcmp(s1, s2, l1);
+//-----------------------------------------------------------------------------
+bool CLeaf::contains(const string_q& _key) const {
+    size_t l1 = _key.length();
+    size_t l2 = prefixS.length();
+    const char* s1 = _key.c_str();
+    const char* s2 = prefixS.c_str();
+    bool found = !memcmp(s1, s2, l1);
 
-        return l1 == l2 && found;
-    }
+    return l1 == l2 && found;
+}
 
-    //-----------------------------------------------------------------------------
-    CTreeNode* CLeaf::insert(const string_q& _key, const string_q& _value) {
-        if (contains(_key)) {
-            // If the leaf exists, we reset the value
-            // We've reached the end of the key, so store the value here
-//            if (first == 0) {
-//                // store the first encountered block
-//                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
-//                first = str_2_Uint(_value);
-//
-//            } else
-            {
-                // preserve the most recent block encountered
-                if (verbose) cerr << "\t\tReplacing leaf contents " << _key << " at " << _value
-//                    << " (" << first << ")"
-                    << "\n";
-                counter++;
-            }
-            return this;
-
-        } else {
-            // If the leaf is not the key, delete and convert to a branch
-            if (verbose == 2) { cerr << "\tleaf branching " << _key << " at " << _value << "\n"; }
-            string_q curVal;
-            if (!contains(_key) || blocks.size() == 0) {
-                curVal = "";
-            } else {
-                curVal = uint_2_Str(counter);
-            }
-            CTreeNode *n = CTreeNode::newBranch(_key, _value, prefixS, curVal);
-            delete this;
-            return n;
-        }
-    }
-
-    //-----------------------------------------------------------------------------
-    CTreeNode* CLeaf::remove(const string_q& _key) {
-        if (verbose)
-            cerr << endl<< endl<< endl
-            << idnt << string_q(80, '-') << endl
-            << idnt << string_q(80, '-') << endl
-            << idnt << "remove infix at [" << _key << "]: ";
-
-        if (contains(_key)) {
+//-----------------------------------------------------------------------------
+CTreeNode* CLeaf::insert(const string_q& _key, const string_q& _value) {
+    if (contains(_key)) {
+        // If the leaf exists, we reset the value
+        // We've reached the end of the key, so store the value here
+        //            if (first == 0) {
+        //                // store the first encountered block
+        //                if (verbose) cerr << "\t\tStoring first contents " << _key << " at " << _value << "\n";
+        //                first = str_2_Uint(_value);
+        //
+        //            } else
+        {
+            // preserve the most recent block encountered
             if (verbose)
-                cerr << endl << idnt << "removed leaf node at" << _key << endl;
-            delete this;
-            return NULL;
+                cerr << "\t\tReplacing leaf contents " << _key << " at " << _value << endl;
+            counter++;
         }
-        if (verbose)
-            cerr << endl << idnt << "no node removed at" << _key << endl;
         return this;
-    }
 
-    //------------------------------------------------------------------
-    bool CLeaf::visitItems(ACCTVISITOR func, void *data) const {
-        ASSERT(func);
-        CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint64_t save = vd->type;
-        vd->counter = counter;
-        vd->type = T_LEAF;
-        vd->strs = vd->strs + "+" + (cMagenta + prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
-        (*func)(this, data);
-        nextTokenClearReverse(vd->strs, '+');
-        vd->type = save;
-        return true;
+    } else {
+        // If the leaf is not the key, delete and convert to a branch
+        if (verbose == 2) {
+            cerr << "\tleaf branching " << _key << " at " << _value << "\n";
+        }
+        string_q curVal;
+        if (!contains(_key) || blocks.size() == 0) {
+            curVal = "";
+        } else {
+            curVal = uint_2_Str(counter);
+        }
+        CTreeNode* n = CTreeNode::newBranch(_key, _value, prefixS, curVal);
+        delete this;
+        return n;
     }
+}
+
+//-----------------------------------------------------------------------------
+CTreeNode* CLeaf::remove(const string_q& _key) {
+    if (verbose)
+        cerr << endl
+             << endl
+             << endl
+             << idnt << string_q(80, '-') << endl
+             << idnt << string_q(80, '-') << endl
+             << idnt << "remove infix at [" << _key << "]: ";
+
+    if (contains(_key)) {
+        if (verbose)
+            cerr << endl << idnt << "removed leaf node at" << _key << endl;
+        delete this;
+        return NULL;
+    }
+    if (verbose)
+        cerr << endl << idnt << "no node removed at" << _key << endl;
+    return this;
+}
+
+//------------------------------------------------------------------
+bool CLeaf::visitItems(ACCTVISITOR func, void* data) const {
+    ASSERT(func);
+    CVisitData* vd = reinterpret_cast<CVisitData*>(data);
+    uint64_t save = vd->type;
+    vd->counter = counter;
+    vd->type = T_LEAF;
+    vd->strs = vd->strs + "+" + (cMagenta + prefixS + cOff + "|" + cBlue + at(prefixS) + cOff);
+    (*func)(this, data);
+    nextTokenClearReverse(vd->strs, '+');
+    vd->type = save;
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks
-

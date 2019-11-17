@@ -16,12 +16,12 @@
 
 namespace qblocks {
 
-    double qbNow(void);
+double qbNow(void);
 
-    typedef std::chrono::steady_clock::time_point timepoint_t;
-    typedef std::chrono::duration<double> duration_t;
+typedef std::chrono::steady_clock::time_point timepoint_t;
+typedef std::chrono::duration<double> duration_t;
 #define qbNow2() std::chrono::steady_clock::now()
-    extern void resetClock(void);
-    extern string_q TIC(double div = 1.);
+extern void resetClock(void);
+extern string_q TIC(double div = 1.);
 
 }  // namespace qblocks

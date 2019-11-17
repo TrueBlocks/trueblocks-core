@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool daemon;
     // END_CODE_DECLARE
@@ -30,16 +30,16 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool visitBinaryFile(const string_q& path, void *data);
+    bool visitBinaryFile(const string_q& path, void* data);
     void moveToProduction(void);
     bool checkLocks(const address_t& addr) const;
     blknum_t nextBlockAsPerMonitor(const address_t& addr) const;
 };
 
-#define VIS_FINAL   (1<<1)
-#define VIS_STAGING (1<<2)
-#define VIS_UNRIPE  (1<<3)
+#define VIS_FINAL (1 << 1)
+#define VIS_STAGING (1 << 2)
+#define VIS_UNRIPE (1 << 3)
 
-extern bool visitFinalIndexFiles(const string_q& path, void *data);
-extern bool visitStagingIndexFiles(const string_q& path, void *data);
-extern bool visitUnripeIndexFiles(const string_q& path, void *data);
+extern bool visitFinalIndexFiles(const string_q& path, void* data);
+extern bool visitStagingIndexFiles(const string_q& path, void* data);
+extern bool visitUnripeIndexFiles(const string_q& path, void* data);

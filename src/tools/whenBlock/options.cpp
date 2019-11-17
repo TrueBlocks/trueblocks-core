@@ -16,13 +16,15 @@
  */
 #include "options.h"
 
-bool parseRequestDates(COptionsBase *opt, CNameValueArray& blocks, const string_q& arg);
+bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -30,7 +32,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern const char* STR_DISPLAY_WHEN;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -129,7 +130,8 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
-    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to 0.6.0)
+    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to
+    // 0.6.0)
     CToml toml(configPath("whenBlock.toml"));
     if (toml.isBackLevel()) {
         string_q ss = toml.getConfigStr("specials", "list", "");
@@ -146,10 +148,12 @@ COptions::COptions(void) {
         exportFmt = TXT1;
 
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
     notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
     notes.push_back("You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.");
     notes.push_back("The following `named` blocks are provided are currently configured:");
+    // clang-format on
     // END_CODE_NOTES
     notes.push_back("  " + listSpecials(NONE1));
 
@@ -166,7 +170,7 @@ void COptions::applyFilter() {
     for (auto request : requests) {
         CBlock block;
         if (request.first == "block") {
-            string_q bn = nextTokenClear(request.second,'|');
+            string_q bn = nextTokenClear(request.second, '|');
             if (request.second == "latest") {
                 if (isTestMode()) {
                     continue;
@@ -191,7 +195,7 @@ void COptions::applyFilter() {
 }
 
 //--------------------------------------------------------------------------------
-bool showSpecials(CNameValue& pair, void *data) {
+bool showSpecials(CNameValue& pair, void* data) {
     ((CNameValueArray*)data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
     return true;
 }
@@ -199,12 +203,11 @@ bool showSpecials(CNameValue& pair, void *data) {
 //--------------------------------------------------------------------------------
 string_q COptions::listSpecials(format_t fmt) const {
     if (specials.size() == 0)
-        ((COptionsBase *)this)->loadSpecials();  // NOLINT
+        ((COptionsBase*)this)->loadSpecials();  // NOLINT
 
     ostringstream os;
     string_q extra;
-    for (size_t i = 0 ; i < specials.size(); i++) {
-
+    for (size_t i = 0; i < specials.size(); i++) {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
@@ -213,7 +216,7 @@ string_q COptions::listSpecials(format_t fmt) const {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i-1].second) >= getLastBlock_client()) {
+            } else if (i > 0 && str_2_Uint(specials[i - 1].second) >= getLastBlock_client()) {
                 extra = " (syncing)";
             }
         }
@@ -221,10 +224,10 @@ string_q COptions::listSpecials(format_t fmt) const {
 #define N_PER_LINE 4
         os << name;
         os << " (`" << bn << extra << "`)";
-        if (!((i+1) % N_PER_LINE)) {
-            if (i < specials.size()-1)
+        if (!((i + 1) % N_PER_LINE)) {
+            if (i < specials.size() - 1)
                 os << "\n  ";
-        } else if (i < specials.size()-1) {
+        } else if (i < specials.size() - 1) {
             os << ", ";
         }
     }
@@ -233,27 +236,28 @@ string_q COptions::listSpecials(format_t fmt) const {
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY_WHEN =
-"[{BLOCKNUMBER}]\t"
-"[{TIMESTAMP}]\t"
-"[{DATE}]"
-"[\t{NAME}]";
+    "[{BLOCKNUMBER}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DATE}]"
+    "[\t{NAME}]";
 
 //-----------------------------------------------------------------------
-bool parseRequestDates(COptionsBase *opt, CNameValueArray& requests, const string_q& arg) {
+bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const string_q& arg) {
     time_q date = str_2_Date(arg);
     if (date == earliestDate) {
         return opt->usage("Invalid date: '" + arg + "'.");
 
     } else if (date > Now()) {
         ostringstream os;
-        os << "The date you specified (" << arg << ") " << "is in the future. No such block.";
+        os << "The date you specified (" << arg << ") "
+           << "is in the future. No such block.";
         return opt->usage(os.str());
 
     } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
         ostringstream os;
-        os << "The date you specified (" << arg << ") " << "is before the first block.";
+        os << "The date you specified (" << arg << ") "
+           << "is before the first block.";
         return opt->usage(os.str());
-
     }
     requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
     return true;

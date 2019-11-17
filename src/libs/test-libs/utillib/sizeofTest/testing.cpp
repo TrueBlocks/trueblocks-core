@@ -17,45 +17,48 @@
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
-public:
-                 CThisTest(void) : Test() {}
-    virtual void SetUp    (void) {}
-    virtual void TearDown (void) {}
+  public:
+    CThisTest(void) : Test() {
+    }
+    virtual void SetUp(void) {
+    }
+    virtual void TearDown(void) {
+    }
 };
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestSizes) {
-
     cout << "Running " << testName << "\n";
 
-    cout << TESTID("sizeof(char)",     20) << sizeof(char)      << "\n";
-    cout << TESTID("sizeof(int)",      20) << sizeof(int)       << "\n";
-    cout << TESTID("sizeof(short)",    20) << sizeof(short)     << "\n";  // NOLINT
-    cout << TESTID("sizeof(long)",     20) << sizeof(long)      << "\n";  // NOLINT
-    cout << TESTID("sizeof(unsigned)", 20) << sizeof(unsigned)  << "\n";  // NOLINT
-    cout << TESTID("sizeof(size_t)",   20) << sizeof(size_t)    << "\n";
-    cout << TESTID("sizeof(uint32_t)", 20) << sizeof(uint32_t)  << "\n";
-    cout << TESTID("sizeof(uint64_t)", 20) << sizeof(uint64_t)  << "\n";
+    cout << TESTID("sizeof(char)", 20) << sizeof(char) << "\n";
+    cout << TESTID("sizeof(int)", 20) << sizeof(int) << "\n";
+    cout << TESTID("sizeof(short)", 20) << sizeof(short) << "\n";        // NOLINT
+    cout << TESTID("sizeof(long)", 20) << sizeof(long) << "\n";          // NOLINT
+    cout << TESTID("sizeof(unsigned)", 20) << sizeof(unsigned) << "\n";  // NOLINT
+    cout << TESTID("sizeof(size_t)", 20) << sizeof(size_t) << "\n";
+    cout << TESTID("sizeof(uint32_t)", 20) << sizeof(uint32_t) << "\n";
+    cout << TESTID("sizeof(uint64_t)", 20) << sizeof(uint64_t) << "\n";
     cout << "\n";
 
-    cout << TESTID("sizeof(bool)",               20) << sizeof(bool)               << "\n";
-    cout << TESTID("sizeof(char)",               20) << sizeof(char)               << "\n";
-    cout << TESTID("sizeof(int)",                20) << sizeof(int)                << "\n";
-    cout << TESTID("sizeof(unsigned int)",       20) << sizeof(unsigned int)       << "\n";
-    cout << TESTID("sizeof(long)",               20) << sizeof(long)               << "\n";  // NOLINT
-    cout << TESTID("sizeof(unsigned long)",      20) << sizeof(unsigned long)      << "\n";  // NOLINT
-    cout << TESTID("sizeof(long long)",          20) << sizeof(long long)          << "\n";  // NOLINT
+    cout << TESTID("sizeof(bool)", 20) << sizeof(bool) << "\n";
+    cout << TESTID("sizeof(char)", 20) << sizeof(char) << "\n";
+    cout << TESTID("sizeof(int)", 20) << sizeof(int) << "\n";
+    cout << TESTID("sizeof(unsigned int)", 20) << sizeof(unsigned int) << "\n";
+    cout << TESTID("sizeof(long)", 20) << sizeof(long) << "\n";                              // NOLINT
+    cout << TESTID("sizeof(unsigned long)", 20) << sizeof(unsigned long) << "\n";            // NOLINT
+    cout << TESTID("sizeof(long long)", 20) << sizeof(long long) << "\n";                    // NOLINT
     cout << TESTID("sizeof(unsigned long long)", 20) << sizeof(unsigned long long) << "\n";  // NOLINT
-    cout << TESTID("sizeof(float)",              20) << sizeof(float)              << "\n";
-    cout << TESTID("sizeof(double)",             20) << sizeof(double)             << "\n";
-    cout << TESTID("sizeof(const char *)",       20) << sizeof(const char *)       << "\n";
+    cout << TESTID("sizeof(float)", 20) << sizeof(float) << "\n";
+    cout << TESTID("sizeof(double)", 20) << sizeof(double) << "\n";
+    cout << TESTID("sizeof(const char *)", 20) << sizeof(const char*) << "\n";
 
     return true;
-}}
+}
+}
 
 #include "options.h"
 //------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;

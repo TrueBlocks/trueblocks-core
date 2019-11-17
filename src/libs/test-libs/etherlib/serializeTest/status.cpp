@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CStatus, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextStatusChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextStatusChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CStatus::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CStatus::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CStatus::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextStatusChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CStatus *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CStatus*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextStatusChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CStatus::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextStatusChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,20 +68,24 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "api_provider" ) return api_provider;
+            if (fieldName % "api_provider")
+                return api_provider;
             break;
         case 'b':
-            if ( fieldName % "balance_provider" ) return balance_provider;
+            if (fieldName % "balance_provider")
+                return balance_provider;
             break;
         case 'c':
-            if ( fieldName % "client_version" ) return client_version;
-            if ( fieldName % "caches" || fieldName % "cachesCnt" ) {
+            if (fieldName % "client_version")
+                return client_version;
+            if (fieldName % "caches" || fieldName % "cachesCnt") {
                 size_t cnt = caches.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += caches[i]->Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -90,16 +93,20 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'h':
-            if ( fieldName % "host" ) return host;
+            if (fieldName % "host")
+                return host;
             break;
         case 'i':
-            if ( fieldName % "is_scraping" ) return bool_2_Str_t(is_scraping);
+            if (fieldName % "is_scraping")
+                return bool_2_Str_t(is_scraping);
             break;
         case 'r':
-            if ( fieldName % "rpc_provider" ) return rpc_provider;
+            if (fieldName % "rpc_provider")
+                return rpc_provider;
             break;
         case 't':
-            if ( fieldName % "trueblocks_version" ) return trueblocks_version;
+            if (fieldName % "trueblocks_version")
+                return trueblocks_version;
             break;
     }
 
@@ -120,34 +127,55 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "api_provider" ) { api_provider = fieldValue; return true; }
+            if (fieldName % "api_provider") {
+                api_provider = fieldValue;
+                return true;
+            }
             break;
         case 'b':
-            if ( fieldName % "balance_provider" ) { balance_provider = fieldValue; return true; }
+            if (fieldName % "balance_provider") {
+                balance_provider = fieldValue;
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "client_version" ) { client_version = fieldValue; return true; }
-            if ( fieldName % "caches" ) {
-//                CCachePtr item;
-//                string_q str = fieldValue;
-//                while (item.parseJson3(str)) {
-//                    caches.push_back(item);
-//                    item = CCachePtr();  // reset
-//                }
+            if (fieldName % "client_version") {
+                client_version = fieldValue;
+                return true;
+            }
+            if (fieldName % "caches") {
+                // CCachePtr item;
+                // string_q str = fieldValue;
+                // while (item.parseJson3(str)) {
+                //    caches.push_back(item);
+                //    item = CCachePtr();  // reset
+                // }
                 return true;
             }
             break;
         case 'h':
-            if ( fieldName % "host" ) { host = fieldValue; return true; }
+            if (fieldName % "host") {
+                host = fieldValue;
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "is_scraping" ) { is_scraping = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "is_scraping") {
+                is_scraping = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "rpc_provider" ) { rpc_provider = fieldValue; return true; }
+            if (fieldName % "rpc_provider") {
+                rpc_provider = fieldValue;
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "trueblocks_version" ) { trueblocks_version = fieldValue; return true; }
+            if (fieldName % "trueblocks_version") {
+                trueblocks_version = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -163,7 +191,6 @@ void CStatus::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CStatus::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -182,14 +209,13 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> balance_provider;
     archive >> host;
     archive >> is_scraping;
-//    archive >> caches;
+    // archive >> caches;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CStatus::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -202,7 +228,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << balance_provider;
     archive << host;
     archive << is_scraping;
-//    archive << caches;
+    // archive << caches;
 
     return true;
 }
@@ -212,7 +238,7 @@ CArchive& operator>>(CArchive& archive, CStatusArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -223,7 +249,7 @@ CArchive& operator>>(CArchive& archive, CStatusArray& array) {
 CArchive& operator<<(CArchive& archive, const CStatusArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -231,13 +257,14 @@ CArchive& operator<<(CArchive& archive, const CStatusArray& array) {
 //---------------------------------------------------------------------------
 void CStatus::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CStatus, "schema")) return;
+    if (HAS_FIELD(CStatus, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CStatus, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CStatus, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CStatus, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CStatus, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CStatus, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "client_version", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "trueblocks_version", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
@@ -245,7 +272,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "caches", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -260,15 +287,15 @@ void CStatus::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextStatusChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CStatus *sta = reinterpret_cast<const CStatus *>(dataPtr);
+string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CStatus* sta = reinterpret_cast<const CStatus*>(dataPtr);
     if (sta) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, sta);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -284,7 +311,6 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CStatus::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -302,8 +328,8 @@ ostream& operator<<(ostream& os, const CStatus& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "caches" && index < caches.size() )
+const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "caches" && index < caches.size())
         return caches[index];
     return NULL;
 }
@@ -315,4 +341,3 @@ const char* STR_DISPLAY_STATUS = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

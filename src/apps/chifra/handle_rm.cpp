@@ -10,7 +10,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
@@ -25,7 +24,6 @@ bool COptions::handle_rm(void) {
     CStringArray removed;
     bool hasYes = contains(tool_flags, "--yes");
     for (auto addr : addrs) {
-
         bool exists = false;
         exists |= fileExists(getMonitorPath(addr));
         exists |= fileExists(getMonitorLast(addr));
@@ -38,7 +36,7 @@ bool COptions::handle_rm(void) {
                 LOG_WARN("Monitor not found for address " + addr + ".");
 
         } else {
-            int ch = 'n'; // default to no in both command line and api cases
+            int ch = 'n';  // default to no in both command line and api cases
             if (!isApiMode() && !hasYes) {
                 cerr << "Remove monitor for " << addr << "? (y=yes) >";
                 cerr.flush();
@@ -50,12 +48,12 @@ bool COptions::handle_rm(void) {
                 os << "cd " << getMonitorPath("") << " && ";
                 os << "rm -f " << addr << ".*";
                 NOTE_CALL(os.str());
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                if (system(os.str().c_str())) {
+                }  // Don't remove. Silences compiler warnings
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 
             } else {
                 EXIT_USAGE("Monitor not removed.");
-
             }
         }
     }
@@ -73,7 +71,7 @@ bool COptions::handle_rm(void) {
         if (msg.empty())
             msg = "{ \"msg\": \"noting was removed\" }";
         cout << msg;
-        cout  << exportPostamble(JSON1, errors, "") << endl;
+        cout << exportPostamble(JSON1, errors, "") << endl;
     }
 
     EXIT_NOMSG8(true);

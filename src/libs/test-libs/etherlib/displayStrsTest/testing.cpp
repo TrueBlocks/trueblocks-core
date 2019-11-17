@@ -16,7 +16,7 @@
 
 bool testDisplayStr(COptions& options);
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
 
     COptions options;
@@ -34,10 +34,8 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 bool testDisplayStr(COptions& options) {
-
     cout << string_q(30, '-') << options.className << string_q(30, '-') << endl;
     if (options.className == "CAccountWatch") {
-
         CAccountWatch watch;
         SHOW_FIELD(CAccountWatch, "abi_spec");
         watch.name = "watch";
@@ -46,8 +44,10 @@ bool testDisplayStr(COptions& options) {
         func.name = "interface";
 
         CParameter param;
-        param.name = "input";  func.inputs .push_back(param);
-        param.name = "output"; func.outputs.push_back(param);
+        param.name = "input";
+        func.inputs.push_back(param);
+        param.name = "output";
+        func.outputs.push_back(param);
 
         CAbi abi;
         abi.address = "0x1234567890123456789012345678901234567890";
@@ -80,7 +80,6 @@ bool testDisplayStr(COptions& options) {
         cout << watch.stateHistory[0].Format("[{p:STORAGE}]: [{STORAGE}]") << endl;
 
     } else if (options.className == "CBlock") {
-
         CTraceResult tr;
         tr.code = "This is the code field of trace result";
 
@@ -118,7 +117,8 @@ bool testDisplayStr(COptions& options) {
         cout << r.logs[0].Format("[{p:ARTICULATEDLOG::NAME}]: [{ARTICULATEDLOG::NAME}]") << endl;
         cout << b.transactions[0].Format("[{p:RECEIPT::contractAddress}]: [{RECEIPT::contractAddress}]") << endl;
         cout << b.transactions[0].Format("[{p:ARTICULATEDTX::encoding}]: [{ARTICULATEDTX::encoding}]") << endl;
-        cout << b.transactions[0].receipt.logs[0].Format("[{p:ARTICULATEDLOG::ENCODING}]: [{ARTICULATEDLOG::ENCODING}]") << endl;
+        cout << b.transactions[0].receipt.logs[0].Format("[{p:ARTICULATEDLOG::ENCODING}]: [{ARTICULATEDLOG::ENCODING}]")
+             << endl;
         cout << b.transactions[0].traces[0].Format("[{p:ACTION::init}]: [{ACTION::init}]") << endl;
         cout << endl;
 

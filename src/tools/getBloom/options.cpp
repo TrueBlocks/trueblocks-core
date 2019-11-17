@@ -19,6 +19,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
@@ -30,13 +31,13 @@ static const COption params[] = {
     COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -116,7 +117,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("--eab and --receipts options are not allowed together. Choose one. Quitting...");
 
     // Initialize these here (hack alert)
-    CBloomReceipt noRemove1; CBloomTrans noRemove2; CBloomBlock noRemove3;
+    CBloomReceipt noRemove1;
+    CBloomTrans noRemove2;
+    CBloomBlock noRemove3;
     HIDE_FIELD(CBloomTrans, "hash");
     if (block_only)
         HIDE_FIELD(CBloomBlock, "transactions");
@@ -152,8 +155,8 @@ void COptions::Init(void) {
     bitcount = false;
     // END_CODE_INIT
 
-    isRaw        = true; // unusual, but true
-    bitBound     = 200;
+    isRaw = true;  // unusual, but true
+    bitBound = 200;
     blocks.Init();
 }
 
@@ -169,9 +172,11 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CBlock, "logsBloom");
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
     notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

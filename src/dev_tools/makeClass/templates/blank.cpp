@@ -22,11 +22,11 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
-[SCOPE_CODE] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr);
-static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr);
+[SCOPE_CODE] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr);
+static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -47,9 +47,9 @@ void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr) {
+string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const [{CLASS_NAME}] *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const [{CLASS_NAME}]*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,7 +59,6 @@ string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = next[{PROPER}]Chunk_custom(fieldName, this);
     if (!ret.empty())
@@ -96,7 +95,6 @@ void [{CLASS_NAME}]::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -114,7 +112,6 @@ bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
 [{PARENT_SER2}]
     // EXISTING_CODE
@@ -128,7 +125,7 @@ CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -139,7 +136,7 @@ CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array) {
 CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -147,13 +144,14 @@ CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array) {
 //---------------------------------------------------------------------------
 void [{CLASS_NAME}]::registerClass(void) {
     // only do this once
-    if (HAS_FIELD([{CLASS_NAME}], "schema")) return;
+    if (HAS_FIELD([{CLASS_NAME}], "schema"))
+        return;
 
     [{PARENT_REG}]size_t fieldNum = 1000;
-    ADD_FIELD([{CLASS_NAME}], "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD([{CLASS_NAME}], "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD([{CLASS_NAME}], "cname", T_TEXT, ++fieldNum);
 [ADD_FIELDS][HIDE_FIELDS]
 
     // Hide our internal fields, user can turn them on if they like
@@ -169,15 +167,15 @@ void [{CLASS_NAME}]::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const [{CLASS_NAME}] *[{SHORT3}] = reinterpret_cast<const [{CLASS_NAME}] *>(dataPtr);
+string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const [{CLASS_NAME}]* [{SHORT3}] = reinterpret_cast<const [{CLASS_NAME}]*>(dataPtr);
     if ([{SHORT3}]) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, [{SHORT3}]);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -193,7 +191,6 @@ string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool [{CLASS_NAME}]::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -211,7 +208,7 @@ ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
 }
 
 [{GET_OBJ}][{GET_STR}]//---------------------------------------------------------------------------
-const char* STR_DISPLAY_[{CLASS_UPPER}] = [{DISPLAY_FIELDS}];
+const char* STR_DISPLAY_[{CLASS_UPPER}] =[{DISPLAY_FIELDS}];
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

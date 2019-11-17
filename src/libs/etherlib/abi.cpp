@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbi, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAbiChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAbiChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAbi::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CAbi::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextAbiChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAbi *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAbi*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextAbiChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CAbi::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextAbiChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,16 +69,18 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
+            if (fieldName % "address")
+                return addr_2_Str(address);
             break;
         case 'i':
-            if ( fieldName % "interfaces" || fieldName % "interfacesCnt" ) {
+            if (fieldName % "interfaces" || fieldName % "interfacesCnt") {
                 size_t cnt = interfaces.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += interfaces[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -105,10 +106,13 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "interfaces" ) {
+            if (fieldName % "interfaces") {
                 CFunction item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -132,7 +136,6 @@ void CAbi::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -152,7 +155,6 @@ bool CAbi::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAbi::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -169,7 +171,7 @@ CArchive& operator>>(CArchive& archive, CAbiArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -180,7 +182,7 @@ CArchive& operator>>(CArchive& archive, CAbiArray& array) {
 CArchive& operator<<(CArchive& archive, const CAbiArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -188,15 +190,16 @@ CArchive& operator<<(CArchive& archive, const CAbiArray& array) {
 //---------------------------------------------------------------------------
 void CAbi::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAbi, "schema")) return;
+    if (HAS_FIELD(CAbi, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAbi, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAbi, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAbi, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAbi, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAbi, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbi, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAbi, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAbi, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAbi, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CAbi, "interfaces", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAbi, "interfaces", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -211,15 +214,15 @@ void CAbi::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAbi *abi = reinterpret_cast<const CAbi *>(dataPtr);
+string_q nextAbiChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAbi* abi = reinterpret_cast<const CAbi*>(dataPtr);
     if (abi) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, abi);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -235,7 +238,6 @@ string_q nextAbiChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CAbi::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -271,32 +273,29 @@ ostream& operator<<(ostream& os, const CAbi& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "interfaces" && index < interfaces.size() )
+const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "interfaces" && index < interfaces.size())
         return &interfaces[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ABI = 
-"[{ADDRESS}]\t"
-"[{ENCODING}]\t"
-"[{TYPE}]\t"
-"[{CONSTANT}]\t"
-"[{NAME}]\t"
-"[{SIGNATURE}]\t"
-"[{INPUT_NAMES}]";
+const char* STR_DISPLAY_ABI =
+    "[{ADDRESS}]\t"
+    "[{ENCODING}]\t"
+    "[{TYPE}]\t"
+    "[{CONSTANT}]\t"
+    "[{NAME}]\t"
+    "[{SIGNATURE}]\t"
+    "[{INPUT_NAMES}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool visitABI(const qblocks::string_q& path, void *data) {
+bool visitABI(const qblocks::string_q& path, void* data) {
     if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
-//    if (!isTestMode()) {
-//        LOG_INFO("Loading ABI: ", path, "\r");
-//    }
-    CAbi *abi = (CAbi*)data;  // NOLINT
+    CAbi* abi = (CAbi*)data;  // NOLINT
     if (!abi->loadAbiFromFile(path, true))
         return false;
     return true;
@@ -306,12 +305,10 @@ bool visitABI(const qblocks::string_q& path, void *data) {
 bool CAbi::loadAbiKnown(const string_q& which) {
     bool ret = true;
     if (which == "all") {
-        ret = forEveryFileInFolder(configPath("known_abis/""*"), visitABI, this);
+        ret = forEveryFileInFolder(configPath("known_abis/*"), visitABI, this);
     } else {
         ret = loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
     }
-//    if (!isTestMode())
-//        LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -321,11 +318,10 @@ bool CAbi::loadAbiKnown(const string_q& which) {
 bool CAbi::loadCachedAbis(const string_q& which) {
     bool ret = true;
     if (which == "all") {
-        ret = forEveryFileInFolder(getCachePath("abis/""*"), visitABI, this);
+        ret = forEveryFileInFolder(getCachePath("abis/*"), visitABI, this);
     } else {
         ret = loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
     }
-//    LOG_INFO("Loaded ", interfaces.size(), " function definitions.                                       ");
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -345,31 +341,30 @@ bool CAbi::loadAbiByAddress(address_t addrIn) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
-
     if (!fileExists(fileName))
         return false;
 
-//    string_q binFile = substitute(fileName, ".json", ".bin");
-//    if (fileExists(binFile)) {
-//        CArchive archive(READING_ARCHIVE);
-//        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-//            archive >> *this;
-//            archive.Release();
-//            return true;
-//        }
-//    }
+    //    string_q binFile = substitute(fileName, ".json", ".bin");
+    //    if (fileExists(binFile)) {
+    //        CArchive archive(READING_ARCHIVE);
+    //        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+    //            archive >> *this;
+    //            archive.Release();
+    //            return true;
+    //        }
+    //    }
 
     string_q contents;
     asciiFileToString(fileName, contents);
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
         sort(interfaces.begin(), interfaces.end());
-//        CArchive archive(WRITING_ARCHIVE);
-//        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-//            archive << *this;
-//            archive.Release();
-//            return true;
-//        }
+        //        CArchive archive(WRITING_ARCHIVE);
+        //        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+        //            archive << *this;
+        //            archive.Release();
+        //            return true;
+        //        }
     }
 
     return false;
@@ -392,7 +387,6 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
 
 //-----------------------------------------------------------------------
 void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors) {
-
     if (isZeroAddr(addr))
         return;
 
@@ -411,16 +405,14 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
 
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
-
         if (!isTestMode())
             LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "cache"), "\r");
         asciiFileToString(fileName, results);
 
     } else {
-
         if (!isTestMode())
             LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
-        string_q url = string_q("http:/""/api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
+        string_q url = string_q("http://api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
         results = substitute(urlToString(url), "\\", "");
 
         if (!contains(results, "NOTOK")) {
@@ -435,7 +427,6 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
             stringToAsciiFile(fileName, results);
 
         } else if (contains(toLower(results), "source code not verified")) {
-
             ostringstream os;
             os << "Could not get the ABI for " << addr << ". Etherscan returned: ";
             os << substitute(substitute(results, "\"", "'"), "\n", " ") << ". ";
@@ -444,7 +435,6 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
             results = "";
 
         } else {
-
             // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
             // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
 
@@ -494,4 +484,3 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

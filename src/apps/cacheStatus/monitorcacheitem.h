@@ -27,10 +27,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CMonitorCacheItem : public CAccountWatch {
-public:
+  public:
     string_q type;
 
-public:
+  public:
     CMonitorCacheItem(void);
     CMonitorCacheItem(const CMonitorCacheItem& mo);
     virtual ~CMonitorCacheItem(void);
@@ -41,11 +41,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CMonitorCacheItem& item) const;
-    bool operator!=(const CMonitorCacheItem& item) const { return !operator==(item); }
+    bool operator!=(const CMonitorCacheItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CMonitorCacheItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CMonitorCacheItem& mo);
@@ -142,4 +144,3 @@ extern const char* STR_DISPLAY_MONITORCACHEITEM;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

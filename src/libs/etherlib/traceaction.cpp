@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceAction, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTraceactionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTraceactionChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTraceAction *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTraceAction*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextTraceactionChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTraceAction::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTraceactionChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,32 +69,42 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
+            if (fieldName % "address")
+                return addr_2_Str(address);
             break;
         case 'b':
-            if ( fieldName % "balance" ) return wei_2_Str(balance);
+            if (fieldName % "balance")
+                return wei_2_Str(balance);
             break;
         case 'c':
-            if ( fieldName % "callType" ) return callType;
+            if (fieldName % "callType")
+                return callType;
             break;
         case 'f':
-            if ( fieldName % "from" ) return addr_2_Str(from);
+            if (fieldName % "from")
+                return addr_2_Str(from);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return gas_2_Str(gas);
+            if (fieldName % "gas")
+                return gas_2_Str(gas);
             break;
         case 'i':
-            if ( fieldName % "init" ) return init;
-            if ( fieldName % "input" ) return input;
+            if (fieldName % "init")
+                return init;
+            if (fieldName % "input")
+                return input;
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) return addr_2_Str(refundAddress);
+            if (fieldName % "refundAddress")
+                return addr_2_Str(refundAddress);
             break;
         case 't':
-            if ( fieldName % "to" ) return addr_2_Str(to);
+            if (fieldName % "to")
+                return addr_2_Str(to);
             break;
         case 'v':
-            if ( fieldName % "value" ) return wei_2_Str(value);
+            if (fieldName % "value")
+                return wei_2_Str(value);
             break;
     }
 
@@ -116,32 +125,62 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'b':
-            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "balance") {
+                balance = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "callType" ) { callType = fieldValue; return true; }
+            if (fieldName % "callType") {
+                callType = fieldValue;
+                return true;
+            }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "from") {
+                from = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
+            if (fieldName % "gas") {
+                gas = str_2_Gas(fieldValue);
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "init" ) { init = fieldValue; return true; }
-            if ( fieldName % "input" ) { input = fieldValue; return true; }
+            if (fieldName % "init") {
+                init = fieldValue;
+                return true;
+            }
+            if (fieldName % "input") {
+                input = fieldValue;
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "refundAddress" ) { refundAddress = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "refundAddress") {
+                refundAddress = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "to") {
+                to = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "value") {
+                value = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -157,7 +196,6 @@ void CTraceAction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -185,7 +223,6 @@ bool CTraceAction::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTraceAction::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -210,7 +247,7 @@ CArchive& operator>>(CArchive& archive, CTraceActionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -221,7 +258,7 @@ CArchive& operator>>(CArchive& archive, CTraceActionArray& array) {
 CArchive& operator<<(CArchive& archive, const CTraceActionArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -229,13 +266,14 @@ CArchive& operator<<(CArchive& archive, const CTraceActionArray& array) {
 //---------------------------------------------------------------------------
 void CTraceAction::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTraceAction, "schema")) return;
+    if (HAS_FIELD(CTraceAction, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTraceAction, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTraceAction, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTraceAction, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTraceAction, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTraceAction, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTraceAction, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTraceAction, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTraceAction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
@@ -262,19 +300,19 @@ void CTraceAction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTraceAction *tra = reinterpret_cast<const CTraceAction *>(dataPtr);
+string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTraceAction* tra = reinterpret_cast<const CTraceAction*>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'e':
-                if ( fieldIn % "ether" )
+                if (fieldIn % "ether")
                     return wei_2_Ether(bnu_2_Str(tra->value));
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -290,7 +328,6 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void *dataPt
 
 //---------------------------------------------------------------------------
 bool CTraceAction::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -326,4 +363,3 @@ const char* STR_DISPLAY_TRACEACTION = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

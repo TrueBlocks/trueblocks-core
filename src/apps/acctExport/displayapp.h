@@ -24,12 +24,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CDisplayApp : public CBaseNode {
-public:
+  public:
     address_t address;
     blknum_t blockNumber;
     blknum_t transactionIndex;
 
-public:
+  public:
     CDisplayApp(void);
     CDisplayApp(const CDisplayApp& di);
     virtual ~CDisplayApp(void);
@@ -38,14 +38,17 @@ public:
     DECLARE_NODE(CDisplayApp);
 
     // EXISTING_CODE
-    CDisplayApp(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) { }
+    CDisplayApp(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) {
+    }
     // EXISTING_CODE
     bool operator==(const CDisplayApp& item) const;
-    bool operator!=(const CDisplayApp& item) const { return !operator==(item); }
+    bool operator!=(const CDisplayApp& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CDisplayApp& v1, const CDisplayApp& v2);
     friend ostream& operator<<(ostream& os, const CDisplayApp& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CDisplayApp& di);
@@ -146,4 +149,3 @@ extern const char* STR_DISPLAY_DISPLAYAPP;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

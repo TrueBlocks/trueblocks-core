@@ -25,11 +25,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CMonitorCache : public CCache {
-public:
+  public:
     CAddressArray addrs;
     CMonitorCacheItemArray items;
 
-public:
+  public:
     CMonitorCache(void);
     CMonitorCache(const CMonitorCache& mo);
     virtual ~CMonitorCache(void);
@@ -37,17 +37,19 @@ public:
 
     DECLARE_NODE(CMonitorCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CMonitorCache& item) const;
-    bool operator!=(const CMonitorCache& item) const { return !operator==(item); }
+    bool operator!=(const CMonitorCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CMonitorCache& v1, const CMonitorCache& v2);
     friend ostream& operator<<(ostream& os, const CMonitorCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CMonitorCache& mo);
@@ -146,4 +148,3 @@ extern const char* STR_DISPLAY_MONITORCACHE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

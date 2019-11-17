@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccount, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAccountChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -50,9 +50,9 @@ void CAccount::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextAccountChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccount *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccount*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,7 +62,6 @@ string_q nextAccountChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CAccount::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextAccountChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -71,11 +70,13 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) return addr_2_Str(addr);
+            if (fieldName % "addr")
+                return addr_2_Str(addr);
             break;
         case 'l':
-            if ( fieldName % "latestPage" ) return uint_2_Str(latestPage);
-            if ( fieldName % "latestTx" ) {
+            if (fieldName % "latestPage")
+                return uint_2_Str(latestPage);
+            if (fieldName % "latestTx") {
                 if (latestTx == CTransaction())
                     return "";
                 expContext().noFrst = true;
@@ -83,13 +84,14 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if ( fieldName % "transactions" || fieldName % "transactionsCnt" ) {
+            if (fieldName % "transactions" || fieldName % "transactionsCnt") {
                 size_t cnt = transactions.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += transactions[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -120,7 +122,7 @@ bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if ( fieldName % "latestTx" ) {
+    if (fieldName % "latestTx") {
         string_q str = fieldValue;
         return latestTx.parseJson3(str);
     }
@@ -128,14 +130,22 @@ bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addr" ) { addr = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "addr") {
+                addr = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'l':
-            if ( fieldName % "latestPage" ) { latestPage = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "latestTx" ) { return latestTx.parseJson3(fieldValue); }
+            if (fieldName % "latestPage") {
+                latestPage = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "latestTx") {
+                return latestTx.parseJson3(fieldValue);
+            }
             break;
         case 't':
-            if ( fieldName % "transactions" ) {
+            if (fieldName % "transactions") {
                 CTransaction item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -159,7 +169,6 @@ void CAccount::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -181,7 +190,6 @@ bool CAccount::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccount::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -200,7 +208,7 @@ CArchive& operator>>(CArchive& archive, CAccountArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -211,7 +219,7 @@ CArchive& operator>>(CArchive& archive, CAccountArray& array) {
 CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -219,17 +227,18 @@ CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
 //---------------------------------------------------------------------------
 void CAccount::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAccount, "schema")) return;
+    if (HAS_FIELD(CAccount, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAccount, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccount, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccount, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccount, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAccount, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccount, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccount, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccount, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccount, "latestPage", T_NUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "latestTx", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccount, "transactions", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAccount, "transactions", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccount, "schema");
@@ -244,21 +253,23 @@ void CAccount::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccount *acc = reinterpret_cast<const CAccount *>(dataPtr);
+string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAccount* acc = reinterpret_cast<const CAccount*>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
-                if ( fieldIn % "now" ) return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
+                if (fieldIn % "now")
+                    return (isTestMode() ? "TESTING_TIME" : Now().Format(FMT_JSON));
                 break;
             case 'r':
-                if ( fieldIn % "records" ) return (acc->transactions.size() == 0 ? "No records" : "");
+                if (fieldIn % "records")
+                    return (acc->transactions.size() == 0 ? "No records" : "");
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, acc);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -274,7 +285,6 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CAccount::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -292,10 +302,10 @@ ostream& operator<<(ostream& os, const CAccount& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "latestTx" )
+const CBaseNode* CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "latestTx")
         return &latestTx;
-    if ( fieldName % "transactions" && index < transactions.size() )
+    if (fieldName % "transactions" && index < transactions.size())
         return &transactions[index];
     return NULL;
 }
@@ -306,7 +316,7 @@ const char* STR_DISPLAY_ACCOUNT = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
@@ -333,7 +343,7 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *dat
         while (!preFmt.empty())
             ctx << getNextChunk(preFmt, nextAccountChunk, this);
         size_t cnt = 0;
-        for (size_t i = 0 ; i < transactions.size() ; i++) {
+        for (size_t i = 0; i < transactions.size(); i++) {
             cnt += transactions[i].m_showing;
             if (cnt && !(cnt % 563)) {
                 cerr << "\tExporting record " << cnt << " of " << transactions.size() << " records\r";
@@ -364,4 +374,3 @@ void CAccount::markLatest(const CTransaction& trans) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

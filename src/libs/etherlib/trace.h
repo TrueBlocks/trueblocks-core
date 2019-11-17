@@ -36,7 +36,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTrace : public CBaseNode {
-public:
+  public:
     hash_t blockHash;
     blknum_t blockNumber;
     uint64_t subtraces;
@@ -50,7 +50,7 @@ public:
     CTraceAction action;
     CTraceResult result;
 
-public:
+  public:
     CTrace(void);
     CTrace(const CTrace& tr);
     virtual ~CTrace(void);
@@ -58,22 +58,24 @@ public:
 
     DECLARE_NODE(CTrace);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     bool isError(void) const;
-    const CTransaction *pTrans;
+    const CTransaction* pTrans;
     void loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid);
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
-    bool operator!=(const CTrace& item) const { return !operator==(item); }
+    bool operator!=(const CTrace& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTrace& v1, const CTrace& v2);
     friend ostream& operator<<(ostream& os, const CTrace& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTrace& tr);
@@ -194,4 +196,3 @@ extern const char* STR_DISPLAY_TRACE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

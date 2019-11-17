@@ -12,17 +12,19 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("commands", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),
     COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for status config only, indicates that this is config --sef"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool visitIndexFiles(const string_q& path, void *data);
+extern bool visitIndexFiles(const string_q& path, void* data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -42,7 +44,6 @@ bool COptions::parseArguments(string_q& command) {
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
@@ -73,12 +74,10 @@ bool COptions::parseArguments(string_q& command) {
             tool_help = true;
 
         } else if (mode.empty() && startsWith(arg, '-')) {
-
             if (!builtInCmd(arg))
                 EXIT_USAGE("Missing mode: " + arg);
 
         } else {
-
             if (copy_to_tool) {
                 tool_flags += (arg + '~');
                 continue;
@@ -88,14 +87,15 @@ bool COptions::parseArguments(string_q& command) {
             if (isTestMode())
                 descr += "where|when|tokens|blooms|";
 
-            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));
+            bool isStatus =
+                (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));
             if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
 
             } else if (contains(arg, ",")) {
-                if (isAddress(arg.substr(0,42))) {
+                if (isAddress(arg.substr(0, 42))) {
                     if (mode == "list") {
                         CStringArray parts;
                         explode(parts, arg, ',');
@@ -120,7 +120,8 @@ bool COptions::parseArguments(string_q& command) {
                     tool_flags += (arg + " ");
                 } else if (arg == "--to_file") {
                     if (getEnvStr("DOCKER_MODE").empty()) {
-                        arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) + (fmt == CSV1 ? ".csv" : ".txt"));
+                        arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) +
+                                                       (fmt == CSV1 ? ".csv" : ".txt"));
                         tool_flags += (arg + " ");
                     } else {
                         // ignore --to_file flag in docker mode
@@ -144,15 +145,8 @@ bool COptions::parseArguments(string_q& command) {
 
     scrapeSleep = (useconds_t)sleep;
 
-    if (mode == "blocks" ||
-        mode == "transactions" ||
-        mode == "receipts" ||
-        mode == "names" ||
-        mode == "logs" ||
-        mode == "traces" ||
-        mode == "state" ||
-        mode == "message" ||
-        mode == "abi") {
+    if (mode == "blocks" || mode == "transactions" || mode == "receipts" || mode == "names" || mode == "logs" ||
+        mode == "traces" || mode == "state" || mode == "message" || mode == "abi") {
         tool_flags += (" --" + mode);
         mode = "data";
     }
@@ -167,16 +161,41 @@ bool COptions::parseArguments(string_q& command) {
         establishFolder(getMonitorPath("", FM_STAGING));
     }
 
-    if (tool_help)              { tool_flags += " --help"; }
-    if (isNoHeader)             { tool_flags += " --no_header"; }
-    if (expContext().asEther)   { tool_flags += " --ether"; }
-    if (expContext().asDollars) { tool_flags += " --dollars"; }
-    if (expContext().isParity)  { tool_flags += " --parity"; }
-    if (verbose)      { tool_flags += " -v:"      + uint_2_Str(verbose); freshen_flags += (" -v:"     + uint_2_Str(verbose)); }
-    if (start != 0)   { tool_flags += " --start " + uint_2_Str(start);   freshen_flags += " --start " + uint_2_Str(start); }
-    if (end != NOPOS) { tool_flags += " --end "   + uint_2_Str(end);     freshen_flags += " --end "   + uint_2_Str(end); }
-    if (true)         { tool_flags += addExportMode(exportFmt);          freshen_flags += addExportMode(exportFmt); }
-    if (true)         { tool_flags  = trim(tool_flags, ' ');             freshen_flags  = trim(freshen_flags, ' '); }
+    if (tool_help) {
+        tool_flags += " --help";
+    }
+    if (isNoHeader) {
+        tool_flags += " --no_header";
+    }
+    if (expContext().asEther) {
+        tool_flags += " --ether";
+    }
+    if (expContext().asDollars) {
+        tool_flags += " --dollars";
+    }
+    if (expContext().isParity) {
+        tool_flags += " --parity";
+    }
+    if (verbose) {
+        tool_flags += " -v:" + uint_2_Str(verbose);
+        freshen_flags += (" -v:" + uint_2_Str(verbose));
+    }
+    if (start != 0) {
+        tool_flags += " --start " + uint_2_Str(start);
+        freshen_flags += " --start " + uint_2_Str(start);
+    }
+    if (end != NOPOS) {
+        tool_flags += " --end " + uint_2_Str(end);
+        freshen_flags += " --end " + uint_2_Str(end);
+    }
+    if (true) {
+        tool_flags += addExportMode(exportFmt);
+        freshen_flags += addExportMode(exportFmt);
+    }
+    if (true) {
+        tool_flags = trim(tool_flags, ' ');
+        freshen_flags = trim(freshen_flags, ' ');
+    }
 
     if (isNodeRunning()) {
         LOG_INFO("Connecting to node...");
@@ -204,11 +223,11 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     addrs.clear();
-    tool_flags    = "";
+    tool_flags = "";
     freshen_flags = "";
-    mode          = "";
-    scrapeSleep   = 14;
-    minArgs       = 0;
+    mode = "";
+    scrapeSleep = 14;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -216,6 +235,8 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -233,13 +254,18 @@ string_q addExportMode(format_t fmt) {
     if (!isApiMode() && fmt == TXT1)
         return "";
     switch (fmt) {
-    case NONE1: return " --fmt none";
-    case JSON1: return " --fmt json";
-    case TXT1:  return " --fmt txt";
-    case CSV1:  return " --fmt csv";
-    case API1:  return " --fmt api";
-    default:
-        break;
+        case NONE1:
+            return " --fmt none";
+        case JSON1:
+            return " --fmt json";
+        case TXT1:
+            return " --fmt txt";
+        case CSV1:
+            return " --fmt csv";
+        case API1:
+            return " --fmt api";
+        default:
+            break;
     }
     return "";
 }

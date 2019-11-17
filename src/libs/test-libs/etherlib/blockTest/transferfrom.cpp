@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(QTransferFrom, CTransaction);
 
 //---------------------------------------------------------------------------
-static string_q nextTransferfromChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTransferfromChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void QTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void QTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void QTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
 }
 
 //---------------------------------------------------------------------------
-string_q nextTransferfromChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTransferfromChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const QTransferFrom *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const QTransferFrom*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextTransferfromChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTransferfromChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,9 +68,12 @@ string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) return addr_2_Str(_from);
-            if ( fieldName % "_to" ) return addr_2_Str(_to);
-            if ( fieldName % "_value" ) return bnu_2_Str(_value);
+            if (fieldName % "_from")
+                return addr_2_Str(_from);
+            if (fieldName % "_to")
+                return addr_2_Str(_to);
+            if (fieldName % "_value")
+                return bnu_2_Str(_value);
             break;
     }
 
@@ -95,9 +97,18 @@ bool QTransferFrom::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     switch (tolower(fieldName[0])) {
         case '_':
-            if ( fieldName % "_from" ) { _from = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "_to" ) { _to = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "_value" ) { _value = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "_from") {
+                _from = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "_to") {
+                _to = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "_value") {
+                _value = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -113,7 +124,6 @@ void QTransferFrom::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -134,7 +144,6 @@ bool QTransferFrom::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QTransferFrom::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CTransaction::SerializeC(archive);
 
@@ -152,7 +161,7 @@ CArchive& operator>>(CArchive& archive, QTransferFromArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -163,7 +172,7 @@ CArchive& operator>>(CArchive& archive, QTransferFromArray& array) {
 CArchive& operator<<(CArchive& archive, const QTransferFromArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -171,15 +180,16 @@ CArchive& operator<<(CArchive& archive, const QTransferFromArray& array) {
 //---------------------------------------------------------------------------
 void QTransferFrom::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(QTransferFrom, "schema")) return;
+    if (HAS_FIELD(QTransferFrom, "schema"))
+        return;
 
     CTransaction::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(QTransferFrom, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(QTransferFrom, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QTransferFrom, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(QTransferFrom, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(QTransferFrom, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(QTransferFrom, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(QTransferFrom, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(QTransferFrom, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_value", T_NUMBER, ++fieldNum);
@@ -197,15 +207,15 @@ void QTransferFrom::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const QTransferFrom *tra = reinterpret_cast<const QTransferFrom *>(dataPtr);
+string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const QTransferFrom* tra = reinterpret_cast<const QTransferFrom*>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -221,7 +231,6 @@ string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void *dataP
 
 //---------------------------------------------------------------------------
 bool QTransferFrom::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -245,4 +254,3 @@ const char* STR_DISPLAY_TRANSFERFROM = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

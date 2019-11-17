@@ -6,8 +6,8 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q& tool_flags, const string_q& freshen_flags) {
-
+bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q& tool_flags,
+                      const string_q& freshen_flags) {
     ENTER8("freshen_internal");
     nodeNotRequired();
 
@@ -19,7 +19,7 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
     string_q groupsOfFive;
     for (auto addr : addrs) {
         groupsOfFive += (addr + " ");
-        if (!(++cnt % 5)) { // we don't want to do too many addrs at a time
+        if (!(++cnt % 5)) {  // we don't want to do too many addrs at a time
             groupsOfFive += "|";
             cnt = 0;
         }
@@ -30,9 +30,10 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
         string_q thisGroup = nextTokenClear(groupsOfFive, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
         NOTE_CALL(cmd);
-        if (system(cmd.c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(cmd.c_str())) {
+        }  // Don't remove. Silences compiler warnings
         if (!groupsOfFive.empty())
-           usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
     EXIT_NOMSG8(true);
 }

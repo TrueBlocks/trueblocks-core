@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CMeasure : public CBaseNode {
-public:
+  public:
     string_q git_hash;
     string_q date;
     uint64_t epoch;
@@ -35,7 +35,7 @@ public:
     uint64_t nPassed;
     double totSecs;
 
-public:
+  public:
     CMeasure(void);
     CMeasure(const CMeasure& me);
     virtual ~CMeasure(void);
@@ -44,17 +44,19 @@ public:
     DECLARE_NODE(CMeasure);
 
     // EXISTING_CODE
-    double avgSecs(void) const { return totSecs / nTests; }
+    double avgSecs(void) const {
+        return totSecs / nTests;
+    }
     CMeasure(const string_q& g, const string_q& c, const string_q& t) {
         initialize();
-        git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0,10);
+        git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
         date = Now().Format(FMT_EXPORT);
         epoch = getGlobalConfig("testRunner")->getConfigInt("settings", "test_epoch", 3000);
         group = g;
         cmd = c;
         type = t;
     }
-    CMeasure &operator +=(const CMeasure& m) {
+    CMeasure& operator+=(const CMeasure& m) {
         nTests += m.nTests;
         nPassed += m.nPassed;
         totSecs += m.totSecs;
@@ -62,11 +64,13 @@ public:
     }
     // EXISTING_CODE
     bool operator==(const CMeasure& item) const;
-    bool operator!=(const CMeasure& item) const { return !operator==(item); }
+    bool operator!=(const CMeasure& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CMeasure& v1, const CMeasure& v2);
     friend ostream& operator<<(ostream& os, const CMeasure& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CMeasure& me);
@@ -179,4 +183,3 @@ extern const char* STR_DISPLAY_MEASURE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

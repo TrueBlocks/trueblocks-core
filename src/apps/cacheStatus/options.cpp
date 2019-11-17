@@ -12,6 +12,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more types of data to retrieve"),
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
@@ -21,6 +22,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -147,8 +149,10 @@ void COptions::Init(void) {
     isConfig = false;
     mode = "";
 
-    char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
-    char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+    char hostname[HOST_NAME_MAX];
+    gethostname(hostname, HOST_NAME_MAX);
+    char username[LOGIN_NAME_MAX];
+    getlogin_r(username, LOGIN_NAME_MAX);
     if (!getEnvStr("DOCKER_MODE").empty()) {
         memset(username, 0, LOGIN_NAME_MAX);
         strncpy(username, "nobody", 6);
@@ -196,14 +200,14 @@ COptions::COptions(void) {
     CConfigGroup::registerClass();
     CConfigItem::registerClass();
 
-    HIDE_FIELD(CAccountWatch,  "statement");
-    HIDE_FIELD(CAccountWatch,  "stateHistory");
-    HIDE_FIELD(CAccountWatch,  "curBalance");
-    HIDE_FIELD(CAccountWatch,  "abi_spec");
+    HIDE_FIELD(CAccountWatch, "statement");
+    HIDE_FIELD(CAccountWatch, "stateHistory");
+    HIDE_FIELD(CAccountWatch, "curBalance");
+    HIDE_FIELD(CAccountWatch, "abi_spec");
 
-    HIDE_FIELD(CAccountName,   "is_contract");
-    HIDE_FIELD(CAccountName,   "is_private");
-    HIDE_FIELD(CAccountName,   "is_shared");
+    HIDE_FIELD(CAccountName, "is_contract");
+    HIDE_FIELD(CAccountName, "is_private");
+    HIDE_FIELD(CAccountName, "is_shared");
     UNHIDE_FIELD(CAccountName, "nRecords");
     UNHIDE_FIELD(CAccountName, "nAppearances");
     UNHIDE_FIELD(CAccountName, "sizeInBytes");
@@ -213,6 +217,8 @@ COptions::COptions(void) {
     minArgs = 0;
 
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

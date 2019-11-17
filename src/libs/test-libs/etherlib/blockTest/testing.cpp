@@ -26,7 +26,7 @@ extern void testFormatting(CBlock& block);
 static const string_q sep(120, '-');
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -41,36 +41,46 @@ int main(int argc, const char *argv[]) {
         CBlock block;
         getBlock(block, 4312145);
 
-        cout << sep << "\n";
+        cout << sep << endl;
         switch (options.testNum) {
-            case 0:  everyAddress(block);             break;
-            case 1:  everyUniqueAddress(block);       everyUniqueAddressPerTx(block); break;
-            case 2:  everySortedUniqueAddress(block); everySortedUniqueAddressPerTx(block); break;
-            default: testFormatting(block);           break;
+            case 0:
+                everyAddress(block);
+                break;
+            case 1:
+                everyUniqueAddress(block);
+                everyUniqueAddressPerTx(block);
+                break;
+            case 2:
+                everySortedUniqueAddress(block);
+                everySortedUniqueAddressPerTx(block);
+                break;
+            default:
+                testFormatting(block);
+                break;
         }
     }
     return 0;
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.addr))
         return true;
-    cout << item << "\n";
+    cout << item << endl;
     return true;
 }
 
 //----------------------------------------------------------------
-bool accumAddrs(const CAppearance& item, void *data) {
+bool accumAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.addr))
         return true;
-    CAppearanceArray *array = (CAppearanceArray *)data;  // NOLINT
+    CAppearanceArray* array = (CAppearanceArray*)data;  // NOLINT
     array->push_back(item);
     return true;
 }
 
 //----------------------------------------------------------------
-bool transFilter(const CTransaction *trans, void *data) {
+bool transFilter(const CTransaction* trans, void* data) {
     // return true to filter (i.e. ignore) this transaction
     return (trans->transactionIndex == 2);
 }
@@ -90,74 +100,76 @@ bool sortAddressArray(const CAppearance& v1, const CAppearance& v2) {
 
 //--------------------------------------------------------------
 void everyAddress(CBlock& block) {
-    cout << "Every address in block 4312145\n";
+    cout << "Every address in block 4312145" << endl;
     block.forEveryAddress(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everyUniqueAddress(CBlock& block) {
-    cout << "Every unique addresses in block 4312145\n";
+    cout << "Every unique addresses in block 4312145" << endl;
     block.forEveryUniqueAddress(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everySortedUniqueAddress(CBlock& block) {
-    cout << "Every unique addresses in block 4312145 (sorted)\n";
+    cout << "Every unique addresses in block 4312145 (sorted)" << endl;
     CAppearanceArray array;
     block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
-        cout << elem << "\n";
+        cout << elem << endl;
 }
 
 //--------------------------------------------------------------
 void everyUniqueAddressPerTx(CBlock& block) {
-    cout << "Every unique addresses per tx in block 4312145\n";
+    cout << "Every unique addresses per tx in block 4312145" << endl;
     block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everySortedUniqueAddressPerTx(CBlock& block) {
-    cout << "Every unique addresses per tx in block 4312145 (sorted)\n";
+    cout << "Every unique addresses per tx in block 4312145 (sorted)" << endl;
     CAppearanceArray array;
     block.forEveryUniqueAddressPerTx(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
-        cout << elem << "\n";
+        cout << elem << endl;
 }
 
 //--------------------------------------------------------------
 void testFormatting(CBlock& block) {
     QTransferFrom::registerClass();
 
-    cout << "Testing JSON export of a block\n";
+    cout << "Testing JSON export of a block" << endl;
     CBlock block1;
     getBlock(block1, 22000);
 
-    cout << sep << "\nUsing doExport\n" << sep << "\n";
+    cout << sep << endl << "Using doExport" << endl << sep << endl;
     block1.doExport(cout);
 
-    cout << sep << "\nUsing operator<<\n" << sep << "\n";
+    cout << sep << endl << "Using operator<<" << endl << sep << endl;
     cout << block1;
 
-    cout << sep << "\nUsing Format\n" << sep << "\n";
-    cout << block1.Format() << "\n";
+    cout << sep << endl << "Using Format" << endl << sep << endl;
+    cout << block1.Format() << endl;
 
     verbose = 5;
-    cout << sep << "\nUsing Format(fmt) - TODO(tjayrush): should report missing field, does not.\n" << sep << "\n";
-    cout << block1.Format("[{PARSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << "\n";
+    cout << sep << endl
+         << "Using Format(fmt) - TODO(tjayrush): should report missing field, does not." << endl
+         << sep << endl;
+    cout << block1.Format("[{PARSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\t[{MINER}]\t[{NOT_A_FIELD}]") << endl;
 
     QTransferFrom tf;
     tf._from = "0xTransferFromFrom";
     tf._to = "0xTransferFromTo";
     tf._value = 1001010100;
     tf.transactionIndex = 1002;
-    cout << sep << "\nUsing Format(fmt) on a derived class QTransferFrom.\n" << sep << "\n";
-    cout << tf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
+    cout << sep << endl << "Using Format(fmt) on a derived class QTransferFrom." << endl << sep << endl;
+    cout << tf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << endl;
 
     QFromTransferFrom ftf;
-    cout << sep << "\nNot registered, should error out\n" << sep << "\n";
-    cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
+    cout << sep << endl << "Not registered, should error out" << endl << sep << endl;
+    cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << endl;
 
     QFromTransferFrom::registerClass();
     ftf._from = "0xFromTransferFromFrom";
@@ -166,6 +178,6 @@ void testFormatting(CBlock& block) {
     ftf.werp = "Jim";
     ftf._value = 121212121;
     ftf.transactionIndex = 1212;
-    cout << sep << "\nUsing Format(fmt) on a derived class derived from QTransferFrom.\n" << sep << "\n";
-    cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << "\n";
+    cout << sep << endl << "Using Format(fmt) on a derived class derived from QTransferFrom." << endl << sep << endl;
+    cout << ftf.Format("[{PARSED}]\t[{_FROM}]\t[{_TO}]\t[{TRANSACTIONINDEX}]\t[{NOT_A_FIELD}]") << endl;
 }

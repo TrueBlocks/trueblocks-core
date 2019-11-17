@@ -24,12 +24,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CESResult : public CBaseNode {
-public:
+  public:
     string_q status;
     string_q message;
     string_q result;
 
-public:
+  public:
     CESResult(void);
     CESResult(const CESResult& es);
     virtual ~CESResult(void);
@@ -40,11 +40,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CESResult& item) const;
-    bool operator!=(const CESResult& item) const { return !operator==(item); }
+    bool operator!=(const CESResult& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CESResult& v1, const CESResult& v2);
     friend ostream& operator<<(ostream& os, const CESResult& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CESResult& es);
@@ -145,4 +147,3 @@ extern const char* STR_DISPLAY_ESRESULT;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

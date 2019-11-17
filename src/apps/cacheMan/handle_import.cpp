@@ -7,7 +7,6 @@
 
 //-------------------------------------------------------------------------
 bool COptions::handleImport(void) const {
-
     ASSERT(fileExists("./import.txt"));
     ASSERT(filenames.size() == 1);
 
@@ -44,4 +43,3 @@ bool COptions::handleImport(void) const {
 
     return true;
 }
-

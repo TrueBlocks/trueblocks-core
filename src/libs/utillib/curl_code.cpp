@@ -18,60 +18,60 @@
 
 namespace qblocks {
 
-    //---------------------------------------------------------------------------------------------------
-    class CResponseData {
-    public:
-        CURLCALLBACKFUNC noteFunc;
-        string_q response;
-        CResponseData(void) : noteFunc(NULL) { }
-    };
+//---------------------------------------------------------------------------------------------------
+class CResponseData {
+  public:
+    CURLCALLBACKFUNC noteFunc;
+    string_q response;
+    CResponseData(void) : noteFunc(NULL) {
+    }
+};
 
-    //-------------------------------------------------------------------------
-    size_t internalCallback(char *ptr, size_t size, size_t nmemb, void *userdata) {
+//-------------------------------------------------------------------------
+size_t internalCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
+    // We need to save the last character...
+    char l = ptr[nmemb - 1];
 
-        // We need to save the last character...
-        char l = ptr[nmemb-1];
+    // ...because we're overwriting it (curl doesn't end the data with a '\0')...
+    ptr[nmemb - 1] = '\0';
 
-        // ...because we're overwriting it (curl doesn't end the data with a '\0')...
-        ptr[nmemb-1] = '\0';
+    // ... now we can copy the string...
+    string result = ptr;
 
-        // ... now we can copy the string...
-        string result = ptr;
+    // ...but we need the last character...
+    result += l;
 
-        // ...but we need the last character...
-        result += l;
-
-        // Now we copy out to the caller's buffer and make a note of it if told to
-        CResponseData *dataPtr = reinterpret_cast<CResponseData*>(userdata);
-        if (dataPtr) {
-            dataPtr->response += result;
-            if (dataPtr->noteFunc)
-                (*dataPtr->noteFunc)(ptr, size, nmemb, userdata);
-        }
-
-        // We've handeled everything, tell curl to keep going
-        return size * nmemb;
+    // Now we copy out to the caller's buffer and make a note of it if told to
+    CResponseData* dataPtr = reinterpret_cast<CResponseData*>(userdata);
+    if (dataPtr) {
+        dataPtr->response += result;
+        if (dataPtr->noteFunc)
+            (*dataPtr->noteFunc)(ptr, size, nmemb, userdata);
     }
 
-    //---------------------------------------------------------------------------------------------------
-    string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
-        CURL *curl = curl_easy_init();
-        if (!curl) {
-            cerr << "Curl failed to initialize. Quitting..." << endl;
-            quickQuitHandler(0);
-        }
-        CResponseData result;
-        result.noteFunc = noteFunc;
-        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, internalCallback);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
-            quickQuitHandler(0);
-        }
-        curl_easy_cleanup(curl);
-        return result.response;
+    // We've handeled everything, tell curl to keep going
+    return size * nmemb;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        cerr << "Curl failed to initialize. Quitting..." << endl;
+        quickQuitHandler(0);
     }
+    CResponseData result;
+    result.noteFunc = noteFunc;
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, internalCallback);
+    CURLcode res = curl_easy_perform(curl);
+    if (res != CURLE_OK) {
+        cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
+        quickQuitHandler(0);
+    }
+    curl_easy_cleanup(curl);
+    return result.response;
+}
 
 }  // namespace qblocks

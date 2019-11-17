@@ -13,7 +13,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
 
     COptions options;
@@ -40,10 +40,9 @@ int main(int argc, const char *argv[]) {
 }
 
 //--------------------------------------------------------------
-bool visitBlock(uint64_t blockNum, void *data) {
-
-    COptions *opt = reinterpret_cast<COptions *>(data);
-    bool isText = opt->exportFmt & (TXT1|CSV1);
+bool visitBlock(uint64_t blockNum, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = opt->exportFmt & (TXT1 | CSV1);
 
     if (!isTestMode()) {
         cerr << blockNum << "\r";
@@ -77,7 +76,7 @@ bool visitBlock(uint64_t blockNum, void *data) {
         string_q code = getCodeAt(state.address);
         state.code = code;
         if (code.length() > 250 && !verbose)
-            state.code = code.substr(0,20) + "..." + code.substr(code.length()-20, 100);
+            state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
     }
     if (opt->modeBits & ST_STORAGE)
         state.storage = getStorageAt(state.address, 0);

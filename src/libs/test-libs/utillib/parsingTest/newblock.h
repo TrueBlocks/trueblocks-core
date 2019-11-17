@@ -25,7 +25,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNewBlock : public CBaseNode {
-public:
+  public:
     gas_t gasLimit;
     gas_t gasUsed;
     hash_t hash;
@@ -38,7 +38,7 @@ public:
     timestamp_t timestamp;
     CTransactionArray transactions;
 
-public:
+  public:
     CNewBlock(void);
     CNewBlock(const CNewBlock& ne);
     virtual ~CNewBlock(void);
@@ -46,16 +46,18 @@ public:
 
     DECLARE_NODE(CNewBlock);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CNewBlock& item) const;
-    bool operator!=(const CNewBlock& item) const { return !operator==(item); }
+    bool operator!=(const CNewBlock& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CNewBlock& ne);
@@ -172,4 +174,3 @@ extern const char* STR_DISPLAY_NEWBLOCK;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

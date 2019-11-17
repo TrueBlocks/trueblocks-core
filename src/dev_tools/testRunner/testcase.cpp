@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTestCase, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTestcaseChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTestCase::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTestCase::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CTestCase::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 }
 
 //---------------------------------------------------------------------------
-string_q nextTestcaseChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTestCase *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTestCase*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextTestcaseChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTestCase::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTestcaseChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,41 +68,56 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "builtin" ) return bool_2_Str_t(builtin);
+            if (fieldName % "builtin")
+                return bool_2_Str_t(builtin);
             break;
         case 'e':
-            if ( fieldName % "extra" ) return extra;
+            if (fieldName % "extra")
+                return extra;
             break;
         case 'f':
-            if ( fieldName % "filename" ) return filename;
-            if ( fieldName % "fileName" ) return fileName;
+            if (fieldName % "filename")
+                return filename;
+            if (fieldName % "fileName")
+                return fileName;
             break;
         case 'g':
-            if ( fieldName % "goldPath" ) return goldPath;
+            if (fieldName % "goldPath")
+                return goldPath;
             break;
         case 'm':
-            if ( fieldName % "mode" ) return mode;
+            if (fieldName % "mode")
+                return mode;
             break;
         case 'o':
-            if ( fieldName % "origLine" ) return origLine;
-            if ( fieldName % "onOff" ) return onOff;
-            if ( fieldName % "options" ) return options;
+            if (fieldName % "origLine")
+                return origLine;
+            if (fieldName % "onOff")
+                return onOff;
+            if (fieldName % "options")
+                return options;
             break;
         case 'p':
-            if ( fieldName % "post" ) return post;
-            if ( fieldName % "path" ) return path;
+            if (fieldName % "post")
+                return post;
+            if (fieldName % "path")
+                return path;
             break;
         case 'r':
-            if ( fieldName % "route" ) return route;
+            if (fieldName % "route")
+                return route;
             break;
         case 's':
-            if ( fieldName % "speed" ) return speed;
+            if (fieldName % "speed")
+                return speed;
             break;
         case 't':
-            if ( fieldName % "tool" ) return tool;
+            if (fieldName % "tool")
+                return tool;
             break;
         case 'w':
-            if ( fieldName % "workPath" ) return workPath;
+            if (fieldName % "workPath")
+                return workPath;
             break;
     }
 
@@ -124,41 +138,86 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if ( fieldName % "builtin" ) { builtin = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "builtin") {
+                builtin = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'e':
-            if ( fieldName % "extra" ) { extra = fieldValue; return true; }
+            if (fieldName % "extra") {
+                extra = fieldValue;
+                return true;
+            }
             break;
         case 'f':
-            if ( fieldName % "filename" ) { filename = fieldValue; return true; }
-            if ( fieldName % "fileName" ) { fileName = fieldValue; return true; }
+            if (fieldName % "filename") {
+                filename = fieldValue;
+                return true;
+            }
+            if (fieldName % "fileName") {
+                fileName = fieldValue;
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "goldPath" ) { goldPath = fieldValue; return true; }
+            if (fieldName % "goldPath") {
+                goldPath = fieldValue;
+                return true;
+            }
             break;
         case 'm':
-            if ( fieldName % "mode" ) { mode = fieldValue; return true; }
+            if (fieldName % "mode") {
+                mode = fieldValue;
+                return true;
+            }
             break;
         case 'o':
-            if ( fieldName % "origLine" ) { origLine = fieldValue; return true; }
-            if ( fieldName % "onOff" ) { onOff = fieldValue; return true; }
-            if ( fieldName % "options" ) { options = fieldValue; return true; }
+            if (fieldName % "origLine") {
+                origLine = fieldValue;
+                return true;
+            }
+            if (fieldName % "onOff") {
+                onOff = fieldValue;
+                return true;
+            }
+            if (fieldName % "options") {
+                options = fieldValue;
+                return true;
+            }
             break;
         case 'p':
-            if ( fieldName % "post" ) { post = fieldValue; return true; }
-            if ( fieldName % "path" ) { path = fieldValue; return true; }
+            if (fieldName % "post") {
+                post = fieldValue;
+                return true;
+            }
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "route" ) { route = fieldValue; return true; }
+            if (fieldName % "route") {
+                route = fieldValue;
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "speed" ) { speed = fieldValue; return true; }
+            if (fieldName % "speed") {
+                speed = fieldValue;
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "tool" ) { tool = fieldValue; return true; }
+            if (fieldName % "tool") {
+                tool = fieldValue;
+                return true;
+            }
             break;
         case 'w':
-            if ( fieldName % "workPath" ) { workPath = fieldValue; return true; }
+            if (fieldName % "workPath") {
+                workPath = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -174,7 +233,6 @@ void CTestCase::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTestCase::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -207,7 +265,6 @@ bool CTestCase::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTestCase::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -237,7 +294,7 @@ CArchive& operator>>(CArchive& archive, CTestCaseArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -248,7 +305,7 @@ CArchive& operator>>(CArchive& archive, CTestCaseArray& array) {
 CArchive& operator<<(CArchive& archive, const CTestCaseArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -256,13 +313,14 @@ CArchive& operator<<(CArchive& archive, const CTestCaseArray& array) {
 //---------------------------------------------------------------------------
 void CTestCase::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTestCase, "schema")) return;
+    if (HAS_FIELD(CTestCase, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTestCase, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTestCase, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTestCase, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTestCase, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTestCase, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTestCase, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTestCase, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTestCase, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "origLine", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "builtin", T_BOOL, ++fieldNum);
     ADD_FIELD(CTestCase, "onOff", T_TEXT, ++fieldNum);
@@ -292,15 +350,15 @@ void CTestCase::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTestCase *tes = reinterpret_cast<const CTestCase *>(dataPtr);
+string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTestCase* tes = reinterpret_cast<const CTestCase*>(dataPtr);
     if (tes) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tes);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -316,7 +374,6 @@ string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 
 //---------------------------------------------------------------------------
 bool CTestCase::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -339,7 +396,7 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-CStringArray commands = { "COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv" };
+CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv"};
 
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
@@ -349,10 +406,10 @@ bool prepareBuiltIn(string_q& options) {
             ostringstream os;
             bool debug = false;
             if (debug)
-               os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
+                os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
             os << options;
             if (debug)
-               os << " ; ls -l ; ";
+                os << " ; ls -l ; ";
             options = os.str();
             replaceAll(options, match, cmd);
             return true;
@@ -367,19 +424,19 @@ CTestCase::CTestCase(const string_q& line) {
 
     CStringArray parts;
     explode(parts, line, ',');
-    onOff    = parts.size() > 0 ? trim(parts[0]) : "";
-    mode     = parts.size() > 1 ? trim(parts[1]) : "";
-    speed    = parts.size() > 2 ? trim(parts[2]) : "";
-    route    = parts.size() > 3 ? trim(parts[3]) : "";
-    tool     = parts.size() > 4 ? trim(parts[4]) : "";
+    onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    mode = parts.size() > 1 ? trim(parts[1]) : "";
+    speed = parts.size() > 2 ? trim(parts[2]) : "";
+    route = parts.size() > 3 ? trim(parts[3]) : "";
+    tool = parts.size() > 4 ? trim(parts[4]) : "";
     filename = parts.size() > 5 ? trim(parts[5]) : "";
-    post     = parts.size() > 6 ? trim(parts[6]) : "";
-    options  = parts.size() > 7 ? trim(parts[7]) : "";
-    extra    = parts.size() > 8 ? trim(parts[8]) : "";
+    post = parts.size() > 6 ? trim(parts[6]) : "";
+    options = parts.size() > 7 ? trim(parts[7]) : "";
+    extra = parts.size() > 8 ? trim(parts[8]) : "";
 
-    path     = nextTokenClear(tool, '/');
+    path = nextTokenClear(tool, '/');
     if (endsWith(path, "lib"))
-    path = "libs/" + path;
+        path = "libs/" + path;
 
     fileName = tool + "_" + filename + ".txt";
 
@@ -388,9 +445,12 @@ CTestCase::CTestCase(const string_q& line) {
 
     builtin = prepareBuiltIn(options);
     if (!builtin) {
-        replaceAll(options, " = ", "="); replaceAll(options, "= ", "=");
-        replaceAll(options, " & ", "&"); replaceAll(options, "& ", "&");
-        replaceAll(options, " @ ", "@"); replaceAll(options, "@ ", "@");
+        replaceAll(options, " = ", "=");
+        replaceAll(options, "= ", "=");
+        replaceAll(options, " & ", "&");
+        replaceAll(options, "& ", "&");
+        replaceAll(options, " @ ", "@");
+        replaceAll(options, "@ ", "@");
     }
 }
 
@@ -401,20 +461,11 @@ void CTestCase::prepareTest(bool cmdLine) {
     establishFolder(goldPath);
     establishFolder(workPath);
 
-    if (!builtin) { // order matters
+    if (!builtin) {  // order matters
         if (cmdLine) {
             CStringArray opts = {
-                "val",
-                "addrs",
-                "addrs2",
-                "blocks",
-                "block_list",
-                "files",
-                "dates",
-                "transactions",
-                "terms",
-                "functions",
-                "modes",
+                "val",   "addrs",        "addrs2", "blocks",    "block_list", "files",
+                "dates", "transactions", "terms",  "functions", "modes",
             };
             options = "&" + options;
             for (auto opt : opts)
@@ -437,15 +488,14 @@ void CTestCase::prepareTest(bool cmdLine) {
         }
     }
 
-    string_q removePath = workPath + fileName; // order matters
+    string_q removePath = workPath + fileName;  // order matters
     if (fileExists(removePath))
         ::remove(removePath.c_str());
 
-    if (!extra.empty() && !contains(extra,"=")) { // order matters
+    if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
         extra = "";
     }
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

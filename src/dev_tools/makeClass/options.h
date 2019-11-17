@@ -29,7 +29,7 @@
 
 //-------------------------------------------------------------------
 class CClassDefinition {
-public:
+  public:
     string_q className;
     string_q inputPath;
     string_q outputPath(const string_q& t) const {
@@ -37,10 +37,10 @@ public:
     }
 };
 
-typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
+typedef enum { NONE = 0, RUN = (1 << 1), EDIT = (1 << 2), LIST = (1 << 3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool all;
     string_q nspace;
@@ -64,15 +64,17 @@ public:
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
 
     bool check_option(const CCommandOption& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="", const string_q& errors="");
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
+                   const string_q& init = "", const string_q& notes = "", const string_q& errors = "");
 };
 
 //-------------------------------------------------------------------
-extern bool listClasses(const string_q& path, void *data);
+extern bool listClasses(const string_q& path, void* data);
 extern void updateTemplates(void);
 extern string_q getCaseGetCode(const string_q& fieldCase);
 extern string_q getCaseSetCode(const string_q& fieldCase);
 extern string_q convertTypes(const string_q& inStr);
+extern string_q splitIfTooWide(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
 inline string_q short2(const string_q& str) {

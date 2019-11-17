@@ -7,7 +7,6 @@
 
 //-------------------------------------------------------------------------
 bool COptions::handleSort(void) const {
-
     ASSERT(filenmes.size() == 1);
 
     CAppearanceArray_base dataArray;

@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CCommandOption : public CBaseNode {
-public:
+  public:
     string_q num;
     string_q group;
     string_q api_route;
@@ -41,7 +41,7 @@ public:
     string_q data_type;
     string_q description;
 
-public:
+  public:
     CCommandOption(void);
     CCommandOption(const CCommandOption& co);
     virtual ~CCommandOption(void);
@@ -53,11 +53,13 @@ public:
     CCommandOption(const string_q& line);
     // EXISTING_CODE
     bool operator==(const CCommandOption& item) const;
-    bool operator!=(const CCommandOption& item) const { return !operator==(item); }
+    bool operator!=(const CCommandOption& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CCommandOption& v1, const CCommandOption& v2);
     friend ostream& operator<<(ostream& os, const CCommandOption& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CCommandOption& co);
@@ -182,4 +184,3 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

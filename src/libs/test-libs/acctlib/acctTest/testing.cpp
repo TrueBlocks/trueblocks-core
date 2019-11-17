@@ -14,7 +14,7 @@
 #include "reporter.h"
 
 //-----------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     CTreeRoot::registerClass();
@@ -40,9 +40,8 @@ int main(int argc, const char *argv[]) {
         CFilename fn("accts.bin");
         bool exists = fileExists(fn.getFullPath());
         string_q msg = string_q(exists ? "Reading" : "Accumulating") + " accounts between blocks " +
-                            uint_2_Str(options.startBlock) + " and " +
-                            uint_2_Str(options.startBlock+options.nBlocks) + " (nBlocks: " +
-                            uint_2_Str(options.nBlocks) + ")";
+                       uint_2_Str(options.startBlock) + " and " + uint_2_Str(options.startBlock + options.nBlocks) +
+                       " (nBlocks: " + uint_2_Str(options.nBlocks) + ")";
 
         CReporter reporter;
         reporter.tree = new CTreeRoot;
@@ -82,13 +81,12 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool buildTree(CBlock& block, void *data) {
-
-    CReporter *r = reinterpret_cast<CReporter*>(data);
+bool buildTree(CBlock& block, void* data) {
+    CReporter* r = reinterpret_cast<CReporter*>(data);
 
     r->nBlocksVisited++;
-    for (size_t i = 0 ; i < block.transactions.size() ; i++) {
-        CTransaction *tr = reinterpret_cast<CTransaction *>(&block.transactions[i]);
+    for (size_t i = 0; i < block.transactions.size(); i++) {
+        CTransaction* tr = reinterpret_cast<CTransaction*>(&block.transactions[i]);
         if (string_q(tr->to).empty())
             tr->to = "0x0";
         r->nTransVisited++;
@@ -101,8 +99,8 @@ bool buildTree(CBlock& block, void *data) {
 }
 
 //-----------------------------------------------------------------------------
-bool printTree(const CTreeNode *node, void *data) {
-    CReporter *r = reinterpret_cast<CReporter*>(data);
+bool printTree(const CTreeNode* node, void* data) {
+    CReporter* r = reinterpret_cast<CReporter*>(data);
 
     r->nAccts++;
 
@@ -113,7 +111,7 @@ bool printTree(const CTreeNode *node, void *data) {
     }
 
     if (r->isMax()) {
-        r->maxDepth  = countOf(r->strs, '-');
+        r->maxDepth = countOf(r->strs, '-');
         r->getNext = true;
         r->maxMatch1 = r->strs;
     }
@@ -138,12 +136,17 @@ bool printTree(const CTreeNode *node, void *data) {
 //-----------------------------------------------------------------------------
 void CReporter::interumReport(void) {
     string_q types[] = {
-        cWhite   +     "T_TRTOP " + cOff,
-        cRed     +     "T_TRLEAF" + cOff,
-        bYellow  + "\n""T_BRANCH" + cOff,
-        cGreen   + "\n""T_INFIX " + cOff,
+        cWhite + "T_TRTOP " + cOff,
+        cRed + "T_TRLEAF" + cOff,
+        bYellow +
+            "\n"
+            "T_BRANCH" +
+            cOff,
+        cGreen +
+            "\n"
+            "T_INFIX " +
+            cOff,
     };
 
     cout << types[type] << " " << substitute(substitute(substitute(strs, "+", ""), "-", ""), "|0", "") << "\n";
 }
-

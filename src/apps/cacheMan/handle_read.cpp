@@ -7,9 +7,8 @@
 
 //-------------------------------------------------------------------------
 bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAppearanceArray_base& dataArray) const {
-
-    dataArray.reserve(2000000); // just a guess, but makes the read very much faster
-    for (uint32_t fn = 0 ; fn < filesToUse ; fn++) {
+    dataArray.reserve(2000000);  // just a guess, but makes the read very much faster
+    for (uint32_t fn = 0; fn < filesToUse; fn++) {
         cerr << "\t" << msg << " cache: " << cTeal << monitors[fn].name << cOff << "...";
         CArchive txCache(READING_ARCHIVE);
         if (!txCache.Lock(monitors[fn].name, modeReadOnly, LOCK_NOWAIT))
@@ -29,4 +28,3 @@ bool COptions::handleRead(const string_q& msg, size_t filesToUse, CAppearanceArr
     }
     return !shouldQuit();
 }
-

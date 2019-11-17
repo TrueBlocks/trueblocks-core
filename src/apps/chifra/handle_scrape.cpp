@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
-
     ENTER8("handle_" + mode);
 
     // scrape mode requires a running node
@@ -17,12 +16,13 @@ bool COptions::handle_scrape(void) {
         ostringstream os;
         os << "blockScrape --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
         return true;
     }
 
     // syntactic sugar
-    tool_flags = substitute(substitute(" "+tool_flags, "--start", " start"), " start", "");
+    tool_flags = substitute(substitute(" " + tool_flags, "--start", " start"), " start", "");
     bool daemonMode = false;
 
     // The presence of 'waitFile' will either pause or kill the scraper. If 'waitFile'
@@ -93,7 +93,8 @@ bool COptions::handle_scrape(void) {
 
         // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
-        explode(optList, tool_flags, ' '); tool_flags = "";  // reset tool_flag
+        explode(optList, tool_flags, ' ');
+        tool_flags = "";  // reset tool_flag
         for (auto opt : optList) {
             if (opt == "--daemon") {
                 opt = "";
@@ -115,12 +116,11 @@ bool COptions::handle_scrape(void) {
     size_t nRuns = 0;
     size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
     while (nRuns++ < maxRuns && !shouldQuit()) {
-
         if (waitFileExists) {
             if (!wasPaused)
                 cerr << cYellow << "\tScraper paused..." << cOff << endl;
             wasPaused = true;
-            usleep(max(useconds_t(5), scrapeSleep) * 1000000); // sleep for at least five seconds
+            usleep(max(useconds_t(5), scrapeSleep) * 1000000);  // sleep for at least five seconds
 
         } else {
             if (wasPaused)
@@ -129,7 +129,8 @@ bool COptions::handle_scrape(void) {
             ostringstream os;
             os << "blockScrape " << tool_flags;
             NOTE_CALL(os.str());
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+            if (system(os.str().c_str())) {
+            }  // Don't remove. Silences compiler warnings
 
             // always catch the timestamp file up to the scraper
             if (!isTestMode())
@@ -150,20 +151,22 @@ bool COptions::handle_scrape(void) {
                         freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
                         for (auto addr : runs) {
                             ostringstream os1;
-                            os1 << "acctExport " << addr << " --freshen"; // << " >/dev/null";
+                            os1 << "acctExport " << addr << " --freshen";  // << " >/dev/null";
                             NOTE_CALL(os1.str());
-                            if (system(os1.str().c_str())) { }  // Don't remove. Silences compiler warnings
-                            usleep(250000); // stay responsive to cntrl+C
+                            if (system(os1.str().c_str())) {
+                            }                // Don't remove. Silences compiler warnings
+                            usleep(250000);  // stay responsive to cntrl+C
                             if (shouldQuit())
                                 continue;
                         }
                     }
-                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff << "                                                           " << endl;
+                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff
+                         << "                                                           " << endl;
                 }
             }
 
             if (!isTestMode())
-                usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000); // stay responsive to cntrl+C
+                usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);  // stay responsive to cntrl+C
         }
 
         waitFileExists = fileExists(waitFile);

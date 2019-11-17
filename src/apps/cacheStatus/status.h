@@ -25,7 +25,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CStatus : public CBaseNode {
-public:
+  public:
     string_q client_version;
     string_q trueblocks_version;
     string_q rpc_provider;
@@ -35,7 +35,7 @@ public:
     bool is_scraping;
     CCachePtrArray caches;
 
-public:
+  public:
     CStatus(void);
     CStatus(const CStatus& st);
     virtual ~CStatus(void);
@@ -43,16 +43,18 @@ public:
 
     DECLARE_NODE(CStatus);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CStatus& item) const;
-    bool operator!=(const CStatus& item) const { return !operator==(item); }
+    bool operator!=(const CStatus& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CStatus& v1, const CStatus& v2);
     friend ostream& operator<<(ostream& os, const CStatus& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CStatus& st);
@@ -163,4 +165,3 @@ extern const char* STR_DISPLAY_STATUS;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

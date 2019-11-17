@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CCommandOption, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CCommandOption::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CCommandOption *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCommandOption*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextCommandoptionChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CCommandOption::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextCommandoptionChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,37 +68,52 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "api_route" ) return api_route;
+            if (fieldName % "api_route")
+                return api_route;
             break;
         case 'c':
-            if ( fieldName % "command" ) return command;
-            if ( fieldName % "core_visible" ) return core_visible;
+            if (fieldName % "command")
+                return command;
+            if (fieldName % "core_visible")
+                return core_visible;
             break;
         case 'd':
-            if ( fieldName % "def_val" ) return def_val;
-            if ( fieldName % "docs_visible" ) return docs_visible;
-            if ( fieldName % "data_type" ) return data_type;
-            if ( fieldName % "description" ) return description;
+            if (fieldName % "def_val")
+                return def_val;
+            if (fieldName % "docs_visible")
+                return docs_visible;
+            if (fieldName % "data_type")
+                return data_type;
+            if (fieldName % "description")
+                return description;
             break;
         case 'g':
-            if ( fieldName % "group" ) return group;
-            if ( fieldName % "generate" ) return generate;
+            if (fieldName % "group")
+                return group;
+            if (fieldName % "generate")
+                return generate;
             break;
         case 'h':
-            if ( fieldName % "hotkey" ) return hotkey;
+            if (fieldName % "hotkey")
+                return hotkey;
             break;
         case 'i':
-            if ( fieldName % "is_required" ) return is_required;
-            if ( fieldName % "is_customizable" ) return is_customizable;
+            if (fieldName % "is_required")
+                return is_required;
+            if (fieldName % "is_customizable")
+                return is_customizable;
             break;
         case 'n':
-            if ( fieldName % "num" ) return num;
+            if (fieldName % "num")
+                return num;
             break;
         case 'o':
-            if ( fieldName % "option_kind" ) return option_kind;
+            if (fieldName % "option_kind")
+                return option_kind;
             break;
         case 't':
-            if ( fieldName % "tool" ) return tool;
+            if (fieldName % "tool")
+                return tool;
             break;
     }
 
@@ -120,37 +134,82 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "api_route" ) { api_route = fieldValue; return true; }
+            if (fieldName % "api_route") {
+                api_route = fieldValue;
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "command" ) { command = fieldValue; return true; }
-            if ( fieldName % "core_visible" ) { core_visible = fieldValue; return true; }
+            if (fieldName % "command") {
+                command = fieldValue;
+                return true;
+            }
+            if (fieldName % "core_visible") {
+                core_visible = fieldValue;
+                return true;
+            }
             break;
         case 'd':
-            if ( fieldName % "def_val" ) { def_val = fieldValue; return true; }
-            if ( fieldName % "docs_visible" ) { docs_visible = fieldValue; return true; }
-            if ( fieldName % "data_type" ) { data_type = fieldValue; return true; }
-            if ( fieldName % "description" ) { description = fieldValue; return true; }
+            if (fieldName % "def_val") {
+                def_val = fieldValue;
+                return true;
+            }
+            if (fieldName % "docs_visible") {
+                docs_visible = fieldValue;
+                return true;
+            }
+            if (fieldName % "data_type") {
+                data_type = fieldValue;
+                return true;
+            }
+            if (fieldName % "description") {
+                description = fieldValue;
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "group" ) { group = fieldValue; return true; }
-            if ( fieldName % "generate" ) { generate = fieldValue; return true; }
+            if (fieldName % "group") {
+                group = fieldValue;
+                return true;
+            }
+            if (fieldName % "generate") {
+                generate = fieldValue;
+                return true;
+            }
             break;
         case 'h':
-            if ( fieldName % "hotkey" ) { hotkey = fieldValue; return true; }
+            if (fieldName % "hotkey") {
+                hotkey = fieldValue;
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "is_required" ) { is_required = fieldValue; return true; }
-            if ( fieldName % "is_customizable" ) { is_customizable = fieldValue; return true; }
+            if (fieldName % "is_required") {
+                is_required = fieldValue;
+                return true;
+            }
+            if (fieldName % "is_customizable") {
+                is_customizable = fieldValue;
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "num" ) { num = fieldValue; return true; }
+            if (fieldName % "num") {
+                num = fieldValue;
+                return true;
+            }
             break;
         case 'o':
-            if ( fieldName % "option_kind" ) { option_kind = fieldValue; return true; }
+            if (fieldName % "option_kind") {
+                option_kind = fieldValue;
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "tool" ) { tool = fieldValue; return true; }
+            if (fieldName % "tool") {
+                tool = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -166,7 +225,6 @@ void CCommandOption::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -199,7 +257,6 @@ bool CCommandOption::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -229,7 +286,7 @@ CArchive& operator>>(CArchive& archive, CCommandOptionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -240,7 +297,7 @@ CArchive& operator>>(CArchive& archive, CCommandOptionArray& array) {
 CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -248,13 +305,14 @@ CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array) {
 //---------------------------------------------------------------------------
 void CCommandOption::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CCommandOption, "schema")) return;
+    if (HAS_FIELD(CCommandOption, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CCommandOption, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCommandOption, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCommandOption, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCommandOption, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CCommandOption, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCommandOption, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCommandOption, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCommandOption, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "num", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "api_route", T_TEXT, ++fieldNum);
@@ -284,22 +342,22 @@ void CCommandOption::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CCommandOption *com = reinterpret_cast<const CCommandOption *>(dataPtr);
+string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCommandOption* com = reinterpret_cast<const CCommandOption*>(dataPtr);
     if (com) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if ( fieldIn % "datatype" )
+                if (fieldIn % "datatype")
                     return ((com->option_kind == "switch" || com->option_kind == "toggle") ? "" : com->data_type);
                 break;
             case 'o':
-                if ( fieldIn % "opts" ) {
+                if (fieldIn % "opts") {
                     string_q ret;
                     if (com->is_required % "true")
                         ret += ("|OPT_REQUIRED");
 
-                    if ( ! (com->core_visible % "true") )
+                    if (!(com->core_visible % "true"))
                         ret += ("|OPT_HIDDEN");
 
                     if (com->option_kind == "switch")
@@ -316,13 +374,13 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *data
                         ret = com->description;
                     else
                         ret += ("|OPT_DESCRIPTION");
-                    return substitute(trim(ret,'|'), "|", " | ");
+                    return substitute(trim(ret, '|'), "|", " | ");
                 }
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, com);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -338,7 +396,6 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void *data
 
 //---------------------------------------------------------------------------
 bool CCommandOption::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -364,26 +421,42 @@ const char* STR_DISPLAY_COMMANDOPTION = "";
 CCommandOption::CCommandOption(const string_q& line) {
     CStringArray parts;
     explode(parts, line, ',');
-    if (parts.size() > 0)  num = parts[0];
-    if (parts.size() > 1)  group = parts[1];
-    if (parts.size() > 2)  api_route = parts[2];
-    if (parts.size() > 3)  tool = parts[3];
-    if (parts.size() > 4)  command = parts[4];
-    if (parts.size() > 5)  hotkey = parts[5];
-    if (parts.size() > 6)  def_val = substitute(substitute(parts[6], "TRUE", "true"), "FALSE", "false");
-    if (parts.size() > 7)  is_required = parts[7];
-    if (parts.size() > 8)  is_customizable = parts[8];
-    if (parts.size() > 9)  core_visible = parts[9];
-    if (parts.size() > 10) docs_visible = parts[10];
-    if (parts.size() > 11) generate = parts[11];
-    if (parts.size() > 12) option_kind = parts[12];
-    if (parts.size() > 13) data_type = parts[13];
-    if (parts.size() > 14) description = substitute(parts[14], "&#44;", ",");
+    if (parts.size() > 0)
+        num = parts[0];
+    if (parts.size() > 1)
+        group = parts[1];
+    if (parts.size() > 2)
+        api_route = parts[2];
+    if (parts.size() > 3)
+        tool = parts[3];
+    if (parts.size() > 4)
+        command = parts[4];
+    if (parts.size() > 5)
+        hotkey = parts[5];
+    if (parts.size() > 6)
+        def_val = substitute(substitute(parts[6], "TRUE", "true"), "FALSE", "false");
+    if (parts.size() > 7)
+        is_required = parts[7];
+    if (parts.size() > 8)
+        is_customizable = parts[8];
+    if (parts.size() > 9)
+        core_visible = parts[9];
+    if (parts.size() > 10)
+        docs_visible = parts[10];
+    if (parts.size() > 11)
+        generate = parts[11];
+    if (parts.size() > 12)
+        option_kind = parts[12];
+    if (parts.size() > 13)
+        data_type = parts[13];
+    if (parts.size() > 14)
+        description = substitute(parts[14], "&#44;", ",");
 
     if (!def_val.empty() && (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")))
         def_val = "\"" + def_val + "\"";
 
-    description = substitute(description, "[{DEF}]", (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
+    description = substitute(description, "[{DEF}]",
+                             (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
     if (def_val.empty() && !generate.empty()) {
         if (data_type == "<boolean>") {
             def_val = "false";
@@ -396,4 +469,3 @@ CCommandOption::CCommandOption(const string_q& line) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

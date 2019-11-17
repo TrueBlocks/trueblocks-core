@@ -26,7 +26,7 @@ extern void testFormatting(CBlock& block);
 static const string_q sep(120, '-');
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -43,17 +43,27 @@ int main(int argc, const char *argv[]) {
 
         cout << sep << "\n";
         switch (options.testNum) {
-            case 0:  everyAddress(block);             break;
-            case 1:  everyUniqueAddress(block);       everyUniqueAddressPerTx(block); break;
-            case 2:  everySortedUniqueAddress(block); everySortedUniqueAddressPerTx(block); break;
-            default: testFormatting(block);           break;
+            case 0:
+                everyAddress(block);
+                break;
+            case 1:
+                everyUniqueAddress(block);
+                everyUniqueAddressPerTx(block);
+                break;
+            case 2:
+                everySortedUniqueAddress(block);
+                everySortedUniqueAddressPerTx(block);
+                break;
+            default:
+                testFormatting(block);
+                break;
         }
     }
     return 0;
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void *data) {
+bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.addr))
         return true;
     cout << item << "\n";
@@ -61,16 +71,16 @@ bool visitAddrs(const CAppearance& item, void *data) {
 }
 
 //----------------------------------------------------------------
-bool accumAddrs(const CAppearance& item, void *data) {
+bool accumAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.addr))
         return true;
-    CAppearanceArray *array = (CAppearanceArray *)data;  // NOLINT
+    CAppearanceArray* array = (CAppearanceArray*)data;  // NOLINT
     array->push_back(item);
     return true;
 }
 
 //----------------------------------------------------------------
-bool transFilter(const CTransaction *trans, void *data) {
+bool transFilter(const CTransaction* trans, void* data) {
     // return true to filter (i.e. ignore) this transaction
     return (trans->transactionIndex == 2);
 }

@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CCache : public CBaseNode {
-public:
+  public:
     string_q type;
     string_q path;
     uint64_t nFiles;
@@ -32,7 +32,7 @@ public:
     uint64_t sizeInBytes;
     bool valid_counts;
 
-public:
+  public:
     CCache(void);
     CCache(const CCache& ca);
     virtual ~CCache(void);
@@ -41,16 +41,25 @@ public:
     DECLARE_NODE(CCache);
 
     // EXISTING_CODE
-    void noteFile(const string_q& p) { nFiles++; sizeInBytes += fileSize(p); }
-    void noteFolder(const string_q& p) { nFolders++; }
-    void reset(void) { initialize(); }
+    void noteFile(const string_q& p) {
+        nFiles++;
+        sizeInBytes += fileSize(p);
+    }
+    void noteFolder(const string_q& p) {
+        nFolders++;
+    }
+    void reset(void) {
+        initialize();
+    }
     // EXISTING_CODE
     bool operator==(const CCache& item) const;
-    bool operator!=(const CCache& item) const { return !operator==(item); }
+    bool operator!=(const CCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CCache& v1, const CCache& v2);
     friend ostream& operator<<(ostream& os, const CCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CCache& ca);
@@ -158,4 +167,3 @@ extern const char* STR_DISPLAY_CACHE;
 typedef vector<CCache*> CCachePtrArray;
 // EXISTING_CODE
 }  // namespace qblocks
-

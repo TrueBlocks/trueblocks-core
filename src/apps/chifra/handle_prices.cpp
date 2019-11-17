@@ -7,14 +7,14 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_quotes(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
     os << "ethQuote " << tool_flags;
     NOTE_CALL(os.str());
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (system(os.str().c_str())) {
+    }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);
 }

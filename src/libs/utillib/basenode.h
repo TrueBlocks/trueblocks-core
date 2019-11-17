@@ -16,83 +16,95 @@
 
 namespace qblocks {
 
-    //----------------------------------------------------------------------------
-    class CArchive;
+//----------------------------------------------------------------------------
+class CArchive;
 
-    //----------------------------------------------------------------------------
-    class CBaseNode {
-    private:
-        virtual char *parseJson1(char *s, size_t& nFields);
+//----------------------------------------------------------------------------
+class CBaseNode {
+  private:
+    virtual char* parseJson1(char* s, size_t& nFields);
 
-    public:
-        uint64_t m_deleted;
-        uint64_t m_schema;
-        uint64_t m_showing;
+  public:
+    uint64_t m_deleted;
+    uint64_t m_schema;
+    uint64_t m_showing;
 
-    public:
-        CBaseNode(void);
-        virtual ~CBaseNode(void);
+  public:
+    CBaseNode(void);
+    virtual ~CBaseNode(void);
 
-        bool isDeleted(void) const;
-        void setDeleted(bool val);
+    bool isDeleted(void) const;
+    void setDeleted(bool val);
 
-        virtual bool isKindOf(const CRuntimeClass* pClass) const;
-        virtual bool  parseJson3(string_q& str);
-        virtual bool  parseJson4(string_q& str);
-        virtual bool  parseCSV(const CStringArray& fields, string_q& str);
-        virtual bool  parseText(const CStringArray& fields, string_q& str);
-        virtual string_q toJson1(void) const;
-        virtual string_q toJson(void) const;
-        virtual string_q toJson(const string_q& fields) const;
-        virtual string_q jsonFromArray(const CFieldDataArray& array) const;
+    virtual bool isKindOf(const CRuntimeClass* pClass) const;
+    virtual bool parseJson3(string_q& str);
+    virtual bool parseJson4(string_q& str);
+    virtual bool parseCSV(const CStringArray& fields, string_q& str);
+    virtual bool parseText(const CStringArray& fields, string_q& str);
+    virtual string_q toJson1(void) const;
+    virtual string_q toJson(void) const;
+    virtual string_q toJson(const string_q& fields) const;
+    virtual string_q jsonFromArray(const CFieldDataArray& array) const;
 
-    public:
-        // TODO(tjayrush): global data
-        static CRuntimeClass classCBaseNode;
-        static CBaseNode *createObject(void);
-        virtual CRuntimeClass *getRuntimeClass(void) const;
-        virtual string_q getValueByName(const string_q& fieldName) const;
-        virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) { return false; }
-        virtual bool Serialize(CArchive& archive);
-        virtual bool SerializeC(CArchive& archive) const;
-        virtual bool readBackLevel(CArchive& archive);
-        virtual void finishParse(void) { }
-        virtual void Format(ostream& ctx, const string_q& fmtIn, void *data = NULL) const { }
-        virtual string_q Format(const string_q& fmtIn = "") const { return ""; }
-        virtual const CBaseNode *getObjectAt(const string_q& name, size_t i) const { return NULL; }
-        virtual const string_q   getStringAt(const string_q& fieldName, size_t i) const { return ""; }
-        virtual bool showEmptyField(const string_q& fn) const { return true; }
-
-        void doExport(ostream& os) const;
-
-    protected:
-        void initialize(void);
-        void duplicate(const CBaseNode& bn);
-    };
-
-    //------------------------------------------------------------------
-    template<class T>
-    T RandomValue(T a, T b) {
-        T range = (a > b ? a - b : b - a);
-        if (range == 0)
-            return a;
-        return min(a, b) + (((T)rand()) % range);
+  public:
+    // TODO(tjayrush): global data
+    static CRuntimeClass classCBaseNode;
+    static CBaseNode* createObject(void);
+    virtual CRuntimeClass* getRuntimeClass(void) const;
+    virtual string_q getValueByName(const string_q& fieldName) const;
+    virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) {
+        return false;
+    }
+    virtual bool Serialize(CArchive& archive);
+    virtual bool SerializeC(CArchive& archive) const;
+    virtual bool readBackLevel(CArchive& archive);
+    virtual void finishParse(void) {
+    }
+    virtual void Format(ostream& ctx, const string_q& fmtIn, void* data = NULL) const {
+    }
+    virtual string_q Format(const string_q& fmtIn = "") const {
+        return "";
+    }
+    virtual const CBaseNode* getObjectAt(const string_q& name, size_t i) const {
+        return NULL;
+    }
+    virtual const string_q getStringAt(const string_q& fieldName, size_t i) const {
+        return "";
+    }
+    virtual bool showEmptyField(const string_q& fn) const {
+        return true;
     }
 
-    //-------------------------------------------------------------------------
-    template<class T>
-    inline bool inRange(T val, T mn, T mx) {
-        return (val >= mn && val <= mx);
-    }
+    void doExport(ostream& os) const;
 
-    //-------------------------------------------------------------------------
-    extern char *cleanUpJson(char *s);
+  protected:
+    void initialize(void);
+    void duplicate(const CBaseNode& bn);
+};
 
-    //--------------------------------------------------------------------------------------------------------------
-    typedef string_q (*NEXTCHUNKFUNC)(const string_q& fieldIn, const void *data);
+//------------------------------------------------------------------
+template <class T>
+T RandomValue(T a, T b) {
+    T range = (a > b ? a - b : b - a);
+    if (range == 0)
+        return a;
+    return min(a, b) + (((T)rand()) % range);
+}
 
-    //--------------------------------------------------------------------------------------------------------------
-    extern string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void *data);
-    extern string_q fldNotFound(const string_q& str);
+//-------------------------------------------------------------------------
+template <class T>
+inline bool inRange(T val, T mn, T mx) {
+    return (val >= mn && val <= mx);
+}
+
+//-------------------------------------------------------------------------
+extern char* cleanUpJson(char* s);
+
+//--------------------------------------------------------------------------------------------------------------
+typedef string_q (*NEXTCHUNKFUNC)(const string_q& fieldIn, const void* data);
+
+//--------------------------------------------------------------------------------------------------------------
+extern string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data);
+extern string_q fldNotFound(const string_q& str);
 
 }  // namespace qblocks

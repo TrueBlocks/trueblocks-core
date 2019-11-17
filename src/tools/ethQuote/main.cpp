@@ -14,7 +14,7 @@
 #include "handle_maker.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(defaultQuitHandler);
 
 #if 0
@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]) {
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CPriceQuote));
 
         size_t step = (options.freq / 5);
-        for (size_t i = 0 ; i < quotes.size() ; i = i + step) {
+        for (size_t i = 0; i < quotes.size(); i = i + step) {
             if (!visitPrice(quotes[i], &options))
                 break;
         }
@@ -54,10 +54,9 @@ int main(int argc, const char *argv[]) {
 }
 
 //--------------------------------------------------------------
-bool visitPrice(CPriceQuote& quote, void *data) {
-
-    COptions *opt = reinterpret_cast<COptions *>(data);
-    bool isText = (opt->exportFmt & (TXT1|CSV1));
+bool visitPrice(CPriceQuote& quote, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
 
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////

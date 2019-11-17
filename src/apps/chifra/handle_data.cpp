@@ -8,11 +8,10 @@
 extern string_q toPrintable_force(const string_q& inHex);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_data(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
-    if (!contains(tool_flags, "--edit")) // weird cleanup of --edit/edit confusion
+    if (!contains(tool_flags, "--edit"))  // weird cleanup of --edit/edit confusion
         tool_flags = substitute(tool_flags, "edit", "--edit");
 
     string_q addrList;
@@ -22,18 +21,21 @@ bool COptions::handle_data(void) {
     ostringstream os;
     if (contains(tool_flags, "--when")) {
         replaceAll(tool_flags, "--when", "");
-        os << "whenBlock --list --data " << tool_flags << (isApiMode() ? " --fmt json" : ""); // order matters, last in wins
+        os << "whenBlock --list --data " << tool_flags
+           << (isApiMode() ? " --fmt json" : "");  // order matters, last in wins
 
     } else if (contains(tool_flags, "--abi")) {
         replaceAll(tool_flags, "--abi", "");
         if (addrs.size() == 0 && !contains(tool_flags, "help"))
-            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+            return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
+                         " does not include a valid Ethereum address. Quitting...");
         os << "grabABI " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--state")) {
         replaceAll(tool_flags, "--state", "");
         if (addrs.size() == 0 && !contains(tool_flags, "help"))
-            return usage("Input" + (tool_flags.empty() ? "" : (" ("+trim(tool_flags)+")")) + " does not include a valid Ethereum address. Quitting...");
+            return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
+                         " does not include a valid Ethereum address. Quitting...");
 
         replaceAll(tool_flags, "--balance", "--mode balance");
         replaceAll(tool_flags, "--code", "--mode code");
@@ -58,7 +60,7 @@ bool COptions::handle_data(void) {
 
     } else if (contains(tool_flags, "--logs")) {
         replaceAll(tool_flags, "--logs", "");
-        os << "getLogs "  << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags);
+        os << "getLogs " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags);
 
     } else if (contains(tool_flags, "--traces")) {
         replaceAll(tool_flags, "--traces", "");
@@ -73,7 +75,8 @@ bool COptions::handle_data(void) {
         return handle_quotes();
 
     } else if (contains(tool_flags, "--message")) {
-        tool_flags = trim(substitute(substitute(substitute(tool_flags, "--message", ""), "--chars", ""), "--bytes", ""));
+        tool_flags =
+            trim(substitute(substitute(substitute(tool_flags, "--message", ""), "--chars", ""), "--bytes", ""));
         if (contains(tool_flags, "0x"))
             cout << "message: " << toPrintable_force(tool_flags);
         else
@@ -85,7 +88,8 @@ bool COptions::handle_data(void) {
     }
 
     NOTE_CALL(os.str());
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (system(os.str().c_str())) {
+    }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);
 }

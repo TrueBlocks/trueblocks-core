@@ -14,7 +14,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
@@ -32,7 +32,6 @@ int main(int argc, const char *argv[]) {
             cout << "Classes found in the classDefinitions folder:\n";
 
         for (auto classDef : options.classDefs) {
-
             if (!fileExists(classDef.inputPath)) {
                 return options.usage("No class definition file found at " + classDef.inputPath + "\n");
 
@@ -47,7 +46,6 @@ int main(int argc, const char *argv[]) {
 
                     } else {
                         cout << "\t" << toml.getConfigStr("settings", "class", "") << "\n";
-
                     }
 
                 } else if (options.mode & EDIT) {
@@ -66,7 +64,6 @@ int main(int argc, const char *argv[]) {
                                 cerr << "Disabled class not processed " << classDef.className << "\n";
                         } else {
                             options.handle_generate(toml, classDef, options.nspace);
-
                         }
                     }
                 }

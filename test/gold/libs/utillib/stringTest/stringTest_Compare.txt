@@ -4,13 +4,13 @@ stringTest 1
 	c-string  -- str1:  green apple str2: red apple
 	qb-string -- xstr1: green apple xstr2: red apple
 
-	000.000 c-string compare                 ==> passed 'str1.compare( str2 )' is not equal to '0'
-	000.001 qb-string compare                ==> passed 'xstr1.compare( xstr2)' is not equal to '0'
-	000.002 c-string compare                 ==> passed 'str1.compare( str2 )' is not equal to '0'
-	000.003 qb-string compare                ==> passed 'xstr1.compare( xstr2)' is not equal to '0'
-	000.004 c-string partial compare         ==> passed 'str1.compare( 6, 5, "apple")' is equal to '0'
-	000.005 qb-string partial compare        ==> passed 'xstr1.compare( 6, 5, "apple")' is equal to '0'
-	000.006 c-string partial compare 2       ==> passed 'str2.compare( str2.size()-5, 5, "apple")' is equal to '0'
-	000.007 qb-string partial compare 2      ==> passed 'xstr2.compare( str2.size()-5, 5, "apple")' is equal to '0'
-	000.008 c-string double partial          ==> passed 'str1.compare( 6, 5, str2, 4, 5)' is equal to '0'
-	000.009 qb-string double partial         ==> passed 'xstr1.compare( 6, 5, xstr2, 4, 5)' is equal to '0'
+	000.000 c-string compare                 ==> passed 'str1.compare(str2)' is not equal to '0'
+	000.001 qb-string compare                ==> passed 'xstr1.compare(xstr2)' is not equal to '0'
+	000.002 c-string compare                 ==> passed 'str1.compare(str2)' is not equal to '0'
+	000.003 qb-string compare                ==> passed 'xstr1.compare(xstr2)' is not equal to '0'
+	000.004 c-string partial compare         ==> passed 'str1.compare(6, 5, "apple")' is equal to '0'
+	000.005 qb-string partial compare        ==> passed 'xstr1.compare(6, 5, "apple")' is equal to '0'
+	000.006 c-string partial compare 2       ==> passed 'str2.compare(str2.size() - 5, 5, "apple")' is equal to '0'
+	000.007 qb-string partial compare 2      ==> passed 'xstr2.compare(str2.size() - 5, 5, "apple")' is equal to '0'
+	000.008 c-string double partial          ==> passed 'str1.compare(6, 5, str2, 4, 5)' is equal to '0'
+	000.009 qb-string double partial         ==> passed 'xstr1.compare(6, 5, xstr2, 4, 5)' is equal to '0'

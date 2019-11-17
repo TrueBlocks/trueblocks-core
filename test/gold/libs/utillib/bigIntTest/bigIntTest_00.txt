@@ -4,14 +4,14 @@ Test 0 [--a--]: 0 expected: 0 ✓
 Test 1 [--a--]: 535 expected: 535 ✓
 Test 2 [--f--]: 3141592653589793238462643383279 expected: 3141592653589793238462643383279 ✓
 Test 3 [--f--]: 19900000000000000000 expected: 19900000000000000000 ✓
-Test 4 [--g+h--]: 314424 expected: 314424 ✓
-Test 5 [--g-h--]: 313894 expected: 313894 ✓
-Test 6 [--g*h--]: 83252135 expected: 83252135 ✓
-Test 7 [--g/h--]: 1185 expected: 1185 ✓
-Test 8 [--g%h--]: 134 expected: 134 ✓
-Test 9 [--i&j--]: 255 expected: 255 ✓
-Test 10 [--i|j--]: 4278255615 expected: 4278255615 ✓
-Test 11 [--i^j--]: 4278255360 expected: 4278255360 ✓
+Test 4 [--g + h--]: 314424 expected: 314424 ✓
+Test 5 [--g - h--]: 313894 expected: 313894 ✓
+Test 6 [--g * h--]: 83252135 expected: 83252135 ✓
+Test 7 [--g / h--]: 1185 expected: 1185 ✓
+Test 8 [--g % h--]: 134 expected: 134 ✓
+Test 9 [--i & j--]: 255 expected: 255 ✓
+Test 10 [--i | j--]: 4278255615 expected: 4278255615 ✓
+Test 11 [--i ^ j--]: 4278255360 expected: 4278255360 ✓
 Test 12 [--j << 21--]: 137436856320 expected: 137436856320 ✓
 Test 13 [--j >> 10--]: 63 expected: 63 ✓
 Test 14 [--x--]: 1 expected: 1 ✓
@@ -31,88 +31,88 @@ Test 27 [--modexp(biguint_t(314), 159, 2653)--]: 1931 expected: 1931 ✓
 Test 28 [--z--]: 0 expected: 0 ✓
 Test 29 [--one--]: 1 expected: 1 ✓
 Test 30 [--ten--]: 10 expected: 10 ✓
-Test 31 [--check( biguint_t() )--]: 0 expected: 0 ✓
-Test 32 [--check( bigint_t () )--]: 0 expected: 0 ✓
-Test 33 [--check( bu )--]: 73786976294838206467 expected: 17179869187 X
-Test 34 [--check( bigint_t(myBlocks, 3) )--]: 73786976294838206467 expected: -7179869187 X
-Test 35 [--check( bigint_t(bu) )--]: 73786976294838206467 expected: error X
-Test 36 [--check( bigint_t(myBlocks, 3, 1) )--]: 73786976294838206467 expected: 17179869187 X
-Test 37 [--check( bigint_t(myBlocks, 3, -1) )--]: -73786976294838206467 expected: -17179869187 X
-Test 38 [--check( bigint_t(myBlocks, 3, 0 ) )--]: errorbigint_t::bigint_t(const uint64_t *, unsigned int, int): Cannot use a sign of zero with a nonzero magnitude expected: error ✓
-Test 39 [--check( bigint_t(bu, 1) )--]: 73786976294838206467 expected: 17179869187 X
-Test 40 [--check( bigint_t(bu, -1) )--]: -73786976294838206467 expected: -17179869187 X
-Test 41 [--check( bigint_t(bu, 0 ) )--]: errorbigint_t::bigint_t(const biguint_t &, int): Cannot use a sign of zero with a nonzero magnitude expected: error ✓
-Test 42 [--check( bigint_t(myZeroBlocks, 1, 1) )--]: 0 expected: 0 ✓
-Test 43 [--check( bigint_t(myZeroBlocks, 1, -1) )--]: 0 expected: 0 ✓
-Test 44 [--check( bigint_t(myZeroBlocks, 1, 0) )--]: 0 expected: 0 ✓
-Test 45 [--biguint_t (0).to_ulong()--]: 0 expected: 0 ✓
-Test 46 [--biguint_t (4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
-Test 47 [--str_2_BigUint (string_q("4294967296")).to_ulong()--]: 4294967296 expected: error X
-Test 48 [--biguint_t (0).to_long()--]: 0 expected: 0 ✓
-Test 49 [--biguint_t (2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
-Test 50 [--biguint_t (2147483648U).to_long()--]: 2147483648 expected: error X
-Test 51 [--biguint_t (0).to_uint()--]: 0 expected: 0 ✓
-Test 52 [--biguint_t (4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
-Test 53 [--str_2_BigUint (string_q("4294967296")).to_uint()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 54 [--biguint_t (0).to_int()--]: 0 expected: 0 ✓
-Test 55 [--biguint_t (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
-Test 56 [--biguint_t (2147483648U).to_int()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 57 [--biguint_t (0).to_uint()--]: 0 expected: 0 ✓
-Test 58 [--biguint_t (65535).to_uint()--]: 65535 expected: 65535 ✓
-Test 59 [--biguint_t (65536).to_uint()--]: 65536 expected: error X
-Test 60 [--biguint_t (0).to_int()--]: 0 expected: 0 ✓
-Test 61 [--biguint_t (32767).to_int()--]: 32767 expected: 32767 ✓
-Test 62 [--biguint_t (32768).to_int()--]: 32768 expected: error X
-Test 63 [--bigint_t (-1).to_ulong()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
-Test 64 [--bigint_t (0).to_ulong()--]: 0 expected: 0 ✓
-Test 65 [--bigint_t (4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
-Test 66 [--str_2_BigInt ("4294967296").to_ulong()--]: 4294967296 expected: error X
-Test 67 [--str_2_BigInt ("-2147483649").to_long()--]: -2147483649 expected: error X
-Test 68 [--str_2_BigInt ("-2147483648").to_long()--]: -2147483648 expected: -2147483648 ✓
-Test 69 [--bigint_t (-2147483647).to_long()--]: -2147483647 expected: -2147483647 ✓
-Test 70 [--bigint_t (0).to_long()--]: 0 expected: 0 ✓
-Test 71 [--bigint_t (2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
-Test 72 [--bigint_t (2147483648U).to_long()--]: 2147483648 expected: error X
-Test 73 [--bigint_t (-1).to_uint()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
-Test 74 [--bigint_t (0).to_uint()--]: 0 expected: 0 ✓
-Test 75 [--bigint_t (4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
-Test 76 [--str_2_BigInt ("4294967296").to_uint()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 77 [--str_2_BigInt ("-2147483649").to_int()--]: errorbigint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 78 [--str_2_BigInt ("-2147483645").to_int()--]: -2147483645 expected: -2147483645 ✓
-Test 79 [--bigint_t (-2147483647).to_int()--]: -2147483647 expected: -2147483647 ✓
-Test 80 [--bigint_t (0).to_int()--]: 0 expected: 0 ✓
-Test 81 [--bigint_t (2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
-Test 82 [--bigint_t (2147483648U).to_int()--]: errorbigint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
-Test 83 [--bigint_t (-1).to_uint()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
-Test 84 [--bigint_t (0).to_uint()--]: 0 expected: 0 ✓
-Test 85 [--bigint_t (65535).to_uint()--]: 65535 expected: 65535 ✓
-Test 86 [--bigint_t (65536).to_uint()--]: 65536 expected: error X
-Test 87 [--bigint_t (-32769).to_int()--]: -32769 expected: error X
-Test 88 [--bigint_t (-32768).to_int()--]: -32768 expected: -32768 ✓
-Test 89 [--bigint_t (-32767).to_int()--]: -32767 expected: -32767 ✓
-Test 90 [--bigint_t (0).to_int()--]: 0 expected: 0 ✓
-Test 91 [--bigint_t (32767).to_int()--]: 32767 expected: 32767 ✓
-Test 92 [--bigint_t (32768).to_int()--]: 32768 expected: error X
-Test 93 [--biguint_t (int16_t(-1))--]: errorCannot convert from negative number. expected: error ✓
-Test 94 [--biguint_t (pathologicalShort)--]: errorCannot convert from negative number. expected: error ✓
-Test 95 [--biguint_t (-1)--]: errorCannot convert from negative number. expected: error ✓
-Test 96 [--biguint_t (pathologicalInt)--]: errorCannot convert from negative number. expected: error ✓
-Test 97 [--biguint_t (uint64_t(-1))--]: 18446744073709551615 expected: 18446744073709551615 ✓
-Test 98 [--biguint_t (pathologicalLong)--]: 9223372036854775808 expected: 9223372036854775808 ✓
-Test 99 [--biguint_t (5) - biguint_t(6)--]: errorbiguint_t::subtract: Negative result in unsigned calculation expected: error ✓
+Test 31 [--check(biguint_t())--]: 0 expected: 0 ✓
+Test 32 [--check(bigint_t())--]: 0 expected: 0 ✓
+Test 33 [--check(bu)--]: 73786976294838206467 expected: 17179869187 X
+Test 34 [--check(bigint_t(myBlocks, 3))--]: 73786976294838206467 expected: -7179869187 X
+Test 35 [--check(bigint_t(bu))--]: 73786976294838206467 expected: error X
+Test 36 [--check(bigint_t(myBlocks, 3, 1))--]: 73786976294838206467 expected: 17179869187 X
+Test 37 [--check(bigint_t(myBlocks, 3, -1))--]: -73786976294838206467 expected: -17179869187 X
+Test 38 [--check(bigint_t(myBlocks, 3, 0))--]: errorbigint_t::bigint_t(const uint64_t *, unsigned int, int): Cannot use a sign of zero with a nonzero magnitude expected: error ✓
+Test 39 [--check(bigint_t(bu, 1))--]: 73786976294838206467 expected: 17179869187 X
+Test 40 [--check(bigint_t(bu, -1))--]: -73786976294838206467 expected: -17179869187 X
+Test 41 [--check(bigint_t(bu, 0))--]: errorbigint_t::bigint_t(const biguint_t &, int): Cannot use a sign of zero with a nonzero magnitude expected: error ✓
+Test 42 [--check(bigint_t(myZeroBlocks, 1, 1))--]: 0 expected: 0 ✓
+Test 43 [--check(bigint_t(myZeroBlocks, 1, -1))--]: 0 expected: 0 ✓
+Test 44 [--check(bigint_t(myZeroBlocks, 1, 0))--]: 0 expected: 0 ✓
+Test 45 [--biguint_t(0).to_ulong()--]: 0 expected: 0 ✓
+Test 46 [--biguint_t(4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
+Test 47 [--str_2_BigUint(string_q("4294967296")).to_ulong()--]: 4294967296 expected: error X
+Test 48 [--biguint_t(0).to_long()--]: 0 expected: 0 ✓
+Test 49 [--biguint_t(2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
+Test 50 [--biguint_t(2147483648U).to_long()--]: 2147483648 expected: error X
+Test 51 [--biguint_t(0).to_uint()--]: 0 expected: 0 ✓
+Test 52 [--biguint_t(4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
+Test 53 [--str_2_BigUint(string_q("4294967296")).to_uint()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 54 [--biguint_t(0).to_int()--]: 0 expected: 0 ✓
+Test 55 [--biguint_t(2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
+Test 56 [--biguint_t(2147483648U).to_int()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 57 [--biguint_t(0).to_uint()--]: 0 expected: 0 ✓
+Test 58 [--biguint_t(65535).to_uint()--]: 65535 expected: 65535 ✓
+Test 59 [--biguint_t(65536).to_uint()--]: 65536 expected: error X
+Test 60 [--biguint_t(0).to_int()--]: 0 expected: 0 ✓
+Test 61 [--biguint_t(32767).to_int()--]: 32767 expected: 32767 ✓
+Test 62 [--biguint_t(32768).to_int()--]: 32768 expected: error X
+Test 63 [--bigint_t(-1).to_ulong()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
+Test 64 [--bigint_t(0).to_ulong()--]: 0 expected: 0 ✓
+Test 65 [--bigint_t(4294967295U).to_ulong()--]: 4294967295 expected: 4294967295 ✓
+Test 66 [--str_2_BigInt("4294967296").to_ulong()--]: 4294967296 expected: error X
+Test 67 [--str_2_BigInt("-2147483649").to_long()--]: -2147483649 expected: error X
+Test 68 [--str_2_BigInt("-2147483648").to_long()--]: -2147483648 expected: -2147483648 ✓
+Test 69 [--bigint_t(-2147483647).to_long()--]: -2147483647 expected: -2147483647 ✓
+Test 70 [--bigint_t(0).to_long()--]: 0 expected: 0 ✓
+Test 71 [--bigint_t(2147483647).to_long()--]: 2147483647 expected: 2147483647 ✓
+Test 72 [--bigint_t(2147483648U).to_long()--]: 2147483648 expected: error X
+Test 73 [--bigint_t(-1).to_uint()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
+Test 74 [--bigint_t(0).to_uint()--]: 0 expected: 0 ✓
+Test 75 [--bigint_t(4294967295U).to_uint()--]: 4294967295 expected: 4294967295 ✓
+Test 76 [--str_2_BigInt("4294967296").to_uint()--]: errorbiguint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 77 [--str_2_BigInt("-2147483649").to_int()--]: errorbigint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 78 [--str_2_BigInt("-2147483645").to_int()--]: -2147483645 expected: -2147483645 ✓
+Test 79 [--bigint_t(-2147483647).to_int()--]: -2147483647 expected: -2147483647 ✓
+Test 80 [--bigint_t(0).to_int()--]: 0 expected: 0 ✓
+Test 81 [--bigint_t(2147483647).to_int()--]: 2147483647 expected: 2147483647 ✓
+Test 82 [--bigint_t(2147483648U).to_int()--]: errorbigint_t::to<Primitive>: Value is too big to fit in the requested type expected: error ✓
+Test 83 [--bigint_t(-1).to_uint()--]: errorbigint_t::to<Primitive>: Cannot convert a negative integer to an unsigned type expected: error ✓
+Test 84 [--bigint_t(0).to_uint()--]: 0 expected: 0 ✓
+Test 85 [--bigint_t(65535).to_uint()--]: 65535 expected: 65535 ✓
+Test 86 [--bigint_t(65536).to_uint()--]: 65536 expected: error X
+Test 87 [--bigint_t(-32769).to_int()--]: -32769 expected: error X
+Test 88 [--bigint_t(-32768).to_int()--]: -32768 expected: -32768 ✓
+Test 89 [--bigint_t(-32767).to_int()--]: -32767 expected: -32767 ✓
+Test 90 [--bigint_t(0).to_int()--]: 0 expected: 0 ✓
+Test 91 [--bigint_t(32767).to_int()--]: 32767 expected: 32767 ✓
+Test 92 [--bigint_t(32768).to_int()--]: 32768 expected: error X
+Test 93 [--biguint_t(int16_t(-1))--]: errorCannot convert from negative number. expected: error ✓
+Test 94 [--biguint_t(pathologicalShort)--]: errorCannot convert from negative number. expected: error ✓
+Test 95 [--biguint_t(-1)--]: errorCannot convert from negative number. expected: error ✓
+Test 96 [--biguint_t(pathologicalInt)--]: errorCannot convert from negative number. expected: error ✓
+Test 97 [--biguint_t(uint64_t(-1))--]: 18446744073709551615 expected: 18446744073709551615 ✓
+Test 98 [--biguint_t(pathologicalLong)--]: 9223372036854775808 expected: 9223372036854775808 ✓
+Test 99 [--biguint_t(5) - biguint_t(6)--]: errorbiguint_t::subtract: Negative result in unsigned calculation expected: error ✓
 Test 100 [--ss1 - ss2--]: errorbiguint_t::subtract: Negative result in unsigned calculation expected: error ✓
-Test 101 [--check( biguint_t(5)-biguint_t(5) )--]: 0 expected: 0 ✓
-Test 102 [--check( ss1 - ss2 )--]: errorbiguint_t::subtract: Negative result in unsigned calculation expected: 0 X
-Test 103 [--check( ss3 - biguint_t(1) )--]: 4294967295 expected: 4294967295 ✓
-Test 104 [--check( biguint_t(0) + 0 )--]: 0 expected: 0 ✓
-Test 105 [--check( biguint_t(0) + 1 )--]: 1 expected: 1 ✓
-Test 106 [--check( str_2_BigUint(string_q("8589934591")) + ss4 )--]: 12884901889 expected: 12884901889 ✓
-Test 107 [--check( biguint_t(0xFFFFFFFFU) + 1 )--]: 4294967296 expected: 4294967296 ✓
-Test 108 [--check( biguint_t(1) - 0 )--]: 1 expected: 1 ✓
-Test 109 [--check( biguint_t(1) - 1 )--]: 0 expected: 0 ✓
-Test 110 [--check( biguint_t(2) - 1 )--]: 1 expected: 1 ✓
-Test 111 [--check( str_2_BigUint(string_q("12884901889")) - ss4)--]: 8589934591 expected: 8589934591 ✓
-Test 112 [--check( ss3 - 1 )--]: 4294967295 expected: 4294967295 ✓
+Test 101 [--check(biguint_t(5) - biguint_t(5))--]: 0 expected: 0 ✓
+Test 102 [--check(ss1 - ss2)--]: errorbiguint_t::subtract: Negative result in unsigned calculation expected: 0 X
+Test 103 [--check(ss3 - biguint_t(1))--]: 4294967295 expected: 4294967295 ✓
+Test 104 [--check(biguint_t(0) + 0)--]: 0 expected: 0 ✓
+Test 105 [--check(biguint_t(0) + 1)--]: 1 expected: 1 ✓
+Test 106 [--check(str_2_BigUint(string_q("8589934591")) + ss4)--]: 12884901889 expected: 12884901889 ✓
+Test 107 [--check(biguint_t(0xFFFFFFFFU) + 1)--]: 4294967296 expected: 4294967296 ✓
+Test 108 [--check(biguint_t(1) - 0)--]: 1 expected: 1 ✓
+Test 109 [--check(biguint_t(1) - 1)--]: 0 expected: 0 ✓
+Test 110 [--check(biguint_t(2) - 1)--]: 1 expected: 1 ✓
+Test 111 [--check(str_2_BigUint(string_q("12884901889")) - ss4)--]: 8589934591 expected: 8589934591 ✓
+Test 112 [--check(ss3 - 1)--]: 4294967295 expected: 4294967295 ✓
 Test 113 [--aa--]: 112776680263877595 expected: 112776680263877595 ✓
 Test 114 [--aa / 123--]: 916883579381118 expected: 916883579381118 ✓
 Test 115 [--aa % 123--]: 81 expected: 81 ✓
@@ -154,18 +154,18 @@ Test 150 [--check(num)--]: 25 expected: 25 ✓
 Test 151 [--biguint_t(0xf)--]: 15 expected: 15 ✓
 Test 152 [--one << 2--]: 4 expected: 4 ✓
 Test 153 [--(one << 2) >> 2--]: 1 expected: 1 ✓
-Test 154 [--(one<<255)--]: 57896044618658097711785492504343953926634992332820282019728792003956564819968 expected: 57896044618658097711785492504343953926634992332820282019728792003956564819968 ✓
+Test 154 [--(one << 255)--]: 57896044618658097711785492504343953926634992332820282019728792003956564819968 expected: 57896044618658097711785492504343953926634992332820282019728792003956564819968 ✓
 Test 155 [--four--]: 4 expected: 4 ✓
 Test 156 [--eight--]: 8 expected: 8 ✓
 Test 157 [--sixteen--]: 16 expected: 16 ✓
-Test 158 [--four|eight--]: 12 expected: 12 ✓
-Test 159 [--four|sixteen|3--]: 23 expected: 23 ✓
-Test 160 [--four&eight--]: 0 expected: 0 ✓
-Test 161 [--bigint_t(four)-sixteen--]: -12 expected: -12 ✓
-Test 162 [--(four&sixteen)|four--]: 4 expected: 4 ✓
-Test 163 [--sixteen%9--]: 7 expected: 7 ✓
+Test 158 [--four | eight--]: 12 expected: 12 ✓
+Test 159 [--four | sixteen | 3--]: 23 expected: 23 ✓
+Test 160 [--four & eight--]: 0 expected: 0 ✓
+Test 161 [--bigint_t(four) - sixteen--]: -12 expected: -12 ✓
+Test 162 [--(four & sixteen) | four--]: 4 expected: 4 ✓
+Test 163 [--sixteen % 9--]: 7 expected: 7 ✓
 Test 164 [--coreDump--]: 1000000000000000000 expected: 1000000000000000000 ✓
-Test 165 [--modexp(10, 9, uint64_t(10000000000) ) * modexp(10, 9, uint64_t(10000000000))--]: 1000000000000000000 expected: 1000000000000000000 ✓
+Test 165 [--modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000))--]: 1000000000000000000 expected: 1000000000000000000 ✓
 18446744073709551615: 18446744073709551615
 1: 1
 115792089237316195423570985008687907853269984665640564039457584007913129639935: 115792089237316195423570985008687907853269984665640564039457584007913129639935

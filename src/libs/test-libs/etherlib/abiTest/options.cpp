@@ -22,19 +22,14 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "encoding" ||
-            arg == "generation" ||
-            arg == "old_bug" ||
-            arg == "func_assign" ||
-            arg == "evt_assign" ||
-            arg == "eth_test") {
+        if (arg == "encoding" || arg == "generation" || arg == "old_bug" || arg == "func_assign" ||
+            arg == "evt_assign" || arg == "eth_test") {
             mode += (arg + "|");
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sub:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--sub:", "");

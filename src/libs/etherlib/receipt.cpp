@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CReceipt, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextReceiptChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 }
 
 //---------------------------------------------------------------------------
-string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextReceiptChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CReceipt *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CReceipt*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextReceiptChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CReceipt::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextReceiptChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,32 +69,39 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
-            if ( fieldName % "cumulativeGasUsed" ) return wei_2_Str(cumulativeGasUsed);
+            if (fieldName % "contractAddress")
+                return addr_2_Str(contractAddress);
+            if (fieldName % "cumulativeGasUsed")
+                return wei_2_Str(cumulativeGasUsed);
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
+            if (fieldName % "gasUsed")
+                return gas_2_Str(gasUsed);
             break;
         case 'l':
-            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
+            if (fieldName % "logs" || fieldName % "logsCnt") {
                 size_t cnt = logs.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += logs[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
-            if ( fieldName % "logsBloom" ) return logsBloom;
+            if (fieldName % "logsBloom")
+                return logsBloom;
             break;
         case 'r':
-            if ( fieldName % "root" ) return root;
+            if (fieldName % "root")
+                return root;
             break;
         case 's':
-            if ( fieldName % "status" ) return uint_2_Str(status);
+            if (fieldName % "status")
+                return uint_2_Str(status);
             break;
     }
 
@@ -149,14 +155,23 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "cumulativeGasUsed" ) { cumulativeGasUsed = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "contractAddress") {
+                contractAddress = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "cumulativeGasUsed") {
+                cumulativeGasUsed = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
+            if (fieldName % "gasUsed") {
+                gasUsed = str_2_Gas(fieldValue);
+                return true;
+            }
             break;
         case 'l':
-            if ( fieldName % "logs" ) {
+            if (fieldName % "logs") {
                 CLogEntry item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -165,13 +180,22 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
                 }
                 return true;
             }
-            if ( fieldName % "logsBloom" ) { logsBloom = fieldValue; return true; }
+            if (fieldName % "logsBloom") {
+                logsBloom = fieldValue;
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "root" ) { root = toLower(fieldValue); return true; }
+            if (fieldName % "root") {
+                root = toLower(fieldValue);
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "status" ) { status = (uint32_t)str_2_Uint(fieldValue); return true; }
+            if (fieldName % "status") {
+                status = (uint32_t)str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -182,7 +206,7 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
 //---------------------------------------------------------------------------------------------------
 void CReceipt::finishParse() {
     // EXISTING_CODE
-    for (size_t i = 0 ; i < logs.size() ; i++) {
+    for (size_t i = 0; i < logs.size(); i++) {
         logs.at(i).pReceipt = this;  // taking a non-const reference of an element that already exists
     }
     // EXISTING_CODE
@@ -190,7 +214,6 @@ void CReceipt::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -203,11 +226,11 @@ bool CReceipt::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> contractAddress;
-//    archive >> cumulativeGasUsed;
+    // archive >> cumulativeGasUsed;
     archive >> gasUsed;
     archive >> logs;
-//    archive >> logsBloom;
-//    archive >> root;
+    // archive >> logsBloom;
+    // archive >> root;
     archive >> status;
     finishParse();
     return true;
@@ -215,18 +238,17 @@ bool CReceipt::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CReceipt::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive << contractAddress;
-//    archive << cumulativeGasUsed;
+    // archive << cumulativeGasUsed;
     archive << gasUsed;
     archive << logs;
-//    archive << logsBloom;
-//    archive << root;
+    // archive << logsBloom;
+    // archive << root;
     archive << status;
 
     return true;
@@ -237,7 +259,7 @@ CArchive& operator>>(CArchive& archive, CReceiptArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -248,7 +270,7 @@ CArchive& operator>>(CArchive& archive, CReceiptArray& array) {
 CArchive& operator<<(CArchive& archive, const CReceiptArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -256,13 +278,14 @@ CArchive& operator<<(CArchive& archive, const CReceiptArray& array) {
 //---------------------------------------------------------------------------
 void CReceipt::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CReceipt, "schema")) return;
+    if (HAS_FIELD(CReceipt, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CReceipt, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CReceipt, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CReceipt, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CReceipt, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CReceipt, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReceipt, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReceipt, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CReceipt, "blockHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CReceipt, "blockHash");
     ADD_FIELD(CReceipt, "blockNumber", T_NUMBER, ++fieldNum);
@@ -273,7 +296,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "from", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CReceipt, "logsBloom", T_TEXT, ++fieldNum);
     HIDE_FIELD(CReceipt, "logsBloom");
     ADD_FIELD(CReceipt, "root", T_TEXT, ++fieldNum);
@@ -299,17 +322,16 @@ void CReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CReceipt *rec = reinterpret_cast<const CReceipt *>(dataPtr);
+string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CReceipt* rec = reinterpret_cast<const CReceipt*>(dataPtr);
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 's':
-                if ( fieldIn % "status" ) {
+                if (fieldIn % "status") {
                     if (rec->status == NO_STATUS) {
                         return "null";
-                    } else if (rec->pTrans &&
-                               rec->pTrans->pBlock &&
+                    } else if (rec->pTrans && rec->pTrans->pBlock &&
                                rec->pTrans->pBlock->blockNumber < byzantiumBlock) {
                         return "null";
                     }
@@ -318,7 +340,7 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, rec);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -334,7 +356,6 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CReceipt::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     bloom_t removed;
@@ -358,7 +379,6 @@ bool CReceipt::readBackLevel(CArchive& archive) {
         archive >> status;
         finishParse();
         done = true;
-
     }
     // EXISTING_CODE
     return done;
@@ -387,23 +407,22 @@ ostream& operator<<(ostream& os, const CReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "logs" && index < logs.size() )
+const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "logs" && index < logs.size())
         return &logs[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RECEIPT = 
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{HASH}]\t"
-"[{GASUSED}]\t"
-"[{STATUS}]\t"
-"[{ISERROR}]";
+const char* STR_DISPLAY_RECEIPT =
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{HASH}]\t"
+    "[{GASUSED}]\t"
+    "[{STATUS}]\t"
+    "[{ISERROR}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

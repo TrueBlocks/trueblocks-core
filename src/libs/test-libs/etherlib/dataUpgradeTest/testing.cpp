@@ -18,20 +18,17 @@
 
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
-extern void reportNode(CBaseNode *node);
+extern void reportNode(CBaseNode* node);
 namespace qblocks {
-    extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
-    extern bool readNodeFromBinary(CBaseNode& node, const string_q& fileName);
-};
+extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
+extern bool readNodeFromBinary(CBaseNode& node, const string_q& fileName);
+};  // namespace qblocks
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
 
     CNewBlock::registerClass();
     CNewReceipt::registerClass();
-//    CAccountWatch::registerClass();
-//    CApiSpec::registerClass();
-//    CIncomeStatement::registerClass();
     UNHIDE_FIELD(CBaseNode, "cname");
 
     COptions options;
@@ -132,15 +129,15 @@ bool testReadWrite(COptions& options) {
             reportNode(&newBlock);
 
             // Clean up all but the original old format and make sure we did.
-            ASSERT( fileExists("./newFmt.cache"));
+            ASSERT(fileExists("./newFmt.cache"));
             remove("./newFmt.cache");
             ASSERT(!fileExists("./newFmt.cache"));
 
-            ASSERT( fileExists("./newFmt.json"));
+            ASSERT(fileExists("./newFmt.json"));
             remove("./newFmt.json");
             ASSERT(!fileExists("./newFmt.json"));
 
-            ASSERT( fileExists("./newFmt2.json"));
+            ASSERT(fileExists("./newFmt2.json"));
             remove("./newFmt2.json");
             ASSERT(!fileExists("./newFmt2.json"));
 
@@ -151,43 +148,64 @@ bool testReadWrite(COptions& options) {
 }
 
 //--------------------------------------------------------------
-CBaseNode *getNode(const string_q& nodeType) {
-    CBaseNode *node = NULL;
-         if (nodeType == "CAbi")             node = CAbi::createObject();  // NOLINT
-    else if (nodeType == "CFunction")        node = CFunction::createObject();
-    else if (nodeType == "CParameter")       node = CParameter::createObject();
-    else if (nodeType == "CBranch")          node = CBranch::createObject();
-    else if (nodeType == "CInfix")           node = CInfix::createObject();
-    else if (nodeType == "CLeaf")            node = CLeaf::createObject();
-    else if (nodeType == "CTreeNode")        node = CTreeNode::createObject();
-    else if (nodeType == "CTreeRoot")        node = CTreeRoot::createObject();
-    else if (nodeType == "CAccountWatch")    node = CAccountWatch::createObject();
-    else if (nodeType == "CApiSpec")         node = CApiSpec::createObject();
-    else if (nodeType == "CBlock")           node = CBlock::createObject();
-    else if (nodeType == "CIncomeStatement") node = CIncomeStatement::createObject();
-    else if (nodeType == "CLogEntry")        node = CLogEntry::createObject();
-    else if (nodeType == "CPriceQuote")      node = CPriceQuote::createObject();
-    else if (nodeType == "CReceipt")         node = CReceipt::createObject();
-    else if (nodeType == "CRPCResult")       node = CRPCResult::createObject();
-    else if (nodeType == "CTrace")           node = CTrace::createObject();
-    else if (nodeType == "CTraceAction")     node = CTraceAction::createObject();
-    else if (nodeType == "CTraceResult")     node = CTraceResult::createObject();
-    else if (nodeType == "CTransaction")     node = CTransaction::createObject();
-    else if (nodeType == "CNewBlock")        node = CNewBlock::createObject();
-    else if (nodeType == "CNewReceipt")      node = CNewReceipt::createObject();
+CBaseNode* getNode(const string_q& nodeType) {
+    CBaseNode* node = NULL;
+    if (nodeType == "CAbi")
+        node = CAbi::createObject();  // NOLINT
+    else if (nodeType == "CFunction")
+        node = CFunction::createObject();
+    else if (nodeType == "CParameter")
+        node = CParameter::createObject();
+    else if (nodeType == "CBranch")
+        node = CBranch::createObject();
+    else if (nodeType == "CInfix")
+        node = CInfix::createObject();
+    else if (nodeType == "CLeaf")
+        node = CLeaf::createObject();
+    else if (nodeType == "CTreeNode")
+        node = CTreeNode::createObject();
+    else if (nodeType == "CTreeRoot")
+        node = CTreeRoot::createObject();
+    else if (nodeType == "CAccountWatch")
+        node = CAccountWatch::createObject();
+    else if (nodeType == "CApiSpec")
+        node = CApiSpec::createObject();
+    else if (nodeType == "CBlock")
+        node = CBlock::createObject();
+    else if (nodeType == "CIncomeStatement")
+        node = CIncomeStatement::createObject();
+    else if (nodeType == "CLogEntry")
+        node = CLogEntry::createObject();
+    else if (nodeType == "CPriceQuote")
+        node = CPriceQuote::createObject();
+    else if (nodeType == "CReceipt")
+        node = CReceipt::createObject();
+    else if (nodeType == "CRPCResult")
+        node = CRPCResult::createObject();
+    else if (nodeType == "CTrace")
+        node = CTrace::createObject();
+    else if (nodeType == "CTraceAction")
+        node = CTraceAction::createObject();
+    else if (nodeType == "CTraceResult")
+        node = CTraceResult::createObject();
+    else if (nodeType == "CTransaction")
+        node = CTransaction::createObject();
+    else if (nodeType == "CNewBlock")
+        node = CNewBlock::createObject();
+    else if (nodeType == "CNewReceipt")
+        node = CNewReceipt::createObject();
     return node;
 }
 
 //--------------------------------------------------------------
-bool visitField(const CFieldData& fld, void *data) {
+bool visitField(const CFieldData& fld, void* data) {
     cout << fld << "\n";
     return true;
 }
 
 //--------------------------------------------------------------
-void reportNode(CBaseNode *node) {
-
-    CRuntimeClass *pClass = node->getRuntimeClass();
+void reportNode(CBaseNode* node) {
+    CRuntimeClass* pClass = node->getRuntimeClass();
     cout << string_q(80, '-') << "\n";
     cout << "className: " << pClass->m_ClassName << "\n";
     cout << "baseClass: " << (pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "None") << "\n";
@@ -195,13 +213,11 @@ void reportNode(CBaseNode *node) {
     cout << node->Format() << "\n";
     cout << "\n";
     cout.flush();
-
 }
 
 //--------------------------------------------------------------
 bool testUpgrade(COptions& options) {
-
-    CBaseNode *node = getNode(options.className);
+    CBaseNode* node = getNode(options.className);
     if (node) {
         reportNode(node);
         node->getRuntimeClass()->hideAllFields();

@@ -17,10 +17,13 @@
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
-public:
-                 CThisTest(void) : Test() {}
-    virtual void SetUp    (void) {}
-    virtual void TearDown (void) {}
+  public:
+    CThisTest(void) : Test() {
+    }
+    virtual void SetUp(void) {
+    }
+    virtual void TearDown(void) {
+    }
 };
 
 //------------------------------------------------------------------------
@@ -32,17 +35,18 @@ TEST_F(CThisTest, TestTime) {
     cerr << "\ttime1:  " << time1 << "\n";
     cerr << "\ttime2:  " << time2 << "\n";
 
-    ASSERT_FALSE("time1 > time2",  (time1 > time2));
-    ASSERT_TRUE ("time1 !< time2", (time1 < time2));
-    ASSERT_TRUE ("time1.month == 10", (time1.GetMonth() == 10));
-    ASSERT_TRUE ("time2.day == 2", (time2.GetDay() == 2));
+    ASSERT_FALSE("time1 > time2", (time1 > time2));
+    ASSERT_TRUE("time1 !< time2", (time1 < time2));
+    ASSERT_TRUE("time1.month == 10", (time1.GetMonth() == 10));
+    ASSERT_TRUE("time2.day == 2", (time2.GetDay() == 2));
 
     return true;
-}}
+}
+}
 
 #include "options.h"
 //------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -54,7 +58,9 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         switch (options.testNum) {
-            case 0: LOAD_TEST(TestTime); break;
+            case 0:
+                LOAD_TEST(TestTime);
+                break;
         }
     }
 

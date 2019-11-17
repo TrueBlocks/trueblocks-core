@@ -15,10 +15,10 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-using uint_addr_mp = map<uint32_t,address_t>;
+using uint_addr_mp = map<uint32_t, address_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool appearances;
     bool receipts;
@@ -47,8 +47,8 @@ public:
     address_t hackAppAddr;
     uint_addr_mp prefundAddrMap;
     uint_addr_mp blkRewardMap;
-    map<address_t,bool>     abiMap;
-    uint32_t *ts_array;
+    map<address_t, bool> abiMap;
+    uint32_t* ts_array;
     size_t ts_cnt;
 
     COptions(void);

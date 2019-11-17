@@ -17,19 +17,22 @@
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
-public:
-                 CThisTest(void) : Test() {}
-    virtual void SetUp    (void) {}
-    virtual void TearDown (void) {}
+  public:
+    CThisTest(void) : Test() {
+    }
+    virtual void SetUp(void) {
+    }
+    virtual void TearDown(void) {
+    }
 };
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestInsertion) {
-
     CStringArray strArray;
     strArray.push_back("c-string");
     strArray.push_back(string_q("string_q"));
-    string str = "string"; strArray.push_back(str.c_str());
+    string str = "string";
+    strArray.push_back(str.c_str());
     strArray.push_back("When will we be loved?");
     for (auto elem : strArray)
         cout << TESTID("array ", 20) << elem << "\n";
@@ -38,7 +41,7 @@ TEST_F(CThisTest, TestInsertion) {
     for (size_t i = 0; i < 10; i++)
         myvector.push_back(i);
     cout << TESTID("int array", 20);
-    for (size_t i = 0 ; i < 10 ; i++)
+    for (size_t i = 0; i < 10; i++)
         cout << ' ' << myvector[i];
     cout << '\n';
     for (size_t i = 0; i < myvector.size() / 2; i++) {
@@ -48,16 +51,17 @@ TEST_F(CThisTest, TestInsertion) {
         myvector.at(i) = temp;
     }
     cout << TESTID("reversed", 20);
-    for (size_t i = 0 ; i < 10 ; i++)
+    for (size_t i = 0; i < 10; i++)
         cout << ' ' << myvector[i];
     cout << '\n';
 
     return true;
-}}
+}
+}
 
 #include "options.h"
 //------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;

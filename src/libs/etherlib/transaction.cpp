@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTransaction, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTransactionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTransactionChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTransaction *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTransaction*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextTransactionChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTransaction::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTransactionChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,7 +69,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) {
+            if (fieldName % "articulatedTx") {
                 if (articulatedTx == CFunction())
                     return "";
                 expContext().noFrst = true;
@@ -78,33 +77,45 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) return hash_2_Str(blockHash);
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
+            if (fieldName % "blockHash")
+                return hash_2_Str(blockHash);
+            if (fieldName % "blockNumber")
+                return uint_2_Str(blockNumber);
             break;
         case 'c':
-            if ( fieldName % "compressedTx" ) return compressedTx;
+            if (fieldName % "compressedTx")
+                return compressedTx;
             break;
         case 'f':
-            if ( fieldName % "from" ) return addr_2_Str(from);
-            if ( fieldName % "finalized" ) return bool_2_Str_t(finalized);
+            if (fieldName % "from")
+                return addr_2_Str(from);
+            if (fieldName % "finalized")
+                return bool_2_Str_t(finalized);
             break;
         case 'g':
-            if ( fieldName % "gas" ) return gas_2_Str(gas);
-            if ( fieldName % "gasPrice" ) return gas_2_Str(gasPrice);
+            if (fieldName % "gas")
+                return gas_2_Str(gas);
+            if (fieldName % "gasPrice")
+                return gas_2_Str(gasPrice);
             break;
         case 'h':
-            if ( fieldName % "hash" ) return hash_2_Str(hash);
+            if (fieldName % "hash")
+                return hash_2_Str(hash);
             break;
         case 'i':
-            if ( fieldName % "input" ) return input;
-            if ( fieldName % "isError" ) return uint_2_Str(isError);
-            if ( fieldName % "isInternal" ) return uint_2_Str(isInternal);
+            if (fieldName % "input")
+                return input;
+            if (fieldName % "isError")
+                return uint_2_Str(isError);
+            if (fieldName % "isInternal")
+                return uint_2_Str(isInternal);
             break;
         case 'n':
-            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
+            if (fieldName % "nonce")
+                return uint_2_Str(nonce);
             break;
         case 'r':
-            if ( fieldName % "receipt" ) {
+            if (fieldName % "receipt") {
                 if (receipt == CReceipt())
                     return "";
                 expContext().noFrst = true;
@@ -112,16 +123,20 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) return uint_2_Str(transactionIndex);
-            if ( fieldName % "timestamp" ) return ts_2_Str(timestamp);
-            if ( fieldName % "to" ) return addr_2_Str(to);
-            if ( fieldName % "traces" || fieldName % "tracesCnt" ) {
+            if (fieldName % "transactionIndex")
+                return uint_2_Str(transactionIndex);
+            if (fieldName % "timestamp")
+                return ts_2_Str(timestamp);
+            if (fieldName % "to")
+                return addr_2_Str(to);
+            if (fieldName % "traces" || fieldName % "tracesCnt") {
                 size_t cnt = traces.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += traces[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -129,7 +144,8 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'v':
-            if ( fieldName % "value" ) return wei_2_Str(value);
+            if (fieldName % "value")
+                return wei_2_Str(value);
             break;
     }
 
@@ -175,26 +191,25 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
     if (fieldName == "to" && fieldValue == "null")
         fieldValue = "0x";  // NOLINT
 
-    if ( fieldName % "input" ) {
+    if (fieldName % "input") {
         input = fieldValue;
         return true;
 
-    } else if ( fieldName % "value" ) {
+    } else if (fieldName % "value") {
         value = str_2_Wei(fieldValue);
         return true;
 
-    } else if ( fieldName % "contractAddress" ) {
+    } else if (fieldName % "contractAddress") {
         receipt.contractAddress = str_2_Addr(fieldValue);
         return true;
 
-    } else if ( fieldName % "gasUsed" ) {
+    } else if (fieldName % "gasUsed") {
         receipt.gasUsed = str_2_Uint(fieldValue);
         return true;
 
-    } else if ( fieldName % "receipt" ) {
+    } else if (fieldName % "receipt") {
         string_q str = fieldValue;
         return receipt.parseJson3(str);
-
     }
 
     if (pBlock) {
@@ -224,42 +239,91 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "articulatedTx" ) { return articulatedTx.parseJson3(fieldValue); }
+            if (fieldName % "articulatedTx") {
+                return articulatedTx.parseJson3(fieldValue);
+            }
             break;
         case 'b':
-            if ( fieldName % "blockHash" ) { blockHash = str_2_Hash(fieldValue); return true; }
-            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "blockHash") {
+                blockHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "compressedTx" ) { compressedTx = fieldValue; return true; }
+            if (fieldName % "compressedTx") {
+                compressedTx = fieldValue;
+                return true;
+            }
             break;
         case 'f':
-            if ( fieldName % "from" ) { from = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "finalized" ) { finalized = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "from") {
+                from = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "finalized") {
+                finalized = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "gas" ) { gas = str_2_Gas(fieldValue); return true; }
-            if ( fieldName % "gasPrice" ) { gasPrice = str_2_Gas(fieldValue); return true; }
+            if (fieldName % "gas") {
+                gas = str_2_Gas(fieldValue);
+                return true;
+            }
+            if (fieldName % "gasPrice") {
+                gasPrice = str_2_Gas(fieldValue);
+                return true;
+            }
             break;
         case 'h':
-            if ( fieldName % "hash" ) { hash = str_2_Hash(fieldValue); return true; }
+            if (fieldName % "hash") {
+                hash = str_2_Hash(fieldValue);
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "input" ) { input = fieldValue; return true; }
-            if ( fieldName % "isError" ) { isError = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "isInternal" ) { isInternal = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "input") {
+                input = fieldValue;
+                return true;
+            }
+            if (fieldName % "isError") {
+                isError = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "isInternal") {
+                isInternal = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "nonce") {
+                nonce = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "receipt" ) { return receipt.parseJson3(fieldValue); }
+            if (fieldName % "receipt") {
+                return receipt.parseJson3(fieldValue);
+            }
             break;
         case 't':
-            if ( fieldName % "transactionIndex" ) { transactionIndex = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "timestamp" ) { timestamp = str_2_Ts(fieldValue); return true; }
-            if ( fieldName % "to" ) { to = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "traces" ) {
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
+                return true;
+            }
+            if (fieldName % "to") {
+                to = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "traces") {
                 CTrace item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -270,7 +334,10 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "value") {
+                value = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -287,7 +354,6 @@ void CTransaction::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -314,17 +380,16 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isError;
     archive >> isInternal;
     archive >> receipt;
-//    archive >> articulatedTx;
-//    archive >> compressedTx;
-//    archive >> finalized;
-//    archive >> traces;
+    // archive >> articulatedTx;
+    // archive >> compressedTx;
+    // archive >> finalized;
+    // archive >> traces;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -345,10 +410,10 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isError;
     archive << isInternal;
     archive << receipt;
-//    archive << articulatedTx;
-//    archive << compressedTx;
-//    archive << finalized;
-//    archive << traces;
+    // archive << articulatedTx;
+    // archive << compressedTx;
+    // archive << finalized;
+    // archive << traces;
 
     return true;
 }
@@ -358,7 +423,7 @@ CArchive& operator>>(CArchive& archive, CTransactionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -369,7 +434,7 @@ CArchive& operator>>(CArchive& archive, CTransactionArray& array) {
 CArchive& operator<<(CArchive& archive, const CTransactionArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -377,13 +442,14 @@ CArchive& operator<<(CArchive& archive, const CTransactionArray& array) {
 //---------------------------------------------------------------------------
 void CTransaction::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTransaction, "schema")) return;
+    if (HAS_FIELD(CTransaction, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTransaction, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTransaction, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTransaction, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTransaction, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTransaction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
@@ -405,7 +471,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "compressedTx");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");
-    ADD_FIELD(CTransaction, "traces", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CTransaction, "traces");
 
     // Hide our internal fields, user can turn them on if they like
@@ -468,13 +534,13 @@ void CTransaction::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTransaction *tra = reinterpret_cast<const CTransaction *>(dataPtr);
+string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTransaction* tra = reinterpret_cast<const CTransaction*>(dataPtr);
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if ( fieldIn % "age" ) {
+                if (fieldIn % "age") {
                     if (isTestMode())
                         return "100";
                     static CBlock latest;
@@ -489,8 +555,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'c':
-                if ( fieldIn % "contractAddress" ) return addr_2_Str(tra->receipt.contractAddress);
-                if ( fieldIn % "compressedTx" ) return tra->articulatedTx.compressed();
+                if (fieldIn % "contractAddress")
+                    return addr_2_Str(tra->receipt.contractAddress);
+                if (fieldIn % "compressedTx")
+                    return tra->articulatedTx.compressed();
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -502,13 +570,13 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'e':
-                if ( fieldIn % "ether" )
+                if (fieldIn % "ether")
                     return wei_2_Ether(bnu_2_Str(tra->value));
-                if ( fieldIn % "encoding" )
+                if (fieldIn % "encoding")
                     return extract(tra->input, 0, 10);
-                if ( fieldIn % "events" || fieldIn % "eventnames" ) {
+                if (fieldIn % "events" || fieldIn % "eventnames") {
                     string_q ret;
-                    for (uint64_t n = 0 ; n < tra->receipt.logs.size() ; n++) {
+                    for (uint64_t n = 0; n < tra->receipt.logs.size(); n++) {
                         string_q v = tra->receipt.logs[n].Format("[{ARTICULATEDLOG}]");
                         if (v.empty())
                             return "";
@@ -534,15 +602,17 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                     }
                     return ret;
                 }
-                if ( fieldIn % "etherGasCost" ) {
+                if (fieldIn % "etherGasCost") {
                     biguint_t used = tra->receipt.gasUsed;
                     biguint_t price = tra->gasPrice;
                     return wei_2_Ether(bnu_2_Str(used * price));
                 }
-                if ( fieldIn % "etherGasPrice" ) { return wei_2_Ether(bnu_2_Str(tra->gasPrice)); }
+                if (fieldIn % "etherGasPrice") {
+                    return wei_2_Ether(bnu_2_Str(tra->gasPrice));
+                }
                 break;
             case 'f':
-                if ( fieldIn % "function" ) {
+                if (fieldIn % "function") {
                     string_q ret = tra->Format("[{ARTICULATEDTX}]");
                     if (ret.empty())
                         return "";
@@ -552,17 +622,20 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
                 }
                 break;
             case 'g':
-                if ( fieldIn % "gasUsed" ) return uint_2_Str(tra->receipt.gasUsed);
-                if ( fieldIn % "gasCost" ) {
+                if (fieldIn % "gasUsed")
+                    return uint_2_Str(tra->receipt.gasUsed);
+                if (fieldIn % "gasCost") {
                     biguint_t used = tra->receipt.gasUsed;
                     biguint_t price = tra->gasPrice;
                     return bnu_2_Str(used * price);
                 }
                 break;
             case 't':
-                if ( fieldIn % "tracescnt" ) return uint_2_Str(getTraceCount(tra->hash));
-                if ( fieldIn % "timestamp" && tra->pBlock) return int_2_Str(tra->pBlock->timestamp);
-                if ( fieldIn % "time" ) {
+                if (fieldIn % "tracescnt")
+                    return uint_2_Str(getTraceCount(tra->hash));
+                if (fieldIn % "timestamp" && tra->pBlock)
+                    return int_2_Str(tra->pBlock->timestamp);
+                if (fieldIn % "time") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
                 }
@@ -570,13 +643,14 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
-                if ( fieldIn % "price" ) {
+                if (fieldIn % "price") {
                     if (!IS_HIDDEN(CTransaction, "price")) {
+                        // this has huge performance implications because it loads a big file
                         timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther());  // this has huge performance implications because it loads a big file
+                        return wei_2_Dollars(ts, weiPerEther());
                     }
                 }
                 // EXISTING_CODE
@@ -592,7 +666,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void *dataPt
 
 //---------------------------------------------------------------------------
 bool CTransaction::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 4, 0)) {
@@ -643,31 +716,31 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "receipt" )
+const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "receipt")
         return &receipt;
-    if ( fieldName % "articulatedTx" )
+    if (fieldName % "articulatedTx")
         return &articulatedTx;
-    if ( fieldName % "traces" && index < traces.size() )
+    if (fieldName % "traces" && index < traces.size())
         return &traces[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_TRANSACTION = 
-"[{BLOCKNUMBER}]\t"
-"[{TRANSACTIONINDEX}]\t"
-"[{DATE}]\t"
-"[{TIMESTAMP}]\t"
-"[{FROM}]\t"
-"[{TO}]\t"
-"[{ETHER}]\t"
-"[{ETHERGASPRICE}]\t"
-"[{GASUSED}]\t"
-"[{HASH}]\t"
-"[{ISERROR}]\t"
-"[{ENCODING}]\t"
-"[{COMPRESSEDTX}]";
+const char* STR_DISPLAY_TRANSACTION =
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{DATE}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{FROM}]\t"
+    "[{TO}]\t"
+    "[{ETHER}]\t"
+    "[{ETHERGASPRICE}]\t"
+    "[{GASUSED}]\t"
+    "[{HASH}]\t"
+    "[{ISERROR}]\t"
+    "[{ENCODING}]\t"
+    "[{COMPRESSEDTX}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -695,7 +768,6 @@ bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t
 
 //-------------------------------------------------------------------------
 bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
-
     blknum_t id = transactionIndex;
     initialize();
     transactionIndex = id;
@@ -706,4 +778,3 @@ bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

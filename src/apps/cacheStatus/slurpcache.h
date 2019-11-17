@@ -25,11 +25,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CSlurpCache : public CCache {
-public:
+  public:
     CAddressArray addrs;
     CMonitorCacheItemArray items;
 
-public:
+  public:
     CSlurpCache(void);
     CSlurpCache(const CSlurpCache& sl);
     virtual ~CSlurpCache(void);
@@ -37,17 +37,19 @@ public:
 
     DECLARE_NODE(CSlurpCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CSlurpCache& item) const;
-    bool operator!=(const CSlurpCache& item) const { return !operator==(item); }
+    bool operator!=(const CSlurpCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CSlurpCache& v1, const CSlurpCache& v2);
     friend ostream& operator<<(ostream& os, const CSlurpCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CSlurpCache& sl);
@@ -146,4 +148,3 @@ extern const char* STR_DISPLAY_SLURPCACHE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

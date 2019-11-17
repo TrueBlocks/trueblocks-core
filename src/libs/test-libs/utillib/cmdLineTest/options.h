@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     bool boolOption;
     bool boolSet;
     int64_t numOption;
@@ -28,10 +28,10 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
     void output(void) const {
-        cout << "boolOption: "   << boolOption << "\n";
-        cout << "boolSet: "      << boolSet << "\n";
-        cout << "numOption: "    << numOption << "\n";
+        cout << "boolOption: " << boolOption << "\n";
+        cout << "boolSet: " << boolSet << "\n";
+        cout << "numOption: " << numOption << "\n";
         cout << "stringOption: " << stringOption << "\n";
-        cout << "testNum: "      << testNum << "\n";
+        cout << "testNum: " << testNum << "\n";
     }
 };

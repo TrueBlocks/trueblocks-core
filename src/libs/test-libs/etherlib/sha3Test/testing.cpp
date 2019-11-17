@@ -15,7 +15,7 @@
 
 extern void doTests(void);
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -58,11 +58,11 @@ void doTests(void) {
                 string_q hex = chr_2_HexStr(in);
                 string_q out = getSha3(hex);
                 cout << string_q(80, '-') << "\n"
-                    << comment << "\n"
-                    << "in:\t\t" << in << "\n"
-                    << "hex:\t\t" << hex << "\n"
-                    << "expected:\t" << line << "\n"
-                    << "delivered:\t" << out << " " << (out == line ? greenCheck : redX) << "\n\n";
+                     << comment << "\n"
+                     << "in:\t\t" << in << "\n"
+                     << "hex:\t\t" << hex << "\n"
+                     << "expected:\t" << line << "\n"
+                     << "delivered:\t" << out << " " << (out == line ? greenCheck : redX) << "\n\n";
                 hasIn = false;
                 comment = "";
             }
@@ -74,27 +74,28 @@ void doTests(void) {
 
 //--------------------------------------------------------------
 const char* STR_TEST_DATA =
-"#\n"
-"# From http://www.di-mgt.com.au/sha_testvectors.html\n"
-"# pairs of input / expected output on subsequent lines\n"
-"#\n"
-"#\n"
-"# From an example on the RPC web page (already in hex)\n"
-"0x68656c6c6f20776f726c64\n"
-"0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad\n"
-"#\n"
-"# An empty string \n"
-"\n"
-"0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470\n"
-"#\n"
-"# A longer string\n"
-"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu \n"
-"0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7\n"
-"#\n"
-"# A regular sentence with no period\n"
-"The quick brown fox jumps over the lazy dog\n"
-"0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15\n"
-"#\n"
-"# A regular sentence with a period\n"
-"The quick brown fox jumps over the lazy dog.\n"
-"0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d\n";
+    "#\n"
+    "# From http://www.di-mgt.com.au/sha_testvectors.html\n"
+    "# pairs of input / expected output on subsequent lines\n"
+    "#\n"
+    "#\n"
+    "# From an example on the RPC web page (already in hex)\n"
+    "0x68656c6c6f20776f726c64\n"
+    "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad\n"
+    "#\n"
+    "# An empty string \n"
+    "\n"
+    "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470\n"
+    "#\n"
+    "# A longer string\n"
+    "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu "
+    "\n"
+    "0x4fdc431ca3869f7a79a3a43acbb0019c769c667ad29fb36896209969b8550af7\n"
+    "#\n"
+    "# A regular sentence with no period\n"
+    "The quick brown fox jumps over the lazy dog\n"
+    "0x4d741b6f1eb29cb2a9b9911c82f56fa8d73b04959d3d9d222895df6c0b28aa15\n"
+    "#\n"
+    "# A regular sentence with a period\n"
+    "The quick brown fox jumps over the lazy dog.\n"
+    "0x578951e24efd62a3d63a86f7cd19aaa53c898fe287d2552133220370240b572d\n";

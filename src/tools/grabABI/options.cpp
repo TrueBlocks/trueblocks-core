@@ -19,12 +19,14 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -32,7 +34,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     ENTER8("parseArguments");
     if (!standardOptions(command))
         return false;
@@ -78,7 +79,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please supply at least one Ethereum address.\n");
 
     for (auto addr : addrs) {
-        if (!isContractAt(addr) && addr != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to ignore during testing
+        if (!isContractAt(addr) &&
+            addr != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to
+                                                                     // ignore during testing
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
 
         } else if (fileExists(addr + ".sol")) {
@@ -157,7 +160,7 @@ bool COptions::parseArguments(string_q& command) {
             CAbi abi;
             abi.loadAbiFromFile(file, true);
             sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-            abi.address = substitute(substitute(file, ".json",""), configPath("known_abis/"), "");
+            abi.address = substitute(substitute(file, ".json", ""), configPath("known_abis/"), "");
             abis.push_back(abi);
         }
     }
@@ -181,7 +184,7 @@ void COptions::Init(void) {
     noconst = false;
     // END_CODE_INIT
 
-    parts = (SIG_DEFAULT|SIG_ENCODE);
+    parts = (SIG_DEFAULT | SIG_ENCODE);
     addrs.clear();
 }
 
@@ -191,7 +194,9 @@ COptions::COptions(void) {
     first = true;
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -204,28 +209,26 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 string_q getPrefix(const string_q& inIn) {
-
-    string_q in = inIn;  // for example ./ENS/parselib/
+    string_q in = inIn;                   // for example ./ENS/parselib/
     replace(in, "parseLib", "parselib");  // hack: to fix dao monitor
     reverse(in);
-    replace(in, "/", "");  // remove trailing '/'
+    replace(in, "/", "");          // remove trailing '/'
     in = nextTokenClear(in, '/');  // remove /parselib
     reverse(in);
     return in;
 }
 
 //---------------------------------------------------------------------------
-bool visitABIs(const string_q& path, void *dataPtr) {
-
+bool visitABIs(const string_q& path, void* dataPtr) {
     if (endsWith(path, ".json")) {
-        string_q *str = reinterpret_cast<string_q *>(dataPtr);
-        *str += (path+"\n");
+        string_q* str = reinterpret_cast<string_q*>(dataPtr);
+        *str += (path + "\n");
     }
     return true;
 }
 
 //---------------------------------------------------------------------------
-//void rebuildFourByteDB(void) {
+// void rebuildFourByteDB(void) {
 //
 //    string_q fileList;
 //    string_q abiPath = getCachePath("abis/");
@@ -256,8 +259,10 @@ bool visitABIs(const string_q& path, void *dataPtr) {
 //-----------------------------------------------------------------------
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
     string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
-    for (auto f : f1.inputs) s1 += f.name;
+    for (auto f : f1.inputs)
+        s1 += f.name;
     string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
-    for (auto f : f2.inputs) s2 += f.name;
+    for (auto f : f2.inputs)
+        s2 += f.name;
     return s1 < s2;
 }

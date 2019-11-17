@@ -16,16 +16,15 @@
 //----------------------------------------------------------------------
 address_t randomAddress(void) {
     uint8_t bytes[20];
-    for (size_t i = 0 ; i < 20 ; i++) {
-        bytes[i] = (uint8_t)(RandomValue(0,16)*16 + RandomValue(0,16));
+    for (size_t i = 0; i < 20; i++) {
+        bytes[i] = (uint8_t)(RandomValue(0, 16) * 16 + RandomValue(0, 16));
     }
     return bytes_2_Addr(bytes);
 }
 
-#define N_TESTS (3500/2)
+#define N_TESTS (3500 / 2)
 //----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     cout << "d    nTotAddrs:     " << N_RAND_ADDR << endl;
     cout << "d    maxInserts:    " << MAX_INSERTS << endl;
     cout << "d    nBytes/bloom:  " << bloom_nt::BYTE_SIZE << " " << sizeof(bloom_nt) << endl;
@@ -38,7 +37,6 @@ int main(int argc, const char *argv[]) {
 
     bool reading = fileExists("./bloom.bin");
     if (reading) {
-
         cerr << "m Reading addrs...";
         asciiFileToLines("./addresses.txt", addrsInBloom);
         asciiFileToLines("./notin.txt", addrsNotInBloom);
@@ -49,7 +47,7 @@ int main(int argc, const char *argv[]) {
         if (file.Lock("./bloom.bin", modeReadOnly, LOCK_NOWAIT)) {
             uint32_t size;
             file.Read(size);
-            for (uint32_t b = 0 ; b < size ; b++) {
+            for (uint32_t b = 0; b < size; b++) {
                 uint32_t nI;
                 file.Read(nI);
 
@@ -63,17 +61,16 @@ int main(int argc, const char *argv[]) {
         cerr << TIC() << endl;
 
     } else {
-
         srand((unsigned int)time(NULL));
 
         cerr << "m Making addrs...";
-        for (size_t i = 0 ; i < N_RAND_ADDR ; i++)
+        for (size_t i = 0; i < N_RAND_ADDR; i++)
             addrsInBloom.push_back(randomAddress());
         ostringstream os;
         for (auto addr : addrsInBloom)
             os << addr << endl;
         stringToAsciiFile("./addresses.txt", os.str());
-        for (size_t i = 0 ; i < N_RAND_ADDR ; i++)
+        for (size_t i = 0; i < N_RAND_ADDR; i++)
             addrsNotInBloom.push_back(randomAddress());
         ostringstream os1;
         for (auto addr : addrsNotInBloom)
@@ -119,9 +116,10 @@ int main(int argc, const char *argv[]) {
     for (auto bloom : blooms) {
         cout << "d        nInserted: " << bloom.nInserted << endl;
         cout << "d        onBits:    " << bloom.nBitsHit();
-        cout << " (" << (double(bloom.nBitsHit())/double(bloom_nt::BIT_SIZE()))*100. << "%)" << endl;
+        cout << " (" << (double(bloom.nBitsHit()) / double(bloom_nt::BIT_SIZE())) * 100. << "%)" << endl;
     }
-    cout << "d    File:          " << "./bloom.bin (" << fileSize("./bloom.bin") << " bytes)" << endl;
+    cout << "d    File:          "
+         << "./bloom.bin (" << fileSize("./bloom.bin") << " bytes)" << endl;
     cout << fileSize("./shit") << endl;
 
     return 0;

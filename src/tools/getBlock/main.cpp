@@ -15,8 +15,7 @@
 
 extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distance);
 //------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // We want to get the latestBlock prior to turning on --prove for example
@@ -42,7 +41,6 @@ int main(int argc, const char *argv[]) {
 
 //------------------------------------------------------------
 string_q doOneBlock(uint64_t num, const COptions& opt) {
-
     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
 
     CBlock gold;
@@ -66,7 +64,6 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
                     writeBlockToBinary(gold, fileName);
                 }
             }
-
         }
 
     } else {
@@ -75,31 +72,29 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
             gold.timestamp = blockZeroTs;
         gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
         if (opt.force) {  // turn this on to force a write of the block to the disc
-            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " + bool_2_Str(fileExists(fileName)));
+            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
+                 bool_2_Str(fileExists(fileName)));
             writeBlockToBinary(gold, fileName);
         }
         result = gold.Format(expContext().fmtMap["format"]);
-
     }
 
     return result;
 }
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void *data) {
-
+bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
     if (item.tc == 10 || isZeroAddr(item.addr))
         return !shouldQuit();
 
-    COptions *opt = (COptions*)data;
+    COptions* opt = (COptions*)data;
     if (opt->count_only) {
         opt->addrCounter++;
 
     } else {
         cout << item.Format(expContext().fmtMap["format"]) << endl;
-
     }
 
     return !shouldQuit();
@@ -107,16 +102,16 @@ bool visitAddrs(const CAppearance& item, void *data) {
 
 //----------------------------------------------------------------
 // Return 'true' if we want the caller NOT to visit the traces of this transaction
-bool transFilter(const CTransaction *trans, void *data) {
+bool transFilter(const CTransaction* trans, void* data) {
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
 }
 
 //------------------------------------------------------------
-bool visitBlock(uint64_t num, void *data) {
-    COptions *opt = reinterpret_cast<COptions *>(data);
-    bool isText = (opt->exportFmt & (TXT1|CSV1));
+bool visitBlock(uint64_t num, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
 
     if (!opt->first) {
         if (!isText)
@@ -137,11 +132,12 @@ bool visitBlock(uint64_t num, void *data) {
             block.forEveryAddress(visitAddrs, transFilter, opt);
 
         if (opt->count_only)
-            cout << block.Format(substitute(substitute(expContext().fmtMap["format"], "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter)), "[{FILTER_TYPE}]", opt->filterType));
+            cout << block.Format(
+                substitute(substitute(expContext().fmtMap["format"], "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter)),
+                           "[{FILTER_TYPE}]", opt->filterType));
 
     } else {
         cout << doOneBlock(num, *opt);
-
     }
 
     opt->first = false;
@@ -156,7 +152,6 @@ bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distan
     // in a perfectly mathematical sense)
     return ((ts_chain - ts_block) > distance);
 }
-
 
 #if 0
 int main(int argc, const char *argv[]) {

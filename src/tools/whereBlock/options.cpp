@@ -19,8 +19,10 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
     COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -28,7 +30,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern const char* STR_DISPLAY_WHERE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -36,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLastBlock_client();
-    if (!isNodeRunning()) // it's okay if it's not
+    if (!isNodeRunning())  // it's okay if it's not
         latest = NOPOS;
 
     Init();
@@ -95,7 +96,9 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -121,13 +124,14 @@ void COptions::applyFilter() {
         if (!ce.cached)
             ce.path = (isNodeRunning() ? getVersionFromClient() : "not found");
         if (isTestMode())
-            ce.path = substitute(substitute(ce.path, getVersionFromClient(), "--nodeVersion--"), getCachePath(""), "./");
+            ce.path =
+                substitute(substitute(ce.path, getVersionFromClient(), "--nodeVersion--"), getCachePath(""), "./");
         items[bn] = ce;
     }
 }
 
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY_WHERE =
-"[{BLOCKNUMBER}]\t"
-"[{PATH}]\t"
-"[{CACHED}]";
+    "[{BLOCKNUMBER}]\t"
+    "[{PATH}]\t"
+    "[{CACHED}]";

@@ -14,7 +14,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -33,7 +33,8 @@ int main(int argc, const char *argv[]) {
         cout << "pgrep -fl " << cmd << ": " << doCommand("pgrep -fl " + cmd) << endl;
         cout << "pgrep -fl " << toLower(cmd) << ": " << doCommand("pgrep -fl " + toLower(cmd)) << endl;
         cout << "pgrep -fil " << toLower(cmd) << ": " << doCommand("pgrep -fli " + toLower(cmd)) << endl;
-        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: " << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
+        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: "
+             << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
         cout << endl;
 
         cmd = "runningTest";
@@ -43,7 +44,8 @@ int main(int argc, const char *argv[]) {
         cout << "pgrep -fl " << cmd << ": " << doCommand("pgrep -fl " + cmd) << endl;
         cout << "pgrep -fl " << toLower(cmd) << ": " << doCommand("pgrep -fl " + toLower(cmd)) << endl;
         cout << "pgrep -fil " << toLower(cmd) << ": " << doCommand("pgrep -fli " + toLower(cmd)) << endl;
-        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: " << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
+        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: "
+             << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
 
         //        cout << "isRunning(\"not running\"): " << isRunning("Not running") << endl;
         //        cout << "isRunning(\"runningTest\", true): " << isRunning("runningTest") << endl;

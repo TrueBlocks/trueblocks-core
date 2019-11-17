@@ -21,12 +21,12 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
+typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CBlock : public CBaseNode {
-public:
+  public:
     gas_t gasLimit;
     gas_t gasUsed;
     hash_t hash;
@@ -41,7 +41,7 @@ public:
     string_q name;
     bool light;
 
-public:
+  public:
     CBlock(void);
     CBlock(const CBlock& bl);
     virtual ~CBlock(void);
@@ -49,19 +49,21 @@ public:
 
     DECLARE_NODE(CBlock);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
-    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
-    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     // EXISTING_CODE
     bool operator==(const CBlock& item) const;
-    bool operator!=(const CBlock& item) const { return !operator==(item); }
+    bool operator!=(const CBlock& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CBlock& v1, const CBlock& v2);
     friend ostream& operator<<(ostream& os, const CBlock& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBlock& bl);
@@ -195,4 +197,3 @@ inline blknum_t bnFromPath(const string_q& path) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

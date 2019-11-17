@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CRPCResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextRpcresultChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) cons
 }
 
 //---------------------------------------------------------------------------
-string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextRpcresultChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CRPCResult *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CRPCResult*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextRpcresultChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CRPCResult::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextRpcresultChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,13 +68,16 @@ string_q CRPCResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "id" ) return id;
+            if (fieldName % "id")
+                return id;
             break;
         case 'j':
-            if ( fieldName % "jsonrpc" ) return jsonrpc;
+            if (fieldName % "jsonrpc")
+                return jsonrpc;
             break;
         case 'r':
-            if ( fieldName % "result" ) return result;
+            if (fieldName % "result")
+                return result;
             break;
     }
 
@@ -103,13 +105,22 @@ bool CRPCResult::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "id" ) { id = fieldValue; return true; }
+            if (fieldName % "id") {
+                id = fieldValue;
+                return true;
+            }
             break;
         case 'j':
-            if ( fieldName % "jsonrpc" ) { jsonrpc = fieldValue; return true; }
+            if (fieldName % "jsonrpc") {
+                jsonrpc = fieldValue;
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "result" ) { result = fieldValue; return true; }
+            if (fieldName % "result") {
+                result = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -125,7 +136,6 @@ void CRPCResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -146,7 +156,6 @@ bool CRPCResult::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CRPCResult::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -164,7 +173,7 @@ CArchive& operator>>(CArchive& archive, CRPCResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -175,7 +184,7 @@ CArchive& operator>>(CArchive& archive, CRPCResultArray& array) {
 CArchive& operator<<(CArchive& archive, const CRPCResultArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -183,13 +192,14 @@ CArchive& operator<<(CArchive& archive, const CRPCResultArray& array) {
 //---------------------------------------------------------------------------
 void CRPCResult::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CRPCResult, "schema")) return;
+    if (HAS_FIELD(CRPCResult, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CRPCResult, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CRPCResult, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CRPCResult, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CRPCResult, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CRPCResult, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CRPCResult, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CRPCResult, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CRPCResult, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "jsonrpc", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "result", T_TEXT, ++fieldNum);
     ADD_FIELD(CRPCResult, "id", T_TEXT, ++fieldNum);
@@ -207,15 +217,15 @@ void CRPCResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CRPCResult *rpc = reinterpret_cast<const CRPCResult *>(dataPtr);
+string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CRPCResult* rpc = reinterpret_cast<const CRPCResult*>(dataPtr);
     if (rpc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, rpc);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -231,7 +241,6 @@ string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void *dataPtr)
 
 //---------------------------------------------------------------------------
 bool CRPCResult::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -261,10 +270,9 @@ string_q extractRPCError(const string_q& resultIn) {
     replace(generic.result, "code:", "name:");
     replace(generic.result, "message:", "value:");
     generic.parseJson3(generic.result);
-extern void unpreserveSpaces(string_q& str);
+    extern void unpreserveSpaces(string_q & str);
     unpreserveSpaces(generic.result);
     return "RPCerror(" + generic.id + "): " + generic.result;
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

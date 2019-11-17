@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CConfiguration : public CBaseNode {
-public:
+  public:
     CConfigFileArray files;
 
-public:
+  public:
     CConfiguration(void);
     CConfiguration(const CConfiguration& co);
     virtual ~CConfiguration(void);
@@ -36,16 +36,18 @@ public:
 
     DECLARE_NODE(CConfiguration);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CConfiguration& item) const;
-    bool operator!=(const CConfiguration& item) const { return !operator==(item); }
+    bool operator!=(const CConfiguration& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CConfiguration& v1, const CConfiguration& v2);
     friend ostream& operator<<(ostream& os, const CConfiguration& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CConfiguration& co);
@@ -142,4 +144,3 @@ extern const char* STR_DISPLAY_CONFIGURATION;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

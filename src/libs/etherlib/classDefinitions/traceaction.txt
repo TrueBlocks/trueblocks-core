@@ -4,4 +4,5 @@ fields = address address|wei balance|string callType|address from|gas gas|string
 includes = abilib.h
 cpp_includes = trace.h
 serializable = true
-equals = ((address == item.address) && (balance == item.balance) && (callType == item.callType) && (from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) && (refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))
+equals = ((address == item.address) && (balance == item.balance) && (callType == item.callType) &&|(from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&|(refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))
+

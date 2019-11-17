@@ -24,13 +24,13 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CBalanceDelta : public CBaseNode {
-public:
+  public:
     blknum_t blockNumber;
     address_t address;
     wei_t balance;
     bigint_t diff;
 
-public:
+  public:
     CBalanceDelta(void);
     CBalanceDelta(const CBalanceDelta& ba);
     virtual ~CBalanceDelta(void);
@@ -41,11 +41,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CBalanceDelta& item) const;
-    bool operator!=(const CBalanceDelta& item) const { return !operator==(item); }
+    bool operator!=(const CBalanceDelta& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CBalanceDelta& v1, const CBalanceDelta& v2);
     friend ostream& operator<<(ostream& os, const CBalanceDelta& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalanceDelta& ba);
@@ -152,4 +154,3 @@ extern const char* STR_DISPLAY_BALANCEDELTA;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

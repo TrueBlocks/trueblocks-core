@@ -7,15 +7,14 @@
 #include "options.h"
 
 //---------------------------------------------------------------
-bool visitStagingIndexFiles(const string_q& path, void *data) {
-
+bool visitStagingIndexFiles(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", visitStagingIndexFiles, data);
 
     } else {
         cerr << path << endl;
         // Pick up some useful data from the options
-//        COptions *options = reinterpret_cast<COptions*>(data);
+        //        COptions *options = reinterpret_cast<COptions*>(data);
 
         // Silently skips unknown files (such as shell scripts).
         if (!startsWith(path, "0") || !endsWith(path, ".txt"))

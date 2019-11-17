@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_slurp(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
@@ -15,7 +14,8 @@ bool COptions::handle_slurp(void) {
         ostringstream os;
         os << "ethslurp --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
 
@@ -26,7 +26,8 @@ bool COptions::handle_slurp(void) {
         ostringstream os;
         os << "ethslurp " << tool_flags << " " << addr;
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
     }
 
     EXIT_NOMSG8(true);

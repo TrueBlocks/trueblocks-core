@@ -29,11 +29,11 @@ typedef map<string, bool> CFunctionMap;
 
 //--------------------------------------------------------------------------
 class CAbi : public CBaseNode {
-public:
+  public:
     address_t address;
     CFunctionArray interfaces;
 
-public:
+  public:
     CAbi(void);
     CAbi(const CAbi& ab);
     virtual ~CAbi(void);
@@ -41,7 +41,7 @@ public:
 
     DECLARE_NODE(CAbi);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     CFunctionMap interfaceMap;
@@ -51,9 +51,9 @@ public:
     bool loadAbiByAddress(address_t addr);
     bool loadAbiFromFile(const string_q& fileName, bool builtIn);
     bool loadAbiFromString(const string_q& str, bool builtIn);
-    bool articulateTransaction(CTransaction *p) const;
-    bool articulateLog(CLogEntry *l) const;
-    bool articulateTrace(CTrace *t) const;
+    bool articulateTransaction(CTransaction* p) const;
+    bool articulateLog(CLogEntry* l) const;
+    bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     friend class CAccountWatch;
     size_t nFunctions(void) const {
@@ -70,14 +70,18 @@ public:
                 cnt++;
         return cnt;
     }
-    size_t nOther(void) const { return interfaces.size() - nFunctions() - nEvents(); }
+    size_t nOther(void) const {
+        return interfaces.size() - nFunctions() - nEvents();
+    }
     // EXISTING_CODE
     bool operator==(const CAbi& item) const;
-    bool operator!=(const CAbi& item) const { return !operator==(item); }
+    bool operator!=(const CAbi& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAbi& v1, const CAbi& v2);
     friend ostream& operator<<(ostream& os, const CAbi& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAbi& ab);
@@ -182,4 +186,3 @@ extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const s
 extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
 // EXISTING_CODE
 }  // namespace qblocks
-

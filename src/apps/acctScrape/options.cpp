@@ -12,6 +12,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
@@ -20,13 +21,13 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -86,7 +87,7 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         CAccountWatch watch;
-        watch.setValueByName("address", toLower(addr)); // don't change, sets bloom value also
+        watch.setValueByName("address", toLower(addr));  // don't change, sets bloom value also
         watch.setValueByName("name", toLower(addr));
         watch.extra_data = getVersionStr() + "/" + watch.address;
         watch.color = cBlue;
@@ -104,26 +105,31 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    if (unripe)  visitTypes |= VIS_UNRIPE;
-    if (staging) visitTypes |= VIS_STAGING;
+    if (unripe)
+        visitTypes |= VIS_UNRIPE;
+    if (staging)
+        visitTypes |= VIS_STAGING;
 
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // Scan the monitors to see if any are locked (fail if yes). While we're at it, find the block the monitors think we
-    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet and
-    // it's a smart contract, or zero).
+    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet
+    // and it's a smart contract, or zero).
     blknum_t earliestBlock = NOPOS;
     for (auto monitor : monitors) {
         if (!checkLocks(monitor.address))
             return false;
         earliestBlock = min(earliestBlock, nextBlockAsPerMonitor(monitor.address));
     }
-    blknum_t latestBlock = (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
+    blknum_t latestBlock =
+        (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
 
     scanRange = make_pair(earliestBlock, latestBlock);
-    if (start != NOPOS) scanRange.first  = start;  // the user is always right
-    if (end   != NOPOS) scanRange.second = end;    // the user is always right
+    if (start != NOPOS)
+        scanRange.first = start;  // the user is always right
+    if (end != NOPOS)
+        scanRange.second = end;  // the user is always right
 
     if (scanRange.first >= scanRange.second) {  // nothing to do?
         for (auto watch : monitors)
@@ -141,7 +147,7 @@ void COptions::Init(void) {
     daemon = false;
     // END_CODE_INIT
 
-    minArgs    = 0;
+    minArgs = 0;
     visitTypes = VIS_FINAL;
     monitors.clear();
 }
@@ -151,7 +157,9 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -169,17 +177,25 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::checkLocks(const address_t& address) const {
-    string_q fn1 = getMonitorPath(address); if (fileExists(fn1 + ".lck")) return usage("The cache file '" + fn1 + "' is locked. Quitting...");
-    string_q fn2 = getMonitorLast(address); if (fileExists(fn2 + ".lck")) return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-    string_q fn3 = getMonitorExpt(address); if (fileExists(fn3 + ".lck")) return usage("The last export file '" + fn3 + "' is locked. Quitting...");
-    string_q fn4 = getMonitorBals(address); if (fileExists(fn4 + ".lck")) return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    string_q fn1 = getMonitorPath(address);
+    if (fileExists(fn1 + ".lck"))
+        return usage("The cache file '" + fn1 + "' is locked. Quitting...");
+    string_q fn2 = getMonitorLast(address);
+    if (fileExists(fn2 + ".lck"))
+        return usage("The last block file '" + fn2 + "' is locked. Quitting...");
+    string_q fn3 = getMonitorExpt(address);
+    if (fileExists(fn3 + ".lck"))
+        return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+    string_q fn4 = getMonitorBals(address);
+    if (fileExists(fn4 + ".lck"))
+        return usage("The last export file '" + fn4 + "' is locked. Quitting...");
     return true;
 }
 
 //--------------------------------------------------------------------------------
 blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
-
-    blknum_t nextBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
+    blknum_t nextBlock =
+        str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
     blknum_t deployed = 0;
 
     if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {

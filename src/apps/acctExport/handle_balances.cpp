@@ -6,10 +6,14 @@
 #include "options.h"
 
 int nn = 0;
-#define HERE(a) if (isTestMode()) { cout << ++nn << ": " << (a) << endl; cout << "----------------------------------------------" << endl; }
+#define HERE(a)                                                                                                        \
+    if (isTestMode()) {                                                                                                \
+        cout << ++nn << ": " << (a) << endl;                                                                           \
+        cout << "----------------------------------------------" << endl;                                              \
+    }
+
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
-
     ENTER8("exportBalances");
 
     // If the node we're running against does not provide balances...
@@ -23,7 +27,8 @@ bool COptions::exportBalances(void) {
             EXIT_FAIL("Balances not available.");
         }
 
-        // ..then we release the curl context, change the node server, and get a new context. We will replace this below.
+        // ..then we release the curl context, change the node server, and get a new context. We will replace this
+        // below.
         getCurlContext()->baseURL = balanceProvider;
         getCurlContext()->releaseCurl();
         getCurlContext()->getCurl();
@@ -34,7 +39,6 @@ bool COptions::exportBalances(void) {
         cout << "[";
 
     for (auto monitor : monitors) {
-
         CAppearanceArray_base apps;
         loadOneAddress(apps, monitor.address);
 
@@ -55,22 +59,21 @@ bool COptions::exportBalances(void) {
                 };
                 balIn.Release();
             }
-HERE("as read")
-if (isTestMode()) {
-    cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
-    for (auto delta : deltasMap)
-        cerr << delta.first << "\t" << delta.second;
-}
+            // TODO(tjayrush) : remove this
+            HERE("as read")
+            if (isTestMode()) {
+                cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
+                for (auto delta : deltasMap)
+                    cerr << delta.first << "\t" << delta.second;
+            }
         }
 
-HERE("data")
+        HERE("data")
         wei_t priorBalance = 0;
         bool first = true;
-        for (size_t i = 0 ; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt ; i++) {
-
-            const CAppearance_base *item = &apps[i];
+        for (size_t i = 0; i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt; i++) {
+            const CAppearance_base* item = &apps[i];
             if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
-
                 CBalanceRecord record;
                 record.blockNumber = item->blk;
                 record.transactionIndex = item->txid;
@@ -79,23 +82,25 @@ HERE("data")
                 CBalanceDelta none;
                 // handle the prior balance -- note we always have this in the delta map other than zero block
                 record.priorBalance = priorBalance;
-//                if (record.blockNumber < lastDelta) {
-//                    auto it = deltasMap.lower_bound(record.blockNumber);
-////                    cout << "Getting from cache " << record.blockNumber << " it: " << (it == deltasMap.end() ? 10 : it->first) << " " << (it == deltasMap.end() ? none : it->second);
-//                    if (it == deltasMap.end())
-//                        --it;
-//                    record.balance = it->second.balance;
-//                } else {
-//                    cout << ++cnt << " Getting from node " << record.blockNumber << endl;
-                    record.balance = getBalanceAt(monitor.address, record.blockNumber);
-//                }
+                // TODO(tjayrush): remove this
+                //                if (record.blockNumber < lastDelta) {
+                //                    auto it = deltasMap.lower_bound(record.blockNumber);
+                ////                    cout << "Getting from cache " << record.blockNumber << " it: " << (it ==
+                /// deltasMap.end() ? 10 : it->first) << " " << (it == deltasMap.end() ? none : it->second);
+                //                    if (it == deltasMap.end())
+                //                        --it;
+                //                    record.balance = it->second.balance;
+                //                } else {
+                //                    cout << ++cnt << " Getting from node " << record.blockNumber << endl;
+                record.balance = getBalanceAt(monitor.address, record.blockNumber);
+                //                }
                 record.diff = (bigint_t(record.balance) - bigint_t(record.priorBalance));
 
                 if (!freshen && !deltas) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
-//                    cout << endl;
+                    //                    cout << endl;
                     nExported++;
                     first = false;
                 }
@@ -133,12 +138,13 @@ HERE("data")
             }
             balOut.Release();
 
-HERE("Out")
-if (isTestMode()) {
-    cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
-    for (auto delta : deltasMap)
-        cerr << delta.first << "\t" << delta.second;
-}
+            // TODO(tjayrush): remove this
+            HERE("Out")
+            if (isTestMode()) {
+                cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
+                for (auto delta : deltasMap)
+                    cerr << delta.first << "\t" << delta.second;
+            }
         }
     }
 
@@ -155,7 +161,7 @@ if (isTestMode()) {
     EXIT_NOMSG8(true);
 }
 
-    // So as to keep the file small, we only write balances where there is a change
+// So as to keep the file small, we only write balances where there is a change
 #if 0
     if (balances.size() == 0 && fileExists(binaryFilename) && fileSize(binaryFilename) > 0) {
 

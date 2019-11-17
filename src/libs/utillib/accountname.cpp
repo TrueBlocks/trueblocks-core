@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountName, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CAccountName::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccountName *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccountName*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextAccountnameChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CAccountName::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextAccountnameChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,42 +68,60 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return address;
+            if (fieldName % "address")
+                return address;
             break;
         case 'c':
-            if ( fieldName % "color" ) return color;
+            if (fieldName % "color")
+                return color;
             break;
         case 'd':
-            if ( fieldName % "description" ) return description;
+            if (fieldName % "description")
+                return description;
             break;
         case 'f':
-            if ( fieldName % "firstAppearance" ) return uint_2_Str(firstAppearance);
+            if (fieldName % "firstAppearance")
+                return uint_2_Str(firstAppearance);
             break;
         case 'g':
-            if ( fieldName % "group" ) return group;
+            if (fieldName % "group")
+                return group;
             break;
         case 'i':
-            if ( fieldName % "is_contract" ) return bool_2_Str(is_contract);
-            if ( fieldName % "is_private" ) return bool_2_Str(is_private);
-            if ( fieldName % "is_shared" ) return bool_2_Str(is_shared);
+            if (fieldName % "is_contract")
+                return bool_2_Str(is_contract);
+            if (fieldName % "is_private")
+                return bool_2_Str(is_private);
+            if (fieldName % "is_shared")
+                return bool_2_Str(is_shared);
             break;
         case 'l':
-            if ( fieldName % "logo" ) return logo;
-            if ( fieldName % "latestAppearance" ) return uint_2_Str(latestAppearance);
-            if ( fieldName % "lastExport" ) return uint_2_Str(lastExport);
+            if (fieldName % "logo")
+                return logo;
+            if (fieldName % "latestAppearance")
+                return uint_2_Str(latestAppearance);
+            if (fieldName % "lastExport")
+                return uint_2_Str(lastExport);
             break;
         case 'n':
-            if ( fieldName % "name" ) return name;
-            if ( fieldName % "nRecords" ) return uint_2_Str(nRecords);
+            if (fieldName % "name")
+                return name;
+            if (fieldName % "nRecords")
+                return uint_2_Str(nRecords);
             break;
         case 'p':
-            if ( fieldName % "path" ) return path;
+            if (fieldName % "path")
+                return path;
             break;
         case 's':
-            if ( fieldName % "subgroup" ) return subgroup;
-            if ( fieldName % "symbol" ) return symbol;
-            if ( fieldName % "source" ) return source;
-            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
+            if (fieldName % "subgroup")
+                return subgroup;
+            if (fieldName % "symbol")
+                return symbol;
+            if (fieldName % "source")
+                return source;
+            if (fieldName % "sizeInBytes")
+                return uint_2_Str(sizeInBytes);
             break;
     }
 
@@ -127,42 +144,96 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = fieldValue; return true; }
+            if (fieldName % "address") {
+                address = fieldValue;
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "color" ) { color = fieldValue; return true; }
+            if (fieldName % "color") {
+                color = fieldValue;
+                return true;
+            }
             break;
         case 'd':
-            if ( fieldName % "description" ) { description = fieldValue; return true; }
+            if (fieldName % "description") {
+                description = fieldValue;
+                return true;
+            }
             break;
         case 'f':
-            if ( fieldName % "firstAppearance" ) { firstAppearance = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "firstAppearance") {
+                firstAppearance = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "group" ) { group = fieldValue; return true; }
+            if (fieldName % "group") {
+                group = fieldValue;
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "is_contract" ) { is_contract = str_2_Bool(fieldValue); return true; }
-            if ( fieldName % "is_private" ) { is_private = str_2_Bool(fieldValue); return true; }
-            if ( fieldName % "is_shared" ) { is_shared = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "is_contract") {
+                is_contract = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_private") {
+                is_private = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_shared") {
+                is_shared = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'l':
-            if ( fieldName % "logo" ) { logo = fieldValue; return true; }
-            if ( fieldName % "latestAppearance" ) { latestAppearance = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "lastExport" ) { lastExport = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "logo") {
+                logo = fieldValue;
+                return true;
+            }
+            if (fieldName % "latestAppearance") {
+                latestAppearance = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "lastExport") {
+                lastExport = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "nRecords" ) { nRecords = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            if (fieldName % "nRecords") {
+                nRecords = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'p':
-            if ( fieldName % "path" ) { path = fieldValue; return true; }
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "subgroup" ) { subgroup = fieldValue; return true; }
-            if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
-            if ( fieldName % "source" ) { source = fieldValue; return true; }
-            if ( fieldName % "sizeInBytes" ) { sizeInBytes = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "subgroup") {
+                subgroup = fieldValue;
+                return true;
+            }
+            if (fieldName % "symbol") {
+                symbol = fieldValue;
+                return true;
+            }
+            if (fieldName % "source") {
+                source = fieldValue;
+                return true;
+            }
+            if (fieldName % "sizeInBytes") {
+                sizeInBytes = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -178,7 +249,6 @@ void CAccountName::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -198,23 +268,22 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> source;
     archive >> logo;
-//    archive >> path;
-//    archive >> color;
+    // archive >> path;
+    // archive >> color;
     archive >> is_contract;
     archive >> is_private;
     archive >> is_shared;
-//    archive >> firstAppearance;
-//    archive >> latestAppearance;
-//    archive >> lastExport;
-//    archive >> nRecords;
-//    archive >> sizeInBytes;
+    // archive >> firstAppearance;
+    // archive >> latestAppearance;
+    // archive >> lastExport;
+    // archive >> nRecords;
+    // archive >> sizeInBytes;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CAccountName::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -228,16 +297,16 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << source;
     archive << logo;
-//    archive << path;
-//    archive << color;
+    // archive << path;
+    // archive << color;
     archive << is_contract;
     archive << is_private;
     archive << is_shared;
-//    archive << firstAppearance;
-//    archive << latestAppearance;
-//    archive << lastExport;
-//    archive << nRecords;
-//    archive << sizeInBytes;
+    // archive << firstAppearance;
+    // archive << latestAppearance;
+    // archive << lastExport;
+    // archive << nRecords;
+    // archive << sizeInBytes;
 
     return true;
 }
@@ -247,7 +316,7 @@ CArchive& operator>>(CArchive& archive, CAccountNameArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -258,7 +327,7 @@ CArchive& operator>>(CArchive& archive, CAccountNameArray& array) {
 CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -266,13 +335,14 @@ CArchive& operator<<(CArchive& archive, const CAccountNameArray& array) {
 //---------------------------------------------------------------------------
 void CAccountName::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAccountName, "schema")) return;
+    if (HAS_FIELD(CAccountName, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAccountName, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountName, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountName, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountName, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CAccountName, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "subgroup", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
@@ -312,15 +382,15 @@ void CAccountName::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountName *acc = reinterpret_cast<const CAccountName *>(dataPtr);
+string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAccountName* acc = reinterpret_cast<const CAccountName*>(dataPtr);
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, acc);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -336,7 +406,6 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void *dataPt
 
 //---------------------------------------------------------------------------
 bool CAccountName::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -354,18 +423,18 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTNAME = 
-"[{GROUP}]\t"
-"[{SUBGROUP}]\t"
-"[{ADDRESS}]\t"
-"[{NAME}]\t"
-"[{SYMBOL}]\t"
-"[{SOURCE}]\t"
-"[{DESCRIPTION}]\t"
-"[{LOGO}]\t"
-"[{IS_CONTRACT}]\t"
-"[{IS_PRIVATE}]\t"
-"[{IS_SHARED}]";
+const char* STR_DISPLAY_ACCOUNTNAME =
+    "[{GROUP}]\t"
+    "[{SUBGROUP}]\t"
+    "[{ADDRESS}]\t"
+    "[{NAME}]\t"
+    "[{SYMBOL}]\t"
+    "[{SOURCE}]\t"
+    "[{DESCRIPTION}]\t"
+    "[{LOGO}]\t"
+    "[{IS_CONTRACT}]\t"
+    "[{IS_PRIVATE}]\t"
+    "[{IS_SHARED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -374,18 +443,39 @@ CAccountName::CAccountName(const string_q& strIn) {
 
     CStringArray parts;
     explode(parts, str, '\t');
-    if (parts.size() > 0) { group = parts[0]; }
-    if (parts.size() > 1) { subgroup = parts[1]; }
-    if (parts.size() > 2) { address = toLower(parts[2]); }
-    if (parts.size() > 3) { name = parts[3]; }
-    if (parts.size() > 4) { description = parts[4]; }
-    if (parts.size() > 5) { symbol = parts[5]; }
-    if (parts.size() > 6) { source = parts[6]; }
-    if (parts.size() > 7) { logo = parts[7]; }
-    if (parts.size() > 8) { is_contract = str_2_Bool(parts[8]); }
-    if (parts.size() > 9) { is_private = str_2_Bool(parts[9]); }
-    if (parts.size() > 10) { is_shared = str_2_Bool(parts[10]); }
+    if (parts.size() > 0) {
+        group = parts[0];
+    }
+    if (parts.size() > 1) {
+        subgroup = parts[1];
+    }
+    if (parts.size() > 2) {
+        address = toLower(parts[2]);
+    }
+    if (parts.size() > 3) {
+        name = parts[3];
+    }
+    if (parts.size() > 4) {
+        description = parts[4];
+    }
+    if (parts.size() > 5) {
+        symbol = parts[5];
+    }
+    if (parts.size() > 6) {
+        source = parts[6];
+    }
+    if (parts.size() > 7) {
+        logo = parts[7];
+    }
+    if (parts.size() > 8) {
+        is_contract = str_2_Bool(parts[8]);
+    }
+    if (parts.size() > 9) {
+        is_private = str_2_Bool(parts[9]);
+    }
+    if (parts.size() > 10) {
+        is_shared = str_2_Bool(parts[10]);
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

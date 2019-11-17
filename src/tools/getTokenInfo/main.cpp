@@ -16,7 +16,7 @@ void reportByToken(COptions& options);
 void reportByAccount(COptions& options);
 extern string_q getERC20State(const string_q& which, CTokenState_erc20& w, const address_t& h, blknum_t b);
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
 
     COptions options;
@@ -60,7 +60,6 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------
 void reportByToken(COptions& options) {
-
     uint64_t cnt = 0;
 
     bool needsNewline = true;
@@ -103,7 +102,6 @@ void reportByToken(COptions& options) {
 
 //--------------------------------------------------------------
 void reportByAccount(COptions& options) {
-
     uint64_t cnt = 0;
 
     bool needsNewline = true;
@@ -147,7 +145,6 @@ void reportByAccount(COptions& options) {
 
 //-------------------------------------------------------------------------
 string_q getERC20State(const string_q& which, CTokenState_erc20& token, const address_t& holder, blknum_t blockNum) {
-
     if (!isAddress(token.address))
         return "";
     ASSERT(holder.empty() || isAddress(holder));
@@ -160,28 +157,28 @@ string_q getERC20State(const string_q& which, CTokenState_erc20& token, const ad
     ostringstream os;
     if (which % "all") {
         for (auto opt : infoOptions) {
-            opt = nextTokenClear(opt,'|');
+            opt = nextTokenClear(opt, '|');
             if (opt != "balanceOf" && opt != "all" && isValidInfo(opt, encoding)) {
                 cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
-                replace(cmd, "[TOKEN]",  token.address);
-                replace(cmd, "[CMD]",    encoding);  // encoded data for the transaction
-                replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+                replace(cmd, "[TOKEN]", token.address);
+                replace(cmd, "[CMD]", encoding);  // encoded data for the transaction
+                replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
                 CFunction ret;
                 token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret);
                 os << "\"" << opt << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\",\n";
             }
         }
-        return "{\n\t" + trim(substitute(trim(trim(os.str(),'\n'),',')+"\n","\n","\n\t"),'\t') + "}";
+        return "{\n\t" + trim(substitute(trim(trim(os.str(), '\n'), ',') + "\n", "\n", "\n\t"), '\t') + "}";
 
     } else {
         if (isValidInfo(which, encoding)) {
             cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
             if (which != "balanceOf")
                 cmd = substitute(cmd, "[HOLDER]", "");
-            replace(cmd, "[TOKEN]",  token.address);
-            replace(cmd, "[CMD]",    encoding);
+            replace(cmd, "[TOKEN]", token.address);
+            replace(cmd, "[CMD]", encoding);
             replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data (may be empty)
-            replace(cmd, "[BLOCK]",  uint_2_Hex(blockNum));
+            replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
         }
     }
 
@@ -197,7 +194,7 @@ bool isValidInfo(const string_q which, string_q& encoding) {
     if (which == "all")
         return true;
     for (auto item : infoOptions) {
-        if (contains(item, which+"|")) {
+        if (contains(item, which + "|")) {
             encoding = item;
             nextTokenClear(encoding, '|');
             return true;
@@ -207,12 +204,10 @@ bool isValidInfo(const string_q which, string_q& encoding) {
 }
 
 //-------------------------------------------------------------------------
-const CStringArray infoOptions = {
-    "name|0x06fdde03",
-    "totalSupply|0x18160ddd",
-    "balanceOf|0x70a08231",
-    "decimals|0x313ce567",
-    "version|0x54fd4d50",
-    "symbol|0x95d89b41",
-    "all"
-};
+const CStringArray infoOptions = {"name|0x06fdde03",
+                                  "totalSupply|0x18160ddd",
+                                  "balanceOf|0x70a08231",
+                                  "decimals|0x313ce567",
+                                  "version|0x54fd4d50",
+                                  "symbol|0x95d89b41",
+                                  "all"};

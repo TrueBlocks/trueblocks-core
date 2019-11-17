@@ -16,21 +16,23 @@
 
 namespace qblocks {
 
-    // TODO(tjayrush): global data
-    static timepoint_t t1 = qbNow2();
-    void resetClock(void) { t1 = qbNow2(); }
-    string_q TIC(double div) {
-        timepoint_t t2 = qbNow2();
-        double ret = std::chrono::duration_cast<duration_t>(t2 - t1).count();
-        t1 = t2;
-        return double_2_Str(ret / div, 5);
-    }
-    double qbNow(void) {
-        struct timeval tv;
-        gettimeofday(&tv, 0);
-        double secs = static_cast<double>(tv.tv_sec);
-        double usecs = static_cast<double>(tv.tv_usec);
-        return (secs + (usecs / 100000.0));
-    }
+// TODO(tjayrush): global data
+static timepoint_t t1 = qbNow2();
+void resetClock(void) {
+    t1 = qbNow2();
+}
+string_q TIC(double div) {
+    timepoint_t t2 = qbNow2();
+    double ret = std::chrono::duration_cast<duration_t>(t2 - t1).count();
+    t1 = t2;
+    return double_2_Str(ret / div, 5);
+}
+double qbNow(void) {
+    struct timeval tv;
+    gettimeofday(&tv, 0);
+    double secs = static_cast<double>(tv.tv_sec);
+    double usecs = static_cast<double>(tv.tv_usec);
+    return (secs + (usecs / 100000.0));
+}
 
 }  // namespace qblocks

@@ -14,7 +14,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -41,7 +41,6 @@ int main(int argc, const char *argv[]) {
 
         } else {
             return options.usage("Unknown test: " + int_2_Str(options.testNum) + "\n");
-
         }
     }
 

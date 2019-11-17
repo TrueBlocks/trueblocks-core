@@ -15,13 +15,13 @@
 
 namespace qblocks {
 
-    //--------------------------------------------------------------------------------
-    extern string_q getVersionStr(bool incProg = true, bool incGit = true);
-    extern uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build);
-    extern uint32_t getVersionNum(void);
+//--------------------------------------------------------------------------------
+extern string_q getVersionStr(bool incProg = true, bool incGit = true);
+extern uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build);
+extern uint32_t getVersionNum(void);
 
-    extern string_q GIT_COMMIT_BRANCH;
-    extern string_q GIT_COMMIT_HASH;
-    extern timestamp_t GIT_COMMIT_TS;
+extern string_q GIT_COMMIT_BRANCH;
+extern string_q GIT_COMMIT_HASH;
+extern timestamp_t GIT_COMMIT_TS;
 
 }  // namespace qblocks

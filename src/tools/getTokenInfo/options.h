@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
     string_q parts;

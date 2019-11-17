@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_leech(void) {
-
 #if 0
     // leech mode does not require a running node
     nodeNotRequired();

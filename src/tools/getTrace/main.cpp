@@ -13,7 +13,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -36,15 +36,14 @@ int main(int argc, const char *argv[]) {
 }
 
 //--------------------------------------------------------------
-bool visitTransaction(CTransaction& trans, void *data) {
-
-    COptions *opt = reinterpret_cast<COptions *>(data);
-    bool isText = (opt->exportFmt & (TXT1|CSV1));
+bool visitTransaction(CTransaction& trans, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
         opt->errors.push_back("Transaction " + hash + " not found.");
-        return true; // continue even with an invalid item
+        return true;  // continue even with an invalid item
     }
 
     if (opt->isRaw || opt->isVeryRaw) {
@@ -52,7 +51,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
         queryRawTrace(result, trans.getValueByName("hash"));
         if (!isText && !opt->first)
             cout << ",";
-        replace(result, "[", "");  // not sure why we need this
+        replace(result, "[", "");         // not sure why we need this
         replaceReverse(result, "]", "");  // not sure why we need this
         cout << result;
         opt->first = false;
@@ -76,7 +75,8 @@ bool visitTransaction(CTransaction& trans, void *data) {
     bool useCache = true;
     if (getEnvStr("NO_CACHE") == "true")
         useCache = false;
-    loadTraces(trans, trans.blockNumber, trans.transactionIndex, useCache, (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
+    loadTraces(trans, trans.blockNumber, trans.transactionIndex, useCache,
+               (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
 
     //////////////////////////////////////////////////////
 
@@ -84,10 +84,10 @@ bool visitTransaction(CTransaction& trans, void *data) {
         opt->abi_spec.loadAbiByAddress(trans.to);
 
     for (auto trace : trans.traces) {
-
         if (!isTestMode() && isApiMode()) {
             qblocks::eLogger->setEndline('\r');
-            LOG_INFO("Getting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
+            LOG_INFO("Getting trace ", trans.blockNumber, ".", trans.transactionIndex, "-",
+                     trace.getValueByName("traceAddress"), string_q(50, ' '));
             qblocks::eLogger->setEndline('\n');
         }
 
@@ -117,7 +117,7 @@ bool visitTransaction(CTransaction& trans, void *data) {
 }
 
 //--------------------------------------------------------------
-bool displayAsCreation(COptions *opt, const CTrace& trace) {
+bool displayAsCreation(COptions* opt, const CTrace& trace) {
     if (trace.result.address == "")
         return false;
     CTrace copy = trace;
@@ -134,7 +134,7 @@ bool displayAsCreation(COptions *opt, const CTrace& trace) {
 }
 
 //--------------------------------------------------------------
-bool displayAsSuicide(COptions *opt, const CTrace& trace) {
+bool displayAsSuicide(COptions* opt, const CTrace& trace) {
     if (trace.action.refundAddress == "")
         return false;
     CTrace copy = trace;
@@ -149,8 +149,8 @@ bool displayAsSuicide(COptions *opt, const CTrace& trace) {
 }
 
 //--------------------------------------------------------------
-bool displayAsTrace(COptions *opt, const CTrace& trace) {
-    bool isText = (opt->exportFmt & (TXT1|CSV1));
+bool displayAsTrace(COptions* opt, const CTrace& trace) {
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
     if (isText) {
         cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {

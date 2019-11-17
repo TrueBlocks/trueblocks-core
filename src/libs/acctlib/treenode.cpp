@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeNode, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,9 +49,9 @@ void CTreeNode::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 }
 
 //---------------------------------------------------------------------------
-string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTreenodeChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTreeNode *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeNode*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -61,7 +61,6 @@ string_q nextTreenodeChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTreeNode::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTreenodeChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -70,10 +69,12 @@ string_q CTreeNode::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) return uint_2_Str(index);
+            if (fieldName % "index")
+                return uint_2_Str(index);
             break;
         case 'p':
-            if ( fieldName % "prefixS" ) return prefixS;
+            if (fieldName % "prefixS")
+                return prefixS;
             break;
     }
 
@@ -94,10 +95,16 @@ bool CTreeNode::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "index" ) { index = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "index") {
+                index = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'p':
-            if ( fieldName % "prefixS" ) { prefixS = fieldValue; return true; }
+            if (fieldName % "prefixS") {
+                prefixS = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -113,7 +120,6 @@ void CTreeNode::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -133,7 +139,6 @@ bool CTreeNode::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeNode::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -150,7 +155,7 @@ CArchive& operator>>(CArchive& archive, CTreeNodeArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -161,7 +166,7 @@ CArchive& operator>>(CArchive& archive, CTreeNodeArray& array) {
 CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -169,13 +174,14 @@ CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array) {
 //---------------------------------------------------------------------------
 void CTreeNode::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTreeNode, "schema")) return;
+    if (HAS_FIELD(CTreeNode, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTreeNode, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTreeNode, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTreeNode, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTreeNode, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTreeNode, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeNode, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTreeNode, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTreeNode, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "prefixS", T_TEXT, ++fieldNum);
 
@@ -192,15 +198,15 @@ void CTreeNode::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeNode *tre = reinterpret_cast<const CTreeNode *>(dataPtr);
+string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTreeNode* tre = reinterpret_cast<const CTreeNode*>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tre);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -216,7 +222,6 @@ string_q nextTreenodeChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 
 //---------------------------------------------------------------------------
 bool CTreeNode::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -238,34 +243,31 @@ const char* STR_DISPLAY_TREENODE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CTreeNode* CTreeNode::newBranch(
-    const string_q& _k1,
-    const string_q& _v1,
-    const string_q& _k2,
-    const string_q& _v2) {
-
+CTreeNode* CTreeNode::newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2) {
     unsigned prefix = commonPrefix(_k1, _k2);
     CTreeNode* ret;
     if (_k1.length() == prefix) {
-        if (verbose == 2) cerr << "k1 matches up to " << prefix << endl;
-        ret = new CBranch(_k2[prefix], new CLeaf(extract(_k2, prefix+1), _v2), _v1);
+        if (verbose == 2)
+            cerr << "k1 matches up to " << prefix << endl;
+        ret = new CBranch(_k2[prefix], new CLeaf(extract(_k2, prefix + 1), _v2), _v1);
 
     } else if (_k2.length() == prefix) {
-        if (verbose == 2) cerr << "k2 matches up to " << prefix << endl;
-        ret = new CBranch(_k1[prefix], new CLeaf(extract(_k1, prefix+1), _v1), _v2);
+        if (verbose == 2)
+            cerr << "k2 matches up to " << prefix << endl;
+        ret = new CBranch(_k1[prefix], new CLeaf(extract(_k1, prefix + 1), _v1), _v2);
 
     } else {
         // both continue after split
-        if (verbose == 2) cerr << "both keys continue past prefix " << prefix << endl;
-        ret = new CBranch(_k1[prefix],
-                          new CLeaf(extract(_k1, prefix+1), _v1),
-                          _k2[prefix],
-                          new CLeaf(extract(_k2, prefix+1), _v2));
+        if (verbose == 2)
+            cerr << "both keys continue past prefix " << prefix << endl;
+        ret = new CBranch(_k1[prefix], new CLeaf(extract(_k1, prefix + 1), _v1), _k2[prefix],
+                          new CLeaf(extract(_k2, prefix + 1), _v2));
     }
 
     if (prefix) {
         // have shared prefix - split.
-        if (verbose == 2) cerr << "shared prefix " << prefix << endl;
+        if (verbose == 2)
+            cerr << "shared prefix " << prefix << endl;
         ret = new CInfix(extract(_k1, 0, prefix), ret);
     }
 
@@ -273,4 +275,3 @@ CTreeNode* CTreeNode::newBranch(
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

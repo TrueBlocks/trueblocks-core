@@ -23,9 +23,9 @@
 
 //--------------------------------------------------------------------------
 class [{CLASS_NAME}] : public [{BASE_CLASS}] {
-public:
+  public:
 [FIELD_DEC]
-public:
+  public:
     [{CLASS_NAME}](void);
     [{CLASS_NAME}](const [{CLASS_NAME}]& [{SHORT}]);
     ~[{CLASS_NAME}](void);
@@ -36,11 +36,13 @@ public:
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const [{CLASS_NAME}]& item) const;
-    bool operator!=(const [{CLASS_NAME}]& item) const { return !operator==(item); }
+    bool operator!=(const [{CLASS_NAME}]& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
     friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const [{CLASS_NAME}]& [{SHORT}]);

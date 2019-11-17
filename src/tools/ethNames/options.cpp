@@ -19,6 +19,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
@@ -30,6 +31,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -38,7 +40,6 @@ string_q shortenFormat(const string_q& fmtIn);
 string_q getSearchFields(const string_q& fmtIn);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -118,11 +119,41 @@ bool COptions::parseArguments(string_q& command) {
         format = searchFields;
     }
 
-    if (named)   { if (deflt) { types = 0; deflt = false; } types |= NAMED;   }
-    if (prefund) { if (deflt) { types = 0; deflt = false; } types |= PREFUND; }
-    if (custom)  { if (deflt) { types = 0; deflt = false; } types |= CUSTOM;  }
-    if (owned)   { if (deflt) { types = 0; deflt = false; } types |= OWNED;   }
-    if (other)   { if (deflt) { types = 0; deflt = false; } types |= OTHER;   }
+    if (named) {
+        if (deflt) {
+            types = 0;
+            deflt = false;
+        }
+        types |= NAMED;
+    }
+    if (prefund) {
+        if (deflt) {
+            types = 0;
+            deflt = false;
+        }
+        types |= PREFUND;
+    }
+    if (custom) {
+        if (deflt) {
+            types = 0;
+            deflt = false;
+        }
+        types |= CUSTOM;
+    }
+    if (owned) {
+        if (deflt) {
+            types = 0;
+            deflt = false;
+        }
+        types |= OWNED;
+    }
+    if (other) {
+        if (deflt) {
+            types = 0;
+            deflt = false;
+        }
+        types |= OTHER;
+    }
 
     if (addr) {
         addr_only = true;
@@ -191,13 +222,16 @@ COptions::COptions(void) {
     loadNames();
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("With a single search term, the tool searches both `name` and `address`.");
     notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");
     notes.push_back("When there are two search terms, both must match.");
     notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    // clang-format on
     // END_CODE_NOTES
-    notes.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" + uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
+    notes.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" +
+                    uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
@@ -214,15 +248,15 @@ bool COptions::addIfUnique(const CAccountName& item) {
 
     address_t key = toLower(item.address);
     if (items[key].address == key) {  // it's already in the map, but we want the last in name to win
-        if (!item.name.empty() &&
-            (items[key].name != item.name || startsWith(items[key].name, "Owned_") || startsWith(items[key].name, "Prefund_"))) {
+        if (!item.name.empty() && (items[key].name != item.name || startsWith(items[key].name, "Owned_") ||
+                                   startsWith(items[key].name, "Prefund_"))) {
             items[key].name = item.name;
         }
         return false;
     }
 
     if (!match_case)
-        for (size_t i = 0 ; i < searches.size() ; i++)
+        for (size_t i = 0; i < searches.size(); i++)
             searches[i] = toLower(searches[i]);
 
     string_q search1 = searches.size() > 0 ? searches[0] : "";
@@ -245,11 +279,10 @@ bool COptions::addIfUnique(const CAccountName& item) {
 
 //-----------------------------------------------------------------------
 void COptions::applyFilter() {
-
     //------------------------
     if (types & OWNED) {
         if (isTestMode()) {
-            for (uint32_t i = 1 ; i < 5 ; i++) {
+            for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 addIfUnique(item);
@@ -268,12 +301,12 @@ void COptions::applyFilter() {
     //------------------------
     if (types & CUSTOM) {
         if (isTestMode()) {
-            for (uint32_t i = 1 ; i < 5 ; i++) {
+            for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
                 item.group = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.name = "Account_" + uint_2_Str(i);
-                if (!(i%2))
+                if (!(i % 2))
                     item.symbol = "AC_" + uint_2_Str(i);
                 item.source = "Testing";
                 addIfUnique(item);

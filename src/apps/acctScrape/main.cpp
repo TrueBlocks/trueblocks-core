@@ -7,8 +7,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(defaultQuitHandler);
 

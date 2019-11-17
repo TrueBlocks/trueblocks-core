@@ -27,7 +27,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAccountWatch : public CAccountName {
-public:
+  public:
     CAbi abi_spec;
     CIncomeStatement statement;
     CEthStateArray stateHistory;
@@ -35,7 +35,7 @@ public:
     bool enabled;
     freshen_e fm_mode;
 
-public:
+  public:
     CAccountWatch(void);
     CAccountWatch(const CAccountWatch& ac);
     virtual ~CAccountWatch(void);
@@ -43,14 +43,14 @@ public:
 
     DECLARE_NODE(CAccountWatch);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color);
     CAccountWatch(const address_t& _addr, const string_q& _name);
     bloom_t bloom;
     bool inBlock;
-    CArchive *tx_cache;
+    CArchive* tx_cache;
     string_q extra_data;
     void writeLastBlock(blknum_t bn);
     void writeLastExport(blknum_t bn);
@@ -59,11 +59,13 @@ public:
     bool openCacheFile1(void);
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
-    bool operator!=(const CAccountWatch& item) const { return !operator==(item); }
+    bool operator!=(const CAccountWatch& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
     friend ostream& operator<<(ostream& os, const CAccountWatch& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAccountWatch& ac);
@@ -90,8 +92,8 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB,
-                                        blknum_t lB, const string_q& _color) {
+inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB,
+                                    const string_q& _color) {
     initialize();
     address = toLower(_addr);
     name = _name;
@@ -204,8 +206,7 @@ extern const char* STR_DISPLAY_ACCOUNTWATCH;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t,CAccountWatch> CAccountWatchMap;  // NOLINT
+typedef map<address_t, CAccountWatch> CAccountWatchMap;  // NOLINT
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 // EXISTING_CODE
 }  // namespace qblocks
-

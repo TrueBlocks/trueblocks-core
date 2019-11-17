@@ -6,8 +6,7 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(defaultQuitHandler);
 
@@ -26,16 +25,15 @@ int main(int argc, const char *argv[]) {
         // Handle the various modes (there may be more than one)
         CStringArray modes;
         explode(modes, options.mode, '|');
-        for (auto mode: modes) {
+        for (auto mode : modes) {
             uint32_t nOpened = 0;
-            for (size_t ac = 0 ; ac < options.monitors.size() ; ac++) {
+            for (size_t ac = 0; ac < options.monitors.size(); ac++) {
+                CAccountWatch* watch = &options.monitors[ac];
 
-                CAccountWatch *watch = &options.monitors[ac];
-
-                options.stats = CStats(); // reset
+                options.stats = CStats();  // reset
                 CAppearance_base lastItem;
                 CAppearanceArray_base fixed;
-                fixed.reserve(2000000); // just a guess, but makes adding new records very much faster
+                fixed.reserve(2000000);  // just a guess, but makes adding new records very much faster
 
                 CAppearanceArray_base items;
                 if (!options.loadMonitorData(items, watch->address)) {
@@ -44,12 +42,12 @@ int main(int argc, const char *argv[]) {
                 } else {
                     nOpened++;
                     if (!options.data)
-                        LOG_INFO(toProper(mode)+"ing cache: ", substitute(watch->name, getCachePath(""), "${CACHE}/"));
+                        LOG_INFO(toProper(mode) + "ing cache: ",
+                                 substitute(watch->name, getCachePath(""), "${CACHE}/"));
                     if (options.exportFmt == JSON1)
                         cout << "[";
 
                     for (auto item : items) {
-
                         if (shouldQuit())
                             break;
 
@@ -63,45 +61,48 @@ int main(int argc, const char *argv[]) {
                                 }
                                 if (isDup) {
                                     cout << "\tDuplicate at record " << cYellow << options.stats.nRecords << cOff
-                                            << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
-                                            << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff << "\n";
+                                         << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
+                                         << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff
+                                         << "\n";
                                     options.stats.nDups++;
 
-                                } else if (item.blk < lastItem.blk)
-                                {
+                                } else if (item.blk < lastItem.blk) {
                                     cout << "\tReversal at record " << cYellow << options.stats.nRecords << cOff
-                                            << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
-                                            << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff << "\n";
+                                         << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
+                                         << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff
+                                         << "\n";
                                     options.stats.nReversals++;
 
                                 } else if (item.blk > latest) {
                                     cout << "\tcur: " << cYellow << item.blk << "\t" << item.txid << cOff;
-                                    cout << " prev: " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff << "\n";
+                                    cout << " prev: " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff
+                                         << "\n";
                                     cout << "\tBlock number larger than latestBlock (" << latest
-                                            << ") found at record: " << cYellow << options.stats.nRecords << cOff
-                                            << " current: " << cYellow << item.blk << "\t" << item.txid << cOff << ". Your file is probably"
-                                            << " currupted. Quitting...\n";
+                                         << ") found at record: " << cYellow << options.stats.nRecords << cOff
+                                         << " current: " << cYellow << item.blk << "\t" << item.txid << cOff
+                                         << ". Your file is probably"
+                                         << " currupted. Quitting...\n";
                                     return 0;
                                 }
                                 lastItem = item;
 
                             } else if (mode == "fix") {
                                 if (isDup) {
-                                    cout << "\tDuplicate removed at record " << cYellow << options.stats.nRecords << cOff
-                                            << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
-                                            << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff << "\n";
+                                    cout << "\tDuplicate removed at record " << cYellow << options.stats.nRecords
+                                         << cOff << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
+                                         << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff
+                                         << "\n";
                                     options.stats.nFixed++;
 
-                                } else if (item.blk < lastItem.blk)
-                                {
+                                } else if (item.blk < lastItem.blk) {
                                     cout << "\tReversal skipped at record " << cYellow << options.stats.nRecords << cOff
-                                            << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
-                                            << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff << "\n";
+                                         << ", current " << cYellow << item.blk << "\t" << item.txid << cOff
+                                         << ", previous " << cYellow << lastItem.blk << "\t" << lastItem.txid << cOff
+                                         << "\n";
                                     options.stats.nFixed++;
 
                                 } else {
                                     if (!options.truncate || item.blk <= options.truncate) {
-
                                         fixed.push_back(item);
                                         lastItem = item;
                                         if (!isTestMode()) {
@@ -112,7 +113,6 @@ int main(int argc, const char *argv[]) {
                                     } else {
                                         options.stats.nTruncs++;
                                     }
-
                                 }
 
                             } else if (mode == "list") {
@@ -130,7 +130,8 @@ int main(int argc, const char *argv[]) {
                                         cout << (isApiMode() ? ("\"" + watch->address + "\",") : "");
                                         cout << item.blk << "," << item.txid << endl;
                                     } else {
-                                        cout << (isApiMode() ? watch->address + "\t" : "") << item.blk << "\t" << item.txid << endl;
+                                        cout << (isApiMode() ? watch->address + "\t" : "") << item.blk << "\t"
+                                             << item.txid << endl;
                                     }
                                 }
 
@@ -153,7 +154,8 @@ int main(int argc, const char *argv[]) {
                     cout << cMagenta << "\tThe cache has " << options.stats.nReversals << " reversals.\n" << cOff;
                 } else if (mode == "check") {
                     cout << cMagenta << "\tNo problems found (n: " << options.stats.nRecords
-                            << " / bn: " << lastItem.blk << ").               \n" << cOff;
+                         << " / bn: " << lastItem.blk << ").               \n"
+                         << cOff;
                 }
 
                 blknum_t lastBlock = 0;
@@ -162,22 +164,22 @@ int main(int argc, const char *argv[]) {
                 asciiFileToString(lbFileName, contents);
                 blknum_t prevLastBlock = str_2_Uint(contents);
                 if (options.stats.nFixed || options.stats.nTruncs) {
-                    string_q backFile = watch->name+".bak";
+                    string_q backFile = watch->name + ".bak";
                     copyFile(watch->name, backFile);
-                    usleep(500000); // wait a second, just in case
+                    usleep(500000);  // wait a second, just in case
                     if (!fileExists(backFile)) {
                         cerr << "Could not create backup file `" << backFile << ". Quitting...";
                         return 1;
                     }
-                    cout << "\tRe-writing " << cYellow << fixed.size() << cOff
-                            << " of " << options.stats.nRecords << " records to cache: "
-                            << cYellow << watch->name << cOff << " (" << options.stats.nTruncs << " truncated)\n";
+                    cout << "\tRe-writing " << cYellow << fixed.size() << cOff << " of " << options.stats.nRecords
+                         << " records to cache: " << cYellow << watch->name << cOff << " (" << options.stats.nTruncs
+                         << " truncated)\n";
 
                     if (fileExists(watch->name))
                         ::remove(watch->name.c_str());
                     CArchive txCache2(WRITING_ARCHIVE);
                     if (txCache2.Lock(watch->name, modeWriteCreate, LOCK_NOWAIT)) {
-                        for (size_t i=0 ; i < fixed.size() ; i++) {
+                        for (size_t i = 0; i < fixed.size(); i++) {
                             txCache2 << fixed[i].blk << fixed[i].txid;
                             lastBlock = fixed[i].blk;
                         }
@@ -217,16 +219,18 @@ int main(int argc, const char *argv[]) {
 }
 
 //-------------------------------------------------------------------------
-int sortByBlock(const void *v1, const void *v2) {
-    const CAppearance_base *c1 = (const CAppearance_base *)v1;
-    const CAppearance_base *c2 = (const CAppearance_base *)v2;
-    if ( c1->blk > c2->blk) return  1;
-    if ( c1->blk < c2->blk) return -1;
+int sortByBlock(const void* v1, const void* v2) {
+    const CAppearance_base* c1 = (const CAppearance_base*)v1;
+    const CAppearance_base* c2 = (const CAppearance_base*)v2;
+    if (c1->blk > c2->blk)
+        return 1;
+    if (c1->blk < c2->blk)
+        return -1;
     return (int)((int32_t)c1->txid - (int32_t)c2->txid);
 }
 
 //-------------------------------------------------------------------------
-const char *STR_DEFAULT_DISPLAY = "blockNum: [{r:10:BLOCKNUM}] transID: [{r:7:TRANSINDEX}]\\n";
+const char* STR_DEFAULT_DISPLAY = "blockNum: [{r:10:BLOCKNUM}] transID: [{r:7:TRANSINDEX}]\\n";
 
 //-------------------------------------------------------------------------
-const char *STR_DATA_DISPLAY = "[{z:9:BLOCKNUM}]\t[{z:5:TRANSINDEX}]\\n";
+const char* STR_DATA_DISPLAY = "[{z:9:BLOCKNUM}]\t[{z:5:TRANSINDEX}]\\n";

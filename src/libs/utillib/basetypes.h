@@ -44,7 +44,7 @@
 #include <chrono>  // NOLINT
 #include <iomanip>
 #include <thread>  // NOLINT
-#include <mutex>  // NOLINT
+#include <mutex>   // NOLINT
 #include <bitset>
 
 //-------------------------------------------------------------------------
@@ -56,8 +56,17 @@ using namespace std;  // NOLINT
 //-------------------------------------------------------------------------
 // #define DEBUG 1
 #ifdef _DEBUG
-#define ASSERT(a) { if (!(a)) { cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n"; } }
-#define XX(a) { cout << __FILE__ << " : " << __LINE__ << "\n\t" << (a) << "\n" ; cout.flush(); }
+#define ASSERT(a)                                                                                                      \
+    {                                                                                                                  \
+        if (!(a)) {                                                                                                    \
+            cout << "error at " << __FILE__ << "(" << __LINE__ << ")\n";                                               \
+        }                                                                                                              \
+    }
+#define XX(a)                                                                                                          \
+    {                                                                                                                  \
+        cout << __FILE__ << " : " << __LINE__ << "\n\t" << (a) << "\n";                                                \
+        cout.flush();                                                                                                  \
+    }
 #else
 #define ASSERT(a)
 #define XX(a)
@@ -74,26 +83,25 @@ using namespace std;  // NOLINT
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    typedef pair<string_q, string_q> CNameValue;
-    typedef vector<CNameValue> CNameValueArray;
-    typedef map<string_q, string_q> CNameValueMap;
-    typedef map<string_q, uint64_t> CCounterMap;
+//-------------------------------------------------------------------------
+typedef pair<string_q, string_q> CNameValue;
+typedef vector<CNameValue> CNameValueArray;
+typedef map<string_q, string_q> CNameValueMap;
+typedef map<string_q, uint64_t> CCounterMap;
 
-    //-------------------------------------------------------------------------
-    typedef bool (*APPLYFUNC)     (string_q& line, void *data);
-    typedef bool (*CHARPTRFUNC)   (const char *str, void *data);
-    typedef int  (*SEARCHFUNC)    (const void *ob1, const void *ob2);
-    typedef int  (*SORTINGFUNC)   (const void *ob1, const void *ob2);
+//-------------------------------------------------------------------------
+typedef bool (*APPLYFUNC)(string_q& line, void* data);
+typedef bool (*CHARPTRFUNC)(const char* str, void* data);
+typedef int (*SEARCHFUNC)(const void* ob1, const void* ob2);
+typedef int (*SORTINGFUNC)(const void* ob1, const void* ob2);
 
-    //---------------------------------------------------------------------------
-    inline bool isTestMode(void) {
-        return (getEnvStr("TEST_MODE") == "true");
-    }
+//---------------------------------------------------------------------------
+inline bool isTestMode(void) {
+    return (getEnvStr("TEST_MODE") == "true");
+}
 
-    //---------------------------------------------------------------------------
-    inline bool isApiMode(void) {
-        return (getEnvStr("API_MODE") == "true");
-    }
+//---------------------------------------------------------------------------
+inline bool isApiMode(void) {
+    return (getEnvStr("API_MODE") == "true");
+}
 }  // namespace qblocks
-

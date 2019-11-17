@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextTreerootChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTreerootChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CTreeRoot::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 }
 
 //---------------------------------------------------------------------------
-string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTreerootChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTreeRoot *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTreeRoot*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextTreerootChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextTreerootChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,7 +68,7 @@ string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'r':
-            if ( fieldName % "root" ) {
+            if (fieldName % "root") {
                 if (root)
                     return root->Format();
                 return "";
@@ -94,7 +93,7 @@ bool CTreeRoot::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'r':
-            if ( fieldName % "root" ) {
+            if (fieldName % "root") {
                 clear();
                 root = new CTreeNode;
                 if (root) {
@@ -118,7 +117,6 @@ void CTreeRoot::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -136,7 +134,7 @@ bool CTreeRoot::Serialize(CArchive& archive) {
     if (has_root) {
         string_q className;
         archive >> className;
-        root = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
+        root = reinterpret_cast<CTreeNode*>(createObjectOfType(className));
         if (!root)
             return false;
         root->Serialize(archive);
@@ -147,7 +145,6 @@ bool CTreeRoot::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTreeRoot::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -167,7 +164,7 @@ CArchive& operator>>(CArchive& archive, CTreeRootArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -178,7 +175,7 @@ CArchive& operator>>(CArchive& archive, CTreeRootArray& array) {
 CArchive& operator<<(CArchive& archive, const CTreeRootArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -186,13 +183,14 @@ CArchive& operator<<(CArchive& archive, const CTreeRootArray& array) {
 //---------------------------------------------------------------------------
 void CTreeRoot::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTreeRoot, "schema")) return;
+    if (HAS_FIELD(CTreeRoot, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTreeRoot, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTreeRoot, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTreeRoot, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTreeRoot, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTreeRoot, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTreeRoot, "root", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -208,15 +206,15 @@ void CTreeRoot::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTreeRoot *tre = reinterpret_cast<const CTreeRoot *>(dataPtr);
+string_q nextTreerootChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTreeRoot* tre = reinterpret_cast<const CTreeRoot*>(dataPtr);
     if (tre) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tre);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -232,7 +230,6 @@ string_q nextTreerootChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 
 //---------------------------------------------------------------------------
 bool CTreeRoot::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -254,71 +251,85 @@ const char* STR_DISPLAY_TREEROOT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-    string_q idex(char n) {
-        switch (n) {
-            case 0: return "0";
-            case 1: return "1";
-            case 2: return "2";
-            case 3: return "3";
-            case 4: return "4";
-            case 5: return "5";
-            case 6: return "6";
-            case 7: return "7";
-            case 8: return "8";
-            case 9: return "9";
-            case 10: return "a";
-            case 11: return "b";
-            case 12: return "c";
-            case 13: return "d";
-            case 14: return "e";
-            case 15: return "f";
-        }
-        cerr << "should never happen";
-        quickQuitHandler(1);
+string_q idex(char n) {
+    switch (n) {
+        case 0:
+            return "0";
+        case 1:
+            return "1";
+        case 2:
+            return "2";
+        case 3:
+            return "3";
+        case 4:
+            return "4";
+        case 5:
+            return "5";
+        case 6:
+            return "6";
+        case 7:
+            return "7";
+        case 8:
+            return "8";
+        case 9:
+            return "9";
+        case 10:
+            return "a";
+        case 11:
+            return "b";
+        case 12:
+            return "c";
+        case 13:
+            return "d";
+        case 14:
+            return "e";
+        case 15:
+            return "f";
+    }
+    cerr << "should never happen";
+    quickQuitHandler(1);
+    return "";
+}
+
+//-----------------------------------------------------------------------------
+string_q CTreeRoot::at(const string_q& _key) const {
+    if (!root)
         return "";
-    }
+    return root->at(_key);
+}
 
-    //-----------------------------------------------------------------------------
-    string_q CTreeRoot::at(const string_q& _key) const {
-        if (!root)
-            return "";
-        return root->at(_key);
-    }
+//-----------------------------------------------------------------------------
+void CTreeRoot::remove(const string_q& _key) {
+    if (root)
+        root = root->remove(_key);
+}
 
-    //-----------------------------------------------------------------------------
-    void CTreeRoot::remove(const string_q& _key) {
-        if (root)
-            root = root->remove(_key);
+//-----------------------------------------------------------------------------
+void CTreeRoot::insert(const string_q& _key, const string_q& _value) {
+    if (_value.empty())
+        remove(_key);
+    if (verbose == 2) {
+        cerr << "treeroot inserting " << _key << " at " << _value << "\n";
     }
+    root = root ? root->insert(_key, _value) : new CLeaf(_key, _value);
+}
 
-    //-----------------------------------------------------------------------------
-    void CTreeRoot::insert(const string_q& _key, const string_q& _value) {
-        if (_value.empty())
-            remove(_key);
-        if (verbose == 2) { cerr << "treeroot inserting " << _key << " at " << _value << "\n"; }
-        root =
-            root ?
-                root->insert(_key, _value) :
-                new CLeaf(_key, _value);
+//-----------------------------------------------------------------------------
+bool CTreeRoot::visitItems(ACCTVISITOR func, void* data) const {
+    ASSERT(func);
+    CVisitData* vd = reinterpret_cast<CVisitData*>(data);
+    vd->level = 0;
+    if (root) {
+        bool ret = root->visitItems(func, data);
+        return ret;
     }
+    return true;
+}
 
-    //-----------------------------------------------------------------------------
-    bool CTreeRoot::visitItems(ACCTVISITOR func, void *data) const {
-        ASSERT(func);
-        CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        vd->level = 0;
-        if (root) {
-            bool ret = root->visitItems(func, data);
-            return ret;
-        }
-        return true;
-    }
-
-    //------------------------------------------------------------------
-    bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data) {
-        ASSERT(trie);
-        return trie->visitItems(func, data);
-    }
+//------------------------------------------------------------------
+bool forEveryAccount(CTreeRoot* trie, ACCTVISITOR func, void* data) {
+    ASSERT(trie);
+    return trie->visitItems(func, data);
+}
 // EXISTING_CODE
 }  // namespace qblocks
-

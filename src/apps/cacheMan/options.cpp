@@ -12,6 +12,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
@@ -26,6 +27,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -116,7 +118,7 @@ bool COptions::parseArguments(string_q& command) {
 
         // Command line and chifra send in straight addresses, some test cases may send a local file...
         string_q path = (fileExists(file + ".acct.bin") ? (file + ".acct.bin") : getMonitorPath(addr));
-        if (!fileExists(path)) // Hack alert: some weird test cases send in 'merged' as the address.
+        if (!fileExists(path))  // Hack alert: some weird test cases send in 'merged' as the address.
             EXIT_USAGE("Monitor file for '" + file + "' does not exist.");
 
         monitors.push_back(CAccountWatch(addr, path));
@@ -182,7 +184,8 @@ bool COptions::parseArguments(string_q& command) {
             CAppearance_base item(line);
             if (item.blk > 0) {
                 removals.push_back(item);
-                LOG_INFO(cYellow, "\tremoval instruction: ", cTeal, removals.size(), "-", item.blk, ".", item.txid, cOff, "\r");
+                LOG_INFO(cYellow, "\tremoval instruction: ", cTeal, removals.size(), "-", item.blk, ".", item.txid,
+                         cOff, "\r");
             }
         }
         if (fileExists("./removed.txt"))
@@ -191,7 +194,6 @@ bool COptions::parseArguments(string_q& command) {
         if (removals.size() > 0)
             handleRemove();
         return false;
-
     }
     return true;
 }
@@ -218,6 +220,8 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -242,7 +246,7 @@ bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& ad
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
-    CAppearance_base *buffer = new CAppearance_base[nRecords];
+    CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
         bzero(buffer, nRecords * sizeof(CAppearance_base));
         CArchive txCache(READING_ARCHIVE);
@@ -251,13 +255,12 @@ bool COptions::loadMonitorData(CAppearanceArray_base& items, const address_t& ad
             txCache.Release();
         } else {
             EXIT_FAIL("Failed to lock file '" + fn + "'. Quitting...\n");
-
         }
         // Add to the items which may be non-empty
         items.reserve(items.size() + nRecords);
-        for (size_t i = 0 ; i < nRecords ; i++)
+        for (size_t i = 0; i < nRecords; i++)
             items.push_back(buffer[i]);
-        delete [] buffer;
+        delete[] buffer;
     } else {
         EXIT_FAIL("Could not allocate memory for address " + addr + "Quitting...\n");
     }

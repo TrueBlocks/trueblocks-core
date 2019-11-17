@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CEthState, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextEthstateChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextEthstateChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CEthState::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CEthState::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CEthState::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 }
 
 //---------------------------------------------------------------------------
-string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextEthstateChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CEthState *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CEthState*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextEthstateChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CEthState::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextEthstateChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,24 +68,32 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            if ( fieldName % "accttype" ) return accttype;
+            if (fieldName % "address")
+                return addr_2_Str(address);
+            if (fieldName % "accttype")
+                return accttype;
             break;
         case 'b':
-            if ( fieldName % "blockNumber" ) return uint_2_Str(blockNumber);
-            if ( fieldName % "balance" ) return bnu_2_Str(balance);
+            if (fieldName % "blockNumber")
+                return uint_2_Str(blockNumber);
+            if (fieldName % "balance")
+                return bnu_2_Str(balance);
             break;
         case 'c':
-            if ( fieldName % "code" ) return code;
+            if (fieldName % "code")
+                return code;
             break;
         case 'd':
-            if ( fieldName % "deployed" ) return uint_2_Str(deployed);
+            if (fieldName % "deployed")
+                return uint_2_Str(deployed);
             break;
         case 'n':
-            if ( fieldName % "nonce" ) return uint_2_Str(nonce);
+            if (fieldName % "nonce")
+                return uint_2_Str(nonce);
             break;
         case 's':
-            if ( fieldName % "storage" ) return storage;
+            if (fieldName % "storage")
+                return storage;
             break;
     }
 
@@ -103,32 +110,56 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if ( fieldName % "ether" ) {
-        balance = str_2_Wei(fieldValue)* weiPerEther();
+    if (fieldName % "ether") {
+        balance = str_2_Wei(fieldValue) * weiPerEther();
         return true;
     }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
-            if ( fieldName % "accttype" ) { accttype = fieldValue; return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "accttype") {
+                accttype = fieldValue;
+                return true;
+            }
             break;
         case 'b':
-            if ( fieldName % "blockNumber" ) { blockNumber = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "balance" ) { balance = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "balance") {
+                balance = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'c':
-            if ( fieldName % "code" ) { code = fieldValue; return true; }
+            if (fieldName % "code") {
+                code = fieldValue;
+                return true;
+            }
             break;
         case 'd':
-            if ( fieldName % "deployed" ) { deployed = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "deployed") {
+                deployed = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "nonce" ) { nonce = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "nonce") {
+                nonce = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "storage" ) { storage = fieldValue; return true; }
+            if (fieldName % "storage") {
+                storage = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -144,7 +175,6 @@ void CEthState::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CEthState::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -158,19 +188,18 @@ bool CEthState::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> blockNumber;
     archive >> balance;
-//    archive >> nonce;
-//    archive >> code;
-//    archive >> storage;
-//    archive >> address;
-//    archive >> deployed;
-//    archive >> accttype;
+    // archive >> nonce;
+    // archive >> code;
+    // archive >> storage;
+    // archive >> address;
+    // archive >> deployed;
+    // archive >> accttype;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CEthState::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -178,12 +207,12 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << blockNumber;
     archive << balance;
-//    archive << nonce;
-//    archive << code;
-//    archive << storage;
-//    archive << address;
-//    archive << deployed;
-//    archive << accttype;
+    // archive << nonce;
+    // archive << code;
+    // archive << storage;
+    // archive << address;
+    // archive << deployed;
+    // archive << accttype;
 
     return true;
 }
@@ -193,7 +222,7 @@ CArchive& operator>>(CArchive& archive, CEthStateArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -204,7 +233,7 @@ CArchive& operator>>(CArchive& archive, CEthStateArray& array) {
 CArchive& operator<<(CArchive& archive, const CEthStateArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -212,13 +241,14 @@ CArchive& operator<<(CArchive& archive, const CEthStateArray& array) {
 //---------------------------------------------------------------------------
 void CEthState::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CEthState, "schema")) return;
+    if (HAS_FIELD(CEthState, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CEthState, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CEthState, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CEthState, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CEthState, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CEthState, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CEthState, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CEthState, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CEthState, "blockNumber", T_NUMBER, ++fieldNum);
     ADD_FIELD(CEthState, "balance", T_NUMBER, ++fieldNum);
     ADD_FIELD(CEthState, "nonce", T_NUMBER, ++fieldNum);
@@ -249,23 +279,23 @@ void CEthState::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextEthstateChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CEthState *eth = reinterpret_cast<const CEthState *>(dataPtr);
+string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CEthState* eth = reinterpret_cast<const CEthState*>(dataPtr);
     if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if ( fieldIn % "dollars" )
+                if (fieldIn % "dollars")
                     return getDispBal(eth->blockNumber, eth->balance);
                 break;
             case 'e':
-                if ( fieldIn % "ether" )
+                if (fieldIn % "ether")
                     return wei_2_Ether(bnu_2_Str(eth->balance));
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, eth);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -281,7 +311,6 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 
 //---------------------------------------------------------------------------
 bool CEthState::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -299,15 +328,15 @@ ostream& operator<<(ostream& os, const CEthState& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ETHSTATE = 
-"[{BLOCKNUMBER}]\t"
-"[{ADDRESS}]\t"
-"[{BALANCE}]\t"
-"[{NONCE}]\t"
-"[{CODE}]\t"
-"[{STORAGE}]\t"
-"[{DEPLOYED}]\t"
-"[{ACCTTYPE}]";
+const char* STR_DISPLAY_ETHSTATE =
+    "[{BLOCKNUMBER}]\t"
+    "[{ADDRESS}]\t"
+    "[{BALANCE}]\t"
+    "[{NONCE}]\t"
+    "[{CODE}]\t"
+    "[{STORAGE}]\t"
+    "[{DEPLOYED}]\t"
+    "[{ACCTTYPE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -317,7 +346,7 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
         num = getLastBlock_client();
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
-    replace(params, "[{NUM}]",  uint_2_Hex(num));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
     string_q ret = callRPC("eth_getBalance", params, false);
     if (contains(ret, "error"))
         return 0;
@@ -345,7 +374,7 @@ string_q getCodeAt(const string_q& addr, blknum_t num) {
         num = getLastBlock_client();
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
-    replace(params, "[{NUM}]",  uint_2_Hex(num));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
     return callRPC("eth_getCode", params, false);
 }
 
@@ -360,7 +389,7 @@ uint64_t getNonceAt(const address_t& addr, blknum_t num) {
         num = getLastBlock_client();
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
-    replace(params, "[{NUM}]",  uint_2_Hex(num));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
     return str_2_Uint(callRPC("eth_getTransactionCount", params, false));
 }
 
@@ -370,8 +399,8 @@ string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
         num = getLastBlock_client();
     string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
-    replace(params, "[{POS}]",  uint_2_Hex(pos));
-    replace(params, "[{NUM}]",  uint_2_Hex(num));
+    replace(params, "[{POS}]", uint_2_Hex(pos));
+    replace(params, "[{NUM}]", uint_2_Hex(num));
     return callRPC("eth_getStorageAt", params, false);
 
     // Calculating the correct position depends on the storage to retrieve. Consider the following
@@ -432,16 +461,16 @@ string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
 static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, blknum_t last) {
     if (last > first) {
         size_t mid = first + ((last - first) / 2);
-        bool atMid  = isContractAt(addr, mid);
+        bool atMid = isContractAt(addr, mid);
         bool atMid1 = isContractAt(addr, mid + 1);
         if (!atMid && atMid1)
             return mid;  // found it
         if (atMid) {
             // we're too high, so search below
-            return findCodeAt_binarySearch(addr, first, mid-1);
+            return findCodeAt_binarySearch(addr, first, mid - 1);
         }
         // we're too low, so search above
-        return findCodeAt_binarySearch(addr, mid+1, last);
+        return findCodeAt_binarySearch(addr, mid + 1, last);
     }
     return first;
 }
@@ -451,8 +480,7 @@ blknum_t getDeployBlock(const address_t& addr) {
     if (!isContractAt(addr))
         return NOPOS;
     blknum_t num = findCodeAt_binarySearch(addr, 0, getLastBlock_client());
-    return (num ? num+1 : NOPOS);
+    return (num ? num + 1 : NOPOS);
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

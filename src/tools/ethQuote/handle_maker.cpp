@@ -18,18 +18,17 @@
 
 //-----------------------------------------------------------------------------
 wei_t getUsdFromMakerAt(blknum_t blk) {
-
     string_q cmd = "[{\"to\": \"[CONTRACT]\", \"data\": \"[INPUT]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CONTRACT]", MAKER_V1);
-    replace(cmd, "[INPUT]",    PEEK);
-    replace(cmd, "[BLOCK]",    uint_2_Hex(blk));
+    replace(cmd, "[INPUT]", PEEK);
+    replace(cmd, "[BLOCK]", uint_2_Hex(blk));
 
     string_q result = callRPC("eth_call", cmd, false).substr(2);
     if (result.length() != 128)
         return 0;
 
-    wei_t value = str_2_BigUint("0x"+result.substr(0,64));
-    bool valid = str_2_Bool(result.substr(127,1));
+    wei_t value = str_2_BigUint("0x" + result.substr(0, 64));
+    bool valid = str_2_Bool(result.substr(127, 1));
     if (valid)
         return value;
     return 0;

@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool articulate;
     // END_CODE_DECLARE
@@ -40,4 +40,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitTransaction(CTransaction& trans, void *data);
+extern bool visitTransaction(CTransaction& trans, void* data);

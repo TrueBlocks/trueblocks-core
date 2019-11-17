@@ -16,162 +16,157 @@
 
 namespace qblocks {
 
-    //--------------------------------------------------------------------------------
-    blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const {
+//--------------------------------------------------------------------------------
+blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const {
+    blknum_t ret = NOPOS;
 
-        blknum_t ret = NOPOS;
+    string_q arg = msg;
+    msg = "";
 
-        string_q arg = msg;
-        msg = "";
+    // if it's a number, return it
+    if (isNumeral(arg) || isHexStr(arg)) {
+        ret = str_2_Uint(arg);
 
-        // if it's a number, return it
-        if (isNumeral(arg) || isHexStr(arg)) {
-            ret = str_2_Uint(arg);
+    } else {
+        // if it's not a number, it better be a special value, and we better be able to find it
+        CNameValue spec;
+        if (COptionsBase::findSpecial(spec, arg)) {
+            if (spec.first == "latest")
+                spec.second = uint_2_Str(lastBlock);
+            ret = str_2_Uint(spec.second);
 
         } else {
-            // if it's not a number, it better be a special value, and we better be able to find it
-            CNameValue spec;
-            if (COptionsBase::findSpecial(spec, arg)) {
-                if (spec.first == "latest")
-                    spec.second = uint_2_Str(lastBlock);
-                ret = str_2_Uint(spec.second);
-
-            } else {
-                msg = "The given value '" + arg +
-                    "' is not a numeral or a special named block." + (isApiMode() ? "" : "\n");
-                return NOPOS;
-
-            }
-        }
-
-        if (ret > lastBlock) {
-            string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
-            msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
+            msg =
+                "The given value '" + arg + "' is not a numeral or a special named block." + (isApiMode() ? "" : "\n");
             return NOPOS;
         }
-
-        if (offset == PREV && ret > 0)
-            ret--;
-        else if (offset == NEXT && ret < lastBlock)
-            ret++;
-        return ret;
     }
 
-    //--------------------------------------------------------------------------------
-    string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
+    if (ret > lastBlock) {
+        string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
+        msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
+        return NOPOS;
+    }
 
-        string_q arg = argIn;
+    if (offset == PREV && ret > 0)
+        ret--;
+    else if (offset == NEXT && ret < lastBlock)
+        ret++;
+    return ret;
+}
 
-        direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
-        arg = substitute(substitute(arg, ".next", ""), ".prev", "");
+//--------------------------------------------------------------------------------
+string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
+    string_q arg = argIn;
 
-        // scrape off the skip marker if any
-        if (contains(arg, ":")) {
-            string_q s = arg;
-            arg = nextTokenClear(s, ':');
-            skip = max(blknum_t(1), str_2_Uint(s));
+    direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
+    arg = substitute(substitute(arg, ".next", ""), ".prev", "");
+
+    // scrape off the skip marker if any
+    if (contains(arg, ":")) {
+        string_q s = arg;
+        arg = nextTokenClear(s, ':');
+        skip = max(blknum_t(1), str_2_Uint(s));
+    }
+
+    if (contains(arg, "-") || contains(arg, "+")) {
+        // If we already have a range, bail
+        if (start != stop)
+            return "Specify only a single block range at a time.";
+
+        if (startsWith(arg, "latest"))
+            return "Cannot start range with 'latest'";
+
+        if (contains(arg, "+")) {
+            string_q n = nextTokenClear(arg, '+');
+            blknum_t s1 = parseBlockOption(n, lastBlock, NODIR);
+            if (!n.empty())
+                return n;
+            n = arg;
+            blknum_t s2 = parseBlockOption(n, lastBlock, NODIR);
+            if (!n.empty())
+                return n;
+            s2 = s1 + s2;
+            arg = uint_2_Str(s1) + "-" + uint_2_Str(s2);
         }
 
-        if (contains(arg, "-") || contains(arg, "+")) {
+        string_q stp = arg;
+        string_q strt = nextTokenClear(stp, '-');
+        string_q msg = strt;
+        start = parseBlockOption(msg, lastBlock, offset);
+        if (!msg.empty())
+            return msg;
+        msg = stp;
+        stop = parseBlockOption(msg, lastBlock, offset);
+        if (!msg.empty())
+            return msg;
 
-            // If we already have a range, bail
-            if (start != stop)
-                return "Specify only a single block range at a time.";
+        if (stop <= start)
+            return "'stop' must be strictly larger than 'start'";
 
-            if (startsWith(arg, "latest"))
-                return "Cannot start range with 'latest'";
-
-            if (contains(arg, "+")) {
-                string_q n = nextTokenClear(arg, '+');
-                blknum_t s1 = parseBlockOption(n, lastBlock, NODIR);
-                if (!n.empty())
-                    return n;
-                n = arg;
-                blknum_t s2 = parseBlockOption(n, lastBlock, NODIR);
-                if (!n.empty())
-                    return n;
-                s2 = s1 + s2;
-                arg = uint_2_Str(s1) + "-" + uint_2_Str(s2);
-            }
-
-            string_q stp = arg;
-            string_q strt = nextTokenClear(stp, '-');
-            string_q msg = strt;
-            start = parseBlockOption(msg, lastBlock, offset);
-            if (!msg.empty())
-                return msg;
-            msg = stp;
-            stop = parseBlockOption(msg, lastBlock, offset);
-            if (!msg.empty())
-                return msg;
-
-            if (stop <= start)
-                return "'stop' must be strictly larger than 'start'";
+    } else {
+        if (isHash(arg)) {
+            hashList.push_back(arg);
 
         } else {
-
-            if (isHash(arg)) {
-                hashList.push_back(arg);
-
-            } else {
-                string_q msg = arg;
-                blknum_t num = parseBlockOption(msg, lastBlock, offset);
-                if (!msg.empty())
-                    return msg;
-                numList.push_back(num);
-            }
+            string_q msg = arg;
+            blknum_t num = parseBlockOption(msg, lastBlock, offset);
+            if (!msg.empty())
+                return msg;
+            numList.push_back(num);
         }
-
-        latest = lastBlock;
-        return "";
     }
 
-    //--------------------------------------------------------------------------------
-    void COptionsBlockList::Init(void) {
-        numList.clear();
-        hashList.clear();
-        start = stop = 0;
-        skip = 1;
-        hashFind = NULL;
-    }
+    latest = lastBlock;
+    return "";
+}
 
-    //--------------------------------------------------------------------------------
-    COptionsBlockList::COptionsBlockList(void) {
-        Init();
-    }
+//--------------------------------------------------------------------------------
+void COptionsBlockList::Init(void) {
+    numList.clear();
+    hashList.clear();
+    start = stop = 0;
+    skip = 1;
+    hashFind = NULL;
+}
 
-    //--------------------------------------------------------------------------------
-    bool COptionsBlockList::forEveryBlockNumber(UINT64VISITFUNC func, void *data) const {
-        if (!func)
+//--------------------------------------------------------------------------------
+COptionsBlockList::COptionsBlockList(void) {
+    Init();
+}
+
+//--------------------------------------------------------------------------------
+bool COptionsBlockList::forEveryBlockNumber(UINT64VISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (uint64_t i = start; i < stop; i = i + skip) {
+        if (!(*func)(i, data))
             return false;
-
-        for (uint64_t i = start ; i < stop ; i = i + skip) {
-            if (!(*func)(i, data))
-                return false;
-        }
-        for (size_t i = 0 ; i < numList.size() ; i++) {
-            uint64_t n = numList[i];
+    }
+    for (size_t i = 0; i < numList.size(); i++) {
+        uint64_t n = numList[i];
+        if (!(*func)(n, data))
+            return false;
+    }
+    if (hashFind) {
+        for (size_t i = 0; i < hashList.size(); i++) {
+            uint64_t n = (*hashFind)(hashList[i], data);
             if (!(*func)(n, data))
                 return false;
         }
-        if (hashFind) {
-            for (size_t i = 0 ; i < hashList.size() ; i++) {
-                uint64_t n = (*hashFind)(hashList[i], data);
-                if (!(*func)(n, data))
-                    return false;
-            }
-        }
-        return true;
     }
+    return true;
+}
 
-    //--------------------------------------------------------------------------------
-    bool COptionsBlockList::isInRange(blknum_t bn) const {
-        if (start <= bn && bn < stop)
+//--------------------------------------------------------------------------------
+bool COptionsBlockList::isInRange(blknum_t bn) const {
+    if (start <= bn && bn < stop)
+        return true;
+    for (size_t i = 0; i < numList.size(); i++)
+        if (bn == numList[i])
             return true;
-        for (size_t i = 0 ; i < numList.size() ; i++)
-            if (bn == numList[i])
-                return true;
-        return false;
-    }
+    return false;
+}
 
 }  // namespace qblocks

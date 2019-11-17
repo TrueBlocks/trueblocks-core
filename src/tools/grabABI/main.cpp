@@ -14,9 +14,9 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool visitAbi(CAbi& abi, void *data);
+extern bool visitAbi(CAbi& abi, void* data);
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -39,9 +39,9 @@ int main(int argc, const char *argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool visitAbi(CAbi& abi, void *data) {
-    COptions *opt = (COptions*)data;  // NOLINT
-    bool isText = (opt->exportFmt == (TXT1|CSV1));
+bool visitAbi(CAbi& abi, void* data) {
+    COptions* opt = (COptions*)data;  // NOLINT
+    bool isText = (opt->exportFmt == (TXT1 | CSV1));
     if (isText && !opt->isNoHeader)
         cout << expContext().fmtMap["header"] << endl;
 

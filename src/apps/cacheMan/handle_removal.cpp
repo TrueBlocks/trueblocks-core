@@ -8,7 +8,6 @@
 bool filterForRemove(CAppearanceArray_base& dataArray, const CAppearance_base& item);
 //-----------------------------------------------------------------------
 bool COptions::handleRemove(void) const {
-
     ASSERT(fileExists("./remove.txt"));
     ASSERT(removals.size() == 1);
 
@@ -20,7 +19,7 @@ bool COptions::handleRemove(void) const {
     sort(dataArray.begin(), dataArray.end());
     cerr << "done\n";
 
-    for (size_t i = 0 ; i < removals.size() ; i++)
+    for (size_t i = 0; i < removals.size(); i++)
         if (removals[i].blk > 0)
             cerr << "\tWill remove item " << removals[i].blk << "." << removals[i].txid << " if found\n";
 

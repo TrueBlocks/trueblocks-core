@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CPriceCache : public CCache {
-public:
+  public:
     CPriceCacheItemArray items;
 
-public:
+  public:
     CPriceCache(void);
     CPriceCache(const CPriceCache& pr);
     virtual ~CPriceCache(void);
@@ -36,16 +36,18 @@ public:
 
     DECLARE_NODE(CPriceCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CPriceCache& item) const;
-    bool operator!=(const CPriceCache& item) const { return !operator==(item); }
+    bool operator!=(const CPriceCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CPriceCache& v1, const CPriceCache& v2);
     friend ostream& operator<<(ostream& os, const CPriceCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPriceCache& pr);
@@ -142,4 +144,3 @@ extern const char* STR_DISPLAY_PRICECACHE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

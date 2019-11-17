@@ -24,12 +24,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CPerson : public CBaseNode {
-public:
+  public:
     string_q name;
     uint64_t age;
-    CPerson *next;
+    CPerson* next;
 
-public:
+  public:
     CPerson(void);
     CPerson(const CPerson& pe);
     virtual ~CPerson(void);
@@ -38,14 +38,17 @@ public:
     DECLARE_NODE(CPerson);
 
     // EXISTING_CODE
-    CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) { }
+    CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) {
+    }
     // EXISTING_CODE
     bool operator==(const CPerson& item) const;
-    bool operator!=(const CPerson& item) const { return !operator==(item); }
+    bool operator!=(const CPerson& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CPerson& v1, const CPerson& v2);
     friend ostream& operator<<(ostream& os, const CPerson& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPerson& pe);
@@ -152,4 +155,3 @@ extern const char* STR_DISPLAY_PERSON;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

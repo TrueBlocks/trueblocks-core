@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTestCase : public CBaseNode {
-public:
+  public:
     string_q origLine;
     bool builtin;
     string_q onOff;
@@ -41,7 +41,7 @@ public:
     string_q workPath;
     string_q fileName;
 
-public:
+  public:
     CTestCase(void);
     CTestCase(const CTestCase& te);
     virtual ~CTestCase(void);
@@ -54,11 +54,13 @@ public:
     void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& item) const;
-    bool operator!=(const CTestCase& item) const { return !operator==(item); }
+    bool operator!=(const CTestCase& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTestCase& v1, const CTestCase& v2);
     friend ostream& operator<<(ostream& os, const CTestCase& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTestCase& te);
@@ -183,4 +185,3 @@ extern const char* STR_DISPLAY_TESTCASE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

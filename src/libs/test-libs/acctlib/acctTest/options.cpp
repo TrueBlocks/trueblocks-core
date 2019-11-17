@@ -18,13 +18,14 @@ static const COption params[] = {
     COption("start", "s", "<uint>", OPT_FLAG, "the first block to process"),
     COption("end", "e", "<uint>", OPT_FLAG, "the last block (less one) to process"),
     COption("nblocks", "n", "<uint>", OPT_FLAG, "the number of blocks to visit (ignored for -a)"),
-    COption("", "", "", OPT_DESCRIPTION, "Build an account tree listing first transaction, latest transaction, and node balance for each account.\n"),
+    COption(
+        "", "", "", OPT_DESCRIPTION,
+        "Build an account tree listing first transaction, latest transaction, and node balance for each account.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 

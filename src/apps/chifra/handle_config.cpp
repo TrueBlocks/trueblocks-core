@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_config(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
@@ -15,15 +14,16 @@ bool COptions::handle_config(void) {
         ostringstream os;
         os << "cacheStatus --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
 
     if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
-        replace(tool_flags, "get", "--get"); // syntactic sugar for command line
+        replace(tool_flags, "get", "--get");  // syntactic sugar for command line
 
     if (contains(tool_flags, "set") && !contains(tool_flags, "--set"))
-        replace(tool_flags, "set", "--set"); // syntactic sugar for command line
+        replace(tool_flags, "set", "--set");  // syntactic sugar for command line
 
     replaceAll(tool_flags, "--get", "--get_config");
     replaceAll(tool_flags, "--set", "--set_config");
@@ -43,7 +43,8 @@ bool COptions::handle_config(void) {
 
     // both testing and non-testing
     NOTE_CALL(os.str());
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    if (system(os.str().c_str())) {
+    }  // Don't remove. Silences compiler warnings
 
     EXIT_NOMSG8(true);
 }

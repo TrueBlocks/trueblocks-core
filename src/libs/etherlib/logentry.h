@@ -25,7 +25,7 @@ class CReceipt;
 
 //--------------------------------------------------------------------------
 class CLogEntry : public CBaseNode {
-public:
+  public:
     address_t address;
     string_q data;
     uint64_t logIndex;
@@ -36,7 +36,7 @@ public:
     blknum_t transactionLogIndex;
     string_q type;
 
-public:
+  public:
     CLogEntry(void);
     CLogEntry(const CLogEntry& lo);
     virtual ~CLogEntry(void);
@@ -44,18 +44,20 @@ public:
 
     DECLARE_NODE(CLogEntry);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
-    const CReceipt *pReceipt;
+    const CReceipt* pReceipt;
     // EXISTING_CODE
     bool operator==(const CLogEntry& item) const;
-    bool operator!=(const CLogEntry& item) const { return !operator==(item); }
+    bool operator!=(const CLogEntry& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CLogEntry& v1, const CLogEntry& v2);
     friend ostream& operator<<(ostream& os, const CLogEntry& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CLogEntry& lo);
@@ -174,8 +176,7 @@ extern const char* STR_DISPLAY_LOGENTRY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextReceiptChunk(const string_q& fieldIn, const void *data);
-extern string_q nextLogentryChunk(const string_q& fieldIn, const void *data);
+extern string_q nextReceiptChunk(const string_q& fieldIn, const void* data);
+extern string_q nextLogentryChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

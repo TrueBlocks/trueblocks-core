@@ -16,63 +16,61 @@
 
 namespace qblocks {
 
-    //-------------------------------------------------------------------------
-    // Helps debug a bloom filter
+//-------------------------------------------------------------------------
+// Helps debug a bloom filter
 #define dbgBloom(a) substitute(bloom_2_Bytes(a), "0", " ")
 
-    //-------------------------------------------------------------------------
-    inline size_t bitsTwiddled(bloom_t n) {
-        size_t count = 0;
-        while (n != 0) {
-            biguint_t x = n - 1;
-            biguint_t y = n & x;
-            n = y;
-            count++;
-        }
-        return count;
+//-------------------------------------------------------------------------
+inline size_t bitsTwiddled(bloom_t n) {
+    size_t count = 0;
+    while (n != 0) {
+        biguint_t x = n - 1;
+        biguint_t y = n & x;
+        n = y;
+        count++;
     }
+    return count;
+}
 
-    //-------------------------------------------------------------------------
-    inline bloom_t makeBloom(const string_q& hexIn) {
-        if (hexIn.empty() || !startsWith(hexIn, "0x"))
-            return 0;
+extern string_q getSha3(const string_q& hexIn);
+//-------------------------------------------------------------------------
+inline bloom_t makeBloom(const string_q& hexIn) {
+    if (hexIn.empty() || !startsWith(hexIn, "0x"))
+        return 0;
 
-extern string_q getSha3 (const string_q& hexIn);
-        string_q sha = getSha3(hexIn);
-        bloom_t bloom;
-        for (size_t i = 0 ; i < 3 ; i++)
-            bloom |= (bloom_t(1) << (strtoul(("0x" +
-                            extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
-        return bloom;
-    }
+    string_q sha = getSha3(hexIn);
+    bloom_t bloom;
+    for (size_t i = 0; i < 3; i++)
+        bloom |= (bloom_t(1) << (strtoul(("0x" + extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);
+    return bloom;
+}
 
-    //-------------------------------------------------------------------------
-    inline bloom_t joinBloom(const bloom_t& b1, const bloom_t& b2) {
-        return (b1 | b2);
-    }
+//-------------------------------------------------------------------------
+inline bloom_t joinBloom(const bloom_t& b1, const bloom_t& b2) {
+    return (b1 | b2);
+}
 
-    //-------------------------------------------------------------------------
-    inline bool isBloomHit(const bloom_t& test, const bloom_t filter) {
-        return ((test & filter) == test);
-    }
+//-------------------------------------------------------------------------
+inline bool isBloomHit(const bloom_t& test, const bloom_t filter) {
+    return ((test & filter) == test);
+}
 
-    //-------------------------------------------------------------------------
-    inline bool isBloomHit(const string_q& hexIn, const bloom_t filter) {
-        return isBloomHit(makeBloom(hexIn), filter);
-    }
+//-------------------------------------------------------------------------
+inline bool isBloomHit(const string_q& hexIn, const bloom_t filter) {
+    return isBloomHit(makeBloom(hexIn), filter);
+}
 
-    //----------------------------------------------------------------------------------
-    extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
+//----------------------------------------------------------------------------------
+extern bool addAddrToBloom(const address_t& addr, CBloomArray& blooms, size_t maxBits);
 
-    //----------------------------------------------------------------------------------
-    extern bool readBloomFromBinary(  CBloomArray& blooms, const string_q& fileName);
-    extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
-    extern string_q reportBloom(const CBloomArray& blooms);
+//----------------------------------------------------------------------------------
+extern bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName);
+extern bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName);
+extern string_q reportBloom(const CBloomArray& blooms);
 
-    //--------------------------------------------------------------------------------
-    extern string_q bloom_2_BitStr(const bloom_t& bl);
-    extern string_q bloom_2_ByteStr(const bloom_t& bl);
-    extern string_q compareBlooms(const bloom_t& b1, const bloom_t& b2);
+//--------------------------------------------------------------------------------
+extern string_q bloom_2_BitStr(const bloom_t& bl);
+extern string_q bloom_2_ByteStr(const bloom_t& bl);
+extern string_q compareBlooms(const bloom_t& b1, const bloom_t& b2);
 
 }  // namespace qblocks
-

@@ -25,28 +25,29 @@ namespace qblocks {
 
 // EXISTING_CODE
 //----------------------------------------------------------
-#define T_TOP       (0)
-#define T_LEAF      (1)
-#define T_BRANCH    (2)
-#define T_INFIX     (3)
+#define T_TOP (0)
+#define T_LEAF (1)
+#define T_BRANCH (2)
+#define T_INFIX (3)
 
 //----------------------------------------------------------
 class CVisitData {
-public:
+  public:
     uint64_t type;
     uint64_t level;
     uint64_t counter;
     string_q strs;
-    CVisitData(void) : type(0), level(0), counter(0) { }
+    CVisitData(void) : type(0), level(0), counter(0) {
+    }
 };
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CTreeRoot : public CBaseNode {
-public:
-    CTreeNode *root;
+  public:
+    CTreeNode* root;
 
-public:
+  public:
     CTreeRoot(void);
     CTreeRoot(const CTreeRoot& tr);
     virtual ~CTreeRoot(void);
@@ -58,14 +59,16 @@ public:
     string_q at(const string_q& _key) const;
     void insert(const string_q& _key, const string_q& _value);
     void remove(const string_q& _key);
-    bool visitItems(ACCTVISITOR func, void *data) const;
+    bool visitItems(ACCTVISITOR func, void* data) const;
     // EXISTING_CODE
     bool operator==(const CTreeRoot& item) const;
-    bool operator!=(const CTreeRoot& item) const { return !operator==(item); }
+    bool operator!=(const CTreeRoot& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTreeRoot& v1, const CTreeRoot& v2);
     friend ostream& operator<<(ostream& os, const CTreeRoot& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTreeRoot& tr);
@@ -169,17 +172,17 @@ extern const char* STR_DISPLAY_TREEROOT;
 //----------------------------------------------------------
 inline int nodeIndex(char c) {
     char l = (char)tolower(c);  // NOLINT
-    int ret =  (l < 'a' ? l - '0' : l - 'a' + 10) % 16;
+    int ret = (l < 'a' ? l - '0' : l - 'a' + 10) % 16;
     return ret;
 }
 
 //------------------------------------------------------------------
 extern string_q idex(char n);
-extern bool forEveryAccount(CTreeRoot *trie, ACCTVISITOR func, void *data);
+extern bool forEveryAccount(CTreeRoot* trie, ACCTVISITOR func, void* data);
 extern string_q idnt;
 
 //------------------------------------------------------------------
-inline CTreeNode *createTreeNode(const string_q& type) {
+inline CTreeNode* createTreeNode(const string_q& type) {
     if (type == "CInfix")
         return new CInfix;
     else if (type == "CBranch")
@@ -190,4 +193,3 @@ inline CTreeNode *createTreeNode(const string_q& type) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

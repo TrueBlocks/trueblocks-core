@@ -25,14 +25,14 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNewReceipt : public CBaseNode {
-public:
+  public:
     address_t contractAddress;
     gas_t gasUsed;
     CLogEntryArray logs;
     bloom_t logsBloom;
     bool isError;
 
-public:
+  public:
     CNewReceipt(void);
     CNewReceipt(const CNewReceipt& ne);
     virtual ~CNewReceipt(void);
@@ -40,17 +40,19 @@ public:
 
     DECLARE_NODE(CNewReceipt);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     friend class CTransaction;
     // EXISTING_CODE
     bool operator==(const CNewReceipt& item) const;
-    bool operator!=(const CNewReceipt& item) const { return !operator==(item); }
+    bool operator!=(const CNewReceipt& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CNewReceipt& v1, const CNewReceipt& v2);
     friend ostream& operator<<(ostream& os, const CNewReceipt& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CNewReceipt& ne);
@@ -155,4 +157,3 @@ extern const char* STR_DISPLAY_NEWRECEIPT;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

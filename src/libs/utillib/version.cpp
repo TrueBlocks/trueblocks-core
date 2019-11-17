@@ -19,30 +19,33 @@ namespace qblocks {
 #define MINOR 6
 #define BUILD 1
 #define SUBVERS "alpha"
-#define PRODUCT_NAME "GHC-TrueBlocks/""/"
-    //--------------------------------------------------------------------------------
-    uint32_t getVersionNum(void) {
-        return getVersionNum(MAJOR, MINOR, BUILD);
-    }
+#define PRODUCT_NAME "GHC-TrueBlocks//"
+//--------------------------------------------------------------------------------
+uint32_t getVersionNum(void) {
+    return getVersionNum(MAJOR, MINOR, BUILD);
+}
 
-    //--------------------------------------------------------------------------------
-    uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build) {
-        return ((maj * 1000000) + (min * 1000) + (build));
-    }
+//--------------------------------------------------------------------------------
+uint32_t getVersionNum(uint16_t maj, uint16_t min, uint16_t build) {
+    return ((maj * 1000000) + (min * 1000) + (build));
+}
 
-    //--------------------------------------------------------------------------------
-    string_q getVersionStr(bool incProg, bool incGit) {
-        ostringstream os;
-        if (incProg)
-            os << PRODUCT_NAME;
-        os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
-        if (incGit) {
-            if (isTestMode())
-                os << "-" << "-git-hash-" << "-" << "-git-ts-";
-            else
-                os << "-" << GIT_COMMIT_HASH << "-" << ts_2_Date(GIT_COMMIT_TS).Format(FMT_SHORT);
-        }
-        return os.str();
+//--------------------------------------------------------------------------------
+string_q getVersionStr(bool incProg, bool incGit) {
+    ostringstream os;
+    if (incProg)
+        os << PRODUCT_NAME;
+    os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+    if (incGit) {
+        if (isTestMode())
+            os << "-"
+               << "-git-hash-"
+               << "-"
+               << "-git-ts-";
+        else
+            os << "-" << GIT_COMMIT_HASH << "-" << ts_2_Date(GIT_COMMIT_TS).Format(FMT_SHORT);
     }
+    return os.str();
+}
 
 }  // namespace qblocks

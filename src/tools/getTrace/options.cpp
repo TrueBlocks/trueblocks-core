@@ -19,19 +19,20 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -83,35 +84,36 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(defHide, false);
         manageFields(defShow, true);
         manageFields("CParameter:strDefault", false);  // hide
-        manageFields("CTransaction:price", false);  // hide
-        manageFields("CFunction:outputs", true);  // show
-        manageFields("CTransaction:input", true);  // show
-        manageFields("CLogEntry:topics", true);  // show
+        manageFields("CTransaction:price", false);     // hide
+        manageFields("CFunction:outputs", true);       // show
+        manageFields("CTransaction:input", true);      // show
+        manageFields("CLogEntry:topics", true);        // show
         abi_spec.loadAbiKnown("all");
     }
 
     // Display formatting
     string_q format;
     switch (exportFmt) {
-    case NONE1:
-        format = STR_DISPLAY_TRACE;
-        manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-        manageFields("CTrace:" + cleanFmt(format, exportFmt));
-        manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
-        manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
-        break;
-    case TXT1:
-    case CSV1:
-        format = getGlobalConfig("getTrace")->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
-        manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-        manageFields("CTrace:" + cleanFmt(format, exportFmt));
-        manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
-        manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
-        break;
-    case API1:
-    case JSON1:
-        format = "";
-        break;
+        case NONE1:
+            format = STR_DISPLAY_TRACE;
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            manageFields("CTrace:" + cleanFmt(format, exportFmt));
+            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
+            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+            break;
+        case TXT1:
+        case CSV1:
+            format = getGlobalConfig("getTrace")
+                         ->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
+            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
+            manageFields("CTrace:" + cleanFmt(format, exportFmt));
+            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
+            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+            break;
+        case API1:
+        case JSON1:
+            format = "";
+            break;
     }
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
     if (isNoHeader)
@@ -143,10 +145,12 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
     notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

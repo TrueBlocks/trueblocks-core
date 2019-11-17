@@ -22,14 +22,14 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool freshen;
     // END_CODE_DECLARE
 
     CPriceSource source;
-    uint64_t     freq;
-    bool         first;
+    uint64_t freq;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -39,4 +39,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-bool visitPrice(CPriceQuote& qoute, void *data);
+bool visitPrice(CPriceQuote& qoute, void* data);

@@ -47,7 +47,7 @@ bool COptions::handle_listing(ostream& os) {
             item.sizeInBytes = fileSize(getMonitorPath(item.address));
             item.latestAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
-//            item.lastBalance = 0;
+            //            item.lastBalance = 0;
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accts.push_back(item);
         }
@@ -90,13 +90,13 @@ bool COptions::handle_listing(ostream& os) {
     if (stats) {
         for (auto acct : accts) {
             string_q fmt =
-            "[Address:  -c1-{ADDRESS}-off-\n]"
-            "[\tName:        -c2-{NAME}-off-\n]"
-            "[\tFile name:   -c2-{PATH}-off-\n]"
-            "[\tFile size:   -c2-{SIZEINBYTES}-off-\n]"
-            "[\tLast block:  -c2-{LATESTAPPEARANCE}-off-\n]"
-            "[\tLast export: -c2-{LASTEXPORT}-off-\n]"
-            "[\tnRecords:    -c2-{NRECORDS}-off-\n]";
+                "[Address:  -c1-{ADDRESS}-off-\n]"
+                "[\tName:        -c2-{NAME}-off-\n]"
+                "[\tFile name:   -c2-{PATH}-off-\n]"
+                "[\tFile size:   -c2-{SIZEINBYTES}-off-\n]"
+                "[\tLast block:  -c2-{LATESTAPPEARANCE}-off-\n]"
+                "[\tLast export: -c2-{LASTEXPORT}-off-\n]"
+                "[\tnRecords:    -c2-{NRECORDS}-off-\n]";
             replaceAll(fmt, "-c1-", cTeal);
             replaceAll(fmt, "-c2-", cYellow);
             replaceAll(fmt, "-off-", cOff);
@@ -121,15 +121,15 @@ bool COptions::handle_listing(ostream& os) {
         // find the longest name (max 25 chars)
         size_t longest = 0;
         for (auto acct : accts)
-            longest = max(longest, acct.name.length() + 3); // two parens
-        longest = min(longest, (size_t)23); // max 23
+            longest = max(longest, acct.name.length() + 3);  // two parens
+        longest = min(longest, (size_t)23);                  // max 23
         ncols = max(((size_t)1), (ncols / (size_t(42) + longest)));
 
         uint64_t cnt = 0;
         for (auto acct : accts) {
             string_q name = acct.name;
             if (!name.empty())
-                name = "(" + name.substr(0,20) + ") ";
+                name = "(" + name.substr(0, 20) + ") ";
             os << " " << cTeal << acct.address << " " << setw((int)longest) << name;
             if (!(++cnt % ncols))
                 os << endl;
@@ -137,10 +137,10 @@ bool COptions::handle_listing(ostream& os) {
         os << cOff << endl;
     }
 
-//    if (isTestMode())
-//        cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/");
-//    else
-//        cout << os.str();
+    //    if (isTestMode())
+    //        cout << substitute(os.str(), getCachePath(""), "$BLOCK_CACHE/");
+    //    else
+    //        cout << os.str();
 
     EXIT_NOMSG8(true);
 }

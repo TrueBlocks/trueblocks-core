@@ -19,16 +19,17 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -70,10 +71,10 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(defHide, false);
         manageFields(defShow, true);
         manageFields("CParameter:strDefault", false);  // hide
-        manageFields("CTransaction:price", false);  // hide
-        manageFields("CFunction:outputs", true);  // show
-        manageFields("CTransaction:input", true);  // show
-        manageFields("CLogEntry:topics", true);  // show
+        manageFields("CTransaction:price", false);     // hide
+        manageFields("CFunction:outputs", true);       // show
+        manageFields("CTransaction:input", true);      // show
+        manageFields("CLogEntry:topics", true);        // show
         abi_spec.loadAbiKnown("all");
     }
 
@@ -85,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (exportFmt == JSON1) {
         manageFields(defHide, false);
-        manageFields(defShow+"|CLogEntry:data,topics", true);
+        manageFields(defShow + "|CLogEntry:data,topics", true);
     }
 
     // Display formatting
@@ -113,10 +114,12 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
     notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
     notes.push_back("If the queried node does not store historical state, the results may be undefined.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

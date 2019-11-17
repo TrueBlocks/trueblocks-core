@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     int32_t testNum;
 
     COptions(void);
@@ -26,5 +26,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
+extern bool visitNonEmptyBlock(CBlock& node, void* data);
+extern bool visitEmptyBlock(CBlock& node, void* data);

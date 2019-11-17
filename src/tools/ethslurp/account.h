@@ -25,13 +25,13 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAccount : public CBaseNode {
-public:
+  public:
     address_t addr;
     uint64_t latestPage;
     CTransaction latestTx;
     CTransactionArray transactions;
 
-public:
+  public:
     CAccount(void);
     CAccount(const CAccount& ac);
     virtual ~CAccount(void);
@@ -39,19 +39,21 @@ public:
 
     DECLARE_NODE(CAccount);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     string_q displayString;
-    bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void *data = NULL) const;
+    bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* data = NULL) const;
     void markLatest(const CTransaction& trans);
     // EXISTING_CODE
     bool operator==(const CAccount& item) const;
-    bool operator!=(const CAccount& item) const { return !operator==(item); }
+    bool operator!=(const CAccount& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAccount& v1, const CAccount& v2);
     friend ostream& operator<<(ostream& os, const CAccount& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAccount& ac);
@@ -154,4 +156,3 @@ extern const char* STR_DISPLAY_ACCOUNT;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

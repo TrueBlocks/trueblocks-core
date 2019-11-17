@@ -16,69 +16,65 @@
 
 namespace qblocks {
 
-    //--------------------------------------------------------------------------------
-    void COptionsTransList::Init(void) {
-        queries = "";
-    }
+//--------------------------------------------------------------------------------
+void COptionsTransList::Init(void) {
+    queries = "";
+}
 
-    //--------------------------------------------------------------------------------
-    string_q COptionsTransList::parseTransList(const string_q& argIn) {
-
-        string_q arg = argIn;
-        if (contains(arg, ".0-to-")) {
-            replace(arg, "-to-", ".");
-            CUintArray parts;
-            explode(parts, arg, '.');
-            for (uint64_t i = parts[1] ; i < parts[2] ; i++) {
-                arg = uint_2_Str(parts[0]) + "." + uint_2_Str(i);
-                string_q ret = parseTransList(arg);
-                if (!ret.empty())
-                    return ret;
-            }
-            return "";
-        }
-
-        if (startsWith(arg, "0x")) {
-
-            if (contains(arg, ".")) {
-
-                string_q hash = nextTokenClear(arg, '.');
-                if (!isHash(hash) || !isNumeral(arg))
-                    return "The argument '" + argIn + "' is not properly formatted.";
-                queries += (hash + "." + arg + "|");  // blockHash.transID
-
-            } else if (isHash(arg)) {
-                queries += (arg + "|");  // transHash
-
-            } else {
-                string_q ret = "The argument '" + argIn + "' is not properly formatted.";
-                if (arg.length() != 66)
-                    ret += " Is it the right length?";
+//--------------------------------------------------------------------------------
+string_q COptionsTransList::parseTransList(const string_q& argIn) {
+    string_q arg = argIn;
+    if (contains(arg, ".0-to-")) {
+        replace(arg, "-to-", ".");
+        CUintArray parts;
+        explode(parts, arg, '.');
+        for (uint64_t i = parts[1]; i < parts[2]; i++) {
+            arg = uint_2_Str(parts[0]) + "." + uint_2_Str(i);
+            string_q ret = parseTransList(arg);
+            if (!ret.empty())
                 return ret;
-            }
-
-        } else if (contains(arg, ".")) {
-            string_q blockNum = nextTokenClear(arg, '.');
-            if (!isNumeral(blockNum) || !isNumeral(arg))
-                return "The argument '" + argIn + "' is not properly formatted.";
-            queries += (argIn + "|");  // blockNum.transID
-
-        } else {
-            return "The argument '" + argIn + "' is not properly formatted.";
-
         }
-
         return "";
     }
 
-    //--------------------------------------------------------------------------------
-    COptionsTransList::COptionsTransList(void) {
-        Init();
+    if (startsWith(arg, "0x")) {
+        if (contains(arg, ".")) {
+            string_q hash = nextTokenClear(arg, '.');
+            if (!isHash(hash) || !isNumeral(arg))
+                return "The argument '" + argIn + "' is not properly formatted.";
+            queries += (hash + "." + arg + "|");  // blockHash.transID
+
+        } else if (isHash(arg)) {
+            queries += (arg + "|");  // transHash
+
+        } else {
+            string_q ret = "The argument '" + argIn + "' is not properly formatted.";
+            if (arg.length() != 66)
+                ret += " Is it the right length?";
+            return ret;
+        }
+
+    } else if (contains(arg, ".")) {
+        string_q blockNum = nextTokenClear(arg, '.');
+        if (!isNumeral(blockNum) || !isNumeral(arg))
+            return "The argument '" + argIn + "' is not properly formatted.";
+        queries += (argIn + "|");  // blockNum.transID
+
+    } else {
+        return "The argument '" + argIn + "' is not properly formatted.";
     }
 
-    //--------------------------------------------------------------------------------
-    string_q COptionsTransList::int_2_Str(void) const {
-        return queries;
-    }
+    return "";
+}
+
+//--------------------------------------------------------------------------------
+COptionsTransList::COptionsTransList(void) {
+    Init();
+}
+
+//--------------------------------------------------------------------------------
+string_q COptionsTransList::int_2_Str(void) const {
+    return queries;
+}
 
 }  // namespace qblocks

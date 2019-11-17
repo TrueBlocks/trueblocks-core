@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CChainCache : public CCache {
-public:
+  public:
     CChainCache(void);
     CChainCache(const CChainCache& ch);
     virtual ~CChainCache(void);
@@ -35,11 +35,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CChainCache& item) const;
-    bool operator!=(const CChainCache& item) const { return !operator==(item); }
+    bool operator!=(const CChainCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CChainCache& v1, const CChainCache& v2);
     friend ostream& operator<<(ostream& os, const CChainCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CChainCache& ch);
@@ -132,4 +134,3 @@ extern const char* STR_DISPLAY_CHAINCACHE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

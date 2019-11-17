@@ -13,8 +13,7 @@
 #include "utillib.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     CDefaultOptions options;
     options.minArgs = 0;
     if (!options.prepareArguments(argc, argv))
@@ -22,8 +21,8 @@ int main(int argc, const char *argv[]) {
 
     size_t recurse = (argc == 2 && string_q(argv[1]) == "recurse");
 
-    string_q tests[] = { "Non-recursive", "Recursive" };
-    bool vals[] = { false, true };
+    string_q tests[] = {"Non-recursive", "Recursive"};
+    bool vals[] = {false, true};
 
     cout << tests[recurse] << " from ../" << endl;
     CStringArray files;

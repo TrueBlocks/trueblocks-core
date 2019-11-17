@@ -16,8 +16,8 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
-    bool     all;
+  public:
+    bool all;
     blknum_t endBlock;
     blknum_t startBlock;
     blknum_t nBlocks;

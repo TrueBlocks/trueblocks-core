@@ -20,6 +20,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
@@ -31,13 +32,13 @@ static const COption params[] = {
     COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -134,16 +135,17 @@ bool COptions::parseArguments(string_q& command) {
     LOG8("run: ", run, " edit: ", edit, " list: ", list, " classes: ", all, " mode: ", mode);
     if (list || all) {
         classDefs.clear();
-        if (!folderExists("./classDefinitions")) {  // if not in a folder with one class def, try to produce all classDefs
+        if (!folderExists(
+                "./classDefinitions")) {  // if not in a folder with one class def, try to produce all classDefs
             nspace = "qblocks";
-            forEveryFileInFolder("../", listClasses, this);
-        }  else {
+            forEveryFileInFolder("./", listClasses, this);
+        } else {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
 
     if (classDefs.empty())
-            return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
+        return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
 
     return true;
 }
@@ -170,9 +172,11 @@ COptions::COptions(void) : classFile("") {
     Init();
 
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
     notes.push_back("The `--class` flag generates c++ code for each definition found in the local folder.");
     notes.push_back("More information on class definition files is found in the documentation.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -193,7 +197,7 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool listClasses(const string_q& path, void *data) {
+bool listClasses(const string_q& path, void* data) {
     if (contains(path, "/test/"))
         return true;
 
@@ -202,7 +206,7 @@ bool listClasses(const string_q& path, void *data) {
 
     } else {
         if (contains(path, "classDefinitions/") && contains(path, ".txt")) {
-            COptions *opts = reinterpret_cast<COptions*>(data);
+            COptions* opts = reinterpret_cast<COptions*>(data);
 
             string_q class_name = path;
             class_name = substitute(nextTokenClearReverse(class_name, '/'), ".txt", "");

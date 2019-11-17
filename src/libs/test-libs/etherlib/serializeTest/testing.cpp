@@ -20,9 +20,9 @@
 #include "status.h"
 
 CPerson leader("Leader", 100);
-CPerson *lastAdded = &leader;
+CPerson* lastAdded = &leader;
 
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     CPerson::registerClass();
@@ -38,16 +38,16 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (size_t i = 0 ; i < 10 ; i++) {
-            CPerson *newPerson = new CPerson("Person " + uint_2_Str(i), i * 2);
+        for (size_t i = 0; i < 10; i++) {
+            CPerson* newPerson = new CPerson("Person " + uint_2_Str(i), i * 2);
             lastAdded->next = newPerson;
             lastAdded = newPerson;
         }
 
-        cout << "Creation\n" << string_q(80, '-') << "\n";
-        CPerson *cur = &leader;
+        cout << "Creation" << endl << string_q(80, '-') << endl;
+        CPerson* cur = &leader;
         while (cur) {
-            cout << cur->name << " : " << cur->age << "\n";
+            cout << cur->name << " : " << cur->age << endl;
             cur = cur->next;
         }
         cout.flush();
@@ -58,11 +58,11 @@ int main(int argc, const char *argv[]) {
             out.Release();
         }
 
-        cout << "\nReset\n" << string_q(80, '-') << "\n";
+        cout << endl << "Reset" << endl << string_q(80, '-') << endl;
         leader = CPerson();
         cur = &leader;
         while (cur) {
-            cout << cur->name << " : " << cur->age << "\n";
+            cout << cur->name << " : " << cur->age << endl;
             cur = cur->next;
         }
         cout.flush();
@@ -73,22 +73,22 @@ int main(int argc, const char *argv[]) {
             in.Release();
         }
 
-        cout << "\nRead in data\n" << string_q(80, '-') << "\n";
+        cout << endl << "Read in data" << endl << string_q(80, '-') << endl;
         cur = &leader;
         while (cur) {
-            cout << cur->name << " : " << cur->age << "\n";
+            cout << cur->name << " : " << cur->age << endl;
             cur = cur->next;
         }
         cout.flush();
 
-        cout << "\nShow a person\n" << string_q(80, '-') << "\n";
-        cout << leader << "\n";
+        cout << endl << "Show a person" << endl << string_q(80, '-') << endl;
+        cout << leader << endl;
 
-        cout << "\nShow a status\n" << string_q(80, '-') << "\n";
+        cout << endl << "Show a status" << endl << string_q(80, '-') << endl;
         CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
         cout << status << endl;
 
-        cout << "\nShow a cache\n" << string_q(80, '-') << "\n";
+        cout << endl << "Show a cache" << endl << string_q(80, '-') << endl;
         CCache cache;  // same with cache
         cout << cache << endl;
 

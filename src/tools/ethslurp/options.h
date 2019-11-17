@@ -23,7 +23,7 @@
 // END_ERROR_DEFINES
 
 class COptions : public CBlockOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
     bool appearances;
@@ -48,9 +48,12 @@ public:
 
 //--------------------------------------------------------------------------------
 inline string_q toEtherscan(const string_q& type) {
-    if (type == "token") return "tokentx";
-    else if (type == "miner") return "getminedblocks&blocktype=blocks";
-    else if (type == "int") return "txlistinternal";
+    if (type == "token")
+        return "tokentx";
+    else if (type == "miner")
+        return "getminedblocks&blocktype=blocks";
+    else if (type == "int")
+        return "txlistinternal";
     return "txlist";
 }
 

@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_list(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
@@ -15,7 +14,8 @@ bool COptions::handle_list(void) {
         ostringstream os;
         os << "acctScrape --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
 
@@ -27,10 +27,12 @@ bool COptions::handle_list(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cacheMan " << " --fix " << addr << " >&2 && ";
+        os << "cacheMan "
+           << " --fix " << addr << " >&2 && ";
         os << "acctExport --appearances " << tool_flags << " " << addr;
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
     }
 
     EXIT_NOMSG8(true);

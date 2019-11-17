@@ -26,7 +26,7 @@ typedef vector<uint32_t> CUint32Array;
 
 //--------------------------------------------------------------------------
 class CIndexCacheItem : public CBaseNode {
-public:
+  public:
     string_q type;
     uint32_t nAddresses;
     uint32_t nAppearances;
@@ -38,7 +38,7 @@ public:
     uint32_t sizeInBytes;
     string_q hash;
 
-public:
+  public:
     CIndexCacheItem(void);
     CIndexCacheItem(const CIndexCacheItem& in);
     virtual ~CIndexCacheItem(void);
@@ -49,11 +49,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CIndexCacheItem& item) const;
-    bool operator!=(const CIndexCacheItem& item) const { return !operator==(item); }
+    bool operator!=(const CIndexCacheItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CIndexCacheItem& v1, const CIndexCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CIndexCacheItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CIndexCacheItem& in);
@@ -168,4 +170,3 @@ extern const char* STR_DISPLAY_INDEXCACHEITEM;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

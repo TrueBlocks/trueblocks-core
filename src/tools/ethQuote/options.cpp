@@ -19,17 +19,18 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (append new data)"),
     COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "display prices in this increment"),
     COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -65,7 +66,6 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         } else {
             return usage("Invalid option: " + arg);
-
         }
     }
 
@@ -104,8 +104,10 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("Valid pairs include any pair from the public Poloniex's API here: | https://poloniex.com/public?command=returnCurrencies.");
     notes.push_back("`Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data | at a time. You must repeatedly run this command until the data is up-to-date.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

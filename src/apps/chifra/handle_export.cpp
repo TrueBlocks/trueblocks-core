@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
-
     ENTER8("handle_" + mode);
     nodeRequired();
 
@@ -15,7 +14,8 @@ bool COptions::handle_export(void) {
         ostringstream os;
         os << "acctExport --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        if (system(os.str().c_str())) {
+        }  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
 
@@ -41,7 +41,7 @@ bool COptions::handle_export(void) {
         }
 
         if (++cnt < addrs.size())
-            usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
     EXIT_NOMSG8(true);
 }

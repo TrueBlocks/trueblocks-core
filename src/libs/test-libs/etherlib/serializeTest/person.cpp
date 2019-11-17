@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CPerson, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextPersonChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPersonChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPerson::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CPerson::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CPerson::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextPersonChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPerson *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPerson*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,7 +60,6 @@ string_q nextPersonChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CPerson::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextPersonChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -69,11 +68,13 @@ string_q CPerson::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) return uint_2_Str(age);
+            if (fieldName % "age")
+                return uint_2_Str(age);
             break;
         case 'n':
-            if ( fieldName % "name" ) return name;
-            if ( fieldName % "next" ) {
+            if (fieldName % "name")
+                return name;
+            if (fieldName % "next") {
                 if (next)
                     return next->Format();
                 return "";
@@ -98,11 +99,17 @@ bool CPerson::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "age" ) { age = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "age") {
+                age = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "next" ) {
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            if (fieldName % "next") {
                 clear();
                 next = new CPerson;
                 if (next) {
@@ -126,7 +133,6 @@ void CPerson::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CPerson::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -146,7 +152,7 @@ bool CPerson::Serialize(CArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = reinterpret_cast<CPerson *>(createObjectOfType(className));
+        next = reinterpret_cast<CPerson*>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);
@@ -157,7 +163,6 @@ bool CPerson::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPerson::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -179,7 +184,7 @@ CArchive& operator>>(CArchive& archive, CPersonArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -190,7 +195,7 @@ CArchive& operator>>(CArchive& archive, CPersonArray& array) {
 CArchive& operator<<(CArchive& archive, const CPersonArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -198,13 +203,14 @@ CArchive& operator<<(CArchive& archive, const CPersonArray& array) {
 //---------------------------------------------------------------------------
 void CPerson::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPerson, "schema")) return;
+    if (HAS_FIELD(CPerson, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPerson, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPerson, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPerson, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPerson, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CPerson, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPerson, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPerson, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPerson, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CPerson, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CPerson, "age", T_NUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "next", T_POINTER, ++fieldNum);
@@ -222,15 +228,15 @@ void CPerson::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPerson *per = reinterpret_cast<const CPerson *>(dataPtr);
+string_q nextPersonChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPerson* per = reinterpret_cast<const CPerson*>(dataPtr);
     if (per) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, per);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -246,7 +252,6 @@ string_q nextPersonChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CPerson::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -270,4 +275,3 @@ const char* STR_DISPLAY_PERSON = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

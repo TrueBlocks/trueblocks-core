@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool list;
     // END_CODE_DECLARE
@@ -40,5 +40,5 @@ public:
     string_q listSpecials(format_t fmt) const;
 };
 
-extern bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts);
-extern bool showSpecials(CNameValue& pair, void *data);
+extern bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts);
+extern bool showSpecials(CNameValue& pair, void* data);

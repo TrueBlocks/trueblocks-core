@@ -24,12 +24,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CApiSpec : public CBaseNode {
-public:
+  public:
     string_q method;
     string_q uri;
     string_q headers;
 
-public:
+  public:
     CApiSpec(void);
     CApiSpec(const CApiSpec& ap);
     virtual ~CApiSpec(void);
@@ -43,11 +43,13 @@ public:
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CApiSpec& item) const;
-    bool operator!=(const CApiSpec& item) const { return !operator==(item); }
+    bool operator!=(const CApiSpec& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CApiSpec& v1, const CApiSpec& v2);
     friend ostream& operator<<(ostream& os, const CApiSpec& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CApiSpec& ap);
@@ -152,4 +154,3 @@ extern const char* STR_DISPLAY_APISPEC;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -23,19 +23,19 @@ namespace qblocks {
 IMPLEMENT_NODE(CConfigItem, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextConfigitemChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextConfigitemChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     /* We need to return a boolean if the type is boolean, so we do this crazy shit */
-    CRuntimeClass *pClass = getRuntimeClass();
-    CFieldData *fld = pClass->findField("value");
-    fld->setType(T_TEXT); // always reset it since an item might have children
+    CRuntimeClass* pClass = getRuntimeClass();
+    CFieldData* fld = pClass->findField("value");
+    fld->setType(T_TEXT);  // always reset it since an item might have children
     if (pClass && fld && type == "bool")
         fld->setType(T_BOOL);
     // EXISTING_CODE
@@ -56,9 +56,9 @@ void CConfigItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfigitemChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextConfigitemChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CConfigItem *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CConfigItem*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -68,7 +68,6 @@ string_q nextConfigitemChunk(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 string_q CConfigItem::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextConfigitemChunk_custom(fieldName, this);
     if (!ret.empty())
@@ -77,14 +76,16 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "name" ) return name;
-            if ( fieldName % "named" || fieldName % "namedCnt" ) {
+            if (fieldName % "name")
+                return name;
+            if (fieldName % "named" || fieldName % "namedCnt") {
                 size_t cnt = named.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += named[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
@@ -92,15 +93,20 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'r':
-            if ( fieldName % "required" ) return bool_2_Str_t(required);
-            if ( fieldName % "read_only" ) return bool_2_Str_t(read_only);
+            if (fieldName % "required")
+                return bool_2_Str_t(required);
+            if (fieldName % "read_only")
+                return bool_2_Str_t(read_only);
             break;
         case 't':
-            if ( fieldName % "type" ) return type;
-            if ( fieldName % "tip" ) return tip;
+            if (fieldName % "type")
+                return type;
+            if (fieldName % "tip")
+                return tip;
             break;
         case 'v':
-            if ( fieldName % "value" ) return value;
+            if (fieldName % "value")
+                return value;
             break;
     }
 
@@ -121,8 +127,11 @@ bool CConfigItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
-            if ( fieldName % "named" ) {
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
+            if (fieldName % "named") {
                 CAccountName item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -133,15 +142,30 @@ bool CConfigItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             break;
         case 'r':
-            if ( fieldName % "required" ) { required = str_2_Bool(fieldValue); return true; }
-            if ( fieldName % "read_only" ) { read_only = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "required") {
+                required = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "read_only") {
+                read_only = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "type" ) { type = fieldValue; return true; }
-            if ( fieldName % "tip" ) { tip = fieldValue; return true; }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
+            if (fieldName % "tip") {
+                tip = fieldValue;
+                return true;
+            }
             break;
         case 'v':
-            if ( fieldName % "value" ) { value = fieldValue; return true; }
+            if (fieldName % "value") {
+                value = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -157,7 +181,6 @@ void CConfigItem::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CConfigItem::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -175,14 +198,13 @@ bool CConfigItem::Serialize(CArchive& archive) {
     archive >> tip;
     archive >> required;
     archive >> read_only;
-//    archive >> named;
+    // archive >> named;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CConfigItem::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -194,7 +216,7 @@ bool CConfigItem::SerializeC(CArchive& archive) const {
     archive << tip;
     archive << required;
     archive << read_only;
-//    archive << named;
+    // archive << named;
 
     return true;
 }
@@ -204,7 +226,7 @@ CArchive& operator>>(CArchive& archive, CConfigItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -215,7 +237,7 @@ CArchive& operator>>(CArchive& archive, CConfigItemArray& array) {
 CArchive& operator<<(CArchive& archive, const CConfigItemArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -223,20 +245,21 @@ CArchive& operator<<(CArchive& archive, const CConfigItemArray& array) {
 //---------------------------------------------------------------------------
 void CConfigItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CConfigItem, "schema")) return;
+    if (HAS_FIELD(CConfigItem, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CConfigItem, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CConfigItem, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfigItem, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfigItem, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CConfigItem, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CConfigItem, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigItem, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "value", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "tip", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "required", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigItem, "read_only", T_BOOL, ++fieldNum);
-    ADD_FIELD(CConfigItem, "named", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "named", T_OBJECT | TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CConfigItem, "named");
 
     // Hide our internal fields, user can turn them on if they like
@@ -252,13 +275,13 @@ void CConfigItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CConfigItem *con = reinterpret_cast<const CConfigItem *>(dataPtr);
+string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CConfigItem* con = reinterpret_cast<const CConfigItem*>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'v':
-                if ( fieldIn % "value" && con->named.size() > 0) {
+                if (fieldIn % "value" && con->named.size() > 0) {
                     bool first = true;
                     manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
                     ostringstream os;
@@ -268,13 +291,13 @@ string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void *dataPtr
                         os << name << endl;
                         first = false;
                     }
-                    return substitute(substitute("["+os.str()+"]", "\n", "\\n"), "\"", "\\\"");
+                    return substitute(substitute("[" + os.str() + "]", "\n", "\\n"), "\"", "\\\"");
                 }
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, con);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -290,7 +313,6 @@ string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CConfigItem::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -308,8 +330,8 @@ ostream& operator<<(ostream& os, const CConfigItem& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CConfigItem::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "named" && index < named.size() )
+const CBaseNode* CConfigItem::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "named" && index < named.size())
         return &named[index];
     return NULL;
 }
@@ -321,4 +343,3 @@ const char* STR_DISPLAY_CONFIGITEM = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

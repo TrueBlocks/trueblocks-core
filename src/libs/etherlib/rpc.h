@@ -19,43 +19,43 @@
 
 namespace qblocks {
 
-    //-----------------------------------------------------
-    class IPCSocket {
-    public:
-         explicit IPCSocket(const string_q& _path);
-        ~IPCSocket(void);
-        string_q sendRequest(const string_q& _req);
-        const string_q& path(void) const;
+//-----------------------------------------------------
+class IPCSocket {
+  public:
+    explicit IPCSocket(const string_q& _path);
+    ~IPCSocket(void);
+    string_q sendRequest(const string_q& _req);
+    const string_q& path(void) const;
 
-    private:
-        FILE *m_fp;
-        string_q m_path;
-        int m_socket;
-    };
+  private:
+    FILE* m_fp;
+    string_q m_path;
+    int m_socket;
+};
 
-    //-----------------------------------------------------
-    IPCSocket::~IPCSocket(void) {
-        close(m_socket);
-        fclose(m_fp);
-    }
+//-----------------------------------------------------
+IPCSocket::~IPCSocket(void) {
+    close(m_socket);
+    fclose(m_fp);
+}
 
-    //-----------------------------------------------------
-    const string_q& IPCSocket::path( void ) const {
-        return m_path;
-    }
+//-----------------------------------------------------
+const string_q& IPCSocket::path(void) const {
+    return m_path;
+}
 
-    //-----------------------------------------------------
-    class RPCSession {
-    public:
-        CReceipt eth_getTransactionReceipt(const string_q& _transactionHash);
-//        string_q eth_get Code(const string_q& _address, const string_q& _blockNumber);
-//        string_q eth_get Balance(const string_q& _address, const string_q& _blockNumber);
-//        string_q eth_get StorageRoot(const string_q& _address, const string_q& _blockNumber);
-        string_q rpcCall(const string_q& _methodName, const string_q& _args);
+//-----------------------------------------------------
+class RPCSession {
+  public:
+    CReceipt eth_getTransactionReceipt(const string_q& _transactionHash);
+    //        string_q eth_get Code(const string_q& _address, const string_q& _blockNumber);
+    //        string_q eth_get Balance(const string_q& _address, const string_q& _blockNumber);
+    //        string_q eth_get StorageRoot(const string_q& _address, const string_q& _blockNumber);
+    string_q rpcCall(const string_q& _methodName, const string_q& _args);
 
-    private:
-        explicit RPCSession(const string_q& _path);
-        IPCSocket m_ipcSocket;
-        size_t m_rpcSequence = 1;
-    };
+  private:
+    explicit RPCSession(const string_q& _path);
+    IPCSocket m_ipcSocket;
+    size_t m_rpcSequence = 1;
+};
 }  // namespace qblocks
