@@ -43,6 +43,7 @@
 #include <tuple>
 #include <iomanip>
 #include <bitset>
+#include <mutex>  // NOLINT
 
 //-------------------------------------------------------------------------
 using namespace std;  // NOLINT - bad practice, but it's way too late now

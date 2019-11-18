@@ -40,9 +40,9 @@ bool lintFiles(const string_q& path, void* data) {
             string_q fullPath = substitute(path, "./", getCWD());
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
             string_q cmd = "pylint.py \"" + fullPath + "\" >\"" + resPath + "\" 2>&1";
-            int ret = system(cmd.c_str());
-            ret = 0;  // do not remove
-            // cout << ret << endl;
+            // clang-format off
+            if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+            // clang-format on
             if (!shouldQuit()) {
                 string_q contents = asciiFileToString(resPath);
                 if (contents.empty())

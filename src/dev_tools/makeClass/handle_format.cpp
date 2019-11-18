@@ -40,8 +40,9 @@ bool formatFiles(const string_q& path, void* data) {
             string_q fullPath = substitute(path, "./", getCWD());
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
             string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
-            int ret = system(cmd.c_str());
-            ret = 0;  // do not remove
+            // clang-format off
+            if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+            // clang-format on
             if (!shouldQuit() && fileExists(resPath)) {
                 string_q oldFile = asciiFileToString(fullPath);
                 string_q newFile = asciiFileToString(resPath);

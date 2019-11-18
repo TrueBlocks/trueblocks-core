@@ -13,9 +13,10 @@ bool COptions::handle_export(void) {
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "acctExport --help";
-        NOTE_CALL(os.str());
-        int ret = system(os.str().c_str());
-        ret = 0;  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        // clang-format on
         EXIT_NOMSG8(true);
     }
 
@@ -33,9 +34,10 @@ bool COptions::handle_export(void) {
         explode(cmds, os.str(), ';');
         bool quit = false;
         for (size_t i = 0; i < cmds.size() && !quit; i++) {
-            NOTE_CALL(cmds[i]);
-            int ret = system(cmds[i].c_str());
-            quit = (ret != 0);
+            LOG_CALL(cmds[i]);
+            // clang-format off
+            quit = (system(cmds[i].c_str()) != 0);
+            // clang-format on
             if (verbose)
                 cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
         }

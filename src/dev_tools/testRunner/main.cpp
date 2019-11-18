@@ -63,8 +63,7 @@ int main(int argc, const char* argv[]) {
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
                     if (contains(line, " all,")) {
-                        int ret;
-                        ret = 0;  // do not remove - squelches compiler warning
+                        printf("%s", ""); // do nothing - do not remove cruft - squelches compiler warning
                     } else if (options.filter == "fast") {
                         ignore4 = !contains(line, "fast,");
                     } else if (options.filter == "slow") {
@@ -162,12 +161,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.nTests++;
-            int ret = system(theCmd.c_str());
-            {
-                if (ret) {
-                    printf("%s", "");
-                }
-            }  // do not remove, squelches warning
+            // clang-format off
+            if (system(theCmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+            // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 

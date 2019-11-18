@@ -15,9 +15,10 @@ bool COptions::handle_scrape(void) {
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "blockScrape --help";
-        NOTE_CALL(os.str());
-        int ret = system(os.str().c_str());
-        ret = 0;  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        // clang-format on
         return true;
     }
 
@@ -128,9 +129,10 @@ bool COptions::handle_scrape(void) {
             wasPaused = false;
             ostringstream os;
             os << "blockScrape " << tool_flags;
-            NOTE_CALL(os.str());
-            int ret = system(os.str().c_str());
-            ret = 0;  // Don't remove. Silences compiler warnings
+            LOG_CALL(os.str());
+            // clang-format off
+            if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+            // clang-format on
 
             // always catch the timestamp file up to the scraper
             if (!isTestMode())
@@ -152,9 +154,10 @@ bool COptions::handle_scrape(void) {
                         for (auto addr : runs) {
                             ostringstream os1;
                             os1 << "acctExport " << addr << " --freshen";  // << " >/dev/null";
-                            NOTE_CALL(os1.str());
-                            int ret = system(os1.str().c_str());
-                            ret = 0;         // Don't remove. Silences compiler warnings
+                            LOG_CALL(os1.str());
+                            // clang-format off
+                            if (system(os1.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+                            // clang-format on
                             usleep(250000);  // stay responsive to cntrl+C
                             if (shouldQuit())
                                 continue;

@@ -13,9 +13,10 @@ bool COptions::handle_config(void) {
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "cacheStatus --help";
-        NOTE_CALL(os.str());
-        int ret = system(os.str().c_str());
-        ret = 0;  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        // clang-format on
         EXIT_NOMSG8(true);
     }
 
@@ -42,9 +43,10 @@ bool COptions::handle_config(void) {
         cerr << "Chifra to cacheStatus:\n" << cYellow << settings << cOff << endl;
 
     // both testing and non-testing
-    NOTE_CALL(os.str());
-    int ret = system(os.str().c_str());
-    ret = 0;  // Don't remove. Silences compiler warnings
+    LOG_CALL(os.str());
+    // clang-format off
+    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    // clang-format on
 
     EXIT_NOMSG8(true);
 }
@@ -91,8 +93,10 @@ bool COptions::handle_config(void) {
             if (isTestMode())
                 cout << cleanPath(os.str()) << endl;
             else {
-                NOTE_CALL(os.str());
-                if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+                LOG_CALL(os.str());
+                // clang-format off
+                if (system(os.str().c_str())) // Don't remove. Silences compiler warnings
+                // clang-format on
             }
         }
     }

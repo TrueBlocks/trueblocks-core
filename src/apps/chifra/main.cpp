@@ -63,8 +63,10 @@ int main(int argc, const char* argv[]) {
                 os << cmdMap[options.mode] << " " << options.tool_flags;
                 for (auto addr : options.addrs)
                     os << " " << addr;
-                int ret = system(os.str().c_str());
-                ret = 0;  // do not remove, squelches warning on linux
+                LOG_CALL(os.str());
+                // clang-format off
+                if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+                // clang-format on
             } else {
                 cerr << "Should not happen.";
             }

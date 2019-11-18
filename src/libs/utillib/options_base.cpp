@@ -820,8 +820,9 @@ void editFile(const string_q& fileName) {
         asciiFileToString(fileName, contents);
         cout << contents << "\n";
     } else {
-        int ret = system(cmd.c_str());
-        ret = 0;  // Don't remove. Silences compiler warnings
+        // clang-format off
+        if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+        // clang-format on
     }
 }
 

@@ -87,9 +87,10 @@ bool COptions::handle_data(void) {
         EXIT_FAIL("Invalid option: data " + tool_flags + " " + addrList);
     }
 
-    NOTE_CALL(os.str());
-    int ret = system(os.str().c_str());
-    ret = 0;  // Don't remove. Silences compiler warnings
+    LOG_CALL(os.str());
+    // clang-format off
+    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    // clang-format on
 
     EXIT_NOMSG8(true);
 }
