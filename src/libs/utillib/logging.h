@@ -125,14 +125,14 @@ class logger {
                 header.fill('0');
                 header.width(7);
                 clock_t now = clock();
-                header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";  // NOLINT
+                header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
                 last_clock = now;
             }
-            if (LOG_THREAD) {
-                header.fill('0');
-                header.width(7);
-                header << this_thread::get_id() << " + ";
-            }
+            //            if (LOG_THREAD) {
+            //                header.fill('0');
+            //                header.width(7);
+            //                header << this_thread::get_id() << " + ";
+            //            }
         }
         header << cOff;
         return header.str();

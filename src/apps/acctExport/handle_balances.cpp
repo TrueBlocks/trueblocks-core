@@ -56,7 +56,7 @@ bool COptions::exportBalances(void) {
                     balIn >> rec;
                     rec.address = monitor.address;
                     deltasMap[rec.blockNumber] = rec;
-                };
+                }
                 balIn.Release();
             }
             // TODO(tjayrush) : remove this

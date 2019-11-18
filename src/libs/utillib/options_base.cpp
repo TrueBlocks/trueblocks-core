@@ -45,8 +45,8 @@ string_q COptionsBase::getProgName(void) const {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
-    if (argCountIn > 0)                                         /* always is */
-        COptionsBase::g_progName = basename((char*)argvIn[0]);  // NOLINT
+    if (argCountIn > 0)  // always is, but check anyway
+        COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
     if (getEnvStr("NO_COLOR") == "true")
@@ -189,16 +189,13 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 exportFmt = TXT1;
             } else if (arg == "csv") {
                 exportFmt = CSV1;
-            }  // NOLINT
-            else if (arg == "json") {
+            } else if (arg == "json") {
                 exportFmt = JSON1;
-            }  // NOLINT
-            else if (arg == "api") {
+            } else if (arg == "api") {
                 exportFmt = API1;
-            }  // NOLINT
-            else
-                return usage("Export format (" + arg +
-                             ") must be one of [ json | txt | csv | api ]. Quitting...");  // NOLINT
+            } else {
+                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
+            }
             argumentsOut[i] = "";
         }
     }
@@ -823,8 +820,8 @@ void editFile(const string_q& fileName) {
         asciiFileToString(fileName, contents);
         cout << contents << "\n";
     } else {
-        if (system(cmd.c_str())) {
-        }  // Don't remove. Silences compiler warnings
+        int ret = system(cmd.c_str());
+        ret = 0;  // Don't remove. Silences compiler warnings
     }
 }
 
@@ -855,7 +852,7 @@ int sortByBlockNum(const void* v1, const void* v2) {
         return 1;
     if (contains(b2->second, "tbd"))
         return -1;
-    return (int)(str_2_Uint(b1->second) - str_2_Uint(b2->second));  // NOLINT
+    return static_cast<int>(str_2_Uint(b1->second) - str_2_Uint(b2->second));
 }
 
 //-----------------------------------------------------------------------
@@ -1063,9 +1060,10 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) con
     if (namedAccounts.size() == 0) {
         uint64_t save = verbose;
         verbose = false;
+        COptionsBase* pThis = (COptionsBase*)this;  // NOLINT
         if (!contains(namesFile.getFullPath(), "names.txt"))
-            ((COptionsBase*)this)->namesFile = CFilename(configPath("names/names.txt"));  // NOLINT
-        ((COptionsBase*)this)->loadNames();                                               // NOLINT
+            pThis->namesFile = CFilename(configPath("names/names.txt"));
+        pThis->loadNames();
         verbose = save;
     }
 

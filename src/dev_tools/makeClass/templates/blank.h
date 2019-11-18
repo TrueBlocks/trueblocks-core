@@ -15,6 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+// clang-format off
 [H_INCLUDES]
 [{NAMESPACE1}]
 
@@ -138,3 +139,4 @@ extern const char* STR_DISPLAY_[{CLASS_UPPER}];
 // EXISTING_CODE
 
 [{NAMESPACE2}]
+// clang-format on

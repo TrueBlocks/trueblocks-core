@@ -62,13 +62,16 @@ int main(int argc, const char* argv[]) {
                 bool ignore3 = contains(line, ", route,");
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
-                    if (contains(line, " all,")) { /* do nothing */
-                    } else if (options.filter == "fast")
+                    if (contains(line, " all,")) {
+                        int ret;
+                        ret = 0;  // do not remove - squelches compiler warning
+                    } else if (options.filter == "fast") {
                         ignore4 = !contains(line, "fast,");
-                    else if (options.filter == "slow")
+                    } else if (options.filter == "slow") {
                         ignore4 = !contains(line, "slow,");
-                    else if (options.filter == "medi")
+                    } else if (options.filter == "medi") {
                         ignore4 = !contains(line, "medi,");
+                    }
                 }
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {

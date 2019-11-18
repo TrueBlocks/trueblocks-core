@@ -22,8 +22,8 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
-    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
+    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
+    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
     // clang-format on
     // END_CODE_OPTIONS

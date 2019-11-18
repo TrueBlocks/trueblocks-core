@@ -60,6 +60,8 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_options(void);
+    bool handle_lint(void);
+    bool handle_format(void);
     bool handle_json_export(const string_q& cl);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
 
@@ -70,6 +72,8 @@ class COptions : public COptionsBase {
 
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
+extern bool lintFiles(const string_q& path, void* data);
+extern bool formatFiles(const string_q& path, void* data);
 extern void updateTemplates(void);
 extern string_q getCaseGetCode(const string_q& fieldCase);
 extern string_q getCaseSetCode(const string_q& fieldCase);

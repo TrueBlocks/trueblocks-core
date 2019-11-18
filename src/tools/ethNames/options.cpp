@@ -20,8 +20,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
+    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
+    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
+    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -224,7 +224,7 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("With a single search term, the tool searches both `name` and `address`.");
-    notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");
+    notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");  // NOLINT
     notes.push_back("When there are two search terms, both must match.");
     notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
@@ -255,9 +255,11 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return false;
     }
 
-    if (!match_case)
-        for (size_t i = 0; i < searches.size(); i++)
+    if (!match_case) {
+        for (size_t i = 0; i < searches.size(); i++) {
             searches[i] = toLower(searches[i]);
+        }
+    }
 
     string_q search1 = searches.size() > 0 ? searches[0] : "";
     string_q search2 = searches.size() > 1 ? searches[1] : "";

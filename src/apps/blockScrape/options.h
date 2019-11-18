@@ -25,7 +25,7 @@ class CConsolidator {
     //    blknum_t ts_bn;
 
     blknum_t prevBlock;
-    CConsolidator(blknum_t p);
+    explicit CConsolidator(blknum_t p);
     // TS_SCRAPER
     //    bool checkTimestamps(void);
 

@@ -37,7 +37,6 @@ extern const char* defTraceFmt;
 extern string_q cleanFmt(const string_q& str);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -53,7 +52,6 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
 
         } else if (contains(arg, "-k:") || contains(arg, "--kBlock:")) {
-
             arg = substitute(substitute(arg, "-k:", ""), "--kBlock:", "");
             if (!isNumeral(arg)) {
                 cerr << substitute(usageStr("You must specify a block number (" + arg + ")"), "\n", "\r\n");
@@ -62,7 +60,6 @@ bool COptions::parseArguments(string_q& command) {
             kBlock = str_2_Uint(arg);
 
         } else if (contains(arg, "-o:") || contains(arg, "--offset:")) {
-
             arg = substitute(substitute(arg, "-o:", ""), "--offset:", "");
             if (!isNumeral(arg)) {
                 cerr << substitute(usageStr("You must specify a number for offset (" + arg + ")"), "\n", "\r\n");
@@ -111,12 +108,12 @@ bool COptions::parseArguments(string_q& command) {
             if (visitor.watches.size() > 2)
                 cout << "[";
 
-            for (uint32_t i=0;i<visitor.watches.size()-1;i++) {
+            for (uint32_t i = 0; i < visitor.watches.size() - 1; i++) {
                 cout << " { ";
-                cout << "\"address\": \""  << visitor.watches[i].color << visitor.watches[i].address    << cOff << "\", ";
-                cout << "\"firstBlock\": " << bRed                     << visitor.watches[i].firstBlock << cOff << ", ";
-                cout << "\"name\": \""     << visitor.watches[i].color << visitor.watches[i].name       << cOff << "\"";
-                cout << " }" << ( i < visitor.watches.size()-2 ? ",\r\n " : " \r\n");
+                cout << "\"address\": \"" << visitor.watches[i].color << visitor.watches[i].address << cOff << "\", ";
+                cout << "\"firstBlock\": " << bRed << visitor.watches[i].firstBlock << cOff << ", ";
+                cout << "\"name\": \"" << visitor.watches[i].color << visitor.watches[i].name << cOff << "\"";
+                cout << " }" << (i < visitor.watches.size() - 2 ? ",\r\n " : " \r\n");
             }
 
             if (visitor.watches.size() > 2)
@@ -131,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    kBlock = max((blknum_t)0, kBlock-offset);
+    kBlock = max((blknum_t)0, kBlock - offset);
 
     if (debugger_on && !accounting_on)
         return usage("If you want to use the debugger, you must use the --accounting option as well.");
@@ -144,20 +141,20 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     theWidth = toml.getConfigInt("display", "width", theWidth);
 
-    accounting_on  =          toml.getConfigBool("display", "accounting",  false) || accounting_on;
-    logs_on        =          toml.getConfigBool("display", "logs",        false) || logs_on;
-    trace_on       =          toml.getConfigBool("display", "trace",       false) || trace_on;
-    parse_on       =          toml.getConfigBool("display", "parse",       false) || parse_on;
-    debugger_on    =          toml.getConfigBool("display", "debug",       false) || debugger_on;
-    single_on      =          toml.getConfigBool("display", "single",      false) || single_on;
-    no_check       =          toml.getConfigBool("display", "no_check",    false) || no_check;
-    autocorrect_on =          toml.getConfigBool("display", "autocorrect", false) || autocorrect_on;
-    json_on        =          toml.getConfigBool("formats", "as_json",     false) || json_on;
+    accounting_on = toml.getConfigBool("display", "accounting", false) || accounting_on;
+    logs_on = toml.getConfigBool("display", "logs", false) || logs_on;
+    trace_on = toml.getConfigBool("display", "trace", false) || trace_on;
+    parse_on = toml.getConfigBool("display", "parse", false) || parse_on;
+    debugger_on = toml.getConfigBool("display", "debug", false) || debugger_on;
+    single_on = toml.getConfigBool("display", "single", false) || single_on;
+    no_check = toml.getConfigBool("display", "no_check", false) || no_check;
+    autocorrect_on = toml.getConfigBool("display", "autocorrect", false) || autocorrect_on;
+    json_on = toml.getConfigBool("formats", "as_json", false) || json_on;
 
     // If we're not told to use Json, then we use format strings. No format string == export as json
     if (!json_on) {
-        transFmt   = cleanFmt(toml.getConfigStr ("formats", "trans_fmt",   defTransFmt));
-        traceFmt   = cleanFmt(toml.getConfigStr ("formats", "trace_fmt",   defTraceFmt));
+        transFmt = cleanFmt(toml.getConfigStr("formats", "trans_fmt", defTransFmt));
+        traceFmt = cleanFmt(toml.getConfigStr("formats", "trace_fmt", defTraceFmt));
     } else {
         debugger_on = accounting_on = trace_on = logs_on = false;
     }
@@ -193,12 +190,14 @@ void COptions::Init(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-COptions::COptions(void) : transStats(), blockStats(),
-setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
+COptions::COptions(void)
+    : transStats(),
+      blockStats(),
+      setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 #ifdef DEBUGGER_ON
 tBuffer(),
 #endif
-transFmt(""), traceFmt(""), esc_hit(false) {
+    transFmt(""), traceFmt(""), esc_hit(false) {
     Init();
     barLen(80);
     // BEG_CODE_NOTES
@@ -214,10 +213,14 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 string_q cleanFmt(const string_q& str) {
-    return (substitute(substitute(substitute(substitute(substitute((str), "\\n\\\n", "\\n"), "\n", ""), "\\n", "\n"), "\\t", "\t"), "\\r", "\r"));
+    return (substitute(
+        substitute(substitute(substitute(substitute((str), "\\n\\\n", "\\n"), "\n", ""), "\\n", "\n"), "\\t", "\t"),
+        "\\r", "\r"));
 }
 
 //-----------------------------------------------------------------------
-//const char* defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" }";
-const char* defTransFmt = "+=+ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" =+=";
+// const char* defTransFmt = "{ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\":
+// \"[{VALUE}]\" }";
+const char* defTransFmt =
+    "+=+ \"date\": \"[{DATE}]\", \"from\": \"[{FROM}]\", \"to\": \"[{TO}]\", \"value\": \"[{VALUE}]\" =+=";
 const char* defTraceFmt = "{ \"[{DATESH}]\", \"[{TIME}]\", \"[{FROM}]\", \"[{TO}]\", \"[{VALUE}]\" }";

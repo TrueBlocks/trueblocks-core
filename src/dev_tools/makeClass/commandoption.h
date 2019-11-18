@@ -50,7 +50,7 @@ class CCommandOption : public CBaseNode {
     DECLARE_NODE(CCommandOption);
 
     // EXISTING_CODE
-    CCommandOption(const string_q& line);
+    explicit CCommandOption(const string_q& line);
     // EXISTING_CODE
     bool operator==(const CCommandOption& item) const;
     bool operator!=(const CCommandOption& item) const {

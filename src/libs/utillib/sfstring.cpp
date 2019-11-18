@@ -342,20 +342,14 @@ string_q extract(const string_q& haystack, size_t pos, size_t len) {
 string_q escape_string(const string_q& str) {
     string_q res;
     for (auto it = str.begin(); it != str.end(); ++it) {
-        if (*it == '\b')
-            res += "\\b";
-        else if (*it == '\t')
-            res += "\\t";
-        else if (*it == '\n')
-            res += "\\n";
-        else if (*it == '\f')
-            res += "\\f";
-        else if (*it == '\r')
-            res += "\\r";
-        else if (*it == '"')
-            res += "\\\"";
-        else if (*it == '\\')
-            res += "\\\\";
+        // clang-format off
+             if (*it == '\b') res += "\\b";  // NOLINT
+        else if (*it == '\t') res += "\\t";
+        else if (*it == '\n') res += "\\n";
+        else if (*it == '\f') res += "\\f";
+        else if (*it == '\r') res += "\\r";
+        else if (*it == '"') res += "\\\"";
+        else if (*it == '\\') res += "\\\\";
         else if (static_cast<uint32_t>(*it) <= UINT32_C(0x001f)) {  // NOLINT
             res += "\\u";
             stringstream ss;
@@ -364,6 +358,7 @@ string_q escape_string(const string_q& str) {
         } else {
             res += *it;
         }
+        // clang-format on
     }
     return res;
 }
@@ -384,13 +379,13 @@ void cleanString(string_q& str, bool isCode) {
                     case '\r':
                         if (!isCode)
                             str[pos++] = ch;
-                        break;  // NOLINT
+                        break;
                     case '\n':
                         if (isCode)
                             str[pos++] = ' ';
                         else
                             str[pos++] = ch;
-                        break;  // NOLINT
+                        break;
                     case ' ':
                         state = IN_SPACE;
                         break;
@@ -399,14 +394,14 @@ void cleanString(string_q& str, bool isCode) {
                             state = IN_DASH;
                         else
                             str[pos++] = ch;
-                        break;  // NOLINT
+                        break;
                     case '\\':
                         state = IN_NL;
                         break;
                     case '/':
                         if (isCode)
                             state = COMM_START;
-                        break;  // NOLINT
+                        break;
                     default:
                         str[pos++] = ch;
                 }
@@ -414,8 +409,8 @@ void cleanString(string_q& str, bool isCode) {
             case IN_SPACE:
                 if (isCode && ch == '\n') {
                     str[pos++] = ' ';
-                } else
-                    switch (ch) {  // NOLINT
+                } else {
+                    switch (ch) {
                         case ' ':
                             break;  // skip it
                         default:
@@ -424,6 +419,7 @@ void cleanString(string_q& str, bool isCode) {
                             state = OUT;
                             break;
                     }
+                }
                 break;
             case IN_DASH:
                 switch (ch) {

@@ -21,9 +21,9 @@ bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),
+    COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -196,7 +196,7 @@ void COptions::applyFilter() {
 
 //--------------------------------------------------------------------------------
 bool showSpecials(CNameValue& pair, void* data) {
-    ((CNameValueArray*)data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
+    reinterpret_cast<CNameValueArray*>(data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
     return true;
 }
 

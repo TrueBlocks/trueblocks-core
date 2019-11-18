@@ -46,7 +46,7 @@ biguint_t::biguint_t(uint64_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 biguint_t::biguint_t(uint32_t x) {
     if (x != 0) {
         capacity = 0;
@@ -56,7 +56,7 @@ biguint_t::biguint_t(uint32_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 biguint_t::biguint_t(uint16_t x) {
     if (x != 0) {
         capacity = 0;
@@ -66,11 +66,11 @@ biguint_t::biguint_t(uint16_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 biguint_t::biguint_t(int64_t x) {
-    if (x < 0)
+    if (x < 0) {
         throw msg;
-    else if (x != 0) {
+    } else if (x != 0) {
         capacity = 0;
         allocate(1);
         if (blk) {
@@ -78,11 +78,11 @@ biguint_t::biguint_t(int64_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 biguint_t::biguint_t(int32_t x) {
-    if (x < 0)
+    if (x < 0) {
         throw msg;
-    else if (x != 0) {
+    } else if (x != 0) {
         capacity = 0;
         allocate(1);
         if (blk) {
@@ -90,11 +90,11 @@ biguint_t::biguint_t(int32_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 biguint_t::biguint_t(int16_t x) {
-    if (x < 0)
+    if (x < 0) {
         throw msg;
-    else if (x != 0) {
+    } else if (x != 0) {
         capacity = 0;
         allocate(1);
         if (blk) {
@@ -102,7 +102,7 @@ biguint_t::biguint_t(int16_t x) {
             blk[0] = (uint64_t)(x);
         }
     }
-}  // NOLINT
+}
 
 //----------------------------------------------------------------------
 template <class X>

@@ -21,9 +21,11 @@
 #include "debug.h"
 
 //-----------------------------------------------------------------------
-extern void do_resize      (int dummy);
-extern void myQuitHandler  (int s);
-inline void myOnExitHandler(void) { myQuitHandler(1); }
+extern void do_resize(int dummy);
+extern void myQuitHandler(int s);
+inline void myOnExitHandler(void) {
+    myQuitHandler(1);
+}
 
 // EXISTING_CODE
 // EXISTING_CODE

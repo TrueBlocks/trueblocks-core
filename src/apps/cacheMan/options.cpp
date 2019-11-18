@@ -13,20 +13,20 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
+    COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),  // NOLINT
     COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
     COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
-    COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
+    COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),  // NOLINT
     COption("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
     COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
     COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
     COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
-    COption("truncate", "u", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
+    COption("truncate", "u", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),  // NOLINT
     COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
     COption("skip", "k", "<uint32>", OPT_HIDDEN | OPT_FLAG, "skip value for testing"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
+    COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };

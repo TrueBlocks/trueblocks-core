@@ -20,12 +20,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),  // NOLINT
+    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),  // NOLINT
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // clang-format on
@@ -190,8 +190,8 @@ COptions::COptions(void) {
     exportFmt = NONE1;
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // clang-format on
     // END_CODE_NOTES

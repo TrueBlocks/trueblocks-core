@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to search for"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Reports if a block was found in the cache, at a local, or at a remote node."),
     // clang-format on
     // END_CODE_OPTIONS

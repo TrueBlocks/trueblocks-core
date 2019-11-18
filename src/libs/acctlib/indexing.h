@@ -24,7 +24,7 @@ class CIndexChunk {
   public:
     hash_t hash;
     uint64_t cnt;
-    CIndexChunk(const hash_t& h) {
+    explicit CIndexChunk(const hash_t& h) {
         hash = h;
         cnt = 0;
     }

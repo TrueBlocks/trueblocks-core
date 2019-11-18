@@ -28,9 +28,11 @@ static const COption params[] = {
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("js", "j", "<string>", OPT_FLAG, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
+    COption("lint", "L", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
-    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),
+    COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -49,6 +51,8 @@ bool COptions::parseArguments(string_q& command) {
     bool edit = false;
     string_q js = "";
     bool options = false;
+    bool format = false;
+    bool lint = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -75,11 +79,17 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--options") {
             options = true;
 
+        } else if (arg == "-f" || arg == "--format") {
+            format = true;
+
+        } else if (arg == "-L" || arg == "--lint") {
+            lint = true;
+
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
             nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
 
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
+            filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
 
         } else if (arg == "-t" || arg == "--test") {
             test = true;
@@ -110,8 +120,16 @@ bool COptions::parseArguments(string_q& command) {
         classDefs.push_back(cl);
     }
 
+    // order matters
     if (options)
-        return !handle_options();
+        handle_options();
+    if (format)
+        handle_format();
+    if (lint)
+        handle_lint();
+
+    if (options || format || lint)
+        return false;
 
     if (!js.empty())
         return handle_json_export(js);

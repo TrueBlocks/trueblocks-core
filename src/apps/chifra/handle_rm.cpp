@@ -48,8 +48,8 @@ bool COptions::handle_rm(void) {
                 os << "cd " << getMonitorPath("") << " && ";
                 os << "rm -f " << addr << ".*";
                 NOTE_CALL(os.str());
-                if (system(os.str().c_str())) {
-                }  // Don't remove. Silences compiler warnings
+                int ret = system(os.str().c_str());
+                ret = 0;  // Don't remove. Silences compiler warnings
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 
             } else {

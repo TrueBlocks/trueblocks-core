@@ -25,17 +25,6 @@ namespace qblocks {
 #define remove unlink
 
 //------------------------------------------------------------------
-static string_q escapePath(const string_q& nameIn) {
-    string_q name = nameIn;
-    replaceAll(name, " ", "\\ ");
-    replaceAll(name, "&", "\\&");
-    replaceAll(name, "(", "\\(");
-    replaceAll(name, ")", "\\)");
-    replaceAll(name, "'", "\\'");
-    return name;
-}
-
-//------------------------------------------------------------------
 static int globErrFunc(const char* epath, int eerrno) {
     //  perror(epath);
     return 0;
@@ -62,14 +51,22 @@ int moveFile(const string_q& from, const string_q& to) {
 }
 
 //------------------------------------------------------------------
-int copyFile(const string_q& fromIn, const string_q& toIn) {
-    string_q from = escapePath(fromIn);
-    string_q to = escapePath(toIn);
+static string_q escapePath(const string_q& nameIn) {
+    string_q name = nameIn;
+    replaceAll(name, " ", "\\ ");
+    replaceAll(name, "&", "\\&");
+    replaceAll(name, "(", "\\(");
+    replaceAll(name, ")", "\\)");
+    replaceAll(name, "'", "\\'");
+    return name;
+}
 
-    string_q command = "cp -f " + from + " " + to;
-    if (system(command.c_str())) {
-    }  // do not remove. The test just silences compiler warnings
-    return static_cast<int>(fileExists(to));
+//------------------------------------------------------------------
+int copyFile(const string_q& fromIn, const string_q& toIn) {
+    ifstream src(escapePath(fromIn), ios::binary);
+    ofstream dst(escapePath(toIn), ios::binary);
+    dst << src.rdbuf();
+    return static_cast<int>(fileExists(toIn));
 }
 
 //------------------------------------------------------------------
@@ -112,7 +109,7 @@ void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles
                     path = extract(path, 0, path.length() - 1);
 
                 // trim path to last directory / file
-                path = basename((char*)path.c_str());  // NOLINT
+                path = CFilename(path).getFilename();
                 if (startsWith(path, '/'))
                     path = extract(path, 1);
                 // The path we return is always just the name of the folder or file
@@ -170,8 +167,8 @@ string_q doCommand(const string_q& cmd) {
     string_q tmpPath = "/tmp/";
     string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
     string_q theCommand = (cmd + " >" + filename);
-    if (system(theCommand.c_str())) {
-    }  // Don't remove. Silences compiler warnings
+    int waste = system(theCommand.c_str());
+    waste = 0;  // Don't remove. Silences compiler warnings
 
     // Check twice for existance since the previous command creates the file but may take some time
     waitForCreate(filename);
@@ -183,10 +180,11 @@ string_q doCommand(const string_q& cmd) {
 
 //------------------------------------------------------------------
 string_q getCWD(const string_q& filename) {
+    string_q folder;
+    size_t kMaxPathSize = _POSIX_PATH_MAX;
     char buffer[kMaxPathSize];
-    if (::getcwd(buffer, kMaxPathSize)) {
-    }  // do not remove. The test just silences compiler warnings
-    string_q folder = buffer;
+    if (::getcwd(buffer, kMaxPathSize))
+        folder = buffer;
     if (!endsWith(folder, '/'))
         folder += "/";
     return folder + filename;  // may be empty

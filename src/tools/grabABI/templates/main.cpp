@@ -16,7 +16,7 @@
 // EXISTING_CODE
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     parselib_init(myQuitHandler);
 
     if (argc < 2)
@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
 
-        uint64_t blockNum = visitor.blockStats.minWatchBlock-1;
+        uint64_t blockNum = visitor.blockStats.minWatchBlock - 1;
         if (visitor.kBlock > blockNum)
             blockNum = visitor.kBlock;
 
@@ -49,8 +49,9 @@ int main(int argc, const char *argv[]) {
         cout << "\r\n";
         if (visitor.kBlock) {
             // we're not starting at the beginning
-            for (uint32_t i = 0 ; i < visitor.watches.size() ; i++) {
-                visitor.watches.at(i).statement.endBal = get NodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
+            for (uint32_t i = 0; i < visitor.watches.size(); i++) {
+                visitor.watches.at(i).statement.endBal =
+                    get NodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
             }
         }
 
@@ -75,18 +76,18 @@ int main(int argc, const char *argv[]) {
             UNHIDE_FIELD(CTransaction, "isError");
             UNHIDE_FIELD(CTransaction, "date");
             UNHIDE_FIELD(CTransaction, "ether");
-            HIDE_FIELD  (CTransaction, "gasUsed");
+            HIDE_FIELD(CTransaction, "gasUsed");
 
-            UNHIDE_FIELD(CLogEntry,    "cname");
-            UNHIDE_FIELD(CLogEntry,    "articulated");
+            UNHIDE_FIELD(CLogEntry, "cname");
+            UNHIDE_FIELD(CLogEntry, "articulated");
 
-            UNHIDE_FIELD(CReceipt,     "events");
-            HIDE_FIELD  (CReceipt,     "logs");
+            UNHIDE_FIELD(CReceipt, "events");
+            HIDE_FIELD(CReceipt, "logs");
 
-            HIDE_FIELD  (CTrace,       "blockHash");
-            HIDE_FIELD  (CTrace,       "blockNumber");
-            HIDE_FIELD  (CTrace,       "transactionHash");
-            HIDE_FIELD  (CTrace,       "transactionIndex");
+            HIDE_FIELD(CTrace, "blockHash");
+            HIDE_FIELD(CTrace, "blockNumber");
+            HIDE_FIELD(CTrace, "transactionHash");
+            HIDE_FIELD(CTrace, "transactionIndex");
         }
 
         if (!visitor.debugger_on && !verbose)
@@ -95,10 +96,9 @@ int main(int argc, const char *argv[]) {
 
         time_q now = Now();
         cerr << argv[0] << ": " << now.Format(FMT_JSON) << ": "
-        << "{ "
-        << cYellow << visitor.transStats.nDisplayed    << cOff << " displayed from cache; "
-        << cYellow << visitor.transStats.nAccountedFor << cOff << " accounted for"
-        << " }                        \r\n";
+             << "{ " << cYellow << visitor.transStats.nDisplayed << cOff << " displayed from cache; " << cYellow
+             << visitor.transStats.nAccountedFor << cOff << " accounted for"
+             << " }                        \r\n";
 
         if (visitor.debugger_on) {
             // If we were debugging and we did nothing, let the user know

@@ -324,12 +324,12 @@ string_q serp_2_Type(const string_q& serpent) {
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestSerpent) {
-    ASSERT_TRUE("type_2_Serp(bytes) == 'b'", type_2_Serp("bytes") == "s");          // NOLINT
-    ASSERT_TRUE("type_2_Serp(int256) == 'i'", type_2_Serp("int256") == "i");        // NOLINT
-    ASSERT_TRUE("type_2_Serp(int256[]) == 'a'", type_2_Serp("int256[]") == "a");    // NOLINT
-    ASSERT_TRUE("type_2_Serp(bytes8) == 'b8'", type_2_Serp("bytes8") == "b8");      // NOLINT
-    ASSERT_TRUE("type_2_Serp(bytes32) == 'b32'", type_2_Serp("bytes32") == "b32");  // NOLINT
-    ASSERT_TRUE("type_2_Serp(...) == 'sb8ib8a'",
+    ASSERT_TRUE("type_2_Serp(bytes) == 'b'", type_2_Serp("bytes") == "s");            // NOLINT
+    ASSERT_TRUE("type_2_Serp(int256) == 'i'", type_2_Serp("int256") == "i");          // NOLINT
+    ASSERT_TRUE("type_2_Serp(int256[]) == 'a'", type_2_Serp("int256[]") == "a");      // NOLINT
+    ASSERT_TRUE("type_2_Serp(bytes8) == 'b8'", type_2_Serp("bytes8") == "b8");        // NOLINT
+    ASSERT_TRUE("type_2_Serp(bytes32) == 'b32'", type_2_Serp("bytes32") == "b32");    // NOLINT
+    ASSERT_TRUE("type_2_Serp(...) == 'sb8ib8a'",                                      // NOLINT
                 type_2_Serp("bytes|bytes8|int256|bytes8|int256[]") == "sb8ib8a");     // NOLINT
     ASSERT_TRUE("type_2_Serp(int8) == 'unknown'", type_2_Serp("int8") == "unknown");  // NOLINT
     ASSERT_TRUE("type_2_Serp(bool) == 'unknown'", type_2_Serp("bool") == "unknown");  // NOLINT

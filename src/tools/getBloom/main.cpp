@@ -97,13 +97,13 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
                 blooms.push_back(str_2_BigUint(rawBlock.transactions[i].receipt.logsBloom));
         }
 
-        if (opt.bars)
+        if (opt.bars) {
             return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
-        else if (opt.bitbars)
+        } else if (opt.bitbars) {
             return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
-        else if (opt.pctbars)
-            return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)1024);
-        else {
+        } else if (opt.pctbars) {
+            return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, reinterpret_cast<void*>(1024));
+        } else {
             CBloomTransArray showing;
             if (opt.bits)
                 rawBlock.logsBloom = bloom_2_Bits(str_2_BigUint(rawBlock.logsBloom));
@@ -127,18 +127,18 @@ string_q doOneBloom(uint64_t num, const COptions& opt) {
     } else {
         string_q fileName = getBinaryCacheFilename(CT_BLOOMS, num);
         readBloomFromBinary(blooms, fileName);
-        if (opt.bars)
+        if (opt.bars) {
             return showBloom_oldblooms(num, opt.bitBound, blooms, bars);
-        else if (opt.bitbars)
+        } else if (opt.bitbars) {
             return showBloom_oldblooms(num, opt.bitBound, blooms, bitBar);
-        else if (opt.pctbars) {
+        } else if (opt.pctbars) {
             bloom_t one_bloom = 0;
             uint64_t n = blooms.size();
             for (size_t i = 0; i < blooms.size(); i++)
                 one_bloom = joinBloom(one_bloom, blooms[i]);
             blooms.clear();
             blooms.push_back(one_bloom);
-            return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, (void*)(1024 * n));
+            return showBloom_oldblooms(num, opt.bitBound, blooms, pctBar, reinterpret_cast<void*>(1024 * n));
 
         } else {
             os << "{\n";

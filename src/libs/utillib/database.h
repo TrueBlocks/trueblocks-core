@@ -14,6 +14,9 @@
 #include "fielddata.h"
 #include "sfos.h"
 
+// NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
+// to be conservitive in changing it. It's easier to hide the lint than modify the code
+
 namespace qblocks {
 
 #define READ_OK 1

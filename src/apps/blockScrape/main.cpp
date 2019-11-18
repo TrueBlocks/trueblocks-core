@@ -184,7 +184,7 @@ bool COptions::handle_scrape(void) {
 }
 
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
-const static blknum_t maxIndexRows = 500000;
+static const blknum_t maxIndexRows = 500000;
 //--------------------------------------------------------------------------
 bool COptions::finalize_chunks(CConsolidator* cons) {
     // 'oldStage' contains staged but not yet consolidated records. 'tempStage' contains
@@ -196,8 +196,8 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
-//#define FF(a) { cerr << setw(12) << #a << setw(70) << a << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
-//#define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
+// #define FF(a) { cerr << setw(12) << #a << setw(70) << a << ": " << cYellow << (fileSize(a)/59) << cOff << endl; }
+// #define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
 #define FF(a)
 #define FF1(a)
     FF(tmpFile);
@@ -359,9 +359,9 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
             }
             remainingLines.push_back(lines[record]);
         }
-        if (verbose > 2)
+        if (verbose > 2) {
             cerr << endl;
-        else {
+        } else {
             cerr << bBlue << "\t\t" << (where - 1) << ": " << lines[where - 1] << cOff << endl;
             cerr << bTeal << "\t\t" << (where) << ": " << lines[where] << cOff << endl;
         }
@@ -377,14 +377,14 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
 //--------------------------------------------------------------------------
 bool copyRipeToStage(const string_q& path, void* data) {
-    if (endsWith(path, '/'))
+    if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", copyRipeToStage, data);
 
-    else {
+    } else {
         blknum_t e_unused;
         timestamp_t ts;
         blknum_t bn = bnFromPath(path, e_unused, ts);
-        CConsolidator* con = (CConsolidator*)data;
+        CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
         // If we're not one behind, we have a problem
         if ((con->prevBlock + 1) != bn) {
             // For some reason, we're missing a file. Quit and try again next time
@@ -459,7 +459,7 @@ CConsolidator::CConsolidator(blknum_t p) {
     //            string_q zipFile = configPath("ts.bin.gz");
     //            if (fileExists(zipFile)) { // first run since install? Let's try to get some timestamps
     //                string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-    //                cerr << doCommand(cmd) << endl;
+    //                cerr << doCo mmand(cmd) << endl;
     //                ASSERT(!fileExists(zipFile));
     //                ASSERT(fileExists(ts_fn));
     //            }

@@ -7,14 +7,13 @@
 #include "options.h"
 
 #define RETURN(a)                                                                                                      \
-    {                                                                                                                  \
-        bool ret = (a);                                                                                                \
-        if (!getEnvStr("TEST_MODE").empty()) {                                                                         \
-            EXIT_NOMSG8(0);                                                                                            \
-        } else {                                                                                                       \
-            EXIT_NOMSG8(ret);                                                                                          \
-        }                                                                                                              \
+    bool ret = (a);                                                                                                    \
+    if (!getEnvStr("TEST_MODE").empty()) {                                                                             \
+        EXIT_NOMSG8(0);                                                                                                \
+    } else {                                                                                                           \
+        EXIT_NOMSG8(ret);                                                                                              \
     }
+
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();  // not every command needs a node
@@ -22,36 +21,38 @@ int main(int argc, const char* argv[]) {
 
     ENTER8("chifra");
     COptions options;
-    if (!options.prepareArguments(argc, argv))
+    if (!options.prepareArguments(argc, argv)) {
         RETURN(1);
+    }
 
     for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
+        if (!options.parseArguments(command)) {
             RETURN(1);
+        }
 
-        if (options.mode == "list")
+        if (options.mode == "list") {
             RETURN(options.handle_list())  //
-        else if (options.mode == "export")
+        } else if (options.mode == "export") {
             RETURN(options.handle_export())  //
-        else if (options.mode == "leech")
+        } else if (options.mode == "leech") {
             RETURN(options.handle_leech())
-        else if (options.mode == "scrape")
+        } else if (options.mode == "scrape") {
             RETURN(options.handle_scrape())  //
-        else if (options.mode == "slurp")
+        } else if (options.mode == "slurp") {
             RETURN(options.handle_slurp())  //
-        else if (options.mode == "quotes")
+        } else if (options.mode == "quotes") {
             RETURN(options.handle_quotes())
-        else if (options.mode == "status")
+        } else if (options.mode == "status") {
             RETURN(options.handle_status())
-        else if (options.mode == "rm")
+        } else if (options.mode == "rm") {
             RETURN(options.handle_rm())  //
-        else if (options.mode == "data")
+        } else if (options.mode == "data") {
             RETURN(options.handle_data())
-        else if (options.mode == "state")
+        } else if (options.mode == "state") {
             RETURN(options.handle_data())
-        else if (options.mode == "config")
+        } else if (options.mode == "config") {
             RETURN(options.handle_config())  //
-        else if (isTestMode()) {
+        } else if (isTestMode()) {
             map<string, string> cmdMap;
             cmdMap["where"] = "whereBlock";
             cmdMap["when"] = "whenBlock";
@@ -62,8 +63,8 @@ int main(int argc, const char* argv[]) {
                 os << cmdMap[options.mode] << " " << options.tool_flags;
                 for (auto addr : options.addrs)
                     os << " " << addr;
-                if (system(os.str().c_str())) {
-                }  // do not remove, squelches warning on linux
+                int ret = system(os.str().c_str());
+                ret = 0;  // do not remove, squelches warning on linux
             } else {
                 cerr << "Should not happen.";
             }

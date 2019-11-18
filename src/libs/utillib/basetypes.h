@@ -41,14 +41,11 @@
 #include <vector>
 #include <map>
 #include <tuple>
-#include <chrono>  // NOLINT
 #include <iomanip>
-#include <thread>  // NOLINT
-#include <mutex>   // NOLINT
 #include <bitset>
 
 //-------------------------------------------------------------------------
-using namespace std;  // NOLINT
+using namespace std;  // NOLINT - bad practice, but it's way too late now
 
 //--------------------------------------------------------------------
 #define NOPOS ((size_t)-1)

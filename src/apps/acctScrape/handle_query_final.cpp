@@ -131,7 +131,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 EXIT_FAIL("Could not open index file " + path + ".");
 
             size_t sz = fileSize(path);
-            rawData = (char*)malloc(sz + (2 * 59));
+            rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));
             if (!rawData) {
                 chunk->Release();
                 delete chunk;
@@ -144,7 +144,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             if (nRead != sz)
                 EXIT_FAIL("Could not read entire file.");
 
-            CHeaderRecord_base* h = (CHeaderRecord_base*)rawData;
+            CHeaderRecord_base* h = reinterpret_cast<CHeaderRecord_base*>(rawData);
             ASSERT(h->magic == MAGIC_NUMBER);
             ASSERT(bytes_2_Hash(h->hash) == versionHash);
             nAddrs = h->nAddrs;
@@ -154,14 +154,16 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         CAddressRecord_base search;
         for (size_t i = 0; i < 20; i++)
             search.bytes[i] = array[i];
-        CAddressRecord_base* found = (CAddressRecord_base*)bsearch(&search, (rawData + sizeof(CHeaderRecord_base)),
-                                                                   nAddrs, sizeof(CAddressRecord_base), findAppearance);
+        CAddressRecord_base* found =
+            (CAddressRecord_base*)bsearch(&search, (rawData + sizeof(CHeaderRecord_base)),  // NOLINT
+                                          nAddrs, sizeof(CAddressRecord_base), findAppearance);
 
         if (found) {
             indexHit = true;
             hits += (acct->address.substr(0, 6) + "..");
-            CAddressRecord_base* addrsOnFile = (CAddressRecord_base*)(rawData + sizeof(CHeaderRecord_base));
-            CAppearance_base* blocksOnFile = (CAppearance_base*)&addrsOnFile[nAddrs];
+            CAddressRecord_base* addrsOnFile =
+                reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
+            CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
             for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
                 CAppearance_base item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                 items.push_back(item);

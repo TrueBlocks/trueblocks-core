@@ -144,12 +144,12 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             if (fieldName % "caches") {
-                //                CCachePtr item;
-                //                string_q str = fieldValue;
-                //                while (item.parseJson3(str)) {
-                //                    caches.push_back(item);
-                //                    item = CCachePtr();  // reset
-                //                }
+                // CCachePtr item;
+                // string_q str = fieldValue;
+                // while (item.parseJson3(str)) {
+                //    caches.push_back(item);
+                //    item = CCachePtr();  // reset
+                // }
                 return true;
             }
             break;
@@ -209,7 +209,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> balance_provider;
     archive >> host;
     archive >> is_scraping;
-    //    archive >> caches;
+    // archive >> caches;
     finishParse();
     return true;
 }
@@ -228,7 +228,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << balance_provider;
     archive << host;
     archive << is_scraping;
-    //    archive << caches;
+    // archive << caches;
 
     return true;
 }

@@ -20,13 +20,13 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),  // NOLINT
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
+    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -202,8 +202,8 @@ COptions::COptions(void) : CHistoryOptions() {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");

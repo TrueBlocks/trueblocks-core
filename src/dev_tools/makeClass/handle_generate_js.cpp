@@ -15,7 +15,7 @@
 
 //---------------------------------------------------------------------------------------------------
 bool visitField(const CFieldData& field, void* data) {
-    ostream* pOs = (ostream*)data;
+    ostream* pOs = reinterpret_cast<ostream*>(data);
     *pOs << "<Row ";
     *pOs << "name=\"" << field.getName() << "\" ";
     *pOs << "type=\"string\" ";

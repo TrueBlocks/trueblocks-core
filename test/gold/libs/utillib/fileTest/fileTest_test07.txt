@@ -1,0 +1,4 @@
+fileTest argc: 2 [1:rm] 
+fileTest rm 
+old file:  - 0
+new file:  - 0

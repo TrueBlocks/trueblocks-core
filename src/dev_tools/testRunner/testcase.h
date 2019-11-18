@@ -50,7 +50,7 @@ class CTestCase : public CBaseNode {
     DECLARE_NODE(CTestCase);
 
     // EXISTING_CODE
-    CTestCase(const string_q& line);
+    explicit CTestCase(const string_q& line);
     void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& item) const;

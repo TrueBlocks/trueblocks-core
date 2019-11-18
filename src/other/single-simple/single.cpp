@@ -13,7 +13,7 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     forEveryFileInFolder(getCachePath("traces/"), visitFile, NULL);
     forEveryBlockOnDisc(visitBlock, NULL, 0, getLastBlock_cache_final());
@@ -22,8 +22,7 @@ int main(int argc, const char *argv[]) {
 }
 
 //----------------------------------------------------------------
-bool visitFile(const string_q& path, void *data) {
-
+bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitFile, data);
     } else {
@@ -33,10 +32,9 @@ bool visitFile(const string_q& path, void *data) {
 }
 
 //----------------------------------------------------------------
-bool visitBlock(CBlock& block, void *data) {
-
+bool visitBlock(CBlock& block, void* data) {
     cout << block << "\n";
-    for (uint32_t tr = 0 ; tr < block.transactions.size() ; tr++) {
+    for (uint32_t tr = 0; tr < block.transactions.size(); tr++) {
         cout << block.transactions[tr] << "\n";
     }
     return true;

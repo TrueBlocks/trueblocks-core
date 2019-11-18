@@ -441,8 +441,8 @@ class BigUnsignedInABase : public BigNumStore<unsigned short> {  // NOLINT
     unsigned short base;  // NOLINT
 
     // Creates a BigUnsignedInABase with a capacity; for internal use.
-    BigUnsignedInABase(int, unsigned int c) : BigNumStore<unsigned short>(0, c) {
-    }  // NOLINT
+    BigUnsignedInABase(int, unsigned int c) : BigNumStore<unsigned short>(0, c) {  // NOLINT
+    }
 
     // Decreases len to eliminate any leading zero igits.
     void trimLeadingZeros(void) {
@@ -451,12 +451,12 @@ class BigUnsignedInABase : public BigNumStore<unsigned short> {  // NOLINT
     }
 
     // Constructs zero in base 2.
-    BigUnsignedInABase() : BigNumStore<unsigned short>(), base(2) {
-    }  // NOLINT
+    BigUnsignedInABase() : BigNumStore<unsigned short>(), base(2) {  // NOLINT
+    }
 
     // Copy constructor
-    BigUnsignedInABase(const BigUnsignedInABase& x) : BigNumStore<unsigned short>(x), base(x.base) {
-    }  // NOLINT
+    BigUnsignedInABase(const BigUnsignedInABase& x) : BigNumStore<unsigned short>(x), base(x.base) {  // NOLINT
+    }
 
     // Assignment operator
     void operator=(const BigUnsignedInABase& x) {

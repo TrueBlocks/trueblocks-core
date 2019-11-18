@@ -57,6 +57,8 @@ int main(int argc, const char* argv[]) {
             leader.Serialize(out);
             out.Release();
         }
+        copyFile("./file.bin", "copy.bin");
+        cout << "copied file exists (copy.bin): " << fileExists("copy.bin") << endl;
 
         cout << endl << "Reset" << endl << string_q(80, '-') << endl;
         leader = CPerson();
@@ -81,8 +83,26 @@ int main(int argc, const char* argv[]) {
         }
         cout.flush();
 
-        cout << endl << "Show a person" << endl << string_q(80, '-') << endl;
+        CPerson copy;
+        CArchive cpin(READING_ARCHIVE);
+        if (cpin.Lock("./copy.bin", modeReadOnly, LOCK_WAIT)) {
+            copy.Serialize(cpin);
+            cpin.Release();
+        }
+
+        cout << endl << "Read in data from copy" << endl << string_q(80, '-') << endl;
+        cur = &copy;
+        while (cur) {
+            cout << cur->name << " : " << cur->age << endl;
+            cur = cur->next;
+        }
+        cout.flush();
+
+        cout << endl << "Show the leader" << endl << string_q(80, '-') << endl;
         cout << leader << endl;
+
+        cout << endl << "Show the copy" << endl << string_q(80, '-') << endl;
+        cout << copy << endl;
 
         cout << endl << "Show a status" << endl << string_q(80, '-') << endl;
         CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
@@ -92,7 +112,8 @@ int main(int argc, const char* argv[]) {
         CCache cache;  // same with cache
         cout << cache << endl;
 
-        remove("./file.bin");
+        ::remove("./file.bin");
+        ::remove("./copy.bin");
     }
 
     return 0;

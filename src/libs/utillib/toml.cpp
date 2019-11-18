@@ -48,7 +48,7 @@ void CToml::addGroup(const string_q& group, bool commented, bool array) {
 CToml::CTomlGroup* CToml::findGroup(const string_q& group) const {
     for (size_t i = 0; i < groups.size(); i++) {
         if (groups[i].groupName == group) {
-            return &((CToml*)this)->groups[i];  // NOLINT
+            return (CToml::CTomlGroup*)&groups[i];
         }
     }
     return NULL;

@@ -226,7 +226,7 @@ int sortByBlock(const void* v1, const void* v2) {
         return 1;
     if (c1->blk < c2->blk)
         return -1;
-    return (int)((int32_t)c1->txid - (int32_t)c2->txid);
+    return static_cast<int>((int32_t)c1->txid - (int32_t)c2->txid);
 }
 
 //-------------------------------------------------------------------------

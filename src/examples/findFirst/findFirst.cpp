@@ -30,7 +30,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------------------------------
 bool visitAddress(const CAppearance& item, void* data) {
-    if (item.addr == *(address_t*)data) {
+    if (item.addr == *reinterpret_cast<address_t*>(data)) {
         cout << "Found at " << item << "\n";
         return false;  // we're done
     }

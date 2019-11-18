@@ -73,12 +73,22 @@ bool COptions::handle_options(void) {
                 bool isUint64 = contains(option.data_type, "uint64");
                 bool isNote = option.option_kind == "note";
                 bool isError = option.option_kind == "error";
-                if (isNote)
-                    notes_stream << option.Format("    notes.push_back(\"[{OPTS}]\");") << endl;
-                else if (isError)
-                    errors_stream << option.Format("    errorStrs[[{COMMAND}]] = \"[{OPTS}]\";") << endl;
-                else
-                    option_stream << option.Format(STR_OPTION_STR) << endl;
+                if (isNote) {
+                    string_q note = option.Format("    notes.push_back(\"[{OPTS}]\");");
+                    if (note.length() > 120)
+                        note += "  // NOLINT";
+                    notes_stream << note << endl;
+                } else if (isError) {
+                    string_q err = option.Format("    errorStrs[[{COMMAND]] = \"[{OPTS}]\";");
+                    if (err.length() > 120)
+                        err += "  // NOLINT";
+                    errors_stream << err << endl;
+                } else {
+                    string_q opt = option.Format(STR_OPTION_STR);
+                    if (opt.length() > 120)
+                        opt += "  // NOLINT";
+                    option_stream << opt << endl;
+                }
 
                 if (!option.generate.empty()) {
                     string_q type = substituteAny(substitute(option.data_type, "boolean", "bool"), "<>", "");

@@ -16,8 +16,8 @@ bool COptions::handle_scrape(void) {
         ostringstream os;
         os << "blockScrape --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) {
-        }  // Don't remove. Silences compiler warnings
+        int ret = system(os.str().c_str());
+        ret = 0;  // Don't remove. Silences compiler warnings
         return true;
     }
 
@@ -129,8 +129,8 @@ bool COptions::handle_scrape(void) {
             ostringstream os;
             os << "blockScrape " << tool_flags;
             NOTE_CALL(os.str());
-            if (system(os.str().c_str())) {
-            }  // Don't remove. Silences compiler warnings
+            int ret = system(os.str().c_str());
+            ret = 0;  // Don't remove. Silences compiler warnings
 
             // always catch the timestamp file up to the scraper
             if (!isTestMode())
@@ -153,8 +153,8 @@ bool COptions::handle_scrape(void) {
                             ostringstream os1;
                             os1 << "acctExport " << addr << " --freshen";  // << " >/dev/null";
                             NOTE_CALL(os1.str());
-                            if (system(os1.str().c_str())) {
-                            }                // Don't remove. Silences compiler warnings
+                            int ret = system(os1.str().c_str());
+                            ret = 0;         // Don't remove. Silences compiler warnings
                             usleep(250000);  // stay responsive to cntrl+C
                             if (shouldQuit())
                                 continue;

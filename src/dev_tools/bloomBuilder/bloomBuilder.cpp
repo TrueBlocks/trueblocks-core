@@ -116,7 +116,8 @@ int main(int argc, const char* argv[]) {
     for (auto bloom : blooms) {
         cout << "d        nInserted: " << bloom.nInserted << endl;
         cout << "d        onBits:    " << bloom.nBitsHit();
-        cout << " (" << (double(bloom.nBitsHit()) / double(bloom_nt::BIT_SIZE())) * 100. << "%)" << endl;
+        cout << " (" << (static_cast<double>(bloom.nBitsHit()) / static_cast<double>(bloom_nt::BIT_SIZE())) * 100.
+             << "%)" << endl;
     }
     cout << "d    File:          "
          << "./bloom.bin (" << fileSize("./bloom.bin") << " bytes)" << endl;

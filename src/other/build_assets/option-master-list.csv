@@ -92,8 +92,10 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11740,dev_tools,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
 11760,dev_tools,,makeClass,js,j,,false,false,true,false,local,flag,<string>,export javaScript code from the class definition
 11780,dev_tools,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
+11782,dev_tools,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,makeClass,lint,L,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
 11800,dev_tools,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
-11820,dev_tools,,makeClass,filter,f,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
+11820,dev_tools,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
 11822,dev_tools,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
 11824,dev_tools,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.

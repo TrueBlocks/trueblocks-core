@@ -590,21 +590,15 @@ time_q str_2_Date(const string_q& strIn) {
 
     string_q str = strIn;
     replaceAny(str, "T:-", "");
-    if (str.length() == 4)
-        str += "0101000000";  // YYYY NOLINT
-    else if (str.length() == 6)
-        str += "01000000";  // YYYYMM
-    else if (str.length() == 8)
-        str += "000000";  // YYYYMMDD
-    else if (str.length() == 10)
-        str += "0000";  // YYYYMMDDHH
-    else if (str.length() == 12)
-        str += "00";  // YYYYMMDDHHMM
-    else if (str.length() == 14)
-        str += "";  // YYYYMMDDHHMMSS
-    else {          // NOLINT
-        cerr << "str_2_Date: Invalid date string '" << strIn << "'";
-    }
+    // clang-format off
+         if (str.length() == 4)  str += "0101000000";  // YYYY NOLINT
+    else if (str.length() == 6)  str += "01000000";    // YYYYMM
+    else if (str.length() == 8)  str += "000000";      // YYYYMMDD
+    else if (str.length() == 10) str += "0000";        // YYYYMMDDHH
+    else if (str.length() == 12) str += "00";          // YYYYMMDDHHMM
+    else if (str.length() == 14) str += "";            // YYYYMMDDHHMMSS
+    else { cerr << "str_2_Date: Invalid date string '" << strIn << "'"; }  // NOLINT
+    // clang-format off
 
 #define NP ((uint32_t)-1)
 #define str_2_Int32u(a) (uint32_t) str_2_Uint((a))
@@ -700,11 +694,10 @@ bloom_tHex::bloom_tHex(const biguint_t& numIn) {
     }
     len = nDigits;
 
-    char s[len + 1];  // NOLINT
-    memset(s, '\0', sizeof(s));
+    string_q s(len + 1, '\0');
     for (unsigned int p = 0; p < len; p++) {
-        unsigned short c = blk[len - 1 - p];                     // NOLINT
-        s[p] = ((c < 10) ? char('0' + c) : char('A' + c - 10));  // NOLINT
+        unsigned char c = blk[len - 1 - p];
+        s[p] = static_cast<char>((c < 10) ? ('0' + c) : ('A' + c - 10));
     }
     str = s;
 }
@@ -763,7 +756,7 @@ string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
     while (!in.empty() && in.size() >= 2) {
         string_q nibble = extract(in, 0, 2);
         in = extract(in, 2);
-        char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+        char ch = static_cast<char>(hex_2_Ascii(nibble[0], nibble[1]));
         if (ch != '\"')
             ret += static_cast<char>(ch);
     }

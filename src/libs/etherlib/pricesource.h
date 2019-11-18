@@ -24,8 +24,7 @@ class CPriceSource {
     string_q url;
     string_q pair;
     PRICEPARSEFUNC func;
-    CPriceSource(const string_q& u = STR_PRICE_URL, const string_q& p = "USDT_ETH", PRICEPARSEFUNC f = parsePoloniex)
-        : url(u), pair(p), func(f) {
+    CPriceSource(const string_q& u, const string_q& p, PRICEPARSEFUNC f) : url(u), pair(p), func(f) {
     }
     string_q getDatabasePath(string& source) const;
 };

@@ -20,12 +20,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),
-    COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),
-    COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),
-    COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
+    COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
+    COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),  // NOLINT
+    COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),  // NOLINT
     COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -195,7 +195,7 @@ COptions::COptions(void) {
     Init();
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");
+    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

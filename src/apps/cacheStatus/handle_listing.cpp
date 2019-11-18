@@ -130,7 +130,7 @@ bool COptions::handle_listing(ostream& os) {
             string_q name = acct.name;
             if (!name.empty())
                 name = "(" + name.substr(0, 20) + ") ";
-            os << " " << cTeal << acct.address << " " << setw((int)longest) << name;
+            os << " " << cTeal << acct.address << " " << setw(static_cast<int>(longest)) << name;
             if (!(++cnt % ncols))
                 os << endl;
         }

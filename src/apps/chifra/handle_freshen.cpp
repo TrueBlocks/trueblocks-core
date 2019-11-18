@@ -30,8 +30,8 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
         string_q thisGroup = nextTokenClear(groupsOfFive, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
         NOTE_CALL(cmd);
-        if (system(cmd.c_str())) {
-        }  // Don't remove. Silences compiler warnings
+        int ret = system(cmd.c_str());
+        ret = 0;  // Don't remove. Silences compiler warnings
         if (!groupsOfFive.empty())
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }

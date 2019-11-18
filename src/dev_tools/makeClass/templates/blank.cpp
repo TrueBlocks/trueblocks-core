@@ -14,6 +14,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
+// clang-format off
 #include <algorithm>
 #include "[{FN}].h"
 [OTHER_INCS]
@@ -214,3 +215,4 @@ const char* STR_DISPLAY_[{CLASS_UPPER}] =[{DISPLAY_FIELDS}];
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]
+// clang-format on

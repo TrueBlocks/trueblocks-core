@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the local cache or a running node."),
     // clang-format on
@@ -115,9 +115,9 @@ COptions::COptions(void) {
     first = true;
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
-    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results may be undefined.");
     // clang-format on
     // END_CODE_NOTES

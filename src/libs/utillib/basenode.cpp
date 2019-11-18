@@ -122,41 +122,29 @@ bool CBaseNode::parseText(const CStringArray& fields, string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-bool CBaseNode::parseJson4(string_q& str) {
-    char* p = (char*)str.c_str();  // NOLINT
-    size_t nFields = 0;
-    p = parseJson1(p, nFields);
-    if (p)
-        str = p;
-    return (nFields);
-}
-
-//--------------------------------------------------------------------------------
 inline void preserveSpaces(string_q& str) {
     enum state_t { OUT = 0, IN = 1 };
     state_t state = OUT;
-    char* s = (char*)str.c_str();  // NOLINT
-    while (*s) {
+    for (char& s : str) {
         switch (state) {
             case OUT:
-                if (*s == '\"')
+                if (s == '\"')
                     state = IN;
                 break;
             case IN:
-                if (*s == ' ') {
-                    *s = static_cast<char>(5);
+                if (s == ' ') {
+                    s = static_cast<char>(5);
                 }
-                if (*s == '\"')
+                if (s == '\"')
                     state = OUT;
                 break;
         }
-        s++;
     }
     return;
 }
 
 //--------------------------------------------------------------------------------
-inline void unpreserveSpaces(char* s) {
+inline void restoreSpaces(char* s) {
     while (*s) {
         if (*s == static_cast<char>(5))
             *s = ' ';
@@ -164,18 +152,36 @@ inline void unpreserveSpaces(char* s) {
     }
     return;
 }
-
+struct cleaner {
+    void operator()(char& s) {
+        if (s == static_cast<char>(5))
+            s = ' ';
+    }
+};
 //--------------------------------------------------------------------------------
-void unpreserveSpaces(string_q& str) {
-    unpreserveSpaces((char*)str.c_str());  // NOLINT
+void restoreSpaces(string_q& str) {
+    for_each(str.begin(), str.end(), cleaner());
     return;
 }
 
 //--------------------------------------------------------------------------------
+// The data in 'str' is copied in to the object. Whatever portion of the string
+// that represents this object gets consumed. The remained is returned in 'str'
 bool CBaseNode::parseJson3(string_q& str) {
     preserveSpaces(str);
-    char* s = (char*)str.c_str();  // NOLINT
+    char* s = (char*)str.c_str();  // NOLINT - we own the memory
     char* p = cleanUpJson(s);
+    size_t nFields = 0;
+    p = parseJson1(p, nFields);
+    if (p)
+        str = p;  // We give the altered memory back
+    return (nFields);
+}
+
+//--------------------------------------------------------------------------------
+// See above comment on parseJson3
+bool CBaseNode::parseJson4(string_q& str) {
+    char* p = (char*)str.c_str();  // NOLINT
     size_t nFields = 0;
     p = parseJson1(p, nFields);
     if (p)
@@ -274,7 +280,7 @@ char* CBaseNode::parseJson1(char* s, size_t& nFields) {
                 fflush(stdout);
 #endif
                 if (!strchr(fieldVal, '{'))  // if it's not an object, replace space savers
-                    unpreserveSpaces(fieldVal);
+                    restoreSpaces(fieldVal);
                 nFields += this->setValueByName(fieldName, fieldVal);
                 fieldName = NULL;
                 fieldVal = NULL;
@@ -348,8 +354,8 @@ bool CBaseNode::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------
 bool CBaseNode::SerializeC(CArchive& archive) const {
-    // Not happy with this, but we must set the schema to the latest before we write data
-    // since we always write the latest version to the hard drive.
+    // Not happy with this, but we must set the schema version prior to writing
+    // the data. We only write the latest version of the to the hard drive.
     ((CBaseNode*)this)->m_schema = getVersionNum();  // NOLINT
 
     archive << m_deleted;

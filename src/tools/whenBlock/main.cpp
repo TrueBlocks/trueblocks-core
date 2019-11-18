@@ -34,9 +34,9 @@ int main(int argc, const char* argv[]) {
                 if (first)
                     cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
                                            item.second.getRuntimeClass());
-                if (isText)
+                if (isText) {
                     cout << item.second.Format(expContext().fmtMap["format"]) << endl;
-                else {
+                } else {
                     if (!first)
                         cout << "," << endl;
                     cout << "  ";

@@ -21,35 +21,28 @@
 
 //-----------------------------------------------------------------------
 class CBlockStats {
-public:
+  public:
     blknum_t nBlocks;
     blknum_t firstBlock;
     blknum_t lastBlock;
     blknum_t minWatchBlock;
     blknum_t maxWatchBlock;
-    CBlockStats(void) :
-    nBlocks(0),
-    firstBlock(0),
-    lastBlock(0),
-    minWatchBlock(0),
-    maxWatchBlock(UINT32_MAX)
-    {  }
+    CBlockStats(void) : nBlocks(0), firstBlock(0), lastBlock(0), minWatchBlock(0), maxWatchBlock(UINT32_MAX) {
+    }
 };
 
 //-----------------------------------------------------------------------
 class CTransStats {
-public:
+  public:
     uint64_t nAccountedFor;
     uint64_t nDisplayed;
-    CTransStats(void) :
-    nAccountedFor(0),
-    nDisplayed(0)
-    {  }
+    CTransStats(void) : nAccountedFor(0), nDisplayed(0) {
+    }
 };
 
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     bool single_on;
     bool no_check;
     bool accounting_on;
@@ -67,8 +60,8 @@ public:
     bool parseArguments(string_q& command);
     void Init(void);
 
-    CTransStats  transStats;
-    CBlockStats  blockStats;
+    CTransStats transStats;
+    CBlockStats blockStats;
 #ifdef DEBUGGER_ON
     CTransBuffer tBuffer;
 #endif
@@ -83,18 +76,18 @@ public:
     COptions(void);
     ~COptions(void);
 
-    bool openIncomeStatement      (const CBlock& block);
-    bool accountForExtTransaction (const CBlock& block, const CTransaction *trans);
-    bool accountForIntTransaction (const CBlock& block, const CTransaction *trans, const CTrace *trace);
-    bool closeIncomeStatement     (const CBlock& block);
-    bool enterDebugger            (const CBlock& block);
-    bool displayFromCache         (uint64_t startBlock);
+    bool openIncomeStatement(const CBlock& block);
+    bool accountForExtTransaction(const CBlock& block, const CTransaction* trans);
+    bool accountForIntTransaction(const CBlock& block, const CTransaction* trans, const CTrace* trace);
+    bool closeIncomeStatement(const CBlock& block);
+    bool enterDebugger(const CBlock& block);
+    bool displayFromCache(uint64_t startBlock);
 
-    bool     loadWatches    (const CToml& toml);
-    string_q annotate       (const string_q& strIn) const;
+    bool loadWatches(const CToml& toml);
+    string_q annotate(const string_q& strIn) const;
 
-    void displayTrans (ostream& os, const CTransaction *theTrans) const;
-    void displayTrace (ostream& os, const CTransaction *theTrans) const;
+    void displayTrans(ostream& os, const CTransaction* theTrans) const;
+    void displayTrace(ostream& os, const CTransaction* theTrans) const;
     typedef bool (*NAMEVISITFUNC)(string_q& str, const CAccountWatch& watch);
     void renameItems(string_q& str, const CAccountWatchArray& array) const;
 };

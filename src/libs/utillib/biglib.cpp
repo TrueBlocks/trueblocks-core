@@ -52,8 +52,8 @@ inline BigUnsignedInABase::BigUnsignedInABase(const unsigned short* d,          
 }
 
 //------------------------------------------------------------------
-unsigned int bitLen(unsigned int x) {  // NOLINT
-    unsigned int len = 0;              // NOLINT
+unsigned int bitLen(unsigned int x) {
+    unsigned int len = 0;
     while (x > 0) {
         x >>= 1;
         len++;
@@ -69,9 +69,9 @@ BigUnsignedInABase::BigUnsignedInABase(const biguint_t& x, unsigned short base) 
     this->base = base;
 
     // Get an upper bound on how much space we need
-    int maxBitLenOfX = static_cast<int>(x.len * biguint_t::N);                    // NOLINT
-    int minBitsPerDigit = static_cast<int>(bitLen(base) - 1);                     // NOLINT
-    int maxDigitLenOfX = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;  // NOLINT
+    int maxBitLenOfX = static_cast<int>(x.len * biguint_t::N);
+    int minBitsPerDigit = static_cast<int>(bitLen(base) - 1);
+    int maxDigitLenOfX = (maxBitLenOfX + minBitsPerDigit - 1) / minBitsPerDigit;
 
     len = (unsigned int)maxDigitLenOfX;  // Another change to comply with 'staying in bounds'.
     allocate(len);                       // Get the space
@@ -152,9 +152,9 @@ BigUnsignedInABase::operator string(void) const {
         return string("0");
     string_q ret;
     ret.reserve(len + 1);
-    for (unsigned int p = 0; p < len; p++) {                     // NOLINT
-        unsigned short c = blk[len - 1 - p];                     // NOLINT
-        ret += ((c < 10) ? char('0' + c) : char('A' + c - 10));  // NOLINT
+    for (unsigned int p = 0; p < len; p++) {
+        unsigned short c = blk[len - 1 - p];  // NOLINT
+        ret += static_cast<char>((c < 10) ? ('0' + c) : ('A' + c - 10));
     }
     return ret;
 }

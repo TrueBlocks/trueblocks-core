@@ -156,7 +156,7 @@ bool COptions::handle_status(ostream& os) {
 
 //---------------------------------------------------------------------------
 bool countFiles(const string_q& path, void* data) {
-    CCache* counter = (CCache*)data;
+    CCache* counter = reinterpret_cast<CCache*>(data);
     if (endsWith(path, '/')) {
         if (!isTestMode() && !contains(path, "monitors/staging"))
             counter->noteFolder(path);
@@ -179,9 +179,9 @@ bool noteMonitor_light(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteMonitor_light, data);
 
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
-        CItemCounter* counter = (CItemCounter*)data;
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
-        CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;
+        CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
         if (isTestMode()) {
             if (ptr->addrs.size() < 3)
                 ptr->addrs.push_back("--address--");
@@ -205,7 +205,7 @@ bool noteMonitor(const string_q& path, void* data) {
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
         LOG4("Processing: ", path);
 
-        CItemCounter* counter = (CItemCounter*)data;
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
@@ -253,7 +253,7 @@ bool noteMonitor(const string_q& path, void* data) {
                          last = 0;  // the data on file is stored as uint32_t. Make sure to read the right thing
                 archive.Seek(0, SEEK_SET);
                 archive.Read(first);
-                archive.Seek(-1 * (long)(2 * sizeof(uint32_t)), SEEK_END);
+                archive.Seek(-1 * (long)(2 * sizeof(uint32_t)), SEEK_END);  // NOLINT
                 archive.Read(last);
                 archive.Release();
                 mdi.firstAppearance = first;
@@ -288,7 +288,7 @@ bool noteIndex(const string_q& path, void* data) {
             cerr.flush();
         }
 
-        CItemCounter* counter = (CItemCounter*)data;
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
 
         timestamp_t unused;
         blknum_t last = NOPOS;
@@ -360,7 +360,7 @@ bool noteABI(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteABI, data);
 
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-        CItemCounter* counter = (CItemCounter*)data;
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
 
         CAbiCacheItem abii;
@@ -397,7 +397,7 @@ bool notePrice(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", notePrice, data);
 
     } else if (endsWith(path, ".bin")) {
-        CItemCounter* counter = (CItemCounter*)data;
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
 
         CPriceCacheItem price;

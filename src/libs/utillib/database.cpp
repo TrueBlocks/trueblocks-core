@@ -10,6 +10,9 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+// NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
+// to be conservitive in changing it. It's easier to hide the lint than modify the code
+
 #include "basetypes.h"
 
 #include "database.h"
@@ -90,9 +93,10 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
     if (deleteOnFail) {
         // Release the old lock and create a new one
         bool owns = m_ownsLock;
-        ((CSharedResource*)this)->m_ownsLock = true;  // NOLINT
-        ((CSharedResource*)this)->Release();          // NOLINT
-        ((CSharedResource*)this)->m_ownsLock = owns;  // NOLINT
+        CSharedResource* pResource = (CSharedResource*)this;  // NOLINT
+        pResource->m_ownsLock = true;
+        pResource->Release();
+        pResource->m_ownsLock = owns;
         if (!isTestMode())
             cerr << "Lock cleared...\n";
         return true;
@@ -222,36 +226,18 @@ size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
 }
 
 //----------------------------------------------------------------------
-size_t CSharedResource::Read(bool& val) {
-    return Read(&val, sizeof(bool), 1);
-}
-size_t CSharedResource::Read(char& val) {
-    return Read(&val, sizeof(char), 1);
-}
-size_t CSharedResource::Read(int& val) {
-    return Read(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Read(unsigned int& val) {
-    return Read(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Read(long& val) {
-    return Read(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(unsigned long& val) {
-    return Read(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(long long& val) {
-    return Read(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(unsigned long long& val) {
-    return Read(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Read(float& val) {
-    return Read(&val, sizeof(float), 1);
-}
-size_t CSharedResource::Read(double& val) {
-    return Read(&val, sizeof(double), 1);
-}
+// clang-format off
+size_t CSharedResource::Read(bool& val) { return Read(&val, sizeof(bool), 1); }
+size_t CSharedResource::Read(char& val) { return Read(&val, sizeof(char), 1); }
+size_t CSharedResource::Read(int& val) { return Read(&val, sizeof(int), 1); }
+size_t CSharedResource::Read(unsigned int& val) { return Read(&val, sizeof(int), 1); }
+size_t CSharedResource::Read(long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
+size_t CSharedResource::Read(unsigned long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
+size_t CSharedResource::Read(long long& val) { return Read(&val, sizeof(long long), 1); }  // NOLINT
+size_t CSharedResource::Read(unsigned long long& val) { return Read(&val, sizeof(long long), 1); }  // NOLINT
+size_t CSharedResource::Read(float& val) { return Read(&val, sizeof(float), 1); }
+size_t CSharedResource::Read(double& val) { return Read(&val, sizeof(double), 1); }
+// clang-format on
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Read(string_q& str) {
@@ -289,36 +275,18 @@ size_t CSharedResource::Write(const void* buff, size_t size, size_t cnt) const {
 }
 
 //----------------------------------------------------------------------
-size_t CSharedResource::Write(bool val) const {
-    return Write(&val, sizeof(bool), 1);
-}
-size_t CSharedResource::Write(char val) const {
-    return Write(&val, sizeof(char), 1);
-}
-size_t CSharedResource::Write(int val) const {
-    return Write(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Write(unsigned int val) const {
-    return Write(&val, sizeof(int), 1);
-}
-size_t CSharedResource::Write(long val) const {
-    return Write(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(unsigned long val) const {
-    return Write(&val, sizeof(long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(long long val) const {
-    return Write(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(unsigned long long val) const {
-    return Write(&val, sizeof(long long), 1);
-}  // NOLINT
-size_t CSharedResource::Write(float val) const {
-    return Write(&val, sizeof(float), 1);
-}
-size_t CSharedResource::Write(double val) const {
-    return Write(&val, sizeof(double), 1);
-}
+// clang-format off
+size_t CSharedResource::Write(bool val) const { return Write(&val, sizeof(bool), 1); }
+size_t CSharedResource::Write(char val) const { return Write(&val, sizeof(char), 1); }
+size_t CSharedResource::Write(int val) const { return Write(&val, sizeof(int), 1); }
+size_t CSharedResource::Write(unsigned int val) const { return Write(&val, sizeof(int), 1); }
+size_t CSharedResource::Write(long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
+size_t CSharedResource::Write(unsigned long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
+size_t CSharedResource::Write(long long val) const { return Write(&val, sizeof(long long), 1); }  // NOLINT
+size_t CSharedResource::Write(unsigned long long val) const { return Write(&val, sizeof(long long), 1); }  // NOLINT
+size_t CSharedResource::Write(float val) const { return Write(&val, sizeof(float), 1); }
+size_t CSharedResource::Write(double val) const { return Write(&val, sizeof(double), 1); }
+// clang-format on
 
 //----------------------------------------------------------------------
 size_t CSharedResource::Write(const string_q& val) const {
@@ -565,7 +533,6 @@ string_q manageRemoveList(const string_q& filename) {
     }
 
     string_q fn = substitute(filename, "r:", "");
-    ;
     if (!fn.empty()) {
         if (startsWith(filename, "r:")) {
             replace(theList, fn + "|", "");

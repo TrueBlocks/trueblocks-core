@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks for which to retrieve blooms"),  // NOLINT
     COption("eab", "e", "", OPT_SWITCH, "pull the enhanced adaptive blooms from QBlocks cache"),
     COption("block_only", "b", "", OPT_SWITCH, "show only the block-level bloom (--raw only)"),
     COption("receipt_only", "r", "", OPT_SWITCH, "show only the receipt-level blooms (--raw only)"),
@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("pctbars", "p", "", OPT_SWITCH, "display nBits as a percentage of bloom space"),
     COption("bitcount", "t", "", OPT_SWITCH, "display the number of bits lit per bloom"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the bloom to the cache"),
-    COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),
+    COption("", "", "", OPT_DESCRIPTION, "Returns bloom filter(s) from running node (the default) or as EAB from QBlocks."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -173,8 +173,8 @@ COptions::COptions(void) {
     Init();
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // clang-format on
     // END_CODE_NOTES

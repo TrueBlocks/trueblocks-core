@@ -28,6 +28,8 @@ on, cmd,  fast, null, utillib/fileTest,     test02,         n, val = first
 on, cmd,  fast, null, utillib/fileTest,     test03,         n, val = last
 on, cmd,  fast, null, utillib/fileTest,     test04,         n, val = first-recurse
 on, cmd,  fast, null, utillib/fileTest,     test05,         n, val = last-recurse
+on, cmd,  fast, null, utillib/fileTest,     test06,         n, val = copy
+on, cmd,  fast, null, utillib/fileTest,     test07,         n, val = rm
 
 on, cmd,  fast, null, utillib/jsonTest,     nothing,        n,
 on, cmd,  fast, null, utillib/jsonTest,     test_blocks,    n, val = blocks

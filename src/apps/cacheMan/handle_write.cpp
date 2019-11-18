@@ -23,7 +23,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
     CAppearanceArray_base writeArray;
     for (size_t i = 0; i < dataArray.size() && !shouldQuit(); i++) {
         // filterFunc (if present) returns true if we should include the record
-        if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {
+        if (!filterFunc || (*filterFunc)(((COptions*)this)->removals, dataArray[i])) {  // NOLINT
             if (i == 0 || dataArray[i - 1].blk != dataArray[i].blk ||
                 dataArray[i - 1].txid != dataArray[i].txid) {  // removes dups
                 if (dataArray[i].blk > currentLastItem)        // update last item

@@ -96,11 +96,11 @@ bool CRPCResult::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
     // Note: This class doubles as a name/value pair for json parsing
     if (fieldName == "name")
-        *(string_q*)&fieldName = "jsonrpc";  // NOLINT
+        fieldName = "jsonrpc";
     else if (fieldName == "value")
-        *(string_q*)&fieldName = "result";  // NOLINT
+        fieldName = "result";
     else if (fieldName == "error")
-        *(string_q*)&fieldName = "result";  // NOLINT
+        fieldName = "result";
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -270,8 +270,8 @@ string_q extractRPCError(const string_q& resultIn) {
     replace(generic.result, "code:", "name:");
     replace(generic.result, "message:", "value:");
     generic.parseJson3(generic.result);
-    extern void unpreserveSpaces(string_q & str);
-    unpreserveSpaces(generic.result);
+    extern void restoreSpaces(string_q & str);
+    restoreSpaces(generic.result);
     return "RPCerror(" + generic.id + "): " + generic.result;
 }
 // EXISTING_CODE

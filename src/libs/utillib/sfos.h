@@ -39,6 +39,4 @@ extern bool isRunning(const string_q& progName);
 extern size_t nRunning(const string_q& progName);
 extern string_q listRunning(const string_q& progName);
 extern bool isRunning_better(const string_q& progName);
-
-#define kMaxPathSize _POSIX_PATH_MAX
 }  // namespace qblocks

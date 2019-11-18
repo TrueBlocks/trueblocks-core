@@ -14,8 +14,8 @@ bool COptions::handle_slurp(void) {
         ostringstream os;
         os << "ethslurp --help";
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) {
-        }  // Don't remove. Silences compiler warnings
+        int ret = system(os.str().c_str());
+        ret = 0;  // Don't remove. Silences compiler warnings
         EXIT_NOMSG8(true);
     }
 
@@ -26,8 +26,8 @@ bool COptions::handle_slurp(void) {
         ostringstream os;
         os << "ethslurp " << tool_flags << " " << addr;
         NOTE_CALL(os.str());
-        if (system(os.str().c_str())) {
-        }  // Don't remove. Silences compiler warnings
+        int ret = system(os.str().c_str());
+        ret = 0;  // Don't remove. Silences compiler warnings
     }
 
     EXIT_NOMSG8(true);

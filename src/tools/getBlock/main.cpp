@@ -89,7 +89,7 @@ bool visitAddrs(const CAppearance& item, void* data) {
     if (item.tc == 10 || isZeroAddr(item.addr))
         return !shouldQuit();
 
-    COptions* opt = (COptions*)data;
+    COptions* opt = reinterpret_cast<COptions*>(data);
     if (opt->count_only) {
         opt->addrCounter++;
 
@@ -170,13 +170,13 @@ int main(int argc, const char *argv[]) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
 
-    //    COptions *opt = reinterpret_cast<COptions *>(data);
-    //    bool isText = (opt->exportFmt & (TXT1|CSV1));
+    // COptions *opt = reinterpret_cast<COptions *>(data);
+    // bool isText = (opt->exportFmt & (TXT1|CSV1));
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
         opt->errors.push_back("Transaction " + hash + " not found.");
-        return true; // continue even with an invalid item
+        return true;  // continue even with an invalid item
     }
 
     if (opt->isRaw || opt->isVeryRaw) {

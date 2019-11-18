@@ -111,7 +111,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
         } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
-        } else if (startsWith(fld.type,"bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
+        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.isPointer)                { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
         } else if (fld.isObject)                 { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
@@ -222,8 +222,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
 
     //------------------------------------------------------------------------------------------------
     string_q headerFile = classDef.outputPath(".h");
-    string_q headSource;
-    asciiFileToString(configPath("makeClass/blank.h"), headSource);
+    string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
+    replace(headSource, "// clang-format off\n", "");
+    replace(headSource, "// clang-format on\n", "");
+
     replaceAll(headSource, "[{GET_OBJ}]", (hasObjGetter ? string_q(STR_GETOBJ_HEAD) + (hasStrGetter ? "" : "\n") : ""));
     replaceAll(headSource, "[{GET_STR}]", (hasStrGetter ? string_q(STR_GETSTR_HEAD) + "\n" : ""));
     replaceAll(headSource, "[FIELD_COPY]", copy_stream.str());
@@ -265,8 +267,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
-    string_q srcSource;
-    asciiFileToString(configPath("makeClass/blank.cpp"), srcSource);
+    string_q srcSource = asciiFileToString(configPath("makeClass/blank.cpp"));
+    replace(srcSource, "// clang-format off\n", "");
+    replace(srcSource, "// clang-format on\n", "");
     if (use_export)
         replace(srcSource, "ctx << toJson();", "doExport(ctx);");
     if ((startsWith(class_name, "CNew") || class_name == "CPriceQuote") && !contains(getCWD(), "parse"))
