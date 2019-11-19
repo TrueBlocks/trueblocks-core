@@ -20,6 +20,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         return true;
 
     //------------------------------------------------------------------------------------------------
+    counter.nVisited++;
+
+    //------------------------------------------------------------------------------------------------
     string_q class_name = toml.getConfigStr("settings", "class", "");
     string_q base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
     string_q fields = toml.getConfigStr("settings", "fields", "");
@@ -77,13 +80,18 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     //------------------------------------------------------------------------------------------------
     CParameterArray fieldArray;
     explode(fieldArray, fields, '|');
+#if 0
+    for (auto field : fieldArray) {
+        cout << toml.getFilename() << "\t" << field.Format(cleanFmt(STR_DISPLAY_PARAMETER, exportFmt)) << endl;
+    }
+#else
     for (auto fld : fieldArray) {
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
         string_q regAddFmt = "`ADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
         string_q regHideFmt = "`HIDE_FIELD(CL_NM, \"[{NAME}]\");\n";
         string_q ptrClearFmt = "`if ([{NAME}])\n``delete [{NAME}];\n`[{NAME}] = NULL;\n";
-        string_q caseFmt = "[{TYPE}]+[{NAME}]-[{ISPOINTER}]~[{ISOBJECT}]|";
+        string_q caseFmt = "[{TYPE}]+[{NAME}]-[{IS_POINTER}]~[{IS_OBJECT}]|";
         string_q copyFmt = "`[{NAME}] = ++SHORT++.[{NAME}];\n";
 
         // order matters in the next block
@@ -111,10 +119,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
         } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
-        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
+        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.isPointer)                { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
-        } else if (fld.isObject)                 { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
+        } else if (fld.is_pointer)               { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
+        } else if (fld.is_object)                { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
         } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT"; }
         // clang-format on
 
@@ -144,7 +152,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
                 replaceAll(fieldGetStr, "THING", "");
             }
 
-        } else if (fld.isObject && !fld.isPointer) {
+        } else if (fld.is_object && !fld.is_pointer) {
             fieldGetObj += STR_GETOBJ_CODE_FIELD;
             if (!contains(fld.type, "Array")) {
                 replace(fieldGetObj, " && index < [{FIELD}].size()", "");
@@ -153,17 +161,17 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
             replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
         }
 
-        replace(setFmt, "[{DEFS}]", fld.strDefault.empty() ? "\"\"" : fld.strDefault);
-        replace(setFmt, "[{DEF}]", fld.strDefault.empty() ? "0" : fld.strDefault);
-        replace(setFmt, "[{DEFF}]", fld.strDefault.empty() ? "0.0" : fld.strDefault);
-        replace(setFmt, "[{DEFT}]", fld.strDefault.empty() ? "earliestDate" : fld.strDefault);
-        replace(setFmt, "[{DEFP}]", fld.strDefault.empty() ? "NULL" : fld.strDefault);
+        replace(setFmt, "[{DEFS}]", fld.str_default.empty() ? "\"\"" : fld.str_default);
+        replace(setFmt, "[{DEF}]", fld.str_default.empty() ? "0" : fld.str_default);
+        replace(setFmt, "[{DEFF}]", fld.str_default.empty() ? "0.0" : fld.str_default);
+        replace(setFmt, "[{DEFT}]", fld.str_default.empty() ? "earliestDate" : fld.str_default);
+        replace(setFmt, "[{DEFP}]", fld.str_default.empty() ? "NULL" : fld.str_default);
 
-        if (fld.isPointer)
+        if (fld.is_pointer)
             copyFmt =
                 "`if ([++SHORT++.{NAME}]) {\n``[{NAME}] = new [{TYPE}];\n``*[{NAME}] = *[++SHORT++.{NAME}];\n`}\n";
 
-        if (!fld.isPointer)
+        if (!fld.is_pointer)
             replace(declareFmt, "*", "");
 
         add_field_stream << substitute(substitute(fld.Format(regAddFmt), "T_TEXT", regType), "CL_NM", "[{CLASS_NAME}]");
@@ -179,13 +187,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
             copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
                                       "[{CLASS_NAME}]");
             defaults_stream << fld.Format(setFmt);
-            clear_stream << (fld.isPointer ? fld.Format(ptrClearFmt) : "");
-            ar_read_stream << substitute(fld.Format(fld.isPointer ? STR_PRTREADFMT : STR_READFMT), "`archive",
+            clear_stream << (fld.is_pointer ? fld.Format(ptrClearFmt) : "");
+            ar_read_stream << substitute(fld.Format(fld.is_pointer ? STR_PRTREADFMT : STR_READFMT), "`archive",
                                          (fld.noWrite ? "`// archive" : "`archive"));
-            ar_write_stream << substitute(fld.Format(fld.isPointer ? STR_PTRWRITEFMT : STR_WRITEFMT), "`archive",
+            ar_write_stream << substitute(fld.Format(fld.is_pointer ? STR_PTRWRITEFMT : STR_WRITEFMT), "`archive",
                                           (fld.noWrite ? "`// archive" : "`archive"));
 
-            if (fld.isObject && !fld.isPointer && !contains(fld.type, "Array")) {
+            if (fld.is_object && !fld.is_pointer && !contains(fld.type, "Array")) {
                 if (child_obj_stream.str().empty())
                     child_obj_stream << "\n`string_q s;\n";
                 child_obj_stream << fld.Format(STR_CHILD_OBJS) << endl;
@@ -262,8 +270,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
     bool wouldHaveWritten = writeTheCode(headerFile, headSource, ns, true, test);
-    if (wouldHaveWritten && test)
-        cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
+    if (wouldHaveWritten) {
+        if (test) {
+            cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
+        } else {
+            counter.nProcessed++;
+        }
+    }
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
@@ -314,8 +327,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
     wouldHaveWritten = writeTheCode(srcFile, srcSource, ns, true, test);
-    if (wouldHaveWritten && test)
-        cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
+    if (wouldHaveWritten) {
+        if (test) {
+            cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
+        } else {
+            counter.nProcessed++;
+        }
+    }
+#endif
 
     return true;
 }
@@ -335,15 +354,15 @@ string_q getCaseGetCode(const string_q& fieldCaseIn) {
                 string_q type = nextTokenClear(isObj, '+');
                 string_q field12 = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool isPointer = str_2_Bool(isPtr);
-                bool isObject = str_2_Bool(isObj);
+                bool is_pointer = str_2_Bool(isPtr);
+                bool is_object = str_2_Bool(isObj);
 
                 if (tolower(field12[0]) == ch) {
                     caseCodeOut += ("```if (fieldName % \"" + field12 + "\"");
                     if (contains(type, "Array"))
                         caseCodeOut += " || fieldName % \"" + field12 + "Cnt\"";
                     caseCodeOut += ")";
-                    if (contains(type, "List") || isPointer) {
+                    if (contains(type, "List") || is_pointer) {
                         string_q ptrCase = PTR_GET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field12);
                         replaceAll(ptrCase, "[{TYPE}]", type);
@@ -417,7 +436,7 @@ string_q getCaseGetCode(const string_q& fieldCaseIn) {
                         replaceAll(str, "[{FIELD}]", field12);
                         caseCodeOut += str;
 
-                    } else if (isObject) {
+                    } else if (is_object) {
                         caseCodeOut += " {\n````if (" + field12 + " == " + type + "())\n`````return \"\";\n````";
                         caseCodeOut += "expContext().noFrst = true;\n````return [{PTR}]" + field12 + ".Format();\n```}";
 
@@ -448,12 +467,12 @@ string_q getCaseSetCode(const string_q& fieldCaseIn) {
                 string_q type = nextTokenClear(isObj, '+');
                 string_q field12 = nextTokenClear(isObj, '-');
                 string_q isPtr = nextTokenClear(isObj, '~');
-                bool isPointer = str_2_Bool(isPtr);
-                bool isObject = str_2_Bool(isObj);
+                bool is_pointer = str_2_Bool(isPtr);
+                bool is_object = str_2_Bool(isObj);
 
                 if (tolower(field12[0]) == ch) {
                     caseCodeOut += ("```if (fieldName % \"" + field12 + "\")");
-                    if (contains(type, "List") || isPointer) {
+                    if (contains(type, "List") || is_pointer) {
                         string_q ptrCase = PTR_SET_CASE;
                         replaceAll(ptrCase, "[{NAME}]", field12);
                         replaceAll(ptrCase, "[{TYPE}]", type);
@@ -538,7 +557,7 @@ string_q getCaseSetCode(const string_q& fieldCaseIn) {
                         replaceAll(str, "[{TYPE}]", substitute(type, "Array", ""));
                         caseCodeOut += str;
 
-                    } else if (isObject) {
+                    } else if (is_object) {
                         caseCodeOut += " {\n````return " + field12 + ".parseJson3(fieldValue);\n```}";
 
                     } else {

@@ -7,20 +7,20 @@
       "encoding": "0x1e354742",
       "inputs": [
         {
-          "name": "minimumQuorumForProposals",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "minimumQuorumForProposals"
         },
         {
-          "name": "minutesForDebate",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "minutesForDebate"
         },
         {
-          "name": "marginOfVotesForMajority",
-          "type": "int256"
+          "type": "int256",
+          "name": "marginOfVotesForMajority"
         },
         {
-          "name": "congressLeader",
-          "type": "address"
+          "type": "address",
+          "name": "congressLeader"
         }
       ],
       "outputs": []
@@ -32,20 +32,20 @@
       "encoding": "0x824dbc9a",
       "inputs": [
         {
-          "name": "targetMember",
-          "type": "address"
+          "type": "address",
+          "name": "targetMember"
         },
         {
-          "name": "voteWeight",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "voteWeight"
         },
         {
-          "name": "canAddProposals",
-          "type": "bool"
+          "type": "bool",
+          "name": "canAddProposals"
         },
         {
-          "name": "memberName",
-          "type": "string"
+          "type": "string",
+          "name": "memberName"
         }
       ],
       "outputs": []
@@ -57,12 +57,12 @@
       "encoding": "0x522103fa",
       "inputs": [
         {
-          "name": "newUnicornPriceInFinney",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "newUnicornPriceInFinney"
         },
         {
-          "name": "newUnicornAddress",
-          "type": "address"
+          "type": "address",
+          "name": "newUnicornAddress"
         }
       ],
       "outputs": []
@@ -74,16 +74,16 @@
       "encoding": "0xbcca1fd3",
       "inputs": [
         {
-          "name": "minimumQuorumForProposals",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "minimumQuorumForProposals"
         },
         {
-          "name": "minutesForDebate",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "minutesForDebate"
         },
         {
-          "name": "marginOfVotesForMajority",
-          "type": "int256"
+          "type": "int256",
+          "name": "marginOfVotesForMajority"
         }
       ],
       "outputs": []
@@ -96,26 +96,26 @@
       "encoding": "0xeceb2945",
       "inputs": [
         {
-          "name": "proposalNumber",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalNumber"
         },
         {
-          "name": "beneficiary",
-          "type": "address"
+          "type": "address",
+          "name": "beneficiary"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "transactionBytecode",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "transactionBytecode"
         }
       ],
       "outputs": [
         {
-          "name": "codeChecksOut",
-          "type": "bool"
+          "type": "bool",
+          "name": "codeChecksOut"
         }
       ]
     },
@@ -128,8 +128,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -140,18 +140,18 @@
       "encoding": "0x237e9492",
       "inputs": [
         {
-          "name": "proposalNumber",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalNumber"
         },
         {
-          "name": "transactionBytecode",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "transactionBytecode"
         }
       ],
       "outputs": [
         {
-          "name": "result",
-          "type": "int256"
+          "type": "int256",
+          "name": "result"
         }
       ]
     },
@@ -164,8 +164,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "int256"
+          "type": "int256",
+          "name": "val_0"
         }
       ]
     },
@@ -177,14 +177,14 @@
       "encoding": "0x39106821",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -196,30 +196,30 @@
       "encoding": "0x5daf08ca",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "member",
-          "type": "address"
+          "type": "address",
+          "name": "member"
         },
         {
-          "name": "voteWeight",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "voteWeight"
         },
         {
-          "name": "canAddProposals",
-          "type": "bool"
+          "type": "bool",
+          "name": "canAddProposals"
         },
         {
-          "name": "name",
-          "type": "string"
+          "type": "string",
+          "name": "name"
         },
         {
-          "name": "memberSince",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "memberSince"
         }
       ]
     },
@@ -232,8 +232,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -244,26 +244,26 @@
       "encoding": "0xb9f256cd",
       "inputs": [
         {
-          "name": "beneficiary",
-          "type": "address"
+          "type": "address",
+          "name": "beneficiary"
         },
         {
-          "name": "etherAmount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "etherAmount"
         },
         {
-          "name": "JobDescription",
-          "type": "string"
+          "type": "string",
+          "name": "JobDescription"
         },
         {
-          "name": "transactionBytecode",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "transactionBytecode"
         }
       ],
       "outputs": [
         {
-          "name": "proposalID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalID"
         }
       ]
     },
@@ -274,26 +274,26 @@
       "encoding": "0x83876bc9",
       "inputs": [
         {
-          "name": "beneficiary",
-          "type": "address"
+          "type": "address",
+          "name": "beneficiary"
         },
         {
-          "name": "weiAmount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "weiAmount"
         },
         {
-          "name": "JobDescription",
-          "type": "string"
+          "type": "string",
+          "name": "JobDescription"
         },
         {
-          "name": "transactionBytecode",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "transactionBytecode"
         }
       ],
       "outputs": [
         {
-          "name": "proposalID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalID"
         }
       ]
     },
@@ -306,8 +306,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -320,8 +320,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -334,8 +334,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -347,46 +347,46 @@
       "encoding": "0x013cf08b",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "description",
-          "type": "string"
+          "type": "string",
+          "name": "description"
         },
         {
-          "name": "votingDeadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "votingDeadline"
         },
         {
-          "name": "executed",
-          "type": "bool"
+          "type": "bool",
+          "name": "executed"
         },
         {
-          "name": "proposalPassed",
-          "type": "bool"
+          "type": "bool",
+          "name": "proposalPassed"
         },
         {
-          "name": "numberOfVotes",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "numberOfVotes"
         },
         {
-          "name": "currentResult",
-          "type": "int256"
+          "type": "int256",
+          "name": "currentResult"
         },
         {
-          "name": "proposalHash",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "proposalHash"
         }
       ]
     },
@@ -397,8 +397,8 @@
       "encoding": "0xf2fde38b",
       "inputs": [
         {
-          "name": "newOwner",
-          "type": "address"
+          "type": "address",
+          "name": "newOwner"
         }
       ],
       "outputs": []
@@ -412,8 +412,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -424,22 +424,22 @@
       "encoding": "0xd3c0715b",
       "inputs": [
         {
-          "name": "proposalNumber",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalNumber"
         },
         {
-          "name": "supportsProposal",
-          "type": "bool"
+          "type": "bool",
+          "name": "supportsProposal"
         },
         {
-          "name": "justificationText",
-          "type": "string"
+          "type": "string",
+          "name": "justificationText"
         }
       ],
       "outputs": [
         {
-          "name": "voteID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "voteID"
         }
       ]
     },
@@ -450,16 +450,16 @@
       "encoding": "0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de",
       "inputs": [
         {
-          "name": "minimumQuorum",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "minimumQuorum"
         },
         {
-          "name": "debatingPeriodInMinutes",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "debatingPeriodInMinutes"
         },
         {
-          "name": "majorityMargin",
-          "type": "int256"
+          "type": "int256",
+          "name": "majorityMargin"
         }
       ],
       "outputs": []
@@ -471,8 +471,8 @@
       "encoding": "0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c",
       "inputs": [
         {
-          "name": "member",
-          "type": "address"
+          "type": "address",
+          "name": "member"
         }
       ],
       "outputs": []
@@ -484,20 +484,20 @@
       "encoding": "0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881",
       "inputs": [
         {
-          "name": "proposalID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalID"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "description",
-          "type": "string"
+          "type": "string",
+          "name": "description"
         }
       ],
       "outputs": []
@@ -509,20 +509,20 @@
       "encoding": "0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af",
       "inputs": [
         {
-          "name": "proposalID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalID"
         },
         {
-          "name": "result",
-          "type": "int256"
+          "type": "int256",
+          "name": "result"
         },
         {
-          "name": "quorum",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "quorum"
         },
         {
-          "name": "active",
-          "type": "bool"
+          "type": "bool",
+          "name": "active"
         }
       ],
       "outputs": []
@@ -534,20 +534,20 @@
       "encoding": "0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8",
       "inputs": [
         {
-          "name": "proposalID",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "proposalID"
         },
         {
-          "name": "position",
-          "type": "bool"
+          "type": "bool",
+          "name": "position"
         },
         {
-          "name": "voter",
-          "type": "address"
+          "type": "address",
+          "name": "voter"
         },
         {
-          "name": "justification",
-          "type": "string"
+          "type": "string",
+          "name": "justification"
         }
       ],
       "outputs": []
@@ -559,30 +559,28 @@
       "encoding": "0xe51c223d",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         },
         {
-          "name": "_values",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_values"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -594,28 +592,28 @@
       "encoding": "0x084e9e24",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -627,18 +625,18 @@
       "encoding": "0x771602f7",
       "inputs": [
         {
-          "name": "a",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "a"
         },
         {
-          "name": "b",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "b"
         }
       ],
       "outputs": [
         {
-          "name": "c",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "c"
         }
       ]
     },
@@ -650,22 +648,22 @@
       "encoding": "0x598af9e7",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -676,20 +674,20 @@
       "encoding": "0x4f4df442",
       "inputs": [
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_currentValue",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_currentValue"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -702,18 +700,18 @@
       "encoding": "0x00fdd58e",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -725,21 +723,18 @@
       "encoding": "0x4e1273f4",
       "inputs": [
         {
-          "name": "_owners",
           "type": "address[]",
-          "isArray": true
+          "name": "_owners"
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         }
       ],
       "outputs": [
         {
-          "name": "memory",
           "type": "uint256[]",
-          "isArray": true
+          "name": "memory"
         }
       ]
     },
@@ -750,18 +745,18 @@
       "encoding": "0x0118fa49",
       "inputs": [
         {
-          "name": "_initialSupply",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_initialSupply"
         },
         {
-          "name": "_uri",
-          "type": "string"
+          "type": "string",
+          "name": "_uri"
         }
       ],
       "outputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ]
     },
@@ -772,18 +767,18 @@
       "encoding": "0xcc10e401",
       "inputs": [
         {
-          "name": "_uri",
-          "type": "string"
+          "type": "string",
+          "name": "_uri"
         },
         {
-          "name": "_isNF",
-          "type": "bool"
+          "type": "bool",
+          "name": "_isNF"
         }
       ],
       "outputs": [
         {
-          "name": "_type",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_type"
         }
       ]
     },
@@ -794,18 +789,18 @@
       "encoding": "0xa391c15b",
       "inputs": [
         {
-          "name": "a",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "a"
         },
         {
-          "name": "b",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "b"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -816,14 +811,14 @@
       "encoding": "0x6f969c2d",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -834,14 +829,14 @@
       "encoding": "0x9cca1c64",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -853,18 +848,18 @@
       "encoding": "0xe985e9c5",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -876,14 +871,14 @@
       "encoding": "0x16279055",
       "inputs": [
         {
-          "name": "account",
-          "type": "address"
+          "type": "address",
+          "name": "account"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -894,14 +889,14 @@
       "encoding": "0xadebf6f2",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -912,14 +907,14 @@
       "encoding": "0xe44591f0",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -930,14 +925,14 @@
       "encoding": "0x7269a327",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -948,14 +943,14 @@
       "encoding": "0x5e81b958",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -966,18 +961,16 @@
       "encoding": "0xcfa84fc1",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_to",
           "type": "address[]",
-          "isArray": true
+          "name": "_to"
         },
         {
-          "name": "_quantities",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_quantities"
         }
       ],
       "outputs": []
@@ -989,18 +982,16 @@
       "encoding": "0x78b27221",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_to",
           "type": "address[]",
-          "isArray": true
+          "name": "_to"
         },
         {
-          "name": "_quantities",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_quantities"
         }
       ],
       "outputs": []
@@ -1012,13 +1003,12 @@
       "encoding": "0xf9419088",
       "inputs": [
         {
-          "name": "_type",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_type"
         },
         {
-          "name": "_to",
           "type": "address[]",
-          "isArray": true
+          "name": "_to"
         }
       ],
       "outputs": []
@@ -1030,18 +1020,18 @@
       "encoding": "0xc8a4ac9c",
       "inputs": [
         {
-          "name": "a",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "a"
         },
         {
-          "name": "b",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "b"
         }
       ],
       "outputs": [
         {
-          "name": "c",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "c"
         }
       ]
     },
@@ -1052,32 +1042,30 @@
       "encoding": "0xbc197c81",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         },
         {
-          "name": "_values",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_values"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -1088,30 +1076,30 @@
       "encoding": "0xf23a6e61",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -1123,32 +1111,30 @@
       "encoding": "0xe9e5be6a",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         },
         {
-          "name": "_values",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_values"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -1160,30 +1146,30 @@
       "encoding": "0xeb510be8",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -1195,14 +1181,14 @@
       "encoding": "0x6352211e",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -1213,26 +1199,24 @@
       "encoding": "0x2eb2c2d6",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         },
         {
-          "name": "_values",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_values"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1244,24 +1228,24 @@
       "encoding": "0xf242432a",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1273,12 +1257,12 @@
       "encoding": "0xa22cb465",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_approved",
-          "type": "bool"
+          "type": "bool",
+          "name": "_approved"
         }
       ],
       "outputs": []
@@ -1290,8 +1274,8 @@
       "encoding": "0xfdacd576",
       "inputs": [
         {
-          "name": "completed",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "completed"
         }
       ],
       "outputs": []
@@ -1303,8 +1287,8 @@
       "encoding": "0xa175b638",
       "inputs": [
         {
-          "name": "_value",
-          "type": "bool"
+          "type": "bool",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -1316,8 +1300,8 @@
       "encoding": "0x2090dd24",
       "inputs": [
         {
-          "name": "_value",
-          "type": "bool"
+          "type": "bool",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -1329,8 +1313,8 @@
       "encoding": "0x80f5fe74",
       "inputs": [
         {
-          "name": "_value",
-          "type": "bool"
+          "type": "bool",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -1342,12 +1326,12 @@
       "encoding": "0x67db3b8f",
       "inputs": [
         {
-          "name": "_uri",
-          "type": "string"
+          "type": "string",
+          "name": "_uri"
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": []
@@ -1359,18 +1343,18 @@
       "encoding": "0xb67d77c5",
       "inputs": [
         {
-          "name": "a",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "a"
         },
         {
-          "name": "b",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "b"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -1382,14 +1366,14 @@
       "encoding": "0x01ffc9a7",
       "inputs": [
         {
-          "name": "interfaceID",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "interfaceID"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -1400,16 +1384,16 @@
       "encoding": "0x61455567",
       "inputs": [
         {
-          "name": "_delegate",
-          "type": "address"
+          "type": "address",
+          "name": "_delegate"
         },
         {
-          "name": "_functionSignatures",
-          "type": "string"
+          "type": "string",
+          "name": "_functionSignatures"
         },
         {
-          "name": "_commitMessage",
-          "type": "string"
+          "type": "string",
+          "name": "_commitMessage"
         }
       ],
       "outputs": []
@@ -1421,8 +1405,8 @@
       "encoding": "0x0900f010",
       "inputs": [
         {
-          "name": "new_address",
-          "type": "address"
+          "type": "address",
+          "name": "new_address"
         }
       ],
       "outputs": []
@@ -1435,14 +1419,14 @@
       "encoding": "0x0e89341c",
       "inputs": [
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         }
       ],
       "outputs": [
         {
-          "name": "memory",
-          "type": "string"
+          "type": "string",
+          "name": "memory"
         }
       ]
     },
@@ -1453,27 +1437,27 @@
       "encoding": "0x3a9c85c6b31f7a9d7fe1478f53e1be42e85db97ca30d1789cfef9196dbc472c9",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_spender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_id",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "name": "_oldValue",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_oldValue"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -1485,18 +1469,18 @@
       "encoding": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_approved",
-          "type": "bool"
+          "type": "bool",
+          "name": "_approved"
         }
       ],
       "outputs": []
@@ -1508,8 +1492,8 @@
       "encoding": "0xaa1c0a0a78cec2470f9652e5d29540752e7a64d70f926933cebf13afaeda45de",
       "inputs": [
         {
-          "name": "message",
-          "type": "string"
+          "type": "string",
+          "name": "message"
         }
       ],
       "outputs": []
@@ -1521,23 +1505,23 @@
       "encoding": "0x3234040ce3bd4564874e44810f198910133a1b24c4e84aac87edbf6b458f5353",
       "inputs": [
         {
-          "indexed": true,
+          "type": "bytes4",
           "name": "functionId",
-          "type": "bytes4"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "oldDelegate",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "newDelegate",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "functionSignature",
-          "type": "string"
+          "type": "string",
+          "name": "functionSignature"
         }
       ],
       "outputs": []
@@ -1549,29 +1533,27 @@
       "encoding": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_ids",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_ids"
         },
         {
-          "name": "_values",
           "type": "uint256[]",
-          "isArray": true
+          "name": "_values"
         }
       ],
       "outputs": []
@@ -1583,27 +1565,27 @@
       "encoding": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_id",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_id"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -1615,13 +1597,13 @@
       "encoding": "0x6bb7ff708619ba0610cba295a58592e0451dee2622938c8755667688daf3529b",
       "inputs": [
         {
-          "name": "_value",
-          "type": "string"
+          "type": "string",
+          "name": "_value"
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_id",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -1634,30 +1616,30 @@
       "encoding": "0x1badb25c",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         },
         {
-          "name": "ret_1",
-          "type": "byte"
+          "type": "byte",
+          "name": "ret_1"
         },
         {
-          "name": "ret_2",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "ret_2"
         }
       ]
     },
@@ -1669,34 +1651,34 @@
       "encoding": "0x122eb575",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         },
         {
-          "name": "ret_1",
-          "type": "byte"
+          "type": "byte",
+          "name": "ret_1"
         },
         {
-          "name": "ret_2",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "ret_2"
         }
       ]
     },
@@ -1709,8 +1691,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -1721,16 +1703,16 @@
       "encoding": "0xbb3acde9",
       "inputs": [
         {
-          "name": "_tokenHolder",
-          "type": "address"
+          "type": "address",
+          "name": "_tokenHolder"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1742,12 +1724,12 @@
       "encoding": "0xe77c646d",
       "inputs": [
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1759,16 +1741,16 @@
       "encoding": "0x9675193c",
       "inputs": [
         {
-          "name": "_tokenHolder",
-          "type": "address"
+          "type": "address",
+          "name": "_tokenHolder"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1780,20 +1762,20 @@
       "encoding": "0xee532f31",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1805,16 +1787,16 @@
       "encoding": "0x2535f762",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1826,22 +1808,22 @@
       "encoding": "0x0e9905d62635f049c2f4e11678ebf9dc3d1f8c4a653e290759b772e47ba00d00",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1853,22 +1835,22 @@
       "encoding": "0xb7d0d6b60740753e9f16692a2f479472a1385aec2420fa43225b02f2ffa1afe7",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -1881,14 +1863,14 @@
       "encoding": "0x01ffc9a7",
       "inputs": [
         {
-          "name": "interfaceID",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "interfaceID"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -1900,18 +1882,18 @@
       "encoding": "0x249cb3fa",
       "inputs": [
         {
-          "name": "interfaceHash",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "interfaceHash"
         },
         {
-          "name": "addr",
-          "type": "address"
+          "type": "address",
+          "name": "addr"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "ret_0"
         }
       ]
     },
@@ -1923,18 +1905,18 @@
       "encoding": "0xaabbb8ca",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         },
         {
-          "name": "_interfaceHash",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_interfaceHash"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -1946,14 +1928,14 @@
       "encoding": "0x3d584063",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -1965,18 +1947,18 @@
       "encoding": "0xf712f3e8",
       "inputs": [
         {
-          "name": "_contract",
-          "type": "address"
+          "type": "address",
+          "name": "_contract"
         },
         {
-          "name": "_interfaceId",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "_interfaceId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -1988,18 +1970,18 @@
       "encoding": "0xb7056765",
       "inputs": [
         {
-          "name": "_contract",
-          "type": "address"
+          "type": "address",
+          "name": "_contract"
         },
         {
-          "name": "_interfaceId",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "_interfaceId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -2010,14 +1992,14 @@
       "encoding": "0x65ba36c1",
       "inputs": [
         {
-          "name": "_interfaceName",
-          "type": "string"
+          "type": "string",
+          "name": "_interfaceName"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "ret_0"
         }
       ]
     },
@@ -2028,14 +2010,14 @@
       "encoding": "0x9d4cf268",
       "inputs": [
         {
-          "name": "_interfaceHash",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_interfaceHash"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -2047,22 +2029,22 @@
       "encoding": "0xf86cd33d",
       "inputs": [
         {
-          "name": "_contract",
-          "type": "address"
+          "type": "address",
+          "name": "_contract"
         },
         {
-          "name": "_interfaceId",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "_interfaceId"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "success"
         },
         {
-          "name": "result",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "result"
         }
       ]
     },
@@ -2073,16 +2055,16 @@
       "encoding": "0x29965a1d",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         },
         {
-          "name": "_interfaceHash",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_interfaceHash"
         },
         {
-          "name": "_implementer",
-          "type": "address"
+          "type": "address",
+          "name": "_implementer"
         }
       ],
       "outputs": []
@@ -2094,12 +2076,12 @@
       "encoding": "0x5df8122f",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         },
         {
-          "name": "_newManager",
-          "type": "address"
+          "type": "address",
+          "name": "_newManager"
         }
       ],
       "outputs": []
@@ -2111,12 +2093,12 @@
       "encoding": "0xa41e7d51",
       "inputs": [
         {
-          "name": "_contract",
-          "type": "address"
+          "type": "address",
+          "name": "_contract"
         },
         {
-          "name": "_interfaceId",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "_interfaceId"
         }
       ],
       "outputs": []
@@ -2128,19 +2110,19 @@
       "encoding": "0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "addr",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "bytes32",
           "name": "interfaceHash",
-          "type": "bytes32"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "implementer",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2152,14 +2134,14 @@
       "encoding": "0x605c2dbf762e5f7d60a546d42e7205dcb1b011ebc62a61736a57c9089d3a4350",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "addr",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "newManager",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2171,12 +2153,12 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "name": "_approved",
-          "type": "address"
+          "type": "address",
+          "name": "_approved"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -2189,14 +2171,14 @@
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2208,14 +2190,14 @@
       "encoding": "0x081812fc",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -2227,18 +2209,18 @@
       "encoding": "0xe985e9c5",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -2251,8 +2233,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "_name",
-          "type": "string"
+          "type": "string",
+          "name": "_name"
         }
       ]
     },
@@ -2263,26 +2245,26 @@
       "encoding": "0x150b7a02",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -2294,14 +2276,14 @@
       "encoding": "0x6352211e",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -2312,16 +2294,16 @@
       "encoding": "0x42842e0e",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -2333,20 +2315,20 @@
       "encoding": "0xb88d4fde",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -2358,12 +2340,12 @@
       "encoding": "0xa22cb465",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_approved",
-          "type": "bool"
+          "type": "bool",
+          "name": "_approved"
         }
       ],
       "outputs": []
@@ -2377,8 +2359,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "_symbol",
-          "type": "string"
+          "type": "string",
+          "name": "_symbol"
         }
       ]
     },
@@ -2390,14 +2372,14 @@
       "encoding": "0xc87b56dd",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "string"
+          "type": "string",
+          "name": "ret_0"
         }
       ]
     },
@@ -2408,16 +2390,16 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -2429,19 +2411,19 @@
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_approved",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_tokenId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2453,18 +2435,18 @@
       "encoding": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_approved",
-          "type": "bool"
+          "type": "bool",
+          "name": "_approved"
         }
       ],
       "outputs": []
@@ -2476,19 +2458,19 @@
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_tokenId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2500,8 +2482,8 @@
       "encoding": "0x959b8c3f",
       "inputs": [
         {
-          "name": "operator",
-          "type": "address"
+          "type": "address",
+          "name": "operator"
         }
       ],
       "outputs": []
@@ -2514,14 +2496,14 @@
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "name": "holder",
-          "type": "address"
+          "type": "address",
+          "name": "holder"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2532,12 +2514,12 @@
       "encoding": "0xfe9d9303",
       "inputs": [
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -2551,9 +2533,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "memory",
           "type": "address[]",
-          "isArray": true
+          "name": "memory"
         }
       ]
     },
@@ -2566,8 +2547,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2579,18 +2560,18 @@
       "encoding": "0xd95b6371",
       "inputs": [
         {
-          "name": "operator",
-          "type": "address"
+          "type": "address",
+          "name": "operator"
         },
         {
-          "name": "holder",
-          "type": "address"
+          "type": "address",
+          "name": "holder"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -2603,8 +2584,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "memory",
-          "type": "string"
+          "type": "string",
+          "name": "memory"
         }
       ]
     },
@@ -2615,20 +2596,20 @@
       "encoding": "0xfc673c4f",
       "inputs": [
         {
-          "name": "from",
-          "type": "address"
+          "type": "address",
+          "name": "from"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "operatorData",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "operatorData"
         }
       ],
       "outputs": []
@@ -2640,24 +2621,24 @@
       "encoding": "0x62ad1b83",
       "inputs": [
         {
-          "name": "from",
-          "type": "address"
+          "type": "address",
+          "name": "from"
         },
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "operatorData",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "operatorData"
         }
       ],
       "outputs": []
@@ -2669,8 +2650,8 @@
       "encoding": "0xfad8b32a",
       "inputs": [
         {
-          "name": "operator",
-          "type": "address"
+          "type": "address",
+          "name": "operator"
         }
       ],
       "outputs": []
@@ -2682,16 +2663,16 @@
       "encoding": "0x9bd9bbc6",
       "inputs": [
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -2705,8 +2686,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "memory",
-          "type": "string"
+          "type": "string",
+          "name": "memory"
         }
       ]
     },
@@ -2719,8 +2700,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2731,14 +2712,14 @@
       "encoding": "0xf4caeb2d6ca8932a215a353d0703c326ec2d81fc68170f320eb2ab49e9df61f9",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "holder",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2750,26 +2731,26 @@
       "encoding": "0xa78a9be3a7b862d26933ad85fb11d80ef66b8f972d7cbba06621d583943a4098",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "operatorData",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "operatorData"
         }
       ],
       "outputs": []
@@ -2781,26 +2762,26 @@
       "encoding": "0x2fe5be0146f74c5bce36c0b80911af6c7d86ff27e89d5cfa61fc681327954e5d",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "operatorData",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "operatorData"
         }
       ],
       "outputs": []
@@ -2812,14 +2793,14 @@
       "encoding": "0x50546e66e5f44d728365dc3908c63bc5cfeeab470722c1677e3073a6ac294aa1",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "holder",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -2831,31 +2812,31 @@
       "encoding": "0x06b541ddaa720db2b10a4d0cdac39b8d360425fc073085fac19bc82614677987",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "operator",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "operatorData",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "operatorData"
         }
       ],
       "outputs": []
@@ -2868,22 +2849,22 @@
       "encoding": "0xa5aeb1d4",
       "inputs": [
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": [
         {
-          "name": "parentTokenOwner",
-          "type": "address"
+          "type": "address",
+          "name": "parentTokenOwner"
         },
         {
-          "name": "parentTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "parentTokenId"
         }
       ]
     },
@@ -2894,16 +2875,16 @@
       "encoding": "0xcb712535",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -2916,18 +2897,18 @@
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         }
       ],
       "outputs": [
         {
-          "name": "remaining",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "remaining"
         }
       ]
     },
@@ -2938,12 +2919,12 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "name": "_approved",
-          "type": "address"
+          "type": "address",
+          "name": "_approved"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -2956,14 +2937,14 @@
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "name": "_tokenOwner",
-          "type": "address"
+          "type": "address",
+          "name": "_tokenOwner"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2975,18 +2956,18 @@
       "encoding": "0xe226ed22",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "__erc20Contract",
-          "type": "address"
+          "type": "address",
+          "name": "__erc20Contract"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -2998,18 +2979,18 @@
       "encoding": "0x0d5a621b",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_index",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_index"
         }
       ],
       "outputs": [
         {
-          "name": "childContract",
-          "type": "address"
+          "type": "address",
+          "name": "childContract"
         }
       ]
     },
@@ -3021,18 +3002,18 @@
       "encoding": "0x5680a3ad",
       "inputs": [
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -3044,22 +3025,22 @@
       "encoding": "0x160b01a1",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_index",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_index"
         }
       ],
       "outputs": [
         {
-          "name": "childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "childTokenId"
         }
       ]
     },
@@ -3071,18 +3052,18 @@
       "encoding": "0x627c81ff",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_index",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_index"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -3093,20 +3074,20 @@
       "encoding": "0x9e95670d",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_erc20Contract",
-          "type": "address"
+          "type": "address",
+          "name": "_erc20Contract"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3119,14 +3100,14 @@
       "encoding": "0x081812fc",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "address"
+          "type": "address",
+          "name": "ret_0"
         }
       ]
     },
@@ -3137,20 +3118,20 @@
       "encoding": "0xba6b5f96",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3162,20 +3143,20 @@
       "encoding": "0x07cff6f2",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_erc20Contract",
-          "type": "address"
+          "type": "address",
+          "name": "_erc20Contract"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3188,18 +3169,18 @@
       "encoding": "0xe985e9c5",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -3211,14 +3192,14 @@
       "encoding": "0x16279055",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "ret_0"
         }
       ]
     },
@@ -3229,14 +3210,14 @@
       "encoding": "0x6a627842",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -3247,26 +3228,26 @@
       "encoding": "0x150b7a02",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -3277,22 +3258,22 @@
       "encoding": "0xf0b9e5ba",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "bytes4"
+          "type": "bytes4",
+          "name": "ret_0"
         }
       ]
     },
@@ -3304,14 +3285,14 @@
       "encoding": "0x6352211e",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "tokenOwner",
-          "type": "address"
+          "type": "address",
+          "name": "tokenOwner"
         }
       ]
     },
@@ -3323,22 +3304,22 @@
       "encoding": "0xeadb80b8",
       "inputs": [
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": [
         {
-          "name": "parentTokenOwner",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "parentTokenOwner"
         },
         {
-          "name": "parentTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "parentTokenId"
         }
       ]
     },
@@ -3349,20 +3330,20 @@
       "encoding": "0x597c255f",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3374,16 +3355,16 @@
       "encoding": "0x0f0ba766",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3395,16 +3376,16 @@
       "encoding": "0x9771ccc8",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_erc20Contract",
-          "type": "address"
+          "type": "address",
+          "name": "_erc20Contract"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3417,14 +3398,14 @@
       "encoding": "0x43a61a8e",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "rootOwner",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "rootOwner"
         }
       ]
     },
@@ -3436,18 +3417,18 @@
       "encoding": "0xed81cdda",
       "inputs": [
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": [
         {
-          "name": "rootOwner",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "rootOwner"
         }
       ]
     },
@@ -3458,20 +3439,20 @@
       "encoding": "0x1d98f3c5",
       "inputs": [
         {
-          "name": "_fromTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_fromTokenId"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3483,24 +3464,24 @@
       "encoding": "0x8d81f51e",
       "inputs": [
         {
-          "name": "_fromTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_fromTokenId"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3512,16 +3493,16 @@
       "encoding": "0x42842e0e",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": []
@@ -3533,20 +3514,20 @@
       "encoding": "0xb88d4fde",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3558,12 +3539,12 @@
       "encoding": "0xa22cb465",
       "inputs": [
         {
-          "name": "_operator",
-          "type": "address"
+          "type": "address",
+          "name": "_operator"
         },
         {
-          "name": "_approved",
-          "type": "bool"
+          "type": "bool",
+          "name": "_approved"
         }
       ],
       "outputs": []
@@ -3575,16 +3556,16 @@
       "encoding": "0xc0ee0b8a",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3597,14 +3578,14 @@
       "encoding": "0x8da7d0b5",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -3616,18 +3597,18 @@
       "encoding": "0x35b21ceb",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -3639,14 +3620,14 @@
       "encoding": "0xa7811732",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "ret_0"
         }
       ]
     },
@@ -3657,18 +3638,18 @@
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -3679,22 +3660,22 @@
       "encoding": "0xbe45fd62",
       "inputs": [
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -3705,20 +3686,20 @@
       "encoding": "0xbef44f18",
       "inputs": [
         {
-          "name": "_fromTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_fromTokenId"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3730,28 +3711,28 @@
       "encoding": "0x08937f62",
       "inputs": [
         {
-          "name": "_fromTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_fromTokenId"
         },
         {
-          "name": "_toContract",
-          "type": "address"
+          "type": "address",
+          "name": "_toContract"
         },
         {
-          "name": "_toTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_toTokenId"
         },
         {
-          "name": "_childContract",
-          "type": "address"
+          "type": "address",
+          "name": "_childContract"
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3763,20 +3744,20 @@
       "encoding": "0x830ef41b",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_erc20Contract",
-          "type": "address"
+          "type": "address",
+          "name": "_erc20Contract"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3788,24 +3769,24 @@
       "encoding": "0xd49d1bac",
       "inputs": [
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_erc223Contract",
-          "type": "address"
+          "type": "address",
+          "name": "_erc223Contract"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3817,22 +3798,22 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -3843,24 +3824,24 @@
       "encoding": "0xf50acfa0",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_toContract",
-          "type": "address"
+          "type": "address",
+          "name": "_toContract"
         },
         {
-          "name": "_toTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_toTokenId"
         },
         {
-          "name": "_tokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_tokenId"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": []
@@ -3872,23 +3853,23 @@
       "encoding": "0x0371ddf2288ad1ba92626a7e31c86a9d006e592cfe57d7d946ef08b13457c08b",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_tokenId",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_childContract",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3900,23 +3881,23 @@
       "encoding": "0x684ce28ace37552c6bfb98b7cceda8ed55327078eafb5dfb31218e0856382763",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_tokenId",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_erc20Contract",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3928,23 +3909,23 @@
       "encoding": "0x0ef52e516fb5aec15a5d3587e5480481b702b26db93c8430eca78b61990fd3f6",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "tokenId",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_childContract",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_childTokenId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_childTokenId"
         }
       ],
       "outputs": []
@@ -3956,23 +3937,23 @@
       "encoding": "0xa8352277873fc0d2b233b8127433da351a4164fa701ed6ff79655694222932c4",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_tokenId",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_erc20Contract",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -3986,8 +3967,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -4000,12 +3981,12 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "val_0"
         },
         {
-          "name": "val_1",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_1"
         }
       ]
     },
@@ -4017,14 +3998,14 @@
       "encoding": "0x2db78d93",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "val_0"
         }
       ]
     },
@@ -4037,8 +4018,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint96"
+          "type": "uint96",
+          "name": "val_0"
         }
       ]
     },
@@ -4051,8 +4032,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "val_0"
         }
       ]
     },
@@ -4065,8 +4046,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -4079,12 +4060,12 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "val_0"
         },
         {
-          "name": "val_1",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_1"
         }
       ]
     },
@@ -4095,8 +4076,8 @@
       "encoding": "0x1504460f",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "val_0"
         }
       ],
       "outputs": []
@@ -4118,8 +4099,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "val_0"
         }
       ]
     },
@@ -4130,8 +4111,8 @@
       "encoding": "0x2801617e",
       "inputs": [
         {
-          "name": "wat",
-          "type": "address"
+          "type": "address",
+          "name": "wat"
         }
       ],
       "outputs": []
@@ -4143,12 +4124,12 @@
       "encoding": "0xbeb38b43",
       "inputs": [
         {
-          "name": "pos",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "pos"
         },
         {
-          "name": "wat",
-          "type": "address"
+          "type": "address",
+          "name": "wat"
         }
       ],
       "outputs": []
@@ -4160,8 +4141,8 @@
       "encoding": "0x7a9e5e4b",
       "inputs": [
         {
-          "name": "authority_",
-          "type": "address"
+          "type": "address",
+          "name": "authority_"
         }
       ],
       "outputs": []
@@ -4173,8 +4154,8 @@
       "encoding": "0x6ba5ef0d",
       "inputs": [
         {
-          "name": "min_",
-          "type": "uint96"
+          "type": "uint96",
+          "name": "min_"
         }
       ],
       "outputs": []
@@ -4186,8 +4167,8 @@
       "encoding": "0xf2c5925d",
       "inputs": [
         {
-          "name": "next_",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "next_"
         }
       ],
       "outputs": []
@@ -4199,8 +4180,8 @@
       "encoding": "0x13af4035",
       "inputs": [
         {
-          "name": "owner_",
-          "type": "address"
+          "type": "address",
+          "name": "owner_"
         }
       ],
       "outputs": []
@@ -4212,8 +4193,8 @@
       "encoding": "0x2966d1b9",
       "inputs": [
         {
-          "name": "wat",
-          "type": "address"
+          "type": "address",
+          "name": "wat"
         }
       ],
       "outputs": []
@@ -4225,8 +4206,8 @@
       "encoding": "0xe0a1fdad",
       "inputs": [
         {
-          "name": "pos",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "pos"
         }
       ],
       "outputs": []
@@ -4239,14 +4220,14 @@
       "encoding": "0x651dd0de",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "bytes12"
+          "type": "bytes12",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -4265,32 +4246,32 @@
       "encoding": "0x644843f351d3fba4abcd60109eaff9f54bac8fb8ccf0bab941009c21df21cf31",
       "inputs": [
         {
-          "indexed": true,
+          "type": "bytes4",
           "name": "sig",
-          "type": "bytes4"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "guy",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "bytes32",
           "name": "foo",
-          "type": "bytes32"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "bytes32",
           "name": "bar",
-          "type": "bytes32"
+          "indexed": true
         },
         {
-          "name": "wad",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "wad"
         },
         {
-          "name": "fax",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "fax"
         }
       ],
       "outputs": []
@@ -4302,9 +4283,9 @@
       "encoding": "0x1abebea81bfa2637f28358c371278fb15ede7ea8dd28d2e03b112ff6d936ada4",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "authority",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -4316,9 +4297,9 @@
       "encoding": "0xce241d7ca1f669fee44b6fc00b8eba2df3bb514eed0f6f668f8f89096e81ed94",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "owner",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -4330,18 +4311,18 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -4352,18 +4333,18 @@
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -4374,22 +4355,22 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "success",
-          "type": "bool"
+          "type": "bool",
+          "name": "success"
         }
       ]
     },
@@ -4400,18 +4381,18 @@
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_spender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -4423,18 +4404,18 @@
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -4456,22 +4437,22 @@
       "encoding": "0x422f1043",
       "inputs": [
         {
-          "name": "min_liquidity",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_liquidity"
         },
         {
-          "name": "max_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4483,18 +4464,18 @@
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4505,18 +4486,18 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "bool"
+          "type": "bool",
+          "name": "out"
         }
       ]
     },
@@ -4528,14 +4509,14 @@
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4548,8 +4529,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4561,18 +4542,18 @@
       "encoding": "0xf39b5b9b",
       "inputs": [
         {
-          "name": "min_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4584,18 +4565,18 @@
       "encoding": "0x6b1d4db7",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4607,22 +4588,22 @@
       "encoding": "0xad65d76d",
       "inputs": [
         {
-          "name": "min_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4634,22 +4615,22 @@
       "encoding": "0x0b573638",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4662,8 +4643,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "address"
+          "type": "address",
+          "name": "out"
         }
       ]
     },
@@ -4675,14 +4656,14 @@
       "encoding": "0xcd7724c3",
       "inputs": [
         {
-          "name": "eth_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "eth_sold"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4694,14 +4675,14 @@
       "encoding": "0x59e94862",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4713,14 +4694,14 @@
       "encoding": "0x95b68fe7",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4732,14 +4713,14 @@
       "encoding": "0x2640f62c",
       "inputs": [
         {
-          "name": "eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "eth_bought"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4752,8 +4733,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "out"
         }
       ]
     },
@@ -4764,30 +4745,30 @@
       "encoding": "0xf88bf15a",
       "inputs": [
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         },
         {
-          "name": "min_eth",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth"
         },
         {
-          "name": "min_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         },
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4798,8 +4779,8 @@
       "encoding": "0x66d38203",
       "inputs": [
         {
-          "name": "token_addr",
-          "type": "address"
+          "type": "address",
+          "name": "token_addr"
         }
       ],
       "outputs": []
@@ -4813,8 +4794,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "out"
         }
       ]
     },
@@ -4827,8 +4808,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "address"
+          "type": "address",
+          "name": "out"
         }
       ]
     },
@@ -4839,22 +4820,22 @@
       "encoding": "0x95e3c50b",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_eth",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4865,22 +4846,22 @@
       "encoding": "0x013efd8b",
       "inputs": [
         {
-          "name": "eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "eth_bought"
         },
         {
-          "name": "max_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4891,26 +4872,26 @@
       "encoding": "0x7237e031",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_eth",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4921,26 +4902,26 @@
       "encoding": "0xd4e4841d",
       "inputs": [
         {
-          "name": "eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "eth_bought"
         },
         {
-          "name": "max_tokens",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4951,30 +4932,30 @@
       "encoding": "0xb1cb43bf",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens_bought"
         },
         {
-          "name": "min_eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "exchange_addr",
-          "type": "address"
+          "type": "address",
+          "name": "exchange_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -4985,30 +4966,30 @@
       "encoding": "0xea650c7d",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "max_tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens_sold"
         },
         {
-          "name": "max_eth_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_eth_sold"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "exchange_addr",
-          "type": "address"
+          "type": "address",
+          "name": "exchange_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5019,34 +5000,34 @@
       "encoding": "0xec384a3e",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens_bought"
         },
         {
-          "name": "min_eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "exchange_addr",
-          "type": "address"
+          "type": "address",
+          "name": "exchange_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5057,34 +5038,34 @@
       "encoding": "0x981a1327",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "max_tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens_sold"
         },
         {
-          "name": "max_eth_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_eth_sold"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "exchange_addr",
-          "type": "address"
+          "type": "address",
+          "name": "exchange_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5095,30 +5076,30 @@
       "encoding": "0xddf7e1a7",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens_bought"
         },
         {
-          "name": "min_eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "token_addr",
-          "type": "address"
+          "type": "address",
+          "name": "token_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5129,30 +5110,30 @@
       "encoding": "0xb040d545",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "max_tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens_sold"
         },
         {
-          "name": "max_eth_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_eth_sold"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "token_addr",
-          "type": "address"
+          "type": "address",
+          "name": "token_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5163,34 +5144,34 @@
       "encoding": "0xf552d91b",
       "inputs": [
         {
-          "name": "tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_sold"
         },
         {
-          "name": "min_tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_tokens_bought"
         },
         {
-          "name": "min_eth_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "min_eth_bought"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "token_addr",
-          "type": "address"
+          "type": "address",
+          "name": "token_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5201,34 +5182,34 @@
       "encoding": "0xf3c0efe9",
       "inputs": [
         {
-          "name": "tokens_bought",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "tokens_bought"
         },
         {
-          "name": "max_tokens_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_tokens_sold"
         },
         {
-          "name": "max_eth_sold",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "max_eth_sold"
         },
         {
-          "name": "deadline",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "deadline"
         },
         {
-          "name": "recipient",
-          "type": "address"
+          "type": "address",
+          "name": "recipient"
         },
         {
-          "name": "token_addr",
-          "type": "address"
+          "type": "address",
+          "name": "token_addr"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5241,8 +5222,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "out",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "out"
         }
       ]
     },
@@ -5253,18 +5234,18 @@
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "bool"
+          "type": "bool",
+          "name": "out"
         }
       ]
     },
@@ -5275,22 +5256,22 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "out",
-          "type": "bool"
+          "type": "bool",
+          "name": "out"
         }
       ]
     },
@@ -5301,19 +5282,19 @@
       "encoding": "0x06239653922ac7bea6aa2b19dc486b9361821d37712eb796adfd38d81de278ca",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "provider",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "eth_amount",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "token_amount",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -5325,18 +5306,18 @@
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_spender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -5348,19 +5329,19 @@
       "encoding": "0x7f4091b46c33e918a0f3aa42307641d17bb67029427a5369e54b353984238705",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "buyer",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "tokens_sold",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "eth_bought",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -5372,19 +5353,19 @@
       "encoding": "0x0fbf06c058b90cb038a618f8c2acbf6145f8b3570fd1fa56abb8f0f3f05b36e8",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "provider",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "eth_amount",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "token_amount",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -5396,19 +5377,19 @@
       "encoding": "0xcd60aa75dea3072fbc07ae6d7d856b5dc5f4eee88854f5b4abf7b680ef8bc50f",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "buyer",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "eth_sold",
-          "type": "uint256"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "tokens_bought",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -5420,18 +5401,18 @@
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": []
@@ -5442,16 +5423,16 @@
       "encoding": "0xaf8342fe",
       "inputs": [
         {
-          "name": "_owners",
-          "type": "address[]"
+          "type": "address[]",
+          "name": "_owners"
         },
         {
-          "name": "_required",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_required"
         },
         {
-          "name": "_daylimit",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_daylimit"
         }
       ],
       "outputs": []
@@ -5462,12 +5443,12 @@
       "encoding": "0xfcd52c14",
       "inputs": [
         {
-          "name": "_owners",
-          "type": "address[]"
+          "type": "address[]",
+          "name": "_owners"
         },
         {
-          "name": "_required",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_required"
         }
       ],
       "outputs": []
@@ -5489,8 +5470,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -5501,8 +5482,8 @@
       "encoding": "0x7065cb48",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": []
@@ -5514,12 +5495,12 @@
       "encoding": "0xf00d4b5d",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         }
       ],
       "outputs": []
@@ -5531,8 +5512,8 @@
       "encoding": "0xba51a6df",
       "inputs": [
         {
-          "name": "_newRequired",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_newRequired"
         }
       ],
       "outputs": []
@@ -5544,14 +5525,14 @@
       "encoding": "0x797af627",
       "inputs": [
         {
-          "name": "_h",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_h"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -5562,8 +5543,8 @@
       "encoding": "0xc01a8c84",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": []
@@ -5576,18 +5557,18 @@
       "encoding": "0x3411c81c",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         },
         {
-          "name": "val_1",
-          "type": "address"
+          "type": "address",
+          "name": "val_1"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -5598,22 +5579,22 @@
       "encoding": "0xb61d27f6",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         },
         {
-          "name": "_data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "_data"
         }
       ],
       "outputs": [
         {
-          "name": "_r",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_r"
         }
       ]
     },
@@ -5624,8 +5605,8 @@
       "encoding": "0xee22610b",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": []
@@ -5638,14 +5619,14 @@
       "encoding": "0x8b51d13f",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": [
         {
-          "name": "count",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "count"
         }
       ]
     },
@@ -5657,14 +5638,14 @@
       "encoding": "0xb5dc40c3",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": [
         {
-          "name": "_confirmations",
-          "type": "address[]"
+          "type": "address[]",
+          "name": "_confirmations"
         }
       ]
     },
@@ -5677,8 +5658,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address[]"
+          "type": "address[]",
+          "name": "val_0"
         }
       ]
     },
@@ -5690,18 +5671,18 @@
       "encoding": "0x54741525",
       "inputs": [
         {
-          "name": "pending",
-          "type": "bool"
+          "type": "bool",
+          "name": "pending"
         },
         {
-          "name": "executed",
-          "type": "bool"
+          "type": "bool",
+          "name": "executed"
         }
       ],
       "outputs": [
         {
-          "name": "count",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "count"
         }
       ]
     },
@@ -5713,26 +5694,26 @@
       "encoding": "0xa8abe69a",
       "inputs": [
         {
-          "name": "from",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "from"
         },
         {
-          "name": "to",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "to"
         },
         {
-          "name": "pending",
-          "type": "bool"
+          "type": "bool",
+          "name": "pending"
         },
         {
-          "name": "executed",
-          "type": "bool"
+          "type": "bool",
+          "name": "executed"
         }
       ],
       "outputs": [
         {
-          "name": "_transactionIds",
-          "type": "uint256[]"
+          "type": "uint256[]",
+          "name": "_transactionIds"
         }
       ]
     },
@@ -5744,18 +5725,18 @@
       "encoding": "0xc2cf7326",
       "inputs": [
         {
-          "name": "_operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_operation"
         },
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -5767,14 +5748,14 @@
       "encoding": "0x784547a7",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -5785,14 +5766,14 @@
       "encoding": "0x2f54bf6e",
       "inputs": [
         {
-          "name": "_addr",
-          "type": "address"
+          "type": "address",
+          "name": "_addr"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -5803,8 +5784,8 @@
       "encoding": "0xcbf0b0c0",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         }
       ],
       "outputs": []
@@ -5818,8 +5799,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -5832,8 +5813,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -5846,8 +5827,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -5859,14 +5840,14 @@
       "encoding": "0x025e7c27",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -5877,8 +5858,8 @@
       "encoding": "0x173825d9",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": []
@@ -5890,12 +5871,12 @@
       "encoding": "0xe20056e6",
       "inputs": [
         {
-          "name": "owner",
-          "type": "address"
+          "type": "address",
+          "name": "owner"
         },
         {
-          "name": "newOwner",
-          "type": "address"
+          "type": "address",
+          "name": "newOwner"
         }
       ],
       "outputs": []
@@ -5909,8 +5890,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -5929,8 +5910,8 @@
       "encoding": "0xb75c7dc6",
       "inputs": [
         {
-          "name": "_operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "_operation"
         }
       ],
       "outputs": []
@@ -5942,8 +5923,8 @@
       "encoding": "0x20ea8d86",
       "inputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ],
       "outputs": []
@@ -5955,8 +5936,8 @@
       "encoding": "0xb20d30a9",
       "inputs": [
         {
-          "name": "_newLimit",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_newLimit"
         }
       ],
       "outputs": []
@@ -5968,22 +5949,22 @@
       "encoding": "0xc6427474",
       "inputs": [
         {
-          "name": "destination",
-          "type": "address"
+          "type": "address",
+          "name": "destination"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": [
         {
-          "name": "transactionId",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "transactionId"
         }
       ]
     },
@@ -5996,8 +5977,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -6009,26 +5990,26 @@
       "encoding": "0x9ace38c2",
       "inputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ],
       "outputs": [
         {
-          "name": "destination",
-          "type": "address"
+          "type": "address",
+          "name": "destination"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         },
         {
-          "name": "executed",
-          "type": "bool"
+          "type": "bool",
+          "name": "executed"
         }
       ]
     },
@@ -6039,14 +6020,14 @@
       "encoding": "0x4a504a94899432a9846e1aa406dceb1bcfd538bb839071d49d1e5e23f5be30ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_sender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_transactionId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6058,12 +6039,12 @@
       "encoding": "0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda",
       "inputs": [
         {
-          "name": "owner",
-          "type": "address"
+          "type": "address",
+          "name": "owner"
         },
         {
-          "name": "operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "operation"
         }
       ],
       "outputs": []
@@ -6075,24 +6056,24 @@
       "encoding": "0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32",
       "inputs": [
         {
-          "name": "operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "operation"
         },
         {
-          "name": "initiator",
-          "type": "address"
+          "type": "address",
+          "name": "initiator"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -6104,12 +6085,12 @@
       "encoding": "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
       "inputs": [
         {
-          "name": "from",
-          "type": "address"
+          "type": "address",
+          "name": "from"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         }
       ],
       "outputs": []
@@ -6121,9 +6102,9 @@
       "encoding": "0x33e13ecb54c3076d8e8bb8c2881800a4d972b792045ffae98fdf46df365fed75",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_transactionId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6135,9 +6116,9 @@
       "encoding": "0x526441bb6c1aba3c9a4a6ca1d6545da9c2333c8c48343ef398eb858d72b79236",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_transactionId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6149,24 +6130,24 @@
       "encoding": "0xe7c957c06e9a662c1a6c77366179f5b702b97651dc28eee7d5bf1dff6e40bb4a",
       "inputs": [
         {
-          "name": "owner",
-          "type": "address"
+          "type": "address",
+          "name": "owner"
         },
         {
-          "name": "operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "operation"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -6178,8 +6159,8 @@
       "encoding": "0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3",
       "inputs": [
         {
-          "name": "newOwner",
-          "type": "address"
+          "type": "address",
+          "name": "newOwner"
         }
       ],
       "outputs": []
@@ -6191,9 +6172,9 @@
       "encoding": "0xf39e6e1eb0edcf53c221607b54b00cd28f3196fed0a24994dc308b8f611b682d",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6205,12 +6186,12 @@
       "encoding": "0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c",
       "inputs": [
         {
-          "name": "oldOwner",
-          "type": "address"
+          "type": "address",
+          "name": "oldOwner"
         },
         {
-          "name": "newOwner",
-          "type": "address"
+          "type": "address",
+          "name": "newOwner"
         }
       ],
       "outputs": []
@@ -6222,9 +6203,9 @@
       "encoding": "0x8001553a916ef2f495d26a907cc54d96ed840d7bda71e73194bf5a9df7a76b90",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6236,8 +6217,8 @@
       "encoding": "0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da",
       "inputs": [
         {
-          "name": "oldOwner",
-          "type": "address"
+          "type": "address",
+          "name": "oldOwner"
         }
       ],
       "outputs": []
@@ -6249,8 +6230,8 @@
       "encoding": "0xa3f1ee9126a074d9326c682f561767f710e927faa811f7a99829d49dc421797a",
       "inputs": [
         {
-          "name": "_required",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_required"
         }
       ],
       "outputs": []
@@ -6262,8 +6243,8 @@
       "encoding": "0xacbdb084c721332ac59f9b8e392196c9eb0e4932862da8eb9beaf0dad4f550da",
       "inputs": [
         {
-          "name": "newRequirement",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "newRequirement"
         }
       ],
       "outputs": []
@@ -6275,14 +6256,14 @@
       "encoding": "0xf6a317157440607f36269043eb55f1287a5a19ba2216afeab88cd46cbcfb88e9",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_sender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_transactionId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []
@@ -6294,12 +6275,12 @@
       "encoding": "0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b",
       "inputs": [
         {
-          "name": "owner",
-          "type": "address"
+          "type": "address",
+          "name": "owner"
         },
         {
-          "name": "operation",
-          "type": "bytes32"
+          "type": "bytes32",
+          "name": "operation"
         }
       ],
       "outputs": []
@@ -6311,20 +6292,20 @@
       "encoding": "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004",
       "inputs": [
         {
-          "name": "owner",
-          "type": "address"
+          "type": "address",
+          "name": "owner"
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         },
         {
-          "name": "to",
-          "type": "address"
+          "type": "address",
+          "name": "to"
         },
         {
-          "name": "data",
-          "type": "bytes"
+          "type": "bytes",
+          "name": "data"
         }
       ],
       "outputs": []
@@ -6336,9 +6317,9 @@
       "encoding": "0xc0ba8fe4b176c1714197d43b9cc6bcf797a4a7461c5fe8d0ef6e184ae7601e51",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "_transactionId",
-          "type": "uint256"
+          "indexed": true
         }
       ],
       "outputs": []

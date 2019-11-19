@@ -53,7 +53,7 @@ bool COptions::handle_leech(void) {
             os << ipfs_cmd.str() << " \"" << zipFile << "\"";
             LOG_CALL(os.str());
             // clang-format off
-            if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
             usleep(500000);  // so Ctrl+C works
 
@@ -75,7 +75,7 @@ bool COptions::handle_leech(void) {
             cerr << "Leeching " << cTeal << textFile << cOff << endl;
             LOG_CALL(os.str());
             // clang-format off
-            if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
             usleep(500000);  // so Ctrl+C works
 

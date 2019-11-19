@@ -228,7 +228,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     os << "find ../../../working/" << path << "/" << testName;
     os << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     // clang-format off
-    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
     return true;
 }

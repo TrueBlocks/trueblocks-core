@@ -168,7 +168,7 @@ string_q doCommand(const string_q& cmd) {
     string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
     string_q theCommand = (cmd + " >" + filename);
     // clang-format off
-    if (system(theCommand.c_str())) {} // Don't remove cruft. Silences compiler warnings
+    if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
     // Check twice for existance since the previous command creates the file but may take some time

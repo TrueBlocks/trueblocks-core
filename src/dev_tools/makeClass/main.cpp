@@ -31,6 +31,7 @@ int main(int argc, const char* argv[]) {
         if (options.mode & LIST)
             cout << "Classes found in the classDefinitions folder:\n";
 
+        options.counter = CCounter();  // reset
         for (auto classDef : options.classDefs) {
             if (!fileExists(classDef.inputPath)) {
                 return options.usage("No class definition file found at " + classDef.inputPath + "\n");
@@ -69,6 +70,8 @@ int main(int argc, const char* argv[]) {
                 }
             }
         }
+        LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
+                 options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
     acctlib_cleanup();

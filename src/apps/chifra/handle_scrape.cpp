@@ -17,7 +17,7 @@ bool COptions::handle_scrape(void) {
         os << "blockScrape --help";
         LOG_CALL(os.str());
         // clang-format off
-        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         return true;
     }
@@ -131,7 +131,7 @@ bool COptions::handle_scrape(void) {
             os << "blockScrape " << tool_flags;
             LOG_CALL(os.str());
             // clang-format off
-            if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
 
             // always catch the timestamp file up to the scraper
@@ -156,7 +156,7 @@ bool COptions::handle_scrape(void) {
                             os1 << "acctExport " << addr << " --freshen";  // << " >/dev/null";
                             LOG_CALL(os1.str());
                             // clang-format off
-                            if (system(os1.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+                            if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                             // clang-format on
                             usleep(250000);  // stay responsive to cntrl+C
                             if (shouldQuit())

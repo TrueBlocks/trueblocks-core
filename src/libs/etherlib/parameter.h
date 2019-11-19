@@ -39,14 +39,14 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CParameter : public CBaseNode {
   public:
-    bool indexed;
-    string_q name;
     string_q type;
-    bool isPointer;
-    bool isArray;
-    bool isObject;
-    string_q strDefault;
+    string_q name;
+    string_q str_default;
     string_q value;
+    bool indexed;
+    bool is_pointer;
+    bool is_array;
+    bool is_object;
 
   public:
     CParameter(void);
@@ -122,14 +122,14 @@ inline void CParameter::clear(void) {
 inline void CParameter::initialize(void) {
     CBaseNode::initialize();
 
-    indexed = 0;
-    name = "";
     type = "";
-    isPointer = 0;
-    isArray = 0;
-    isObject = 0;
-    strDefault = "";
+    name = "";
+    str_default = "";
     value = "";
+    indexed = 0;
+    is_pointer = 0;
+    is_array = 0;
+    is_object = 0;
 
     // EXISTING_CODE
     noWrite = false;
@@ -142,14 +142,14 @@ inline void CParameter::duplicate(const CParameter& pa) {
     clear();
     CBaseNode::duplicate(pa);
 
-    indexed = pa.indexed;
-    name = pa.name;
     type = pa.type;
-    isPointer = pa.isPointer;
-    isArray = pa.isArray;
-    isObject = pa.isObject;
-    strDefault = pa.strDefault;
+    name = pa.name;
+    str_default = pa.str_default;
     value = pa.value;
+    indexed = pa.indexed;
+    is_pointer = pa.is_pointer;
+    is_array = pa.is_array;
+    is_object = pa.is_object;
 
     // EXISTING_CODE
     noWrite = pa.noWrite;

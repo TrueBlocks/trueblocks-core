@@ -6,16 +6,16 @@
       "encoding": "0x522f3752",
       "inputs": [
         {
-          "name": "_legacyRepContract",
-          "type": "address"
+          "type": "address",
+          "name": "_legacyRepContract"
         },
         {
-          "name": "_amountUsedToFreeze",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_amountUsedToFreeze"
         },
         {
-          "name": "_accountToSendFrozenRepTo",
-          "type": "address"
+          "type": "address",
+          "name": "_accountToSendFrozenRepTo"
         }
       ],
       "outputs": []
@@ -28,18 +28,18 @@
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         },
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         }
       ],
       "outputs": [
         {
-          "name": "remaining",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "remaining"
         }
       ]
     },
@@ -50,18 +50,18 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
-          "name": "_spender",
-          "type": "address"
+          "type": "address",
+          "name": "_spender"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -73,14 +73,14 @@
       "encoding": "0x70a08231",
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
+          "type": "address",
+          "name": "_owner"
         }
       ],
       "outputs": [
         {
-          "name": "balance",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "balance"
         }
       ]
     },
@@ -93,8 +93,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -107,8 +107,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -121,8 +121,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -133,14 +133,14 @@
       "encoding": "0x2988e36b",
       "inputs": [
         {
-          "name": "_holder",
-          "type": "address"
+          "type": "address",
+          "name": "_holder"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -151,14 +151,14 @@
       "encoding": "0x4b92738e",
       "inputs": [
         {
-          "name": "_holders",
-          "type": "address[]"
+          "type": "address[]",
+          "name": "_holders"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -171,8 +171,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "string"
+          "type": "string",
+          "name": "val_0"
         }
       ]
     },
@@ -185,8 +185,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "address"
+          "type": "address",
+          "name": "val_0"
         }
       ]
     },
@@ -198,8 +198,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -212,8 +212,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -226,8 +226,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "string"
+          "type": "string",
+          "name": "val_0"
         }
       ]
     },
@@ -240,8 +240,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -254,8 +254,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "val_0"
         }
       ]
     },
@@ -266,18 +266,18 @@
       "encoding": "0xa9059cbb",
       "inputs": [
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -288,22 +288,22 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
+          "type": "address",
+          "name": "_from"
         },
         {
-          "name": "_to",
-          "type": "address"
+          "type": "address",
+          "name": "_to"
         },
         {
-          "name": "_value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "_value"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -314,8 +314,8 @@
       "encoding": "0xf2fde38b",
       "inputs": [
         {
-          "name": "newOwner",
-          "type": "address"
+          "type": "address",
+          "name": "newOwner"
         }
       ],
       "outputs": []
@@ -328,8 +328,8 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "type": "bool"
+          "type": "bool",
+          "name": "val_0"
         }
       ]
     },
@@ -340,18 +340,18 @@
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "owner",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "spender",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         }
       ],
       "outputs": []
@@ -363,13 +363,13 @@
       "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "holder",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "amount",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "amount"
         }
       ],
       "outputs": []
@@ -389,18 +389,18 @@
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "from",
-          "type": "address"
+          "indexed": true
         },
         {
-          "indexed": true,
+          "type": "address",
           "name": "to",
-          "type": "address"
+          "indexed": true
         },
         {
-          "name": "value",
-          "type": "uint256"
+          "type": "uint256",
+          "name": "value"
         }
       ],
       "outputs": []

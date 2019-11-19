@@ -37,6 +37,17 @@ class CClassDefinition {
     }
 };
 
+//-------------------------------------------------------------------
+class CCounter {
+  public:
+    size_t fileCount;
+    size_t nVisited;
+    size_t nProcessed;
+    bool is_counting;
+    CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
+    }
+};
+
 typedef enum { NONE = 0, RUN = (1 << 1), EDIT = (1 << 2), LIST = (1 << 3) } runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -52,6 +63,9 @@ class COptions : public COptionsBase {
     vector<CClassDefinition> classDefs;
     CToml classFile;
     ostringstream warnings;
+    CCounter counter;
+    timestamp_t lastFormat;
+    timestamp_t lastLint;
 
     COptions(void);
     ~COptions(void);

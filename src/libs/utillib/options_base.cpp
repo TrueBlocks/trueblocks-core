@@ -821,7 +821,7 @@ void editFile(const string_q& fileName) {
         cout << contents << "\n";
     } else {
         // clang-format off
-        if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
     }
 }

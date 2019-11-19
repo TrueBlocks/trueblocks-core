@@ -3,3 +3,4 @@ makeClass --list function
 Classes found in the classDefinitions folder:
 	CBlock
 	CFunction
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        

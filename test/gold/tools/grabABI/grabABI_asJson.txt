@@ -9,14 +9,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x67f01c04",
   "inputs": [
     {
-      "name": "_id",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_id"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -28,14 +28,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xd67ae54d",
   "inputs": [
     {
-      "name": "_id",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_id"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -47,14 +47,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x5a8ef28a",
   "inputs": [
     {
-      "name": "_id",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_id"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -66,14 +66,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x0c560c64",
   "inputs": [
     {
-      "name": "_id",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_id"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -84,16 +84,16 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xbd943312",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     },
     {
-      "name": "_etherAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_etherAmount"
     },
     {
-      "name": "_acceptor",
-      "type": "address"
+      "type": "address",
+      "name": "_acceptor"
     }
   ],
   "outputs": []
@@ -105,19 +105,19 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x9775fc80",
   "inputs": [
     {
+      "type": "uint256[]",
       "name": "_keys",
-      "type": "uint256[]",
-      "isArray": true
+      "is_array": true
     },
     {
+      "type": "uint256[]",
       "name": "_tokenAmounts",
-      "type": "uint256[]",
-      "isArray": true
+      "is_array": true
     },
     {
-      "name": "_dollarPrices",
       "type": "uint256[]",
-      "isArray": true
+      "name": "_dollarPrices",
+      "is_array": true
     }
   ],
   "outputs": []
@@ -129,19 +129,19 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x2c7845cd",
   "inputs": [
     {
+      "type": "uint256[]",
       "name": "_keys",
-      "type": "uint256[]",
-      "isArray": true
+      "is_array": true
     },
     {
+      "type": "uint256[]",
       "name": "_tokenAmounts",
-      "type": "uint256[]",
-      "isArray": true
+      "is_array": true
     },
     {
-      "name": "_dollarPrices",
       "type": "uint256[]",
-      "isArray": true
+      "name": "_dollarPrices",
+      "is_array": true
     }
   ],
   "outputs": []
@@ -153,18 +153,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x771602f7",
   "inputs": [
     {
-      "name": "a",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "a"
     },
     {
-      "name": "b",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "b"
     }
   ],
   "outputs": [
     {
-      "name": "c",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "c"
     }
   ]
 },
@@ -175,14 +175,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x328d06c6",
   "inputs": [
     {
-      "name": "_account",
-      "type": "address"
+      "type": "address",
+      "name": "_account"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -194,18 +194,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xdd62ed3e",
   "inputs": [
     {
-      "name": "_owner",
-      "type": "address"
+      "type": "address",
+      "name": "_owner"
     },
     {
-      "name": "_spender",
-      "type": "address"
+      "type": "address",
+      "name": "_spender"
     }
   ],
   "outputs": [
     {
-      "name": "remaining",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "remaining"
     }
   ]
 },
@@ -216,18 +216,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x095ea7b3",
   "inputs": [
     {
-      "name": "_spender",
-      "type": "address"
+      "type": "address",
+      "name": "_spender"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -239,14 +239,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x70a08231",
   "inputs": [
     {
-      "name": "tokenOwner",
-      "type": "address"
+      "type": "address",
+      "name": "tokenOwner"
     }
   ],
   "outputs": [
     {
-      "name": "balance",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "balance"
     }
   ]
 },
@@ -257,14 +257,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x6d1b229d",
   "inputs": [
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -275,8 +275,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x0a3120f2",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     }
   ],
   "outputs": []
@@ -288,18 +288,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xd6918013",
   "inputs": [
     {
-      "name": "_setting",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_setting"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -311,14 +311,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x0619a976",
   "inputs": [
     {
-      "name": "_setting",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_setting"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -329,24 +329,24 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x653726d8",
   "inputs": [
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     },
     {
-      "name": "_deposit",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_deposit"
     },
     {
-      "name": "_requestType",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_requestType"
     },
     {
-      "name": "_requester",
-      "type": "address"
+      "type": "address",
+      "name": "_requester"
     }
   ],
   "outputs": []
@@ -359,8 +359,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_0"
     }
   ]
 },
@@ -371,18 +371,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xa391c15b",
   "inputs": [
     {
-      "name": "a",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "a"
     },
     {
-      "name": "b",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "b"
     }
   ],
   "outputs": [
     {
-      "name": "c",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "c"
     }
   ]
 },
@@ -393,26 +393,26 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xa4b8cf14",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     },
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     },
     {
-      "name": "_requestType",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_requestType"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_0"
     }
   ]
 },
@@ -424,18 +424,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xd1dbc3b5",
   "inputs": [
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     },
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -447,34 +447,34 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x54e4067a",
   "inputs": [
     {
-      "name": "_address",
-      "type": "address"
+      "type": "address",
+      "name": "_address"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     },
     {
-      "name": "ret_1",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_1"
     },
     {
-      "name": "ret_2",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_2"
     },
     {
-      "name": "ret_3",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_3"
     },
     {
-      "name": "ret_4",
-      "type": "string"
+      "type": "string",
+      "name": "ret_4"
     },
     {
-      "name": "ret_5",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_5"
     }
   ]
 },
@@ -487,9 +487,9 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "ret_0",
       "type": "address[]",
-      "isArray": true
+      "name": "ret_0",
+      "is_array": true
     }
   ]
 },
@@ -501,46 +501,46 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc58343ef",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     },
     {
-      "name": "ret_1",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_1"
     },
     {
-      "name": "ret_2",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_2"
     },
     {
-      "name": "ret_3",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_3"
     },
     {
-      "name": "ret_4",
-      "type": "address"
+      "type": "address",
+      "name": "ret_4"
     },
     {
-      "name": "ret_5",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_5"
     },
     {
-      "name": "ret_6",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_6"
     },
     {
-      "name": "ret_7",
-      "type": "address"
+      "type": "address",
+      "name": "ret_7"
     },
     {
-      "name": "ret_8",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "ret_8"
     }
   ]
 },
@@ -553,9 +553,9 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "ret_0",
       "type": "uint256[]",
-      "isArray": true
+      "name": "ret_0",
+      "is_array": true
     }
   ]
 },
@@ -566,14 +566,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x8274fbf5",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_0"
     }
   ]
 },
@@ -584,8 +584,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x0d1994fe",
   "inputs": [
     {
-      "name": "_deposit",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_deposit"
     }
   ],
   "outputs": []
@@ -597,12 +597,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xfaa47056",
   "inputs": [
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     }
   ],
   "outputs": []
@@ -614,12 +614,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xeaca750d",
   "inputs": [
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     }
   ],
   "outputs": []
@@ -631,14 +631,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x97304ced",
   "inputs": [
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -649,18 +649,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc8a4ac9c",
   "inputs": [
     {
-      "name": "a",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "a"
     },
     {
-      "name": "b",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "b"
     }
   ],
   "outputs": [
     {
-      "name": "c",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "c"
     }
   ]
 },
@@ -672,8 +672,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xf812e909",
   "inputs": [
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     }
   ],
   "outputs": []
@@ -685,14 +685,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x80279f92",
   "inputs": [
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_0"
     }
   ]
 },
@@ -703,14 +703,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x1ec1eabf",
   "inputs": [
     {
-      "name": "_account",
-      "type": "address"
+      "type": "address",
+      "name": "_account"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -721,12 +721,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x5f443e73",
   "inputs": [
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_requester",
-      "type": "address"
+      "type": "address",
+      "name": "_requester"
     }
   ],
   "outputs": []
@@ -738,14 +738,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x2c1e816d",
   "inputs": [
     {
-      "name": "_address",
-      "type": "address"
+      "type": "address",
+      "name": "_address"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -756,14 +756,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x45243120",
   "inputs": [
     {
-      "name": "_address",
-      "type": "address"
+      "type": "address",
+      "name": "_address"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -774,14 +774,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x331a6bf5",
   "inputs": [
     {
-      "name": "_address",
-      "type": "address"
+      "type": "address",
+      "name": "_address"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -792,20 +792,20 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x681f482e",
   "inputs": [
     {
-      "name": "_payment",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_payment"
     },
     {
-      "name": "_deposit",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_deposit"
     },
     {
-      "name": "_buyer",
-      "type": "address"
+      "type": "address",
+      "name": "_buyer"
     },
     {
-      "name": "_seller",
-      "type": "address"
+      "type": "address",
+      "name": "_seller"
     }
   ],
   "outputs": []
@@ -817,18 +817,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xb67d77c5",
   "inputs": [
     {
-      "name": "a",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "a"
     },
     {
-      "name": "b",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "b"
     }
   ],
   "outputs": [
     {
-      "name": "c",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "c"
     }
   ]
 },
@@ -839,18 +839,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xce0d0033",
   "inputs": [
     {
-      "name": "_account",
-      "type": "address"
+      "type": "address",
+      "name": "_account"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "ret_0"
     }
   ]
 },
@@ -869,14 +869,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x465f7840",
   "inputs": [
     {
-      "name": "_verifier",
-      "type": "address"
+      "type": "address",
+      "name": "_verifier"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -889,8 +889,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -901,18 +901,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xa9059cbb",
   "inputs": [
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -923,18 +923,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xdc39d06d",
   "inputs": [
     {
-      "name": "_tokenAddress",
-      "type": "address"
+      "type": "address",
+      "name": "_tokenAddress"
     },
     {
-      "name": "_tokens",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokens"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -945,22 +945,22 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x23b872dd",
   "inputs": [
     {
-      "name": "_from",
-      "type": "address"
+      "type": "address",
+      "name": "_from"
     },
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -971,22 +971,22 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x39df656a",
   "inputs": [
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     },
     {
-      "name": "_transferMetaData",
-      "type": "string"
+      "type": "string",
+      "name": "_transferMetaData"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -998,14 +998,14 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc818faec",
   "inputs": [
     {
-      "name": "_id",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_id"
     }
   ],
   "outputs": [
     {
-      "name": "ret_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "ret_0"
     }
   ]
 },
@@ -1016,18 +1016,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x21daa08e",
   "inputs": [
     {
-      "name": "_account",
-      "type": "address"
+      "type": "address",
+      "name": "_account"
     },
     {
-      "name": "_verifyMetaData",
-      "type": "string"
+      "type": "string",
+      "name": "_verifyMetaData"
     }
   ],
   "outputs": [
     {
-      "name": "success",
-      "type": "bool"
+      "type": "bool",
+      "name": "success"
     }
   ]
 },
@@ -1039,8 +1039,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "amount"
     }
   ]
 },
@@ -1052,8 +1052,8 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "inputs": [],
   "outputs": [
     {
-      "name": "paymentMade",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "paymentMade"
     }
   ]
 },
@@ -1064,25 +1064,25 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc62f8b1313b549bc5c94efe776ee0559a8f88efdb3db504331857fc163553c71",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     },
     {
-      "name": "_etherAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_etherAmount"
     },
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_acceptor",
-      "type": "address"
+      "indexed": true
     }
   ],
   "outputs": []
@@ -1094,22 +1094,22 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x561d06141a26ac6edf895e7e79d3002d07dd7689b6dcec5ea29f4aba8922caf0",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_sender",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_account",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_affirmDate",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_affirmDate"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -1121,18 +1121,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_owner",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_spender",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -1144,12 +1144,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xf1337af994b33c56a7ce51266931ae8dedce9d6eb9b3eb127fcf7f006374f74e",
   "inputs": [
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     },
     {
-      "name": "_balance",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_balance"
     }
   ],
   "outputs": []
@@ -1161,21 +1161,21 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc08c07687f5dc22e00846ec2d0afff7fb5d509f6fc5c60ad9f70fdeb0ab6a5c7",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_sender",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_deposit",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_deposit"
     },
     {
-      "name": "_amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_amount"
     }
   ],
   "outputs": []
@@ -1187,29 +1187,29 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x45ec157657ca4ad92c9a421e4b776d16042d8b7e497133b925e95bade7977c9f",
   "inputs": [
     {
-      "name": "_key",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_key"
     },
     {
-      "name": "_date",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_date"
     },
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     },
     {
-      "name": "_dollarPrice",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_dollarPrice"
     },
     {
-      "name": "_requestType",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_requestType"
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_requester",
-      "type": "address"
+      "indexed": true
     }
   ],
   "outputs": []
@@ -1221,12 +1221,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x8252da6cc8ba70656d63b4439295f2de59ffee7cf90c96f5aee10857159474e7",
   "inputs": [
     {
-      "name": "fName",
-      "type": "string"
+      "type": "string",
+      "name": "fName"
     },
     {
-      "name": "message",
-      "type": "string"
+      "type": "string",
+      "name": "message"
     }
   ],
   "outputs": []
@@ -1238,12 +1238,12 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xcadacfb8c0e49204cf16077a3391d064f2d96ca5279ac8952e9fe94a586820a2",
   "inputs": [
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     },
     {
-      "name": "_balance",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_balance"
     }
   ],
   "outputs": []
@@ -1255,13 +1255,13 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x21cb51cd5a443947666669cbd7817449c0c8655db9fdcbb54361bd7d5a3f6636",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_from",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_tokenAmount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_tokenAmount"
     }
   ],
   "outputs": []
@@ -1273,16 +1273,16 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x5d3b22fc1b5791b3bd0e715ed4a863225e41557da6054af84331354b3caa5da6",
   "inputs": [
     {
-      "name": "_admin",
-      "type": "address"
+      "type": "address",
+      "name": "_admin"
     },
     {
-      "name": "_setting",
-      "type": "uint8"
+      "type": "uint8",
+      "name": "_setting"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -1294,13 +1294,13 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x023b74e8ede17df2114fd7c1891458b2191a5e35f416f6e0516d27a436586b36",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_verifier",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_isTrustedVerifier",
-      "type": "bool"
+      "type": "bool",
+      "name": "_isTrustedVerifier"
     }
   ],
   "outputs": []
@@ -1312,18 +1312,18 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_from",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_to",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -1335,22 +1335,22 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0xc620c23091c77c537ae2f7deb703ecdea8b2cb3df9053ac018b281ffa1a9cae4",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_from",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_to",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     },
     {
-      "name": "_transferMetaData",
-      "type": "string"
+      "type": "string",
+      "name": "_transferMetaData"
     }
   ],
   "outputs": []
@@ -1362,22 +1362,22 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x915343c82f85b094d9cd849a66a07e32f510471c64a8d62cbd36f23148242b72",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_verifier",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "_account",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_verifyDate",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_verifyDate"
     },
     {
-      "name": "_verifyMetaData",
-      "type": "string"
+      "type": "string",
+      "name": "_verifyMetaData"
     }
   ],
   "outputs": []
@@ -1389,13 +1389,13 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "encoding": "0x37bf10b25ac7f114ebfb7b1d314deb36f7b89f2d9b3f155f61ea8a23af43339e",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "_account",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "_payment",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_payment"
     }
   ],
   "outputs": []

@@ -121,15 +121,15 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // order matters
-    if (options)
-        handle_options();
-    if (format)
-        handle_format();
-    if (lint)
-        handle_lint();
-
-    if (options || format || lint)
+    if (options || format || lint) {
+        if (options)
+            handle_options();
+        if (format)
+            handle_format();
+        if (lint)
+            handle_lint();
         return false;
+    }
 
     if (!js.empty())
         return handle_json_export(js);
@@ -182,6 +182,12 @@ void COptions::Init(void) {
 
     mode = NONE;
     classDefs.clear();
+    counter = CCounter();
+
+    CToml toml(configPath("makeClass.toml"));
+    lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
+    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
+    toml.Release();
 }
 
 //---------------------------------------------------------------------------------------------------

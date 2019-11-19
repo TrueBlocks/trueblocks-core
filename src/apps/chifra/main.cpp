@@ -65,7 +65,7 @@ int main(int argc, const char* argv[]) {
                     os << " " << addr;
                 LOG_CALL(os.str());
                 // clang-format off
-                if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                 // clang-format on
             } else {
                 cerr << "Should not happen.";

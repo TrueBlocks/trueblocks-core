@@ -13,13 +13,21 @@
 #include "acctlib.h"
 #include "options.h"
 
-static uint32_t nFiles = 0;
-static uint32_t nLints = 0;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
+    counter = CCounter();
+    counter.is_counting = true;
     forEveryFileInFolder("./", lintFiles, this);
-    cout << "                                                           \r";
-    cout << "Formatter: " << nFiles << " checked, " << nLints << " with lint." << endl;
+    counter.is_counting = false;
+    forEveryFileInFolder("./", lintFiles, this);
+    LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
+             " lints).", string_q(40, ' '));
+
+    CToml config(configPath("makeClass.toml"));
+    config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.writeFile();
+    config.Release();
+
     return 0;
 }
 
@@ -36,12 +44,22 @@ bool lintFiles(const string_q& path, void* data) {
             return true;
 
         if (endsWith(path, ".cpp") || endsWith(path, ".h")) {
-            nFiles++;
+            COptions* opts = reinterpret_cast<COptions*>(data);
+            if (opts->counter.is_counting) {
+                opts->counter.fileCount++;
+                return true;
+            }
+
+            opts->counter.nVisited++;
+            timestamp_t ts = date_2_Ts(fileLastModifyDate(path));
+            if (ts < opts->lastLint)
+                return true;
+
             string_q fullPath = substitute(path, "./", getCWD());
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
             string_q cmd = "pylint.py \"" + fullPath + "\" >\"" + resPath + "\" 2>&1";
             // clang-format off
-            if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+            if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
             if (!shouldQuit()) {
                 string_q contents = asciiFileToString(resPath);
@@ -49,29 +67,32 @@ bool lintFiles(const string_q& path, void* data) {
                     return false;
                 CStringArray lines;
                 explode(lines, contents, '\n');
-                size_t n = 0;
+                size_t lints = 0;
                 for (auto line : lines) {
                     if (!startsWith(line, "Linting")) {
                         line = substitute(line, getCWD(), "./");
                         replace(line, path + ":", path + ":" + cYellow);
-                        cout << line << cOff << endl;
-                        n++;
+                        LOG_INFO(line, cOff);
+                        lints++;
                     }
                 }
-                if (n == 0) {
-                    cout << string_q(150, ' ') << "\r";
-                    cout << "Linter: " << cTeal << path << cOff << "\r";
-                    cout.flush();
+                if (lints) {
+                    opts->counter.nProcessed++;
                 } else {
-                    nLints++;
+                    ostringstream os;
+                    os << "Linter (" << opts->counter.nVisited << " of " << opts->counter.fileCount << "): ";
+                    os << cTeal << path << cOff << string_q(20, ' ') << "\r";
+                    LOG_INFO(os.str());
                 }
-                if (!(nFiles % 2))
-                    usleep(50000);
+
+                if (!(opts->counter.nVisited % 2))
+                    usleep(50000);  // do not remove cruft - allows control+C
             }
+
             if (fileExists(resPath))
                 ::remove(resPath.c_str());
             else
-                return false;
+                return false;  // user probably hit control+C
         }
     }
 

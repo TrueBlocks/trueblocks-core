@@ -70,20 +70,20 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
         case 'i':
             if (fieldName % "indexed")
                 return bool_2_Str_t(indexed);
-            if (fieldName % "isPointer")
-                return bool_2_Str_t(isPointer);
-            if (fieldName % "isArray")
-                return bool_2_Str_t(isArray);
-            if (fieldName % "isObject")
-                return bool_2_Str_t(isObject);
+            if (fieldName % "is_pointer")
+                return bool_2_Str_t(is_pointer);
+            if (fieldName % "is_array")
+                return bool_2_Str_t(is_array);
+            if (fieldName % "is_object")
+                return bool_2_Str_t(is_object);
             break;
         case 'n':
             if (fieldName % "name")
                 return name;
             break;
         case 's':
-            if (fieldName % "strDefault")
-                return strDefault;
+            if (fieldName % "str_default")
+                return str_default;
             break;
         case 't':
             if (fieldName % "type")
@@ -116,16 +116,16 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 indexed = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "isPointer") {
-                isPointer = str_2_Bool(fieldValue);
+            if (fieldName % "is_pointer") {
+                is_pointer = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "isArray") {
-                isArray = str_2_Bool(fieldValue);
+            if (fieldName % "is_array") {
+                is_array = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "isObject") {
-                isObject = str_2_Bool(fieldValue);
+            if (fieldName % "is_object") {
+                is_object = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -136,8 +136,8 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             break;
         case 's':
-            if (fieldName % "strDefault") {
-                strDefault = fieldValue;
+            if (fieldName % "str_default") {
+                str_default = fieldValue;
                 return true;
             }
             break;
@@ -178,14 +178,14 @@ bool CParameter::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> indexed;
-    archive >> name;
     archive >> type;
-    archive >> isPointer;
-    archive >> isArray;
-    archive >> isObject;
-    archive >> strDefault;
+    archive >> name;
+    archive >> str_default;
     archive >> value;
+    archive >> indexed;
+    archive >> is_pointer;
+    archive >> is_array;
+    archive >> is_object;
     finishParse();
     return true;
 }
@@ -197,14 +197,14 @@ bool CParameter::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << indexed;
-    archive << name;
     archive << type;
-    archive << isPointer;
-    archive << isArray;
-    archive << isObject;
-    archive << strDefault;
+    archive << name;
+    archive << str_default;
     archive << value;
+    archive << indexed;
+    archive << is_pointer;
+    archive << is_array;
+    archive << is_object;
 
     return true;
 }
@@ -241,14 +241,14 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "isPointer", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "isArray", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "isObject", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "strDefault", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "str_default", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_pointer", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -304,7 +304,15 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PARAMETER = "";
+const char* STR_DISPLAY_PARAMETER =
+    "[{TYPE}]\t"
+    "[{NAME}]\t"
+    "[{STR_DEFAULT}]\t"
+    "[{VALUE}]\t"
+    "[{INDEXED}]\t"
+    "[{IS_POINTER}]\t"
+    "[{IS_ARRAY}]\t"
+    "[{IS_OBJECT}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -321,14 +329,14 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     if (contains(textIn, "=")) {
-        strDefault = textIn;
-        textIn = nextTokenClear(strDefault, '=');
+        str_default = textIn;
+        textIn = nextTokenClear(str_default, '=');
     }
 
     type = nextTokenClear(textIn, ' ');
-    isPointer = contains(textIn, "*");
-    isArray = contains(textIn, "Array");
-    isObject = !isArray && startsWith(type, 'C');
+    is_pointer = contains(textIn, "*");
+    is_array = contains(textIn, "Array");
+    is_object = !is_array && startsWith(type, 'C');
     name = substitute(textIn, "*", "");
 }
 
@@ -467,7 +475,7 @@ bool CParameter::fromDefinition(const string_q& strIn) {
     indexed = contains(str, "indexed");
     str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
     type = elementaryName(nextTokenClear(str, ' '));
-    isArray = contains(type, '[');
+    is_array = contains(type, '[');
     name = str;
     return true;
 }

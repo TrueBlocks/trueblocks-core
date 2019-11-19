@@ -14,7 +14,7 @@ bool COptions::handle_status(void) {
     os << "cacheStatus " << tool_flags;
     LOG_CALL(os.str());
     // clang-format off
-    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
     EXIT_NOMSG8(true);

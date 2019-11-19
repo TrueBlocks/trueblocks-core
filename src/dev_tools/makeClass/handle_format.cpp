@@ -13,13 +13,21 @@
 #include "acctlib.h"
 #include "options.h"
 
-static uint32_t nFiles = 0;
-static uint32_t nChanged = 0;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
+    counter = CCounter();
+    counter.is_counting = true;
     forEveryFileInFolder("./", formatFiles, this);
-    cout << "                                                           \r";
-    cout << "Formatter: " << nFiles << " checked, " << nChanged << " altered." << endl;
+    counter.is_counting = false;
+    forEveryFileInFolder("./", formatFiles, this);
+    LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
+             counter.nProcessed, ").", string_q(40, ' '));
+
+    CToml config(configPath("makeClass.toml"));
+    config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.writeFile();
+    config.Release();
+
     return 0;
 }
 
@@ -36,28 +44,42 @@ bool formatFiles(const string_q& path, void* data) {
             return true;
 
         if (endsWith(path, ".cpp") || endsWith(path, ".h")) {
-            nFiles++;
+            COptions* opts = reinterpret_cast<COptions*>(data);
+            if (opts->counter.is_counting) {
+                opts->counter.fileCount++;
+                return true;
+            }
+            opts->counter.nVisited++;
+            timestamp_t ts = date_2_Ts(fileLastModifyDate(path));
+            if (ts < opts->lastFormat)
+                return true;
+
             string_q fullPath = substitute(path, "./", getCWD());
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
             string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
             // clang-format off
-            if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+            if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
             if (!shouldQuit() && fileExists(resPath)) {
                 string_q oldFile = asciiFileToString(fullPath);
                 string_q newFile = asciiFileToString(resPath);
                 if (oldFile != newFile) {
+                    opts->counter.nProcessed++;
                     copyFile(resPath, fullPath);
-                    cout << "Formatter: file changed " << cYellow << path << cOff
-                         << "                                         " << endl;
-                    nChanged++;
+                    ostringstream os;
+                    os << "Formatted: ";
+                    os << cTeal << path << cOff << string_q(50, ' ');
+                    LOG_INFO(os.str());
+
                 } else {
-                    cout << "Formatter: no change in " << cTeal << path << cOff
-                         << "                                             \r";
-                    cout.flush();
+                    ostringstream os;
+                    os << "Formatter (" << opts->counter.nVisited << " of " << opts->counter.fileCount
+                       << "): no change ";
+                    os << cTeal << path << cOff << string_q(20, ' ') << "\r";
+                    LOG_INFO(os.str());
                 }
-                if (!(nFiles % 5))
-                    usleep(50000);
+                if (!(opts->counter.nVisited % 5))
+                    usleep(50000);  // do not remove cruft - allows control+C
             }
             ::remove(resPath.c_str());
         }

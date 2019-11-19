@@ -15,7 +15,7 @@ bool COptions::handle_list(void) {
         os << "acctScrape --help";
         LOG_CALL(os.str());
         // clang-format off
-        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         EXIT_NOMSG8(true);
     }
@@ -33,7 +33,7 @@ bool COptions::handle_list(void) {
         os << "acctExport --appearances " << tool_flags << " " << addr;
         LOG_CALL(os.str());
         // clang-format off
-        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
     }
 

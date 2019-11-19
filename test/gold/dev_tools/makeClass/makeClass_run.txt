@@ -1,3 +1,4 @@
 makeClass argc: 3 [1:--run] [2:block] 
 makeClass --run block 
 Would run class definition file: block (not run, testing)
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        

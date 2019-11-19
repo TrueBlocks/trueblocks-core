@@ -49,3 +49,4 @@ class = "CFunction"
 fields = "string name|string type|bool anonymous|bool constant|bool payable|string signature|string encoding|CParameterArray inputs|CParameterArray outputs"
 includes = "utillib.h|parameter.h"
 
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        

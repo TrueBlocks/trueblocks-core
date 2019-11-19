@@ -89,7 +89,7 @@ bool COptions::handle_data(void) {
 
     LOG_CALL(os.str());
     // clang-format off
-    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
     EXIT_NOMSG8(true);

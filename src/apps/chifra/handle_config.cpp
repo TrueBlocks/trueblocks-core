@@ -15,7 +15,7 @@ bool COptions::handle_config(void) {
         os << "cacheStatus --help";
         LOG_CALL(os.str());
         // clang-format off
-        if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         EXIT_NOMSG8(true);
     }
@@ -45,7 +45,7 @@ bool COptions::handle_config(void) {
     // both testing and non-testing
     LOG_CALL(os.str());
     // clang-format off
-    if (system(os.str().c_str())) {} // Don't remove cruft. Silences compiler warnings
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
     EXIT_NOMSG8(true);
@@ -95,7 +95,7 @@ bool COptions::handle_config(void) {
             else {
                 LOG_CALL(os.str());
                 // clang-format off
-                if (system(os.str().c_str())) // Don't remove. Silences compiler warnings
+                if (system(os.str().c_str()))  // Don't remove. Silences compiler warnings
                 // clang-format on
             }
         }

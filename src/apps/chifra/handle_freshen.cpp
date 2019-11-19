@@ -31,7 +31,7 @@ bool freshen_internal(freshen_e mode, const CAddressArray& addrs, const string_q
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
         LOG_CALL(cmd);
         // clang-format off
-        if (system(cmd.c_str())) {} // Don't remove cruft. Silences compiler warnings
+        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         if (!groupsOfFive.empty())
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove

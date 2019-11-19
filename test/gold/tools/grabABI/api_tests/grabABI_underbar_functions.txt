@@ -5,20 +5,20 @@
   "encoding": "0x00c5681d",
   "inputs": [
     {
-      "name": "_initialSupply",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_initialSupply"
     },
     {
-      "name": "_name",
-      "type": "string"
+      "type": "string",
+      "name": "_name"
     },
     {
-      "name": "_symbol",
-      "type": "string"
+      "type": "string",
+      "name": "_symbol"
     },
     {
-      "name": "_decimals",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_decimals"
     }
   ],
   "outputs": []
@@ -32,8 +32,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -46,8 +46,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -58,8 +58,8 @@
   "encoding": "0x0ecb93c0",
   "inputs": [
     {
-      "name": "_evilUser",
-      "type": "address"
+      "type": "address",
+      "name": "_evilUser"
     }
   ],
   "outputs": []
@@ -72,18 +72,18 @@
   "encoding": "0xdd62ed3e",
   "inputs": [
     {
-      "name": "_owner",
-      "type": "address"
+      "type": "address",
+      "name": "_owner"
     },
     {
-      "name": "_spender",
-      "type": "address"
+      "type": "address",
+      "name": "_spender"
     }
   ],
   "outputs": [
     {
-      "name": "remaining",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "remaining"
     }
   ]
 },
@@ -95,18 +95,18 @@
   "encoding": "0x5c658165",
   "inputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     },
     {
-      "name": "val_1",
-      "type": "address"
+      "type": "address",
+      "name": "val_1"
     }
   ],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -117,12 +117,12 @@
   "encoding": "0x095ea7b3",
   "inputs": [
     {
-      "name": "_spender",
-      "type": "address"
+      "type": "address",
+      "name": "_spender"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -135,14 +135,14 @@
   "encoding": "0x70a08231",
   "inputs": [
     {
-      "name": "who",
-      "type": "address"
+      "type": "address",
+      "name": "who"
     }
   ],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -154,14 +154,14 @@
   "encoding": "0x27e235e3",
   "inputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     }
   ],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -174,8 +174,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -188,8 +188,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -200,8 +200,8 @@
   "encoding": "0x0753c30c",
   "inputs": [
     {
-      "name": "_upgradedAddress",
-      "type": "address"
+      "type": "address",
+      "name": "_upgradedAddress"
     }
   ],
   "outputs": []
@@ -215,8 +215,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "val_0"
     }
   ]
 },
@@ -227,8 +227,8 @@
   "encoding": "0xf3bdc228",
   "inputs": [
     {
-      "name": "_blackListedUser",
-      "type": "address"
+      "type": "address",
+      "name": "_blackListedUser"
     }
   ],
   "outputs": []
@@ -241,14 +241,14 @@
   "encoding": "0x59bf1abe",
   "inputs": [
     {
-      "name": "_maker",
-      "type": "address"
+      "type": "address",
+      "name": "_maker"
     }
   ],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "val_0"
     }
   ]
 },
@@ -261,8 +261,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     }
   ]
 },
@@ -274,14 +274,14 @@
   "encoding": "0xe47d6060",
   "inputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     }
   ],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "val_0"
     }
   ]
 },
@@ -292,8 +292,8 @@
   "encoding": "0xcc872b66",
   "inputs": [
     {
-      "name": "amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "amount"
     }
   ],
   "outputs": []
@@ -307,8 +307,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -321,8 +321,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "string"
+      "type": "string",
+      "name": "val_0"
     }
   ]
 },
@@ -335,8 +335,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     }
   ]
 },
@@ -357,8 +357,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "bool"
+      "type": "bool",
+      "name": "val_0"
     }
   ]
 },
@@ -369,8 +369,8 @@
   "encoding": "0xdb006a75",
   "inputs": [
     {
-      "name": "amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "amount"
     }
   ],
   "outputs": []
@@ -382,8 +382,8 @@
   "encoding": "0xe4997dc5",
   "inputs": [
     {
-      "name": "_clearedUser",
-      "type": "address"
+      "type": "address",
+      "name": "_clearedUser"
     }
   ],
   "outputs": []
@@ -395,12 +395,12 @@
   "encoding": "0xc0324c77",
   "inputs": [
     {
-      "name": "newBasisPoints",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "newBasisPoints"
     },
     {
-      "name": "newMaxFee",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "newMaxFee"
     }
   ],
   "outputs": []
@@ -414,8 +414,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "string"
+      "type": "string",
+      "name": "val_0"
     }
   ]
 },
@@ -428,8 +428,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "val_0"
     }
   ]
 },
@@ -440,12 +440,12 @@
   "encoding": "0xa9059cbb",
   "inputs": [
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -457,16 +457,16 @@
   "encoding": "0x23b872dd",
   "inputs": [
     {
-      "name": "_from",
-      "type": "address"
+      "type": "address",
+      "name": "_from"
     },
     {
-      "name": "_to",
-      "type": "address"
+      "type": "address",
+      "name": "_to"
     },
     {
-      "name": "_value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_value"
     }
   ],
   "outputs": []
@@ -478,8 +478,8 @@
   "encoding": "0xf2fde38b",
   "inputs": [
     {
-      "name": "newOwner",
-      "type": "address"
+      "type": "address",
+      "name": "newOwner"
     }
   ],
   "outputs": []
@@ -501,8 +501,8 @@
   "inputs": [],
   "outputs": [
     {
-      "name": "val_0",
-      "type": "address"
+      "type": "address",
+      "name": "val_0"
     }
   ]
 },
@@ -513,8 +513,8 @@
   "encoding": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
   "inputs": [
     {
-      "name": "_user",
-      "type": "address"
+      "type": "address",
+      "name": "_user"
     }
   ],
   "outputs": []
@@ -526,18 +526,18 @@
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "owner",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "spender",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "value"
     }
   ],
   "outputs": []
@@ -549,8 +549,8 @@
   "encoding": "0xcc358699805e9a8b7f77b522628c7cb9abd07d9efb86b6fb616af1609036a99e",
   "inputs": [
     {
-      "name": "newAddress",
-      "type": "address"
+      "type": "address",
+      "name": "newAddress"
     }
   ],
   "outputs": []
@@ -562,12 +562,12 @@
   "encoding": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
   "inputs": [
     {
-      "name": "_blackListedUser",
-      "type": "address"
+      "type": "address",
+      "name": "_blackListedUser"
     },
     {
-      "name": "_balance",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "_balance"
     }
   ],
   "outputs": []
@@ -579,8 +579,8 @@
   "encoding": "0xcb8241adb0c3fdb35b70c24ce35c5eb0c17af7431c99f827d44a445ca624176a",
   "inputs": [
     {
-      "name": "amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "amount"
     }
   ],
   "outputs": []
@@ -592,12 +592,12 @@
   "encoding": "0xb044a1e409eac5c48e5af22d4af52670dd1a99059537a78b31b48c6500a6354e",
   "inputs": [
     {
-      "name": "feeBasisPoints",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "feeBasisPoints"
     },
     {
-      "name": "maxFee",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "maxFee"
     }
   ],
   "outputs": []
@@ -617,8 +617,8 @@
   "encoding": "0x702d5967f45f6513a38ffc42d6ba9bf230bd40e8f53b16363c7eb4fd2deb9a44",
   "inputs": [
     {
-      "name": "amount",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "amount"
     }
   ],
   "outputs": []
@@ -630,8 +630,8 @@
   "encoding": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
   "inputs": [
     {
-      "name": "_user",
-      "type": "address"
+      "type": "address",
+      "name": "_user"
     }
   ],
   "outputs": []
@@ -643,18 +643,18 @@
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
   "inputs": [
     {
-      "indexed": true,
+      "type": "address",
       "name": "from",
-      "type": "address"
+      "indexed": true
     },
     {
-      "indexed": true,
+      "type": "address",
       "name": "to",
-      "type": "address"
+      "indexed": true
     },
     {
-      "name": "value",
-      "type": "uint256"
+      "type": "uint256",
+      "name": "value"
     }
   ],
   "outputs": []

@@ -1,3 +1,4 @@
 makeClass argc: 5 [1:-n] [2:qblocks] [3:--run] [4:function] 
 makeClass -n qblocks --run function 
 Would run class definition file: function (not run, testing)
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        

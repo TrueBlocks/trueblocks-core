@@ -28,10 +28,10 @@ extern const char* STR_ADDR_PROCESSOR;
 extern const char* STR_STRING_PROCESSOR;
 extern const char* STR_ENUM_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
-uint32_t nFiles = 0, nChanges = 0;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
     CCommandOption::registerClass();
+    counter = CCounter();  // reset
 
     string_q contents = asciiFileToString("../src/other/build_assets/option-master-list.csv");
 
@@ -317,10 +317,11 @@ bool COptions::handle_options(void) {
     }
 
     if (test) {
-        nChanges = 0;
+        counter.nProcessed = 0;
         LOG_WARN("Testing only - no files written");
     }
-    LOG_INFO("makeClass --options: processed ", nFiles, " files (changed ", nChanges, ").", string_q(50, ' '));
+    LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
+             counter.nProcessed, ").", string_q(40, ' '));
 
     return true;
 }
@@ -395,11 +396,11 @@ bool COptions::writeCode(const string_q& fn, const string_q& code, const string_
         converted = replaceCode(converted, "CODE_DECLARE", code);
     }
     cerr << bBlue << "Processing " << cOff << fn << " ";
-    nFiles++;
+    counter.nVisited++;
     if (converted != orig) {
         cerr << cGreen << "wrote " << converted.size() << " bytes..." << cOff << endl;
         stringToAsciiFile(fn, converted);
-        nChanges++;
+        counter.nProcessed++;
         return true;
     }
     cerr << cTeal << "no changes..." << cOff << "\r";
