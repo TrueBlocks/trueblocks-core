@@ -414,7 +414,7 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     if (orig != codeOut) {
         // Do the actual writing of the data only if we're not testing or the user has told us not to
         if (!testing) {
-            LOG_INFO("Writing: ", fileName);
+            LOG_INFO("Writing: ", cTeal, fileName, cOff);
             stringToAsciiFile(fileName, codeOut);
         } else {
             LOG8("Not writing: ", fileName);

@@ -143,18 +143,36 @@ Show the copy
 }
 
 
-Show a status
---------------------------------------------------------------------------------
-{
-  "caches": []
-}
-
-
 Show a cache
 --------------------------------------------------------------------------------
 {
-  "nFiles": 0,
-  "nFolders": 0,
-  "sizeInBytes": 0
+  "type": "type",
+  "path": "path",
+  "nFiles": 12,
+  "nFolders": 13,
+  "sizeInBytes": 14,
+  "valid_counts": true
+}
+
+
+Show a status
+--------------------------------------------------------------------------------
+{
+  "client_version": "client_version",
+  "trueblocks_version": "trueblocks_version",
+  "rpc_provider": "rpc_provider",
+  "api_provider": "api_provider",
+  "balance_provider": "balance_provider",
+  "host": "host",
+  "caches": [
+    {
+      "type": "type",
+      "path": "path",
+      "nFiles": 12,
+      "nFolders": 13,
+      "sizeInBytes": 14,
+      "valid_counts": true
+    }
+  ]
 }
 

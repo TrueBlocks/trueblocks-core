@@ -76,6 +76,8 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str_t(is_array);
             if (fieldName % "is_object")
                 return bool_2_Str_t(is_object);
+            if (fieldName % "is_builtin")
+                return bool_2_Str_t(is_builtin);
             break;
         case 'n':
             if (fieldName % "name")
@@ -126,6 +128,10 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             if (fieldName % "is_object") {
                 is_object = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_builtin") {
+                is_builtin = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -186,6 +192,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> is_pointer;
     archive >> is_array;
     archive >> is_object;
+    archive >> is_builtin;
     finishParse();
     return true;
 }
@@ -205,6 +212,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << is_pointer;
     archive << is_array;
     archive << is_object;
+    archive << is_builtin;
 
     return true;
 }
@@ -249,6 +257,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_pointer", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_builtin", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -312,7 +321,8 @@ const char* STR_DISPLAY_PARAMETER =
     "[{INDEXED}]\t"
     "[{IS_POINTER}]\t"
     "[{IS_ARRAY}]\t"
-    "[{IS_OBJECT}]";
+    "[{IS_OBJECT}]\t"
+    "[{IS_BUILTIN}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -320,7 +330,9 @@ const char* STR_DISPLAY_PARAMETER =
 CParameter::CParameter(string_q& textIn) {
     initialize();
 
-    replaceAll(textIn, "address[]", "CAddressArray");
+    replaceAll(textIn, " *", "* ");  // cleanup
+    replaceAll(textIn, "address[]", "CAddressArray");  // cleanup
+
     if (contains(textIn, "nowrite")) {
         noWrite = true;
         noWrite_min = contains(textIn, "-min");
@@ -334,10 +346,19 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = nextTokenClear(textIn, ' ');
-    is_pointer = contains(textIn, "*");
-    is_array = contains(textIn, "Array");
-    is_object = !is_array && startsWith(type, 'C');
-    name = substitute(textIn, "*", "");
+    is_pointer = contains(type, "*") || contains(type, "Ptr");
+    is_array = contains(type, "Array");
+    is_object = startsWith(type, 'C');
+    CStringArray builtins = {
+        "CStringArray", "CBlockNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
+    };
+    for (auto b : builtins)
+        if (type == b)
+            is_builtin = true;
+
+    type = substitute(type, "*", "");
+    name = textIn;
+
 }
 
 //-----------------------------------------------------------------------

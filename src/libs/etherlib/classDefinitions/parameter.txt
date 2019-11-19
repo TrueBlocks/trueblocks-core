@@ -1,5 +1,5 @@
 [settings]
 class = CParameter
-fields = string type|string name|string str_default|string value|sbool indexed|sbool is_pointer|sbool is_array|sbool is_object
+fields = string type|string name|string str_default|string value|sbool indexed|sbool is_pointer|sbool is_array|sbool is_object|sbool is_builtin
 includes = utillib.h
-display_str = type, name, str_default, value, indexed, is_pointer, is_array, is_object
+display_str = type, name, str_default, value, indexed, is_pointer, is_array, is_object, is_builtin

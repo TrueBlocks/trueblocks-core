@@ -1335,7 +1335,7 @@ const string_q defHide =
     "|CTraceAction: init"
     "|CTraceResult: code"
     "|CFunction: constant, payable, signature, encoding, type, articulate_str"
-    "|CParameter: type, indexed, is_pointer, is_array, is_object";
+    "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin";
 
 const string_q defShow =
     "CTransaction: gasCost, articulatedTx, traces, isError, date, ether"

@@ -14,37 +14,20 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns) {
+bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& ns) {
     //------------------------------------------------------------------------------------------------
-    if (!toml.getConfigBool("settings", "enabled", true))
+    if (toml.getConfigBool("settings", "disabled", false)) {
+        if (verbose)
+            cerr << "    disabled class not processed " << classDefIn.short_fn << "\n";
         return true;
+    }
 
     //------------------------------------------------------------------------------------------------
     counter.nVisited++;
 
-    //------------------------------------------------------------------------------------------------
-    string_q class_name = toml.getConfigStr("settings", "class", "");
-    string_q base_class = toml.getConfigStr("settings", "base_class", "CBaseNode");
-    string_q fields = toml.getConfigStr("settings", "fields", "");
-    string_q head_includes = toml.getConfigStr("settings", "includes", "");
-    string_q src_includes = toml.getConfigStr("settings", "cpp_includes", "");
-    string_q display_str = toml.getConfigStr("settings", "display_str", "");
-    string_q sort_str = toml.getConfigStr("settings", "sort", "");
-    string_q eq_str = toml.getConfigStr("settings", "equals", "");
-    string_q scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
-    bool serializable = toml.getConfigBool("settings", "serializable", false);
-    bool use_export = toml.getConfigBool("settings", "use_export", false);
-
-    //------------------------------------------------------------------------------------------------
-    string_q class_base = toProper(extract(class_name, 1));
-    string_q class_upper = toUpper(class_base);
-
-    //------------------------------------------------------------------------------------------------
-    string_q base_name = extract(class_name, 1);
-    string_q base_proper = toProper(base_name);
-    string_q base_lower = toLower(base_name);
-    string_q base_upper = toUpper(base_name);
-    string_q base_base = toProper(extract(base_class, 1));
+    CClassDefinition classDef(toml);
+    classDef.short_fn = classDefIn.short_fn;
+    classDef.input_path = classDefIn.input_path;
 
     //------------------------------------------------------------------------------------------------
     ostringstream declare_stream, clear_stream, copy_stream;
@@ -58,18 +41,18 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
 
     //------------------------------------------------------------------------------------------------
     CStringArray h_incs;
-    explode(h_incs, head_includes, '|');
+    explode(h_incs, classDef.head_includes, '|');
     for (auto inc : h_incs)
         head_inc_stream << ("#include \"" + inc + "\"\n");
 
     //------------------------------------------------------------------------------------------------
     CStringArray c_inc;
-    explode(c_inc, src_includes, '|');
+    explode(c_inc, classDef.src_includes, '|');
     for (auto inc : c_inc)
         src_inc_stream << ("#include \"" + inc + "\"\n");
 
     //------------------------------------------------------------------------------------------------
-    bool isBase = (base_class == "CBaseNode");
+    bool isBase = (classDef.base_class == "CBaseNode");
     // clang-format off
     string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
     string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
@@ -78,14 +61,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     // clang-format on
 
     //------------------------------------------------------------------------------------------------
-    CParameterArray fieldArray;
-    explode(fieldArray, fields, '|');
-#if 0
-    for (auto field : fieldArray) {
-        cout << toml.getFilename() << "\t" << field.Format(cleanFmt(STR_DISPLAY_PARAMETER, exportFmt)) << endl;
-    }
-#else
-    for (auto fld : fieldArray) {
+    for (auto fld : classDef.fieldArray) {
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
         string_q regAddFmt = "`ADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
@@ -126,7 +102,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT"; }
         // clang-format on
 
-        if (contains(fld.type, "Array")) {
+        if (fld.is_array) {
             setFmt = "\t[{NAME}].clear();\n";
             if (contains(fld.type, "Address")) {
                 regType = "T_ADDRESS | TS_ARRAY";
@@ -137,9 +113,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
             }
         }
 
-        if (contains(fld.type, "CStringArray") || contains(fld.type, "CBlockNumArray") ||
-            contains(fld.type, "CAddressArray") || contains(fld.type, "CBigUintArray") ||
-            contains(fld.type, "CTopicArray")) {
+        if (fld.is_builtin) {
             fieldGetStr += STR_GETSTR_CODE_FIELD;
             replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
             if (fld.name == "topics") {
@@ -152,12 +126,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
                 replaceAll(fieldGetStr, "THING", "");
             }
 
-        } else if (fld.is_object && !fld.is_pointer) {
+        } else if (fld.is_object) {
             fieldGetObj += STR_GETOBJ_CODE_FIELD;
-            if (!contains(fld.type, "Array")) {
+            if (!fld.is_array) {
                 replace(fieldGetObj, " && index < [{FIELD}].size()", "");
                 replace(fieldGetObj, "[index]", "");
             }
+            replace(fieldGetObj, "[PTR]", (fld.is_pointer ? "" : "&"));
             replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
         }
 
@@ -167,11 +142,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
         replace(setFmt, "[{DEFT}]", fld.str_default.empty() ? "earliestDate" : fld.str_default);
         replace(setFmt, "[{DEFP}]", fld.str_default.empty() ? "NULL" : fld.str_default);
 
-        if (fld.is_pointer)
+        if (fld.is_pointer && !fld.is_array)
             copyFmt =
                 "`if ([++SHORT++.{NAME}]) {\n``[{NAME}] = new [{TYPE}];\n``*[{NAME}] = *[++SHORT++.{NAME}];\n`}\n";
 
-        if (!fld.is_pointer)
+        if (!fld.is_pointer || fld.is_array)
             replace(declareFmt, "*", "");
 
         add_field_stream << substitute(substitute(fld.Format(regAddFmt), "T_TEXT", regType), "CL_NM", "[{CLASS_NAME}]");
@@ -187,7 +162,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
             copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
                                       "[{CLASS_NAME}]");
             defaults_stream << fld.Format(setFmt);
-            clear_stream << (fld.is_pointer ? fld.Format(ptrClearFmt) : "");
+            clear_stream << ((fld.is_pointer && !fld.is_array) ? fld.Format(ptrClearFmt) : "");
             ar_read_stream << substitute(fld.Format(fld.is_pointer ? STR_PRTREADFMT : STR_READFMT), "`archive",
                                          (fld.noWrite ? "`// archive" : "`archive"));
             ar_write_stream << substitute(fld.Format(fld.is_pointer ? STR_PTRWRITEFMT : STR_WRITEFMT), "`archive",
@@ -202,20 +177,20 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     }
 
     //------------------------------------------------------------------------------------------------
-    string_q operators_decl = string_q(serializable ? STR_OPERATOR_DECL : "\n");
-    string_q operators_impl = string_q(serializable ? STR_OPERATOR_IMPL : "\n");
+    string_q operators_decl = string_q(classDef.serializable ? STR_OPERATOR_DECL : "\n");
+    string_q operators_impl = string_q(classDef.serializable ? STR_OPERATOR_IMPL : "\n");
 
     //------------------------------------------------------------------------------------------------
-    sort_str = substitute(sort_str, "|", "\n```");
-    eq_str = substitute(eq_str, "|", "\n```");
+    classDef.sort_str = substitute(classDef.sort_str, "|", "\n```");
+    classDef.eq_str = substitute(classDef.eq_str, "|", "\n```");
 
     //------------------------------------------------------------------------------------------------
-    if (display_str.empty()) {
-        display_str = " \"\"";
+    if (classDef.display_str.empty()) {
+        classDef.display_str = " \"\"";
     } else {
-        display_str = "\n`\"[{" + trim(toUpper(display_str)) + "}]\"";
-        replaceAll(display_str, " ", "");
-        replaceAll(display_str, ",", "}][PTAB]\"\n`\"[{");
+        classDef.display_str = "\n`\"[{" + trim(toUpper(classDef.display_str)) + "}]\"";
+        replaceAll(classDef.display_str, " ", "");
+        replaceAll(classDef.display_str, ",", "}][PTAB]\"\n`\"[{");
     }
 
     //------------------------------------------------------------------------------------------------
@@ -243,22 +218,22 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     replaceAll(headSource, "[INIT_DEFAULTS]", defaults_stream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{BASE_CLASS}]", base_class);
-    replaceAll(headSource, "[{LONG}]", base_lower);
-    replaceAll(headSource, "[{SHORT}]", short2(base_lower));
-    replaceAll(headSource, "[{SHORT3}]", short3(base_lower));
-    replaceAll(headSource, "[{BASE_CLASS}]", base_class);
-    replaceAll(headSource, "[{BASE_BASE}]", base_base);
-    replaceAll(headSource, "[{BASE}]", base_upper);
-    replaceAll(headSource, "[{PROPER}]", base_proper);
-    replaceAll(headSource, "[{CLASS_NAME}]", class_name);
-    replaceAll(headSource, "[{CLASS_BASE}]", class_base);
-    replaceAll(headSource, "[{CLASS_UPPER}]", class_upper);
+    replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
+    replaceAll(headSource, "[{LONG}]", classDef.base_lower);
+    replaceAll(headSource, "[{SHORT}]", short2(classDef.base_lower));
+    replaceAll(headSource, "[{SHORT3}]", short3(classDef.base_lower));
+    replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
+    replaceAll(headSource, "[{BASE_BASE}]", classDef.base_base);
+    replaceAll(headSource, "[{BASE}]", classDef.base_upper);
+    replaceAll(headSource, "[{PROPER}]", classDef.base_proper);
+    replaceAll(headSource, "[{CLASS_NAME}]", classDef.class_name);
+    replaceAll(headSource, "[{CLASS_BASE}]", classDef.class_base);
+    replaceAll(headSource, "[{CLASS_UPPER}]", classDef.class_upper);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(headSource, "[{SORT_COMMENT}]", (sort_str.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
-    replaceAll(headSource, "[{EQUAL_COMMENT}]", (eq_str.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
-    replaceAll(headSource, "[{SORT_CODE}]", (sort_str.length() ? sort_str : "true"));
-    replaceAll(headSource, "[{EQUAL_CODE}]", (eq_str.length() ? eq_str : "false"));
+    replaceAll(headSource, "[{SORT_COMMENT}]", (classDef.sort_str.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
+    replaceAll(headSource, "[{EQUAL_COMMENT}]", (classDef.eq_str.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
+    replaceAll(headSource, "[{SORT_CODE}]", (classDef.sort_str.length() ? classDef.sort_str : "true"));
+    replaceAll(headSource, "[{EQUAL_CODE}]", (classDef.eq_str.length() ? classDef.eq_str : "false"));
     replaceAll(headSource, "[{NAMESPACE1}]", (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]", (ns.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(headSource, "public:\n\n  public:", "public:");
@@ -283,9 +258,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     string_q srcSource = asciiFileToString(configPath("makeClass/blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
-    if (use_export)
+    if (classDef.use_export)
         replace(srcSource, "ctx << toJson();", "doExport(ctx);");
-    if ((startsWith(class_name, "CNew") || class_name == "CPriceQuote") && !contains(getCWD(), "parse"))
+    if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&
+        !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]", fieldGetObj);
     replaceAll(srcSource, "[{GET_STR}]", fieldGetStr);
@@ -297,28 +273,28 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
     replaceAll(srcSource, "[HIDE_FIELDS]", hide_field_stream.str());
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(get_case_stream.str()));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(get_case_stream.str()));
-    replaceAll(srcSource, "[SCOPE_CODE]", scope_str);
+    replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
     replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]", parReg);
     replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n", parSet);
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
-    replaceAll(srcSource, "[{BASE_CLASS}]", base_class);
-    replaceAll(srcSource, "[{LONG}]", base_lower);
-    replaceAll(srcSource, "[{SHORT}]", short2(base_lower));
-    replaceAll(srcSource, "[{SHORT3}]", short3(base_lower));
-    replaceAll(srcSource, "[{BASE_CLASS}]", base_class);
-    replaceAll(srcSource, "[{BASE_BASE}]", base_base);
-    replaceAll(srcSource, "[{BASE}]", base_upper);
-    replaceAll(srcSource, "[{PROPER}]", base_proper);
-    replaceAll(srcSource, "[{CLASS_NAME}]", class_name);
-    replaceAll(srcSource, "[{CLASS_BASE}]", class_base);
-    replaceAll(srcSource, "[{CLASS_UPPER}]", class_upper);
-    replaceAll(srcSource, "[{DISPLAY_FIELDS}]", display_str);
+    replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
+    replaceAll(srcSource, "[{LONG}]", classDef.base_lower);
+    replaceAll(srcSource, "[{SHORT}]", short2(classDef.base_lower));
+    replaceAll(srcSource, "[{SHORT3}]", short3(classDef.base_lower));
+    replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
+    replaceAll(srcSource, "[{BASE_BASE}]", classDef.base_base);
+    replaceAll(srcSource, "[{BASE}]", classDef.base_upper);
+    replaceAll(srcSource, "[{PROPER}]", classDef.base_proper);
+    replaceAll(srcSource, "[{CLASS_NAME}]", classDef.class_name);
+    replaceAll(srcSource, "[{CLASS_BASE}]", classDef.class_base);
+    replaceAll(srcSource, "[{CLASS_UPPER}]", classDef.class_upper);
+    replaceAll(srcSource, "[{DISPLAY_FIELDS}]", classDef.display_str);
     replaceAll(srcSource, "[{NAMESPACE1}]", (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]", (ns.empty() ? "" : "}  // namespace qblocks\n"));
-    replaceAll(srcSource, "[{FN}]", classDef.className);
+    replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     replaceAll(srcSource, "`````", string_q(5, '\t'));
     replaceAll(srcSource, "````", string_q(4, '\t'));
     replaceAll(srcSource, "```", string_q(3, '\t'));
@@ -334,7 +310,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDef, co
             counter.nProcessed++;
         }
     }
-#endif
 
     return true;
 }
@@ -725,7 +700,7 @@ const char* STR_GETOBJ_HEAD =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE_FIELD =
     "`if (fieldName % \"[{FIELD}]\" && index < [{FIELD}].size())\n"
-    "``return &[{FIELD}][index];\n";
+    "``return [PTR][{FIELD}][index];\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE =

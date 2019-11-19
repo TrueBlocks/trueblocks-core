@@ -104,13 +104,26 @@ int main(int argc, const char* argv[]) {
         cout << endl << "Show the copy" << endl << string_q(80, '-') << endl;
         cout << copy << endl;
 
-        cout << endl << "Show a status" << endl << string_q(80, '-') << endl;
-        CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
-        cout << status << endl;
-
         cout << endl << "Show a cache" << endl << string_q(80, '-') << endl;
         CCache cache;  // same with cache
+        cache.type = "type";
+        cache.path = "path";
+        cache.nFiles = 12;
+        cache. nFolders = 13;
+        cache.sizeInBytes = 14;
+        cache.valid_counts = true;
         cout << cache << endl;
+
+        cout << endl << "Show a status" << endl << string_q(80, '-') << endl;
+        CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
+        status.client_version = "client_version";
+        status.trueblocks_version = "trueblocks_version";
+        status.rpc_provider = "rpc_provider";
+        status.api_provider = "api_provider";
+        status.balance_provider = "balance_provider";
+        status.host = "host";
+        status.caches.push_back(&cache);
+        cout << status << endl;
 
         ::remove("./file.bin");
         ::remove("./copy.bin");

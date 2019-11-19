@@ -23,37 +23,57 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPerson : public CBaseNode {
+class CClassDefinition : public CBaseNode {
   public:
-    string_q name;
-    uint64_t age;
-    CPerson* next;
+    string_q short_fn;
+    string_q input_path;
+    string_q class_name;
+    string_q class_base;
+    string_q class_upper;
+    string_q base_class;
+    string_q base_name;
+    string_q base_proper;
+    string_q base_lower;
+    string_q base_upper;
+    string_q base_base;
+    string_q head_includes;
+    string_q src_includes;
+    string_q field_str;
+    string_q display_str;
+    string_q sort_str;
+    string_q eq_str;
+    string_q scope_str;
+    bool serializable;
+    bool use_export;
+    CParameterArray fieldArray;
 
   public:
-    CPerson(void);
-    CPerson(const CPerson& pe);
-    virtual ~CPerson(void);
-    CPerson& operator=(const CPerson& pe);
+    CClassDefinition(void);
+    CClassDefinition(const CClassDefinition& cl);
+    virtual ~CClassDefinition(void);
+    CClassDefinition& operator=(const CClassDefinition& cl);
 
-    DECLARE_NODE(CPerson);
+    DECLARE_NODE(CClassDefinition);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) {
+    string_q outputPath(const string_q& t) const {
+        return substitute(substitute(input_path, "classDefinitions/", ""), ".txt", t);
     }
+    explicit CClassDefinition(const CToml& toml);
     // EXISTING_CODE
-    bool operator==(const CPerson& item) const;
-    bool operator!=(const CPerson& item) const {
+    bool operator==(const CClassDefinition& item) const;
+    bool operator!=(const CClassDefinition& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CPerson& v1, const CPerson& v2);
-    friend ostream& operator<<(ostream& os, const CPerson& item);
+    friend bool operator<(const CClassDefinition& v1, const CClassDefinition& v2);
+    friend ostream& operator<<(ostream& os, const CClassDefinition& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPerson& pe);
+    void duplicate(const CClassDefinition& cl);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -61,76 +81,106 @@ class CPerson : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPerson::CPerson(void) {
+inline CClassDefinition::CClassDefinition(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPerson::CPerson(const CPerson& pe) {
+inline CClassDefinition::CClassDefinition(const CClassDefinition& cl) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pe);
+    duplicate(cl);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPerson::~CPerson(void) {
+inline CClassDefinition::~CClassDefinition(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::clear(void) {
-    if (next)
-        delete next;
-    next = NULL;
+inline void CClassDefinition::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::initialize(void) {
+inline void CClassDefinition::initialize(void) {
     CBaseNode::initialize();
 
-    name = "";
-    age = 0;
-    next = NULL;
+    short_fn = "";
+    input_path = "";
+    class_name = "";
+    class_base = "";
+    class_upper = "";
+    base_class = "";
+    base_name = "";
+    base_proper = "";
+    base_lower = "";
+    base_upper = "";
+    base_base = "";
+    head_includes = "";
+    src_includes = "";
+    field_str = "";
+    display_str = "";
+    sort_str = "";
+    eq_str = "";
+    scope_str = "";
+    serializable = 0;
+    use_export = 0;
+    fieldArray.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPerson::duplicate(const CPerson& pe) {
+inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     clear();
-    CBaseNode::duplicate(pe);
+    CBaseNode::duplicate(cl);
 
-    name = pe.name;
-    age = pe.age;
-    if (pe.next) {
-        next = new CPerson;
-        *next = *pe.next;
-    }
+    short_fn = cl.short_fn;
+    input_path = cl.input_path;
+    class_name = cl.class_name;
+    class_base = cl.class_base;
+    class_upper = cl.class_upper;
+    base_class = cl.base_class;
+    base_name = cl.base_name;
+    base_proper = cl.base_proper;
+    base_lower = cl.base_lower;
+    base_upper = cl.base_upper;
+    base_base = cl.base_base;
+    head_includes = cl.head_includes;
+    src_includes = cl.src_includes;
+    field_str = cl.field_str;
+    display_str = cl.display_str;
+    sort_str = cl.sort_str;
+    eq_str = cl.eq_str;
+    scope_str = cl.scope_str;
+    serializable = cl.serializable;
+    use_export = cl.use_export;
+    fieldArray = cl.fieldArray;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPerson& CPerson::operator=(const CPerson& pe) {
-    duplicate(pe);
+inline CClassDefinition& CClassDefinition::operator=(const CClassDefinition& cl) {
+    duplicate(cl);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPerson::operator==(const CPerson& item) const {
+inline bool CClassDefinition::operator==(const CClassDefinition& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -138,7 +188,7 @@ inline bool CPerson::operator==(const CPerson& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPerson& v1, const CPerson& v2) {
+inline bool operator<(const CClassDefinition& v1, const CClassDefinition& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -146,12 +196,12 @@ inline bool operator<(const CPerson& v1, const CPerson& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPerson> CPersonArray;
-extern CArchive& operator>>(CArchive& archive, CPersonArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPersonArray& array);
+typedef vector<CClassDefinition> CClassDefinitionArray;
+extern CArchive& operator>>(CArchive& archive, CClassDefinitionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CClassDefinitionArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PERSON;
+extern const char* STR_DISPLAY_CLASSDEFINITION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

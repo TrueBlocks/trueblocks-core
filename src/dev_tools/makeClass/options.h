@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 #include "commandoption.h"
+#include "classdefinition.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -26,16 +27,6 @@
 #define ERR_NOFILTERMATCH 5
 #define ERR_NEEDONECLASS 6
 // END_ERROR_DEFINES
-
-//-------------------------------------------------------------------
-class CClassDefinition {
-  public:
-    string_q className;
-    string_q inputPath;
-    string_q outputPath(const string_q& t) const {
-        return substitute(substitute(inputPath, "classDefinitions/", ""), ".txt", t);
-    }
-};
 
 //-------------------------------------------------------------------
 class CCounter {
@@ -48,7 +39,11 @@ class CCounter {
     }
 };
 
-typedef enum { NONE = 0, RUN = (1 << 1), EDIT = (1 << 2), LIST = (1 << 3) } runmode_t;
+typedef enum {
+    NONE = 0,
+    RUN = (1 << 1),
+    EDIT = (1 << 2),
+} runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -60,7 +55,7 @@ class COptions : public COptionsBase {
     // END_CODE_DECLARE
 
     runmode_t mode;
-    vector<CClassDefinition> classDefs;
+    CClassDefinitionArray classDefs;
     CToml classFile;
     ostringstream warnings;
     CCounter counter;

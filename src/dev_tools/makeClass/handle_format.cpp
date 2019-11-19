@@ -21,14 +21,13 @@ bool COptions::handle_format(void) {
     counter.is_counting = false;
     forEveryFileInFolder("./", formatFiles, this);
     LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
-             counter.nProcessed, ").", string_q(40, ' '));
+             counter.nProcessed, ").", string_q(40, ' '), "\n");
 
     CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
-
-    return 0;
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -67,7 +66,7 @@ bool formatFiles(const string_q& path, void* data) {
                     opts->counter.nProcessed++;
                     copyFile(resPath, fullPath);
                     ostringstream os;
-                    os << "Formatted: ";
+                    os << "Formatting: ";
                     os << cTeal << path << cOff << string_q(50, ' ');
                     LOG_INFO(os.str());
 

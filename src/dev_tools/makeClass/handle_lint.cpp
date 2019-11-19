@@ -21,14 +21,13 @@ bool COptions::handle_lint(void) {
     counter.is_counting = false;
     forEveryFileInFolder("./", lintFiles, this);
     LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
-             " lints).", string_q(40, ' '));
+             " lints).", string_q(40, ' '), "\n");
 
     CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
-
-    return 0;
+    return true;
 }
 
 //--------------------------------------------------------------------------------

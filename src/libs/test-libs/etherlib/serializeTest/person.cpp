@@ -269,6 +269,13 @@ ostream& operator<<(ostream& os, const CPerson& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode* CPerson::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "next")
+        return next;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_PERSON = "";
 
 //---------------------------------------------------------------------------

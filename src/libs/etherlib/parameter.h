@@ -47,6 +47,7 @@ class CParameter : public CBaseNode {
     bool is_pointer;
     bool is_array;
     bool is_object;
+    bool is_builtin;
 
   public:
     CParameter(void);
@@ -130,6 +131,7 @@ inline void CParameter::initialize(void) {
     is_pointer = 0;
     is_array = 0;
     is_object = 0;
+    is_builtin = 0;
 
     // EXISTING_CODE
     noWrite = false;
@@ -150,6 +152,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
     is_pointer = pa.is_pointer;
     is_array = pa.is_array;
     is_object = pa.is_object;
+    is_builtin = pa.is_builtin;
 
     // EXISTING_CODE
     noWrite = pa.noWrite;
