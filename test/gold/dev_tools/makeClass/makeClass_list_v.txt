@@ -3,7 +3,6 @@ makeClass --dump function --verbose
 {
   "class_name": "CFunction",
   "class_base": "Function",
-  "class_upper": "FUNCTION",
   "base_class": "CBaseNode",
   "base_name": "Function",
   "base_proper": "Function",

@@ -84,8 +84,11 @@ string_q CLeaf::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
-            if (fieldName % "counter")
+            if (fieldName % "counter") {
                 return uint_2_Str(counter);
+            }
+            break;
+        default:
             break;
     }
 

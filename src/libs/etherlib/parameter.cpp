@@ -68,32 +68,49 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "indexed")
+            if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
-            if (fieldName % "is_pointer")
+            }
+            if (fieldName % "is_pointer") {
                 return bool_2_Str_t(is_pointer);
-            if (fieldName % "is_array")
+            }
+            if (fieldName % "is_array") {
                 return bool_2_Str_t(is_array);
-            if (fieldName % "is_object")
+            }
+            if (fieldName % "is_object") {
                 return bool_2_Str_t(is_object);
-            if (fieldName % "is_builtin")
+            }
+            if (fieldName % "is_builtin") {
                 return bool_2_Str_t(is_builtin);
+            }
+            if (fieldName % "is_minimal") {
+                return bool_2_Str_t(is_minimal);
+            }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
+            if (fieldName % "no_write") {
+                return bool_2_Str_t(no_write);
+            }
             break;
         case 's':
-            if (fieldName % "str_default")
+            if (fieldName % "str_default") {
                 return str_default;
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
             break;
         case 'v':
-            if (fieldName % "value")
+            if (fieldName % "value") {
                 return value;
+            }
+            break;
+        default:
             break;
     }
 
@@ -134,10 +151,18 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 is_builtin = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "is_minimal") {
+                is_minimal = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "name") {
                 name = fieldValue;
+                return true;
+            }
+            if (fieldName % "no_write") {
+                no_write = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -193,6 +218,8 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> is_array;
     archive >> is_object;
     archive >> is_builtin;
+    archive >> no_write;
+    archive >> is_minimal;
     finishParse();
     return true;
 }
@@ -213,6 +240,8 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << is_array;
     archive << is_object;
     archive << is_builtin;
+    archive << no_write;
+    archive << is_minimal;
 
     return true;
 }
@@ -258,6 +287,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_builtin", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_minimal", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -322,7 +353,9 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_POINTER}]\t"
     "[{IS_ARRAY}]\t"
     "[{IS_OBJECT}]\t"
-    "[{IS_BUILTIN}]";
+    "[{IS_BUILTIN}]\t"
+    "[{NO_WRITE}]\t"
+    "[{IS_MINIMAL}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -330,12 +363,12 @@ const char* STR_DISPLAY_PARAMETER =
 CParameter::CParameter(string_q& textIn) {
     initialize();
 
-    replaceAll(textIn, " *", "* ");  // cleanup
+    replaceAll(textIn, " *", "* ");                    // cleanup
     replaceAll(textIn, "address[]", "CAddressArray");  // cleanup
 
     if (contains(textIn, "nowrite")) {
-        noWrite = true;
-        noWrite_min = contains(textIn, "-min");
+        no_write = true;
+        is_minimal = contains(textIn, "-min");
         replace(textIn, " (nowrite)", "");
         replace(textIn, " (nowrite-min)", "");
     }
@@ -358,7 +391,6 @@ CParameter::CParameter(string_q& textIn) {
 
     type = substitute(type, "*", "");
     name = textIn;
-
 }
 
 //-----------------------------------------------------------------------

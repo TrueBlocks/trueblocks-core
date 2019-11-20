@@ -68,12 +68,16 @@ string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'p':
-            if (fieldName % "pair")
+            if (fieldName % "pair") {
                 return pair;
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

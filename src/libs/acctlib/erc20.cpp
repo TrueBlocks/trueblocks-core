@@ -68,12 +68,14 @@ string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'd':
-            if (fieldName % "decimals")
+            if (fieldName % "decimals") {
                 return uint_2_Str(decimals);
+            }
             break;
         case 'h':
             if (fieldName % "holders" || fieldName % "holdersCnt") {
@@ -91,16 +93,21 @@ string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "symbol")
+            if (fieldName % "symbol") {
                 return symbol;
+            }
             break;
         case 't':
-            if (fieldName % "totalSupply")
+            if (fieldName % "totalSupply") {
                 return wei_2_Str(totalSupply);
+            }
             break;
         case 'v':
-            if (fieldName % "version")
+            if (fieldName % "version") {
                 return version;
+            }
+            break;
+        default:
             break;
     }
 

@@ -68,8 +68,11 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

@@ -68,32 +68,42 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
-            if (fieldName % "accttype")
+            }
+            if (fieldName % "accttype") {
                 return accttype;
+            }
             break;
         case 'b':
-            if (fieldName % "blockNumber")
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
-            if (fieldName % "balance")
+            }
+            if (fieldName % "balance") {
                 return bnu_2_Str(balance);
+            }
             break;
         case 'c':
-            if (fieldName % "code")
+            if (fieldName % "code") {
                 return code;
+            }
             break;
         case 'd':
-            if (fieldName % "deployed")
+            if (fieldName % "deployed") {
                 return uint_2_Str(deployed);
+            }
             break;
         case 'n':
-            if (fieldName % "nonce")
+            if (fieldName % "nonce") {
                 return uint_2_Str(nonce);
+            }
             break;
         case 's':
-            if (fieldName % "storage")
+            if (fieldName % "storage") {
                 return storage;
+            }
+            break;
+        default:
             break;
     }
 

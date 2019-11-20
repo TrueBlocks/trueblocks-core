@@ -68,16 +68,21 @@ string_q CApiSpec::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'h':
-            if (fieldName % "headers")
+            if (fieldName % "headers") {
                 return headers;
+            }
             break;
         case 'm':
-            if (fieldName % "method")
+            if (fieldName % "method") {
                 return method;
+            }
             break;
         case 'u':
-            if (fieldName % "uri")
+            if (fieldName % "uri") {
                 return uri;
+            }
+            break;
+        default:
             break;
     }
 

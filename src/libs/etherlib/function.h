@@ -118,9 +118,9 @@ inline void CFunction::initialize(void) {
 
     name = "";
     type = "";
-    anonymous = 0;
-    constant = 0;
-    payable = 0;
+    anonymous = false;
+    constant = false;
+    payable = false;
     signature = "";
     encoding = "";
     message = "";

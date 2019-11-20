@@ -68,18 +68,24 @@ string_q CBalanceDelta::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'b':
-            if (fieldName % "blockNumber")
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
-            if (fieldName % "balance")
+            }
+            if (fieldName % "balance") {
                 return wei_2_Str(balance);
+            }
             break;
         case 'd':
-            if (fieldName % "diff")
+            if (fieldName % "diff") {
                 return bni_2_Str(diff);
+            }
+            break;
+        default:
             break;
     }
 

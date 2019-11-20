@@ -68,17 +68,21 @@ string_q CPerson::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "age")
+            if (fieldName % "age") {
                 return uint_2_Str(age);
+            }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
             if (fieldName % "next") {
                 if (next)
                     return next->Format();
                 return "";
             }
+            break;
+        default:
             break;
     }
 
@@ -110,12 +114,13 @@ bool CPerson::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             if (fieldName % "next") {
-                clear();
-                next = new CPerson;
-                if (next) {
-                    string_q str = fieldValue;
-                    return next->parseJson3(str);
-                }
+                // This drops memory, so we comment it out for now
+                // clear();
+                // next = new CPerson;
+                // if (next) {
+                //     string_q str = fieldValue;
+                //     return next->parseJson3(str);
+                // }
                 return false;
             }
             break;

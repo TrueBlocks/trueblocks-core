@@ -68,16 +68,21 @@ string_q CDisplayApp::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'b':
-            if (fieldName % "blockNumber")
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
+            }
             break;
         case 't':
-            if (fieldName % "transactionIndex")
+            if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
+            }
+            break;
+        default:
             break;
     }
 

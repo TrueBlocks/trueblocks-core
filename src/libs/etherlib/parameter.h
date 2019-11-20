@@ -48,6 +48,8 @@ class CParameter : public CBaseNode {
     bool is_array;
     bool is_object;
     bool is_builtin;
+    bool no_write;
+    bool is_minimal;
 
   public:
     CParameter(void);
@@ -69,8 +71,6 @@ class CParameter : public CBaseNode {
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     bool fromDefinition(const string_q& input);
     bool isValid(void) const;
-    bool noWrite;
-    bool noWrite_min;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
     bool operator!=(const CParameter& item) const {
@@ -127,15 +127,15 @@ inline void CParameter::initialize(void) {
     name = "";
     str_default = "";
     value = "";
-    indexed = 0;
-    is_pointer = 0;
-    is_array = 0;
-    is_object = 0;
-    is_builtin = 0;
+    indexed = false;
+    is_pointer = false;
+    is_array = false;
+    is_object = false;
+    is_builtin = false;
+    no_write = false;
+    is_minimal = false;
 
     // EXISTING_CODE
-    noWrite = false;
-    noWrite_min = false;
     // EXISTING_CODE
 }
 
@@ -153,10 +153,10 @@ inline void CParameter::duplicate(const CParameter& pa) {
     is_array = pa.is_array;
     is_object = pa.is_object;
     is_builtin = pa.is_builtin;
+    no_write = pa.no_write;
+    is_minimal = pa.is_minimal;
 
     // EXISTING_CODE
-    noWrite = pa.noWrite;
-    noWrite_min = pa.noWrite_min;
     // EXISTING_CODE
 }
 

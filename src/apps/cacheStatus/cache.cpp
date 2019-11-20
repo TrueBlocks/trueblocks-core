@@ -68,26 +68,34 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if (fieldName % "nFiles")
+            if (fieldName % "nFiles") {
                 return uint_2_Str(nFiles);
-            if (fieldName % "nFolders")
+            }
+            if (fieldName % "nFolders") {
                 return uint_2_Str(nFolders);
+            }
             break;
         case 'p':
-            if (fieldName % "path")
+            if (fieldName % "path") {
                 return path;
+            }
             break;
         case 's':
-            if (fieldName % "sizeInBytes")
+            if (fieldName % "sizeInBytes") {
                 return uint_2_Str(sizeInBytes);
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
             break;
         case 'v':
-            if (fieldName % "valid_counts")
+            if (fieldName % "valid_counts") {
                 return bool_2_Str_t(valid_counts);
+            }
+            break;
+        default:
             break;
     }
 

@@ -68,16 +68,21 @@ string_q CRPCResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "id")
+            if (fieldName % "id") {
                 return id;
+            }
             break;
         case 'j':
-            if (fieldName % "jsonrpc")
+            if (fieldName % "jsonrpc") {
                 return jsonrpc;
+            }
             break;
         case 'r':
-            if (fieldName % "result")
+            if (fieldName % "result") {
                 return result;
+            }
+            break;
+        default:
             break;
     }
 

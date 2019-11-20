@@ -68,16 +68,19 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "anonymous")
+            if (fieldName % "anonymous") {
                 return bool_2_Str_t(anonymous);
+            }
             break;
         case 'c':
-            if (fieldName % "constant")
+            if (fieldName % "constant") {
                 return bool_2_Str_t(constant);
+            }
             break;
         case 'e':
-            if (fieldName % "encoding")
+            if (fieldName % "encoding") {
                 return encoding;
+            }
             break;
         case 'i':
             if (fieldName % "inputs" || fieldName % "inputsCnt") {
@@ -95,12 +98,14 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'm':
-            if (fieldName % "message")
+            if (fieldName % "message") {
                 return message;
+            }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
             break;
         case 'o':
             if (fieldName % "outputs" || fieldName % "outputsCnt") {
@@ -118,16 +123,21 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if (fieldName % "payable")
+            if (fieldName % "payable") {
                 return bool_2_Str_t(payable);
+            }
             break;
         case 's':
-            if (fieldName % "signature")
+            if (fieldName % "signature") {
                 return signature;
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

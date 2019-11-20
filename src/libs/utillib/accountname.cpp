@@ -68,60 +68,80 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return address;
+            }
             break;
         case 'c':
-            if (fieldName % "color")
+            if (fieldName % "color") {
                 return color;
+            }
             break;
         case 'd':
-            if (fieldName % "description")
+            if (fieldName % "description") {
                 return description;
+            }
             break;
         case 'f':
-            if (fieldName % "firstAppearance")
+            if (fieldName % "firstAppearance") {
                 return uint_2_Str(firstAppearance);
+            }
             break;
         case 'g':
-            if (fieldName % "group")
+            if (fieldName % "group") {
                 return group;
+            }
             break;
         case 'i':
-            if (fieldName % "is_contract")
+            if (fieldName % "is_contract") {
                 return bool_2_Str(is_contract);
-            if (fieldName % "is_private")
+            }
+            if (fieldName % "is_private") {
                 return bool_2_Str(is_private);
-            if (fieldName % "is_shared")
+            }
+            if (fieldName % "is_shared") {
                 return bool_2_Str(is_shared);
+            }
             break;
         case 'l':
-            if (fieldName % "logo")
+            if (fieldName % "logo") {
                 return logo;
-            if (fieldName % "latestAppearance")
+            }
+            if (fieldName % "latestAppearance") {
                 return uint_2_Str(latestAppearance);
-            if (fieldName % "lastExport")
+            }
+            if (fieldName % "lastExport") {
                 return uint_2_Str(lastExport);
+            }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
-            if (fieldName % "nRecords")
+            }
+            if (fieldName % "nRecords") {
                 return uint_2_Str(nRecords);
+            }
             break;
         case 'p':
-            if (fieldName % "path")
+            if (fieldName % "path") {
                 return path;
+            }
             break;
         case 's':
-            if (fieldName % "subgroup")
+            if (fieldName % "subgroup") {
                 return subgroup;
-            if (fieldName % "symbol")
+            }
+            if (fieldName % "symbol") {
                 return symbol;
-            if (fieldName % "source")
+            }
+            if (fieldName % "source") {
                 return source;
-            if (fieldName % "sizeInBytes")
+            }
+            if (fieldName % "sizeInBytes") {
                 return uint_2_Str(sizeInBytes);
+            }
+            break;
+        default:
             break;
     }
 

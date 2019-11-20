@@ -109,7 +109,7 @@ inline void CNewBlock::initialize(void) {
     miner = "";
     difficulty = 0;
     price = 0.0;
-    finalized = 0;
+    finalized = false;
     timestamp = 0;
     transactions.clear();
 

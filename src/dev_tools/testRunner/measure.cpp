@@ -68,34 +68,45 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "cmd")
+            if (fieldName % "cmd") {
                 return cmd;
+            }
             break;
         case 'd':
-            if (fieldName % "date")
+            if (fieldName % "date") {
                 return date;
+            }
             break;
         case 'e':
-            if (fieldName % "epoch")
+            if (fieldName % "epoch") {
                 return uint_2_Str(epoch);
+            }
             break;
         case 'g':
-            if (fieldName % "git_hash")
+            if (fieldName % "git_hash") {
                 return git_hash;
-            if (fieldName % "group")
+            }
+            if (fieldName % "group") {
                 return group;
+            }
             break;
         case 'n':
-            if (fieldName % "nTests")
+            if (fieldName % "nTests") {
                 return uint_2_Str(nTests);
-            if (fieldName % "nPassed")
+            }
+            if (fieldName % "nPassed") {
                 return uint_2_Str(nPassed);
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
-            if (fieldName % "totSecs")
+            }
+            if (fieldName % "totSecs") {
                 return double_2_Str(totSecs, 5);
+            }
+            break;
+        default:
             break;
     }
 

@@ -68,38 +68,50 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'f':
-            if (fieldName % "firstAppearance")
+            if (fieldName % "firstAppearance") {
                 return uint_2_Str(firstAppearance);
-            if (fieldName % "firstTs")
+            }
+            if (fieldName % "firstTs") {
                 return ts_2_Str(firstTs);
+            }
             break;
         case 'h':
-            if (fieldName % "hash")
+            if (fieldName % "hash") {
                 return hash;
+            }
             break;
         case 'l':
-            if (fieldName % "latestAppearance")
+            if (fieldName % "latestAppearance") {
                 return uint_2_Str(latestAppearance);
-            if (fieldName % "lastestTs")
+            }
+            if (fieldName % "lastestTs") {
                 return ts_2_Str(lastestTs);
+            }
             break;
         case 'n':
-            if (fieldName % "nAddresses")
+            if (fieldName % "nAddresses") {
                 return uint_2_Str(nAddresses);
-            if (fieldName % "nAppearances")
+            }
+            if (fieldName % "nAppearances") {
                 return uint_2_Str(nAppearances);
+            }
             break;
         case 'p':
-            if (fieldName % "path")
+            if (fieldName % "path") {
                 return path;
+            }
             break;
         case 's':
-            if (fieldName % "sizeInBytes")
+            if (fieldName % "sizeInBytes") {
                 return uint_2_Str(sizeInBytes);
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

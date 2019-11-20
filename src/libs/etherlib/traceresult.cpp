@@ -69,20 +69,26 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'c':
-            if (fieldName % "code")
+            if (fieldName % "code") {
                 return code;
+            }
             break;
         case 'g':
-            if (fieldName % "gasUsed")
+            if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
+            }
             break;
         case 'o':
-            if (fieldName % "output")
+            if (fieldName % "output") {
                 return output;
+            }
+            break;
+        default:
             break;
     }
 

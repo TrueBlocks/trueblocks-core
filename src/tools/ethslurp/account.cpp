@@ -70,12 +70,14 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "addr")
+            if (fieldName % "addr") {
                 return addr_2_Str(addr);
+            }
             break;
         case 'l':
-            if (fieldName % "latestPage")
+            if (fieldName % "latestPage") {
                 return uint_2_Str(latestPage);
+            }
             if (fieldName % "latestTx") {
                 if (latestTx == CTransaction())
                     return "";
@@ -97,6 +99,8 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            break;
+        default:
             break;
     }
 

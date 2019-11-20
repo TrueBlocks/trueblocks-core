@@ -55,6 +55,8 @@ class CTreeRoot : public CBaseNode {
 
     DECLARE_NODE(CTreeRoot);
 
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+
     // EXISTING_CODE
     string_q at(const string_q& _key) const;
     void insert(const string_q& _key, const string_q& _value);

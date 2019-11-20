@@ -77,42 +77,54 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "blockHash")
+            if (fieldName % "blockHash") {
                 return hash_2_Str(blockHash);
-            if (fieldName % "blockNumber")
+            }
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
+            }
             break;
         case 'c':
-            if (fieldName % "compressedTx")
+            if (fieldName % "compressedTx") {
                 return compressedTx;
+            }
             break;
         case 'f':
-            if (fieldName % "from")
+            if (fieldName % "from") {
                 return addr_2_Str(from);
-            if (fieldName % "finalized")
+            }
+            if (fieldName % "finalized") {
                 return bool_2_Str_t(finalized);
+            }
             break;
         case 'g':
-            if (fieldName % "gas")
+            if (fieldName % "gas") {
                 return gas_2_Str(gas);
-            if (fieldName % "gasPrice")
+            }
+            if (fieldName % "gasPrice") {
                 return gas_2_Str(gasPrice);
+            }
             break;
         case 'h':
-            if (fieldName % "hash")
+            if (fieldName % "hash") {
                 return hash_2_Str(hash);
+            }
             break;
         case 'i':
-            if (fieldName % "input")
+            if (fieldName % "input") {
                 return input;
-            if (fieldName % "isError")
+            }
+            if (fieldName % "isError") {
                 return uint_2_Str(isError);
-            if (fieldName % "isInternal")
+            }
+            if (fieldName % "isInternal") {
                 return uint_2_Str(isInternal);
+            }
             break;
         case 'n':
-            if (fieldName % "nonce")
+            if (fieldName % "nonce") {
                 return uint_2_Str(nonce);
+            }
             break;
         case 'r':
             if (fieldName % "receipt") {
@@ -123,12 +135,15 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if (fieldName % "transactionIndex")
+            if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
-            if (fieldName % "timestamp")
+            }
+            if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
-            if (fieldName % "to")
+            }
+            if (fieldName % "to") {
                 return addr_2_Str(to);
+            }
             if (fieldName % "traces" || fieldName % "tracesCnt") {
                 size_t cnt = traces.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -144,8 +159,11 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'v':
-            if (fieldName % "value")
+            if (fieldName % "value") {
                 return wei_2_Str(value);
+            }
+            break;
+        default:
             break;
     }
 

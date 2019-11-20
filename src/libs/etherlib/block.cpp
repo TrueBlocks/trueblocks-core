@@ -69,48 +69,60 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "blockNumber")
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
+            }
             break;
         case 'd':
-            if (fieldName % "difficulty")
+            if (fieldName % "difficulty") {
                 return uint_2_Str(difficulty);
+            }
             break;
         case 'f':
-            if (fieldName % "finalized")
+            if (fieldName % "finalized") {
                 return bool_2_Str_t(finalized);
+            }
             break;
         case 'g':
-            if (fieldName % "gasLimit")
+            if (fieldName % "gasLimit") {
                 return gas_2_Str(gasLimit);
-            if (fieldName % "gasUsed")
+            }
+            if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
+            }
             break;
         case 'h':
-            if (fieldName % "hash")
+            if (fieldName % "hash") {
                 return hash_2_Str(hash);
+            }
             break;
         case 'l':
-            if (fieldName % "light")
+            if (fieldName % "light") {
                 return bool_2_Str_t(light);
+            }
             break;
         case 'm':
-            if (fieldName % "miner")
+            if (fieldName % "miner") {
                 return addr_2_Str(miner);
+            }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
             break;
         case 'p':
-            if (fieldName % "parentHash")
+            if (fieldName % "parentHash") {
                 return hash_2_Str(parentHash);
-            if (fieldName % "price")
+            }
+            if (fieldName % "price") {
                 return double_2_Str(price, 5);
+            }
             break;
         case 't':
-            if (fieldName % "timestamp")
+            if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
+            }
             if (fieldName % "transactions" || fieldName % "transactionsCnt") {
                 size_t cnt = transactions.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -124,6 +136,8 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            break;
+        default:
             break;
     }
 

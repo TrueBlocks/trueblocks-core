@@ -83,12 +83,16 @@ string_q CConfigGroup::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
             break;
         case 's':
-            if (fieldName % "section")
+            if (fieldName % "section") {
                 return section;
+            }
+            break;
+        default:
             break;
     }
 

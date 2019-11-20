@@ -118,9 +118,9 @@ inline void CAccountName::initialize(void) {
     logo = "";
     path = "";
     color = "";
-    is_contract = 0;
-    is_private = 0;
-    is_shared = 0;
+    is_contract = false;
+    is_private = false;
+    is_shared = false;
     firstAppearance = 0;
     latestAppearance = 0;
     lastExport = 0;

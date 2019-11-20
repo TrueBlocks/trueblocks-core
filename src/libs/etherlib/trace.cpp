@@ -83,18 +83,22 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "blockHash")
+            if (fieldName % "blockHash") {
                 return hash_2_Str(blockHash);
-            if (fieldName % "blockNumber")
+            }
+            if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
+            }
             break;
         case 'c':
-            if (fieldName % "compressedTrace")
+            if (fieldName % "compressedTrace") {
                 return compressedTrace;
+            }
             break;
         case 'e':
-            if (fieldName % "error")
+            if (fieldName % "error") {
                 return error;
+            }
             break;
         case 'r':
             if (fieldName % "result") {
@@ -105,8 +109,9 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "subtraces")
+            if (fieldName % "subtraces") {
                 return uint_2_Str(subtraces);
+            }
             break;
         case 't':
             if (fieldName % "traceAddress" || fieldName % "traceAddressCnt") {
@@ -122,12 +127,17 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "transactionHash")
+            if (fieldName % "transactionHash") {
                 return hash_2_Str(transactionHash);
-            if (fieldName % "transactionIndex")
+            }
+            if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
-            if (fieldName % "type")
+            }
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

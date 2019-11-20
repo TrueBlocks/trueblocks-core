@@ -138,7 +138,7 @@ inline void CTransaction::initialize(void) {
     receipt = CReceipt();
     articulatedTx = CFunction();
     compressedTx = "";
-    finalized = 0;
+    finalized = false;
     traces.clear();
 
     // EXISTING_CODE

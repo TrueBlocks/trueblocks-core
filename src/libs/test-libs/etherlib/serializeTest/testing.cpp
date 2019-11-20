@@ -109,7 +109,7 @@ int main(int argc, const char* argv[]) {
         cache.type = "type";
         cache.path = "path";
         cache.nFiles = 12;
-        cache. nFolders = 13;
+        cache.nFolders = 13;
         cache.sizeInBytes = 14;
         cache.valid_counts = true;
         cout << cache << endl;

@@ -34,7 +34,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     ostringstream ar_read_stream, ar_write_stream;
     ostringstream src_inc_stream, head_inc_stream;
     ostringstream child_obj_stream, add_field_stream, hide_field_stream;
-    ostringstream get_case_stream, defaults_stream;
+    ostringstream defaults_stream;
 
     //------------------------------------------------------------------------------------------------
     string_q fieldGetObj, fieldGetStr;
@@ -67,7 +67,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         string_q regAddFmt = "`ADD_FIELD(CL_NM, \"[{NAME}]\", T_TEXT, ++fieldNum);\n";
         string_q regHideFmt = "`HIDE_FIELD(CL_NM, \"[{NAME}]\");\n";
         string_q ptrClearFmt = "`if ([{NAME}])\n``delete [{NAME}];\n`[{NAME}] = NULL;\n";
-        string_q caseFmt = "[{TYPE}]+[{NAME}]-[{IS_POINTER}]~[{IS_OBJECT}]|";
         string_q copyFmt = "`[{NAME}] = ++SHORT++.[{NAME}];\n";
 
         // order matters in the next block
@@ -92,8 +91,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "uint32")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "uint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "uint256")        { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
-        } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BOOL";
+        } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";    regType = "T_BOOL";
+        } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEFB}];\n";    regType = "T_BOOL";
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -136,6 +135,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
         }
 
+        replace(setFmt, "[{DEFB}]", fld.str_default.empty() ? "false" : fld.str_default);
         replace(setFmt, "[{DEFS}]", fld.str_default.empty() ? "\"\"" : fld.str_default);
         replace(setFmt, "[{DEF}]", fld.str_default.empty() ? "0" : fld.str_default);
         replace(setFmt, "[{DEFF}]", fld.str_default.empty() ? "0.0" : fld.str_default);
@@ -150,23 +150,25 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replace(declareFmt, "*", "");
 
         add_field_stream << substitute(substitute(fld.Format(regAddFmt), "T_TEXT", regType), "CL_NM", "[{CLASS_NAME}]");
-        if (fld.noWrite)
+        if (fld.no_write)
             add_field_stream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 
-        // noWrite-min means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
+        // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
         // belongs to).
-        if (!fld.noWrite_min) {
-            get_case_stream << fld.Format(caseFmt);
+        if (!fld.is_minimal) {
             declare_stream << convertTypes(fld.Format(declareFmt)) << endl;
             copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
                                       "[{CLASS_NAME}]");
             defaults_stream << fld.Format(setFmt);
             clear_stream << ((fld.is_pointer && !fld.is_array) ? fld.Format(ptrClearFmt) : "");
-            ar_read_stream << substitute(fld.Format(fld.is_pointer ? STR_PRTREADFMT : STR_READFMT), "`archive",
-                                         (fld.noWrite ? "`// archive" : "`archive"));
-            ar_write_stream << substitute(fld.Format(fld.is_pointer ? STR_PTRWRITEFMT : STR_WRITEFMT), "`archive",
-                                          (fld.noWrite ? "`// archive" : "`archive"));
+            if (fld.no_write) {
+                ar_read_stream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
+                ar_write_stream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
+            } else {
+                ar_read_stream << fld.Format(fld.is_pointer ? STR_PRTREADFMT : STR_READFMT);
+                ar_write_stream << fld.Format(fld.is_pointer ? STR_PTRWRITEFMT : STR_WRITEFMT);
+            }
 
             if (fld.is_object && !fld.is_pointer && !contains(fld.type, "Array")) {
                 if (child_obj_stream.str().empty())
@@ -228,7 +230,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{PROPER}]", classDef.base_proper);
     replaceAll(headSource, "[{CLASS_NAME}]", classDef.class_name);
     replaceAll(headSource, "[{CLASS_BASE}]", classDef.class_base);
-    replaceAll(headSource, "[{CLASS_UPPER}]", classDef.class_upper);
+    replaceAll(headSource, "[{CLASS_UPPER}]", classDef.base_upper);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{SORT_COMMENT}]", (classDef.sort_str.length() ? STR_SORT_COMMENT_1 : STR_SORT_COMMENT_2));
     replaceAll(headSource, "[{EQUAL_COMMENT}]", (classDef.eq_str.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
@@ -271,8 +273,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[CHILD_OBJ_GETTER]", child_obj_stream.str());
     replaceAll(srcSource, "[ADD_FIELDS]", add_field_stream.str());
     replaceAll(srcSource, "[HIDE_FIELDS]", hide_field_stream.str());
-    replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(get_case_stream.str()));
-    replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(get_case_stream.str()));
+    replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
+    replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
     replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
     replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
@@ -290,7 +292,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{PROPER}]", classDef.base_proper);
     replaceAll(srcSource, "[{CLASS_NAME}]", classDef.class_name);
     replaceAll(srcSource, "[{CLASS_BASE}]", classDef.class_base);
-    replaceAll(srcSource, "[{CLASS_UPPER}]", classDef.class_upper);
+    replaceAll(srcSource, "[{CLASS_UPPER}]", classDef.base_upper);
     replaceAll(srcSource, "[{DISPLAY_FIELDS}]", classDef.display_str);
     replaceAll(srcSource, "[{NAMESPACE1}]", (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]", (ns.empty() ? "" : "}  // namespace qblocks\n"));
@@ -315,238 +317,307 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 }
 
 //------------------------------------------------------------------------------------------------
-string_q getCaseGetCode(const string_q& fieldCaseIn) {
-    if (fieldCaseIn.empty())
+string_q getCaseGetCode(const CParameterArray& fieldsIn) {
+    if (fieldsIn.empty())
         return "// No fields";
 
-    string_q caseCodeOut;
-    for (char ch = '_'; ch < 'z' + 1; ch++) {
-        if (contains(toLower(fieldCaseIn), "+" + string_q(1, ch))) {
-            caseCodeOut += ("``case '" + string_q(1, ch) + "':\n");
-            string_q fields = fieldCaseIn;
-            while (!fields.empty()) {
-                string_q isObj = nextTokenClear(fields, '|');
-                string_q type = nextTokenClear(isObj, '+');
-                string_q field12 = nextTokenClear(isObj, '-');
-                string_q isPtr = nextTokenClear(isObj, '~');
-                bool is_pointer = str_2_Bool(isPtr);
-                bool is_object = str_2_Bool(isObj);
-
-                if (tolower(field12[0]) == ch) {
-                    caseCodeOut += ("```if (fieldName % \"" + field12 + "\"");
-                    if (contains(type, "Array"))
-                        caseCodeOut += " || fieldName % \"" + field12 + "Cnt\"";
-                    caseCodeOut += ")";
-                    if (contains(type, "List") || is_pointer) {
-                        string_q ptrCase = PTR_GET_CASE;
-                        replaceAll(ptrCase, "[{NAME}]", field12);
-                        replaceAll(ptrCase, "[{TYPE}]", type);
-                        caseCodeOut += ptrCase;
-
-                    } else if (type == "bool") {
-                        caseCodeOut += "\n````return bool_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "sbool") {
-                        caseCodeOut += "\n````return bool_2_Str_t([{PTR}]" + field12 + ");";
-
-                    } else if (type == "bloom") {
-                        caseCodeOut += "\n````return bloom_2_Bytes([{PTR}]" + field12 + ");";
-
-                    } else if (type == "wei") {
-                        caseCodeOut += "\n````return wei_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "gas") {
-                        caseCodeOut += "\n````return gas_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "timestamp") {
-                        caseCodeOut += "\n````return ts_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "addr" || type == "address") {
-                        caseCodeOut += "\n````return addr_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "hash") {
-                        caseCodeOut += "\n````return hash_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (startsWith(type, "bytes")) {
-                        caseCodeOut += "\n````return [{PTR}]" + field12 + ";";
-
-                    } else if (type == "uint8" || type == "uint16" || type == "uint32" || type == "uint64") {
-                        caseCodeOut += "\n````return uint_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "blknum") {
-                        caseCodeOut += "\n````return uint_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "uint256") {
-                        caseCodeOut += "\n````return bnu_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "int8" || type == "int16" || type == "int32" || type == "int64") {
-                        caseCodeOut += "\n````return int_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "int256") {
-                        caseCodeOut += "\n````return bni_2_Str([{PTR}]" + field12 + ");";
-
-                    } else if (type == "double") {
-                        caseCodeOut += "\n````return double_2_Str([{PTR}]" + field12 + ", 5);";
-
-                    } else if (endsWith(type, "_e")) {
-                        caseCodeOut += "\n````return uint_2_Str(" + field12 + ");";
-
-                    } else if (contains(type, "CStringArray") || contains(type, "CAddressArray")) {
-                        string_q str = STR_CASE_CODE_STRINGARRAY;
-                        replaceAll(str, "[{FIELD}]", field12);
-                        caseCodeOut += str;
-
-                    } else if (contains(type, "CBigUintArray") || contains(type, "CTopicArray")) {
-                        string_q str = STR_CASE_CODE_STRINGARRAY;
-                        // hack for size clause
-                        replace(str, "[{FIELD}]", field12);
-                        // hack for the array access
-                        replace(str, "[{FIELD}][i]", "topic_2_Str(" + field12 + "[i])");
-                        caseCodeOut += str;
-
-                    } else if (contains(type, "Array")) {
-                        string_q str = STR_CASE_CODE_ARRAY;
-                        if (contains(type, "CBlockNum"))
-                            replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
-                        replaceAll(str, "[{FIELD}]", field12);
-                        caseCodeOut += str;
-
-                    } else if (is_object) {
-                        caseCodeOut += " {\n````if (" + field12 + " == " + type + "())\n`````return \"\";\n````";
-                        caseCodeOut += "expContext().noFrst = true;\n````return [{PTR}]" + field12 + ".Format();\n```}";
-
-                    } else {
-                        caseCodeOut += "\n````return [{PTR}]" + field12 + ";";
-                    }
-
-                    caseCodeOut += "\n";
-                }
-            }
-            caseCodeOut += ("```break;\n");
+    map<char, CParameterArray> ch_map;
+    for (auto f : fieldsIn) {
+        if (!f.is_minimal) {
+            ch_map[f.name[0]].push_back(f);
         }
     }
-    caseCodeOut = "// Return field values\n`switch (tolower(fieldName[0])) {\n" + caseCodeOut + "`}\n";
-    replaceAll(caseCodeOut, "[{PTR}]", "");
-    return caseCodeOut;
+
+    ostringstream outStream;
+    for (auto ar : ch_map) {
+        outStream << ("``case '" + string_q(1, ar.first) + "':\n");
+        for (auto p : ar.second) {
+            if (p.name[0] == ar.first) {
+                outStream << ("```if (fieldName % \"" + p.name + "\"");
+                if (contains(p.type, "Array"))
+                    outStream << (" || fieldName % \"" + p.name + "Cnt\"");
+                outStream << (") {\n````");
+
+                if (p.type == "bool") {
+                    outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "sbool") {
+                    outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "bloom") {
+                    outStream << ("return bloom_2_Bytes([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "wei") {
+                    outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "gas") {
+                    outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "timestamp") {
+                    outStream << ("return ts_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "addr" || p.type == "address") {
+                    outStream << ("return addr_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "hash") {
+                    outStream << ("return hash_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (startsWith(p.type, "bytes")) {
+                    outStream << ("return [{PTR}]" + p.name + ";");
+
+                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32" || p.type == "uint64") {
+                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "blknum") {
+                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "uint256") {
+                    outStream << ("return bnu_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "int8" || p.type == "int16" || p.type == "int32" || p.type == "int64") {
+                    outStream << ("return int_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "int256") {
+                    outStream << ("return bni_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "double") {
+                    outStream << ("return double_2_Str([{PTR}]" + p.name + ", 5);");
+
+                } else if (endsWith(p.type, "_e")) {
+                    outStream << ("return uint_2_Str(" + p.name + ");");
+
+                } else if (contains(p.type, "CStringArray") || contains(p.type, "CAddressArray")) {
+                    const char* STR_CASE_CODE_STRINGARRAY =
+                        "size_t cnt = [{PTR}][{FIELD}].size();\n"
+                        "if (endsWith(toLower(fieldName), \"cnt\"))\n"
+                        "`return uint_2_Str(cnt);\n"
+                        "if (!cnt)\n"
+                        "`return \"\";\n"
+                        "string_q retS;\n"
+                        "for (size_t i = 0; i < cnt; i++) {\n"
+                        "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
+                        "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
+                        "}\n"
+                        "return retS;";
+                    string_q str = substitute(STR_CASE_CODE_STRINGARRAY, "\n", "\n````");
+                    replaceAll(str, "[{FIELD}]", p.name);
+                    outStream << (str);
+
+                } else if (contains(p.type, "CBigUintArray") || contains(p.type, "CTopicArray")) {
+                    const char* STR_CASE_CODE_STRINGARRAY =
+                        "size_t cnt = [{PTR}][{FIELD}].size();\n"
+                        "if (endsWith(toLower(fieldName), \"cnt\"))\n"
+                        "`return uint_2_Str(cnt);\n"
+                        "if (!cnt)\n"
+                        "`return \"\";\n"
+                        "string_q retS;\n"
+                        "for (size_t i = 0; i < cnt; i++) {\n"
+                        "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
+                        "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
+                        "}\n"
+                        "return retS;";
+                    string_q str = substitute(STR_CASE_CODE_STRINGARRAY, "\n", "\n````");
+                    // hack for size clause
+                    replace(str, "[{FIELD}]", p.name);
+                    // hack for the array access
+                    replace(str, "[{FIELD}][i]", "topic_2_Str(" + p.name + "[i])");
+                    outStream << (str);
+
+                } else if (contains(p.type, "Array")) {
+                    const char* STR_CASE_CODE_ARRAY =
+                        "size_t cnt = [{PTR}][{FIELD}].size();\n"
+                        "if (endsWith(toLower(fieldName), \"cnt\"))\n"
+                        "`return uint_2_Str(cnt);\n"
+                        "if (!cnt)\n"
+                        "`return \"\";\n"
+                        "string_q retS;\n"
+                        "for (size_t i = 0; i < cnt; i++) {\n"
+                        "`retS += [{PTR}][{FIELD}][i].Format();\n"
+                        "`retS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
+                        "}\n"
+                        "return retS;";
+                    string_q str = substitute(STR_CASE_CODE_ARRAY, "\n", "\n````");
+                    if (contains(p.type, "CBlockNum"))
+                        replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
+                    replaceAll(str, "[{FIELD}]", p.name);
+                    if (p.is_pointer)
+                        replace(str, "[i].Format", "[i]->Format");
+                    outStream << (str);
+
+                } else if (contains(p.type, "List") || p.is_pointer) {
+                    const char* PTR_GET_CASE =
+                        "if ([{NAME}])\n"
+                        "`return [{NAME}]->Format();\n"
+                        "return \"\";";
+                    string_q ptrCase = substitute(PTR_GET_CASE, "\n", "\n````");
+                    replaceAll(ptrCase, "[{NAME}]", p.name);
+                    replaceAll(ptrCase, "[{TYPE}]", p.type);
+                    outStream << (ptrCase);
+
+                } else if (p.is_object) {
+                    const char* STR_OBJECT_CASE =
+                        "if ([{NAME}] == [{TYPE}]())\n"
+                        "`return \"\";\n"
+                        "expContext().noFrst = true;\n"
+                        "return [{PTR}][{NAME}].Format();";
+                    string_q objCase = substitute(STR_OBJECT_CASE, "\n", "\n````");
+                    replaceAll(objCase, "[{NAME}]", p.name);
+                    replaceAll(objCase, "[{TYPE}]", p.type);
+                    outStream << (objCase);
+
+                } else {
+                    outStream << ("return [{PTR}]" + p.name + ";");
+                }
+                outStream << endl << "```}" << endl;
+            }
+        }
+        outStream << ("```break;\n");
+    }
+    outStream << "``default:\n```break;\n";
+
+    string out = "// Return field values\n`switch (tolower(fieldName[0])) {\n" + outStream.str() + "`}\n";
+    replaceAll(out, "[{PTR}]", "");
+    return out;
 }
 
 //------------------------------------------------------------------------------------------------
-string_q getCaseSetCode(const string_q& fieldCaseIn) {
-    string_q caseCodeOut;
-    for (char ch = '_'; ch < 'z' + 1; ch++) {
-        if (contains(toLower(fieldCaseIn), "+" + string_q(1, ch))) {
-            caseCodeOut += ("``case '" + string_q(1, ch) + "':\n");
-            string_q fields = fieldCaseIn;
-            while (!fields.empty()) {
-                string_q isObj = nextTokenClear(fields, '|');
-                string_q type = nextTokenClear(isObj, '+');
-                string_q field12 = nextTokenClear(isObj, '-');
-                string_q isPtr = nextTokenClear(isObj, '~');
-                bool is_pointer = str_2_Bool(isPtr);
-                bool is_object = str_2_Bool(isObj);
-
-                if (tolower(field12[0]) == ch) {
-                    caseCodeOut += ("```if (fieldName % \"" + field12 + "\")");
-                    if (contains(type, "List") || is_pointer) {
-                        string_q ptrCase = PTR_SET_CASE;
-                        replaceAll(ptrCase, "[{NAME}]", field12);
-                        replaceAll(ptrCase, "[{TYPE}]", type);
-                        caseCodeOut += ptrCase;
-
-                    } else if (type == "bool") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Bool(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "sbool") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Bool(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "bloom") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Bloom(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "wei") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Wei(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "gas") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Gas(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "timestamp") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Ts(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "addr" || type == "address") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Addr(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "hash") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Hash(fieldValue);\n````return true;\n```}";
-
-                    } else if (startsWith(type, "bytes")) {
-                        caseCodeOut += " {\n````" + field12 + " = toLower(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "int8" || type == "int16" || type == "int32") {
-                        caseCodeOut +=
-                            " {\n````" + field12 + " = (int32_t)str_2_Uint(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "int64") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Int(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "int256") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Wei(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "uint8" || type == "uint16" || type == "uint32") {
-                        caseCodeOut +=
-                            " {\n````" + field12 + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "uint64") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Uint(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "uint256") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Wei(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "blknum") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Uint(fieldValue);\n````return true;\n```}";
-
-                    } else if (type == "double") {
-                        caseCodeOut += " {\n````" + field12 + " = str_2_Double(fieldValue);\n````return true;\n```}";
-
-                    } else if (endsWith(type, "_e")) {
-                        caseCodeOut +=
-                            " {\n````" + field12 + " = str_2_Enum(" + type + ", fieldValue);\n````return true;\n```}";
-
-                    } else if (contains(type, "CStringArray") || contains(type, "CBlockNumArray")) {
-                        string_q str = STR_ARRAY_SET;
-                        replaceAll(str, "[{NAME}]", field12);
-                        if (contains(type, "CBlockNumArray"))
-                            replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
-                        caseCodeOut += str;
-
-                    } else if (contains(type, "CAddressArray") || contains(type, "CBigUintArray") ||
-                               contains(type, "CTopicArray")) {
-                        string_q str = STR_ARRAY_SET;
-                        replaceAll(str, "[{NAME}]", field12);
-                        replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
-                        replaceAll(str, "[{TYPE}]",
-                                   substitute(substitute(extract(type, 1), "Array", ""), "Address", "Addr"));
-                        caseCodeOut += str;
-
-                    } else if (contains(type, "Array")) {
-                        string_q str = STR_CASE_SET_CODE_ARRAY;
-                        replaceAll(str, "[{NAME}]", field12);
-                        replaceAll(str, "[{TYPE}]", substitute(type, "Array", ""));
-                        caseCodeOut += str;
-
-                    } else if (is_object) {
-                        caseCodeOut += " {\n````return " + field12 + ".parseJson3(fieldValue);\n```}";
-
-                    } else {
-                        caseCodeOut += " {\n````" + field12 + " = fieldValue;\n````return true;\n```}";
-                    }
-
-                    caseCodeOut += "\n";
-                }
-            }
-            caseCodeOut += ("```break;\n");
+string_q getCaseSetCode(const CParameterArray& fieldsIn) {
+    map<char, CParameterArray> ch_map;
+    for (auto f : fieldsIn) {
+        if (!f.is_minimal) {
+            ch_map[f.name[0]].push_back(f);
         }
     }
 
-    return caseCodeOut + "``default:\n```break;\n";
+    ostringstream outStream;
+    for (auto ar : ch_map) {
+        outStream << ("``case '" + string_q(1, ar.first) + "':\n");
+        for (auto p : ar.second) {
+            if (p.name[0] == ar.first) {
+                outStream << ("```if (fieldName % \"" + p.name + "\") {\n````");
+                if (p.type == "bool" || p.type == "sbool") {
+                    outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
+
+                } else if (p.type == "bloom") {
+                    outStream << (p.name + " = str_2_Bloom(fieldValue);\n````return true;");
+
+                } else if (p.type == "wei") {
+                    outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
+
+                } else if (p.type == "gas") {
+                    outStream << (p.name + " = str_2_Gas(fieldValue);\n````return true;");
+
+                } else if (p.type == "timestamp") {
+                    outStream << (p.name + " = str_2_Ts(fieldValue);\n````return true;");
+
+                } else if (p.type == "address") {
+                    outStream << (p.name + " = str_2_Addr(fieldValue);\n````return true;");
+
+                } else if (p.type == "hash") {
+                    outStream << (p.name + " = str_2_Hash(fieldValue);\n````return true;");
+
+                } else if (p.type == "blknum") {
+                    outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "double") {
+                    outStream << (p.name + " = str_2_Double(fieldValue);\n````return true;");
+
+                } else if (endsWith(p.type, "_e")) {
+                    outStream << (p.name + " = str_2_Enum(" + p.type + ", fieldValue);\n````return true;");
+
+                } else if (p.type == "int64") {
+                    outStream << (p.name + " = str_2_Int(fieldValue);\n````return true;");
+
+                } else if (p.type == "int256") {
+                    outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
+
+                } else if (p.type == "uint64") {
+                    outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "uint256") {
+                    outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
+
+                } else if (p.type == "int8" || p.type == "int16" || p.type == "int32") {
+                    outStream << (p.name + " = (int32_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32") {
+                    outStream << (p.name + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (startsWith(p.type, "bytes")) {
+                    outStream << (p.name + " = toLower(fieldValue);\n````return true;");
+
+                } else if (contains(p.type, "CStringArray") || contains(p.type, "CBlockNumArray")) {
+                    const char* STR_ARRAY_SET =
+                        "string_q str = fieldValue;\n"
+                        "while (!str.empty()) {\n"
+                        "`[{NAME}].push_back(nextTokenClear(str, ','));\n"
+                        "}\n"
+                        "return true;";
+                    string_q str = substitute(STR_ARRAY_SET, "\n", "\n````");
+                    replaceAll(str, "[{NAME}]", p.name);
+                    if (contains(p.type, "CBlockNumArray"))
+                        replaceAll(str, "nextTokenClear(str, ',')", "str_2_Uint(nextTokenClear(str, ','))");
+                    outStream << (str);
+
+                } else if (contains(p.type, "CAddressArray") || contains(p.type, "CBigUintArray") ||
+                           contains(p.type, "CTopicArray")) {
+                    const char* STR_ARRAY_SET =
+                        "string_q str = fieldValue;\n"
+                        "while (!str.empty()) {\n"
+                        "`[{NAME}].push_back(nextTokenClear(str, ','));\n"
+                        "}\n"
+                        "return true;";
+                    string_q str = substitute(STR_ARRAY_SET, "\n", "\n````");
+                    replaceAll(str, "[{NAME}]", p.name);
+                    replaceAll(str, "nextTokenClear(str, ',')", "str_2_[{TYPE}](nextTokenClear(str, ','))");
+                    replaceAll(str, "[{TYPE}]",
+                               substitute(substitute(extract(p.type, 1), "Array", ""), "Address", "Addr"));
+                    outStream << (str);
+
+                } else if (p.is_pointer) {
+                    const char* PTR_SET_CASE =
+                        "// This drops memory, so we comment it out for now\n"
+                        "clear();\n"
+                        "[{NAME}] = new [{TYPE}];\n"
+                        "if ([{NAME}]) {\n"
+                        "`string_q str = fieldValue;\n"
+                        "`return [{NAME}]->parseJson3(str);\n"
+                        "}\n"
+                        "return false;";
+                    string_q ptrCase = substitute(PTR_SET_CASE, "\n", "\n````// ");
+                    replace(ptrCase, "// return false;", "return false;");
+                    replaceAll(ptrCase, "[{NAME}]", p.name);
+                    replaceAll(ptrCase, "[{TYPE}]", p.type);
+                    outStream << ptrCase;
+
+                } else if (contains(p.type, "Array")) {
+                    const char* STR_CASE_SET_CODE_ARRAY =
+                        "[{TYPE}] item;\n"
+                        "string_q str = fieldValue;\n"
+                        "while (item.parseJson3(str)) {\n"
+                        "`[{NAME}].push_back(item);\n"
+                        "`item = [{TYPE}]();  // reset\n"
+                        "}\n"
+                        "return true;";
+                    string_q str = substitute(STR_CASE_SET_CODE_ARRAY, "\n", "\n````");
+                    replaceAll(str, "[{NAME}]", p.name);
+                    replaceAll(str, "[{TYPE}]", substitute(p.type, "Array", ""));
+                    outStream << (str);
+
+                } else if (p.is_object) {
+                    outStream << ("return " + p.name + ".parseJson3(fieldValue);");
+
+                } else {
+                    outStream << (p.name + " = fieldValue;\n````return true;");
+                }
+                outStream << endl << "```}" << endl;
+            }
+        }
+        outStream << ("```break;\n");
+    }
+    outStream << "``default:\n```break;\n";
+
+    return outStream.str();
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -583,51 +654,6 @@ string_q convertTypes(const string_q& inStr) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_CASE_SET_CODE_ARRAY =
-    " {\n"
-    "````[{TYPE}] item;\n"
-    "````string_q str = fieldValue;\n"
-    "````while (item.parseJson3(str)) {\n"
-    "`````[{NAME}].push_back(item);\n"
-    "`````item = [{TYPE}]();  /"
-    "/ reset\n"
-    "````}\n"
-    "````return true;\n"
-    "```}";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_CASE_CODE_ARRAY =
-    " {\n"
-    "````size_t cnt = [{PTR}][{FIELD}].size();\n"
-    "````if (endsWith(toLower(fieldName), \"cnt\"))\n"
-    "`````return uint_2_Str(cnt);\n"
-    "````if (!cnt)\n"
-    "`````return \"\";\n"
-    "````string_q retS;\n"
-    "````for (size_t i = 0; i < cnt; i++) {\n"
-    "`````retS += [{PTR}][{FIELD}][i].Format();\n"
-    "`````retS += ((i < cnt - 1) ? \",\\n\" : \"\\n\");\n"
-    "````}\n"
-    "````return retS;\n"
-    "```}";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_CASE_CODE_STRINGARRAY =
-    " {\n"
-    "````size_t cnt = [{PTR}][{FIELD}].size();\n"
-    "````if (endsWith(toLower(fieldName), \"cnt\"))\n"
-    "`````return uint_2_Str(cnt);\n"
-    "````if (!cnt)\n"
-    "`````return \"\";\n"
-    "````string_q retS;\n"
-    "````for (size_t i = 0; i < cnt; i++) {\n"
-    "`````retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-    "`````retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
-    "````}\n"
-    "````return retS;\n"
-    "```}";
-
-//------------------------------------------------------------------------------------------------------------
 const char* STR_COMMENT_LINE = "//---------------------------------------------------------------------------\n";
 
 //------------------------------------------------------------------------------------------------------------
@@ -651,26 +677,6 @@ const char* STR_OPERATOR_IMPL =
     "`return archive;\n"
     "}\n"
     "\n";
-
-//------------------------------------------------------------------------------------------------------------
-const char* PTR_GET_CASE =
-    " {\n"
-    "````if ([{NAME}])\n"
-    "`````return [{NAME}]->Format();\n"
-    "````return \"\";\n"
-    "```}";
-
-//------------------------------------------------------------------------------------------------------------
-const char* PTR_SET_CASE =
-    " {\n"
-    "````clear();\n"
-    "````[{NAME}] = new [{TYPE}];\n"
-    "````if ([{NAME}]) {\n"
-    "`````string_q str = fieldValue;\n"
-    "`````return [{NAME}]->parseJson3(str);\n"
-    "````}\n"
-    "````return false;\n"
-    "```}";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PRTREADFMT =
@@ -757,16 +763,6 @@ const char* STR_CHILD_OBJS =
     "``f = [{NAME}].getValueByName(f);\n"
     "``return f;\n"
     "`}\n";
-
-//------------------------------------------------------------------------------------------------
-const char* STR_ARRAY_SET =
-    " {\n"
-    "````string_q str = fieldValue;\n"
-    "````while (!str.empty()) {\n"
-    "`````[{NAME}].push_back(nextTokenClear(str, ','));\n"
-    "````}\n"
-    "````return true;\n"
-    "```}";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_READFMT = "`archive >> [{NAME}];\n";

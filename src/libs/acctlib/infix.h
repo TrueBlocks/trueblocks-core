@@ -36,6 +36,8 @@ class CInfix : public CTreeNode {
 
     DECLARE_NODE(CInfix);
 
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+
     // EXISTING_CODE
     CInfix(const string_q& _key, CTreeNode* _next) : next(_next) {
         prefixS = _key;

@@ -104,7 +104,7 @@ inline void CLogEntry::initialize(void) {
     address = "";
     data = "";
     logIndex = 0;
-    removed = 0;
+    removed = false;
     topics.clear();
     articulatedLog = CFunction();
     compressedLog = "";

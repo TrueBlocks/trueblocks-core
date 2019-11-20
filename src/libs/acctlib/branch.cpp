@@ -69,8 +69,11 @@ string_q CBranch::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "branchValue")
+            if (fieldName % "branchValue") {
                 return branchValue;
+            }
+            break;
+        default:
             break;
     }
 

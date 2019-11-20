@@ -68,52 +68,69 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "api_route")
+            if (fieldName % "api_route") {
                 return api_route;
+            }
             break;
         case 'c':
-            if (fieldName % "command")
+            if (fieldName % "command") {
                 return command;
-            if (fieldName % "core_visible")
+            }
+            if (fieldName % "core_visible") {
                 return core_visible;
+            }
             break;
         case 'd':
-            if (fieldName % "def_val")
+            if (fieldName % "def_val") {
                 return def_val;
-            if (fieldName % "docs_visible")
+            }
+            if (fieldName % "docs_visible") {
                 return docs_visible;
-            if (fieldName % "data_type")
+            }
+            if (fieldName % "data_type") {
                 return data_type;
-            if (fieldName % "description")
+            }
+            if (fieldName % "description") {
                 return description;
+            }
             break;
         case 'g':
-            if (fieldName % "group")
+            if (fieldName % "group") {
                 return group;
-            if (fieldName % "generate")
+            }
+            if (fieldName % "generate") {
                 return generate;
+            }
             break;
         case 'h':
-            if (fieldName % "hotkey")
+            if (fieldName % "hotkey") {
                 return hotkey;
+            }
             break;
         case 'i':
-            if (fieldName % "is_required")
+            if (fieldName % "is_required") {
                 return is_required;
-            if (fieldName % "is_customizable")
+            }
+            if (fieldName % "is_customizable") {
                 return is_customizable;
+            }
             break;
         case 'n':
-            if (fieldName % "num")
+            if (fieldName % "num") {
                 return num;
+            }
             break;
         case 'o':
-            if (fieldName % "option_kind")
+            if (fieldName % "option_kind") {
                 return option_kind;
+            }
             break;
         case 't':
-            if (fieldName % "tool")
+            if (fieldName % "tool") {
                 return tool;
+            }
+            break;
+        default:
             break;
     }
 

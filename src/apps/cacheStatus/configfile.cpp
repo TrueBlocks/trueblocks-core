@@ -83,8 +83,11 @@ string_q CConfigFile::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
+            break;
+        default:
             break;
     }
 

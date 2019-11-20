@@ -69,8 +69,9 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             if (fieldName % "articulatedLog") {
                 if (articulatedLog == CFunction())
                     return "";
@@ -79,20 +80,24 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
-            if (fieldName % "compressedLog")
+            if (fieldName % "compressedLog") {
                 return compressedLog;
+            }
             break;
         case 'd':
-            if (fieldName % "data")
+            if (fieldName % "data") {
                 return data;
+            }
             break;
         case 'l':
-            if (fieldName % "logIndex")
+            if (fieldName % "logIndex") {
                 return uint_2_Str(logIndex);
+            }
             break;
         case 'r':
-            if (fieldName % "removed")
+            if (fieldName % "removed") {
                 return bool_2_Str_t(removed);
+            }
             break;
         case 't':
             if (fieldName % "topics" || fieldName % "topicsCnt") {
@@ -108,10 +113,14 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "transactionLogIndex")
+            if (fieldName % "transactionLogIndex") {
                 return uint_2_Str(transactionLogIndex);
-            if (fieldName % "type")
+            }
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

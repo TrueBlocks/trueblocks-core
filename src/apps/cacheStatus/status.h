@@ -104,7 +104,7 @@ inline void CStatus::initialize(void) {
     api_provider = "";
     balance_provider = "";
     host = "";
-    is_scraping = 0;
+    is_scraping = false;
     caches.clear();
 
     // EXISTING_CODE

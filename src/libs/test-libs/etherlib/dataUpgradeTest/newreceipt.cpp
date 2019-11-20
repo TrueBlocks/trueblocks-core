@@ -68,16 +68,19 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "contractAddress")
+            if (fieldName % "contractAddress") {
                 return addr_2_Str(contractAddress);
+            }
             break;
         case 'g':
-            if (fieldName % "gasUsed")
+            if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
+            }
             break;
         case 'i':
-            if (fieldName % "isError")
+            if (fieldName % "isError") {
                 return bool_2_Str_t(isError);
+            }
             break;
         case 'l':
             if (fieldName % "logs" || fieldName % "logsCnt") {
@@ -93,8 +96,11 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "logsBloom")
+            if (fieldName % "logsBloom") {
                 return bloom_2_Bytes(logsBloom);
+            }
+            break;
+        default:
             break;
     }
 

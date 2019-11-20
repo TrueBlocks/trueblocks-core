@@ -69,12 +69,16 @@ string_q CPriceQuote::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "close")
+            if (fieldName % "close") {
                 return double_2_Str(close, 5);
+            }
             break;
         case 't':
-            if (fieldName % "timestamp")
+            if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
+            }
+            break;
+        default:
             break;
     }
 

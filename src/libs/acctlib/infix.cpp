@@ -75,6 +75,8 @@ string_q CInfix::getValueByName(const string_q& fieldName) const {
                 return "";
             }
             break;
+        default:
+            break;
     }
 
     // EXISTING_CODE
@@ -98,12 +100,13 @@ bool CInfix::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     switch (tolower(fieldName[0])) {
         case 'n':
             if (fieldName % "next") {
-                clear();
-                next = new CTreeNode;
-                if (next) {
-                    string_q str = fieldValue;
-                    return next->parseJson3(str);
-                }
+                // This drops memory, so we comment it out for now
+                // clear();
+                // next = new CTreeNode;
+                // if (next) {
+                //     string_q str = fieldValue;
+                //     return next->parseJson3(str);
+                // }
                 return false;
             }
             break;
@@ -250,6 +253,13 @@ ostream& operator<<(ostream& os, const CInfix& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CInfix::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "next")
+        return next;
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

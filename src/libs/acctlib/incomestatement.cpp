@@ -68,26 +68,34 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "begBal")
+            if (fieldName % "begBal") {
                 return bni_2_Str(begBal);
-            if (fieldName % "blockNum")
+            }
+            if (fieldName % "blockNum") {
                 return uint_2_Str(blockNum);
+            }
             break;
         case 'e':
-            if (fieldName % "endBal")
+            if (fieldName % "endBal") {
                 return bni_2_Str(endBal);
+            }
             break;
         case 'g':
-            if (fieldName % "gasCostInWei")
+            if (fieldName % "gasCostInWei") {
                 return bni_2_Str(gasCostInWei);
+            }
             break;
         case 'i':
-            if (fieldName % "inflow")
+            if (fieldName % "inflow") {
                 return bni_2_Str(inflow);
+            }
             break;
         case 'o':
-            if (fieldName % "outflow")
+            if (fieldName % "outflow") {
                 return bni_2_Str(outflow);
+            }
+            break;
+        default:
             break;
     }
 

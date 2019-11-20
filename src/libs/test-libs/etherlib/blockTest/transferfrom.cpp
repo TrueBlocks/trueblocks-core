@@ -68,12 +68,17 @@ string_q QTransferFrom::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case '_':
-            if (fieldName % "_from")
+            if (fieldName % "_from") {
                 return addr_2_Str(_from);
-            if (fieldName % "_to")
+            }
+            if (fieldName % "_to") {
                 return addr_2_Str(_to);
-            if (fieldName % "_value")
+            }
+            if (fieldName % "_value") {
                 return bnu_2_Str(_value);
+            }
+            break;
+        default:
             break;
     }
 

@@ -69,14 +69,17 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "contractAddress")
+            if (fieldName % "contractAddress") {
                 return addr_2_Str(contractAddress);
-            if (fieldName % "cumulativeGasUsed")
+            }
+            if (fieldName % "cumulativeGasUsed") {
                 return wei_2_Str(cumulativeGasUsed);
+            }
             break;
         case 'g':
-            if (fieldName % "gasUsed")
+            if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
+            }
             break;
         case 'l':
             if (fieldName % "logs" || fieldName % "logsCnt") {
@@ -92,16 +95,21 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "logsBloom")
+            if (fieldName % "logsBloom") {
                 return logsBloom;
+            }
             break;
         case 'r':
-            if (fieldName % "root")
+            if (fieldName % "root") {
                 return root;
+            }
             break;
         case 's':
-            if (fieldName % "status")
+            if (fieldName % "status") {
                 return uint_2_Str(status);
+            }
+            break;
+        default:
             break;
     }
 

@@ -132,8 +132,8 @@ inline void CClassDefinition::initialize(void) {
     sort_str = "";
     eq_str = "";
     scope_str = "";
-    serializable = 0;
-    use_export = 0;
+    serializable = false;
+    use_export = false;
     fieldArray.clear();
 
     // EXISTING_CODE

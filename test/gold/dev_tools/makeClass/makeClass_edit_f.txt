@@ -1,5 +1,44 @@
-makeClass argc: 5 [1:--dump] [2:-a] [3:-i] [4:CFunc] 
-makeClass --dump -a -i CFunc 
+makeClass argc: 3 [1:--dump] [2:-a] 
+makeClass --dump -a 
+------------------------------------------------------------------------------------------------------------------------
+./classDefinitions/block.txt
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.6.1-alpha"
+
+[settings]
+class = "CBlock"
+fields = "uint32 gasLimit|uint32 gasUsed|hash hash|bloom logsBloom|uint32 blockNumber|hash parentHash|uint32 timestamp|CTransactionArray transactions"
+includes = "ethtypes.h|abilib.h|transaction.h"
+cIncs = "#include \"etherlib.h"
+scope = "extern"
+serialize = true
+; = ""
+; full block definition from around Jan 2017 = ""
+;;address author = ""
+;;string difficulty = ""
+;;string extraData = ""
+;;string gasLimit = ""
+;;string gasUsed = ""
+;;hash hash = ""
+;;tring logsBloom = ""
+;;address miner = ""
+;;hash mixHash = ""
+;;string nonce = ""
+;;string number = ""
+;;hash parentHash = ""
+;;string receiptRoot = ""
+;;string receiptsRoot = ""
+;;SFStringArray sealFields; = ""
+;;string sha3Uncles = ""
+;;string size = ""
+;;string stateRoot = ""
+;;string timestamp = ""
+;;string totalDifficulty = ""
+;;CTransactionArray transactions = ""
+;;string transactionsRoot = ""
+;;SFStringArray uncles = ""
+
 ------------------------------------------------------------------------------------------------------------------------
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
@@ -10,4 +49,17 @@ current = "0.6.1-alpha"
 class = "CFunction"
 fields = "string name|string type|bool anonymous|bool constant|bool payable|string signature|string encoding|CParameterArray inputs|CParameterArray outputs"
 includes = "utillib.h|parameter.h"
+
+------------------------------------------------------------------------------------------------------------------------
+./classDefinitions/status.txt
+------------------------------------------------------------------------------------------------------------------------
+[version]
+current = "0.6.1-alpha"
+
+[settings]
+class = "CStatus"
+fields = "string client_version|string trueblocks_version|string rpc_provider|string api_provider|string balance_provider|string host|sbool is_scraping|CCachePtrArray caches"
+includes = "etherlib.h|cache.h"
+serialize = true
+enabled = false
 

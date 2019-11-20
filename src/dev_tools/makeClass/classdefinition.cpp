@@ -68,38 +68,50 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "base_class")
+            if (fieldName % "base_class") {
                 return base_class;
-            if (fieldName % "base_name")
+            }
+            if (fieldName % "base_name") {
                 return base_name;
-            if (fieldName % "base_proper")
+            }
+            if (fieldName % "base_proper") {
                 return base_proper;
-            if (fieldName % "base_lower")
+            }
+            if (fieldName % "base_lower") {
                 return base_lower;
-            if (fieldName % "base_upper")
+            }
+            if (fieldName % "base_upper") {
                 return base_upper;
-            if (fieldName % "base_base")
+            }
+            if (fieldName % "base_base") {
                 return base_base;
+            }
             break;
         case 'c':
-            if (fieldName % "class_name")
+            if (fieldName % "class_name") {
                 return class_name;
-            if (fieldName % "class_base")
+            }
+            if (fieldName % "class_base") {
                 return class_base;
-            if (fieldName % "class_upper")
+            }
+            if (fieldName % "class_upper") {
                 return class_upper;
+            }
             break;
         case 'd':
-            if (fieldName % "display_str")
+            if (fieldName % "display_str") {
                 return display_str;
+            }
             break;
         case 'e':
-            if (fieldName % "eq_str")
+            if (fieldName % "eq_str") {
                 return eq_str;
+            }
             break;
         case 'f':
-            if (fieldName % "field_str")
+            if (fieldName % "field_str") {
                 return field_str;
+            }
             if (fieldName % "fieldArray" || fieldName % "fieldArrayCnt") {
                 size_t cnt = fieldArray.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -115,28 +127,38 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'h':
-            if (fieldName % "head_includes")
+            if (fieldName % "head_includes") {
                 return head_includes;
+            }
             break;
         case 'i':
-            if (fieldName % "input_path")
+            if (fieldName % "input_path") {
                 return input_path;
+            }
             break;
         case 's':
-            if (fieldName % "short_fn")
+            if (fieldName % "short_fn") {
                 return short_fn;
-            if (fieldName % "src_includes")
+            }
+            if (fieldName % "src_includes") {
                 return src_includes;
-            if (fieldName % "sort_str")
+            }
+            if (fieldName % "sort_str") {
                 return sort_str;
-            if (fieldName % "scope_str")
+            }
+            if (fieldName % "scope_str") {
                 return scope_str;
-            if (fieldName % "serializable")
+            }
+            if (fieldName % "serializable") {
                 return bool_2_Str_t(serializable);
+            }
             break;
         case 'u':
-            if (fieldName % "use_export")
+            if (fieldName % "use_export") {
                 return bool_2_Str_t(use_export);
+            }
+            break;
+        default:
             break;
     }
 
@@ -481,7 +503,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));
-    class_upper = toUpper(class_base);
 
     //------------------------------------------------------------------------------------------------
     base_name = extract(class_name, 1);

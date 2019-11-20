@@ -100,7 +100,7 @@ inline void CNewReceipt::initialize(void) {
     gasUsed = 0;
     logs.clear();
     logsBloom = 0;
-    isError = 0;
+    isError = false;
 
     // EXISTING_CODE
     // EXISTING_CODE

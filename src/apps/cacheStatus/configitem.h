@@ -103,8 +103,8 @@ inline void CConfigItem::initialize(void) {
     value = "";
     type = "";
     tip = "";
-    required = 0;
-    read_only = 0;
+    required = false;
+    read_only = false;
     named.clear();
 
     // EXISTING_CODE

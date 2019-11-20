@@ -68,56 +68,73 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "builtin")
+            if (fieldName % "builtin") {
                 return bool_2_Str_t(builtin);
+            }
             break;
         case 'e':
-            if (fieldName % "extra")
+            if (fieldName % "extra") {
                 return extra;
+            }
             break;
         case 'f':
-            if (fieldName % "filename")
+            if (fieldName % "filename") {
                 return filename;
-            if (fieldName % "fileName")
+            }
+            if (fieldName % "fileName") {
                 return fileName;
+            }
             break;
         case 'g':
-            if (fieldName % "goldPath")
+            if (fieldName % "goldPath") {
                 return goldPath;
+            }
             break;
         case 'm':
-            if (fieldName % "mode")
+            if (fieldName % "mode") {
                 return mode;
+            }
             break;
         case 'o':
-            if (fieldName % "origLine")
+            if (fieldName % "origLine") {
                 return origLine;
-            if (fieldName % "onOff")
+            }
+            if (fieldName % "onOff") {
                 return onOff;
-            if (fieldName % "options")
+            }
+            if (fieldName % "options") {
                 return options;
+            }
             break;
         case 'p':
-            if (fieldName % "post")
+            if (fieldName % "post") {
                 return post;
-            if (fieldName % "path")
+            }
+            if (fieldName % "path") {
                 return path;
+            }
             break;
         case 'r':
-            if (fieldName % "route")
+            if (fieldName % "route") {
                 return route;
+            }
             break;
         case 's':
-            if (fieldName % "speed")
+            if (fieldName % "speed") {
                 return speed;
+            }
             break;
         case 't':
-            if (fieldName % "tool")
+            if (fieldName % "tool") {
                 return tool;
+            }
             break;
         case 'w':
-            if (fieldName % "workPath")
+            if (fieldName % "workPath") {
                 return workPath;
+            }
+            break;
+        default:
             break;
     }
 

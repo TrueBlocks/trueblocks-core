@@ -68,16 +68,22 @@ string_q CAbiCacheItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if (fieldName % "nFunctions")
+            if (fieldName % "nFunctions") {
                 return uint_2_Str(nFunctions);
-            if (fieldName % "nEvents")
+            }
+            if (fieldName % "nEvents") {
                 return uint_2_Str(nEvents);
-            if (fieldName % "nOther")
+            }
+            if (fieldName % "nOther") {
                 return uint_2_Str(nOther);
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
+            }
+            break;
+        default:
             break;
     }
 

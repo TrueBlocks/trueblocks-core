@@ -105,7 +105,7 @@ inline void CTestCase::initialize(void) {
     CBaseNode::initialize();
 
     origLine = "";
-    builtin = 0;
+    builtin = false;
     onOff = "";
     mode = "";
     speed = "";

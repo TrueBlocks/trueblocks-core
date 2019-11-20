@@ -68,10 +68,14 @@ string_q QFromTransferFrom::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'w':
-            if (fieldName % "whop")
+            if (fieldName % "whop") {
                 return addr_2_Str(whop);
-            if (fieldName % "werp")
+            }
+            if (fieldName % "werp") {
                 return addr_2_Str(werp);
+            }
+            break;
+        default:
             break;
     }
 

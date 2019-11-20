@@ -13,7 +13,7 @@ on, cmd, fast, null, dev_tools/makeClass, conflict3, n, @ r & edit
 on, cmd, fast, null, dev_tools/makeClass, list,      n, dump & files = function
 on, cmd, fast, null, dev_tools/makeClass, list_v,    n, dump & files = function & verbose
 on, cmd, fast, null, dev_tools/makeClass, edit,      n, edit @ a & filter = function
-on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, dump @ a @ i = CFunc
+on, cmd, fast, null, dev_tools/makeClass, edit_f,    n, dump @ a
 on, cmd, fast, null, dev_tools/makeClass, dump_stat, n, dump @ a @ i = CStatus & verbose
 on, cmd, fast, null, dev_tools/makeClass, run,       n, run & files = block
 on, cmd, fast, null, dev_tools/makeClass, run_ns,    n, @n = qblocks & run & files = function

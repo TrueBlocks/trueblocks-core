@@ -82,6 +82,8 @@ string_q CIndexCache::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        default:
+            break;
     }
 
     // EXISTING_CODE

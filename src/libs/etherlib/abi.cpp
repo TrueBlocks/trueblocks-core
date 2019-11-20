@@ -69,8 +69,9 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'i':
             if (fieldName % "interfaces" || fieldName % "interfacesCnt") {
@@ -86,6 +87,8 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            break;
+        default:
             break;
     }
 

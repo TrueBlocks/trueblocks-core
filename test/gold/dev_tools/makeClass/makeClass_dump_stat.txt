@@ -3,7 +3,6 @@ makeClass --dump -a -i CStatus --verbose
 {
   "class_name": "CStatus",
   "class_base": "Status",
-  "class_upper": "STATUS",
   "base_class": "CBaseNode",
   "base_name": "Status",
   "base_proper": "Status",

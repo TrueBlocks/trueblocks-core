@@ -97,6 +97,8 @@ string_q CNameCache::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        default:
+            break;
     }
 
     // EXISTING_CODE

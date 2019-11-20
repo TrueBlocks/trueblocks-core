@@ -76,16 +76,19 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
-            if (fieldName % "curBalance")
+            if (fieldName % "curBalance") {
                 return wei_2_Str(curBalance);
+            }
             break;
         case 'e':
-            if (fieldName % "enabled")
+            if (fieldName % "enabled") {
                 return bool_2_Str_t(enabled);
+            }
             break;
         case 'f':
-            if (fieldName % "fm_mode")
+            if (fieldName % "fm_mode") {
                 return uint_2_Str(fm_mode);
+            }
             break;
         case 's':
             if (fieldName % "statement") {
@@ -107,6 +110,8 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            break;
+        default:
             break;
     }
 

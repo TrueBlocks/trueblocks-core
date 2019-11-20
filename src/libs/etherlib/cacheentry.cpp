@@ -68,20 +68,26 @@ string_q CCacheEntry::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'c':
-            if (fieldName % "cached")
+            if (fieldName % "cached") {
                 return bool_2_Str(cached);
+            }
             break;
         case 'e':
-            if (fieldName % "extra")
+            if (fieldName % "extra") {
                 return extra;
+            }
             break;
         case 'p':
-            if (fieldName % "path")
+            if (fieldName % "path") {
                 return path;
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return uint_2_Str(type);
+            }
+            break;
+        default:
             break;
     }
 

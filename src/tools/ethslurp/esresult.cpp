@@ -68,16 +68,21 @@ string_q CESResult::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'm':
-            if (fieldName % "message")
+            if (fieldName % "message") {
                 return message;
+            }
             break;
         case 'r':
-            if (fieldName % "result")
+            if (fieldName % "result") {
                 return result;
+            }
             break;
         case 's':
-            if (fieldName % "status")
+            if (fieldName % "status") {
                 return status;
+            }
+            break;
+        default:
             break;
     }
 

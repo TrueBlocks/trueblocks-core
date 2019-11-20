@@ -76,8 +76,9 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'n':
-            if (fieldName % "name")
+            if (fieldName % "name") {
                 return name;
+            }
             if (fieldName % "named" || fieldName % "namedCnt") {
                 size_t cnt = named.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -93,20 +94,27 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'r':
-            if (fieldName % "required")
+            if (fieldName % "required") {
                 return bool_2_Str_t(required);
-            if (fieldName % "read_only")
+            }
+            if (fieldName % "read_only") {
                 return bool_2_Str_t(read_only);
+            }
             break;
         case 't':
-            if (fieldName % "type")
+            if (fieldName % "type") {
                 return type;
-            if (fieldName % "tip")
+            }
+            if (fieldName % "tip") {
                 return tip;
+            }
             break;
         case 'v':
-            if (fieldName % "value")
+            if (fieldName % "value") {
                 return value;
+            }
+            break;
+        default:
             break;
     }
 

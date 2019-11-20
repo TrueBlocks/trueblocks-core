@@ -68,16 +68,19 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "api_provider")
+            if (fieldName % "api_provider") {
                 return api_provider;
+            }
             break;
         case 'b':
-            if (fieldName % "balance_provider")
+            if (fieldName % "balance_provider") {
                 return balance_provider;
+            }
             break;
         case 'c':
-            if (fieldName % "client_version")
+            if (fieldName % "client_version") {
                 return client_version;
+            }
             if (fieldName % "caches" || fieldName % "cachesCnt") {
                 size_t cnt = caches.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -93,20 +96,26 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'h':
-            if (fieldName % "host")
+            if (fieldName % "host") {
                 return host;
+            }
             break;
         case 'i':
-            if (fieldName % "is_scraping")
+            if (fieldName % "is_scraping") {
                 return bool_2_Str_t(is_scraping);
+            }
             break;
         case 'r':
-            if (fieldName % "rpc_provider")
+            if (fieldName % "rpc_provider") {
                 return rpc_provider;
+            }
             break;
         case 't':
-            if (fieldName % "trueblocks_version")
+            if (fieldName % "trueblocks_version") {
                 return trueblocks_version;
+            }
+            break;
+        default:
             break;
     }
 
@@ -144,13 +153,14 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             if (fieldName % "caches") {
-                // CCachePtr item;
-                // string_q str = fieldValue;
-                // while (item.parseJson3(str)) {
-                //    caches.push_back(item);
-                //    item = CCachePtr();  // reset
+                // This drops memory, so we comment it out for now
+                // clear();
+                // caches = new CCachePtrArray;
+                // if (caches) {
+                //     string_q str = fieldValue;
+                //     return caches->parseJson3(str);
                 // }
-                return true;
+                return false;
             }
             break;
         case 'h':
@@ -273,6 +283,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CStatus, "caches");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");
@@ -283,6 +294,7 @@ void CStatus::registerClass(void) {
     builtIns.push_back(_biCStatus);
 
     // EXISTING_CODE
+    SHOW_FIELD(CStatus, "caches");
     // EXISTING_CODE
 }
 

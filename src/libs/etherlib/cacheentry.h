@@ -103,7 +103,7 @@ inline void CCacheEntry::initialize(void) {
 
     type = 0;
     extra = "";
-    cached = 0;
+    cached = false;
     path = "";
 
     // EXISTING_CODE

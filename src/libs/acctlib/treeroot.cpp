@@ -74,6 +74,8 @@ string_q CTreeRoot::getValueByName(const string_q& fieldName) const {
                 return "";
             }
             break;
+        default:
+            break;
     }
 
     // EXISTING_CODE
@@ -94,12 +96,13 @@ bool CTreeRoot::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     switch (tolower(fieldName[0])) {
         case 'r':
             if (fieldName % "root") {
-                clear();
-                root = new CTreeNode;
-                if (root) {
-                    string_q str = fieldValue;
-                    return root->parseJson3(str);
-                }
+                // This drops memory, so we comment it out for now
+                // clear();
+                // root = new CTreeNode;
+                // if (root) {
+                //     string_q str = fieldValue;
+                //     return root->parseJson3(str);
+                // }
                 return false;
             }
             break;
@@ -244,6 +247,13 @@ ostream& operator<<(ostream& os, const CTreeRoot& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CTreeRoot::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "root")
+        return root;
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

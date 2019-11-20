@@ -16,6 +16,8 @@ is_pointer          	1010	0	65556	T_BOOL TS_NUMERAL
 is_array            	1011	0	65556	T_BOOL TS_NUMERAL
 is_object           	1012	0	65556	T_BOOL TS_NUMERAL
 is_builtin          	1013	0	65556	T_BOOL TS_NUMERAL
+no_write            	1014	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1015	0	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -35,6 +37,8 @@ is_pointer          	1010	1	65556	T_BOOL TS_NUMERAL
 is_array            	1011	1	65556	T_BOOL TS_NUMERAL
 is_object           	1012	1	65556	T_BOOL TS_NUMERAL
 is_builtin          	1013	1	65556	T_BOOL TS_NUMERAL
+no_write            	1014	1	65556	T_BOOL TS_NUMERAL
+is_minimal          	1015	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -54,6 +58,8 @@ is_pointer          	1010	0	65556	T_BOOL TS_NUMERAL
 is_array            	1011	0	65556	T_BOOL TS_NUMERAL
 is_object           	1012	0	65556	T_BOOL TS_NUMERAL
 is_builtin          	1013	0	65556	T_BOOL TS_NUMERAL
+no_write            	1014	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1015	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 6001,
   "deleted": 0,

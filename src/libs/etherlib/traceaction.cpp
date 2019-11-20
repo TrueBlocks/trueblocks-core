@@ -69,42 +69,54 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "address")
+            if (fieldName % "address") {
                 return addr_2_Str(address);
+            }
             break;
         case 'b':
-            if (fieldName % "balance")
+            if (fieldName % "balance") {
                 return wei_2_Str(balance);
+            }
             break;
         case 'c':
-            if (fieldName % "callType")
+            if (fieldName % "callType") {
                 return callType;
+            }
             break;
         case 'f':
-            if (fieldName % "from")
+            if (fieldName % "from") {
                 return addr_2_Str(from);
+            }
             break;
         case 'g':
-            if (fieldName % "gas")
+            if (fieldName % "gas") {
                 return gas_2_Str(gas);
+            }
             break;
         case 'i':
-            if (fieldName % "init")
+            if (fieldName % "init") {
                 return init;
-            if (fieldName % "input")
+            }
+            if (fieldName % "input") {
                 return input;
+            }
             break;
         case 'r':
-            if (fieldName % "refundAddress")
+            if (fieldName % "refundAddress") {
                 return addr_2_Str(refundAddress);
+            }
             break;
         case 't':
-            if (fieldName % "to")
+            if (fieldName % "to") {
                 return addr_2_Str(to);
+            }
             break;
         case 'v':
-            if (fieldName % "value")
+            if (fieldName % "value") {
                 return wei_2_Str(value);
+            }
+            break;
+        default:
             break;
     }
 
