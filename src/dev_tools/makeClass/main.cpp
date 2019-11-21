@@ -29,6 +29,7 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         options.counter = CCounter();  // reset
+        LOG_INFO(cYellow, "handling generate...", cOff);
         for (auto classDef : options.classDefs) {
             CToml toml(classDef.input_path);
             toml.readFile(classDef.input_path);
@@ -47,7 +48,7 @@ int main(int argc, const char* argv[]) {
             }
         }
         LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
-                 options.counter.nProcessed, ").", string_q(40, ' '), "\n");
+                 options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
     acctlib_cleanup();

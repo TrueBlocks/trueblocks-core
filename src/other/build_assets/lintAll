@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-#
-# Usage: lintAll <optional_param_to_pylint>
-#
-# Lints all .cpp or .h files found in this folder or any children folders
-#
-find . -name "*.[ch]*" -exec pylint.py '{}' ';'

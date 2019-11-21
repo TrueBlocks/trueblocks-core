@@ -115,6 +115,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage(errStrs[ERR_EMPTYJSFILE]);
 
     // If the user has explicitly specified a classDef, use that
+    LOG8("pwd: ", getCWD());
     for (auto file : files) {
         CClassDefinition cl;
         if (fileExists(file)) {

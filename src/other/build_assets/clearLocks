@@ -1,4 +1,0 @@
-cd ..
-export QUICKBLOCKS=`pwd`
-#echo "Clearing locks in $QUICKBLOCKS/monitors"
-find $QUICKBLOCKS/monitors -name *.lck | xargs

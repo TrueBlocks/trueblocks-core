@@ -15,13 +15,14 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
+    LOG_INFO(cYellow, "handling linting...", cOff);
     counter = CCounter();
     counter.is_counting = true;
     forEveryFileInFolder("./", lintFiles, this);
     counter.is_counting = false;
     forEveryFileInFolder("./", lintFiles, this);
     LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
-             " lints).", string_q(40, ' '), "\n");
+             " lints).", string_q(40, ' '));
 
     CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
@@ -48,7 +49,6 @@ bool lintFiles(const string_q& path, void* data) {
                 opts->counter.fileCount++;
                 return true;
             }
-
             opts->counter.nVisited++;
             timestamp_t ts = date_2_Ts(fileLastModifyDate(path));
             if (ts < opts->lastLint)

@@ -30,6 +30,7 @@ extern const char* STR_ENUM_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
+    LOG_INFO(cYellow, "handling options...", cOff);
     CCommandOption::registerClass();
     counter = CCounter();  // reset
 
@@ -321,7 +322,7 @@ bool COptions::handle_options(void) {
         LOG_WARN("Testing only - no files written");
     }
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
-             counter.nProcessed, ").", string_q(40, ' '), "\n");
+             counter.nProcessed, ").", string_q(40, ' '));
 
     return true;
 }

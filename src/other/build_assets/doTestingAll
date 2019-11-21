@@ -12,14 +12,16 @@ cmake ../src
 make
 
 #echo "Testing..."
-cd $BUILD_FOLDER/$1 2>/dev/null
-make test-all | tee test_all_results
-cat test_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
-mv -f x test_results
-chmod uog+x test_results
+#cd $BUILD_FOLDER/$1 2>/dev/null
+#make test-all | tee test_all_results
+#cat test_results | cut -c6-1000 | grep "^-" | cut -c2-1000 | sed 's/ (Failed)//' | sed 's/^/diffTest/' >x
+#mv -f x test_results
+#chmod uog+x test_results
 
 #echo "Testing 2..."
 cd $BUILD_FOLDER/
+make generate finish
+make readme
 doTestingApi --filter all --mode both --clean --report $@
 
 echo "Copying working folder to compare folder..."

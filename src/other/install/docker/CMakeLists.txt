@@ -65,23 +65,14 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/acctlib")
 
 # ----------------------------------------------------------------------------------------
-# Folders for various purposes
-set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
-set (BUILD_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
-
-# ----------------------------------------------------------------------------------------
 # Enable testing
 enable_testing()
-set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 
 # ----------------------------------------------------------------------------------------
 # Builds the README.md file in the given folder
 function(build_readme sourcePath toolName)
-    set(README_FILE "${sourcePath}/README.md")
-    set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
-    set(README_FOOTER "${CMAKE_SOURCE_DIR}/other/docs/README.footer.md")
     add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${README_FOOTER}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
+    add_custom_target(readme COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/makeReadme.py" "${CMAKE_SOURCE_DIR}" "${sourcePath}" "${toolName}" DEPENDS help.txt)
 endfunction(build_readme)
 
 # ----------------------------------------------------------------------------------------

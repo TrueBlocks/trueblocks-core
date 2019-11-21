@@ -65,73 +65,23 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/acctlib")
 
 # ----------------------------------------------------------------------------------------
-# Folders for various purposes
-set (SCRIPTS_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin")
-set (BUILD_DEST_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
-
-# ----------------------------------------------------------------------------------------
 # Enable testing
 enable_testing()
-
-set (TEST_PATH   "${CMAKE_SOURCE_DIR}/../test/working")
-set (GOLD_PATH   "${CMAKE_SOURCE_DIR}/../test/gold")
-set (TEST_CHECK  "${SCRIPTS_DEST_PATH}/checkTest.py")
-set (TAG_REPLACE "${SCRIPTS_DEST_PATH}/replaceTag.py")
 
 # ----------------------------------------------------------------------------------------
 # Builds the README.md file in the given folder
 function(build_readme sourcePath toolName)
-    set(README_FILE "${sourcePath}/README.md")
-    set(TOOL_README_TEMPLATE "${sourcePath}/docs/README.tmpl.md")
-    set(README_FOOTER "${CMAKE_SOURCE_DIR}/other/docs/README.footer.md")
     add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${TAG_REPLACE}" "${TOOL_README_TEMPLATE}" "${README_FOOTER}" "${toolName}" help.txt "${README_FILE}" DEPENDS help.txt)
+    add_custom_target(readme COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/makeReadme.py" "${CMAKE_SOURCE_DIR}" "${sourcePath}" "${toolName}" DEPENDS help.txt)
 endfunction(build_readme)
 
-# ----------------------------------------------------------------------------------------
-# Runs test and checks output against expected gold file
-function(run_the_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-	set(TEST_FILE "${testPath}/${testName}.txt")
-	set(GOLD_FILE "${goldPath}/${testName}.txt")
-	if (NOT ${ARGV4} STREQUAL "" )
-	    # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE})
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-	    add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE})
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_test)
-
-# ----------------------------------------------------------------------------------------
-# Runs specials tests that are only run with "make test-all"
-function(run_the_special_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-    set(TEST_FILE "${testPath}/${testName}.txt")
-    set(GOLD_FILE "${goldPath}/${testName}.txt")
-    if (NOT ${ARGV4} STREQUAL "" )
-        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_all)
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_special_test)
-
-# ----------------------------------------------------------------------------------------
-# Runs state tests that are only run with "make test-state"
-function(run_the_state_test testPath goldPath testName testExe) # Optional argv4 with command parameters
-    set(TEST_FILE "${testPath}/${testName}.txt")
-    set(GOLD_FILE "${goldPath}/${testName}.txt")
-    if (NOT ${ARGV4} STREQUAL "" )
-        # In ARGV4 we receive the parameters to be passed to testExe  (optional)
-        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${ARGN} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${ARGN} " " ${TEST_FILE} " " ${GOLD_FILE})
-    else()
-        add_test(NAME ${testName} COMMAND ${TEST_CHECK} ${testExe} ${TEST_FILE} ${GOLD_FILE} CONFIGURATIONS test_state)
-	    #message(STATUS ${TEST_CHECK} " " ${testExe} " " ${TEST_FILE} " " ${GOLD_FILE})
-    endif()
-endfunction(run_the_state_test)
+add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-ao" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTestingAll" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

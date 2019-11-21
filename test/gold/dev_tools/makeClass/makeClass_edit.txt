@@ -1,5 +1,6 @@
 makeClass argc: 5 [1:--edit] [2:-a] [3:--filter] [4:function] 
 makeClass --edit -a --filter function 
+TIME ~ CLOCK - <INFO>  : handling generate...
 Testing editFile: function.txt
 [settings]
 class    = CFunction
@@ -7,4 +8,3 @@ fields   = string name|string type|bool anonymous|bool constant|bool payable|str
 includes = utillib.h|parameter.h
 
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        
-

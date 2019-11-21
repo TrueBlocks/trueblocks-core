@@ -15,13 +15,14 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
+    LOG_INFO(cYellow, "handling formatting...", cOff);
     counter = CCounter();
     counter.is_counting = true;
     forEveryFileInFolder("./", formatFiles, this);
     counter.is_counting = false;
     forEveryFileInFolder("./", formatFiles, this);
     LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
-             counter.nProcessed, ").", string_q(40, ' '), "\n");
+             counter.nProcessed, ").", string_q(40, ' '));
 
     CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
