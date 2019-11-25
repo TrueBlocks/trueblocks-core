@@ -128,6 +128,17 @@ extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node
     }
 
 //------------------------------------------------------------
+#define HIDE_PARENT_FIELD(CLASS_NAME, FIELD_NAME)                                                                      \
+    {                                                                                                                  \
+        CRuntimeClass* p = GETRUNTIME_CLASS(CLASS_NAME)->m_BaseClass;                                                  \
+        if (p) {                                                                                                       \
+            CFieldData* f = p->findField(FIELD_NAME);                                                                  \
+            if (f)                                                                                                     \
+                f->setHidden(true);                                                                                    \
+        }                                                                                                              \
+    }
+
+//------------------------------------------------------------
 #define UNHIDE_FIELD(CLASS_NAME, FIELD_NAME)                                                                           \
     {                                                                                                                  \
         CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \

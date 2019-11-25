@@ -922,9 +922,9 @@ CNameValueArray COptionsBase::specials;
 
 //-----------------------------------------------------------------------
 void COptionsBase::loadSpecials(void) {
-    const CToml* toml = getGlobalConfig("whenBlock");
     specials.clear();
-    string_q specialsStr = toml->getConfigStr("specials", "list", STR_DEFAULT_WHENBLOCKS);
+    extern const char* STR_DEFAULT_WHENBLOCKS;
+    string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
     CKeyValuePair keyVal;
     while (keyVal.parseJson3(specialsStr)) {
         CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
@@ -1148,27 +1148,30 @@ string_q cleanFmt(const string_q& str, format_t fmt) {
 }
 
 const char* STR_DEFAULT_WHENBLOCKS =
-    "[ { name = \"first\", value = 0 },"
-    "{ name = \"firstTrans\", value = 46147 },"
-    "{ name = \"iceage\", value = 200000 },"
-    "{ name = \"devcon1\", value = 543626 },"
-    "{ name = \"homestead\", value = 1150000 },"
-    "{ name = \"daofund\", value = 1428756 },"
-    "{ name = \"daohack\", value = 1718497 },"
-    "{ name = \"daofork\", value = 1920000 },"
-    "{ name = \"devcon2\", value = 2286910 },"
-    "{ name = \"tangerine\", value = 2463000 },"
-    "{ name = \"spurious\", value = 2675000 },"
-    "{ name = \"stateclear\", value = 2717576 },"
-    "{ name = \"eea\", value = 3265360 },"
-    "{ name = \"ens2\", value = 3327417 },"
-    "{ name = \"parityhack1\", value = 4041179 },"
-    "{ name = \"byzantium\", value = 4370000 },"
-    "{ name = \"devcon3\", value = 4469339 },"
-    "{ name = \"parityhack2\", value = 4501969 },"
-    "{ name = \"kitties\", value = 4605167 },"
-    "{ name = \"devcon4\", value = 6610279 },"
-    "{ name = \"constantinople\", value = 7280000 },"
-    "{ name = \"latest\", value = \"\" }"
+    "[ "
+    "{ name: \"first\", value: 0 },"
+    "{ name: \"firstTrans\", value: 46147 },"
+    "{ name: \"iceage\", value: 200000 },"
+    "{ name: \"devcon1\", value: 543626 },"
+    "{ name: \"homestead\", value: 1150000 },"
+    "{ name: \"daofund\", value: 1428756 },"
+    "{ name: \"daohack\", value: 1718497 },"
+    "{ name: \"daofork\", value: 1920000 },"
+    "{ name: \"devcon2\", value: 2286910 },"
+    "{ name: \"tangerine\", value: 2463000 },"
+    "{ name: \"spurious\", value: 2675000 },"
+    "{ name: \"stateclear\", value: 2717576 },"
+    "{ name: \"eea\", value: 3265360 },"
+    "{ name: \"ens2\", value: 3327417 },"
+    "{ name: \"parityhack1\", value: 4041179 },"
+    "{ name: \"byzantium\", value: 4370000 },"
+    "{ name: \"devcon3\", value: 4469339 },"
+    "{ name: \"parityhack2\", value: 4501969 },"
+    "{ name: \"kitties\", value: 4605167 },"
+    "{ name: \"makerdao\", value: 4620855 },"
+    "{ name: \"devcon4\", value: 6610279 },"
+    "{ name: \"constantinople\", value: 7280000 },"
+    "{ name: \"istanbul\", value: 9069000 },"
+    "{ name: \"latest\", value:\"\" }"
     "]";
 }  // namespace qblocks

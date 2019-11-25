@@ -351,22 +351,22 @@ void CNewBlock::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewblockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CNewBlock* newp = reinterpret_cast<const CNewBlock*>(dataPtr);
-    if (newp) {
+    const CNewBlock* newb = reinterpret_cast<const CNewBlock*>(dataPtr);
+    if (newb) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
                 if (fieldIn % "number")
-                    return uint_2_Str(newp->blockNumber);
+                    return uint_2_Str(newb->blockNumber);
                 break;
             case 't':
                 if (expContext().hashesOnly && fieldIn % "transactions") {
-                    size_t cnt = newp->transactions.size();
+                    size_t cnt = newb->transactions.size();
                     if (!cnt)
                         return "";
                     string_q ret;
                     for (size_t i = 0; i < cnt; i++) {
-                        ret += newp->transactions[i].hash;
+                        ret += newb->transactions[i].hash;
                         ret += ((i < cnt - 1) ? ",\n" : "\n");
                     }
                     return ret;
@@ -376,7 +376,7 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, newp);
+                    return nextBasenodeChunk(fieldIn, newb);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;

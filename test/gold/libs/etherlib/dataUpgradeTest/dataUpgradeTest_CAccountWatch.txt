@@ -73,7 +73,7 @@ fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
 curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 6001,
+  "schema": 6002,
   "deleted": 0,
   "showing": 1,
   "cname": "AccountWatch",

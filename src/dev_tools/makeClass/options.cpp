@@ -167,6 +167,7 @@ bool COptions::parseArguments(string_q& command) {
             if (verbose) {
                 SHOW_FIELD(CClassDefinition, "fieldArray");
                 HIDE_FIELD(CClassDefinition, "field_str");
+                manageFields("CParameter:is_enabled,is_flags", false);
                 CClassDefinition d(toml);
                 cout << d << endl;
                 HIDE_FIELD(CClassDefinition, "fieldArray");

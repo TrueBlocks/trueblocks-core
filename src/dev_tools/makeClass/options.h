@@ -90,21 +90,22 @@ extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
+inline bool is_reserved(const string_q& str) {
+    CStringArray reserved = { "new", "ret", "do", "or" };
+    for (auto r : reserved)
+        if (startsWith(str, r))
+            return true;
+    return false;
+}
+
+//------------------------------------------------------------------------------------------------------------
 inline string_q short2(const string_q& str) {
-    string_q ret = extract(str, 0, 2);
-    if (ret == "or")
-        ret = "ord";
-    return ret;
+    return extract(str, 0, (is_reserved(str) ? 4 : 2));
 }
 
 //------------------------------------------------------------------------------------------------------------
 inline string_q short3(const string_q& str) {
-    string_q ret = extract(str, 0, 3);
-    if (ret == "new")
-        ret = "newp";
-    if (ret == "ret")
-        ret = "retp";
-    return ret;
+    return extract(str, 0, (is_reserved(str) ? 4 : 3));
 }
 
 //------------------------------------------------------------------------------------------------------------

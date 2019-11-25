@@ -6,7 +6,7 @@ on, cmd, fast, abi, tools/grabABI, help_long,              n, help
 on, both, fast, abi, tools/grabABI, invalid_1,             y, addrs = 0x00001
 on, both, fast, abi, tools/grabABI, not_a_contract,        y, addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
 
-on, both, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw & fmt = json
+#on, both, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw & fmt = json
 on, both, fast, abi, tools/grabABI, local_fail,            n, addrs = 0x1234567812345678123456781234567812345678 & fmt = txt
 on, both, fast, abi, tools/grabABI, local_file,            y, addrs = 0x1234567812345678123456781234567812345678 & fmt = json
 on, cmd,  fast, abi, tools/grabABI, invalid_option,        n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne

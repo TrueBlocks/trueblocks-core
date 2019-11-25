@@ -23,6 +23,7 @@ namespace qblocks {
 #define firstTraceBlock 50871
 #define byzantiumBlock 4370000
 #define constantinopleBlock 7280000
+#define instanbulBlock 9069000
 
 //-----------------------------------------------------------------------
 inline bool ddosRange(blknum_t bn) {

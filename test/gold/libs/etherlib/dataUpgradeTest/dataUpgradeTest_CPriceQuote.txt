@@ -40,7 +40,7 @@ timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
-  "schema": 6001,
+  "schema": 6002,
   "deleted": 0,
   "showing": 1,
   "cname": "PriceQuote",

@@ -34,9 +34,9 @@ class CNewReceipt : public CBaseNode {
 
   public:
     CNewReceipt(void);
-    CNewReceipt(const CNewReceipt& ne);
+    CNewReceipt(const CNewReceipt& newr);
     virtual ~CNewReceipt(void);
-    CNewReceipt& operator=(const CNewReceipt& ne);
+    CNewReceipt& operator=(const CNewReceipt& newr);
 
     DECLARE_NODE(CNewReceipt);
 
@@ -55,7 +55,7 @@ class CNewReceipt : public CBaseNode {
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CNewReceipt& ne);
+    void duplicate(const CNewReceipt& newr);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -70,10 +70,10 @@ inline CNewReceipt::CNewReceipt(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CNewReceipt::CNewReceipt(const CNewReceipt& ne) {
+inline CNewReceipt::CNewReceipt(const CNewReceipt& newr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ne);
+    duplicate(newr);
 }
 
 // EXISTING_CODE
@@ -107,23 +107,23 @@ inline void CNewReceipt::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CNewReceipt::duplicate(const CNewReceipt& ne) {
+inline void CNewReceipt::duplicate(const CNewReceipt& newr) {
     clear();
-    CBaseNode::duplicate(ne);
+    CBaseNode::duplicate(newr);
 
-    contractAddress = ne.contractAddress;
-    gasUsed = ne.gasUsed;
-    logs = ne.logs;
-    logsBloom = ne.logsBloom;
-    isError = ne.isError;
+    contractAddress = newr.contractAddress;
+    gasUsed = newr.gasUsed;
+    logs = newr.logs;
+    logsBloom = newr.logsBloom;
+    isError = newr.isError;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& ne) {
-    duplicate(ne);
+inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& newr) {
+    duplicate(newr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;

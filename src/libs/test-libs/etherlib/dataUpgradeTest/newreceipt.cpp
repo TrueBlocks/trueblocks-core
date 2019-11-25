@@ -256,15 +256,15 @@ void CNewReceipt::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CNewReceipt* newp = reinterpret_cast<const CNewReceipt*>(dataPtr);
-    if (newp) {
+    const CNewReceipt* newr = reinterpret_cast<const CNewReceipt*>(dataPtr);
+    if (newr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, newp);
+                    return nextBasenodeChunk(fieldIn, newr);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;

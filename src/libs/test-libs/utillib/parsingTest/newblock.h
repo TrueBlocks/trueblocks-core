@@ -40,9 +40,9 @@ class CNewBlock : public CBaseNode {
 
   public:
     CNewBlock(void);
-    CNewBlock(const CNewBlock& ne);
+    CNewBlock(const CNewBlock& newb);
     virtual ~CNewBlock(void);
-    CNewBlock& operator=(const CNewBlock& ne);
+    CNewBlock& operator=(const CNewBlock& newb);
 
     DECLARE_NODE(CNewBlock);
 
@@ -60,7 +60,7 @@ class CNewBlock : public CBaseNode {
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CNewBlock& ne);
+    void duplicate(const CNewBlock& newb);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -75,10 +75,10 @@ inline CNewBlock::CNewBlock(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock::CNewBlock(const CNewBlock& ne) {
+inline CNewBlock::CNewBlock(const CNewBlock& newb) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ne);
+    duplicate(newb);
 }
 
 // EXISTING_CODE
@@ -118,29 +118,29 @@ inline void CNewBlock::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::duplicate(const CNewBlock& ne) {
+inline void CNewBlock::duplicate(const CNewBlock& newb) {
     clear();
-    CBaseNode::duplicate(ne);
+    CBaseNode::duplicate(newb);
 
-    gasLimit = ne.gasLimit;
-    gasUsed = ne.gasUsed;
-    hash = ne.hash;
-    blockNumber = ne.blockNumber;
-    parentHash = ne.parentHash;
-    miner = ne.miner;
-    difficulty = ne.difficulty;
-    price = ne.price;
-    finalized = ne.finalized;
-    timestamp = ne.timestamp;
-    transactions = ne.transactions;
+    gasLimit = newb.gasLimit;
+    gasUsed = newb.gasUsed;
+    hash = newb.hash;
+    blockNumber = newb.blockNumber;
+    parentHash = newb.parentHash;
+    miner = newb.miner;
+    difficulty = newb.difficulty;
+    price = newb.price;
+    finalized = newb.finalized;
+    timestamp = newb.timestamp;
+    transactions = newb.transactions;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
-    duplicate(ne);
+inline CNewBlock& CNewBlock::operator=(const CNewBlock& newb) {
+    duplicate(newb);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;

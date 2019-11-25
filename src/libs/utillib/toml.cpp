@@ -169,7 +169,7 @@ bool CToml::writeFile(void) {
 
 //---------------------------------------------------------------------------------------
 bool CToml::isBackLevel(void) const {
-    if (getVersion() < getVersionNum(0, 6, 0))
+    if (getVersion() < getVersionNum(0, 6, 2))
         return true;
     // This is where we would handle future upgrades
     return false;

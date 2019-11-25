@@ -96,12 +96,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.is_pointer)               { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
-        } else if (fld.is_object)                { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
+        } else if ((fld.is_flags & IS_POINTER))  { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
+        } else if ((fld.is_flags & IS_OBJECT))   { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
         } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT"; }
         // clang-format on
 
-        if (fld.is_array) {
+        if ((fld.is_flags & IS_ARRAY)) {
             setFmt = "\t[{NAME}].clear();\n";
             if (contains(fld.type, "Address")) {
                 regType = "T_ADDRESS | TS_ARRAY";
@@ -112,7 +112,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             }
         }
 
-        if (fld.is_builtin) {
+        if (fld.is_flags & IS_BUILTIN) {
             fieldGetStr += STR_GETSTR_CODE_FIELD;
             replaceAll(fieldGetStr, "[{FIELD}]", fld.name);
             if (fld.name == "topics") {
@@ -125,13 +125,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                 replaceAll(fieldGetStr, "THING", "");
             }
 
-        } else if (fld.is_object) {
+        } else if ((fld.is_flags & IS_OBJECT)) {
             fieldGetObj += STR_GETOBJ_CODE_FIELD;
-            if (!fld.is_array) {
+            if (!(fld.is_flags & IS_ARRAY)) {
                 replace(fieldGetObj, " && index < [{FIELD}].size()", "");
                 replace(fieldGetObj, "[index]", "");
             }
-            replace(fieldGetObj, "[PTR]", (fld.is_pointer ? "" : "&"));
+            replace(fieldGetObj, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
             replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
         }
 
@@ -142,11 +142,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         replace(setFmt, "[{DEFT}]", fld.str_default.empty() ? "earliestDate" : fld.str_default);
         replace(setFmt, "[{DEFP}]", fld.str_default.empty() ? "NULL" : fld.str_default);
 
-        if (fld.is_pointer && !fld.is_array)
+        if ((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY))
             copyFmt =
                 "`if ([++SHORT++.{NAME}]) {\n``[{NAME}] = new [{TYPE}];\n``*[{NAME}] = *[++SHORT++.{NAME}];\n`}\n";
 
-        if (!fld.is_pointer || fld.is_array)
+        if (!(fld.is_flags & IS_POINTER) || (fld.is_flags & IS_ARRAY))
             replace(declareFmt, "*", "");
 
         add_field_stream << substitute(substitute(fld.Format(regAddFmt), "T_TEXT", regType), "CL_NM", "[{CLASS_NAME}]");
@@ -156,21 +156,22 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
         // belongs to).
-        if (!fld.is_minimal) {
+        if (!(fld.is_flags & IS_MINIMAL)) {
             declare_stream << convertTypes(fld.Format(declareFmt)) << endl;
             copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
                                       "[{CLASS_NAME}]");
             defaults_stream << fld.Format(setFmt);
-            clear_stream << ((fld.is_pointer && !fld.is_array) ? fld.Format(ptrClearFmt) : "");
+            clear_stream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt)
+                                                                                         : "");
             if (fld.no_write) {
                 ar_read_stream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
                 ar_write_stream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
             } else {
-                ar_read_stream << fld.Format(fld.is_pointer ? STR_PRTREADFMT : STR_READFMT);
-                ar_write_stream << fld.Format(fld.is_pointer ? STR_PTRWRITEFMT : STR_WRITEFMT);
+                ar_read_stream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PRTREADFMT : STR_READFMT);
+                ar_write_stream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PTRWRITEFMT : STR_WRITEFMT);
             }
 
-            if (fld.is_object && !fld.is_pointer && !contains(fld.type, "Array")) {
+            if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_POINTER) && !contains(fld.type, "Array")) {
                 if (child_obj_stream.str().empty())
                     child_obj_stream << "\n`string_q s;\n";
                 child_obj_stream << fld.Format(STR_CHILD_OBJS) << endl;
@@ -323,7 +324,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!f.is_minimal) {
+        if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }
     }
@@ -440,11 +441,11 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     if (contains(p.type, "CBlockNum"))
                         replaceAll(str, "[{PTR}][{FIELD}][i].Format()", "uint_2_Str([{PTR}][{FIELD}][i])");
                     replaceAll(str, "[{FIELD}]", p.name);
-                    if (p.is_pointer)
+                    if ((p.is_flags & IS_POINTER))
                         replace(str, "[i].Format", "[i]->Format");
                     outStream << (str);
 
-                } else if (contains(p.type, "List") || p.is_pointer) {
+                } else if (contains(p.type, "List") || (p.is_flags & IS_POINTER)) {
                     const char* PTR_GET_CASE =
                         "if ([{NAME}])\n"
                         "`return [{NAME}]->Format();\n"
@@ -454,7 +455,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     replaceAll(ptrCase, "[{TYPE}]", p.type);
                     outStream << (ptrCase);
 
-                } else if (p.is_object) {
+                } else if ((p.is_flags & IS_OBJECT)) {
                     const char* STR_OBJECT_CASE =
                         "if ([{NAME}] == [{TYPE}]())\n"
                         "`return \"\";\n"
@@ -484,7 +485,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 string_q getCaseSetCode(const CParameterArray& fieldsIn) {
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
-        if (!f.is_minimal) {
+        if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }
     }
@@ -574,7 +575,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                                substitute(substitute(extract(p.type, 1), "Array", ""), "Address", "Addr"));
                     outStream << (str);
 
-                } else if (p.is_pointer) {
+                } else if ((p.is_flags & IS_POINTER)) {
                     const char* PTR_SET_CASE =
                         "// This drops memory, so we comment it out for now\n"
                         "clear();\n"
@@ -604,7 +605,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                     replaceAll(str, "[{TYPE}]", substitute(p.type, "Array", ""));
                     outStream << (str);
 
-                } else if (p.is_object) {
+                } else if ((p.is_flags & IS_OBJECT)) {
                     outStream << ("return " + p.name + ".parseJson3(fieldValue);");
 
                 } else {

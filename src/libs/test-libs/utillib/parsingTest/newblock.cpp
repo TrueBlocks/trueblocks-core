@@ -332,15 +332,15 @@ void CNewBlock::registerClass(void) {
 
 //---------------------------------------------------------------------------
 string_q nextNewblockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CNewBlock* newp = reinterpret_cast<const CNewBlock*>(dataPtr);
-    if (newp) {
+    const CNewBlock* newb = reinterpret_cast<const CNewBlock*>(dataPtr);
+    if (newb) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, newp);
+                    return nextBasenodeChunk(fieldIn, newb);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;

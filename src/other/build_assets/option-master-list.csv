@@ -250,6 +250,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 13940,tools,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 13960,tools,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
+13962,tools,when,whenBlock,timestamps,t,,false,false,true,true,local,switch,<boolean>,ignore other options and generate timestamps only
+13962,tools,when,whenBlock,skip,s,,false,false,true,true,local,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block numbers in the export
 13980,tools,when,whenBlock,,,,false,false,true,false,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

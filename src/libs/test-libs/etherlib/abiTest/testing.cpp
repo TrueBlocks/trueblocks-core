@@ -135,6 +135,7 @@ bool test_old_bug(void) {
     // This used to core dump when we first shifted to native c++ strings
     CFunction::registerClass();
     CParameter::registerClass();
+    manageFields("CParameter:is_flags,is_enabled", false);
 
     CAbi abi;
     cout << string_q(120, '-') << "\nABI of test1.json" << endl << string_q(120, '-') << endl;

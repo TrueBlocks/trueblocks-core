@@ -73,7 +73,7 @@ action              	1015	0	1048651	T_OBJECT TS_OBJECT
 result              	1016	0	1048651	T_OBJECT TS_OBJECT
 date                	1017	0	262149	T_DATE TS_DATE
 {
-  "schema": 6001,
+  "schema": 6002,
   "deleted": 0,
   "showing": 1,
   "cname": "Trace",

@@ -215,7 +215,6 @@ class COptionsTransList {
     }
 };
 
-extern const char* STR_DEFAULT_WHENBLOCKS;
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str, format_t fmt);
 extern const char* STR_ERROR_JSON;

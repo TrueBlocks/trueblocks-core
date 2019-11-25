@@ -23,6 +23,8 @@ static const COption params[] = {
     // clang-format off
     COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
+    COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
+    COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -30,6 +32,7 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_DISPLAY_WHEN;
+extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -37,9 +40,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray block_list;
+    bool timestamps = false;
+    uint64_t skip = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -50,6 +54,13 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-l" || arg == "--list") {
             list = true;
+
+        } else if (arg == "-t" || arg == "--timestamps") {
+            timestamps = true;
+
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
+            if (!confirmUint("skip", skip, arg))
+                return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -64,6 +75,9 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    if (skip != NOPOS && !skip)
+        return usage("--skip value must be larger than zero. Quitting...");
 
     blknum_t latest = getLastBlock_client();
     for (auto item : block_list) {
@@ -94,6 +108,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // timestamp mode dominates
+    if (timestamps)
+        return presentTimestamps(skip);
+
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
 
@@ -102,9 +120,10 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please supply either a JSON formatted date or a blockNumber.");
 
     // Display formatting
-    configureDisplay("whenBlock", "CBlock", STR_DISPLAY_WHEN);
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
+    configureDisplay("whenBlock", "CBlock", format);
     if (exportFmt == API1 || exportFmt == JSON1)
-        manageFields("CBlock:" + string_q(STR_DISPLAY_WHEN));
+        manageFields("CBlock:" + string_q(format));
 
     // Collect together results for later display
     applyFilter();
@@ -130,17 +149,6 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
-    // Upgrade the configuration file by opening it, fixing the data, and then re-writing it (i.e. versions prior to
-    // 0.6.0)
-    CToml toml(configPath("whenBlock.toml"));
-    if (toml.isBackLevel()) {
-        string_q ss = toml.getConfigStr("specials", "list", "");
-        if (!contains(ss, "kitties")) {
-            toml.setConfigArray("specials", "list", STR_DEFAULT_WHENBLOCKS);
-            toml.writeFile();
-            getGlobalConfig("whenBlock");
-        }
-    }
     Init();
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
@@ -180,8 +188,13 @@ void COptions::applyFilter() {
                 queryBlock(block, bn, false);
             }
             // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
-            if (block.blockNumber == 0)
+            if (block.blockNumber == 0 &&
+                bn == "9069000") {  // TODO(tjayrush): once instanbul passes, this can be removed
+                block.timestamp = date_2_Ts(time_q(2019, 12, 4, 12, 0, 0));
+                block.blockNumber = 9069000;
+            } else if (block.blockNumber == 0) {
                 block.timestamp = blockZeroTs;
+            }
             block.name = request.second;
             items[block.blockNumber] = block;
 
@@ -235,13 +248,6 @@ string_q COptions::listSpecials(format_t fmt) const {
 }
 
 //-----------------------------------------------------------------------
-const char* STR_DISPLAY_WHEN =
-    "[{BLOCKNUMBER}]\t"
-    "[{TIMESTAMP}]\t"
-    "[{DATE}]"
-    "[\t{NAME}]";
-
-//-----------------------------------------------------------------------
 bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const string_q& arg) {
     time_q date = str_2_Date(arg);
     if (date == earliestDate) {
@@ -262,3 +268,60 @@ bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const strin
     requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
     return true;
 }
+
+//-----------------------------------------------------------------------
+bool COptions::presentTimestamps(uint64_t skip) {
+    uint32_t* tsArray = NULL;
+    size_t nItems;
+    if (!loadTimestampArray(&tsArray, nItems))
+        return usage("Could not open timestamp file.");
+    if (!tsArray)
+        return usage("Could not allocate memory for timestamp option.");
+
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "fmt_ts", STR_DISPLAY_TIMESTAMP);
+    configureDisplay("whenBlock", "CBlock", format);
+    manageFields("CBlock:" + string_q(format));
+
+    bool isText = (exportFmt == TXT1 || exportFmt == CSV1);
+    if (!isText)
+        expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
+
+    cout << exportPreamble(exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+
+    size_t start = 0;
+    size_t n_elements = (nItems * 2);
+    size_t step = 2 * (skip == NOPOS ? 1 : skip);
+
+    for (size_t bn = start; bn < n_elements; bn += step) {
+        CBlock block;
+        block.blockNumber = tsArray[bn];
+        block.timestamp = tsArray[bn + 1];
+        if (isText) {
+            cout << block.Format(expContext().fmtMap["format"]) << endl;
+
+        } else {
+            if (bn != start)
+                cout << "," << endl;
+            cout << "  ";
+            incIndent();
+            block.doExport(cout);
+            decIndent();
+        }
+    }
+    ASSERT(tsArray)
+    delete[] tsArray;
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY_WHEN =
+    "[{BLOCKNUMBER}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DATE}]"
+    "[\t{NAME}]";
+
+//-----------------------------------------------------------------------
+const char* STR_DISPLAY_TIMESTAMP =
+    "[{BLOCKNUMBER}]\t"
+    "[{TIMESTAMP}]";

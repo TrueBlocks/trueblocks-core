@@ -71,7 +71,7 @@ to                  	1015	0	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	0	131132	T_HASH TS_STRING
 transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
 {
-  "schema": 6001,
+  "schema": 6002,
   "deleted": 0,
   "showing": 1,
   "cname": "Receipt",

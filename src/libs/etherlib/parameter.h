@@ -21,6 +21,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
+// Signature parts
 #define SIG_FTYPE (1 << 1)
 #define SIG_FNAME (1 << 2)
 #define SIG_FSPACE (1 << 3)
@@ -34,6 +35,14 @@ namespace qblocks {
 #define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
 #define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
 #define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
+// bitfield for 'is_flags'
+#define IS_NOT (0)
+#define IS_POINTER (1 << 1)
+#define IS_ARRAY (1 << 2)
+#define IS_OBJECT (1 << 3)
+#define IS_BUILTIN (1 << 4)
+#define IS_MINIMAL (1 << 5)
+#define IS_ENABLED (1 << 6)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -44,12 +53,8 @@ class CParameter : public CBaseNode {
     string_q str_default;
     string_q value;
     bool indexed;
-    bool is_pointer;
-    bool is_array;
-    bool is_object;
-    bool is_builtin;
     bool no_write;
-    bool is_minimal;
+    uint64_t is_flags;
 
   public:
     CParameter(void);
@@ -128,12 +133,8 @@ inline void CParameter::initialize(void) {
     str_default = "";
     value = "";
     indexed = false;
-    is_pointer = false;
-    is_array = false;
-    is_object = false;
-    is_builtin = false;
     no_write = false;
-    is_minimal = false;
+    is_flags = IS_ENABLED;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -149,12 +150,8 @@ inline void CParameter::duplicate(const CParameter& pa) {
     str_default = pa.str_default;
     value = pa.value;
     indexed = pa.indexed;
-    is_pointer = pa.is_pointer;
-    is_array = pa.is_array;
-    is_object = pa.is_object;
-    is_builtin = pa.is_builtin;
     no_write = pa.no_write;
-    is_minimal = pa.is_minimal;
+    is_flags = pa.is_flags;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -170,6 +170,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("grabABI", "CAbi", STR_DISPLAY_ABI);
+    manageFields("CParameter:all", false);
+    manageFields("CParameter:type,name,is_array,indexed", true);
 
     return true;
 }

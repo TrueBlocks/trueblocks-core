@@ -71,20 +71,8 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
             }
-            if (fieldName % "is_pointer") {
-                return bool_2_Str_t(is_pointer);
-            }
-            if (fieldName % "is_array") {
-                return bool_2_Str_t(is_array);
-            }
-            if (fieldName % "is_object") {
-                return bool_2_Str_t(is_object);
-            }
-            if (fieldName % "is_builtin") {
-                return bool_2_Str_t(is_builtin);
-            }
-            if (fieldName % "is_minimal") {
-                return bool_2_Str_t(is_minimal);
+            if (fieldName % "is_flags") {
+                return uint_2_Str(is_flags);
             }
             break;
         case 'n':
@@ -127,6 +115,14 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    // clang-format off
+    if (fieldName % "is_pointer") { if (str_2_Bool(fieldValue)) is_flags |= IS_POINTER; return true; }
+    if (fieldName % "is_array")   { if (str_2_Bool(fieldValue)) is_flags |= IS_ARRAY;   return true; }
+    if (fieldName % "is_object")  { if (str_2_Bool(fieldValue)) is_flags |= IS_OBJECT;  return true; }
+    if (fieldName % "is_builtin") { if (str_2_Bool(fieldValue)) is_flags |= IS_BUILTIN; return true; }
+    if (fieldName % "is_minimal") { if (str_2_Bool(fieldValue)) is_flags |= IS_MINIMAL; return true; }
+    if (fieldName % "is_enabled") { if (str_2_Bool(fieldValue)) is_flags |= IS_ENABLED; return true; }
+    // clang-format on
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -135,24 +131,8 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 indexed = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_pointer") {
-                is_pointer = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_array") {
-                is_array = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_object") {
-                is_object = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_builtin") {
-                is_builtin = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_minimal") {
-                is_minimal = str_2_Bool(fieldValue);
+            if (fieldName % "is_flags") {
+                is_flags = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -214,12 +194,8 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> str_default;
     archive >> value;
     archive >> indexed;
-    archive >> is_pointer;
-    archive >> is_array;
-    archive >> is_object;
-    archive >> is_builtin;
     archive >> no_write;
-    archive >> is_minimal;
+    archive >> is_flags;
     finishParse();
     return true;
 }
@@ -236,12 +212,8 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << str_default;
     archive << value;
     archive << indexed;
-    archive << is_pointer;
-    archive << is_array;
-    archive << is_object;
-    archive << is_builtin;
     archive << no_write;
-    archive << is_minimal;
+    archive << is_flags;
 
     return true;
 }
@@ -283,12 +255,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "str_default", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_pointer", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_builtin", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_minimal", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_flags", T_NUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
@@ -299,6 +267,14 @@ void CParameter::registerClass(void) {
     builtIns.push_back(_biCParameter);
 
     // EXISTING_CODE
+    ADD_FIELD(CParameter, "is_pointer", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_builtin", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_minimal", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_enabled", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CParameter, "is_enabled");
+    HIDE_FIELD(CParameter, "is_flags");
     // EXISTING_CODE
 }
 
@@ -308,6 +284,16 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
     if (par) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            // clang-format off
+            case 'i':
+                if (fieldIn % "is_pointer") return bool_2_Str_t(par->is_flags & IS_POINTER);
+                if (fieldIn % "is_array")   return bool_2_Str_t(par->is_flags & IS_ARRAY);
+                if (fieldIn % "is_object")  return bool_2_Str_t(par->is_flags & IS_OBJECT);
+                if (fieldIn % "is_builtin") return bool_2_Str_t(par->is_flags & IS_BUILTIN);
+                if (fieldIn % "is_minimal") return bool_2_Str_t(par->is_flags & IS_MINIMAL);
+                if (fieldIn % "is_enabled") return bool_2_Str_t(par->is_flags & IS_ENABLED);
+                break;
+            // clang-format off
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -368,7 +354,8 @@ CParameter::CParameter(string_q& textIn) {
 
     if (contains(textIn, "nowrite")) {
         no_write = true;
-        is_minimal = contains(textIn, "-min");
+        if (contains(textIn, "-min"))
+            is_flags |= IS_MINIMAL;
         replace(textIn, " (nowrite)", "");
         replace(textIn, " (nowrite-min)", "");
     }
@@ -379,15 +366,20 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = nextTokenClear(textIn, ' ');
-    is_pointer = contains(type, "*") || contains(type, "Ptr");
-    is_array = contains(type, "Array");
-    is_object = startsWith(type, 'C');
+    if (contains(type, "*") || contains(type, "Ptr"))
+        is_flags |= IS_POINTER;
+    if (contains(type, "Array"))
+        is_flags |= IS_ARRAY;
+    if (startsWith(type, 'C'))
+        is_flags |= IS_OBJECT;
     CStringArray builtins = {
         "CStringArray", "CBlockNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
     };
-    for (auto b : builtins)
-        if (type == b)
-            is_builtin = true;
+    for (auto b : builtins) {
+        if (type == b) {
+            is_flags |= IS_BUILTIN;
+        }
+    }
 
     type = substitute(type, "*", "");
     name = textIn;
@@ -528,7 +520,8 @@ bool CParameter::fromDefinition(const string_q& strIn) {
     indexed = contains(str, "indexed");
     str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
     type = elementaryName(nextTokenClear(str, ' '));
-    is_array = contains(type, '[');
+    if (contains(type, '['))
+        is_flags |= IS_ARRAY;
     name = str;
     return true;
 }
