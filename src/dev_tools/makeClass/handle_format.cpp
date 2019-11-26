@@ -15,6 +15,10 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
+    string_q res = doCommand("which clang-format");
+    if (res.empty())
+        return usage("clang-format not found. Install it before running this command. Quitting");
+
     LOG_INFO(cYellow, "handling formatting...", cOff);
     counter = CCounter();
     counter.is_counting = true;
