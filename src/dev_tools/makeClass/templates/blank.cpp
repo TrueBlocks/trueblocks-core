@@ -65,6 +65,9 @@ string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
     if (!ret.empty())
         return ret;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     [GET_CASE_CODE]
 
     // EXISTING_CODE

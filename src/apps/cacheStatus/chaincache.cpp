@@ -65,6 +65,9 @@ string_q CChainCache::getValueByName(const string_q& fieldName) const {
     if (!ret.empty())
         return ret;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     // No fields
 
     // EXISTING_CODE

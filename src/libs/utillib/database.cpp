@@ -405,8 +405,10 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
         replaceAll(codeOut, "\t", "    ");
     replaceAll(codeOut, "[PTAB]", "\\t");
 
-    if (contains(codeOut, "virtual") || contains(codeOut, "override"))
-        replace(codeOut, "~", "virtual ~");
+    if (contains(codeOut, "virtual") || contains(codeOut, "override")) {
+        replace(codeOut, "~C", "virtual ~C");
+        replace(codeOut, "~Q", "virtual ~Q");
+    }
 
     if (isTestMode())
         testing = true;

@@ -65,6 +65,9 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
     if (!ret.empty())
         return ret;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
@@ -116,12 +119,13 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     // EXISTING_CODE
     // clang-format off
-    if (fieldName % "is_pointer") { if (str_2_Bool(fieldValue)) is_flags |= IS_POINTER; return true; }
-    if (fieldName % "is_array")   { if (str_2_Bool(fieldValue)) is_flags |= IS_ARRAY;   return true; }
-    if (fieldName % "is_object")  { if (str_2_Bool(fieldValue)) is_flags |= IS_OBJECT;  return true; }
-    if (fieldName % "is_builtin") { if (str_2_Bool(fieldValue)) is_flags |= IS_BUILTIN; return true; }
-    if (fieldName % "is_minimal") { if (str_2_Bool(fieldValue)) is_flags |= IS_MINIMAL; return true; }
-    if (fieldName % "is_enabled") { if (str_2_Bool(fieldValue)) is_flags |= IS_ENABLED; return true; }
+#define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
+    if (fieldName % "is_pointer") { BOOL_ASSIGN_MASK(is_flags, IS_POINTER); return true; }
+    if (fieldName % "is_array")   { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);   return true; }
+    if (fieldName % "is_object")  { BOOL_ASSIGN_MASK(is_flags, IS_OBJECT);  return true; }
+    if (fieldName % "is_builtin") { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN); return true; }
+    if (fieldName % "is_minimal") { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL); return true; }
+    if (fieldName % "is_enabled") { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED); return true; }
     // clang-format on
     // EXISTING_CODE
 
