@@ -47,18 +47,18 @@ int main(int argc, const char* argv[]) {
 
 ////--------------------------------------------------------------------------------------
 // const char* STR_TEST_TOML =
-//"[settings]\n"
-//"junk = 1\n"
-//"[[folders]]\n"
-//"list = [\n"
-//"        { \"folder\": \"/Users/jrush/Development/trueblocks-core/src\" },\n"
-//"        ]\n"
-//"[[changes]]\n"
-//"list = [\n"
-//"        {\n"
-//"        \"from\": \"\n    // Return field values\n\",\n"
-//"        \"to\": \"\n// EXISTING_CODE\n// EXISTING_CODE\n    // Return field values\n\",\n"
-//"        \"includes\": [ \".cpp\" ],\n"
-//"        \"enabled\": true\n"
-//"        }\n"
-//"        ]\n";
+// "[settings]\n"
+// "junk = 1\n"
+// "[[folders]]\n"
+// "list = [\n"
+// "        { \"folder\": \"/Users/jrush/Development/trueblocks-core/src\" },\n"
+// "        ]\n"
+// "[[changes]]\n"
+// "list = [\n"
+// "        {\n"
+// "        \"from\": \"\n    // Return field values\n\",\n"
+// "        \"to\": \"\n// EXISTING_CODE\n// EXISTING_CODE\n    // Return field values\n\",\n"
+// "        \"includes\": [ \".cpp\" ],\n"
+// "        \"enabled\": true\n"
+// "        }\n"
+// "        ]\n";
