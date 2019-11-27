@@ -39,7 +39,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool tool_help = false;
     bool copy_to_tool = false;
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -200,7 +200,7 @@ bool COptions::parseArguments(string_q& command) {
     if (isNodeRunning()) {
         LOG_INFO("Connecting to node...");
         blknum_t unripe, ripe, staging, finalized, client;
-        getLastBlocks(unripe, ripe, staging, finalized, client);
+        getLatestBlocks(unripe, ripe, staging, finalized, client);
         if ((client - finalized) > 2500)
             scrapeSleep = 1;
         if (mode == "scrape" && !isTestMode())

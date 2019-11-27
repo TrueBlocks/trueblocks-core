@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(defaultQuitHandler);
 
 #if 0
-    for (blknum_t bl = 3684349 ; bl < getLastBlock_client() ; bl = bl + 5000)
+    for (blknum_t bl = 3684349 ; bl < getLatestBlock_client() ; bl = bl + 5000)
         cout << bl << "\t" << bn_2_Date(bl).Format(FMT_JSON) << "\t" << wei_2_Ether(getUsdFromMakerAt(bl)) << endl;
 
 #else

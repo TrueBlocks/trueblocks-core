@@ -49,7 +49,7 @@ bool COptions::parseArguments(string_q& command) {
     bool merge = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');

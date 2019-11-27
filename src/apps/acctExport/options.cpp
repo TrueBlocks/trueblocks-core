@@ -52,7 +52,7 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -344,7 +344,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     nExported = 0;
-    scanRange.second = getLastBlock_cache_ripe();
+    scanRange.second = getLatestBlock_cache_ripe();
 
     minArgs = 0;
 }
@@ -441,7 +441,7 @@ bool COptions::loadAllAppearances(void) {
     sort(tmp.begin(), tmp.end());
 
     bool hasFuture = false;
-    blknum_t lastAtClient = getLastBlock_client();
+    blknum_t lastAtClient = getLatestBlock_client();
     items.push_back(tmp[0]);
     for (auto item : tmp) {
         CAppearance_base* prev = &items[items.size() - 1];

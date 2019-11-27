@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        blknum_t latest = getLastBlock_cache_final();
+        blknum_t latest = getLatestBlock_cache_final();
         string_q def = (options.data ? STR_DATA_DISPLAY : STR_DEFAULT_DISPLAY);
 
         // Handle the various modes (there may be more than one)

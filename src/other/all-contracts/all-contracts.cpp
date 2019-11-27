@@ -12,30 +12,27 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+bool visitTrace(CTrace& trace, void* data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    // Initialize the library
     etherlib_init(quickQuitHandler);
 
-    // Visit every block between the first and the most recent
-    forEveryBlockOnDisc(visitBlock, NULL, 3055641, getLatestBlock_cache_final());
-
+    HIDE_FIELD(CTraceAction, "input");
+    HIDE_FIELD(CTraceAction, "init");
+    HIDE_FIELD(CTraceResult, "code");
+    blknum_t latest = getLatestBlock_client();
+    for (size_t bn = firstTransactionBlock ; bn < latest ; bn++) {
+        cout << bn << "\r"; cout.flush();
+        CBlock block;
+        getBlock(block, bn);
+        forEveryTraceInBlock(visitTrace, NULL, block);
+    }
     return 1;
 }
 
 //----------------------------------------------------------------
-// for each block
-bool visitBlock(CBlock& block, void* data) {
-    // Visit each tranaction and show it seperately
-    for (auto trans : block.transactions)
-        visitTransaction(trans, data);
-    return true;
-}
-
-//----------------------------------------------------------------
-// for each transaction in the block
-bool visitTransaction(CTransaction& trans, void* data) {
-    // simply print the transaction to the screen
-    cout << trans << endl;
+bool visitTrace(CTrace& trace, void* data) {
+    if (!trace.result.address.empty())
+        cout << "deployment," << trace.Format("[{RESULT::ADDRESS}],[{RESULT::GASUSED}]") << endl;
     return true;
 }

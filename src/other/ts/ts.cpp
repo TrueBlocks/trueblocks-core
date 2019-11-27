@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
 }
 
 void regenerate(void) {
-    freshenTimestampFile(getLastBlock_client());
+    freshenTimestampFile(getLatestBlock_client());
 }
 
 void list(void) {

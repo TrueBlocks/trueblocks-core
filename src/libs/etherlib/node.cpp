@@ -292,7 +292,7 @@ bool getFullReceipt(CTransaction* trans, bool needsTrace) {
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
     if (datIn == "latest")
-        return queryBlock(block, uint_2_Str(getLastBlock_client()), needTrace);
+        return queryBlock(block, uint_2_Str(getLatestBlock_client()), needTrace);
 
     if (isHash(datIn)) {
         getObjectViaRPC(block, "eth_getBlockByHash", "[" + quote(datIn) + ",true]");
@@ -432,7 +432,7 @@ bool getChainHead(void) {
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLastBlock_cache_final(void) {
+blknum_t getLatestBlock_cache_final(void) {
     string_q finLast = getLastFileInFolder(indexFolder_finalized, false);
     if (!finLast.empty()) {
         // Files in this folder are n-m.bin
@@ -445,34 +445,34 @@ blknum_t getLastBlock_cache_final(void) {
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLastBlock_cache_staging(void) {
+blknum_t getLatestBlock_cache_staging(void) {
     string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
     // Files in this folder are n.txt, if empty, we fall back on finalized folder
     if (!stageLast.empty())
         return bnFromPath(stageLast);
-    return getLastBlock_cache_final();
+    return getLatestBlock_cache_final();
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLastBlock_cache_ripe(void) {
+blknum_t getLatestBlock_cache_ripe(void) {
     string_q ripeLast = getLastFileInFolder(indexFolder_ripe, false);
     // Files in this folder are n.txt, if empty, we fall back on staging folder
     if (!ripeLast.empty())
         return bnFromPath(ripeLast);
-    return getLastBlock_cache_staging();
+    return getLatestBlock_cache_staging();
 }
 
 //--------------------------------------------------------------------------
-blknum_t getLastBlock_cache_unripe(void) {
+blknum_t getLatestBlock_cache_unripe(void) {
     string_q unripeLast = getLastFileInFolder(indexFolder_unripe, false);
     // Files in this folder are n.txt, if empty, we fall back on ripe folder
     if (!unripeLast.empty())
         return bnFromPath(unripeLast);
-    return getLastBlock_cache_ripe();
+    return getLatestBlock_cache_ripe();
 }
 
 //-------------------------------------------------------------------------
-blknum_t getLastBlock_client(void) {
+blknum_t getLatestBlock_client(void) {
     string_q ret = callRPC("eth_blockNumber", "[]", false);
     uint64_t retN = str_2_Uint(ret);
     if (retN == 0) {
@@ -489,12 +489,12 @@ blknum_t getLastBlock_client(void) {
 }
 
 //--------------------------------------------------------------------------
-bool getLastBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
-    ripe = getLastBlock_cache_ripe();
-    unripe = getLastBlock_cache_unripe();
-    staging = getLastBlock_cache_staging();
-    finalized = getLastBlock_cache_final();
-    client = (isNodeRunning() ? getLastBlock_client() : NOPOS);
+bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
+    ripe = getLatestBlock_cache_ripe();
+    unripe = getLatestBlock_cache_unripe();
+    staging = getLatestBlock_cache_staging();
+    finalized = getLatestBlock_cache_final();
+    client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
     return true;
 }
 
@@ -948,7 +948,7 @@ string_q scraperStatus(bool terse) {
     uint64_t unripe, ripe, staging, finalized, client;
     uint64_t pUnripe, pRipe, pStaging, pFinalized, pClient;
 
-    getLastBlocks(unripe, ripe, staging, finalized, client);
+    getLatestBlocks(unripe, ripe, staging, finalized, client);
     if (fileExists(configPath("cache/tmp/scraper-status.txt"))) {
         prevLastBlocks(pUnripe, pRipe, pStaging, pFinalized, pClient, false);
     } else {
@@ -1151,7 +1151,7 @@ string_q exportPostamble(format_t fmt, const CStringArray& errorsIn, const strin
     ASSERT(fmt == API1);
 
     uint64_t unripe, ripe, staging, finalized, client;
-    getLastBlocks(unripe, ripe, staging, finalized, client);
+    getLatestBlocks(unripe, ripe, staging, finalized, client);
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;
     os << ", \"meta\": {";

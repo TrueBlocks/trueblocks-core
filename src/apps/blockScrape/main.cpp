@@ -39,7 +39,7 @@ bool COptions::handle_scrape(void) {
 
     // Find the last visited block. (It's the later of ripe, staging, or finalized.)
     blknum_t unused1, ripe, staging, finalized, client;
-    getLastBlocks(unused1, ripe, staging, finalized, client);
+    getLatestBlocks(unused1, ripe, staging, finalized, client);
     blknum_t lastVisit = max(ripe, max(staging, finalized));
     blknum_t startBlock = lastVisit + 1;
 

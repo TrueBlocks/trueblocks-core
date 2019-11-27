@@ -79,7 +79,7 @@ bool COptions::parseArguments(string_q& command) {
     if (skip != NOPOS && !skip)
         return usage("--skip value must be larger than zero. Quitting...");
 
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     for (auto item : block_list) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
@@ -224,12 +224,12 @@ string_q COptions::listSpecials(format_t fmt) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = uint_2_Str(getLastBlock_client());
+            bn = uint_2_Str(getLatestBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i - 1].second) >= getLastBlock_client()) {
+            } else if (i > 0 && str_2_Uint(specials[i - 1].second) >= getLatestBlock_client()) {
                 extra = " (syncing)";
             }
         }

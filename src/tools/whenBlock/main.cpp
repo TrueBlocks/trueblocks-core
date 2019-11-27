@@ -61,7 +61,7 @@ bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts) {
     time_q date = ts_2_Date(ts);
 
     // speed up
-    blknum_t start = 1, stop = getLastBlock_client();
+    blknum_t start = 1, stop = getLatestBlock_client();
     if (date.GetYear() >= 2019) {
         start = 6988614;
     } else if (date.GetYear() >= 2018) {

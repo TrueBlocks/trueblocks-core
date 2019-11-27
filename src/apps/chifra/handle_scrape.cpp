@@ -136,7 +136,7 @@ bool COptions::handle_scrape(void) {
 
             // always catch the timestamp file up to the scraper
             if (!isTestMode())
-                freshenTimestampFile(getLastBlock_cache_ripe());
+                freshenTimestampFile(getLatestBlock_cache_ripe());
 
             // sometimes catch the monitors addresses up to the scraper
             if (!isTestMode() && daemonMode) {

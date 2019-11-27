@@ -56,7 +56,7 @@ int main(int argc, const char* argv[]) {
 
     CCounter counter;
     counter.loadFromFile();
-    blknum_t latest = getLastBlock_cache_final();
+    blknum_t latest = getLatestBlock_cache_final();
     for (blknum_t i = counter.startBlock - 1; i < latest; i++) {
         string_q fileName = getBinaryCacheFilename(CT_BLOCKS, i);
         if (fileExists(fileName)) {

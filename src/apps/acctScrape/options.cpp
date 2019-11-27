@@ -42,7 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // How far does the system think it is?
     blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
-    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
+    getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
     blknum_t latest = clientBlk;
 
     Init();

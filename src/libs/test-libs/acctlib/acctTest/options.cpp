@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = substitute(substitute(orig, "-e:", ""), "--end:", "");
             if (arg == "latest") {
-                endBlock = getLastBlock_client();
+                endBlock = getLatestBlock_client();
             } else {
                 endBlock = str_2_Uint(arg);
                 if (!isUnsigned(arg))

@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
     cerr.flush();
 
     blknum_t unripe, staging, finalized, client;
-    getLastBlocks(unripe, staging, finalized, client);
+    getLatestBlocks(unripe, staging, finalized, client);
 
     // Parse command line, allowing for command files
     COptions visitor;

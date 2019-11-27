@@ -148,11 +148,11 @@ extern bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& bloc
 extern bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abis);
 
 //-------------------------------------------------------------------------
-extern blknum_t getLastBlock_client(void);
-extern blknum_t getLastBlock_cache_final(void);
-extern blknum_t getLastBlock_cache_staging(void);
-extern blknum_t getLastBlock_cache_ripe(void);
-extern bool getLastBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& final, blknum_t& client);
+extern blknum_t getLatestBlock_client(void);
+extern blknum_t getLatestBlock_cache_final(void);
+extern blknum_t getLatestBlock_cache_staging(void);
+extern blknum_t getLatestBlock_cache_ripe(void);
+extern bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& final, blknum_t& client);
 
 //-------------------------------------------------------------------------
 extern string_q getCachePath(const string_q& _part);
