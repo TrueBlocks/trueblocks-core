@@ -91,7 +91,7 @@ extern string_q splitIfTooWide(const string_q& in);
 
 //------------------------------------------------------------------------------------------------------------
 inline bool is_reserved(const string_q& str) {
-    CStringArray reserved = { "new", "ret", "do", "or" };
+    CStringArray reserved = {"new", "ret", "do", "or"};
     for (auto r : reserved)
         if (startsWith(str, r))
             return true;
