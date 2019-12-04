@@ -161,11 +161,14 @@ void COptions::Init(void) {
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
         status.rpc_provider = status.api_provider = status.balance_provider = "--providers--";
+        status.cache_path = status.index_path = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.api_provider = getGlobalConfig()->getConfigStr("settings", "apiProvider", "http://localhost:8080");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.api_provider);
+        status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
+        status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }
     if (!isNodeRunning()) {
         status.client_version = "Not running";

@@ -84,6 +84,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "client_version") {
                 return client_version;
             }
+            if (fieldName % "cache_path") {
+                return cache_path;
+            }
             if (fieldName % "caches" || fieldName % "cachesCnt") {
                 size_t cnt = caches.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -104,6 +107,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
+            if (fieldName % "index_path") {
+                return index_path;
+            }
             if (fieldName % "is_scraping") {
                 return bool_2_Str_t(is_scraping);
             }
@@ -155,6 +161,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 client_version = fieldValue;
                 return true;
             }
+            if (fieldName % "cache_path") {
+                cache_path = fieldValue;
+                return true;
+            }
             if (fieldName % "caches") {
                 // This drops memory, so we comment it out for now
                 // clear();
@@ -173,6 +183,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             break;
         case 'i':
+            if (fieldName % "index_path") {
+                index_path = fieldValue;
+                return true;
+            }
             if (fieldName % "is_scraping") {
                 is_scraping = str_2_Bool(fieldValue);
                 return true;
@@ -220,6 +234,8 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> rpc_provider;
     archive >> api_provider;
     archive >> balance_provider;
+    archive >> cache_path;
+    archive >> index_path;
     archive >> host;
     archive >> is_scraping;
     // archive >> caches;
@@ -239,6 +255,8 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << rpc_provider;
     archive << api_provider;
     archive << balance_provider;
+    archive << cache_path;
+    archive << index_path;
     archive << host;
     archive << is_scraping;
     // archive << caches;
@@ -283,6 +301,8 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "api_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
+    ADD_FIELD(CStatus, "cache_path", T_TEXT, ++fieldNum);
+    ADD_FIELD(CStatus, "index_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
