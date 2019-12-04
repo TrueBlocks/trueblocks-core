@@ -37,8 +37,8 @@ func Execute() {
 	}
 }
 
-// options_t Structure to carry command line and config file options
-type optionsT struct {
+// globalOptionsT Structure to carry command line and config file options
+type globalOptionsT struct {
 	rpcProvider string
 	indexPath   string
 	ripePath    string
@@ -48,11 +48,10 @@ type optionsT struct {
 	nBlockProcs int
 	nAddrProcs  int
 	ripeBlock   int
-	dockerMode  bool
 }
 
 // Options Carries the configuration options (from both command line and config file)
-var Options optionsT
+var Options globalOptionsT
 
 // init Initalize options
 func init() {
@@ -68,8 +67,6 @@ func init() {
 	rootCmd.MarkPersistentFlagRequired("startBlock")
 	rootCmd.MarkPersistentFlagRequired("nBlocks")
 	rootCmd.MarkPersistentFlagRequired("ripeBlock")
-
-	Options.dockerMode = (os.Getenv("DOCKER_MODE") != "")
 }
 
 // initConfig reads in config file and ENV variables if set.

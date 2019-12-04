@@ -8,8 +8,7 @@ project (go-apps)
 include_directories(${BASE_INCLUDE})
 
 # messaging
-# message (WARNING  "*** Entering apps folder ***")
+# message (MESSAGE "Entering go-apps folder")
 
 # Compilation order of the src subdirectories
 add_subdirectory(blaze)
-add_subdirectory(scanner)

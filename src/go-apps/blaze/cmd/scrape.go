@@ -1,11 +1,10 @@
 package cmd
 
+//----------------------------------------------------------------------------
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"
 	"os"
 
 	"sort"
@@ -16,273 +15,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// Params Parameters used during calls to the RPC.
-type Params []interface{}
-
-// RPCPayload Data structure used during calls to the RPC.
-type RPCPayload struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Method  string `json:"method"`
-	Params  `json:"params"`
-	ID      int `json:"id"`
-}
-
-// Filter Used by the getLogs RPC call to identify the block range.
-type Filter struct {
-	Fromblock string `json:"fromBlock"`
-	Toblock   string `json:"toBlock"`
-}
-
-// BlockHeader Returned value from the RPC of the block header
-type BlockHeader struct {
-	ID      int    `json:"id"`
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		Author           string   `json:"author"`
-		Difficulty       string   `json:"difficulty"`
-		ExtraData        string   `json:"extraData"`
-		GasLimit         string   `json:"gasLimit"`
-		GasUsed          string   `json:"gasUsed"`
-		Hash             string   `json:"hash"`
-		LogsBloom        string   `json:"logsBloom"`
-		Miner            string   `json:"miner"`
-		MixHash          string   `json:"mixHash"`
-		Nonce            string   `json:"nonce"`
-		Number           string   `json:"number"`
-		ParentHash       string   `json:"parentHash"`
-		ReceiptsRoot     string   `json:"receiptsRoot"`
-		SealFields       []string `json:"sealFields"`
-		Sha3Uncles       string   `json:"sha3Uncles"`
-		Size             string   `json:"size"`
-		StateRoot        string   `json:"stateRoot"`
-		Timestamp        string   `json:"timestamp"`
-		TransactionsRoot string   `json:"transactionsRoot"`
-	} `json:"result"`
-}
-
-// BlockTraces Returned value from the RPC containing all the traces for a given block.
-type BlockTraces struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  []struct {
-		Action struct {
-			CallType      string `json:"callType"` // call
-			From          string `json:"from"`
-			Gas           string `json:"gas"`
-			Input         string `json:"input"`
-			To            string `json:"to"`
-			Value         string `json:"value"`
-			Author        string `json:"author"` // reward
-			RewardType    string `json:"rewardType"`
-			Address       string `json:"address"` // suicide
-			Balance       string `json:"balance"`
-			RefundAddress string `json:"refundAddress"`
-			Init          string `json:"init"` // create
-		} `json:"action,omitempty"`
-		BlockHash   string `json:"blockHash"`
-		BlockNumber int    `json:"blockNumber"`
-		Error       string `json:"error"`
-		Result      struct {
-			GasUsed string `json:"gasUsed"` // call
-			Output  string `json:"output"`
-			Address string `json:"address"` // create
-		} `json:"result"`
-		Subtraces           int           `json:"subtraces"`
-		TraceAddress        []interface{} `json:"traceAddress"`
-		TransactionHash     string        `json:"transactionHash"`
-		TransactionPosition int           `json:"transactionPosition"`
-		Type                string        `json:"type"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
-// BlockLogs Returned value from the RPC containing all the logs for a given block.
-type BlockLogs struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  []struct {
-		Address             string   `json:"address"`
-		BlockHash           string   `json:"blockHash"`
-		BlockNumber         string   `json:"blockNumber"`
-		Data                string   `json:"data"`
-		LogIndex            string   `json:"logIndex"`
-		Removed             bool     `json:"removed"`
-		Topics              []string `json:"topics"`
-		TransactionHash     string   `json:"transactionHash"`
-		TransactionIndex    string   `json:"transactionIndex"`
-		TransactionLogIndex string   `json:"transactionLogIndex"`
-		Type                string   `json:"type"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
-// TransReceipt - a given transaction's receipt
-type TransReceipt struct {
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		BlockHash         string        `json:"blockHash"`
-		BlockNumber       string        `json:"blockNumber"`
-		ContractAddress   string        `json:"contractAddress"`
-		CumulativeGasUsed string        `json:"cumulativeGasUsed"`
-		From              string        `json:"from"`
-		GasUsed           string        `json:"gasUsed"`
-		Logs              []interface{} `json:"logs"`
-		LogsBloom         string        `json:"logsBloom"`
-		Root              string        `json:"root"`
-		Status            interface{}   `json:"status"`
-		To                interface{}   `json:"to"`
-		TransactionHash   string        `json:"transactionHash"`
-		TransactionIndex  string        `json:"transactionIndex"`
-	} `json:"result"`
-	ID int `json:"id"`
-}
-
-// BlockInternals - carries both the traces and the logs for a block
-type BlockInternals struct {
+// tracesAndLogs combines Traces and Logs to make processing easier
+type tracesAndLogs struct {
 	Traces []byte
 	Logs   []byte
 }
 
-// toScreen Sends a prompt and a value to the screen (adjusts spacing if running from docker)
-func toScreen(prompt string, value string, newLine bool) {
-	space1 := "\t"
-	if Options.dockerMode {
-		space1 = "   "
-	}
-	fmt.Print(space1, prompt, "\t", value)
-	if newLine {
-		fmt.Println("")
-	}
-}
-
-// getBlockHeader Returns the block header for a given block.
-func getBlockHeader(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "parity_getBlockHeaderByNumber", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", Options.rpcProvider, body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	blockHeaderBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	defer resp.Body.Close()
-	return blockHeaderBody, nil
-}
-
-// getTracesFromBlock Returns all traces for a given block.
-func getTracesFromBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", Params{fmt.Sprintf("0x%x", blockNum)}, 2})
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", Options.rpcProvider, body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	tracesBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	defer resp.Body.Close()
-	return tracesBody, nil
-}
-
-// getLogsFromBlock Returns all logs for a given block.
-func getLogsFromBlock(blockNum int) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", Params{Filter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", Options.rpcProvider, body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	logsBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	defer resp.Body.Close()
-	return logsBody, nil
-}
-
-// getTransactionReceipt Returns recipt for a given transaction -- only used in errored contract creations
-func getTransactionReceipt(hash string) ([]byte, error) {
-	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", Params{hash}, 2})
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", Options.rpcProvider, body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	receiptBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-		return nil, err
-	}
-
-	defer resp.Body.Close()
-	return receiptBody, nil
-}
-
 // getTracesAndLogs Process the block channel and for each block query the node for both traces and logs. Send results to addressChannel
-func getTracesAndLogs(blockChannel chan int, addressChannel chan BlockInternals, blockWG *sync.WaitGroup) {
+func getTracesAndLogs(blockChannel chan int, addressChannel chan tracesAndLogs, blockWG *sync.WaitGroup) {
 
 	for blockNum := range blockChannel {
 		traces, err := getTracesFromBlock(blockNum)
@@ -295,18 +35,18 @@ func getTracesAndLogs(blockChannel chan int, addressChannel chan BlockInternals,
 			fmt.Println(err)
 			os.Exit(1) // caller will start over if this process exits with non-zero value
 		}
-		addressChannel <- BlockInternals{traces, logs}
+		addressChannel <- tracesAndLogs{traces, logs}
 	}
 	blockWG.Done()
 }
 
-func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGroup) {
+func extractAddresses(addressChannel chan tracesAndLogs, addressWG *sync.WaitGroup) {
 
 	for blockTraceAndLog := range addressChannel {
 		addressMap := make(map[string]bool)
 
 		// Parse the traces
-		var traces BlockTraces
+		var traces Trace
 		err := json.Unmarshal(blockTraceAndLog.Traces, &traces)
 		if err != nil {
 			fmt.Println(err)
@@ -319,7 +59,7 @@ func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGr
 		}
 
 		// Now, parse log data
-		var logs BlockLogs
+		var logs Log
 		err = json.Unmarshal(blockTraceAndLog.Logs, &logs)
 		if err != nil {
 			fmt.Println(err)
@@ -336,7 +76,7 @@ func extractAddresses(addressChannel chan BlockInternals, addressWG *sync.WaitGr
 	addressWG.Done()
 }
 
-func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces, blockNum string) {
+func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, blockNum string) {
 
 	for i := 0; i < len(traces.Result); i++ {
 
@@ -430,7 +170,7 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces,
 							fmt.Println(err)
 							os.Exit(1) // caller will start over if this process exits with non-zero value
 						}
-						var receipt TransReceipt
+						var receipt Receipt
 						err = json.Unmarshal(bytes, &receipt)
 						if err != nil {
 							fmt.Println(err)
@@ -482,7 +222,7 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *BlockTraces,
 }
 
 // extractAddressesFromLogs Extracts addresses from any part of the log data.
-func extractAddressesFromLogs(addressMap map[string]bool, logs *BlockLogs, blockNum string) {
+func extractAddressesFromLogs(addressMap map[string]bool, logs *Log, blockNum string) {
 
 	for i := 0; i < len(logs.Result); i++ {
 		idxInt, err := strconv.ParseInt(logs.Result[i].TransactionIndex, 0, 32)
@@ -570,10 +310,10 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	}
 }
 
-func processBlocks() {
+func scrapeBlocks() {
 
 	blockChannel := make(chan int)
-	addressChannel := make(chan BlockInternals)
+	addressChannel := make(chan tracesAndLogs)
 
 	var blockWG sync.WaitGroup
 	blockWG.Add(Options.nBlockProcs)
@@ -609,64 +349,36 @@ func padLeft(str string, totalLen int) string {
 	return zeros + str
 }
 
-// goodAddr Returns true if the address is not a precompile and not zero
-func goodAddr(addr string) bool {
-	// As per EIP 1352, all addresses less or equal to the following
-	// value are reserved for pre-compiles. We don't index precompiles.
-	if addr <= "0x000000000000000000000000000000000000ffff" {
-		return false
-	}
-	return true
+type scrapeOptionsT struct {
+	columns2 string
 }
 
-// potentialAddress Processing 'input' value, 'output' value or event 'data' value
-// we do our best, but we don't include everything we could. We do the best we can
-func potentialAddress(addr string) bool {
-	// Any address smaller than this we call a 'baddress' and do not index
-	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
-	//        -------+-------+-------+-------+-------+-------+-------+-------+
-	if addr <= small {
-		return false
-	}
-
-	// Any address with less than this many leading zeros is not an left-padded 20-byte address
-	largePrefix := "000000000000000000000000"
-	//              -------+-------+-------+
-	if !strings.HasPrefix(addr, largePrefix) {
-		return false
-	}
-
-	if strings.HasSuffix(addr, "00000000") {
-		return false
-	}
-	return true
-}
+// scanOptions carries local command line options related to the scan command
+var scrapeOptions scrapeOptionsT
 
 var scrapeCmd = &cobra.Command{
 	Use:   "scrape",
 	Short: "Freshen the index to the front of the chain",
 	Long: `
 Description:
-
   The 'scrape' subcommand freshens the TrueBlocks index, picking up where it last
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		toScreen("  options:", strconv.Itoa(Options.startBlock)+"/"+strconv.Itoa(Options.nBlocks)+"/"+strconv.Itoa(Options.ripeBlock), true)
-		toScreen("  processes:", strconv.Itoa(Options.nBlockProcs)+"/"+strconv.Itoa(Options.nAddrProcs), true)
-		toScreen("  rpcProvider:", Options.rpcProvider, true)
-		toScreen("  indexPath:", Options.indexPath, true)
-		toScreen("  ripePath:", Options.ripePath, true)
-		toScreen("  unripePath:", Options.unripePath, true)
-		if Options.dockerMode {
-			toScreen("  dockerMode:", "true", true)
-		}
-		toScreen("  scraping:", "", false)
-		processBlocks()
+		fmt.Printf("\t  options:\t %d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock)
+		fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
+		fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
+		fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
+		fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
+		fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
+		fmt.Printf("\t  columns2:\t%s\n", scrapeOptions.columns2)
+		fmt.Printf("\t  scraping:")
+		scrapeBlocks()
 		fmt.Println("")
 	},
 }
 
 func init() {
+	scrapeCmd.PersistentFlags().StringVarP(&scrapeOptions.columns2, "columns", "l", "block.timestamp", "retrieve the timestamp of the block's data")
 	rootCmd.AddCommand(scrapeCmd)
 }
