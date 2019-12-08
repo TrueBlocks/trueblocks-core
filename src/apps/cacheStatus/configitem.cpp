@@ -98,10 +98,10 @@ string_q CConfigItem::getValueByName(const string_q& fieldName) const {
             break;
         case 'r':
             if (fieldName % "required") {
-                return bool_2_Str_t(required);
+                return bool_2_Str(required);
             }
             if (fieldName % "read_only") {
-                return bool_2_Str_t(read_only);
+                return bool_2_Str(read_only);
             }
             break;
         case 't':

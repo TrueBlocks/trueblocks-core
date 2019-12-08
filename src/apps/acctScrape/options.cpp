@@ -132,8 +132,15 @@ bool COptions::parseArguments(string_q& command) {
         scanRange.second = end;  // the user is always right
 
     if (scanRange.first >= scanRange.second) {  // nothing to do?
-        for (auto watch : monitors)
-            LOG_INFO("Nothing to do for ", watch.address, "\r");
+        for (auto watch : monitors) {
+            if (isContractAt(watch.address) && latest > scanRange.first) {
+                LOG_INFO("The monitor for contract '", watch.address,
+                         "' is caught up to address indexer. Cannot proceed.\n");
+            } else {
+                LOG_INFO("Monitor is for address '", watch.address,
+                         "' is caught up to address indexer. Cannot proceed.\n");
+            }
+        }
         return false;
     }
     return true;

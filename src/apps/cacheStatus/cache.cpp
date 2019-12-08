@@ -95,7 +95,7 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
             break;
         case 'v':
             if (fieldName % "valid_counts") {
-                return bool_2_Str_t(valid_counts);
+                return bool_2_Str(valid_counts);
             }
             break;
         default:

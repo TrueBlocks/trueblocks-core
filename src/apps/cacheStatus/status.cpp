@@ -111,7 +111,7 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
                 return index_path;
             }
             if (fieldName % "is_scraping") {
-                return bool_2_Str_t(is_scraping);
+                return bool_2_Str(is_scraping);
             }
             break;
         case 'r':

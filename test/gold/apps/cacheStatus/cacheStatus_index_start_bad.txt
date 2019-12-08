@@ -6,7 +6,10 @@ cacheStatus index --start 1000000 --end 2500000
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
+  "is_scraping": false,
   "caches": [
     {
       "items": [],

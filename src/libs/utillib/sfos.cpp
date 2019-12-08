@@ -276,10 +276,10 @@ bool isRunning(const string_q& progName) {
 //----------------------------------------------------------------------------
 size_t nRunning(const string_q& progName) {
     if (isTestMode()) {
-        string_q cmd1 = "pgrep -lf " + progName;
+        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
         cerr << endl << doCommand(cmd1) << endl;
     }
-    string_q cmd = "pgrep -lf " + progName + " | wc -l";
+    string_q cmd = "pgrep -lf \"" + progName + "\" | wc -l";
     string_q result = doCommand(cmd);
     return str_2_Uint(result);
 }
@@ -287,10 +287,10 @@ size_t nRunning(const string_q& progName) {
 //----------------------------------------------------------------------------
 bool isRunning_better(const string_q& progName) {
     if (isTestMode()) {
-        string_q cmd1 = "pgrep -lf " + progName;
+        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
         cerr << endl << cmd1 << endl << doCommand(cmd1) << " " << !doCommand(cmd1).empty() << endl;
     }
-    string_q cmd = "pgrep -lf " + progName;
+    string_q cmd = "pgrep -lf \"" + progName + "\"";
     return !doCommand(cmd).empty();
 }
 

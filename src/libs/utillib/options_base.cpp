@@ -1172,6 +1172,7 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"devcon4\", value: 6610279 },"
     "{ name: \"constantinople\", value: 7280000 },"
     "{ name: \"istanbul\", value: 9069000 },"
+    "{ name: \"muir glacier\", value: 9200000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
 }  // namespace qblocks
