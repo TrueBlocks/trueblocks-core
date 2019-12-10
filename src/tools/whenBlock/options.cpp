@@ -160,7 +160,7 @@ COptions::COptions(void) {
     notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
     notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
     notes.push_back("You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.");
-    notes.push_back("The following `named` blocks are provided are currently configured:");
+    notes.push_back("The following `named` blocks are currently configured:");
     // clang-format on
     // END_CODE_NOTES
     notes.push_back("  " + listSpecials(NONE1));
@@ -178,22 +178,28 @@ void COptions::applyFilter() {
     for (auto request : requests) {
         CBlock block;
         if (request.first == "block") {
-            string_q bn = nextTokenClear(request.second, '|');
+            string_q bnStr = nextTokenClear(request.second, '|');
             if (request.second == "latest") {
-                if (isTestMode()) {
-                    continue;
-                }
-                queryBlock(block, "latest", false);
-            } else {
-                queryBlock(block, bn, false);
+                if (isTestMode())
+                    continue;  // latest changes per test, so skip
+                else
+                    bnStr = "latest";
             }
+
+            getBlock_light(block, str_2_Uint(bnStr));
+
             // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
-            if (block.blockNumber == 0 &&
-                bn == "9069000") {  // TODO(tjayrush): once instanbul passes, this can be removed
-                block.timestamp = date_2_Ts(time_q(2019, 12, 4, 12, 0, 0));
-                block.blockNumber = 9069000;
-            } else if (block.blockNumber == 0) {
-                block.timestamp = blockZeroTs;
+            if (block.blockNumber == 0) {
+                blknum_t bn = str_2_Uint(bnStr);
+                if (bn != 0) {
+                    // We've been asked to find a block that is in the future...estimate 14 blocks
+                    block.timestamp = istanbulTs + timestamp_t(14 * (bn - instanbulBlock));
+                    block.blockNumber = bn;
+                    request.second += " (est)";
+
+                } else {
+                    block.timestamp = blockZeroTs;
+                }
             }
             block.name = request.second;
             items[block.blockNumber] = block;

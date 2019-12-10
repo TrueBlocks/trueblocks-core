@@ -122,10 +122,10 @@
       "date": "2017-11-25 18:24:17 UTC"
     },
     {
-      "blockNumber": 6610279,
-      "timestamp": 1540886395,
+      "blockNumber": 6610517,
+      "timestamp": 1540890000,
       "name": "devcon4",
-      "date": "2018-10-30 07:59:55 UTC"
+      "date": "2018-10-30 09:00:00 UTC"
     },
     {
       "blockNumber": 7280000,
@@ -134,10 +134,22 @@
       "date": "2019-02-28 19:52:04 UTC"
     },
     {
+      "blockNumber": 8700401,
+      "timestamp": 1570525179,
+      "name": "devcon5",
+      "date": "2019-10-08 08:59:39 UTC"
+    },
+    {
       "blockNumber": 9069000,
       "timestamp": 1575764709,
       "name": "istanbul",
       "date": "2019-12-08 00:25:09 UTC"
+    },
+    {
+      "blockNumber": 9200000,
+      "timestamp": 1577598709,
+      "name": "muirglacier (est)",
+      "date": "2019-12-29 05:51:49 UTC"
     }
   ],
   "meta": {

@@ -1169,10 +1169,11 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"parityhack2\", value: 4501969 },"
     "{ name: \"kitties\", value: 4605167 },"
     "{ name: \"makerdao\", value: 4620855 },"
-    "{ name: \"devcon4\", value: 6610279 },"
+    "{ name: \"devcon4\", value: 6610517 },"
     "{ name: \"constantinople\", value: 7280000 },"
+    "{ name: \"devcon5\", value: 8700401 },"
     "{ name: \"istanbul\", value: 9069000 },"
-    "{ name: \"muir glacier\", value: 9200000 },"
+    "{ name: \"muirglacier\", value: 9200000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
 }  // namespace qblocks

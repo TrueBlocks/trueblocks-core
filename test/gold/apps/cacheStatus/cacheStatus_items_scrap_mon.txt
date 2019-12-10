@@ -21,7 +21,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1024630,
           "firstTs": 1454922473,
           "lastestTs": 1455832022,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/000971932-001024630.bloom",
+          "path": "/--index-path--/blooms/000971932-001024630.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmam...ZG7e"
         },
@@ -33,7 +33,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1077915,
           "firstTs": 1455832025,
           "lastestTs": 1456746324,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001024631-001077915.bloom",
+          "path": "/--index-path--/blooms/001024631-001077915.bloom",
           "sizeInBytes": 131080,
           "hash": "QmPP...n8Jj"
         },
@@ -45,7 +45,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1121333,
           "firstTs": 1456746354,
           "lastestTs": 1457494242,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001077916-001121333.bloom",
+          "path": "/--index-path--/blooms/001077916-001121333.bloom",
           "sizeInBytes": 131080,
           "hash": "QmRf...K7NZ"
         },
@@ -57,7 +57,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1162350,
           "firstTs": 1457494278,
           "lastestTs": 1458161607,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001121334-001162350.bloom",
+          "path": "/--index-path--/blooms/001121334-001162350.bloom",
           "sizeInBytes": 131080,
           "hash": "QmNZ...f1MA"
         },
@@ -69,7 +69,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1198370,
           "firstTs": 1458161615,
           "lastestTs": 1458676829,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001162351-001198370.bloom",
+          "path": "/--index-path--/blooms/001162351-001198370.bloom",
           "sizeInBytes": 131080,
           "hash": "Qme9...pbEs"
         },
@@ -81,7 +81,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1231075,
           "firstTs": 1458676846,
           "lastestTs": 1459145330,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001198371-001231075.bloom",
+          "path": "/--index-path--/blooms/001198371-001231075.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmb4...3Tud"
         },
@@ -93,7 +93,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1266948,
           "firstTs": 1459145360,
           "lastestTs": 1459658787,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001231076-001266948.bloom",
+          "path": "/--index-path--/blooms/001231076-001266948.bloom",
           "sizeInBytes": 131080,
           "hash": "QmTJ...JwXQ"
         },
@@ -105,7 +105,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1300043,
           "firstTs": 1459658807,
           "lastestTs": 1460133395,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001266949-001300043.bloom",
+          "path": "/--index-path--/blooms/001266949-001300043.bloom",
           "sizeInBytes": 131080,
           "hash": "QmQd...73VJ"
         },
@@ -117,7 +117,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1336925,
           "firstTs": 1460133398,
           "lastestTs": 1460663732,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001300044-001336925.bloom",
+          "path": "/--index-path--/blooms/001300044-001336925.bloom",
           "sizeInBytes": 131080,
           "hash": "QmVh...Bm6X"
         },
@@ -129,7 +129,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1374185,
           "firstTs": 1460663744,
           "lastestTs": 1461197926,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001336926-001374185.bloom",
+          "path": "/--index-path--/blooms/001336926-001374185.bloom",
           "sizeInBytes": 131080,
           "hash": "QmVs...aqtP"
         },
@@ -141,7 +141,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1411435,
           "firstTs": 1461197934,
           "lastestTs": 1461733191,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001374186-001411435.bloom",
+          "path": "/--index-path--/blooms/001374186-001411435.bloom",
           "sizeInBytes": 131080,
           "hash": "Qma5...EYcZ"
         },
@@ -153,7 +153,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1444289,
           "firstTs": 1461733198,
           "lastestTs": 1462204326,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001411436-001444289.bloom",
+          "path": "/--index-path--/blooms/001411436-001444289.bloom",
           "sizeInBytes": 131080,
           "hash": "QmTQ...hnjJ"
         },
@@ -165,7 +165,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1475866,
           "firstTs": 1462204334,
           "lastestTs": 1462656545,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001444290-001475866.bloom",
+          "path": "/--index-path--/blooms/001444290-001475866.bloom",
           "sizeInBytes": 131080,
           "hash": "QmfA...xd3V"
         },
@@ -177,7 +177,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1506480,
           "firstTs": 1462656563,
           "lastestTs": 1463095784,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001475867-001506480.bloom",
+          "path": "/--index-path--/blooms/001475867-001506480.bloom",
           "sizeInBytes": 131080,
           "hash": "QmR5...zdq8"
         },
@@ -189,7 +189,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1534852,
           "firstTs": 1463095790,
           "lastestTs": 1463504029,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001506481-001534852.bloom",
+          "path": "/--index-path--/blooms/001506481-001534852.bloom",
           "sizeInBytes": 131080,
           "hash": "QmXp...S9P1"
         },
@@ -201,7 +201,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1563637,
           "firstTs": 1463504046,
           "lastestTs": 1463915310,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001534853-001563637.bloom",
+          "path": "/--index-path--/blooms/001534853-001563637.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmcz...hxUj"
         },
@@ -213,7 +213,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1592752,
           "firstTs": 1463915332,
           "lastestTs": 1464333491,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001563638-001592752.bloom",
+          "path": "/--index-path--/blooms/001563638-001592752.bloom",
           "sizeInBytes": 131080,
           "hash": "QmcU...agci"
         },
@@ -225,7 +225,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1617001,
           "firstTs": 1464333492,
           "lastestTs": 1464681713,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001592753-001617001.bloom",
+          "path": "/--index-path--/blooms/001592753-001617001.bloom",
           "sizeInBytes": 262156,
           "hash": "QmVb...TW6k"
         },
@@ -237,7 +237,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1649656,
           "firstTs": 1464681719,
           "lastestTs": 1465150569,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001617002-001649656.bloom",
+          "path": "/--index-path--/blooms/001617002-001649656.bloom",
           "sizeInBytes": 131080,
           "hash": "QmY4...JHfn"
         },
@@ -249,7 +249,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1680548,
           "firstTs": 1465150624,
           "lastestTs": 1465593072,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001649657-001680548.bloom",
+          "path": "/--index-path--/blooms/001649657-001680548.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmbd...baKj"
         },
@@ -261,7 +261,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1710537,
           "firstTs": 1465593077,
           "lastestTs": 1466020841,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001680549-001710537.bloom",
+          "path": "/--index-path--/blooms/001680549-001710537.bloom",
           "sizeInBytes": 262156,
           "hash": "QmNT...KbTZ"
         },
@@ -273,7 +273,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1733043,
           "firstTs": 1466020853,
           "lastestTs": 1466345983,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001710538-001733043.bloom",
+          "path": "/--index-path--/blooms/001710538-001733043.bloom",
           "sizeInBytes": 262156,
           "hash": "QmX1...AJEZ"
         },
@@ -285,7 +285,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1759951,
           "firstTs": 1466346016,
           "lastestTs": 1466731886,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001733044-001759951.bloom",
+          "path": "/--index-path--/blooms/001733044-001759951.bloom",
           "sizeInBytes": 262156,
           "hash": "QmYv...2rQh"
         },
@@ -297,7 +297,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1792950,
           "firstTs": 1466731892,
           "lastestTs": 1467203855,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001759952-001792950.bloom",
+          "path": "/--index-path--/blooms/001759952-001792950.bloom",
           "sizeInBytes": 131080,
           "hash": "QmPg...R7zW"
         },
@@ -309,7 +309,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1819796,
           "firstTs": 1467203862,
           "lastestTs": 1467587903,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001792951-001819796.bloom",
+          "path": "/--index-path--/blooms/001792951-001819796.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmea...qTzN"
         },
@@ -321,7 +321,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1853185,
           "firstTs": 1467587937,
           "lastestTs": 1468066361,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001819797-001853185.bloom",
+          "path": "/--index-path--/blooms/001819797-001853185.bloom",
           "sizeInBytes": 262156,
           "hash": "QmWH...ADFy"
         },
@@ -333,7 +333,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1886600,
           "firstTs": 1468066368,
           "lastestTs": 1468543762,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001853186-001886600.bloom",
+          "path": "/--index-path--/blooms/001853186-001886600.bloom",
           "sizeInBytes": 131080,
           "hash": "QmSh...vLTp"
         },
@@ -345,7 +345,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1920120,
           "firstTs": 1468543771,
           "lastestTs": 1469023272,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001886601-001920120.bloom",
+          "path": "/--index-path--/blooms/001886601-001920120.bloom",
           "sizeInBytes": 262156,
           "hash": "QmWV...RHwP"
         },
@@ -357,7 +357,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1946117,
           "firstTs": 1469023288,
           "lastestTs": 1469396717,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001920121-001946117.bloom",
+          "path": "/--index-path--/blooms/001920121-001946117.bloom",
           "sizeInBytes": 262156,
           "hash": "QmWQ...Viw9"
         },
@@ -369,7 +369,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1968540,
           "firstTs": 1469396725,
           "lastestTs": 1469718883,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001946118-001968540.bloom",
+          "path": "/--index-path--/blooms/001946118-001968540.bloom",
           "sizeInBytes": 262156,
           "hash": "QmQJ...DVWB"
         },
@@ -381,7 +381,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1994173,
           "firstTs": 1469718888,
           "lastestTs": 1470088077,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001968541-001994173.bloom",
+          "path": "/--index-path--/blooms/001968541-001994173.bloom",
           "sizeInBytes": 131080,
           "hash": "QmeV...HKtF"
         },
@@ -393,7 +393,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2019948,
           "firstTs": 1470088090,
           "lastestTs": 1470457376,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/001994174-002019948.bloom",
+          "path": "/--index-path--/blooms/001994174-002019948.bloom",
           "sizeInBytes": 131080,
           "hash": "QmTy...sGNA"
         },
@@ -405,7 +405,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2047041,
           "firstTs": 1470457379,
           "lastestTs": 1470843415,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002019949-002047041.bloom",
+          "path": "/--index-path--/blooms/002019949-002047041.bloom",
           "sizeInBytes": 131080,
           "hash": "Qmdn...e5Mq"
         },
@@ -417,7 +417,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2074053,
           "firstTs": 1470843425,
           "lastestTs": 1471230477,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002047042-002074053.bloom",
+          "path": "/--index-path--/blooms/002047042-002074053.bloom",
           "sizeInBytes": 131080,
           "hash": "QmRZ...Tr6L"
         },
@@ -429,7 +429,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2100263,
           "firstTs": 1471230481,
           "lastestTs": 1471604264,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002074054-002100263.bloom",
+          "path": "/--index-path--/blooms/002074054-002100263.bloom",
           "sizeInBytes": 131080,
           "hash": "QmRx...oAsW"
         },
@@ -441,7 +441,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2127256,
           "firstTs": 1471604266,
           "lastestTs": 1471988689,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002100264-002127256.bloom",
+          "path": "/--index-path--/blooms/002100264-002127256.bloom",
           "sizeInBytes": 131080,
           "hash": "QmQp...3jCA"
         },
@@ -453,7 +453,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2152218,
           "firstTs": 1471988691,
           "lastestTs": 1472345373,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002127257-002152218.bloom",
+          "path": "/--index-path--/blooms/002127257-002152218.bloom",
           "sizeInBytes": 131080,
           "hash": "QmW1...Aj9i"
         },
@@ -465,7 +465,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2178324,
           "firstTs": 1472345377,
           "lastestTs": 1472718721,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002152219-002178324.bloom",
+          "path": "/--index-path--/blooms/002152219-002178324.bloom",
           "sizeInBytes": 131080,
           "hash": "QmVU...Ycyt"
         },
@@ -477,7 +477,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2202858,
           "firstTs": 1472718724,
           "lastestTs": 1473070747,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002178325-002202858.bloom",
+          "path": "/--index-path--/blooms/002178325-002202858.bloom",
           "sizeInBytes": 131080,
           "hash": "QmWL...66qK"
         },
@@ -489,7 +489,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1024630,
           "firstTs": 1454922473,
           "lastestTs": 1455832022,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/000971932-001024630.bin",
+          "path": "/--index-path--/finalized/000971932-001024630.bin",
           "sizeInBytes": 4803368,
           "hash": "QmZ9...6WZN"
         },
@@ -501,7 +501,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1077915,
           "firstTs": 1455832025,
           "lastestTs": 1456746324,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001024631-001077915.bin",
+          "path": "/--index-path--/finalized/001024631-001077915.bin",
           "sizeInBytes": 4715000,
           "hash": "Qmdx...n5Na"
         },
@@ -513,7 +513,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1121333,
           "firstTs": 1456746354,
           "lastestTs": 1457494242,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001077916-001121333.bin",
+          "path": "/--index-path--/finalized/001077916-001121333.bin",
           "sizeInBytes": 5055880,
           "hash": "QmTG...aEBi"
         },
@@ -525,7 +525,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1162350,
           "firstTs": 1457494278,
           "lastestTs": 1458161607,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001121334-001162350.bin",
+          "path": "/--index-path--/finalized/001121334-001162350.bin",
           "sizeInBytes": 4994436,
           "hash": "QmYn...cGMR"
         },
@@ -537,7 +537,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1198370,
           "firstTs": 1458161615,
           "lastestTs": 1458676829,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001162351-001198370.bin",
+          "path": "/--index-path--/finalized/001162351-001198370.bin",
           "sizeInBytes": 4869436,
           "hash": "QmUs...NmgH"
         },
@@ -549,7 +549,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1231075,
           "firstTs": 1458676846,
           "lastestTs": 1459145330,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001198371-001231075.bin",
+          "path": "/--index-path--/finalized/001198371-001231075.bin",
           "sizeInBytes": 4754844,
           "hash": "QmQE...xRZR"
         },
@@ -561,7 +561,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1266948,
           "firstTs": 1459145360,
           "lastestTs": 1459658787,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001231076-001266948.bin",
+          "path": "/--index-path--/finalized/001231076-001266948.bin",
           "sizeInBytes": 4895212,
           "hash": "Qmek...1VS8"
         },
@@ -573,7 +573,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1300043,
           "firstTs": 1459658807,
           "lastestTs": 1460133395,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001266949-001300043.bin",
+          "path": "/--index-path--/finalized/001266949-001300043.bin",
           "sizeInBytes": 4874180,
           "hash": "Qmcq...SR4Y"
         },
@@ -585,7 +585,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1336925,
           "firstTs": 1460133398,
           "lastestTs": 1460663732,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001300044-001336925.bin",
+          "path": "/--index-path--/finalized/001300044-001336925.bin",
           "sizeInBytes": 4827124,
           "hash": "QmVX...yMHU"
         },
@@ -597,7 +597,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1374185,
           "firstTs": 1460663744,
           "lastestTs": 1461197926,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001336926-001374185.bin",
+          "path": "/--index-path--/finalized/001336926-001374185.bin",
           "sizeInBytes": 4802224,
           "hash": "QmNR...HbnQ"
         },
@@ -609,7 +609,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1411435,
           "firstTs": 1461197934,
           "lastestTs": 1461733191,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001374186-001411435.bin",
+          "path": "/--index-path--/finalized/001374186-001411435.bin",
           "sizeInBytes": 4850420,
           "hash": "QmfZ...2qiS"
         },
@@ -621,7 +621,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1444289,
           "firstTs": 1461733198,
           "lastestTs": 1462204326,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001411436-001444289.bin",
+          "path": "/--index-path--/finalized/001411436-001444289.bin",
           "sizeInBytes": 5062204,
           "hash": "QmNu...MHH6"
         },
@@ -633,7 +633,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1475866,
           "firstTs": 1462204334,
           "lastestTs": 1462656545,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001444290-001475866.bin",
+          "path": "/--index-path--/finalized/001444290-001475866.bin",
           "sizeInBytes": 5000240,
           "hash": "QmZe...DAct"
         },
@@ -645,7 +645,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1506480,
           "firstTs": 1462656563,
           "lastestTs": 1463095784,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001475867-001506480.bin",
+          "path": "/--index-path--/finalized/001475867-001506480.bin",
           "sizeInBytes": 5031032,
           "hash": "QmNj...sHsS"
         },
@@ -657,7 +657,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1534852,
           "firstTs": 1463095790,
           "lastestTs": 1463504029,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001506481-001534852.bin",
+          "path": "/--index-path--/finalized/001506481-001534852.bin",
           "sizeInBytes": 5203392,
           "hash": "QmbW...eWxU"
         },
@@ -669,7 +669,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1563637,
           "firstTs": 1463504046,
           "lastestTs": 1463915310,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001534853-001563637.bin",
+          "path": "/--index-path--/finalized/001534853-001563637.bin",
           "sizeInBytes": 5337728,
           "hash": "QmXB...ZDLF"
         },
@@ -681,7 +681,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1592752,
           "firstTs": 1463915332,
           "lastestTs": 1464333491,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001563638-001592752.bin",
+          "path": "/--index-path--/finalized/001563638-001592752.bin",
           "sizeInBytes": 5350816,
           "hash": "Qmct...7HuJ"
         },
@@ -693,7 +693,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1617001,
           "firstTs": 1464333492,
           "lastestTs": 1464681713,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001592753-001617001.bin",
+          "path": "/--index-path--/finalized/001592753-001617001.bin",
           "sizeInBytes": 5481424,
           "hash": "QmXF...Ax3x"
         },
@@ -705,7 +705,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1649656,
           "firstTs": 1464681719,
           "lastestTs": 1465150569,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001617002-001649656.bin",
+          "path": "/--index-path--/finalized/001617002-001649656.bin",
           "sizeInBytes": 5145464,
           "hash": "QmSx...pYwk"
         },
@@ -717,7 +717,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1680548,
           "firstTs": 1465150624,
           "lastestTs": 1465593072,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001649657-001680548.bin",
+          "path": "/--index-path--/finalized/001649657-001680548.bin",
           "sizeInBytes": 5312640,
           "hash": "QmdJ...utL5"
         },
@@ -729,7 +729,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1710537,
           "firstTs": 1465593077,
           "lastestTs": 1466020841,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001680549-001710537.bin",
+          "path": "/--index-path--/finalized/001680549-001710537.bin",
           "sizeInBytes": 5443888,
           "hash": "Qmed...ofv4"
         },
@@ -741,7 +741,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1733043,
           "firstTs": 1466020853,
           "lastestTs": 1466345983,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001710538-001733043.bin",
+          "path": "/--index-path--/finalized/001710538-001733043.bin",
           "sizeInBytes": 6094772,
           "hash": "QmUF...dTiN"
         },
@@ -753,7 +753,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1759951,
           "firstTs": 1466346016,
           "lastestTs": 1466731886,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001733044-001759951.bin",
+          "path": "/--index-path--/finalized/001733044-001759951.bin",
           "sizeInBytes": 5604648,
           "hash": "QmWh...c966"
         },
@@ -765,7 +765,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1792950,
           "firstTs": 1466731892,
           "lastestTs": 1467203855,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001759952-001792950.bin",
+          "path": "/--index-path--/finalized/001759952-001792950.bin",
           "sizeInBytes": 5387420,
           "hash": "QmfE...aS2M"
         },
@@ -777,7 +777,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1819796,
           "firstTs": 1467203862,
           "lastestTs": 1467587903,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001792951-001819796.bin",
+          "path": "/--index-path--/finalized/001792951-001819796.bin",
           "sizeInBytes": 5175148,
           "hash": "Qmbv...t8EQ"
         },
@@ -789,7 +789,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1853185,
           "firstTs": 1467587937,
           "lastestTs": 1468066361,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001819797-001853185.bin",
+          "path": "/--index-path--/finalized/001819797-001853185.bin",
           "sizeInBytes": 5412836,
           "hash": "QmdU...pgad"
         },
@@ -801,7 +801,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1886600,
           "firstTs": 1468066368,
           "lastestTs": 1468543762,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001853186-001886600.bin",
+          "path": "/--index-path--/finalized/001853186-001886600.bin",
           "sizeInBytes": 5345784,
           "hash": "QmZ8...TQ8G"
         },
@@ -813,7 +813,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1920120,
           "firstTs": 1468543771,
           "lastestTs": 1469023272,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001886601-001920120.bin",
+          "path": "/--index-path--/finalized/001886601-001920120.bin",
           "sizeInBytes": 5599100,
           "hash": "QmUo...CTus"
         },
@@ -825,7 +825,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1946117,
           "firstTs": 1469023288,
           "lastestTs": 1469396717,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001920121-001946117.bin",
+          "path": "/--index-path--/finalized/001920121-001946117.bin",
           "sizeInBytes": 5516004,
           "hash": "QmYS...nzj1"
         },
@@ -837,7 +837,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1968540,
           "firstTs": 1469396725,
           "lastestTs": 1469718883,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001946118-001968540.bin",
+          "path": "/--index-path--/finalized/001946118-001968540.bin",
           "sizeInBytes": 5701624,
           "hash": "QmTX...sLBf"
         },
@@ -849,7 +849,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1994173,
           "firstTs": 1469718888,
           "lastestTs": 1470088077,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001968541-001994173.bin",
+          "path": "/--index-path--/finalized/001968541-001994173.bin",
           "sizeInBytes": 5303636,
           "hash": "QmQ7...mPpk"
         },
@@ -861,7 +861,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2019948,
           "firstTs": 1470088090,
           "lastestTs": 1470457376,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/001994174-002019948.bin",
+          "path": "/--index-path--/finalized/001994174-002019948.bin",
           "sizeInBytes": 5343328,
           "hash": "Qmb9...Q4ig"
         },
@@ -873,7 +873,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2047041,
           "firstTs": 1470457379,
           "lastestTs": 1470843415,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002019949-002047041.bin",
+          "path": "/--index-path--/finalized/002019949-002047041.bin",
           "sizeInBytes": 5187740,
           "hash": "QmNR...CpCY"
         },
@@ -885,7 +885,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2074053,
           "firstTs": 1470843425,
           "lastestTs": 1471230477,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002047042-002074053.bin",
+          "path": "/--index-path--/finalized/002047042-002074053.bin",
           "sizeInBytes": 5134528,
           "hash": "QmUC...bynn"
         },
@@ -897,7 +897,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2100263,
           "firstTs": 1471230481,
           "lastestTs": 1471604264,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002074054-002100263.bin",
+          "path": "/--index-path--/finalized/002074054-002100263.bin",
           "sizeInBytes": 5122468,
           "hash": "QmUy...QfpF"
         },
@@ -909,7 +909,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2127256,
           "firstTs": 1471604266,
           "lastestTs": 1471988689,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002100264-002127256.bin",
+          "path": "/--index-path--/finalized/002100264-002127256.bin",
           "sizeInBytes": 5096260,
           "hash": "QmVj...iK9f"
         },
@@ -921,7 +921,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2152218,
           "firstTs": 1471988691,
           "lastestTs": 1472345373,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002127257-002152218.bin",
+          "path": "/--index-path--/finalized/002127257-002152218.bin",
           "sizeInBytes": 5143312,
           "hash": "QmPL...EsJX"
         },
@@ -933,7 +933,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2178324,
           "firstTs": 1472345377,
           "lastestTs": 1472718721,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002152219-002178324.bin",
+          "path": "/--index-path--/finalized/002152219-002178324.bin",
           "sizeInBytes": 5178416,
           "hash": "QmVZ...3fZe"
         },
@@ -945,7 +945,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2202858,
           "firstTs": 1472718724,
           "lastestTs": 1473070747,
-          "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002178325-002202858.bin",
+          "path": "/--index-path--/finalized/002178325-002202858.bin",
           "sizeInBytes": 5208776,
           "hash": "QmNh...oGZM"
         }

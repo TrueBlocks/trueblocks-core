@@ -1181,8 +1181,8 @@ bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool p
     if (last > first) {
         size_t mid = first + ((last - first) / 2);
         CBlock b1, b2;
-        getBlock(b1, mid);
-        getBlock(b2, mid + 1);
+        getBlock_light(b1, mid);
+        getBlock_light(b2, mid + 1);
         bool atMid = (b1.timestamp <= block.timestamp);
         bool atMid1 = (b2.timestamp <= block.timestamp);
         if (atMid && !atMid1) {
@@ -1195,7 +1195,7 @@ bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool p
         // we're too low, so search above
         return findTimestamp_binarySearch(block, mid + 1, last);
     }
-    getBlock(block, first);
+    getBlock_light(block, first);
     return true;
 }
 

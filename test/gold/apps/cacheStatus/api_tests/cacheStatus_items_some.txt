@@ -22,7 +22,7 @@
               "latestAppearance": 3012968,
               "firstTs": 1484277812,
               "lastestTs": 1484659811,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002986116-003012968.bloom",
+              "path": "/--index-path--/blooms/002986116-003012968.bloom",
               "sizeInBytes": 131080,
               "hash": "Qmdr...kWX7"
             },
@@ -34,7 +34,7 @@
               "latestAppearance": 3039485,
               "firstTs": 1484659813,
               "lastestTs": 1485038618,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003012969-003039485.bloom",
+              "path": "/--index-path--/blooms/003012969-003039485.bloom",
               "sizeInBytes": 131080,
               "hash": "QmdM...JYwW"
             },
@@ -46,7 +46,7 @@
               "latestAppearance": 3064476,
               "firstTs": 1485038623,
               "lastestTs": 1485396031,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003039486-003064476.bloom",
+              "path": "/--index-path--/blooms/003039486-003064476.bloom",
               "sizeInBytes": 131080,
               "hash": "QmNR...npTg"
             },
@@ -58,7 +58,7 @@
               "latestAppearance": 3090505,
               "firstTs": 1485396040,
               "lastestTs": 1485768828,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003064477-003090505.bloom",
+              "path": "/--index-path--/blooms/003064477-003090505.bloom",
               "sizeInBytes": 131080,
               "hash": "QmfY...Q1zT"
             },
@@ -70,7 +70,7 @@
               "latestAppearance": 3117476,
               "firstTs": 1485768838,
               "lastestTs": 1486156334,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003090506-003117476.bloom",
+              "path": "/--index-path--/blooms/003090506-003117476.bloom",
               "sizeInBytes": 131080,
               "hash": "QmQE...GhiQ"
             },
@@ -82,7 +82,7 @@
               "latestAppearance": 3012968,
               "firstTs": 1484277812,
               "lastestTs": 1484659811,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002986116-003012968.bin",
+              "path": "/--index-path--/finalized/002986116-003012968.bin",
               "sizeInBytes": 5158008,
               "hash": "QmPE...P2RP"
             },
@@ -94,7 +94,7 @@
               "latestAppearance": 3039485,
               "firstTs": 1484659813,
               "lastestTs": 1485038618,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003012969-003039485.bin",
+              "path": "/--index-path--/finalized/003012969-003039485.bin",
               "sizeInBytes": 5159484,
               "hash": "QmaL...ovMo"
             },
@@ -106,7 +106,7 @@
               "latestAppearance": 3064476,
               "firstTs": 1485038623,
               "lastestTs": 1485396031,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003039486-003064476.bin",
+              "path": "/--index-path--/finalized/003039486-003064476.bin",
               "sizeInBytes": 5090664,
               "hash": "QmTY...KUeh"
             },
@@ -118,7 +118,7 @@
               "latestAppearance": 3090505,
               "firstTs": 1485396040,
               "lastestTs": 1485768828,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003064477-003090505.bin",
+              "path": "/--index-path--/finalized/003064477-003090505.bin",
               "sizeInBytes": 5076756,
               "hash": "QmeX...kcE1"
             },
@@ -130,7 +130,7 @@
               "latestAppearance": 3117476,
               "firstTs": 1485768838,
               "lastestTs": 1486156334,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003090506-003117476.bin",
+              "path": "/--index-path--/finalized/003090506-003117476.bin",
               "sizeInBytes": 5127744,
               "hash": "QmUE...Z9Mc"
             }
