@@ -28,8 +28,9 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        return false;
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
@@ -41,6 +42,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
+    LOG8("Setting up...");
     blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
     getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
     blknum_t latest = clientBlk;
@@ -94,9 +96,10 @@ bool COptions::parseArguments(string_q& command) {
         watch.finishParse();
         monitors.push_back(watch);
     }
+    LOG_INFO("Scraping ", monitors.size(), " addresses.");
 
     if (monitors.size() == 0)
-        return usage("Please provide at least one Ethereum address to scrape. Quitting...");
+        EXIT_USAGE("Please provide at least one Ethereum address to scrape. Quitting...");
 
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -116,10 +119,11 @@ bool COptions::parseArguments(string_q& command) {
     // Scan the monitors to see if any are locked (fail if yes). While we're at it, find the block the monitors think we
     // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet
     // and it's a smart contract, or zero).
+    LOG8("Checking locks...");
     blknum_t earliestBlock = NOPOS;
     for (auto monitor : monitors) {
         if (!checkLocks(monitor.address))
-            return false;
+            EXIT_NOMSG(false);
         earliestBlock = min(earliestBlock, nextBlockAsPerMonitor(monitor.address));
     }
     blknum_t latestBlock =
@@ -134,16 +138,14 @@ bool COptions::parseArguments(string_q& command) {
     if (scanRange.first >= scanRange.second) {  // nothing to do?
         for (auto watch : monitors) {
             if (isContractAt(watch.address) && latest > scanRange.first) {
-                LOG_INFO("The monitor for contract '", watch.address,
-                         "' is caught up to address indexer. Cannot proceed.\n");
+                LOG_INFO("The monitor for contract '", watch.address, "' is caught up to address indexer. Quitting...");
             } else {
-                LOG_INFO("Monitor is for address '", watch.address,
-                         "' is caught up to address indexer. Cannot proceed.\n");
+                LOG_INFO("Monitor is for address '", watch.address, "' is caught up to address indexer. Quitting...");
             }
         }
-        return false;
+        EXIT_NOMSG(false);
     }
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -201,15 +203,15 @@ bool COptions::checkLocks(const address_t& address) const {
 
 //--------------------------------------------------------------------------------
 blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
-    blknum_t nextBlock =
-        str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
-    blknum_t deployed = 0;
+    ENTER8("nextBlockAsPerMonitor: " + address);
+
+    if (fileExists(getMonitorLast(address)))
+        return str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
-        deployed = getDeployBlock(address);  // returns NOPOS if not a contract, block deployed otherwise
-        if (deployed == NOPOS)
-            deployed = 0;
+        blknum_t deployed = getDeployBlock(address);
+        EXIT_NOMSG8(deployed == NOPOS ? 0 : deployed);
     }
 
-    return max(nextBlock, deployed);
+    EXIT_NOMSG8(0);
 }
