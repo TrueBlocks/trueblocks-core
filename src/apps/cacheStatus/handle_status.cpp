@@ -305,6 +305,8 @@ bool noteIndex(const string_q& path, void* data) {
         //        string_q fn = substitute(path, getIndexPath(""), "");
         aci.path = substitute(path, counter->cachePtr->path, "");
         string_q fn = aci.path;
+        if (isTestMode())
+            aci.path = substitute(aci.path, getIndexPath(""), "/--index-path--/");
         replace(fn, "blooms/", "");
         replace(fn, "finalized/", "");
         replace(fn, "staging/", "");
