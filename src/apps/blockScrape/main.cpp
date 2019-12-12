@@ -70,6 +70,15 @@ bool COptions::handle_scrape(void) {
     // index is near the head of the chain and the difficulty level is high (the time bomb is
     // exploding), the time will extend, but the final nature is the same.
     blknum_t ripeBlock = client - 28;
+    if (client < 28)
+        ripeBlock = 0;
+
+    // Now we want to do a final adjustment to n_blocks to make sure it doesn't go past the
+    // last synced block at the client
+    if ((startBlock + n_blocks) > client) {
+        ASSERT(startBlock <= client);  // see above
+        n_blocks = (client - startBlock);
+    }
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;

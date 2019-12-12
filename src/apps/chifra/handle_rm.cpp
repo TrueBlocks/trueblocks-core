@@ -70,7 +70,7 @@ bool COptions::handle_rm(void) {
             first = false;
         }
         if (msg.empty())
-            msg = "{ \"msg\": \"noting was removed\" }";
+            msg = "{ \"msg\": \"nothing was removed\" }";
         cout << msg;
         cout << exportPostamble(JSON1, errors, "") << endl;
     }

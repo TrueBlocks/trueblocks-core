@@ -180,7 +180,7 @@ bool COptions::exportData(void) {
 
                 } else {
                     static size_t cnt = 0;
-                    if (!(++cnt % 71)) {  // not reporting every tx is way faster
+                    if (!(++cnt % 11)) {  // not reporting every tx is way faster
                         LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
                                  trans.transactionIndex, ")      ", "\r");
                     }

@@ -299,7 +299,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		fmt.Println(err)
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
-	// Show twenty-five dots no matter how many blocks we're scraping
+	// Show fifty dots no matter how many blocks we're scraping
 	skip := Options.nBlocks / 50
 	if skip < 1 {
 		skip = 1
@@ -365,7 +365,7 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("\t  options:\t %d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock)
+		fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
 		fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
 		fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
 		fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)

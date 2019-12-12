@@ -64,7 +64,7 @@ Description:
   data, so you have to edit this file to customize it.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		Options.rpcProvider = "http://localhost:8545"
-		fmt.Printf("\t  options:\t %d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock)
+		fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
 		fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
 		fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
 		fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
