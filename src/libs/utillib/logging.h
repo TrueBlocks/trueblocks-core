@@ -270,23 +270,27 @@ extern string_q _logExit(const string_q& func);
 #define ENTER(a)                                                                                                       \
     { LOG2(_logEnter(a)); }                                                                                            \
     string_q l_funcName = (a);
+
 #define EXIT_USAGE(a)                                                                                                  \
     {                                                                                                                  \
         LOG_ERR(_logExit(l_funcName));                                                                                 \
         return usage((a));                                                                                             \
     }
+
 #define EXIT_FAIL(a)                                                                                                   \
     {                                                                                                                  \
         LOG_WARN(_logExit(l_funcName));                                                                                \
         cerr << (a);                                                                                                   \
         return false;                                                                                                  \
     }
+
 #define EXIT_MSG(a, b)                                                                                                 \
     {                                                                                                                  \
         LOG2(_logExit(l_funcName));                                                                                    \
         cerr << (a);                                                                                                   \
         return (b);                                                                                                    \
     }
+    
 #define EXIT_NOMSG(b)                                                                                                  \
     {                                                                                                                  \
         LOG2(_logExit(l_funcName));                                                                                    \
@@ -296,12 +300,14 @@ extern string_q _logExit(const string_q& func);
 #define ENTER8(a)                                                                                                      \
     { LOG8(_logEnter(a)); }                                                                                            \
     string_q l_funcName = (a);
+
 #define EXIT_MSG8(a, b)                                                                                                \
     {                                                                                                                  \
         LOG8(_logExit(l_funcName));                                                                                    \
         cerr << a;                                                                                                     \
         return (b);                                                                                                    \
     }
+
 #define EXIT_NOMSG8(b)                                                                                                 \
     {                                                                                                                  \
         LOG8(_logExit(l_funcName));                                                                                    \
