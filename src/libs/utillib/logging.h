@@ -290,7 +290,7 @@ extern string_q _logExit(const string_q& func);
         cerr << (a);                                                                                                   \
         return (b);                                                                                                    \
     }
-    
+
 #define EXIT_NOMSG(b)                                                                                                  \
     {                                                                                                                  \
         LOG2(_logExit(l_funcName));                                                                                    \

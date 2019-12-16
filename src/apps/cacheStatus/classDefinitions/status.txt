@@ -3,4 +3,4 @@ class = CStatus
 fields = string client_version|string trueblocks_version|string rpc_provider|string api_provider|string balance_provider|string cache_path|string index_path|string host|bool is_scraping|CCachePtrArray caches (nowrite)
 includes = etherlib.h|cache.h
 serialize = true
-enabled = false
+enabled = true

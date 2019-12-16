@@ -24,12 +24,15 @@ bool COptions::handle_rm(void) {
     CStringArray removed;
     bool hasYes = contains(tool_flags, "--yes");
     for (auto addr : addrs) {
+        string_q delFn = substitute(getMonitorPath(addr), ".acct.bin", ".deleted");
+
         bool exists = false;
         exists |= fileExists(getMonitorPath(addr));
         exists |= fileExists(getMonitorLast(addr));
         exists |= fileExists(getMonitorExpt(addr));
         exists |= fileExists(getMonitorBals(addr));
         exists |= fileExists(substitute(getMonitorPath(addr), ".acct.bin", ".toml"));
+        exists |= fileExists(delFn);
 
         if (!exists) {
             if (!hasYes)
@@ -37,10 +40,19 @@ bool COptions::handle_rm(void) {
 
         } else {
             int ch = 'n';  // default to no in both command line and api cases
-            if (!isApiMode() && !hasYes) {
-                cerr << "Remove monitor for " << addr << "? (y=yes) >";
-                cerr.flush();
-                ch = getchar();
+            if (!hasYes) {
+                if (isApiMode()) {
+                    bool exists = fileExists(delFn);
+                    if (exists)
+                        ::remove(delFn.c_str());
+                    else
+                        stringToAsciiFile(delFn, Now().Format(FMT_EXPORT));
+                    return true;
+                } else {
+                    cerr << "Remove monitor for " << addr << "? (y=yes) >";
+                    cerr.flush();
+                    ch = getchar();
+                }
             }
 
             if (ch == 'y' || ch == 'Y' || hasYes) {
@@ -54,7 +66,10 @@ bool COptions::handle_rm(void) {
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 
             } else {
-                EXIT_USAGE("Monitor not removed.");
+                if (isApiMode())
+                    removed.push_back("{ \"removed\": \"" + addr + "\" }");
+                else
+                    EXIT_USAGE("Monitor not removed.");
             }
         }
     }

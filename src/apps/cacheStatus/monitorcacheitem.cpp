@@ -70,6 +70,11 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'd':
+            if (fieldName % "deleted") {
+                return bool_2_Str(deleted);
+            }
+            break;
         case 't':
             if (fieldName % "type") {
                 return type;
@@ -98,6 +103,12 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'd':
+            if (fieldName % "deleted") {
+                deleted = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 't':
             if (fieldName % "type") {
                 type = fieldValue;
@@ -130,6 +141,7 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
+    archive >> deleted;
     finishParse();
     return true;
 }
@@ -142,6 +154,7 @@ bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
+    archive << deleted;
 
     return true;
 }
@@ -181,6 +194,7 @@ void CMonitorCacheItem::registerClass(void) {
     ADD_FIELD(CMonitorCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMonitorCacheItem, "schema");

@@ -198,7 +198,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isNodeRunning()) {
-//        LOG_INFO("Connecting to node...");
+        //        LOG_INFO("Connecting to node...");
         blknum_t unripe, ripe, staging, finalized, client;
         getLatestBlocks(unripe, ripe, staging, finalized, client);
         if ((client - finalized) > 2500)

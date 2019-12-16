@@ -146,6 +146,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "items": [
         {
           "type": "CMonitorCacheItem",
+          "deleted": false,
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",

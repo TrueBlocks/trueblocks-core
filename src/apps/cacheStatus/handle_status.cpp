@@ -270,6 +270,7 @@ bool noteMonitor(const string_q& path, void* data) {
             mdi.nRecords = NOPOS;
             mdi.sizeInBytes = NOPOS;
         }
+        mdi.deleted = fileExists(substitute(path, ".acct.bin", ".deleted"));
         counter->monitorArray->push_back(mdi);
         if (isTestMode())
             return false;

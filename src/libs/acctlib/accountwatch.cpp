@@ -85,7 +85,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             break;
         case 'e':
             if (fieldName % "enabled") {
-                return bool_2_Str_t(enabled);
+                return bool_2_Str(enabled);
             }
             break;
         case 'f':

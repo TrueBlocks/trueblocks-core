@@ -16,6 +16,7 @@ cacheStatus --details monitors
       "items": [
         {
           "type": "CMonitorCacheItem",
+          "deleted": false,
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",

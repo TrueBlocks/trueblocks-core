@@ -1,6 +1,5 @@
 chifra argc: 3 [1:status] [2:--help] 
 chifra status --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 chifra status argc: 2 [1:--help] 
 chifra status --help 
 

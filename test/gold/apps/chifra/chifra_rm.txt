@@ -1,7 +1,6 @@
 chifra argc: 6 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--yes] [4:--verbose] [5:10] 
 chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 --yes --verbose 10 
 TIME ~ CLOCK - : 8------Enter(chifra,parseArguments): 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 TIME ~ CLOCK - : 3----tool_flags=--yes -v:10  -v:10
 TIME ~ CLOCK - : 3----freshen_flags=-v:10
 TIME ~ CLOCK - : 8------Exit(chifra,parseArguments): 

@@ -1,6 +1,5 @@
 chifra argc: 3 [1:tokens] [2:--help] 
 chifra tokens --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 chifra tokens argc: 2 [1:--help] 
 chifra tokens --help 
 

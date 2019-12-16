@@ -1,6 +1,5 @@
 chifra argc: 3 [1:rm] [2:--help] 
 chifra rm --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 
   Usage:    chifra [-s|-v|-h] commands  
   Purpose:  Create a TrueBlocks monitor configuration.
