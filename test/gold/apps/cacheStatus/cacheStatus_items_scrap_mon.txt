@@ -951,7 +951,7 @@ cacheStatus --details index --start 1000000 --end 2200000
         }
       ],
       "type": "CIndexCache",
-      "path": "IndexPath",
+      "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

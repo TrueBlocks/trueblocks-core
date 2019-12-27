@@ -198,6 +198,12 @@ bool COptions::checkLocks(const address_t& address) const {
     string_q fn4 = getMonitorBals(address);
     if (fileExists(fn4 + ".lck"))
         return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    string_q fn5 = getMonitorCnfg(address);
+    if (fileExists(fn5 + ".lck"))
+        return usage("The config file '" + fn5 + "' is locked. Quitting...");
+    string_q fn6 = getMonitorPath(address + ".deleted");
+    if (fileExists(fn6 + ".lck"))
+        return usage("The marker file '" + fn6 + "' is locked. Quitting...");
     return true;
 }
 

@@ -14,7 +14,7 @@
       "caches": [
         {
           "type": "CPriceCache",
-          "path": "PricePath",
+          "path": "pricesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

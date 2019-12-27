@@ -14,7 +14,7 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& ns) {
+bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
     //------------------------------------------------------------------------------------------------
     if (toml.getConfigBool("settings", "disabled", false)) {
         if (verbose)
@@ -207,6 +207,22 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
 
     //------------------------------------------------------------------------------------------------
+    if (asJs) {
+        CJavascriptDef js;
+        js.longName = classDef.base_lower;
+        js.properName = classDef.base_proper;
+        js.pageNotes = toml.getConfigStr("settings", "page_notes", "");
+        js.query_url = toml.getConfigStr("settings", "query_url", "");
+        js.query_opts = toml.getConfigStr("settings", "query_opts", "");
+        js.query_extract = toml.getConfigStr("settings", "query_extract", "");
+        js.subpage = toml.getConfigStr("settings", "subpage", "");
+        js.state = toml.getConfigStr("settings", "state", "");
+        js.polling = toml.getConfigBool("settings", "polling", false);
+        js.files = toml.getConfigStr("settings", "files", "index|getdata|inner");
+        js.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
+        return handle_generate_frontend(js);
+    }
+
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
     replace(headSource, "// clang-format off\n", "");
@@ -237,17 +253,17 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{EQUAL_COMMENT}]", (classDef.eq_str.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
     replaceAll(headSource, "[{SORT_CODE}]", (classDef.sort_str.length() ? classDef.sort_str : "true"));
     replaceAll(headSource, "[{EQUAL_CODE}]", (classDef.eq_str.length() ? classDef.eq_str : "false"));
-    replaceAll(headSource, "[{NAMESPACE1}]", (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(headSource, "[{NAMESPACE2}]", (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(headSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(headSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(headSource, "public:\n\n  public:", "public:");
     replaceAll(headSource, "`````", string_q(5, '\t'));
     replaceAll(headSource, "````", string_q(4, '\t'));
     replaceAll(headSource, "```", string_q(3, '\t'));
     replaceAll(headSource, "``", string_q(2, '\t'));
     replaceAll(headSource, "`", string_q(1, '\t'));
-    // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
+    // w riteTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
-    bool wouldHaveWritten = writeTheCode(headerFile, headSource, ns, true, test);
+    bool wouldHaveWritten = writeTheCode(headerFile, headSource, namespc, 4, test);
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
@@ -295,17 +311,17 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{CLASS_BASE}]", classDef.class_base);
     replaceAll(srcSource, "[{CLASS_UPPER}]", classDef.base_upper);
     replaceAll(srcSource, "[{DISPLAY_FIELDS}]", classDef.display_str);
-    replaceAll(srcSource, "[{NAMESPACE1}]", (ns.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(srcSource, "[{NAMESPACE2}]", (ns.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(srcSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
+    replaceAll(srcSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     replaceAll(srcSource, "`````", string_q(5, '\t'));
     replaceAll(srcSource, "````", string_q(4, '\t'));
     replaceAll(srcSource, "```", string_q(3, '\t'));
     replaceAll(srcSource, "``", string_q(2, '\t'));
     replaceAll(srcSource, "`", string_q(1, '\t'));
-    // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
+    // w riteTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
-    wouldHaveWritten = writeTheCode(srcFile, srcSource, ns, true, test);
+    wouldHaveWritten = writeTheCode(srcFile, srcSource, namespc, 4, test);
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;

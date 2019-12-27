@@ -14,7 +14,7 @@
       "caches": [
         {
           "type": "CNameCache",
-          "path": "CachePath",
+          "path": "namesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

@@ -28,7 +28,7 @@
             }
           ],
           "type": "CMonitorCache",
-          "path": "CachePath",
+          "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
@@ -46,7 +46,7 @@
             }
           ],
           "type": "CAbiCache",
-          "path": "CachePath",
+          "path": "abisPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
@@ -56,7 +56,7 @@
           "addrs": [],
           "items": [],
           "type": "CSlurpCache",
-          "path": "SlurpPath",
+          "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

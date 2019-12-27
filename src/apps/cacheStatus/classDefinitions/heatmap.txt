@@ -1,0 +1,5 @@
+[settings]
+class = CHeatmap
+fields = CHeatmapMap heatmap
+includes = etherlib.h
+disabled = true

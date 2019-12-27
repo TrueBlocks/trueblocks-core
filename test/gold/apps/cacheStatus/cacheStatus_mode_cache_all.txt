@@ -1,0 +1,47 @@
+cacheStatus argc: 4 [1:caches] [2:--types] [3:all] 
+cacheStatus caches --types all 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "type": "CChainCache",
+      "path": "blocksPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    },
+    {
+      "type": "CChainCache",
+      "path": "txsPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    },
+    {
+      "type": "CChainCache",
+      "path": "tracesPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    },
+    {
+      "type": "CSlurpCache",
+      "path": "slurpsPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": true
+    }
+  ]
+}

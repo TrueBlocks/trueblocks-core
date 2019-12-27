@@ -1,5 +1,5 @@
-cacheStatus argc: 4 [1:abis] [2:slurps] [3:monitors] 
-cacheStatus abis slurps monitors 
+cacheStatus argc: 6 [1:abis] [2:caches] [3:monitors] [4:--types] [5:slurps] 
+cacheStatus abis caches monitors --types slurps 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
@@ -13,12 +13,10 @@ cacheStatus abis slurps monitors
   "caches": [
     {
       "addrs": [
-        "--address--",
-        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",
-      "path": "CachePath",
+      "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -26,16 +24,15 @@ cacheStatus abis slurps monitors
     },
     {
       "type": "CAbiCache",
-      "path": "CachePath",
+      "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
     },
     {
-      "addrs": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

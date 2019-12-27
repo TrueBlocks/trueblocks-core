@@ -1,5 +1,5 @@
-cacheStatus argc: 2 [1:traces] 
-cacheStatus traces 
+cacheStatus argc: 4 [1:caches] [2:--types] [3:traces] 
+cacheStatus caches --types traces 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
@@ -13,7 +13,7 @@ cacheStatus traces
   "caches": [
     {
       "type": "CChainCache",
-      "path": "TracePath",
+      "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "cache.h"
+#include "status.h"
 
 namespace qblocks {
 
@@ -301,5 +302,43 @@ const char* STR_DISPLAY_CACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
+    return false;
+#if 0
+    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    if (!fileExists(fn))
+        return false;
+    CArchive archive(READING_ARCHIVE);
+    if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+        CStatus status;
+        status.Serialize(archive);
+        CCache* cache = status.caches[0];
+        *this = *cache;  // copy the values from the parent class
+        const CRuntimeClass* pClass = cache->getRuntimeClass();
+        if (pClass) {  // copy the values from this class
+            for (auto field : pClass->fieldList) {
+                setValueByName(field.getName(), trim(cache->getValueByName(field.getName()), '\"'));
+            }
+        }
+        archive.Release();
+        return true;
+    }
+    return false;
+#endif
+}
+
+//---------------------------------------------------------------------------
+bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
+    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
+        CStatus status;
+        status.caches.push_back(this);
+        status.SerializeC(archive);
+        archive.Release();
+        return true;
+    }
+    return false;
+}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -8,7 +8,7 @@ makeClass -h
 	files                 one or more class definition files (required)
 	-r  (--run)           run the class maker on associated <class_name(s)>
 	-a  (--all)           list, or run all class definitions found in the local folder
-	-j  (--js <str>)      export javaScript code from the class definition
+	-j  (--js)            export javaScript code from the class definition
 	-o  (--options)       export options code (check validity in the process)
 	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
 	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below

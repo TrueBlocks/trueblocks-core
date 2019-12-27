@@ -15,7 +15,7 @@ cacheStatus --report --fmt json
     {
       "items": [],
       "type": "CIndexCache",
-      "path": "IndexPath",
+      "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -23,12 +23,10 @@ cacheStatus --report --fmt json
     },
     {
       "addrs": [
-        "--address--",
-        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",
-      "path": "CachePath",
+      "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -36,16 +34,15 @@ cacheStatus --report --fmt json
     },
     {
       "type": "CNameCache",
-      "path": "CachePath",
+      "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
     },
     {
-      "addrs": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -53,7 +50,7 @@ cacheStatus --report --fmt json
     },
     {
       "type": "CPriceCache",
-      "path": "PricePath",
+      "path": "pricesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

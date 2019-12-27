@@ -1,6 +1,7 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] [3:--fmt] [4:json] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --fmt json --end 001506480 
 { "data": [
+TIME ~ CLOCK - <INFO>  : Cache by default: CACHE_TXS CACHE_TRACES CACHE_BYDEFAULT 
 [{
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
   "blockNumber": 0,

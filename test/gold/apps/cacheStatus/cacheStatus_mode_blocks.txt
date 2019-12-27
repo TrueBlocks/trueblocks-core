@@ -1,5 +1,5 @@
-cacheStatus argc: 2 [1:blocks] 
-cacheStatus blocks 
+cacheStatus argc: 4 [1:caches] [2:--types] [3:blocks] 
+cacheStatus caches --types blocks 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
@@ -13,7 +13,7 @@ cacheStatus blocks
   "caches": [
     {
       "type": "CChainCache",
-      "path": "BlockPath",
+      "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

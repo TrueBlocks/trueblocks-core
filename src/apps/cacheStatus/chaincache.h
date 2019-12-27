@@ -25,12 +25,18 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CChainCache : public CCache {
   public:
+    uint64_t max_depth;
+    CStringArray items;
+
+  public:
     CChainCache(void);
     CChainCache(const CChainCache& ch);
     virtual ~CChainCache(void);
     CChainCache& operator=(const CChainCache& ch);
 
     DECLARE_NODE(CChainCache);
+
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -85,6 +91,9 @@ inline void CChainCache::clear(void) {
 inline void CChainCache::initialize(void) {
     CCache::initialize();
 
+    max_depth = NOPOS;
+    items.clear();
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -93,6 +102,9 @@ inline void CChainCache::initialize(void) {
 inline void CChainCache::duplicate(const CChainCache& ch) {
     clear();
     CCache::duplicate(ch);
+
+    max_depth = ch.max_depth;
+    items = ch.items;
 
     // EXISTING_CODE
     // EXISTING_CODE

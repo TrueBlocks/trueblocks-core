@@ -43,7 +43,7 @@ int main(int argc, const char* argv[]) {
                 if (isTestMode()) {
                     cout << "  Test mode - code not generated" << endl;
                 } else {
-                    options.handle_generate(toml, classDef, options.nspace);
+                    options.handle_generate(toml, classDef, options.nspace, false);
                 }
             }
         }

@@ -24,14 +24,13 @@ bool COptions::handle_rm(void) {
     CStringArray removed;
     bool hasYes = contains(tool_flags, "--yes");
     for (auto addr : addrs) {
-        string_q delFn = substitute(getMonitorPath(addr), ".acct.bin", ".deleted");
-
         bool exists = false;
         exists |= fileExists(getMonitorPath(addr));
         exists |= fileExists(getMonitorLast(addr));
         exists |= fileExists(getMonitorExpt(addr));
         exists |= fileExists(getMonitorBals(addr));
-        exists |= fileExists(substitute(getMonitorPath(addr), ".acct.bin", ".toml"));
+        exists |= fileExists(getMonitorCnfg(addr));
+        string_q delFn = getMonitorPath(addr + ".deleted");
         exists |= fileExists(delFn);
 
         if (!exists) {

@@ -11,6 +11,7 @@ TIME ~ CLOCK - <INFO>  : There was nothing to fix (0).
 acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
 address	blocknumber	transactionindex
+TIME ~ CLOCK - <INFO>  : Cache by default: CACHE_TXS CACHE_TRACES CACHE_BYDEFAULT 
 0xfb744b951d094b310262c8f986c860df9ab1de65	0	8713
 
 TIME ~ CLOCK - <INFO>  : exported 1 appearances from 1 transactions                                                       

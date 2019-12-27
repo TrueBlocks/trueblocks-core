@@ -1,0 +1,27 @@
+cacheStatus argc: 7 [1:caches] [2:--types] [3:transactions] [4:--details] [5:--depth] [6:2] 
+cacheStatus caches --types transactions --details --depth 2 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
+  "host": "--hostname-- (--username--)",
+  "is_scraping": false,
+  "caches": [
+    {
+      "items": [
+        "CachePath/00/00/00",
+        "CachePath/00/01/00"
+      ],
+      "type": "CChainCache",
+      "path": "txsPath",
+      "nFiles": 0,
+      "nFolders": 0,
+      "sizeInBytes": 0,
+      "valid_counts": false
+    }
+  ]
+}

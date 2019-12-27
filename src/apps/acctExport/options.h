@@ -15,6 +15,14 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
+#define CACHE_NONE (0)
+#define CACHE_BLOCKS (1 << 1)
+#define CACHE_TXS (1 << 2)
+#define CACHE_TRACES (1 << 3)
+#define CACHE_BYCONFIG (1 << 4)
+#define CACHE_BYUSER (1 << 5)
+#define CACHE_BYDEFAULT (1 << 6)
+
 using uint_addr_mp = map<uint32_t, address_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -28,15 +36,14 @@ class COptions : public COptionsBase {
     bool hashes_only;
     bool count_only;
     bool articulate;
-    bool write_blocks;
-    bool write_txs;
-    bool write_traces;
     bool skip_ddos;
     uint64_t max_traces;
     bool grab_abis;
     bool freshen;
     bool deltas;
     // END_CODE_DECLARE
+
+    int write_opt;  // cache options as resolved (see options.cpp for notes)
 
     CAbi abis;
     CAccountWatchArray monitors;

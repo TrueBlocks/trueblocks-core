@@ -13,6 +13,9 @@
 #include "utillib.h"
 #include "options.h"
 
+extern const char* STR_EXPORT_1;
+extern const char* STR_EXPORT_2;
+extern const char* STR_POLLING;
 //---------------------------------------------------------------------------------------------------
 bool visitField(const CFieldData& field, void* data) {
     ostream* pOs = reinterpret_cast<ostream*>(data);
@@ -27,11 +30,107 @@ bool visitField(const CFieldData& field, void* data) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_json_export(const string_q& cl) {
-    CBaseNode* item = createObjectOfType(cl);
-    if (!item)
-        return usage("Class " + cl + " not found.");
-    CRuntimeClass* pClass = item->getRuntimeClass();
-    pClass->forEveryField(visitField, &cout);
-    return true;
+bool COptions::handle_json_export(void) {
+    for (auto classDef : classDefs) {
+        CBaseNode* item = createObjectOfType(classDef.short_fn);
+        if (item) {
+            CRuntimeClass* pClass = item->getRuntimeClass();
+            pClass->forEveryField(visitField, &cout);
+        } else {
+            CToml toml(classDef.input_path);
+            toml.readFile(classDef.input_path);
+            handle_generate(toml, classDef, nspace, true);
+        }
+    }
+    return false;  // we're done processing
 }
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_frontend(const CJavascriptDef& def) {
+    string_q destFolder = "../" + def.longName + "/";
+    establishFolder(destFolder);
+    CStringArray files;
+    explode(files, def.files, '|');
+    for (auto file : files)
+        handle_one_frontend_file(def, destFolder, (file == "index" ? file : "blank-" + file) + ".js");
+    string_q ccsFile = destFolder + def.longName + ".css";
+    if (!fileExists(ccsFile))
+        copyFile("./blank.css", ccsFile);
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_one_frontend_file(const CJavascriptDef& def, const string_q& folder, const string_q& source) {
+    string_q destFile = folder + substitute(source, "blank", def.longName);
+    string_q sourceFile = "./" + source;
+    string_q code = asciiFileToString(sourceFile);
+    replaceAll(code, "[{CONNECT}]", def.polling ? STR_EXPORT_2 : STR_EXPORT_1);
+    if (!def.state.empty()) {
+        replaceAll(code, "[{GLOBAL_STATE1}]", ",\n\t" + def.state);
+        replaceAll(code, "[{GLOBAL_STATE2}]", ",\n\t\t\t\t" + def.state);
+        if (contains(def.state, "[]")) {
+            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "[]", "action.payload"));
+            replaceAll(
+                code, "[{GLOBAL_STATE4}]",
+                ",\n\t" + substitute(def.state, "[]", "reducer_[{PROPER}]." + substitute(def.state, ": []", "")));
+        } else {
+            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "{}", "action.payload"));
+            replaceAll(
+                code, "[{GLOBAL_STATE4}]",
+                ",\n\t" + substitute(def.state, "{}", "reducer_[{PROPER}]." + substitute(def.state, ": {}", "")));
+        }
+    } else {
+        replaceAll(code, "[{GLOBAL_STATE1}]", "");
+        replaceAll(code, "[{GLOBAL_STATE2}]", "");
+        replaceAll(code, "[{GLOBAL_STATE3}]", "");
+        replaceAll(code, "[{GLOBAL_STATE4}]", "");
+    }
+    replaceAll(code, "[{LONG}]", def.longName);
+    replaceAll(code, "[{SEVEN}]", padRight(def.longName.substr(0, 7), 7, '_'));
+    replaceAll(code, "[{PAGENOTES}]", substitute(def.pageNotes, "|", " \n            "));
+    replaceAll(code, "[{PROPER}]", def.properName);
+    replaceAll(code, "[{SUBPAGE}]", def.subpage);
+    replaceAll(code, "[{QUERY_URL}]", def.query_url);
+    replaceAll(code, "[{QUERY_OPTS}]", def.query_opts);
+    replaceAll(code, "[{QUERY_EXTRACT}]", def.query_extract);
+    replaceAll(code, "[{MENU_TYPE}]", def.menuType);
+    replaceAll(code, "[{MENU_FILE}]", def.menuType == "LocalMenu" ? "local-menu" : "summary-table");
+    replaceAll(code, "[{POLLING}]", def.polling ? STR_POLLING : "");
+
+    string_q thing = def.subpage;
+    replaceAll(code, "[{STATE_FIELDS_2}]", nextTokenClear(thing, ':') + ": value");
+    // w riteTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
+    // actually write the file
+    bool wouldHaveWritten = writeTheCode(destFile, code, nspace, 2, test);
+    if (wouldHaveWritten) {
+        if (test) {
+            cerr << "File '" << destFile << "' changed but was not written because of testing." << endl;
+        } else {
+            counter.nProcessed++;
+        }
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_EXPORT_1 =
+    "export default connect(\n"
+    "\tmapStateToProps,\n"
+    "\tmapDispatchToProps\n"
+    ")([{PROPER}]Inner);\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_EXPORT_2 =
+    "export default polling(dispatcher_[{PROPER}], poll_timeout)(\n"
+    "\tconnect(\n"
+    "\t\tmapStateToProps,\n"
+    "\t\tmapDispatchToProps\n"
+    "\t)([{PROPER}]Inner)\n"
+    ");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_POLLING =
+    "\n"
+    "\n"
+    "import { polling } from '../../components/polling';\n"
+    "import { poll_timeout } from '../../config.js';\n";

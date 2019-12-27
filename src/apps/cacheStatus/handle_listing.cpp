@@ -47,6 +47,7 @@ bool COptions::handle_listing(ostream& os) {
             item.sizeInBytes = fileSize(getMonitorPath(item.address));
             item.latestAppearance = str_2_Uint(asciiFileToString(getMonitorLast(item.address)));
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
+            item.m_deleted = fileExists(getMonitorPath(item.address + ".deleted"));
             //            item.lastBalance = 0;
             item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accts.push_back(item);

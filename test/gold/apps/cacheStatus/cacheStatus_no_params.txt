@@ -14,7 +14,7 @@ cacheStatus
     {
       "items": [],
       "type": "CIndexCache",
-      "path": "IndexPath",
+      "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -22,12 +22,10 @@ cacheStatus
     },
     {
       "addrs": [
-        "--address--",
-        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",
-      "path": "CachePath",
+      "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -35,16 +33,15 @@ cacheStatus
     },
     {
       "type": "CNameCache",
-      "path": "CachePath",
+      "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
     },
     {
-      "addrs": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -52,7 +49,7 @@ cacheStatus
     },
     {
       "type": "CPriceCache",
-      "path": "PricePath",
+      "path": "pricesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

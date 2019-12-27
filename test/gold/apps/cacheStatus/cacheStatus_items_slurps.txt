@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:--details] [2:slurps] 
-cacheStatus --details slurps 
+cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:slurps] 
+cacheStatus --details caches --types slurps 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
@@ -15,7 +15,7 @@ cacheStatus --details slurps
       "addrs": [],
       "items": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

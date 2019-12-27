@@ -265,17 +265,27 @@ bool COptions::handle_config_set(ostream& os) {
                 bool isPath = (key.type == "path");
                 if (isPath && !endsWith(val, '/'))
                     val += "/";
-                cerr << "  "
-                     << "toml.";
-                cerr << (isBool ? "setConfigBool(" : "setConfigStr(");
-                cerr << "\"" << group.name << "\", ";
-                cerr << "\"" << key.name << "\", ";
-                cerr << (isBool ? bool_2_Str(str_2_Bool(val)) : ("\"" + val + "\""));
-                cerr << ");" << endl;
-                if (key.type == "bool") {
-                    toml.setConfigBool(group.name, key.name, str_2_Bool(val));
+
+                bool isDefaultConfigPath = (contains(path, "quickBlocks.toml") && group.name == "settings" &&
+                                            key.name == "configPath" && val == "~/.quickBlocks/");
+
+                if (isDefaultConfigPath) {
+                    toml.deleteKey("settings", "configPath");
+
                 } else {
-                    toml.setConfigStr(group.name, key.name, val);
+                    cerr << "  "
+                         << "toml.";
+                    cerr << (isBool ? "setConfigBool(" : "setConfigStr(");
+                    cerr << "\"" << group.name << "\", ";
+                    cerr << "\"" << key.name << "\", ";
+                    cerr << (isBool ? bool_2_Str(str_2_Bool(val)) : ("\"" + val + "\""));
+                    cerr << ");" << endl;
+
+                    if (key.type == "bool") {
+                        toml.setConfigBool(group.name, key.name, str_2_Bool(val));
+                    } else {
+                        toml.setConfigStr(group.name, key.name, val);
+                    }
                 }
             }
         }

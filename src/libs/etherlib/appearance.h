@@ -136,5 +136,6 @@ extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCT
 extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorCnfg(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 
 }  // namespace qblocks

@@ -14,7 +14,7 @@ cacheStatus all
     {
       "items": [],
       "type": "CIndexCache",
-      "path": "IndexPath",
+      "path": "indexPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -22,12 +22,10 @@ cacheStatus all
     },
     {
       "addrs": [
-        "--address--",
-        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",
-      "path": "CachePath",
+      "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -35,7 +33,7 @@ cacheStatus all
     },
     {
       "type": "CNameCache",
-      "path": "CachePath",
+      "path": "namesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -43,7 +41,7 @@ cacheStatus all
     },
     {
       "type": "CAbiCache",
-      "path": "CachePath",
+      "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -51,7 +49,7 @@ cacheStatus all
     },
     {
       "type": "CChainCache",
-      "path": "BlockPath",
+      "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -59,7 +57,7 @@ cacheStatus all
     },
     {
       "type": "CChainCache",
-      "path": "TxPath",
+      "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -67,16 +65,15 @@ cacheStatus all
     },
     {
       "type": "CChainCache",
-      "path": "TracePath",
+      "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
       "valid_counts": true
     },
     {
-      "addrs": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
@@ -84,7 +81,7 @@ cacheStatus all
     },
     {
       "type": "CPriceCache",
-      "path": "PricePath",
+      "path": "pricesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

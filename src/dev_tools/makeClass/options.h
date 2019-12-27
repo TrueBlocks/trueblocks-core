@@ -18,6 +18,7 @@
 #include "etherlib.h"
 #include "commandoption.h"
 #include "classdefinition.h"
+#include "javascriptclass.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -71,8 +72,10 @@ class COptions : public COptionsBase {
     bool handle_options(void);
     bool handle_lint(void);
     bool handle_format(void);
-    bool handle_json_export(const string_q& cl);
-    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
+    bool handle_json_export(void);
+    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
+    bool handle_generate_frontend(const CJavascriptDef& def);
+    bool handle_one_frontend_file(const CJavascriptDef& def, const string_q& folder, const string_q& source);
 
     bool check_option(const CCommandOption& option);
     bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",

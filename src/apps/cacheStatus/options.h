@@ -18,6 +18,7 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
+#include "heatmap.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -27,6 +28,8 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool details;
+    uint64_t depth;
+    string_q heatmap;
     bool list;
     blknum_t start;
     blknum_t end;
@@ -47,12 +50,15 @@ class COptions : public COptionsBase {
     bool handle_status(ostream& os);
     bool handle_listing(ostream& os);
     bool handle_config(ostream& os);
+    bool handle_heatmap(ostream& os);
     bool handle_config_get(ostream& os);
     bool handle_config_set(ostream& os);
 };
 
 //-------------------------------------------------------------------------
 extern bool countFiles(const string_q& path, void* data);
+extern bool countFilesInCache(const string_q& path, void* data);
+extern bool listFilesInCache(const string_q& path, void* data);
 extern bool noteMonitor_light(const string_q& path, void* data);
 extern bool noteMonitor(const string_q& path, void* data);
 extern bool noteABI(const string_q& path, void* data);

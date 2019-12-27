@@ -202,7 +202,7 @@ void COptions::handle_generate(void) {
     evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
     replaceAll(headerCode, "[{EXTERNS}]", comment + funcExterns + "\n" + comment + evtExterns);
     headerCode = substitute(headerCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".h", headerCode, "", true, false);
+    writeTheCode(classDir + prefix + ".h", headerCode, "", 4, false);
 
     // The library make file
     replaceReverse(sources, " \\\n", " \\\n" + prefix + ".cpp\n");
@@ -210,7 +210,7 @@ void COptions::handle_generate(void) {
         string_q makefile;
         asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
         replaceAll(makefile, "[{PROJECT_NAME}]", projectName(classDir));
-        writeTheCode(classDir + "CMakeLists.txt", makefile, "", true, false);
+        writeTheCode(classDir + "CMakeLists.txt", makefile, "", 0, false);
     }
 
     // The library source file
@@ -259,7 +259,7 @@ void COptions::handle_generate(void) {
     replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
     replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
     sourceCode = substitute(sourceCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".cpp", sourceCode, "", true, false);
+    writeTheCode(classDir + prefix + ".cpp", sourceCode, "", 4, false);
 
     string_q primaryAddr = "";
     // The code

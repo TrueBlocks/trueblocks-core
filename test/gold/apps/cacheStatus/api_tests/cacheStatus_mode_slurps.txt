@@ -13,9 +13,8 @@
       "is_scraping": false,
       "caches": [
         {
-          "addrs": [],
           "type": "CSlurpCache",
-          "path": "SlurpPath",
+          "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

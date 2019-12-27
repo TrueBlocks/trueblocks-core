@@ -238,7 +238,19 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> index_path;
     archive >> host;
     archive >> is_scraping;
-    // archive >> caches;
+    uint64_t nCaches = 0;
+    archive >> nCaches;
+    if (nCaches) {
+        for (size_t i = 0; i < nCaches; i++) {
+            string_q cacheType;
+            archive >> cacheType;
+            CCache* cache = reinterpret_cast<CCache*>(createObjectOfType(cacheType));  // NOLINT
+            if (cache) {
+                cache->Serialize(archive);
+                caches.push_back(cache);
+            }
+        }
+    }
     finishParse();
     return true;
 }
@@ -259,7 +271,11 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << index_path;
     archive << host;
     archive << is_scraping;
-    // archive << caches;
+    archive << (uint64_t)caches.size();
+    for (auto cache : caches) {
+        archive << cache->getRuntimeClass()->getClassNamePtr();
+        cache->SerializeC(archive);
+    }
 
     return true;
 }
@@ -306,7 +322,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CStatus, "caches");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");

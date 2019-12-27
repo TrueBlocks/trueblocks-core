@@ -30,6 +30,11 @@ int main(int argc, const char* argv[]) {
                                        GETRUNTIME_CLASS(CConfiguration));
             options.handle_config(cout);
 
+        } else if (!options.heatmap.empty()) {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CHeatmap));
+            options.handle_heatmap(cout);
+
         } else {
             if (once)
                 cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));

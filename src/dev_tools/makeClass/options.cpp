@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code from the class definition"),
+    COption("js", "j", "", OPT_SWITCH, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
@@ -48,7 +48,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray files;
     bool run = false;
     bool edit = false;
-    string_q js = "";
+    bool js = false;
     bool options = false;
     bool format = false;
     bool lint = false;
@@ -70,8 +70,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (startsWith(arg, "-j:") || startsWith(arg, "--js:")) {
-            js = substitute(substitute(arg, "-j:", ""), "--js:", "");
+        } else if (arg == "-j" || arg == "--js") {
+            js = true;
 
         } else if (arg == "-o" || arg == "--options") {
             options = true;
@@ -108,12 +108,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Handle the weird javaScript code export first just to get it out of the way
-    if (!js.empty())
-        return handle_json_export(js);
-    if (contains(command, "-j"))
-        return usage(errStrs[ERR_EMPTYJSFILE]);
-
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
     for (auto file : files) {
@@ -138,6 +132,12 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
+
+    // Handle the weird javaScript code export first just to get it out of the way
+    if (js)
+        return handle_json_export();
+    if (contains(command, "-j"))
+        return usage(errStrs[ERR_EMPTYJSFILE]);
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (options && !handle_options())
@@ -249,6 +249,7 @@ COptions::COptions(void) : classFile("") {
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
+    CJavascriptDef::registerClass();
 }
 
 //--------------------------------------------------------------------------------

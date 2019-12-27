@@ -14,7 +14,7 @@
       "caches": [
         {
           "type": "CAbiCache",
-          "path": "CachePath",
+          "path": "abisPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

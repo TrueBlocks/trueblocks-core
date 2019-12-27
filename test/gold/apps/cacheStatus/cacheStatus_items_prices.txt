@@ -1,5 +1,5 @@
-cacheStatus argc: 3 [1:--details] [2:prices] 
-cacheStatus --details prices 
+cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:prices] 
+cacheStatus --details caches --types prices 
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
@@ -21,7 +21,7 @@ cacheStatus --details prices
         }
       ],
       "type": "CPriceCache",
-      "path": "PricePath",
+      "path": "pricesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,

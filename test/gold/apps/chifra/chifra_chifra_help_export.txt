@@ -16,9 +16,9 @@ chifra export --help
 	-e  (--hashes_only)   export the IPFS hashes of the index chunks the address appears in
 	-c  (--count_only)    display only the count of the number of data items requested
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-w  (--write_blocks)  toggle writing blocks to the binary cache ('off' by default)
-	-i  (--write_txs)     toggle writing transactions to the cache ('on' by default)
-	-R  (--write_traces)  toggle writing traces to the cache ('on' by default)
+	-w  (--write_blocks)  write blocks to the binary cache ('off' by default)
+	-i  (--write_txs)     write transactions to the cache (see notes)
+	-R  (--write_traces)  write traces to the cache (see notes)
 
 #### Hidden options (shown during testing only)
 	-s  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)

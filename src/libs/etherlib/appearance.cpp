@@ -151,6 +151,14 @@ bool foundPot(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t t
 }
 
 //---------------------------------------------------------------------------
+string_q getMonitorPath(const string_q& addr, freshen_e mode) {
+    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+    if (!isAddress(addr))  // empty for example
+        return getCachePath(base + addr);
+    return getCachePath(base + addr + ".acct.bin");
+}
+
+//---------------------------------------------------------------------------
 string_q getMonitorLast(const string_q& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
@@ -181,11 +189,13 @@ string_q getMonitorBals(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorPath(const string_q& addr, freshen_e mode) {
+string_q getMonitorCnfg(const string_q& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isAddress(addr))  // empty for example
-        return getCachePath(base + addr);
-    return getCachePath(base + addr + ".acct.bin");
+    if (!isTestMode() && !isAddress(addr)) {
+        cerr << "Not an address: " << addr << endl;
+        quickQuitHandler(0);
+    }
+    return getCachePath(base + addr + ".toml");
 }
 
 //----------------------------------------------------------------

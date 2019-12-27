@@ -28,7 +28,7 @@
             }
           ],
           "type": "CMonitorCache",
-          "path": "CachePath",
+          "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,

@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "cacheStatus - Invalid option 'blocks' for 'modes'. One or more of [index|monitors|names|abis|caches|some|all] required. Quitting..."
+  ]
+}

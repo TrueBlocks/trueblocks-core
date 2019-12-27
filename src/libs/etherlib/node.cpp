@@ -1045,7 +1045,12 @@ string_q getCachePath(const string_q& _part) {
             establishFolder(folder.getFullPath());
 
         if (!folder.isValid()) {
-            cerr << "Invalid path (" << folder.getFullPath() << ") in config file. Quitting...\n";
+            ostringstream errMsg;
+            errMsg << "{ \"errors\": [\"Invalid cachePath (" + folder.getFullPath()
+                   << ") in config file. Cannot proceed.\"] }";
+            if (isApiMode())
+                cout << errMsg.str();
+            cerr << errMsg.str();
             quickQuitHandler(EXIT_FAILURE);
         }
         g_cachePath = folder.getFullPath();
@@ -1163,7 +1168,6 @@ string_q exportPostamble(format_t fmt, const CStringArray& errorsIn, const strin
     if (!extra.empty())
         os << extra;
     os << " }";
-
     os << " }";
 
     return os.str();

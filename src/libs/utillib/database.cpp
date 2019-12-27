@@ -357,11 +357,13 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& ns, bool spaces, bool testing) {
+bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& namespc, uint32_t nSpaces,
+                  bool testing) {
     string_q codeOut = codeOutIn;
     string_q orig;
     asciiFileToString(fileName, orig);
     string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
+
     string_q checkCode = existingCode;
     uint64_t cnt = 0;
     while (contains(checkCode, "// EXISTING_CODE")) {
@@ -370,13 +372,13 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     }
     if ((cnt % 2))
         codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
-    if (spaces) {
-        replaceAll(existingCode, "    ", "\t");
-        replaceAll(codeOut, "    ", "\t");
+    if (nSpaces) {
+        replaceAll(existingCode, string_q(nSpaces, ' '), "\t");
+        replaceAll(codeOut, string_q(nSpaces, ' '), "\t");
     }
 
     string_q tabs;
-    int nTabs = 4;
+    int nTabs = 6;
     while (nTabs >= 0) {
         tabs = string_q((size_t)nTabs, '\t');
         nTabs--;
@@ -387,9 +389,11 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
         }
         while (contains(existingCode, "</code>")) {
             string_q snipit = trim(snagFieldClear(existingCode, "code"), '\n');
-            replace(codeOut, tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE",
-                    tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE");
+            string_q r1 = tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE";
+            string_q r2 = tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE";
+            replace(codeOut, r1, r2);
         }
+
         replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE",
                    "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE");
         //--------------------------------------------------------------------------------------
@@ -401,8 +405,8 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     if (endsWith(codeOut, "\n"))
         replaceReverse(codeOut, "\n", "");
 
-    if (spaces)
-        replaceAll(codeOut, "\t", "    ");
+    if (nSpaces)
+        replaceAll(codeOut, "\t", string_q(nSpaces, ' '));
     replaceAll(codeOut, "[PTAB]", "\\t");
 
     if (contains(codeOut, "virtual") || contains(codeOut, "override")) {

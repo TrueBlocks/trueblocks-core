@@ -68,7 +68,31 @@ string_q CChainCache::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    // No fields
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "items" || fieldName % "itemsCnt") {
+                size_t cnt = items.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += ("\"" + items[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'm':
+            if (fieldName % "max_depth") {
+                return uint_2_Str(max_depth);
+            }
+            break;
+        default:
+            break;
+    }
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -89,6 +113,21 @@ bool CChainCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "items") {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    items.push_back(nextTokenClear(str, ','));
+                }
+                return true;
+            }
+            break;
+        case 'm':
+            if (fieldName % "max_depth") {
+                max_depth = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -114,6 +153,8 @@ bool CChainCache::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> max_depth;
+    archive >> items;
     finishParse();
     return true;
 }
@@ -125,6 +166,8 @@ bool CChainCache::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << max_depth;
+    archive << items;
 
     return true;
 }
@@ -163,6 +206,8 @@ void CChainCache::registerClass(void) {
     ADD_FIELD(CChainCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CChainCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CChainCache, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CChainCache, "max_depth", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CChainCache, "items", T_TEXT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChainCache, "schema");
@@ -215,6 +260,13 @@ ostream& operator<<(ostream& os, const CChainCache& item) {
     item.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const string_q CChainCache::getStringAt(const string_q& fieldName, size_t i) const {
+    if (fieldName % "items" && i < items.size())
+        return (items[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
