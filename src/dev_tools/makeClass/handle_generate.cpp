@@ -218,7 +218,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         js.subpage = toml.getConfigStr("settings", "subpage", "");
         js.state = toml.getConfigStr("settings", "state", "");
         js.polling = toml.getConfigBool("settings", "polling", false);
-        js.files = toml.getConfigStr("settings", "files", "index|getdata|inner");
+        js.files = toml.getConfigStr("settings", "files", "index|actions|dispatchers|inner|reducers");
         js.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
         return handle_generate_frontend(js);
     }

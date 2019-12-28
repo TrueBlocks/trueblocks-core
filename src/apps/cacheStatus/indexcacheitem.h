@@ -34,9 +34,11 @@ class CIndexCacheItem : public CBaseNode {
     uint32_t latestAppearance;
     timestamp_t firstTs;
     timestamp_t lastestTs;
-    string_q path;
-    uint32_t sizeInBytes;
-    string_q hash;
+    string_q filename;
+    uint32_t indexSizeBytes;
+    string_q index_hash;
+    uint32_t bloomSizeBytes;
+    string_q bloom_hash;
 
   public:
     CIndexCacheItem(void);
@@ -106,9 +108,11 @@ inline void CIndexCacheItem::initialize(void) {
     latestAppearance = 0;
     firstTs = 0;
     lastestTs = 0;
-    path = "";
-    sizeInBytes = 0;
-    hash = "";
+    filename = "";
+    indexSizeBytes = 0;
+    index_hash = "";
+    bloomSizeBytes = 0;
+    bloom_hash = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,9 +130,11 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     latestAppearance = in.latestAppearance;
     firstTs = in.firstTs;
     lastestTs = in.lastestTs;
-    path = in.path;
-    sizeInBytes = in.sizeInBytes;
-    hash = in.hash;
+    filename = in.filename;
+    indexSizeBytes = in.indexSizeBytes;
+    index_hash = in.index_hash;
+    bloomSizeBytes = in.bloomSizeBytes;
+    bloom_hash = in.bloom_hash;
 
     // EXISTING_CODE
     // EXISTING_CODE

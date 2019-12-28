@@ -61,32 +61,34 @@ bool COptions::handle_generate_frontend(const CJavascriptDef& def) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_one_frontend_file(const CJavascriptDef& def, const string_q& folder, const string_q& source) {
-    string_q destFile = folder + substitute(source, "blank", def.longName);
+    string_q destFile = folder + substitute(source, "blank-", "");
     string_q sourceFile = "./" + source;
     string_q code = asciiFileToString(sourceFile);
     replaceAll(code, "[{CONNECT}]", def.polling ? STR_EXPORT_2 : STR_EXPORT_1);
-    if (!def.state.empty()) {
-        replaceAll(code, "[{GLOBAL_STATE1}]", ",\n\t" + def.state);
-        replaceAll(code, "[{GLOBAL_STATE2}]", ",\n\t\t\t\t" + def.state);
-        if (contains(def.state, "[]")) {
-            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "[]", "action.payload"));
-            replaceAll(
-                code, "[{GLOBAL_STATE4}]",
-                ",\n\t" + substitute(def.state, "[]", "reducer_[{PROPER}]." + substitute(def.state, ": []", "")));
-        } else {
-            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "{}", "action.payload"));
-            replaceAll(
-                code, "[{GLOBAL_STATE4}]",
-                ",\n\t" + substitute(def.state, "{}", "reducer_[{PROPER}]." + substitute(def.state, ": {}", "")));
-        }
-    } else {
-        replaceAll(code, "[{GLOBAL_STATE1}]", "");
-        replaceAll(code, "[{GLOBAL_STATE2}]", "");
-        replaceAll(code, "[{GLOBAL_STATE3}]", "");
-        replaceAll(code, "[{GLOBAL_STATE4}]", "");
-    }
+//    if (!def.state.empty()) {
+//        replaceAll(code, "[{GLOBAL_STATE1}]", ",\n\t" + def.state);
+//        replaceAll(code, "[{GLOBAL_STATE2}]", ",\n\t\t\t\t" + def.state);
+//        if (contains(def.state, "[]")) {
+//            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "[]", "action.payload"));
+//            replaceAll(
+//                code, "[{GLOBAL_STATE4}]",
+//                ",\n\t" + substitute(def.state, "[]", "reducer_[{PROPER}]." + substitute(def.state, ": []", "")));
+//        } else {
+//            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "{}", "action.payload"));
+//            replaceAll(
+//                code, "[{GLOBAL_STATE4}]",
+//                ",\n\t" + substitute(def.state, "{}", "reducer_[{PROPER}]." + substitute(def.state, ": {}", "")));
+//        }
+//    } else {
+//        replaceAll(code, "[{GLOBAL_STATE1}]", "");
+//        replaceAll(code, "[{GLOBAL_STATE2}]", "");
+//        replaceAll(code, "[{GLOBAL_STATE3}]", "");
+//        replaceAll(code, "[{GLOBAL_STATE4}]", "");
+//    }
     replaceAll(code, "[{LONG}]", def.longName);
     replaceAll(code, "[{SEVEN}]", padRight(def.longName.substr(0, 7), 7, '_'));
+    replaceAll(code, "[{TWO1}]", toUpper(def.longName.substr(0, 2)));
+    replaceAll(code, "[{TWO2}]", toLower(def.longName.substr(0, 2)));
     replaceAll(code, "[{PAGENOTES}]", substitute(def.pageNotes, "|", " \n            "));
     replaceAll(code, "[{PROPER}]", def.properName);
     replaceAll(code, "[{SUBPAGE}]", def.subpage);

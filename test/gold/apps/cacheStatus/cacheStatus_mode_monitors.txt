@@ -13,6 +13,8 @@ cacheStatus monitors
   "caches": [
     {
       "addrs": [
+        "--address--",
+        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",

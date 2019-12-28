@@ -21,15 +21,11 @@ bool COptions::handle_status(ostream& os) {
             forEveryFileInFolder(getIndexPath(""), countFiles, &index);
             CItemCounter counter(this, start, end);
             loadTimestampArray(&counter.ts_array, counter.ts_cnt);
+            index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
-            if (details) {
-                forEveryFileInFolder(getIndexPath(""), noteIndex, &counter);
-            } else {
-                //            forEveryFileInFolder(getCachePath("monitors/"), noteIndex_light, &counter);
-                //            if (index.metrics.size() == 0)
-                //                index.valid_counts = true;
-            }
+            if (details)
+                forEveryFileInFolder(indexFolder_finalized, noteIndex, &counter);
             LOG8("\tre-writing index cache");
             index.writeBinaryCache("index", details);
         }
@@ -382,42 +378,39 @@ bool noteIndex(const string_q& path, void* data) {
         if (last < counter->scanRange.first)
             return true;
         if (first > counter->scanRange.second)
-            return !contains(path, "finalized");
+            return false;  //! contains(path, "finalized");
+        if (!endsWith(path, ".bin"))
+            return true;
 
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
-        //        aci.path = substitute(path, getIndexPath(""), "${INDEX}/");
-        //        string_q fn = substitute(path, getIndexPath(""), "");
-        aci.path = substitute(path, counter->cachePtr->path, "");
-        string_q fn = aci.path;
+        aci.filename = substitute(path, counter->cachePtr->path, "");
+        string_q fn = aci.filename;
         if (isTestMode())
-            aci.path = substitute(aci.path, getIndexPath(""), "/--index-path--/");
-        replace(fn, "blooms/", "");
-        replace(fn, "finalized/", "");
-        replace(fn, "staging/", "");
-        replace(fn, "unripe/", "");
-        replace(fn, "ripe/", "");
-        if (contains(path, "finalized") || contains(path, "blooms")) {
-            uint64_t tmp;
-            aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
-            aci.latestAppearance = (uint32_t)tmp;
-            CStringArray parts;
-            explode(parts, path, '/');
-            blknum_t num = str_2_Uint(nextTokenClear(parts[parts.size() - 1], '-'));
-            if (contains(path, "blooms")) {
-                aci.hash = counter->options->bloomHashes[num].hash;
-            } else {
-                ASSERT(contains(path, "finalized"));
-                aci.hash = counter->options->indexHashes[num].hash;
-            }
-            size_t len = aci.hash.length();
-            if (len)
-                aci.hash = aci.hash.substr(0, 4) + "..." + aci.hash.substr(len - 4, len);
-        } else {
-            aci.firstAppearance = (uint32_t)str_2_Uint(fn);
-            aci.latestAppearance = (uint32_t)str_2_Uint(fn);
+            aci.filename = substitute(aci.filename, indexFolder_finalized, "/--index-path--/");
+        uint64_t tmp;
+        aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
+        aci.latestAppearance = (uint32_t)tmp;
+        CStringArray parts;
+        explode(parts, path, '/');
+        blknum_t num = str_2_Uint(nextTokenClear(parts[parts.size() - 1], '-'));
+        {
+            aci.bloom_hash = counter->options->bloomHashes[num].hash;
+            size_t len = aci.bloom_hash.length();
+            if (len && !verbose)
+                aci.bloom_hash = aci.bloom_hash.substr(0, 4) + "..." + aci.bloom_hash.substr(len - 4, len);
+            aci.bloomSizeBytes =
+                (uint32_t)fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"));
         }
+        {
+            aci.index_hash = counter->options->indexHashes[num].hash;
+            size_t len = aci.index_hash.length();
+            if (len && !verbose)
+                aci.index_hash = aci.index_hash.substr(0, 4) + "..." + aci.index_hash.substr(len - 4, len);
+            aci.indexSizeBytes = (uint32_t)fileSize(path);
+        }
+
         if (counter->ts_array) {
             if (aci.firstAppearance < counter->ts_cnt && aci.latestAppearance < counter->ts_cnt) {
                 aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance * 2) + 1];
@@ -428,12 +421,6 @@ bool noteIndex(const string_q& path, void* data) {
             }
         }
         getIndexMetrics(path, aci.nAppearances, aci.nAddresses);
-        aci.sizeInBytes = (uint32_t)fileSize(path);
-        // aci.metrics.push_back(aci.firstAppearance);
-        // a/ci.metrics.push_back(aci.latestAppearance);
-        // aci.metrics.push_back(aci.nAppearances);
-        // aci.metrics.push_back(aci.nAddresses);
-        // aci.metrics.push_back(aci.sizeInBytes);
         counter->indexArray->push_back(aci);
     }
     return !shouldQuit();

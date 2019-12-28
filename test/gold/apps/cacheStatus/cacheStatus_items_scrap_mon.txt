@@ -15,483 +15,17 @@ cacheStatus --details index --start 1000000 --end 2200000
       "items": [
         {
           "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 971932,
-          "latestAppearance": 1024630,
-          "firstTs": 1454922473,
-          "lastestTs": 1455832022,
-          "path": "/--index-path--/blooms/000971932-001024630.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmam...ZG7e"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1024631,
-          "latestAppearance": 1077915,
-          "firstTs": 1455832025,
-          "lastestTs": 1456746324,
-          "path": "/--index-path--/blooms/001024631-001077915.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmPP...n8Jj"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1077916,
-          "latestAppearance": 1121333,
-          "firstTs": 1456746354,
-          "lastestTs": 1457494242,
-          "path": "/--index-path--/blooms/001077916-001121333.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmRf...K7NZ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1121334,
-          "latestAppearance": 1162350,
-          "firstTs": 1457494278,
-          "lastestTs": 1458161607,
-          "path": "/--index-path--/blooms/001121334-001162350.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmNZ...f1MA"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1162351,
-          "latestAppearance": 1198370,
-          "firstTs": 1458161615,
-          "lastestTs": 1458676829,
-          "path": "/--index-path--/blooms/001162351-001198370.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qme9...pbEs"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1198371,
-          "latestAppearance": 1231075,
-          "firstTs": 1458676846,
-          "lastestTs": 1459145330,
-          "path": "/--index-path--/blooms/001198371-001231075.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmb4...3Tud"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1231076,
-          "latestAppearance": 1266948,
-          "firstTs": 1459145360,
-          "lastestTs": 1459658787,
-          "path": "/--index-path--/blooms/001231076-001266948.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmTJ...JwXQ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1266949,
-          "latestAppearance": 1300043,
-          "firstTs": 1459658807,
-          "lastestTs": 1460133395,
-          "path": "/--index-path--/blooms/001266949-001300043.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmQd...73VJ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1300044,
-          "latestAppearance": 1336925,
-          "firstTs": 1460133398,
-          "lastestTs": 1460663732,
-          "path": "/--index-path--/blooms/001300044-001336925.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmVh...Bm6X"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1336926,
-          "latestAppearance": 1374185,
-          "firstTs": 1460663744,
-          "lastestTs": 1461197926,
-          "path": "/--index-path--/blooms/001336926-001374185.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmVs...aqtP"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1374186,
-          "latestAppearance": 1411435,
-          "firstTs": 1461197934,
-          "lastestTs": 1461733191,
-          "path": "/--index-path--/blooms/001374186-001411435.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qma5...EYcZ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1411436,
-          "latestAppearance": 1444289,
-          "firstTs": 1461733198,
-          "lastestTs": 1462204326,
-          "path": "/--index-path--/blooms/001411436-001444289.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmTQ...hnjJ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1444290,
-          "latestAppearance": 1475866,
-          "firstTs": 1462204334,
-          "lastestTs": 1462656545,
-          "path": "/--index-path--/blooms/001444290-001475866.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmfA...xd3V"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1475867,
-          "latestAppearance": 1506480,
-          "firstTs": 1462656563,
-          "lastestTs": 1463095784,
-          "path": "/--index-path--/blooms/001475867-001506480.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmR5...zdq8"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1506481,
-          "latestAppearance": 1534852,
-          "firstTs": 1463095790,
-          "lastestTs": 1463504029,
-          "path": "/--index-path--/blooms/001506481-001534852.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmXp...S9P1"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1534853,
-          "latestAppearance": 1563637,
-          "firstTs": 1463504046,
-          "lastestTs": 1463915310,
-          "path": "/--index-path--/blooms/001534853-001563637.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmcz...hxUj"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1563638,
-          "latestAppearance": 1592752,
-          "firstTs": 1463915332,
-          "lastestTs": 1464333491,
-          "path": "/--index-path--/blooms/001563638-001592752.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmcU...agci"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1592753,
-          "latestAppearance": 1617001,
-          "firstTs": 1464333492,
-          "lastestTs": 1464681713,
-          "path": "/--index-path--/blooms/001592753-001617001.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmVb...TW6k"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1617002,
-          "latestAppearance": 1649656,
-          "firstTs": 1464681719,
-          "lastestTs": 1465150569,
-          "path": "/--index-path--/blooms/001617002-001649656.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmY4...JHfn"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1649657,
-          "latestAppearance": 1680548,
-          "firstTs": 1465150624,
-          "lastestTs": 1465593072,
-          "path": "/--index-path--/blooms/001649657-001680548.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmbd...baKj"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1680549,
-          "latestAppearance": 1710537,
-          "firstTs": 1465593077,
-          "lastestTs": 1466020841,
-          "path": "/--index-path--/blooms/001680549-001710537.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmNT...KbTZ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1710538,
-          "latestAppearance": 1733043,
-          "firstTs": 1466020853,
-          "lastestTs": 1466345983,
-          "path": "/--index-path--/blooms/001710538-001733043.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmX1...AJEZ"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1733044,
-          "latestAppearance": 1759951,
-          "firstTs": 1466346016,
-          "lastestTs": 1466731886,
-          "path": "/--index-path--/blooms/001733044-001759951.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmYv...2rQh"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1759952,
-          "latestAppearance": 1792950,
-          "firstTs": 1466731892,
-          "lastestTs": 1467203855,
-          "path": "/--index-path--/blooms/001759952-001792950.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmPg...R7zW"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1792951,
-          "latestAppearance": 1819796,
-          "firstTs": 1467203862,
-          "lastestTs": 1467587903,
-          "path": "/--index-path--/blooms/001792951-001819796.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmea...qTzN"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1819797,
-          "latestAppearance": 1853185,
-          "firstTs": 1467587937,
-          "lastestTs": 1468066361,
-          "path": "/--index-path--/blooms/001819797-001853185.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmWH...ADFy"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1853186,
-          "latestAppearance": 1886600,
-          "firstTs": 1468066368,
-          "lastestTs": 1468543762,
-          "path": "/--index-path--/blooms/001853186-001886600.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmSh...vLTp"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1886601,
-          "latestAppearance": 1920120,
-          "firstTs": 1468543771,
-          "lastestTs": 1469023272,
-          "path": "/--index-path--/blooms/001886601-001920120.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmWV...RHwP"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1920121,
-          "latestAppearance": 1946117,
-          "firstTs": 1469023288,
-          "lastestTs": 1469396717,
-          "path": "/--index-path--/blooms/001920121-001946117.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmWQ...Viw9"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1946118,
-          "latestAppearance": 1968540,
-          "firstTs": 1469396725,
-          "lastestTs": 1469718883,
-          "path": "/--index-path--/blooms/001946118-001968540.bloom",
-          "sizeInBytes": 262156,
-          "hash": "QmQJ...DVWB"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1968541,
-          "latestAppearance": 1994173,
-          "firstTs": 1469718888,
-          "lastestTs": 1470088077,
-          "path": "/--index-path--/blooms/001968541-001994173.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmeV...HKtF"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 1994174,
-          "latestAppearance": 2019948,
-          "firstTs": 1470088090,
-          "lastestTs": 1470457376,
-          "path": "/--index-path--/blooms/001994174-002019948.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmTy...sGNA"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2019949,
-          "latestAppearance": 2047041,
-          "firstTs": 1470457379,
-          "lastestTs": 1470843415,
-          "path": "/--index-path--/blooms/002019949-002047041.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmdn...e5Mq"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2047042,
-          "latestAppearance": 2074053,
-          "firstTs": 1470843425,
-          "lastestTs": 1471230477,
-          "path": "/--index-path--/blooms/002047042-002074053.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmRZ...Tr6L"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2074054,
-          "latestAppearance": 2100263,
-          "firstTs": 1471230481,
-          "lastestTs": 1471604264,
-          "path": "/--index-path--/blooms/002074054-002100263.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmRx...oAsW"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2100264,
-          "latestAppearance": 2127256,
-          "firstTs": 1471604266,
-          "lastestTs": 1471988689,
-          "path": "/--index-path--/blooms/002100264-002127256.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmQp...3jCA"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2127257,
-          "latestAppearance": 2152218,
-          "firstTs": 1471988691,
-          "lastestTs": 1472345373,
-          "path": "/--index-path--/blooms/002127257-002152218.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmW1...Aj9i"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2152219,
-          "latestAppearance": 2178324,
-          "firstTs": 1472345377,
-          "lastestTs": 1472718721,
-          "path": "/--index-path--/blooms/002152219-002178324.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmVU...Ycyt"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2178325,
-          "latestAppearance": 2202858,
-          "firstTs": 1472718724,
-          "lastestTs": 1473070747,
-          "path": "/--index-path--/blooms/002178325-002202858.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmWL...66qK"
-        },
-        {
-          "type": "CIndexCacheItem",
           "nAddresses": 28689,
           "nAppearances": 500004,
           "firstAppearance": 971932,
           "latestAppearance": 1024630,
           "firstTs": 1454922473,
           "lastestTs": 1455832022,
-          "path": "/--index-path--/finalized/000971932-001024630.bin",
-          "sizeInBytes": 4803368,
-          "hash": "QmZ9...6WZN"
+          "filename": "/--index-path--/000971932-001024630.bin",
+          "indexSizeBytes": 4803368,
+          "index_hash": "QmZ9...6WZN",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmam...ZG7e"
         },
         {
           "type": "CIndexCacheItem",
@@ -501,9 +35,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1077915,
           "firstTs": 1455832025,
           "lastestTs": 1456746324,
-          "path": "/--index-path--/finalized/001024631-001077915.bin",
-          "sizeInBytes": 4715000,
-          "hash": "Qmdx...n5Na"
+          "filename": "/--index-path--/001024631-001077915.bin",
+          "indexSizeBytes": 4715000,
+          "index_hash": "Qmdx...n5Na",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmPP...n8Jj"
         },
         {
           "type": "CIndexCacheItem",
@@ -513,9 +49,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1121333,
           "firstTs": 1456746354,
           "lastestTs": 1457494242,
-          "path": "/--index-path--/finalized/001077916-001121333.bin",
-          "sizeInBytes": 5055880,
-          "hash": "QmTG...aEBi"
+          "filename": "/--index-path--/001077916-001121333.bin",
+          "indexSizeBytes": 5055880,
+          "index_hash": "QmTG...aEBi",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmRf...K7NZ"
         },
         {
           "type": "CIndexCacheItem",
@@ -525,9 +63,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1162350,
           "firstTs": 1457494278,
           "lastestTs": 1458161607,
-          "path": "/--index-path--/finalized/001121334-001162350.bin",
-          "sizeInBytes": 4994436,
-          "hash": "QmYn...cGMR"
+          "filename": "/--index-path--/001121334-001162350.bin",
+          "indexSizeBytes": 4994436,
+          "index_hash": "QmYn...cGMR",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmNZ...f1MA"
         },
         {
           "type": "CIndexCacheItem",
@@ -537,9 +77,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1198370,
           "firstTs": 1458161615,
           "lastestTs": 1458676829,
-          "path": "/--index-path--/finalized/001162351-001198370.bin",
-          "sizeInBytes": 4869436,
-          "hash": "QmUs...NmgH"
+          "filename": "/--index-path--/001162351-001198370.bin",
+          "indexSizeBytes": 4869436,
+          "index_hash": "QmUs...NmgH",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qme9...pbEs"
         },
         {
           "type": "CIndexCacheItem",
@@ -549,9 +91,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1231075,
           "firstTs": 1458676846,
           "lastestTs": 1459145330,
-          "path": "/--index-path--/finalized/001198371-001231075.bin",
-          "sizeInBytes": 4754844,
-          "hash": "QmQE...xRZR"
+          "filename": "/--index-path--/001198371-001231075.bin",
+          "indexSizeBytes": 4754844,
+          "index_hash": "QmQE...xRZR",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmb4...3Tud"
         },
         {
           "type": "CIndexCacheItem",
@@ -561,9 +105,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1266948,
           "firstTs": 1459145360,
           "lastestTs": 1459658787,
-          "path": "/--index-path--/finalized/001231076-001266948.bin",
-          "sizeInBytes": 4895212,
-          "hash": "Qmek...1VS8"
+          "filename": "/--index-path--/001231076-001266948.bin",
+          "indexSizeBytes": 4895212,
+          "index_hash": "Qmek...1VS8",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmTJ...JwXQ"
         },
         {
           "type": "CIndexCacheItem",
@@ -573,9 +119,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1300043,
           "firstTs": 1459658807,
           "lastestTs": 1460133395,
-          "path": "/--index-path--/finalized/001266949-001300043.bin",
-          "sizeInBytes": 4874180,
-          "hash": "Qmcq...SR4Y"
+          "filename": "/--index-path--/001266949-001300043.bin",
+          "indexSizeBytes": 4874180,
+          "index_hash": "Qmcq...SR4Y",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmQd...73VJ"
         },
         {
           "type": "CIndexCacheItem",
@@ -585,9 +133,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1336925,
           "firstTs": 1460133398,
           "lastestTs": 1460663732,
-          "path": "/--index-path--/finalized/001300044-001336925.bin",
-          "sizeInBytes": 4827124,
-          "hash": "QmVX...yMHU"
+          "filename": "/--index-path--/001300044-001336925.bin",
+          "indexSizeBytes": 4827124,
+          "index_hash": "QmVX...yMHU",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmVh...Bm6X"
         },
         {
           "type": "CIndexCacheItem",
@@ -597,9 +147,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1374185,
           "firstTs": 1460663744,
           "lastestTs": 1461197926,
-          "path": "/--index-path--/finalized/001336926-001374185.bin",
-          "sizeInBytes": 4802224,
-          "hash": "QmNR...HbnQ"
+          "filename": "/--index-path--/001336926-001374185.bin",
+          "indexSizeBytes": 4802224,
+          "index_hash": "QmNR...HbnQ",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmVs...aqtP"
         },
         {
           "type": "CIndexCacheItem",
@@ -609,9 +161,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1411435,
           "firstTs": 1461197934,
           "lastestTs": 1461733191,
-          "path": "/--index-path--/finalized/001374186-001411435.bin",
-          "sizeInBytes": 4850420,
-          "hash": "QmfZ...2qiS"
+          "filename": "/--index-path--/001374186-001411435.bin",
+          "indexSizeBytes": 4850420,
+          "index_hash": "QmfZ...2qiS",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qma5...EYcZ"
         },
         {
           "type": "CIndexCacheItem",
@@ -621,9 +175,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1444289,
           "firstTs": 1461733198,
           "lastestTs": 1462204326,
-          "path": "/--index-path--/finalized/001411436-001444289.bin",
-          "sizeInBytes": 5062204,
-          "hash": "QmNu...MHH6"
+          "filename": "/--index-path--/001411436-001444289.bin",
+          "indexSizeBytes": 5062204,
+          "index_hash": "QmNu...MHH6",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmTQ...hnjJ"
         },
         {
           "type": "CIndexCacheItem",
@@ -633,9 +189,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1475866,
           "firstTs": 1462204334,
           "lastestTs": 1462656545,
-          "path": "/--index-path--/finalized/001444290-001475866.bin",
-          "sizeInBytes": 5000240,
-          "hash": "QmZe...DAct"
+          "filename": "/--index-path--/001444290-001475866.bin",
+          "indexSizeBytes": 5000240,
+          "index_hash": "QmZe...DAct",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmfA...xd3V"
         },
         {
           "type": "CIndexCacheItem",
@@ -645,9 +203,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1506480,
           "firstTs": 1462656563,
           "lastestTs": 1463095784,
-          "path": "/--index-path--/finalized/001475867-001506480.bin",
-          "sizeInBytes": 5031032,
-          "hash": "QmNj...sHsS"
+          "filename": "/--index-path--/001475867-001506480.bin",
+          "indexSizeBytes": 5031032,
+          "index_hash": "QmNj...sHsS",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmR5...zdq8"
         },
         {
           "type": "CIndexCacheItem",
@@ -657,9 +217,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1534852,
           "firstTs": 1463095790,
           "lastestTs": 1463504029,
-          "path": "/--index-path--/finalized/001506481-001534852.bin",
-          "sizeInBytes": 5203392,
-          "hash": "QmbW...eWxU"
+          "filename": "/--index-path--/001506481-001534852.bin",
+          "indexSizeBytes": 5203392,
+          "index_hash": "QmbW...eWxU",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmXp...S9P1"
         },
         {
           "type": "CIndexCacheItem",
@@ -669,9 +231,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1563637,
           "firstTs": 1463504046,
           "lastestTs": 1463915310,
-          "path": "/--index-path--/finalized/001534853-001563637.bin",
-          "sizeInBytes": 5337728,
-          "hash": "QmXB...ZDLF"
+          "filename": "/--index-path--/001534853-001563637.bin",
+          "indexSizeBytes": 5337728,
+          "index_hash": "QmXB...ZDLF",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmcz...hxUj"
         },
         {
           "type": "CIndexCacheItem",
@@ -681,9 +245,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1592752,
           "firstTs": 1463915332,
           "lastestTs": 1464333491,
-          "path": "/--index-path--/finalized/001563638-001592752.bin",
-          "sizeInBytes": 5350816,
-          "hash": "Qmct...7HuJ"
+          "filename": "/--index-path--/001563638-001592752.bin",
+          "indexSizeBytes": 5350816,
+          "index_hash": "Qmct...7HuJ",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmcU...agci"
         },
         {
           "type": "CIndexCacheItem",
@@ -693,9 +259,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1617001,
           "firstTs": 1464333492,
           "lastestTs": 1464681713,
-          "path": "/--index-path--/finalized/001592753-001617001.bin",
-          "sizeInBytes": 5481424,
-          "hash": "QmXF...Ax3x"
+          "filename": "/--index-path--/001592753-001617001.bin",
+          "indexSizeBytes": 5481424,
+          "index_hash": "QmXF...Ax3x",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmVb...TW6k"
         },
         {
           "type": "CIndexCacheItem",
@@ -705,9 +273,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1649656,
           "firstTs": 1464681719,
           "lastestTs": 1465150569,
-          "path": "/--index-path--/finalized/001617002-001649656.bin",
-          "sizeInBytes": 5145464,
-          "hash": "QmSx...pYwk"
+          "filename": "/--index-path--/001617002-001649656.bin",
+          "indexSizeBytes": 5145464,
+          "index_hash": "QmSx...pYwk",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmY4...JHfn"
         },
         {
           "type": "CIndexCacheItem",
@@ -717,9 +287,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1680548,
           "firstTs": 1465150624,
           "lastestTs": 1465593072,
-          "path": "/--index-path--/finalized/001649657-001680548.bin",
-          "sizeInBytes": 5312640,
-          "hash": "QmdJ...utL5"
+          "filename": "/--index-path--/001649657-001680548.bin",
+          "indexSizeBytes": 5312640,
+          "index_hash": "QmdJ...utL5",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmbd...baKj"
         },
         {
           "type": "CIndexCacheItem",
@@ -729,9 +301,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1710537,
           "firstTs": 1465593077,
           "lastestTs": 1466020841,
-          "path": "/--index-path--/finalized/001680549-001710537.bin",
-          "sizeInBytes": 5443888,
-          "hash": "Qmed...ofv4"
+          "filename": "/--index-path--/001680549-001710537.bin",
+          "indexSizeBytes": 5443888,
+          "index_hash": "Qmed...ofv4",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmNT...KbTZ"
         },
         {
           "type": "CIndexCacheItem",
@@ -741,9 +315,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1733043,
           "firstTs": 1466020853,
           "lastestTs": 1466345983,
-          "path": "/--index-path--/finalized/001710538-001733043.bin",
-          "sizeInBytes": 6094772,
-          "hash": "QmUF...dTiN"
+          "filename": "/--index-path--/001710538-001733043.bin",
+          "indexSizeBytes": 6094772,
+          "index_hash": "QmUF...dTiN",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmX1...AJEZ"
         },
         {
           "type": "CIndexCacheItem",
@@ -753,9 +329,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1759951,
           "firstTs": 1466346016,
           "lastestTs": 1466731886,
-          "path": "/--index-path--/finalized/001733044-001759951.bin",
-          "sizeInBytes": 5604648,
-          "hash": "QmWh...c966"
+          "filename": "/--index-path--/001733044-001759951.bin",
+          "indexSizeBytes": 5604648,
+          "index_hash": "QmWh...c966",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmYv...2rQh"
         },
         {
           "type": "CIndexCacheItem",
@@ -765,9 +343,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1792950,
           "firstTs": 1466731892,
           "lastestTs": 1467203855,
-          "path": "/--index-path--/finalized/001759952-001792950.bin",
-          "sizeInBytes": 5387420,
-          "hash": "QmfE...aS2M"
+          "filename": "/--index-path--/001759952-001792950.bin",
+          "indexSizeBytes": 5387420,
+          "index_hash": "QmfE...aS2M",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmPg...R7zW"
         },
         {
           "type": "CIndexCacheItem",
@@ -777,9 +357,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1819796,
           "firstTs": 1467203862,
           "lastestTs": 1467587903,
-          "path": "/--index-path--/finalized/001792951-001819796.bin",
-          "sizeInBytes": 5175148,
-          "hash": "Qmbv...t8EQ"
+          "filename": "/--index-path--/001792951-001819796.bin",
+          "indexSizeBytes": 5175148,
+          "index_hash": "Qmbv...t8EQ",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmea...qTzN"
         },
         {
           "type": "CIndexCacheItem",
@@ -789,9 +371,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1853185,
           "firstTs": 1467587937,
           "lastestTs": 1468066361,
-          "path": "/--index-path--/finalized/001819797-001853185.bin",
-          "sizeInBytes": 5412836,
-          "hash": "QmdU...pgad"
+          "filename": "/--index-path--/001819797-001853185.bin",
+          "indexSizeBytes": 5412836,
+          "index_hash": "QmdU...pgad",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmWH...ADFy"
         },
         {
           "type": "CIndexCacheItem",
@@ -801,9 +385,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1886600,
           "firstTs": 1468066368,
           "lastestTs": 1468543762,
-          "path": "/--index-path--/finalized/001853186-001886600.bin",
-          "sizeInBytes": 5345784,
-          "hash": "QmZ8...TQ8G"
+          "filename": "/--index-path--/001853186-001886600.bin",
+          "indexSizeBytes": 5345784,
+          "index_hash": "QmZ8...TQ8G",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmSh...vLTp"
         },
         {
           "type": "CIndexCacheItem",
@@ -813,9 +399,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1920120,
           "firstTs": 1468543771,
           "lastestTs": 1469023272,
-          "path": "/--index-path--/finalized/001886601-001920120.bin",
-          "sizeInBytes": 5599100,
-          "hash": "QmUo...CTus"
+          "filename": "/--index-path--/001886601-001920120.bin",
+          "indexSizeBytes": 5599100,
+          "index_hash": "QmUo...CTus",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmWV...RHwP"
         },
         {
           "type": "CIndexCacheItem",
@@ -825,9 +413,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1946117,
           "firstTs": 1469023288,
           "lastestTs": 1469396717,
-          "path": "/--index-path--/finalized/001920121-001946117.bin",
-          "sizeInBytes": 5516004,
-          "hash": "QmYS...nzj1"
+          "filename": "/--index-path--/001920121-001946117.bin",
+          "indexSizeBytes": 5516004,
+          "index_hash": "QmYS...nzj1",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmWQ...Viw9"
         },
         {
           "type": "CIndexCacheItem",
@@ -837,9 +427,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1968540,
           "firstTs": 1469396725,
           "lastestTs": 1469718883,
-          "path": "/--index-path--/finalized/001946118-001968540.bin",
-          "sizeInBytes": 5701624,
-          "hash": "QmTX...sLBf"
+          "filename": "/--index-path--/001946118-001968540.bin",
+          "indexSizeBytes": 5701624,
+          "index_hash": "QmTX...sLBf",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmQJ...DVWB"
         },
         {
           "type": "CIndexCacheItem",
@@ -849,9 +441,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 1994173,
           "firstTs": 1469718888,
           "lastestTs": 1470088077,
-          "path": "/--index-path--/finalized/001968541-001994173.bin",
-          "sizeInBytes": 5303636,
-          "hash": "QmQ7...mPpk"
+          "filename": "/--index-path--/001968541-001994173.bin",
+          "indexSizeBytes": 5303636,
+          "index_hash": "QmQ7...mPpk",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmeV...HKtF"
         },
         {
           "type": "CIndexCacheItem",
@@ -861,9 +455,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2019948,
           "firstTs": 1470088090,
           "lastestTs": 1470457376,
-          "path": "/--index-path--/finalized/001994174-002019948.bin",
-          "sizeInBytes": 5343328,
-          "hash": "Qmb9...Q4ig"
+          "filename": "/--index-path--/001994174-002019948.bin",
+          "indexSizeBytes": 5343328,
+          "index_hash": "Qmb9...Q4ig",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmTy...sGNA"
         },
         {
           "type": "CIndexCacheItem",
@@ -873,9 +469,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2047041,
           "firstTs": 1470457379,
           "lastestTs": 1470843415,
-          "path": "/--index-path--/finalized/002019949-002047041.bin",
-          "sizeInBytes": 5187740,
-          "hash": "QmNR...CpCY"
+          "filename": "/--index-path--/002019949-002047041.bin",
+          "indexSizeBytes": 5187740,
+          "index_hash": "QmNR...CpCY",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmdn...e5Mq"
         },
         {
           "type": "CIndexCacheItem",
@@ -885,9 +483,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2074053,
           "firstTs": 1470843425,
           "lastestTs": 1471230477,
-          "path": "/--index-path--/finalized/002047042-002074053.bin",
-          "sizeInBytes": 5134528,
-          "hash": "QmUC...bynn"
+          "filename": "/--index-path--/002047042-002074053.bin",
+          "indexSizeBytes": 5134528,
+          "index_hash": "QmUC...bynn",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmRZ...Tr6L"
         },
         {
           "type": "CIndexCacheItem",
@@ -897,9 +497,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2100263,
           "firstTs": 1471230481,
           "lastestTs": 1471604264,
-          "path": "/--index-path--/finalized/002074054-002100263.bin",
-          "sizeInBytes": 5122468,
-          "hash": "QmUy...QfpF"
+          "filename": "/--index-path--/002074054-002100263.bin",
+          "indexSizeBytes": 5122468,
+          "index_hash": "QmUy...QfpF",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmRx...oAsW"
         },
         {
           "type": "CIndexCacheItem",
@@ -909,9 +511,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2127256,
           "firstTs": 1471604266,
           "lastestTs": 1471988689,
-          "path": "/--index-path--/finalized/002100264-002127256.bin",
-          "sizeInBytes": 5096260,
-          "hash": "QmVj...iK9f"
+          "filename": "/--index-path--/002100264-002127256.bin",
+          "indexSizeBytes": 5096260,
+          "index_hash": "QmVj...iK9f",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmQp...3jCA"
         },
         {
           "type": "CIndexCacheItem",
@@ -921,9 +525,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2152218,
           "firstTs": 1471988691,
           "lastestTs": 1472345373,
-          "path": "/--index-path--/finalized/002127257-002152218.bin",
-          "sizeInBytes": 5143312,
-          "hash": "QmPL...EsJX"
+          "filename": "/--index-path--/002127257-002152218.bin",
+          "indexSizeBytes": 5143312,
+          "index_hash": "QmPL...EsJX",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmW1...Aj9i"
         },
         {
           "type": "CIndexCacheItem",
@@ -933,9 +539,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2178324,
           "firstTs": 1472345377,
           "lastestTs": 1472718721,
-          "path": "/--index-path--/finalized/002152219-002178324.bin",
-          "sizeInBytes": 5178416,
-          "hash": "QmVZ...3fZe"
+          "filename": "/--index-path--/002152219-002178324.bin",
+          "indexSizeBytes": 5178416,
+          "index_hash": "QmVZ...3fZe",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmVU...Ycyt"
         },
         {
           "type": "CIndexCacheItem",
@@ -945,9 +553,11 @@ cacheStatus --details index --start 1000000 --end 2200000
           "latestAppearance": 2202858,
           "firstTs": 1472718724,
           "lastestTs": 1473070747,
-          "path": "/--index-path--/finalized/002178325-002202858.bin",
-          "sizeInBytes": 5208776,
-          "hash": "QmNh...oGZM"
+          "filename": "/--index-path--/002178325-002202858.bin",
+          "indexSizeBytes": 5208776,
+          "index_hash": "QmNh...oGZM",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmWL...66qK"
         }
       ],
       "type": "CIndexCache",

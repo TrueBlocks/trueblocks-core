@@ -15,75 +15,17 @@ cacheStatus --details some --start 3000000 --end 3100000
       "items": [
         {
           "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 2986116,
-          "latestAppearance": 3012968,
-          "firstTs": 1484277812,
-          "lastestTs": 1484659811,
-          "path": "/--index-path--/blooms/002986116-003012968.bloom",
-          "sizeInBytes": 131080,
-          "hash": "Qmdr...kWX7"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 3012969,
-          "latestAppearance": 3039485,
-          "firstTs": 1484659813,
-          "lastestTs": 1485038618,
-          "path": "/--index-path--/blooms/003012969-003039485.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmdM...JYwW"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 3039486,
-          "latestAppearance": 3064476,
-          "firstTs": 1485038623,
-          "lastestTs": 1485396031,
-          "path": "/--index-path--/blooms/003039486-003064476.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmNR...npTg"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 3064477,
-          "latestAppearance": 3090505,
-          "firstTs": 1485396040,
-          "lastestTs": 1485768828,
-          "path": "/--index-path--/blooms/003064477-003090505.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmfY...Q1zT"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 4294967295,
-          "nAppearances": 4294967295,
-          "firstAppearance": 3090506,
-          "latestAppearance": 3117476,
-          "firstTs": 1485768838,
-          "lastestTs": 1486156334,
-          "path": "/--index-path--/blooms/003090506-003117476.bloom",
-          "sizeInBytes": 131080,
-          "hash": "QmQE...GhiQ"
-        },
-        {
-          "type": "CIndexCacheItem",
           "nAddresses": 41351,
           "nAppearances": 500017,
           "firstAppearance": 2986116,
           "latestAppearance": 3012968,
           "firstTs": 1484277812,
           "lastestTs": 1484659811,
-          "path": "/--index-path--/finalized/002986116-003012968.bin",
-          "sizeInBytes": 5158008,
-          "hash": "QmPE...P2RP"
+          "filename": "/--index-path--/002986116-003012968.bin",
+          "indexSizeBytes": 5158008,
+          "index_hash": "QmPE...P2RP",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "Qmdr...kWX7"
         },
         {
           "type": "CIndexCacheItem",
@@ -93,9 +35,11 @@ cacheStatus --details some --start 3000000 --end 3100000
           "latestAppearance": 3039485,
           "firstTs": 1484659813,
           "lastestTs": 1485038618,
-          "path": "/--index-path--/finalized/003012969-003039485.bin",
-          "sizeInBytes": 5159484,
-          "hash": "QmaL...ovMo"
+          "filename": "/--index-path--/003012969-003039485.bin",
+          "indexSizeBytes": 5159484,
+          "index_hash": "QmaL...ovMo",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmdM...JYwW"
         },
         {
           "type": "CIndexCacheItem",
@@ -105,9 +49,11 @@ cacheStatus --details some --start 3000000 --end 3100000
           "latestAppearance": 3064476,
           "firstTs": 1485038623,
           "lastestTs": 1485396031,
-          "path": "/--index-path--/finalized/003039486-003064476.bin",
-          "sizeInBytes": 5090664,
-          "hash": "QmTY...KUeh"
+          "filename": "/--index-path--/003039486-003064476.bin",
+          "indexSizeBytes": 5090664,
+          "index_hash": "QmTY...KUeh",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmNR...npTg"
         },
         {
           "type": "CIndexCacheItem",
@@ -117,9 +63,11 @@ cacheStatus --details some --start 3000000 --end 3100000
           "latestAppearance": 3090505,
           "firstTs": 1485396040,
           "lastestTs": 1485768828,
-          "path": "/--index-path--/finalized/003064477-003090505.bin",
-          "sizeInBytes": 5076756,
-          "hash": "QmeX...kcE1"
+          "filename": "/--index-path--/003064477-003090505.bin",
+          "indexSizeBytes": 5076756,
+          "index_hash": "QmeX...kcE1",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmfY...Q1zT"
         },
         {
           "type": "CIndexCacheItem",
@@ -129,9 +77,11 @@ cacheStatus --details some --start 3000000 --end 3100000
           "latestAppearance": 3117476,
           "firstTs": 1485768838,
           "lastestTs": 1486156334,
-          "path": "/--index-path--/finalized/003090506-003117476.bin",
-          "sizeInBytes": 5127744,
-          "hash": "QmUE...Z9Mc"
+          "filename": "/--index-path--/003090506-003117476.bin",
+          "indexSizeBytes": 5127744,
+          "index_hash": "QmUE...Z9Mc",
+          "bloomSizeBytes": 131080,
+          "bloom_hash": "QmQE...GhiQ"
         }
       ],
       "type": "CIndexCache",

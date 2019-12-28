@@ -106,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    establishFolder(getCachePath("tmp"));
+    establishFolder(getCachePath("tmp/"));
 
     if (!heatmap.empty())
         return true;

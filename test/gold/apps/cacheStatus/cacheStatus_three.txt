@@ -13,6 +13,8 @@ cacheStatus abis caches monitors --types slurps
   "caches": [
     {
       "addrs": [
+        "--address--",
+        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",

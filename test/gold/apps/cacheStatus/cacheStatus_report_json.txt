@@ -23,6 +23,8 @@ cacheStatus --report --fmt json
     },
     {
       "addrs": [
+        "--address--",
+        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",

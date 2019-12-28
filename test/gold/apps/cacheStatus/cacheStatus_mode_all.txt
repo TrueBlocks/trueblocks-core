@@ -22,6 +22,8 @@ cacheStatus all
     },
     {
       "addrs": [
+        "--address--",
+        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",

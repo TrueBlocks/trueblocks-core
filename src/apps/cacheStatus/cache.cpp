@@ -303,8 +303,9 @@ const char* STR_DISPLAY_CACHE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
+#if 1
     return false;
-#if 0
+#else
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     if (!fileExists(fn))
         return false;
@@ -317,7 +318,11 @@ bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
         const CRuntimeClass* pClass = cache->getRuntimeClass();
         if (pClass) {  // copy the values from this class
             for (auto field : pClass->fieldList) {
-                setValueByName(field.getName(), trim(cache->getValueByName(field.getName()), '\"'));
+                string_q ff = field.getName();
+                string_q val = cache->getValueByName(ff);
+                replaceAll(val, "\"", "");
+                replaceAll(val, "\n", "");
+                setValueByName(ff, val);
             }
         }
         archive.Release();
@@ -329,6 +334,9 @@ bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
 
 //---------------------------------------------------------------------------
 bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
+#if 1
+    return false;
+#else
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
@@ -339,6 +347,7 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
         return true;
     }
     return false;
+#endif
 }
 // EXISTING_CODE
 }  // namespace qblocks
