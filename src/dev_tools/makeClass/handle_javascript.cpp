@@ -65,26 +65,6 @@ bool COptions::handle_one_frontend_file(const CJavascriptDef& def, const string_
     string_q sourceFile = "./" + source;
     string_q code = asciiFileToString(sourceFile);
     replaceAll(code, "[{CONNECT}]", def.polling ? STR_EXPORT_2 : STR_EXPORT_1);
-//    if (!def.state.empty()) {
-//        replaceAll(code, "[{GLOBAL_STATE1}]", ",\n\t" + def.state);
-//        replaceAll(code, "[{GLOBAL_STATE2}]", ",\n\t\t\t\t" + def.state);
-//        if (contains(def.state, "[]")) {
-//            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "[]", "action.payload"));
-//            replaceAll(
-//                code, "[{GLOBAL_STATE4}]",
-//                ",\n\t" + substitute(def.state, "[]", "reducer_[{PROPER}]." + substitute(def.state, ": []", "")));
-//        } else {
-//            replaceAll(code, "[{GLOBAL_STATE3}]", ",\n\t\t\t\t" + substitute(def.state, "{}", "action.payload"));
-//            replaceAll(
-//                code, "[{GLOBAL_STATE4}]",
-//                ",\n\t" + substitute(def.state, "{}", "reducer_[{PROPER}]." + substitute(def.state, ": {}", "")));
-//        }
-//    } else {
-//        replaceAll(code, "[{GLOBAL_STATE1}]", "");
-//        replaceAll(code, "[{GLOBAL_STATE2}]", "");
-//        replaceAll(code, "[{GLOBAL_STATE3}]", "");
-//        replaceAll(code, "[{GLOBAL_STATE4}]", "");
-//    }
     replaceAll(code, "[{LONG}]", def.longName);
     replaceAll(code, "[{SEVEN}]", padRight(def.longName.substr(0, 7), 7, '_'));
     replaceAll(code, "[{TWO1}]", toUpper(def.longName.substr(0, 2)));
