@@ -103,7 +103,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         commands << "export const " << toUpper(item.subpage) << " = '" << item.route << "/" << item.options << "';" << endl;
         if (!menu_items.str().empty())
             menu_items << "," << endl;
-        menu_items << "      { header: '" << toProper(item.subpage) << "', value: 'VAL', action: " << toUpper(item.subpage) << " }";
+        menu_items << "      { header: '" << substitute(toProper(item.subpage), "_", " ") << "', value: 'VAL', action: " << toUpper(item.subpage) << " }";
         if (cnt == 0)
             def_menu = (item.route + "/" + item.options);
         cnt++;
@@ -245,7 +245,7 @@ const char* STR_TEXT_ACTIONS =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TEXT_IMPORTS =
-    "import { [{SUBPAGE}]Text } from './text-[{SUBPAGE}]';";
+    "import { [{SUBPAGE}]Text } from './text/[{SUBPAGE}]';";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TEXT_CODE =
