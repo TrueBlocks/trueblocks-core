@@ -33,7 +33,7 @@ string_q nextTokenClear(string_q& line, char delim, bool doClear) {
 }
 
 //--------------------------------------------------------------------------------
-size_t explode(CStringArray& result, const string& input, char needle) {
+size_t explode(CStringArray& result, const string& input, char needle, bool trim) {
     result.reserve(result.size() + countOf(input, needle) + 1);  // maybe an append
 
     string_q buffer{""};
@@ -41,7 +41,10 @@ size_t explode(CStringArray& result, const string& input, char needle) {
         if (ch != needle) {
             buffer += ch;
         } else if (ch == needle) {
-            result.push_back(trimWhitespace(buffer));
+            if (trim)
+                result.push_back(trimWhitespace(buffer));
+            else
+                result.push_back(buffer);
             buffer = "";
         }
     }
@@ -52,7 +55,7 @@ size_t explode(CStringArray& result, const string& input, char needle) {
 }
 
 //--------------------------------------------------------------------------------
-size_t explode(CUintArray& result, const string& input, char needle) {
+size_t explode(CUintArray& result, const string& input, char needle, bool trim) {
     result.reserve(result.size() + countOf(input, needle) + 1);  // maybe an append
 
     string_q buffer{""};
@@ -60,7 +63,10 @@ size_t explode(CUintArray& result, const string& input, char needle) {
         if (ch != needle) {
             buffer += ch;
         } else if (ch == needle) {
-            result.push_back(str_2_Uint(trimWhitespace(buffer)));
+            if (trim)
+                result.push_back(str_2_Uint(trimWhitespace(buffer)));
+            else
+                result.push_back(str_2_Uint(buffer));
             buffer = "";
         }
     }

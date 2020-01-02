@@ -19,12 +19,7 @@ bool COptions::handle_data(void) {
         addrList += (" " + addr);
 
     ostringstream os;
-    if (contains(tool_flags, "--when")) {
-        replaceAll(tool_flags, "--when", "");
-        os << "whenBlock --list --data " << tool_flags
-           << (isApiMode() ? " --fmt json" : "");  // order matters, last in wins
-
-    } else if (contains(tool_flags, "--abi")) {
+    if (contains(tool_flags, "--abi")) {
         replaceAll(tool_flags, "--abi", "");
         if (addrs.size() == 0 && !contains(tool_flags, "help"))
             return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
@@ -41,6 +36,14 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--code", "--mode code");
         replaceAll(tool_flags, "--nonce", "--mode nonce");
         os << "getState " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
+
+    } else if (contains(tool_flags, "--when")) {
+        replaceAll(tool_flags, "--when", "");
+        cerr << "tool flags: " << tool_flags << endl;
+        if (addrs.size() == 0 && !contains(tool_flags, "help"))
+            return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
+                         " does not include a valid Ethereum block or date. Quitting...");
+        os << "whenBlock " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--names")) {
         replaceAll(tool_flags, "--names", "");

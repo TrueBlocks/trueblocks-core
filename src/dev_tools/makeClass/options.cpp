@@ -249,7 +249,8 @@ COptions::COptions(void) : classFile("") {
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
-    CJavascriptDef::registerClass();
+    CPage::registerClass();
+    CSubpage::registerClass();
 }
 
 //--------------------------------------------------------------------------------

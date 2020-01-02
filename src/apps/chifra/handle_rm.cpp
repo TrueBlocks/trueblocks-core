@@ -24,16 +24,16 @@ bool COptions::handle_rm(void) {
     CStringArray removed;
     bool hasYes = contains(tool_flags, "--yes");
     for (auto addr : addrs) {
-        bool exists = false;
-        exists |= fileExists(getMonitorPath(addr));
-        exists |= fileExists(getMonitorLast(addr));
-        exists |= fileExists(getMonitorExpt(addr));
-        exists |= fileExists(getMonitorBals(addr));
-        exists |= fileExists(getMonitorCnfg(addr));
+        bool itExists = false;
+        itExists |= fileExists(getMonitorPath(addr));
+        itExists |= fileExists(getMonitorLast(addr));
+        itExists |= fileExists(getMonitorExpt(addr));
+        itExists |= fileExists(getMonitorBals(addr));
+        itExists |= fileExists(getMonitorCnfg(addr));
         string_q delFn = getMonitorPath(addr + ".deleted");
-        exists |= fileExists(delFn);
+        itExists |= fileExists(delFn);
 
-        if (!exists) {
+        if (!itExists) {
             if (!hasYes)
                 LOG_WARN("Monitor not found for address " + addr + ".");
 

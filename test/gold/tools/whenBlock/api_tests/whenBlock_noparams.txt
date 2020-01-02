@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whenBlock - Not enough arguments presented."
+    "chifra - Input does not include a valid Ethereum block or date. Quitting..."
   ]
 }

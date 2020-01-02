@@ -1,4 +1,0 @@
-[settings]
-class = CJavascriptDef
-fields = string longName|string properName|string pageNotes|string query_url|string query_opts|string query_extract|string subpage|string state|bool polling|string files|string menuType
-includes = etherlib.h

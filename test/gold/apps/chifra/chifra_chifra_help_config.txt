@@ -1,9 +1,9 @@
-chifra argc: 3 [1:config] [2:--help] 
-chifra config --help 
-chifra config argc: 2 [1:--help] 
-chifra config --help 
+chifra argc: 3 [1:settings] [2:--help] 
+chifra settings --help 
+chifra settings argc: 2 [1:--help] 
+chifra settings --help 
 
-  Usage:    chifra config [-d|-t|-l|-r|-v|-h] <mode> [mode...]  
+  Usage:    chifra settings [-d|-t|-l|-r|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  

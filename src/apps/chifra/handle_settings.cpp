@@ -6,7 +6,7 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_config(void) {
+bool COptions::handle_settings(void) {
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
@@ -30,7 +30,7 @@ bool COptions::handle_config(void) {
     replaceAll(tool_flags, "--set", "--set_config");
 
     if (!startsWith(tool_flags, "--get_config") && !startsWith(tool_flags, "--set_config"))
-        EXIT_MSG8("chifra config 'mode' must be either '--get' or '--set'.", false);
+        EXIT_USAGE("chifra config 'mode' must be either '--get' or '--set'.");
 
     ostringstream os;
     os << "cacheStatus " << tool_flags;
@@ -62,7 +62,7 @@ bool COptions::handle_config(void) {
 
 #define cleanPath(path_) (isTestMode() ? substitute(path_, getCachePath(""), "$CACHE_PATH/") : path_)
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_config(void) {
+bool COptions::handle_settings(void) {
 
     ENTER8("handle_" + mode);
     nodeNotRequired();

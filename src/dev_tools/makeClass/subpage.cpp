@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "javascriptclass.h"
+#include "subpage.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CJavascriptDef, CBaseNode);
+IMPLEMENT_NODE(CSubpage, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextJavascriptdefChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextJavascriptdefChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextSubpageChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextSubpageChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CJavascriptDef::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CSubpage::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["javascriptdef_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["subpage_fmt"] : fmtIn);
     if (fmt.empty()) {
         ctx << toJson();
         return;
@@ -44,13 +44,13 @@ void CJavascriptDef::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextJavascriptdefChunk, this);
+        ctx << getNextChunk(fmt, nextSubpageChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextJavascriptdefChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextSubpageChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CJavascriptDef*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CSubpage*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextJavascriptdefChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CJavascriptDef::getValueByName(const string_q& fieldName) const {
+string_q CSubpage::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextJavascriptdefChunk_custom(fieldName, this);
+    string_q ret = nextSubpageChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,49 +70,34 @@ string_q CJavascriptDef::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'e':
+            if (fieldName % "extract") {
+                return extract;
+            }
+            break;
         case 'f':
-            if (fieldName % "files") {
-                return files;
+            if (fieldName % "from_text") {
+                return bool_2_Str(from_text);
             }
             break;
-        case 'l':
-            if (fieldName % "longName") {
-                return longName;
-            }
-            break;
-        case 'm':
-            if (fieldName % "menuType") {
-                return menuType;
+        case 'o':
+            if (fieldName % "options") {
+                return options;
             }
             break;
         case 'p':
-            if (fieldName % "properName") {
-                return properName;
-            }
-            if (fieldName % "pageNotes") {
-                return pageNotes;
-            }
-            if (fieldName % "polling") {
-                return bool_2_Str(polling);
+            if (fieldName % "page") {
+                return page;
             }
             break;
-        case 'q':
-            if (fieldName % "query_url") {
-                return query_url;
-            }
-            if (fieldName % "query_opts") {
-                return query_opts;
-            }
-            if (fieldName % "query_extract") {
-                return query_extract;
+        case 'r':
+            if (fieldName % "route") {
+                return route;
             }
             break;
         case 's':
             if (fieldName % "subpage") {
                 return subpage;
-            }
-            if (fieldName % "state") {
-                return state;
             }
             break;
         default:
@@ -127,7 +112,7 @@ string_q CJavascriptDef::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CJavascriptDef::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -135,59 +120,39 @@ bool CJavascriptDef::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'e':
+            if (fieldName % "extract") {
+                extract = fieldValue;
+                return true;
+            }
+            break;
         case 'f':
-            if (fieldName % "files") {
-                files = fieldValue;
+            if (fieldName % "from_text") {
+                from_text = str_2_Bool(fieldValue);
                 return true;
             }
             break;
-        case 'l':
-            if (fieldName % "longName") {
-                longName = fieldValue;
-                return true;
-            }
-            break;
-        case 'm':
-            if (fieldName % "menuType") {
-                menuType = fieldValue;
+        case 'o':
+            if (fieldName % "options") {
+                options = fieldValue;
                 return true;
             }
             break;
         case 'p':
-            if (fieldName % "properName") {
-                properName = fieldValue;
-                return true;
-            }
-            if (fieldName % "pageNotes") {
-                pageNotes = fieldValue;
-                return true;
-            }
-            if (fieldName % "polling") {
-                polling = str_2_Bool(fieldValue);
+            if (fieldName % "page") {
+                page = fieldValue;
                 return true;
             }
             break;
-        case 'q':
-            if (fieldName % "query_url") {
-                query_url = fieldValue;
-                return true;
-            }
-            if (fieldName % "query_opts") {
-                query_opts = fieldValue;
-                return true;
-            }
-            if (fieldName % "query_extract") {
-                query_extract = fieldValue;
+        case 'r':
+            if (fieldName % "route") {
+                route = fieldValue;
                 return true;
             }
             break;
         case 's':
             if (fieldName % "subpage") {
                 subpage = fieldValue;
-                return true;
-            }
-            if (fieldName % "state") {
-                state = fieldValue;
                 return true;
             }
             break;
@@ -198,13 +163,13 @@ bool CJavascriptDef::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CJavascriptDef::finishParse() {
+void CSubpage::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CJavascriptDef::Serialize(CArchive& archive) {
+bool CSubpage::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -216,45 +181,35 @@ bool CJavascriptDef::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> longName;
-    archive >> properName;
-    archive >> pageNotes;
-    archive >> query_url;
-    archive >> query_opts;
-    archive >> query_extract;
+    archive >> page;
     archive >> subpage;
-    archive >> state;
-    archive >> polling;
-    archive >> files;
-    archive >> menuType;
+    archive >> route;
+    archive >> options;
+    archive >> extract;
+    archive >> from_text;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CJavascriptDef::SerializeC(CArchive& archive) const {
+bool CSubpage::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << longName;
-    archive << properName;
-    archive << pageNotes;
-    archive << query_url;
-    archive << query_opts;
-    archive << query_extract;
+    archive << page;
     archive << subpage;
-    archive << state;
-    archive << polling;
-    archive << files;
-    archive << menuType;
+    archive << route;
+    archive << options;
+    archive << extract;
+    archive << from_text;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CJavascriptDefArray& array) {
+CArchive& operator>>(CArchive& archive, CSubpageArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -266,7 +221,7 @@ CArchive& operator>>(CArchive& archive, CJavascriptDefArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CJavascriptDefArray& array) {
+CArchive& operator<<(CArchive& archive, const CSubpageArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -275,51 +230,46 @@ CArchive& operator<<(CArchive& archive, const CJavascriptDefArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CJavascriptDef::registerClass(void) {
+void CSubpage::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CJavascriptDef, "schema"))
+    if (HAS_FIELD(CSubpage, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CJavascriptDef, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "longName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "properName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "pageNotes", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "query_url", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "query_opts", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "query_extract", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "subpage", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "state", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "polling", T_BOOL, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "files", T_TEXT, ++fieldNum);
-    ADD_FIELD(CJavascriptDef, "menuType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CSubpage, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSubpage, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSubpage, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "page", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "subpage", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "route", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "options", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "extract", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "from_text", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CJavascriptDef, "schema");
-    HIDE_FIELD(CJavascriptDef, "deleted");
-    HIDE_FIELD(CJavascriptDef, "showing");
-    HIDE_FIELD(CJavascriptDef, "cname");
+    HIDE_FIELD(CSubpage, "schema");
+    HIDE_FIELD(CSubpage, "deleted");
+    HIDE_FIELD(CSubpage, "showing");
+    HIDE_FIELD(CSubpage, "cname");
 
-    builtIns.push_back(_biCJavascriptDef);
+    builtIns.push_back(_biCSubpage);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextJavascriptdefChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CJavascriptDef* jav = reinterpret_cast<const CJavascriptDef*>(dataPtr);
-    if (jav) {
+string_q nextSubpageChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CSubpage* sub = reinterpret_cast<const CSubpage*>(dataPtr);
+    if (sub) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, jav);
+                    return nextBasenodeChunk(fieldIn, sub);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -333,7 +283,7 @@ string_q nextJavascriptdefChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CJavascriptDef::readBackLevel(CArchive& archive) {
+bool CSubpage::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -341,7 +291,7 @@ bool CJavascriptDef::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CJavascriptDef& item) {
+ostream& operator<<(ostream& os, const CSubpage& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -351,7 +301,7 @@ ostream& operator<<(ostream& os, const CJavascriptDef& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_JAVASCRIPTDEF = "";
+const char* STR_DISPLAY_SUBPAGE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

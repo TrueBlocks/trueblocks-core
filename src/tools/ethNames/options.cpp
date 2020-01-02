@@ -294,7 +294,10 @@ void COptions::applyFilter() {
             getAccounts(addrs);
             uint32_t cnt = 0;
             for (auto addr : addrs) {
-                CAccountName item("00-Active\t" + addr + "\tOwned_" + padNum4(cnt++));
+                CAccountName item;
+                item.group = "00-Active";
+                item.address = addr;
+                item.name = "Owned_" + padNum4(cnt++);
                 addIfUnique(item);
             }
         }

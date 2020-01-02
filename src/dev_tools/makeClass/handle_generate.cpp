@@ -207,21 +207,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
 
     //------------------------------------------------------------------------------------------------
-    if (asJs) {
-        CJavascriptDef js;
-        js.longName = classDef.base_lower;
-        js.properName = classDef.base_proper;
-        js.pageNotes = toml.getConfigStr("settings", "page_notes", "");
-        js.query_url = toml.getConfigStr("settings", "query_url", "");
-        js.query_opts = toml.getConfigStr("settings", "query_opts", "");
-        js.query_extract = toml.getConfigStr("settings", "query_extract", "");
-        js.subpage = toml.getConfigStr("settings", "subpage", "");
-        js.state = toml.getConfigStr("settings", "state", "");
-        js.polling = toml.getConfigBool("settings", "polling", false);
-        js.files = toml.getConfigStr("settings", "files", "index|actions|dispatchers|inner|reducers");
-        js.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
-        return handle_generate_frontend(js);
-    }
+    if (asJs)
+        return handle_generate_frontend(toml, classDef);
 
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));

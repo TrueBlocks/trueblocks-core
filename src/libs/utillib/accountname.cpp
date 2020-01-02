@@ -410,6 +410,14 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'n':
+                if (fieldIn % "name")
+                    return substitute(acc->name, "\"", "");
+                break;
+            case 's':
+                if (fieldIn % "source")
+                    return substitute(acc->source, "\"", "");
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

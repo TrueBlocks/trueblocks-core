@@ -43,7 +43,7 @@ class COptions : public COptionsBase {
     bool handle_status(void);
     bool handle_rm(void);
     bool handle_data(void);
-    bool handle_config(void);
+    bool handle_settings(void);
 };
 
 //--------------------------------------------------------------------------------

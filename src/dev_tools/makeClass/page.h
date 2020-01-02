@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
+#include "subpage.h"
 
 namespace qblocks {
 
@@ -23,41 +24,46 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CJavascriptDef : public CBaseNode {
+class CPage : public CBaseNode {
   public:
     string_q longName;
     string_q properName;
+    string_q twoName;
+    string_q sevenName;
     string_q pageNotes;
-    string_q query_url;
-    string_q query_opts;
-    string_q query_extract;
-    string_q subpage;
-    string_q state;
+    CSubpageArray subpages;
     bool polling;
-    string_q files;
     string_q menuType;
+    string_q files;
+    bool no_error;
+    bool no_data;
+    bool no_dt;
+    bool has_text;
+    string_q color;
 
   public:
-    CJavascriptDef(void);
-    CJavascriptDef(const CJavascriptDef& ja);
-    virtual ~CJavascriptDef(void);
-    CJavascriptDef& operator=(const CJavascriptDef& ja);
+    CPage(void);
+    CPage(const CPage& pa);
+    virtual ~CPage(void);
+    CPage& operator=(const CPage& pa);
 
-    DECLARE_NODE(CJavascriptDef);
+    DECLARE_NODE(CPage);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CJavascriptDef& item) const;
-    bool operator!=(const CJavascriptDef& item) const {
+    bool operator==(const CPage& item) const;
+    bool operator!=(const CPage& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CJavascriptDef& v1, const CJavascriptDef& v2);
-    friend ostream& operator<<(ostream& os, const CJavascriptDef& item);
+    friend bool operator<(const CPage& v1, const CPage& v2);
+    friend ostream& operator<<(ostream& os, const CPage& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CJavascriptDef& ja);
+    void duplicate(const CPage& pa);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -65,86 +71,92 @@ class CJavascriptDef : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CJavascriptDef::CJavascriptDef(void) {
+inline CPage::CPage(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CJavascriptDef::CJavascriptDef(const CJavascriptDef& ja) {
+inline CPage::CPage(const CPage& pa) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ja);
+    duplicate(pa);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CJavascriptDef::~CJavascriptDef(void) {
+inline CPage::~CPage(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CJavascriptDef::clear(void) {
+inline void CPage::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CJavascriptDef::initialize(void) {
+inline void CPage::initialize(void) {
     CBaseNode::initialize();
 
     longName = "";
     properName = "";
+    twoName = "";
+    sevenName = "";
     pageNotes = "";
-    query_url = "";
-    query_opts = "";
-    query_extract = "";
-    subpage = "";
-    state = "";
+    subpages.clear();
     polling = false;
-    files = "";
     menuType = "";
+    files = "";
+    no_error = false;
+    no_data = false;
+    no_dt = false;
+    has_text = false;
+    color = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CJavascriptDef::duplicate(const CJavascriptDef& ja) {
+inline void CPage::duplicate(const CPage& pa) {
     clear();
-    CBaseNode::duplicate(ja);
+    CBaseNode::duplicate(pa);
 
-    longName = ja.longName;
-    properName = ja.properName;
-    pageNotes = ja.pageNotes;
-    query_url = ja.query_url;
-    query_opts = ja.query_opts;
-    query_extract = ja.query_extract;
-    subpage = ja.subpage;
-    state = ja.state;
-    polling = ja.polling;
-    files = ja.files;
-    menuType = ja.menuType;
+    longName = pa.longName;
+    properName = pa.properName;
+    twoName = pa.twoName;
+    sevenName = pa.sevenName;
+    pageNotes = pa.pageNotes;
+    subpages = pa.subpages;
+    polling = pa.polling;
+    menuType = pa.menuType;
+    files = pa.files;
+    no_error = pa.no_error;
+    no_data = pa.no_data;
+    no_dt = pa.no_dt;
+    has_text = pa.has_text;
+    color = pa.color;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CJavascriptDef& CJavascriptDef::operator=(const CJavascriptDef& ja) {
-    duplicate(ja);
+inline CPage& CPage::operator=(const CPage& pa) {
+    duplicate(pa);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CJavascriptDef::operator==(const CJavascriptDef& item) const {
+inline bool CPage::operator==(const CPage& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -152,7 +164,7 @@ inline bool CJavascriptDef::operator==(const CJavascriptDef& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CJavascriptDef& v1, const CJavascriptDef& v2) {
+inline bool operator<(const CPage& v1, const CPage& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -160,12 +172,12 @@ inline bool operator<(const CJavascriptDef& v1, const CJavascriptDef& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CJavascriptDef> CJavascriptDefArray;
-extern CArchive& operator>>(CArchive& archive, CJavascriptDefArray& array);
-extern CArchive& operator<<(CArchive& archive, const CJavascriptDefArray& array);
+typedef vector<CPage> CPageArray;
+extern CArchive& operator>>(CArchive& archive, CPageArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPageArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_JAVASCRIPTDEF;
+extern const char* STR_DISPLAY_PAGE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
