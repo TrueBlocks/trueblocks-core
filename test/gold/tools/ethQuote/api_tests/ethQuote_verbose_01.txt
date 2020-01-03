@@ -1,5 +1,19 @@
 {
   "type": "CPriceQuote",
+  "fieldList": [
+    {
+      "name": "timestamp",
+      "type": "timestamp"
+    },
+    {
+      "name": "close",
+      "type": "double"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    }
+  ],
   "data": [
     {
       "timestamp": 1439078400,

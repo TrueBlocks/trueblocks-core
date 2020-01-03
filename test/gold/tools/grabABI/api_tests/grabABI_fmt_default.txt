@@ -1,5 +1,15 @@
 {
   "type": "CAbi",
+  "fieldList": [
+    {
+      "name": "address",
+      "type": "address"
+    },
+    {
+      "name": "interfaces",
+      "type": "object|ts_array"
+    }
+  ],
   "data": [
     {
       "type": "constructor",

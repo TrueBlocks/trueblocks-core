@@ -41,7 +41,7 @@ namespace qblocks {
 #define T_TEXT (50 | TS_STRING)
 #define T_ADDRESS (55 | TS_STRING)
 #define T_HASH (60 | TS_STRING)
-#define T_IPFSHASH (T_HASH)
+#define T_IPFSHASH (62 | TS_STRING)
 #define T_BLOOM (65 | TS_STRING)
 #define T_POINTER (70 | TS_POINTER)
 #define T_OBJECT (75 | TS_OBJECT)
@@ -131,6 +131,5 @@ typedef vector<CFieldData> CFieldDataArray;
 //-----------------------------------------------------------------------
 extern void manageFields(const string_q& formatStr);
 extern void manageFields(const string_q& listIn, bool show);
-extern string_q baseTypeName(uint64_t type);
-extern string_q fieldTypeStr(uint64_t type);
+extern string_q fieldTypeName(uint64_t type);
 }  // namespace qblocks

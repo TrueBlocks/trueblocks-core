@@ -1,5 +1,43 @@
 {
   "type": "CEthState",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "balance",
+      "type": "wei"
+    },
+    {
+      "name": "nonce",
+      "type": "unumber"
+    },
+    {
+      "name": "code",
+      "type": "text"
+    },
+    {
+      "name": "storage",
+      "type": "text"
+    },
+    {
+      "name": "address",
+      "type": "address"
+    },
+    {
+      "name": "deployed",
+      "type": "blocknum"
+    },
+    {
+      "name": "accttype",
+      "type": "text"
+    },
+    {
+      "name": "ether",
+      "type": "number"
+    }
+  ],
   "data": [
     {
       "blockNumber": 2500000,

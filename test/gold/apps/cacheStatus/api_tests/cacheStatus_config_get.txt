@@ -1,4 +1,4 @@
-{ "type": "CConfiguration", "data": [
+{ "type": "CConfiguration", "fieldList": [{ "name": "files", "type": "object|ts_array" }], "data": [
 {
   "files": [
     {

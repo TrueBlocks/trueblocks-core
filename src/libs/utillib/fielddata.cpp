@@ -40,58 +40,66 @@ string_q baseTypeName(uint64_t type) {
 }
 
 //--------------------------------------------------------------
-string_q fieldTypeStr(uint64_t type) {
-    string_q t("\t");
-    if (type == T_DATE)
-        return uint_2_Str(type) + t + "T_DATE " + baseTypeName(type);
-    else if (type == T_TIME)
-        return uint_2_Str(type) + t + "T_TIME " + baseTypeName(type);
-    else if (type == T_BOOL)
-        return uint_2_Str(type) + t + "T_BOOL " + baseTypeName(type);
-    else if (type == T_BLOCKNUM)
-        return uint_2_Str(type) + t + "T_BLOCKNUM " + baseTypeName(type);
-    else if (type == T_NUMBER)
-        return uint_2_Str(type) + t + "T_NUMBER " + baseTypeName(type);
-    else if (type == T_UNUMBER)
-        return uint_2_Str(type) + t + "T_UNUMBER " + baseTypeName(type);
-    else if (type == T_DOUBLE)
-        return uint_2_Str(type) + t + "T_DOUBLE " + baseTypeName(type);
-    else if (type == T_WEI)
-        return uint_2_Str(type) + t + "T_WEI " + baseTypeName(type);
-    else if (type == T_UINT256)
-        return uint_2_Str(type) + t + "T_UINT256 " + baseTypeName(type);
-    else if (type == T_INT256)
-        return uint_2_Str(type) + t + "T_INT256 " + baseTypeName(type);
-    else if (type == T_GAS)
-        return uint_2_Str(type) + t + "T_GAS " + baseTypeName(type);
-    else if (type == T_ETHER)
-        return uint_2_Str(type) + t + "T_ETHER " + baseTypeName(type);
-    else if (type == T_TEXT)
-        return uint_2_Str(type) + t + "T_TEXT " + baseTypeName(type);
-    else if (type == T_ADDRESS)
-        return uint_2_Str(type) + t + "T_ADDRESS " + baseTypeName(type);
-    else if (type == T_TIMESTAMP)
-        return uint_2_Str(type) + t + "T_TIMESPAN " + baseTypeName(type);
-    else if (type == T_HASH)
-        return uint_2_Str(type) + t + "T_HASH " + baseTypeName(type);
-    else if (type == T_IPFSHASH)
-        return uint_2_Str(type) + t + "T_IPFSHASH " + baseTypeName(type);
-    else if (type == T_BLOOM)
-        return uint_2_Str(type) + t + "T_BLOOM " + baseTypeName(type);
-    else if (type == T_POINTER)
-        return uint_2_Str(type) + t + "T_POINTER " + baseTypeName(type);
-    else if (type == T_OBJECT)
-        return uint_2_Str(type) + t + "T_OBJECT " + baseTypeName(type);
-    else if (type == (T_OBJECT | TS_ARRAY))
-        return uint_2_Str(type) + t + "T_OBJECT|TS_ARRAY " + baseTypeName(type);
-    else if (type == (T_TEXT | TS_ARRAY))
-        return uint_2_Str(type) + t + "T_TEXT|TS_ARRAY " + baseTypeName(type);
-    else if (type == (T_ADDRESS | TS_ARRAY))
-        return uint_2_Str(type) + t + "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
-
-    return uint_2_Str(type) + t + "Unknown";
+string_q fieldTypeName(uint64_t type) {
+    switch (type) {
+        case T_DATE:
+            return "T_DATE";
+        case T_TIME:
+            return "T_TIME";
+        case T_BOOL:
+            return "T_BOOL";
+        case T_BLOCKNUM:
+            return "T_BLOCKNUM";
+        case T_NUMBER:
+            return "T_NUMBER";
+        case T_UNUMBER:
+            return "T_UNUMBER";
+        case T_DOUBLE:
+            return "T_DOUBLE";
+        case T_WEI:
+            return "T_WEI";
+        case T_UINT256:
+            return "T_UINT256";
+        case T_INT256:
+            return "T_INT256";
+        case T_GAS:
+            return "T_GAS";
+        case T_ETHER:
+            return "T_ETHER";
+        case T_TEXT:
+            return "T_TEXT";
+        case T_ADDRESS:
+            return "T_ADDRESS";
+        case T_TIMESTAMP:
+            return "T_TIMESTAMP";
+        case T_HASH:
+            return "T_HASH";
+        case T_IPFSHASH:
+            return "T_IPFSHASH";
+        case T_BLOOM:
+            return "T_BLOOM";
+        case T_POINTER:
+            return "T_POINTER";
+        case T_OBJECT:
+            return "T_OBJECT";
+        case T_OBJECT | TS_ARRAY:
+            return "T_OBJECT|TS_ARRAY";
+        case T_TEXT | TS_ARRAY:
+            return "T_TEXT|TS_ARRAY";
+        case T_ADDRESS | TS_ARRAY:
+            return "T_ADDRESS|TS_ARRAY";
+        default:
+            return "Unknown";
+    }
+    return "Unknown";
 }
 
+//--------------------------------------------------------------
+string_q fieldTypeStr(uint64_t type) {
+    return uint_2_Str(type) + "\t" + fieldTypeName(type) + " " + baseTypeName(type);
+}
+
+//--------------------------------------------------------------
 ostream& operator<<(ostream& os, const CFieldData& item) {
     os << padRight(item.getName(), 20) << "\t";
     os << item.getID() << "\t";

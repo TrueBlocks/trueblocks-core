@@ -1,5 +1,27 @@
 {
   "type": "CTrace",
+  "fieldList": [
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "error",
+      "type": "text"
+    },
+    {
+      "name": "articulatedTrace",
+      "type": "object"
+    },
+    {
+      "name": "action",
+      "type": "object"
+    },
+    {
+      "name": "result",
+      "type": "object"
+    }
+  ],
   "data": [
     {
       "type": "call",

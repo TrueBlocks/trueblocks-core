@@ -1,6 +1,6 @@
 whenBlock argc: 4 [1:1001001] [2:--fmt] [3:api] 
 whenBlock 1001001 --fmt api 
-{ "type": "CBlock", "data": [
+{ "type": "CBlock", "fieldList": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "name", "type": "text" }, { "name": "date", "type": "date" }], "data": [
   {
     "blockNumber": 1001001,
     "timestamp": 1455421883,

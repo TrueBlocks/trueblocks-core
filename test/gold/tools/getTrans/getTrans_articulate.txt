@@ -1,6 +1,6 @@
 getTrans argc: 8 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:api] [7:--trace] 
 getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt api --trace 
-{ "type": "CTransaction", "data": [
+{ "type": "CTransaction", "fieldList": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }], "data": [
   {
     "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
     "blockHash": "0x10a610f712557f961e854be9b19561eea3c9c19ab7b302027877181935789da8",

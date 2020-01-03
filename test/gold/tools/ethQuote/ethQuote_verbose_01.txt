@@ -1,7 +1,7 @@
 ethQuote argc: 5 [1:--verbose] [2:1] [3:--fmt] [4:api] 
 ethQuote --verbose 1 --fmt api 
 Read cnt existing price quotes (lastRead: Now)
-{ "type": "CPriceQuote", "data": [
+{ "type": "CPriceQuote", "fieldList": [{ "name": "timestamp", "type": "timestamp" }, { "name": "close", "type": "double" }, { "name": "date", "type": "date" }], "data": [
   {
     "timestamp": 1439078400,
     "close": 1.40000,

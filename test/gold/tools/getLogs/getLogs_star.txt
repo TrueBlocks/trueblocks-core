@@ -1,6 +1,6 @@
 getLogs argc: 4 [1:1428993.*] [2:--fmt] [3:api] 
 getLogs 1428993.* --fmt api 
-{ "type": "CLogEntry", "data": [
+{ "type": "CLogEntry", "fieldList": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "compressedLog", "type": "text" }, { "name": "type", "type": "text" }], "data": [
   {
     "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",
     "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",

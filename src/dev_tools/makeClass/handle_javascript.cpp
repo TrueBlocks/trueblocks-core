@@ -242,9 +242,9 @@ const char* STR_POLLING =
 const char* STR_EXTRACT_CASE =
     "      return {\n"
     "        ...state,\n"
-    "        data: action.payload_EXTRACT_,\n"
-    "        fieldList: action.fieldList,\n"
-    "        meta: action.meta,\n"
+    "        data: action.payload.data_EXTRACT_,\n"
+    "        fieldList: action.payload.fieldList,\n"
+    "        meta: action.payload.meta,\n"
     "        isLoading: false,\n"
     "        error: null\n"
     "      };\n\n";

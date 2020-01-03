@@ -1,5 +1,31 @@
 {
   "type": "CLogEntry",
+  "fieldList": [
+    {
+      "name": "address",
+      "type": "address"
+    },
+    {
+      "name": "data",
+      "type": "text"
+    },
+    {
+      "name": "logIndex",
+      "type": "blocknum"
+    },
+    {
+      "name": "topics",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "compressedLog",
+      "type": "text"
+    },
+    {
+      "name": "type",
+      "type": "text"
+    }
+  ],
   "data": [
     {
       "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",

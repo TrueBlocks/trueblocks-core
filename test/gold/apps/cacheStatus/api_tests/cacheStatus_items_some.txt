@@ -1,5 +1,47 @@
 {
   "type": "CStatus",
+  "fieldList": [
+    {
+      "name": "client_version",
+      "type": "text"
+    },
+    {
+      "name": "trueblocks_version",
+      "type": "text"
+    },
+    {
+      "name": "rpc_provider",
+      "type": "text"
+    },
+    {
+      "name": "api_provider",
+      "type": "text"
+    },
+    {
+      "name": "balance_provider",
+      "type": "text"
+    },
+    {
+      "name": "cache_path",
+      "type": "text"
+    },
+    {
+      "name": "index_path",
+      "type": "text"
+    },
+    {
+      "name": "host",
+      "type": "text"
+    },
+    {
+      "name": "is_scraping",
+      "type": "bool"
+    },
+    {
+      "name": "caches",
+      "type": "object|ts_array"
+    }
+  ],
   "data": [
     {
       "client_version": "Parity version",

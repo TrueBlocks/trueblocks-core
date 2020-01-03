@@ -1,6 +1,6 @@
 getReceipt argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
 getReceipt 2222222.0 2332332.0 --fmt api 
-{ "type": "CTransaction", "data": [
+{ "type": "CTransaction", "fieldList": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }], "data": [
   {
     "contractAddress": "0x0",
     "gasUsed": 1000000,

@@ -1,6 +1,6 @@
 grabABI argc: 4 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:api] 
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api 
-{ "type": "CAbi", "data": [
+{ "type": "CAbi", "fieldList": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }], "data": [
 {
   "type": "constructor",
   "signature": "(address,uint256,address)",

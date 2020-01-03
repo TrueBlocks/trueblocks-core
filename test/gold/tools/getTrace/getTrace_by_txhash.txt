@@ -1,6 +1,6 @@
 getTrace argc: 4 [1:0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6] [2:--fmt] [3:api] 
 getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fmt api 
-{ "type": "CTrace", "data": [
+{ "type": "CTrace", "fieldList": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
     "blockNumber": 4348290,

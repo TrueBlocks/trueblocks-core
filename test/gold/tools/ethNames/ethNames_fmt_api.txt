@@ -1,6 +1,6 @@
 ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:api] 
 ethNames --named --custom --owned --fmt api 
-{ "type": "CAccountName", "data": [
+{ "type": "CAccountName", "fieldList": [{ "name": "group", "type": "text" }, { "name": "subgroup", "type": "text" }, { "name": "name", "type": "text" }, { "name": "address", "type": "address" }, { "name": "symbol", "type": "text" }, { "name": "description", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "is_contract", "type": "bool" }, { "name": "is_private", "type": "bool" }, { "name": "is_shared", "type": "bool" }], "data": [
   {
     "group": "",
     "subgroup": "",
