@@ -9,18 +9,18 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 hash                	1005	0	131132	T_HASH TS_STRING
 blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	0	131127	T_ADDRESS TS_STRING
 to                  	1012	0	131127	T_ADDRESS TS_STRING
 value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	0	131122	T_TEXT TS_STRING
-isError             	1017	0	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
@@ -70,18 +70,18 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 hash                	1005	1	131132	T_HASH TS_STRING
 blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	1	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	1	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	1	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	1	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	1	131127	T_ADDRESS TS_STRING
 to                  	1012	1	131127	T_ADDRESS TS_STRING
 value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	1	131122	T_TEXT TS_STRING
-isError             	1017	1	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+isError             	1017	1	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
@@ -112,18 +112,18 @@ showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 hash                	1005	0	131132	T_HASH TS_STRING
 blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	0	131127	T_ADDRESS TS_STRING
 to                  	1012	0	131127	T_ADDRESS TS_STRING
 value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	0	131122	T_TEXT TS_STRING
-isError             	1017	0	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
+isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	0	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	0	131122	T_TEXT TS_STRING

@@ -132,7 +132,7 @@ str_default         	1007	0	131122	T_TEXT TS_STRING
 value               	1008	0	131122	T_TEXT TS_STRING
 indexed             	1009	0	65556	T_BOOL TS_NUMERAL
 no_write            	1010	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	1	65561	T_NUMBER TS_NUMERAL
+is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
 is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
 is_array            	1013	0	65556	T_BOOL TS_NUMERAL
 is_object           	1014	0	65556	T_BOOL TS_NUMERAL
@@ -155,7 +155,7 @@ str_default         	1007	1	131122	T_TEXT TS_STRING
 value               	1008	1	131122	T_TEXT TS_STRING
 indexed             	1009	1	65556	T_BOOL TS_NUMERAL
 no_write            	1010	1	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	1	65561	T_NUMBER TS_NUMERAL
+is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
 is_pointer          	1012	1	65556	T_BOOL TS_NUMERAL
 is_array            	1013	1	65556	T_BOOL TS_NUMERAL
 is_object           	1014	1	65556	T_BOOL TS_NUMERAL
@@ -178,7 +178,7 @@ str_default         	1007	0	131122	T_TEXT TS_STRING
 value               	1008	0	131122	T_TEXT TS_STRING
 indexed             	1009	0	65556	T_BOOL TS_NUMERAL
 no_write            	1010	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	0	65561	T_NUMBER TS_NUMERAL
+is_flags            	1011	0	65563	T_UNUMBER TS_NUMERAL
 is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
 is_array            	1013	0	65556	T_BOOL TS_NUMERAL
 is_object           	1014	0	65556	T_BOOL TS_NUMERAL
@@ -316,13 +316,13 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	131132	T_HASH TS_STRING
 miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
 price               	1012	0	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	1	131122	T_TEXT TS_STRING
 light               	1017	1	65556	T_BOOL TS_NUMERAL
@@ -351,13 +351,13 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	1	131132	T_HASH TS_STRING
-blockNumber         	1008	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	1	131132	T_HASH TS_STRING
 miner               	1010	1	131127	T_ADDRESS TS_STRING
-difficulty          	1011	1	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	1	65563	T_UNUMBER TS_NUMERAL
 price               	1012	1	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	1	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	1	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	1	131122	T_TEXT TS_STRING
 light               	1017	1	65556	T_BOOL TS_NUMERAL
@@ -376,13 +376,13 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	131132	T_HASH TS_STRING
 miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
 price               	1012	0	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 name                	1016	0	131122	T_TEXT TS_STRING
 light               	1017	0	65556	T_BOOL TS_NUMERAL
@@ -414,12 +414,12 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-begBal              	1005	0	65561	T_NUMBER TS_NUMERAL
-inflow              	1006	0	65561	T_NUMBER TS_NUMERAL
-outflow             	1007	0	65561	T_NUMBER TS_NUMERAL
-gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
-endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
-blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
+begBal              	1005	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+inflow              	1006	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+outflow             	1007	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+gasCostInWei        	1008	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+endBal              	1009	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+blockNum            	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "begBal": 0,
   "inflow": 0,
@@ -436,12 +436,12 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-begBal              	1005	1	65561	T_NUMBER TS_NUMERAL
-inflow              	1006	1	65561	T_NUMBER TS_NUMERAL
-outflow             	1007	1	65561	T_NUMBER TS_NUMERAL
-gasCostInWei        	1008	1	65561	T_NUMBER TS_NUMERAL
-endBal              	1009	1	65561	T_NUMBER TS_NUMERAL
-blockNum            	1010	1	65561	T_NUMBER TS_NUMERAL
+begBal              	1005	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+inflow              	1006	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+outflow             	1007	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+gasCostInWei        	1008	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+endBal              	1009	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+blockNum            	1010	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
 }
 
@@ -452,12 +452,12 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-begBal              	1005	0	65561	T_NUMBER TS_NUMERAL
-inflow              	1006	0	65561	T_NUMBER TS_NUMERAL
-outflow             	1007	0	65561	T_NUMBER TS_NUMERAL
-gasCostInWei        	1008	0	65561	T_NUMBER TS_NUMERAL
-endBal              	1009	0	65561	T_NUMBER TS_NUMERAL
-blockNum            	1010	0	65561	T_NUMBER TS_NUMERAL
+begBal              	1005	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+inflow              	1006	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+outflow             	1007	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+gasCostInWei        	1008	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+endBal              	1009	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
+blockNum            	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "schema": 6002,
   "deleted": 0,
@@ -480,16 +480,16 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 address             	1005	0	131127	T_ADDRESS TS_STRING
 blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 data                	1008	0	131122	T_TEXT TS_STRING
-logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
+logIndex            	1009	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 removed             	1010	1	65556	T_BOOL TS_NUMERAL
 topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
 compressedLog       	1013	1	131122	T_TEXT TS_STRING
 transactionHash     	1014	1	131132	T_HASH TS_STRING
-transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1015	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1016	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1017	1	131122	T_TEXT TS_STRING
 topic0              	1018	1	131132	T_HASH TS_STRING
 topic1              	1019	1	131132	T_HASH TS_STRING
@@ -510,16 +510,16 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 address             	1005	1	131127	T_ADDRESS TS_STRING
 blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 data                	1008	1	131122	T_TEXT TS_STRING
-logIndex            	1009	1	65561	T_NUMBER TS_NUMERAL
+logIndex            	1009	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 removed             	1010	1	65556	T_BOOL TS_NUMERAL
 topics              	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	1	1048651	T_OBJECT TS_OBJECT
 compressedLog       	1013	1	131122	T_TEXT TS_STRING
 transactionHash     	1014	1	131132	T_HASH TS_STRING
-transactionIndex    	1015	1	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1016	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1015	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1016	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1017	1	131122	T_TEXT TS_STRING
 topic0              	1018	1	131132	T_HASH TS_STRING
 topic1              	1019	1	131132	T_HASH TS_STRING
@@ -537,16 +537,16 @@ showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 address             	1005	0	131127	T_ADDRESS TS_STRING
 blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 data                	1008	0	131122	T_TEXT TS_STRING
-logIndex            	1009	0	65561	T_NUMBER TS_NUMERAL
+logIndex            	1009	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 removed             	1010	0	65556	T_BOOL TS_NUMERAL
 topics              	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 articulatedLog      	1012	0	1048651	T_OBJECT TS_OBJECT
 compressedLog       	1013	0	131122	T_TEXT TS_STRING
 transactionHash     	1014	0	131132	T_HASH TS_STRING
-transactionIndex    	1015	0	65561	T_NUMBER TS_NUMERAL
-transactionLogIndex 	1016	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1015	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1016	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1017	0	131122	T_TEXT TS_STRING
 topic0              	1018	0	131132	T_HASH TS_STRING
 topic1              	1019	0	131132	T_HASH TS_STRING
@@ -570,7 +570,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
@@ -586,7 +586,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	1	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	1	65566	T_DOUBLE TS_NUMERAL
 date                	1007	1	262149	T_DATE TS_DATE
 {
@@ -599,7 +599,7 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
@@ -620,7 +620,7 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	1	131127	T_ADDRESS TS_STRING
@@ -628,10 +628,10 @@ gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	1	131122	T_TEXT TS_STRING
 root                	1013	1	131122	T_TEXT TS_STRING
-status              	1014	0	65561	T_NUMBER TS_NUMERAL
+status              	1014	0	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	1	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	1	131132	T_HASH TS_STRING
-transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -647,7 +647,7 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	1	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	1	131127	T_ADDRESS TS_STRING
@@ -655,10 +655,10 @@ gasUsed             	1010	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	1	131122	T_TEXT TS_STRING
 root                	1013	1	131122	T_TEXT TS_STRING
-status              	1014	1	65561	T_NUMBER TS_NUMERAL
+status              	1014	1	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	1	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	1	131132	T_HASH TS_STRING
-transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
 }
 
@@ -670,7 +670,7 @@ deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	0	131127	T_ADDRESS TS_STRING
@@ -678,10 +678,10 @@ gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	0	131122	T_TEXT TS_STRING
 root                	1013	0	131122	T_TEXT TS_STRING
-status              	1014	0	65561	T_NUMBER TS_NUMERAL
+status              	1014	0	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	0	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	0	131132	T_HASH TS_STRING
-transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "schema": 6002,
   "deleted": 0,
@@ -745,11 +745,11 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -774,11 +774,11 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	1	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	1	131122	T_TEXT TS_STRING
 transactionHash     	1009	1	131132	T_HASH TS_STRING
-transactionIndex    	1010	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -797,11 +797,11 @@ deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT
@@ -963,18 +963,18 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 hash                	1005	0	131132	T_HASH TS_STRING
 blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	0	131127	T_ADDRESS TS_STRING
 to                  	1012	0	131127	T_ADDRESS TS_STRING
 value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	0	131122	T_TEXT TS_STRING
-isError             	1017	0	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
@@ -1029,18 +1029,18 @@ showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 hash                	1005	1	131132	T_HASH TS_STRING
 blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	1	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	1	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	1	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	1	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	1	131127	T_ADDRESS TS_STRING
 to                  	1012	1	131127	T_ADDRESS TS_STRING
 value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	1	131122	T_TEXT TS_STRING
-isError             	1017	1	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	1	65561	T_NUMBER TS_NUMERAL
+isError             	1017	1	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
@@ -1071,18 +1071,18 @@ showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 hash                	1005	0	131132	T_HASH TS_STRING
 blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	65561	T_NUMBER TS_NUMERAL
-transactionIndex    	1008	0	65561	T_NUMBER TS_NUMERAL
-nonce               	1009	0	65561	T_NUMBER TS_NUMERAL
-timestamp           	1010	0	65551	T_TIMESPAN TS_NUMERAL
+blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 from                	1011	0	131127	T_ADDRESS TS_STRING
 to                  	1012	0	131127	T_ADDRESS TS_STRING
 value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 gas                 	1014	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasPrice            	1015	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 input               	1016	0	131122	T_TEXT TS_STRING
-isError             	1017	0	65561	T_NUMBER TS_NUMERAL
-isInternal          	1018	0	65561	T_NUMBER TS_NUMERAL
+isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
+isInternal          	1018	0	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
 articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	0	131122	T_TEXT TS_STRING
@@ -1152,13 +1152,13 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	131132	T_HASH TS_STRING
 miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
 price               	1012	0	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "gasLimit": 0,
@@ -1183,13 +1183,13 @@ cname               	1004	1	131122	T_TEXT TS_STRING
 gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	1	131132	T_HASH TS_STRING
-blockNumber         	1008	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	1	131132	T_HASH TS_STRING
 miner               	1010	1	131127	T_ADDRESS TS_STRING
-difficulty          	1011	1	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	1	65563	T_UNUMBER TS_NUMERAL
 price               	1012	1	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	1	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	1	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
 }
@@ -1204,13 +1204,13 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	131132	T_HASH TS_STRING
 miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65561	T_NUMBER TS_NUMERAL
+difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
 price               	1012	0	65566	T_DOUBLE TS_NUMERAL
 finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1014	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 6002,

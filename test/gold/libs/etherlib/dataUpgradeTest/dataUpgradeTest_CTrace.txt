@@ -8,11 +8,11 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -37,11 +37,11 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	1	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	1	131122	T_TEXT TS_STRING
 transactionHash     	1009	1	131132	T_HASH TS_STRING
-transactionIndex    	1010	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	1	131122	T_TEXT TS_STRING
 error               	1012	1	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	1	1048651	T_OBJECT TS_OBJECT
@@ -60,11 +60,11 @@ deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
-subtraces           	1007	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
 traceAddress        	1008	0	131122	T_TEXT TS_STRING
 transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1011	0	131122	T_TEXT TS_STRING
 error               	1012	0	131122	T_TEXT TS_STRING
 articulatedTrace    	1013	0	1048651	T_OBJECT TS_OBJECT

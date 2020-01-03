@@ -7,7 +7,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
@@ -23,7 +23,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	1	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	1	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	1	65566	T_DOUBLE TS_NUMERAL
 date                	1007	1	262149	T_DATE TS_DATE
 {
@@ -36,7 +36,7 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-timestamp           	1005	0	65551	T_TIMESPAN TS_NUMERAL
+timestamp           	1005	0	8454159	T_TIMESPAN TS_NUMERAL TS_INTEGER
 close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {

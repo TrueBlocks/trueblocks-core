@@ -22,6 +22,8 @@ string_q baseTypeName(uint64_t type) {
     string_q ret;
     if (type & TS_NUMERAL)
         ret += (" TS_NUMERAL ");
+    if (type & TS_INTEGER)
+        ret += (" TS_INTEGER ");
     if (type & TS_STRING)
         ret += (" TS_STRING ");
     if (type & TS_DATE)
@@ -42,40 +44,49 @@ string_q fieldTypeStr(uint64_t type) {
     string_q t("\t");
     if (type == T_DATE)
         return uint_2_Str(type) + t + "T_DATE " + baseTypeName(type);
-    if (type == T_TIME)
+    else if (type == T_TIME)
         return uint_2_Str(type) + t + "T_TIME " + baseTypeName(type);
-    if (type == T_BOOL)
+    else if (type == T_BOOL)
         return uint_2_Str(type) + t + "T_BOOL " + baseTypeName(type);
-    if (type == T_NUMBER)
+    else if (type == T_BLOCKNUM)
+        return uint_2_Str(type) + t + "T_BLOCKNUM " + baseTypeName(type);
+    else if (type == T_NUMBER)
         return uint_2_Str(type) + t + "T_NUMBER " + baseTypeName(type);
-    if (type == T_DOUBLE)
+    else if (type == T_UNUMBER)
+        return uint_2_Str(type) + t + "T_UNUMBER " + baseTypeName(type);
+    else if (type == T_DOUBLE)
         return uint_2_Str(type) + t + "T_DOUBLE " + baseTypeName(type);
-    if (type == T_WEI)
+    else if (type == T_WEI)
         return uint_2_Str(type) + t + "T_WEI " + baseTypeName(type);
-    if (type == T_GAS)
+    else if (type == T_UINT256)
+        return uint_2_Str(type) + t + "T_UINT256 " + baseTypeName(type);
+    else if (type == T_INT256)
+        return uint_2_Str(type) + t + "T_INT256 " + baseTypeName(type);
+    else if (type == T_GAS)
         return uint_2_Str(type) + t + "T_GAS " + baseTypeName(type);
-    if (type == T_ETHER)
+    else if (type == T_ETHER)
         return uint_2_Str(type) + t + "T_ETHER " + baseTypeName(type);
-    if (type == T_TEXT)
+    else if (type == T_TEXT)
         return uint_2_Str(type) + t + "T_TEXT " + baseTypeName(type);
-    if (type == T_ADDRESS)
+    else if (type == T_ADDRESS)
         return uint_2_Str(type) + t + "T_ADDRESS " + baseTypeName(type);
-    if (type == T_TIMESTAMP)
+    else if (type == T_TIMESTAMP)
         return uint_2_Str(type) + t + "T_TIMESPAN " + baseTypeName(type);
-    if (type == T_HASH)
+    else if (type == T_HASH)
         return uint_2_Str(type) + t + "T_HASH " + baseTypeName(type);
-    if (type == T_BLOOM)
+    else if (type == T_IPFSHASH)
+        return uint_2_Str(type) + t + "T_IPFSHASH " + baseTypeName(type);
+    else if (type == T_BLOOM)
         return uint_2_Str(type) + t + "T_BLOOM " + baseTypeName(type);
-    if (type == T_POINTER)
+    else if (type == T_POINTER)
         return uint_2_Str(type) + t + "T_POINTER " + baseTypeName(type);
-    if (type == T_OBJECT)
+    else if (type == T_OBJECT)
         return uint_2_Str(type) + t + "T_OBJECT " + baseTypeName(type);
-
-    if (type == (T_OBJECT | TS_ARRAY))
+    else if (type == (T_OBJECT | TS_ARRAY))
         return uint_2_Str(type) + t + "T_OBJECT|TS_ARRAY " + baseTypeName(type);
-    if (type == (T_TEXT | TS_ARRAY))
+    else if (type == (T_TEXT | TS_ARRAY))
         return uint_2_Str(type) + t + "T_TEXT|TS_ARRAY " + baseTypeName(type);
-    if (type == (T_ADDRESS | TS_ARRAY))
+    else if (type == (T_ADDRESS | TS_ARRAY))
         return uint_2_Str(type) + t + "T_ADDRESS|TS_ARRAY " + baseTypeName(type);
 
     return uint_2_Str(type) + t + "Unknown";
