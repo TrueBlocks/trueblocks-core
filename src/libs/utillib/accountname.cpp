@@ -401,6 +401,10 @@ void CAccountName::registerClass(void) {
     builtIns.push_back(_biCAccountName);
 
     // EXISTING_CODE
+    ADD_FIELD(CAccountName, "group_sort", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "raw_group", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "subgroup_sort", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "raw_subgroup", T_TEXT, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -414,9 +418,31 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "name")
                     return substitute(acc->name, "\"", "");
                 break;
+            case 'g':
+                if (fieldIn % "group_sort") {
+                    string_q ret = acc->group;
+                    return nextTokenClear(ret, '-');
+                }
+                break;
+            case 'r':
+                if (fieldIn % "raw_group") {
+                    string_q ret = acc->group;
+                    nextTokenClear(ret, '-');
+                    return ret;
+                }
+                if (fieldIn % "raw_subgroup") {
+                    string_q ret = acc->subgroup;
+                    nextTokenClear(ret, '-');
+                    return ret;
+                }
+                break;
             case 's':
                 if (fieldIn % "source")
                     return substitute(acc->source, "\"", "");
+                if (fieldIn % "subgroup_sort") {
+                    string_q ret = acc->subgroup;
+                    return nextTokenClear(ret, '-');
+                }
                 break;
             // EXISTING_CODE
             case 'p':

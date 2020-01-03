@@ -1,0 +1,17 @@
+ethNames argc: 2 [1:--groups] 
+ethNames --groups 
+group_sort	raw_group	subgroup_sort	raw_subgroup
+30	Contracts
+33	Set Protocol	01	Core
+33	Set Protocol	01	Core Caller
+33	Set Protocol	02	Modules
+33	Set Protocol	03	Factories
+33	Set Protocol	04	Libraries
+33	Set Protocol	05	Wrappers
+33	Set Protocol	06	Other
+50	Tokens
+60	Airdrops
+80	Prefund
+81	Custom
+82	Known
+

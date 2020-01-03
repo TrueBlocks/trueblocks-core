@@ -30,6 +30,7 @@ static const COption params[] = {
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),  // NOLINT
+    COption("groups", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of groups and subgroups only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -91,6 +92,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
             add = substitute(substitute(arg, "-d:", ""), "--add:", "");
+
+        } else if (arg == "-g" || arg == "--groups") {
+            groups = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -165,6 +169,21 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
+    if (groups) {
+        manageFields("CAccountName:all", false);
+        SHOW_FIELD(CAccountName, "group_sort");
+        SHOW_FIELD(CAccountName, "raw_group");
+        SHOW_FIELD(CAccountName, "subgroup_sort");
+        SHOW_FIELD(CAccountName, "raw_subgroup");
+        format = "[{GROUP_SORT}]\t[{RAW_GROUP}]\t[{SUBGROUP_SORT}]\t[{RAW_SUBGROUP}]";
+        addr_only = false;
+        types |= NAMED;
+        types |= PREFUND;
+        types |= CUSTOM;
+        types |= OWNED;
+        types |= OTHER;
+    }
+
     // Prepare formatting
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
@@ -173,7 +192,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
-    if (exportFmt == API1 || exportFmt == JSON1)
+    if (!groups && (exportFmt == API1 || exportFmt == JSON1))
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME, exportFmt));
 
     // Collect results for later display
@@ -203,6 +222,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
+    groups = false;
     // END_CODE_INIT
 
     items.clear();
@@ -246,13 +266,32 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (isZeroAddr(item.address))
         return false;
 
+    if (groups) {
+#define to_key(item) toLower(item.group + "_" + item.subgroup)
+        string_q key = to_key(item);
+        CAccountName found = items[key];
+        string_q fkey = to_key(found);
+        if (fkey != "_")
+            return false;
+        items[key] = item;
+        return true;
+    }
+
     address_t key = toLower(item.address);
     if (items[key].address == key) {  // it's already in the map, but we want the last in name to win
-        if (!item.name.empty() && (items[key].name != item.name || startsWith(items[key].name, "Owned_") ||
-                                   startsWith(items[key].name, "Prefund_"))) {
+        bool empty = item.name.empty();
+        bool isDifferent = items[key].name != item.name;
+        bool isOwned = startsWith(items[key].name, "Owned_");
+        bool isPrefund = startsWith(items[key].name, "Prefund_");
+        if (!empty && (isDifferent || isOwned || isPrefund)) {
             items[key].name = item.name;
         }
         return false;
+    }
+
+    if (searches.size() == 0) {
+        items[key] = item;
+        return true;
     }
 
     if (!match_case) {
