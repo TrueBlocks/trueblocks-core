@@ -206,7 +206,7 @@ void CChainCache::registerClass(void) {
     ADD_FIELD(CChainCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CChainCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CChainCache, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CChainCache, "max_depth", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CChainCache, "max_depth", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CChainCache, "items", T_TEXT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

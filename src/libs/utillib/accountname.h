@@ -30,7 +30,7 @@ class CAccountName : public CBaseNode {
     string_q group;
     string_q subgroup;
     string_q name;
-    string_q address;
+    address_t address;
     string_q symbol;
     string_q description;
     string_q source;

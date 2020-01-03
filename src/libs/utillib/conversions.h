@@ -27,6 +27,7 @@ using txnum_t = uint64_t;
 using gas_t = uint64_t;
 using address_t = string_q;
 using hash_t = string_q;
+using ipfshash_t = string_q;
 using bloom_t = biguint_t;
 using wei_t = biguint_t;
 using topic_t = biguint_t;

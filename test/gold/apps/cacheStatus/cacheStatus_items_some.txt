@@ -136,6 +136,7 @@ cacheStatus --details some --start 3000000 --end 3100000
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
+          "address": "0x0",
           "nRecords": 36910963,
           "sizeInBytes": 36910963
         }

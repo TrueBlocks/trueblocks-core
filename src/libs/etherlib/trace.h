@@ -42,7 +42,7 @@ class CTrace : public CBaseNode {
     uint64_t subtraces;
     CStringArray traceAddress;
     hash_t transactionHash;
-    uint64_t transactionIndex;
+    blknum_t transactionIndex;
     string_q type;
     string_q error;
     CFunction articulatedTrace;

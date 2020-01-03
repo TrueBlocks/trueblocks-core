@@ -269,12 +269,12 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "git_hash", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "epoch", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "epoch", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "nTests", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CMeasure, "nPassed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "nTests", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "nPassed", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "totSecs", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

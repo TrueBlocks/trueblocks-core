@@ -150,7 +150,7 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             break;
         case 'f':
             if (fieldName % "firstAppearance") {
-                firstAppearance = (uint32_t)str_2_Uint(fieldValue);
+                firstAppearance = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "firstTs") {
@@ -174,7 +174,7 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             break;
         case 'l':
             if (fieldName % "latestAppearance") {
-                latestAppearance = (uint32_t)str_2_Uint(fieldValue);
+                latestAppearance = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "lastestTs") {
@@ -295,17 +295,17 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "nAddresses", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "nAppearances", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "firstAppearance", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "latestAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nAddresses", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nAppearances", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "firstAppearance", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "lastestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "index_hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "bloom_hash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "bloom_hash", T_IPFSHASH, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIndexCacheItem, "schema");

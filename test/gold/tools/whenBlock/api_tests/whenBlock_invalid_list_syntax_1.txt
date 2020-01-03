@@ -147,9 +147,9 @@
     },
     {
       "blockNumber": 9200000,
-      "timestamp": 1577598709,
-      "name": "muirglacier (est)",
-      "date": "2019-12-29 05:51:49 UTC"
+      "timestamp": 1577953849,
+      "name": "muirglacier",
+      "date": "2020-01-02 08:30:49 UTC"
     }
   ],
   "meta": {

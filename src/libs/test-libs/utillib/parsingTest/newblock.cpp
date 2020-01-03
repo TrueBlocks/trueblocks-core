@@ -312,10 +312,10 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewBlock, "hash", T_HASH, ++fieldNum);
-    ADD_FIELD(CNewBlock, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewBlock, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CNewBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CNewBlock, "difficulty", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewBlock, "difficulty", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CNewBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);

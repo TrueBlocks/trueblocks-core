@@ -375,10 +375,10 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "gasLimit", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CBlock, "hash", T_HASH, ++fieldNum);
-    ADD_FIELD(CBlock, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CBlock, "parentHash", T_HASH, ++fieldNum);
     ADD_FIELD(CBlock, "miner", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CBlock, "difficulty", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBlock, "difficulty", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);

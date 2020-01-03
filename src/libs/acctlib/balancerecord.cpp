@@ -236,13 +236,13 @@ void CBalanceRecord::registerClass(void) {
     ADD_FIELD(CBalanceRecord, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CBalanceRecord, "address");
     ADD_FIELD(CBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CBalanceRecord, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CBalanceRecord, "diff", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceRecord, "diff", T_INT256, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalanceRecord, "schema");

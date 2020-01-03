@@ -200,7 +200,7 @@ void QTransferFrom::registerClass(void) {
     ADD_FIELD(QTransferFrom, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(QTransferFrom, "_to", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(QTransferFrom, "_value", T_NUMBER, ++fieldNum);
+    ADD_FIELD(QTransferFrom, "_value", T_UINT256, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(QTransferFrom, "schema");

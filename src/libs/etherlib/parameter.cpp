@@ -260,7 +260,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_flags", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");

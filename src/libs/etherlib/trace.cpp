@@ -350,11 +350,11 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTrace, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "blockHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CTrace, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTrace, "subtraces", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTrace, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTrace, "subtraces", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTrace, "traceAddress", T_TEXT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CTrace, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTrace, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);

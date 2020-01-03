@@ -189,7 +189,7 @@ void CTreeNode::registerClass(void) {
     ADD_FIELD(CTreeNode, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTreeNode, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTreeNode, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTreeNode, "index", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTreeNode, "index", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTreeNode, "prefixS", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

@@ -260,7 +260,7 @@ void CTokenState_erc20::registerClass(void) {
     ADD_FIELD(CTokenState_erc20, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "decimals", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "version", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "holders", T_ADDRESS | TS_ARRAY, ++fieldNum);

@@ -214,7 +214,7 @@ void CCacheEntry::registerClass(void) {
     ADD_FIELD(CCacheEntry, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheEntry, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheEntry, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCacheEntry, "type", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "type", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCacheEntry, "extra", T_TEXT, ++fieldNum);
     ADD_FIELD(CCacheEntry, "cached", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheEntry, "path", T_TEXT, ++fieldNum);

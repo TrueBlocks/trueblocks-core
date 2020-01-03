@@ -319,10 +319,10 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CLogEntry, "blockHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CLogEntry, "blockHash");
-    ADD_FIELD(CLogEntry, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "blockNumber");
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLogEntry, "logIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
     HIDE_FIELD(CLogEntry, "removed");
     ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY, ++fieldNum);
@@ -332,9 +332,9 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionHash");
-    ADD_FIELD(CLogEntry, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionIndex");
-    ADD_FIELD(CLogEntry, "transactionLogIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogEntry, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionLogIndex");
     ADD_FIELD(CLogEntry, "type", T_TEXT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "type");

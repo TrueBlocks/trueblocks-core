@@ -28,7 +28,7 @@ class CLogEntry : public CBaseNode {
   public:
     address_t address;
     string_q data;
-    uint64_t logIndex;
+    blknum_t logIndex;
     bool removed;
     CTopicArray topics;
     CFunction articulatedLog;

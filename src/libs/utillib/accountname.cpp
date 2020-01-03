@@ -72,7 +72,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "address") {
-                return address;
+                return addr_2_Str(address);
             }
             break;
         case 'c':
@@ -168,7 +168,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "address") {
-                address = fieldValue;
+                address = str_2_Addr(fieldValue);
                 return true;
             }
             break;
@@ -369,7 +369,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "subgroup", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "address", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
@@ -381,15 +381,15 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "is_contract", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_private", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "firstAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "firstAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "firstAppearance");
-    ADD_FIELD(CAccountName, "latestAppearance", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "latestAppearance");
-    ADD_FIELD(CAccountName, "lastExport", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "lastExport");
-    ADD_FIELD(CAccountName, "nRecords", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "nRecords", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "nRecords");
-    ADD_FIELD(CAccountName, "sizeInBytes", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "sizeInBytes");
 
     // Hide our internal fields, user can turn them on if they like

@@ -37,7 +37,7 @@ typedef enum {
 class CEthState : public CBaseNode {
   public:
     blknum_t blockNumber;
-    biguint_t balance;
+    wei_t balance;
     uint64_t nonce;
     string_q code;
     string_q storage;

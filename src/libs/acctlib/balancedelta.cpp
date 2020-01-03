@@ -210,11 +210,11 @@ void CBalanceDelta::registerClass(void) {
     ADD_FIELD(CBalanceDelta, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CBalanceDelta, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CBalanceDelta, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CBalanceDelta, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CBalanceDelta, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CBalanceDelta, "address");
     ADD_FIELD(CBalanceDelta, "balance", T_WEI, ++fieldNum);
-    ADD_FIELD(CBalanceDelta, "diff", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CBalanceDelta, "diff", T_INT256, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBalanceDelta, "schema");

@@ -39,7 +39,7 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
 
-    CStringArray reserved = { "in" };
+    CStringArray reserved = {"in"};
     for (auto r : reserved)
         if (page.twoName == r)
             page.twoName = toLower(page.longName.substr(0, 3));
@@ -100,10 +100,12 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
-        commands << "export const " << toUpper(item.subpage) << " = '" << item.route << "/" << item.options << "';" << endl;
+        commands << "export const " << toUpper(item.subpage) << " = '" << item.route << "/" << item.options << "';"
+                 << endl;
         if (!menu_items.str().empty())
             menu_items << "," << endl;
-        menu_items << "      { header: '" << substitute(toProper(item.subpage), "_", " ") << "', value: 'VAL', action: " << toUpper(item.subpage) << " }";
+        menu_items << "      { header: '" << substitute(toProper(item.subpage), "_", " ")
+                   << "', value: 'VAL', action: " << toUpper(item.subpage) << " }";
         if (cnt == 0)
             def_menu = (item.route + "/" + item.options);
         cnt++;
@@ -116,7 +118,8 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
             text_imports << substitute(STR_TEXT_IMPORTS, "[{SUBPAGE}]", item.subpage);
             if (text_code.str() != "")
                 text_code << endl;
-            text_code << substitute(substitute(STR_TEXT_CODE, "[{SUBPAGE}]", item.subpage), "[{SP_UPPER}]", toUpper(item.subpage));
+            text_code << substitute(substitute(STR_TEXT_CODE, "[{SUBPAGE}]", item.subpage), "[{SP_UPPER}]",
+                                    toUpper(item.subpage));
         }
     }
 
@@ -137,17 +140,17 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replace(tc, "} else ", "");  // remove one
     replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? tc : ""));
 
-    ostringstream red;
+    ostringstream reducers;
     for (auto e : extactorMap) {
         string_q extract = e.first;
         CStringArray cmds;
         explode(cmds, e.second, '|');
         for (auto c : cmds) {
-            red << "    case " << page.twoName << "." << c << ":" << endl;
+            reducers << "    case " << page.twoName << "." << c << ":" << endl;
         }
-        red << substitute(STR_EXTRACT_CASE, "_EXTRACT_", e.first);
+        reducers << substitute(STR_EXTRACT_CASE, "_EXTRACT_", e.first);
     }
-    replaceAll(code, "[{REDUCERS}]", red.str());
+    replaceAll(code, "[{REDUCERS}]", reducers.str());
 
     string_q thing = "";  // page.subpage;
     replaceAll(code, "[{STATE_FIELDS_2}]", nextTokenClear(thing, ':') + ": value");
@@ -157,10 +160,14 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     code = "";
     for (auto line : lines) {
         bool include = true;
-        if (page.no_error && contains(line, "[{NO_ERROR}]")) include = false;
-        if (page.no_data && contains(line, "[{NO_DATA}]")) include = false;
-        if (page.no_dt && contains(line, "[{NO_DT}]")) include = false;
-        if (!page.has_text && contains(line, "[{NO_TEXT}]")) include = false;
+        if (page.no_error && contains(line, "[{NO_ERROR}]"))
+            include = false;
+        if (page.no_data && contains(line, "[{NO_DATA}]"))
+            include = false;
+        if (page.no_dt && contains(line, "[{NO_DT}]"))
+            include = false;
+        if (!page.has_text && contains(line, "[{NO_TEXT}]"))
+            include = false;
         if (include)
             code += (line + '\n');
     }
@@ -177,7 +184,8 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{PROPER}]", page.properName);
     replaceAll(code, "[{COLOR}]", page.color);
     replaceAll(code, "[{MENU_TYPE}]", page.menuType);
-    replaceAll(code, "[{MENU_CLICK}]", (page.menuType == "DashMenu" ? "changePage={this.changePage}" : "innerEar={this.innerEar}"));
+    replaceAll(code, "[{MENU_CLICK}]",
+               (page.menuType == "DashMenu" ? "changePage={this.changePage}" : "innerEar={this.innerEar}"));
     replaceAll(code, "[{MENU_FILE}]", page.menuType == "LocalMenu" ? "local-menu" : "dash-menu");
     replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
 
@@ -234,21 +242,21 @@ const char* STR_POLLING =
 const char* STR_EXTRACT_CASE =
     "      return {\n"
     "        ...state,\n"
+    "        data: action.payload_EXTRACT_,\n"
+    "        fieldList: action.fieldList,\n"
+    "        meta: action.meta,\n"
     "        isLoading: false,\n"
-    "        error: null,\n"
-    "        data: action.payload_EXTRACT_\n"
+    "        error: null\n"
     "      };\n\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_TEXT_ACTIONS =
-    "import * as [{TWO}] from './actions';";
+const char* STR_TEXT_ACTIONS = "import * as [{TWO}] from './actions';";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_TEXT_IMPORTS =
-    "import { [{SUBPAGE}]Text } from './text/[{SUBPAGE}]';";
+const char* STR_TEXT_IMPORTS = "import { [{SUBPAGE}]Text } from './text/[{SUBPAGE}]';";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TEXT_CODE =
-"    } else if (this.state.subpage === [{TWO}].[{SP_UPPER}]) {\n"
-"      return [{SUBPAGE}]Text();\n"
-"    }";
+    "    } else if (this.state.subpage === [{TWO}].[{SP_UPPER}]) {\n"
+    "      return [{SUBPAGE}]Text();\n"
+    "    }";

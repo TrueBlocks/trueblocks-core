@@ -238,9 +238,9 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCache, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CCache, "path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "nFiles", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "nFolders", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "sizeInBytes", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "valid_counts", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

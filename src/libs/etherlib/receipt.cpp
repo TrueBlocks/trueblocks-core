@@ -299,7 +299,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CReceipt, "blockHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CReceipt, "blockHash");
-    ADD_FIELD(CReceipt, "blockNumber", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CReceipt, "blockNumber");
     ADD_FIELD(CReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CReceipt, "cumulativeGasUsed", T_WEI, ++fieldNum);
@@ -312,12 +312,12 @@ void CReceipt::registerClass(void) {
     HIDE_FIELD(CReceipt, "logsBloom");
     ADD_FIELD(CReceipt, "root", T_TEXT, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
-    ADD_FIELD(CReceipt, "status", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "status", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "to", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CReceipt, "to");
     ADD_FIELD(CReceipt, "transactionHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CReceipt, "transactionHash");
-    ADD_FIELD(CReceipt, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReceipt, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CReceipt, "transactionIndex");
 
     // Hide our internal fields, user can turn them on if they like

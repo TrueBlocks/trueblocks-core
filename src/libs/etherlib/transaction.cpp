@@ -473,9 +473,9 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "hash", T_HASH, ++fieldNum);
     ADD_FIELD(CTransaction, "blockHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CTransaction, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "transactionIndex", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "nonce", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTransaction, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTransaction, "nonce", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CTransaction, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
@@ -483,8 +483,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "isError", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternal", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");

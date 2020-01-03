@@ -30,15 +30,15 @@ class CIndexCacheItem : public CBaseNode {
     string_q type;
     uint32_t nAddresses;
     uint32_t nAppearances;
-    uint32_t firstAppearance;
-    uint32_t latestAppearance;
+    blknum_t firstAppearance;
+    blknum_t latestAppearance;
     timestamp_t firstTs;
     timestamp_t lastestTs;
     string_q filename;
     uint32_t indexSizeBytes;
-    string_q index_hash;
+    ipfshash_t index_hash;
     uint32_t bloomSizeBytes;
-    string_q bloom_hash;
+    ipfshash_t bloom_hash;
 
   public:
     CIndexCacheItem(void);

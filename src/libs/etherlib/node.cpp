@@ -1096,9 +1096,27 @@ string_q exportPreamble(format_t fmt, const string_q& format, const string_q& cl
         case JSON1:
             os << "{ \"data\": [";
             break;
-        case API1:
-            os << "{ \"type\": \"" << className << "\", \"data\": [";
-            break;
+        case API1: {
+            os << "{ \"type\": \"" << className << "\", ";
+            //            os << "\"fieldList\": [";
+            //            CBaseNode* obj = createObjectOfType(className);
+            //            if (obj) {
+            //                const CRuntimeClass* pClass = obj->getRuntimeClass();
+            //                bool first = true;
+            //                for (auto field : pClass->fieldList) {
+            //                    if (!field.isHidden()) {
+            //                        if (!first)
+            //                            os << ", ";
+            //                        os << "{ \"name\": \"" << field.getName() << "\", \"type\": \""
+            //                           << substitute(toLower(baseTypeName(field.getType())), "ts_", "") << "\" }";
+            //                        first = false;
+            //                    }
+            //                }
+            //                delete obj;
+            //            }
+            //            os << "], ";
+            os << "\"data\": [";
+        } break;
         default:
             ASSERT(0);  // shouldn't happen
             break;

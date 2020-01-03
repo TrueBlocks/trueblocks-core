@@ -34,7 +34,7 @@ class CTransaction : public CBaseNode {
     hash_t hash;
     hash_t blockHash;
     blknum_t blockNumber;
-    uint64_t transactionIndex;
+    blknum_t transactionIndex;
     uint64_t nonce;
     timestamp_t timestamp;
     address_t from;

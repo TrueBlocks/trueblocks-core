@@ -214,9 +214,9 @@ void CAbiCacheItem::registerClass(void) {
     ADD_FIELD(CAbiCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAbiCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAbiCacheItem, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAbiCacheItem, "nFunctions", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAbiCacheItem, "nEvents", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAbiCacheItem, "nOther", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nFunctions", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nEvents", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAbiCacheItem, "nOther", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbiCacheItem, "schema");

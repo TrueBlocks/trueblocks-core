@@ -202,8 +202,8 @@ void CDisplayApp::registerClass(void) {
     ADD_FIELD(CDisplayApp, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CDisplayApp, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CDisplayApp, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "transactionIndex", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CDisplayApp, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CDisplayApp, "transactionIndex", T_BLOCKNUM, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CDisplayApp, "schema");

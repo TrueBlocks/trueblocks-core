@@ -236,12 +236,12 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "begBal", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "inflow", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "outflow", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "gasCostInWei", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBal", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "blockNum", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "begBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "inflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "outflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "gasCostInWei", T_INT256, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "endBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "blockNum", T_BLOCKNUM, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIncomeStatement, "schema");

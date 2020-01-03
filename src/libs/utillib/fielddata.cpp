@@ -18,7 +18,7 @@
 namespace qblocks {
 
 //--------------------------------------------------------------
-static string_q baseTypeName(uint64_t type) {
+string_q baseTypeName(uint64_t type) {
     string_q ret;
     if (type & TS_NUMERAL)
         ret += (" TS_NUMERAL ");
@@ -38,7 +38,7 @@ static string_q baseTypeName(uint64_t type) {
 }
 
 //--------------------------------------------------------------
-static string_q typeName(uint64_t type) {
+string_q fieldTypeStr(uint64_t type) {
     string_q t("\t");
     if (type == T_DATE)
         return uint_2_Str(type) + t + "T_DATE " + baseTypeName(type);
@@ -85,7 +85,7 @@ ostream& operator<<(ostream& os, const CFieldData& item) {
     os << padRight(item.getName(), 20) << "\t";
     os << item.getID() << "\t";
     os << item.isHidden() << "\t";
-    os << typeName(item.getType());
+    os << fieldTypeStr(item.getType());
     return os;
 }
 

@@ -83,7 +83,7 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(blockNumber);
             }
             if (fieldName % "balance") {
-                return bnu_2_Str(balance);
+                return wei_2_Str(balance);
             }
             break;
         case 'c':
@@ -262,9 +262,9 @@ void CEthState::registerClass(void) {
     ADD_FIELD(CEthState, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthState, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthState, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CEthState, "blockNumber", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CEthState, "balance", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CEthState, "nonce", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CEthState, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CEthState, "nonce", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CEthState, "nonce");
     ADD_FIELD(CEthState, "code", T_TEXT, ++fieldNum);
     HIDE_FIELD(CEthState, "code");
@@ -272,7 +272,7 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "storage");
     ADD_FIELD(CEthState, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CEthState, "address");
-    ADD_FIELD(CEthState, "deployed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CEthState, "deployed", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT, ++fieldNum);
     HIDE_FIELD(CEthState, "accttype");

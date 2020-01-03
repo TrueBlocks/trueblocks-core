@@ -243,7 +243,7 @@ void CAccount::registerClass(void) {
     ADD_FIELD(CAccount, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccount, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CAccount, "latestPage", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccount, "latestPage", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAccount, "latestTx", T_OBJECT, ++fieldNum);
     ADD_FIELD(CAccount, "transactions", T_OBJECT | TS_ARRAY, ++fieldNum);
 
