@@ -21,8 +21,9 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (append new data)"),
-    COption("period", "p", "enum[5|15|30|60|120*|240|1440]", OPT_FLAG, "display prices in this increment"),
+    COption("period", "p", "enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]", OPT_FLAG, "increment of display"),  // NOLINT
     COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
+    COption("feed", "e", "enum[poloniex*|maker|tellor]", OPT_FLAG, "the feed for the price data"),
     COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,6 +58,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
             pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
 
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--feed:")) {
+            if (!confirmEnum("feed", feed, arg))
+                return false;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -73,14 +78,21 @@ bool COptions::parseArguments(string_q& command) {
     if (!pair.empty())
         source.pair = pair;
 
-    if (!period.empty())
-        freq = str_2_Uint(period);
+    if (!period.empty()) {
+        map<string_q, uint64_t> theMap;
+        theMap["hourly"] = 60;
+        theMap["daily"] = 60 * 24;
+        theMap["weekly"] = 60 * 24 * 7;
+        theMap["monthly"] = 60 * 24 * 30;
+        theMap["annually"] = 60 * 24 * 365;
+        freq = isNumeral(period) ? str_2_Uint(period) : theMap[period];
+    }
 
     string_q unused;
     establishFolder(source.getDatabasePath(unused));
 
     // Display formatting
-    configureDisplay("ethQuote", "CAccountName", STR_DISPLAY_PRICEQUOTE);
+    configureDisplay("ethQuote", "CPriceQuote", STR_DISPLAY_PRICEQUOTE);
 
     return true;
 }
@@ -91,6 +103,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     freshen = false;
+    feed = "";
     // END_CODE_INIT
 
     freq = 120;

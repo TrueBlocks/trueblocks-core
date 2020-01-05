@@ -70,16 +70,19 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_json_export(void) {
     for (auto classDef : classDefs) {
-        CBaseNode* item = createObjectOfType(classDef.short_fn);
-        if (item) {
-            CRuntimeClass* pClass = item->getRuntimeClass();
-            pClass->forEveryField(visitField, &cout);
-        } else {
-            CToml toml("");
-            toml.readFile(classDef.input_path);
-            handle_generate(toml, classDef, nspace, true);
+        if (classDef.short_fn != "app") {
+            CBaseNode* item = createObjectOfType(classDef.short_fn);
+            if (item) {
+                CRuntimeClass* pClass = item->getRuntimeClass();
+                pClass->forEveryField(visitField, &cout);
+            } else {
+                CToml toml("");
+                toml.readFile(classDef.input_path);
+                handle_generate(toml, classDef, nspace, true);
+            }
         }
     }
+    handle_generate_frontend_app();
     return false;  // we're done processing
 }
 
@@ -212,6 +215,64 @@ bool visitField(const CFieldData& field, void* data) {
     *pOs << "display={item." << field.getName() << "} ";
     *pOs << "route=\"\" ";
     *pOs << "/>" << endl;
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_frontend_app(void) {
+    string_q app_import = "import [{PROPER}] from './pages/[{LOWER}]';\n";
+    string_q navlink =
+        "      <NavLink activeClassName=\"is-active\" [{EXACT}]to=\"[{PATH2}]\">\n        [{PROPER}]\n      "
+        "</NavLink>\n";
+    string_q route = "      <Route [{EXACT}]path=\"[{PATH}]\" component={[{PROPER}]} />\n";
+    string_q red_import = "import reducer_[{PROPER}] from './pages/[{LOWER}]/reducers';\n";
+    string_q reducer = "  reducer_[{PROPER}],\n";
+    ostringstream app_imports, red_imports, navlinks, routes, reducers;
+    CToml toml("./classDefinitions/app.txt");
+    string_q str = toml.getConfigStr("settings", "pages", "");
+    CStringArray pages;
+    explode(pages, str, '|');
+    for (auto exact : pages) {
+        string_q lower = nextTokenClear(exact, ',');
+        string_q proper = toProper(lower);
+        string_q path = nextTokenClear(exact, ',');
+        string_q path2 = path;
+        if (path.empty()) {
+            path = "/[{LOWER}]/:subpage?";
+            path2 = "/[{LOWER}]";
+        }
+        if (!exact.empty())
+            exact += "={true} ";
+        app_imports << substitute(substitute(app_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        navlinks << substitute(
+            substitute(substitute(substitute(navlink, "[{PATH2}]", path2), "[{EXACT}]", exact), "[{PROPER}]", proper),
+            "[{LOWER}]", lower);
+        replace(exact, "={true}", "");
+        routes << substitute(
+            substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
+            "[{LOWER}]", lower);
+        red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        reducers << substitute(reducer, "[{PROPER}]", proper);
+    }
+    string_q contents = asciiFileToString("./blank-app.js");
+    string_q orig = asciiFileToString("../../App.js");
+    replaceAll(contents, "[{IMPORTS}]", app_imports.str());
+    replaceAll(contents, "[{NAVLINKS}]", navlinks.str());
+    replaceAll(contents, "[{ROUTES}]", routes.str());
+    if (orig != contents) {
+        stringToAsciiFile("../../App.js", contents);
+        LOG_INFO("Writing: ", cTeal, "App.js", cOff);
+    }
+
+    contents = asciiFileToString("./blank-root-reducers.js");
+    orig = asciiFileToString("../../root-reducers.js");
+    replaceAll(contents, "[{IMPORTS}]", red_imports.str());
+    replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
+    if (orig != contents) {
+        stringToAsciiFile("../../root-reducers.js", contents);
+        LOG_INFO("Writing: ", cTeal, "root-reducers.js", cOff);
+    }
+
     return true;
 }
 

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethQuote - Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440] required. Quitting..."
+    "ethQuote - Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440|10080|hourly|daily|weekly] required. Quitting..."
   ]
 }
