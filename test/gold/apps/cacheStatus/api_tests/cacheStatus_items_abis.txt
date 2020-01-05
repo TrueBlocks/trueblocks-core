@@ -61,8 +61,22 @@
               "nFunctions": 36963,
               "nEvents": 36963,
               "nOther": 36963,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
-              "sizeInBytes": 36963
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
+              "firstAppearance": "",
+              "latestAppearance": "",
+              "nRecords": "",
+              "sizeInBytes": 36963,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CAbiCache",

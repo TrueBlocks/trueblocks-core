@@ -110,7 +110,7 @@ bool COptions::parseArguments(string_q& command) {
                     tool_flags += substitute(arg, ",", " ");
                 }
 
-            } else if (isAddress(arg) || arg == "--known") {
+            } else if (isAddress(arg) || arg == "--known" || arg == "--monitored") {
                 addrs.push_back(toLower(arg));
 
             } else if (mode == "when") {

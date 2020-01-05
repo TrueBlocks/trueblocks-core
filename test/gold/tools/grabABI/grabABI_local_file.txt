@@ -1,10 +1,9 @@
-grabABI argc: 4 [1:0x1234567812345678123456781234567812345678] [2:--fmt] [3:json] 
-grabABI 0x1234567812345678123456781234567812345678 --fmt json 
+grabABI argc: 5 [1:0x1234567812345678123456781234567812345678] [2:--fmt] [3:json] [4:--verbose] 
+grabABI 0x1234567812345678123456781234567812345678 --fmt json --verbose 
 { "data": [
 {
   "name": "ETH",
   "type": "function",
-  "constant": true,
   "signature": "ETH(uint256)",
   "encoding": "0x67f01c04",
   "inputs": [
@@ -23,7 +22,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "EUR",
   "type": "function",
-  "constant": true,
   "signature": "EUR(uint256)",
   "encoding": "0xd67ae54d",
   "inputs": [
@@ -42,7 +40,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "GBP",
   "type": "function",
-  "constant": true,
   "signature": "GBP(uint256)",
   "encoding": "0x5a8ef28a",
   "inputs": [
@@ -61,7 +58,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "USD",
   "type": "function",
-  "constant": true,
   "signature": "USD(uint256)",
   "encoding": "0x0c560c64",
   "inputs": [
@@ -189,7 +185,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "allowance",
   "type": "function",
-  "constant": true,
   "signature": "allowance(address,address)",
   "encoding": "0xdd62ed3e",
   "inputs": [
@@ -234,7 +229,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "balanceOf",
   "type": "function",
-  "constant": true,
   "signature": "balanceOf(address)",
   "encoding": "0x70a08231",
   "inputs": [
@@ -306,7 +300,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "contractSetting",
   "type": "function",
-  "constant": true,
   "signature": "contractSetting(uint8)",
   "encoding": "0x0619a976",
   "inputs": [
@@ -419,7 +412,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "etherEquivalent",
   "type": "function",
-  "constant": true,
   "signature": "etherEquivalent(uint256,uint256)",
   "encoding": "0xd1dbc3b5",
   "inputs": [
@@ -442,7 +434,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "getHolderInfo",
   "type": "function",
-  "constant": true,
   "signature": "getHolderInfo(address)",
   "encoding": "0x54e4067a",
   "inputs": [
@@ -481,7 +472,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "getHolders",
   "type": "function",
-  "constant": true,
   "signature": "getHolders()",
   "encoding": "0x5fe8e7cc",
   "inputs": [],
@@ -496,7 +486,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "getRequest",
   "type": "function",
-  "constant": true,
   "signature": "getRequest(uint256)",
   "encoding": "0xc58343ef",
   "inputs": [
@@ -547,7 +536,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "getRequestKeys",
   "type": "function",
-  "constant": true,
   "signature": "getRequestKeys()",
   "encoding": "0xc8c60a3b",
   "inputs": [],
@@ -667,7 +655,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "permitTransfer",
   "type": "function",
-  "constant": true,
   "signature": "permitTransfer(address)",
   "encoding": "0xf812e909",
   "inputs": [
@@ -883,7 +870,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "totalSupply",
   "type": "function",
-  "constant": true,
   "signature": "totalSupply()",
   "encoding": "0x18160ddd",
   "inputs": [],
@@ -993,7 +979,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json
 {
   "name": "updatedAt",
   "type": "function",
-  "constant": true,
   "signature": "updatedAt(uint256)",
   "encoding": "0xc818faec",
   "inputs": [

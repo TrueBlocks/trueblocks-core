@@ -1,1 +1,5 @@
-{ "errors": [ "grabABI - ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting..." ] }
+{
+  "errors": [
+    "grabABI - ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting..."
+  ]
+}

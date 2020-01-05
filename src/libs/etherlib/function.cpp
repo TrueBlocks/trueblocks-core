@@ -74,6 +74,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "anonymous") {
                 return bool_2_Str_t(anonymous);
             }
+            if (fieldName % "address") {
+                return addr_2_Str(address);
+            }
             break;
         case 'c':
             if (fieldName % "constant") {
@@ -194,6 +197,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 anonymous = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'c':
             if (fieldName % "constant") {
@@ -302,6 +309,7 @@ bool CFunction::Serialize(CArchive& archive) {
     // archive >> message;
     archive >> inputs;
     archive >> outputs;
+    // archive >> address;
     finishParse();
     return true;
 }
@@ -323,6 +331,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // archive << message;
     archive << inputs;
     archive << outputs;
+    // archive << address;
 
     return true;
 }
@@ -370,6 +379,8 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CFunction, "address", T_ADDRESS, ++fieldNum);
+    HIDE_FIELD(CFunction, "address");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");
@@ -382,6 +393,8 @@ void CFunction::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CFunction, "input_names", T_TEXT, ++fieldNum);
     HIDE_FIELD(CFunction, "input_names");
+    ADD_FIELD(CFunction, "output_names", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CFunction, "output_names");
     ADD_FIELD(CFunction, "declaration", T_TEXT, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "indexed");
@@ -431,6 +444,14 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'o':
                 if (fieldIn % "origName") {
                     return fun->origName;
+                } else if (fieldIn % "output_names") {
+                    string_q ret;
+                    for (size_t i = 0; i < fun->outputs.size(); i++) {
+                        ret += fun->outputs[i].name;
+                        if (i < fun->outputs.size())
+                            ret += ",";
+                    }
+                    return ret;
                 }
                 break;
             // EXISTING_CODE

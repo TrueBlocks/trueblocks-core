@@ -62,11 +62,22 @@
               "deleted": false,
               "curBalance": 10000,
               "enabled": true,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
               "nRecords": 18446744073709552000,
-              "sizeInBytes": 18446744073709552000
+              "sizeInBytes": 18446744073709552000,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CMonitorCache",

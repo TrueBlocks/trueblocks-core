@@ -28,7 +28,8 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CAbi));
+            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
+                                   isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
         if (!options.generate)
             forEveryAbiInArray(visitAbi, &options, options.abis);
         once = false;

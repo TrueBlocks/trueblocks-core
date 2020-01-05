@@ -1,6 +1,6 @@
 [settings]
 class = CFunction
-fields = string name|string type|sbool anonymous|sbool constant|sbool payable|string signature|string encoding|string message (nowrite)|CParameterArray inputs|CParameterArray outputs
+fields = string name|string type|sbool anonymous|sbool constant|sbool payable|string signature|string encoding|string message (nowrite)|CParameterArray inputs|CParameterArray outputs|address address (nowrite)
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % item.encoding

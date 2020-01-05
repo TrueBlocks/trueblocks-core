@@ -1,8 +1,6 @@
 {
   "data": [
     {
-      "age": "100",
-      "date": "2017-01-22 21:16:55 UTC",
       "difficulty": "0x62f79fffb26f",
       "finalized": "true",
       "gasLimit": "0x3d4629",

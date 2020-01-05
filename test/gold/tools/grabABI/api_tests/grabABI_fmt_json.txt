@@ -1,417 +1,204 @@
 {
   "data": [
     {
+      "name": "",
       "type": "constructor",
       "signature": "(address,uint256,address)",
       "encoding": "0x522f3752",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_legacyRepContract"
-        },
-        {
-          "type": "uint256",
-          "name": "_amountUsedToFreeze"
-        },
-        {
-          "type": "address",
-          "name": "_accountToSendFrozenRepTo"
-        }
-      ],
-      "outputs": []
+      "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,",
+      "output_names": ""
     },
     {
       "name": "allowance",
       "type": "function",
-      "constant": true,
       "signature": "allowance(address,address)",
       "encoding": "0xdd62ed3e",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_owner"
-        },
-        {
-          "type": "address",
-          "name": "_spender"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "remaining"
-        }
-      ]
+      "input_names": "_owner,_spender,",
+      "output_names": "remaining,"
     },
     {
       "name": "approve",
       "type": "function",
       "signature": "approve(address,uint256)",
       "encoding": "0x095ea7b3",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_spender"
-        },
-        {
-          "type": "uint256",
-          "name": "_value"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "_spender,_value,",
+      "output_names": "val_0,"
     },
     {
       "name": "balanceOf",
       "type": "function",
-      "constant": true,
       "signature": "balanceOf(address)",
       "encoding": "0x70a08231",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_owner"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "balance"
-        }
-      ]
+      "input_names": "_owner,",
+      "output_names": "balance,"
     },
     {
       "name": "decimals",
       "type": "function",
-      "constant": true,
       "signature": "decimals()",
       "encoding": "0x313ce567",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "initialized",
       "type": "function",
-      "constant": true,
       "signature": "initialized()",
       "encoding": "0x158ef93e",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "legacyRepContract",
       "type": "function",
-      "constant": true,
       "signature": "legacyRepContract()",
       "encoding": "0xb85e0aca",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "migrateBalance",
       "type": "function",
       "signature": "migrateBalance(address)",
       "encoding": "0x2988e36b",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_holder"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "_holder,",
+      "output_names": "val_0,"
     },
     {
       "name": "migrateBalances",
       "type": "function",
       "signature": "migrateBalances(address[])",
       "encoding": "0x4b92738e",
-      "inputs": [
-        {
-          "type": "address[]",
-          "name": "_holders"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "_holders,",
+      "output_names": "val_0,"
     },
     {
       "name": "name",
       "type": "function",
-      "constant": true,
       "signature": "name()",
       "encoding": "0x06fdde03",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "string",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "owner",
       "type": "function",
-      "constant": true,
       "signature": "owner()",
       "encoding": "0x8da5cb5b",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "pause",
       "type": "function",
       "signature": "pause()",
       "encoding": "0x8456cb59",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "paused",
       "type": "function",
-      "constant": true,
       "signature": "paused()",
       "encoding": "0x5c975abb",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "symbol",
       "type": "function",
-      "constant": true,
       "signature": "symbol()",
       "encoding": "0x95d89b41",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "string",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "targetSupply",
       "type": "function",
-      "constant": true,
       "signature": "targetSupply()",
       "encoding": "0x2a1eafd9",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "totalSupply",
       "type": "function",
-      "constant": true,
       "signature": "totalSupply()",
       "encoding": "0x18160ddd",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "transfer",
       "type": "function",
       "signature": "transfer(address,uint256)",
       "encoding": "0xa9059cbb",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_to"
-        },
-        {
-          "type": "uint256",
-          "name": "_value"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "_to,_value,",
+      "output_names": "val_0,"
     },
     {
       "name": "transferFrom",
       "type": "function",
       "signature": "transferFrom(address,address,uint256)",
       "encoding": "0x23b872dd",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_from"
-        },
-        {
-          "type": "address",
-          "name": "_to"
-        },
-        {
-          "type": "uint256",
-          "name": "_value"
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "_from,_to,_value,",
+      "output_names": "val_0,"
     },
     {
       "name": "transferOwnership",
       "type": "function",
       "signature": "transferOwnership(address)",
       "encoding": "0xf2fde38b",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "newOwner"
-        }
-      ],
-      "outputs": []
+      "input_names": "newOwner,",
+      "output_names": ""
     },
     {
       "name": "unpause",
       "type": "function",
       "signature": "unpause()",
       "encoding": "0x3f4ba83a",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "Approval",
       "type": "event",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "owner",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "spender",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        }
-      ],
-      "outputs": []
+      "input_names": "owner,spender,value,",
+      "output_names": ""
     },
     {
       "name": "Migrated",
       "type": "event",
       "signature": "Migrated(address,uint256)",
       "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "holder",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "amount"
-        }
-      ],
-      "outputs": []
+      "input_names": "holder,amount,",
+      "output_names": ""
     },
     {
       "name": "Pause",
       "type": "event",
       "signature": "Pause()",
       "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
-      "inputs": [],
-      "outputs": []
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "Transfer",
       "type": "event",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "from",
-          "indexed": true
-        },
-        {
-          "type": "address",
-          "name": "to",
-          "indexed": true
-        },
-        {
-          "type": "uint256",
-          "name": "value"
-        }
-      ],
-      "outputs": []
+      "input_names": "from,to,value,",
+      "output_names": ""
     },
     {
       "name": "Unpause",
       "type": "event",
       "signature": "Unpause()",
       "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
-      "inputs": [],
-      "outputs": []
+      "input_names": "",
+      "output_names": ""
     }
   ]
 }

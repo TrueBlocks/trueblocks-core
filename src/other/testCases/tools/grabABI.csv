@@ -6,32 +6,32 @@ on, cmd, fast, abi, tools/grabABI, help_long,              n, help
 on, both, fast, abi, tools/grabABI, invalid_1,             y, addrs = 0x00001
 on, both, fast, abi, tools/grabABI, not_a_contract,        y, addrs = 0xf1aa581f353005ba3765b81bf52d6b1c488c2101
 
-#on, both, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw & fmt = json
+on, both, fast, abi, tools/grabABI, asJson,                y, addrs = 0x1234567812345678123456781234567812345678 & raw & fmt = json
 on, both, fast, abi, tools/grabABI, local_fail,            n, addrs = 0x1234567812345678123456781234567812345678 & fmt = txt
-on, both, fast, abi, tools/grabABI, local_file,            y, addrs = 0x1234567812345678123456781234567812345678 & fmt = json
-on, cmd,  fast, abi, tools/grabABI, invalid_option,        n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
+on, both, fast, abi, tools/grabABI, local_file,            y, addrs = 0x1234567812345678123456781234567812345678 & fmt = json & verbose
+on, cmd,  fast, abi, tools/grabABI, invalid_option,        y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vne
 on, both, fast, abi, tools/grabABI, no_abi1,               y, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
-on, both, fast, abi, tools/grabABI, no_abi2,               n, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & raw
+on, both, fast, abi, tools/grabABI, no_abi2,               y, addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 & raw
 
-on, both, fast, abi, tools/grabABI, const,                 y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+on, both, fast, abi, tools/grabABI, const,                 y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & addr
 on, both, fast, abi, tools/grabABI, noconst,               y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & noconst
 on, both, fast, abi, tools/grabABI, noconst_v,             y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst
 on, both, fast, abi, tools/grabABI, verbose1,              y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & raw
 on, cmd,  fast, abi, tools/grabABI, noconst_short,         n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 @ vn
 
-on, both, fast, abi, tools/grabABI, known_alone,           y, known
+on, both, fast, abi, tools/grabABI, known_alone,           y, known & addr
 on, both, fast, abi, tools/grabABI, known_with,            y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 
-on, both, fast, abi, tools/grabABI, underbar_functions,    n, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
+on, both, fast, abi, tools/grabABI, underbar_functions,    y, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & addr
 on, both, fast, abi, tools/grabABI, output_test,           n, addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & raw & output = testing_file
 
-on, both, fast, abi, tools/grabABI, known_bug1,            n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
+on, both, fast, abi, tools/grabABI, known_bug1,            y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on, both, fast, abi, tools/grabABI, known_bug1_raw,        y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & raw & fmt = json
 
-on, both, fast, abi, tools/grabABI, known_bug2,            n, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
+on, both, fast, abi, tools/grabABI, known_bug2,            y, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
 on, both, fast, abi, tools/grabABI, known_bug2_raw,        y, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & raw & fmt = json
 
-on, cmd,  fast, abi, tools/grabABI, fromSolidity_fail,     n, addrs = 0x2234567812345678123456781234567812345678
+on, cmd,  fast, abi, tools/grabABI, fromSolidity_fail,     n, addrs = 0x2234567812345678123456781234567812345678 & monitored
 on, cmd,  fast, abi, tools/grabABI, fromSolidity,          n, addrs = 0x1234567812345678123456781234567812345678 & raw
 
 on, both, fast, abi, tools/grabABI, fmt_default,           y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6

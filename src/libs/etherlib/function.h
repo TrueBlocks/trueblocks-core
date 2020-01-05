@@ -36,6 +36,7 @@ class CFunction : public CBaseNode {
     string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
+    address_t address;
 
   public:
     CFunction(void);
@@ -126,6 +127,7 @@ inline void CFunction::initialize(void) {
     message = "";
     inputs.clear();
     outputs.clear();
+    address = "";
 
     // EXISTING_CODE
     showOutput = true;
@@ -149,6 +151,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
     message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
+    address = fu.address;
 
     // EXISTING_CODE
     showOutput = fu.showOutput;

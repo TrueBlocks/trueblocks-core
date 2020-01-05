@@ -456,7 +456,7 @@ string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
     for (auto field : fields) {
         incIndent();
         string_q val = getValueByName(field.m_fieldName);
-        if (!field.isHidden() && (!val.empty() || field.isArray())) {
+        if (!field.isHidden() && (isApiMode() || !val.empty() || field.isArray())) {
             if (!first) {
                 if (expContext().colored)
                     ret += "#";
@@ -484,12 +484,15 @@ string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
                 ret += "\"" + val + "\"";
 
             } else if (field.m_fieldType & TS_NUMERAL) {
-                if (expContext().quoteNums)
+                bool quote = expContext().quoteNums;
+                if (isApiMode() && val.empty())
+                    quote = true;
+                if (quote)
                     ret += "\"";
                 ret +=
                     (expContext().hexNums && ((isNumeral(val) || isHexStr(val)) && !contains(val, ".")) ? str_2_Hex(val)
                                                                                                         : val);
-                if (expContext().quoteNums)
+                if (quote)
                     ret += "\"";
 
             } else if (val == "null") {
@@ -529,7 +532,7 @@ void CBaseNode::doExport(ostream& os) const {
             if (!field.isHidden()) {
                 if (field.isArray()) {
                     uint64_t cnt = str_2_Uint(getValueByName(name + "Cnt"));
-                    if (cnt || showEmptyField(name)) {
+                    if (cnt || isApiMode() || showEmptyField(name)) {
                         if (field.getName() != first)
                             os << ",";
                         os << "\n";
@@ -578,6 +581,8 @@ void CBaseNode::doExport(ostream& os) const {
                     if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, "."))
                         val = str_2_Hex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                    if (isApiMode() && val.empty())
+                        quote = true;
                     if (quote)
                         os << "\"";
                     os << val;

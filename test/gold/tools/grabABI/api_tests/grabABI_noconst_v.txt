@@ -1,44 +1,73 @@
 {
-  "type": "CAbi",
+  "type": "CFunction",
   "fieldList": [
     {
-      "name": "address",
-      "type": "address"
+      "name": "name",
+      "type": "text"
     },
     {
-      "name": "interfaces",
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "signature",
+      "type": "text"
+    },
+    {
+      "name": "encoding",
+      "type": "text"
+    },
+    {
+      "name": "inputs",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "outputs",
       "type": "object|ts_array"
     }
   ],
   "data": [
     {
+      "name": "",
       "type": "constructor",
       "signature": "(address,address,uint256,uint256,uint256,address)",
       "encoding": "0xd9fdb088",
       "inputs": [
         {
           "type": "address",
-          "name": "_curator"
+          "name": "_curator",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_daoCreator"
+          "name": "_daoCreator",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_proposalDeposit"
+          "name": "_proposalDeposit",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_minTokensToCreate"
+          "name": "_minTokensToCreate",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_closingTime"
+          "name": "_closingTime",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_privateCreation"
+          "name": "_privateCreation",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -51,17 +80,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_spender"
+          "name": "_spender",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -73,17 +108,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_recipient"
+          "name": "_recipient",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "_allowed"
+          "name": "_allowed",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -95,7 +136,9 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_proposalDeposit"
+          "name": "_proposalDeposit",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -108,13 +151,17 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_tokenHolder"
+          "name": "_tokenHolder",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -126,17 +173,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_proposalID"
+          "name": "_proposalID",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bytes",
-          "name": "_transactionData"
+          "name": "_transactionData",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -149,7 +202,9 @@
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -162,7 +217,9 @@
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -174,7 +231,9 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_newContract"
+          "name": "_newContract",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -187,33 +246,47 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_recipient"
+          "name": "_recipient",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "_description"
+          "name": "_description",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bytes",
-          "name": "_transactionData"
+          "name": "_transactionData",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_debatingPeriod"
+          "name": "_debatingPeriod",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "_newCurator"
+          "name": "_newCurator",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "_proposalID"
+          "name": "_proposalID",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -226,7 +299,9 @@
       "outputs": [
         {
           "type": "bool",
-          "name": "val_0"
+          "name": "val_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -246,13 +321,17 @@
       "inputs": [
         {
           "type": "bool",
-          "name": "_toMembers"
+          "name": "_toMembers",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -264,17 +343,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_proposalID"
+          "name": "_proposalID",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_newCurator"
+          "name": "_newCurator",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "_success"
+          "name": "_success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -286,17 +371,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -308,21 +399,29 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_from"
+          "name": "_from",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -334,21 +433,29 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_from"
+          "name": "_from",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -360,17 +467,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -383,7 +496,9 @@
       "outputs": [
         {
           "type": "bool",
-          "name": "val_0"
+          "name": "val_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -395,17 +510,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_proposalID"
+          "name": "_proposalID",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "_supportsProposal"
+          "name": "_supportsProposal",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "_voteID"
+          "name": "_voteID",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -418,11 +539,14 @@
         {
           "type": "address",
           "name": "_recipient",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "_allowed"
+          "name": "_allowed",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -436,16 +560,20 @@
         {
           "type": "address",
           "name": "_owner",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_spender",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -459,11 +587,14 @@
         {
           "type": "address",
           "name": "to",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -476,7 +607,9 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "value"
+          "name": "value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -490,7 +623,8 @@
         {
           "type": "address",
           "name": "_newCurator",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -504,23 +638,32 @@
         {
           "type": "uint256",
           "name": "proposalID",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "recipient"
+          "name": "recipient",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "amount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "newCurator"
+          "name": "newCurator",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "description"
+          "name": "description",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -534,15 +677,20 @@
         {
           "type": "uint256",
           "name": "proposalID",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "result"
+          "name": "result",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "quorum"
+          "name": "quorum",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -556,11 +704,14 @@
         {
           "type": "address",
           "name": "to",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "value"
+          "name": "value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -574,16 +725,20 @@
         {
           "type": "address",
           "name": "_from",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_to",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -597,16 +752,20 @@
         {
           "type": "uint256",
           "name": "proposalID",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "position"
+          "name": "position",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "voter",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []

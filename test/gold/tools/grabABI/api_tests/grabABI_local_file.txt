@@ -3,76 +3,88 @@
     {
       "name": "ETH",
       "type": "function",
-      "constant": true,
       "signature": "ETH(uint256)",
       "encoding": "0x67f01c04",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_id"
+          "name": "_id",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "EUR",
       "type": "function",
-      "constant": true,
       "signature": "EUR(uint256)",
       "encoding": "0xd67ae54d",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_id"
+          "name": "_id",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "GBP",
       "type": "function",
-      "constant": true,
       "signature": "GBP(uint256)",
       "encoding": "0x5a8ef28a",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_id"
+          "name": "_id",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "USD",
       "type": "function",
-      "constant": true,
       "signature": "USD(uint256)",
       "encoding": "0x0c560c64",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_id"
+          "name": "_id",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -84,15 +96,21 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_etherAmount"
+          "name": "_etherAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_acceptor"
+          "name": "_acceptor",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -106,16 +124,19 @@
         {
           "type": "uint256[]",
           "name": "_keys",
+          "indexed": false,
           "is_array": true
         },
         {
           "type": "uint256[]",
           "name": "_tokenAmounts",
+          "indexed": false,
           "is_array": true
         },
         {
           "type": "uint256[]",
           "name": "_dollarPrices",
+          "indexed": false,
           "is_array": true
         }
       ],
@@ -130,16 +151,19 @@
         {
           "type": "uint256[]",
           "name": "_keys",
+          "indexed": false,
           "is_array": true
         },
         {
           "type": "uint256[]",
           "name": "_tokenAmounts",
+          "indexed": false,
           "is_array": true
         },
         {
           "type": "uint256[]",
           "name": "_dollarPrices",
+          "indexed": false,
           "is_array": true
         }
       ],
@@ -153,17 +177,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "a"
+          "name": "a",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "b"
+          "name": "b",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "c"
+          "name": "c",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -175,36 +205,45 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_account"
+          "name": "_account",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "allowance",
       "type": "function",
-      "constant": true,
       "signature": "allowance(address,address)",
       "encoding": "0xdd62ed3e",
       "inputs": [
         {
           "type": "address",
-          "name": "_owner"
+          "name": "_owner",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_spender"
+          "name": "_spender",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "remaining"
+          "name": "remaining",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -216,36 +255,45 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_spender"
+          "name": "_spender",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "balanceOf",
       "type": "function",
-      "constant": true,
       "signature": "balanceOf(address)",
       "encoding": "0x70a08231",
       "inputs": [
         {
           "type": "address",
-          "name": "tokenOwner"
+          "name": "tokenOwner",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "balance"
+          "name": "balance",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -257,13 +305,17 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -275,7 +327,9 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -288,36 +342,45 @@
       "inputs": [
         {
           "type": "uint8",
-          "name": "_setting"
+          "name": "_setting",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "contractSetting",
       "type": "function",
-      "constant": true,
       "signature": "contractSetting(uint8)",
       "encoding": "0x0619a976",
       "inputs": [
         {
           "type": "uint8",
-          "name": "_setting"
+          "name": "_setting",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -329,23 +392,33 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_deposit"
+          "name": "_deposit",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint8",
-          "name": "_requestType"
+          "name": "_requestType",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_requester"
+          "name": "_requester",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -359,7 +432,9 @@
       "outputs": [
         {
           "type": "bool",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -371,17 +446,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "a"
+          "name": "a",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "b"
+          "name": "b",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "c"
+          "name": "c",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -393,94 +474,121 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint8",
-          "name": "_requestType"
+          "name": "_requestType",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "etherEquivalent",
       "type": "function",
-      "constant": true,
       "signature": "etherEquivalent(uint256,uint256)",
       "encoding": "0xd1dbc3b5",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "getHolderInfo",
       "type": "function",
-      "constant": true,
       "signature": "getHolderInfo(address)",
       "encoding": "0x54e4067a",
       "inputs": [
         {
           "type": "address",
-          "name": "_address"
+          "name": "_address",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_1"
+          "name": "ret_1",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_2"
+          "name": "ret_2",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_3"
+          "name": "ret_3",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "ret_4"
+          "name": "ret_4",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "ret_5"
+          "name": "ret_5",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "getHolders",
       "type": "function",
-      "constant": true,
       "signature": "getHolders()",
       "encoding": "0x5fe8e7cc",
       "inputs": [],
@@ -488,6 +596,7 @@
         {
           "type": "address[]",
           "name": "ret_0",
+          "indexed": false,
           "is_array": true
         }
       ]
@@ -495,58 +604,76 @@
     {
       "name": "getRequest",
       "type": "function",
-      "constant": true,
       "signature": "getRequest(uint256)",
       "encoding": "0xc58343ef",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_1"
+          "name": "ret_1",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_2"
+          "name": "ret_2",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_3"
+          "name": "ret_3",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "ret_4"
+          "name": "ret_4",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "ret_5"
+          "name": "ret_5",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "ret_6"
+          "name": "ret_6",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "ret_7"
+          "name": "ret_7",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint8",
-          "name": "ret_8"
+          "name": "ret_8",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "getRequestKeys",
       "type": "function",
-      "constant": true,
       "signature": "getRequestKeys()",
       "encoding": "0xc8c60a3b",
       "inputs": [],
@@ -554,6 +681,7 @@
         {
           "type": "uint256[]",
           "name": "ret_0",
+          "indexed": false,
           "is_array": true
         }
       ]
@@ -566,13 +694,17 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -584,7 +716,9 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_deposit"
+          "name": "_deposit",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -597,11 +731,15 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -614,11 +752,15 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -631,13 +773,17 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -649,30 +795,37 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "a"
+          "name": "a",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "b"
+          "name": "b",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "c"
+          "name": "c",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "permitTransfer",
       "type": "function",
-      "constant": true,
       "signature": "permitTransfer(address)",
       "encoding": "0xf812e909",
       "inputs": [
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -685,13 +838,17 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -703,13 +860,17 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_account"
+          "name": "_account",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -721,11 +882,15 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_requester"
+          "name": "_requester",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -738,13 +903,17 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_address"
+          "name": "_address",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -756,13 +925,17 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_address"
+          "name": "_address",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -774,13 +947,17 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_address"
+          "name": "_address",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -792,19 +969,27 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_payment"
+          "name": "_payment",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_deposit"
+          "name": "_deposit",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_buyer"
+          "name": "_buyer",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_seller"
+          "name": "_seller",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -817,17 +1002,23 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "a"
+          "name": "a",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "b"
+          "name": "b",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "c"
+          "name": "c",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -839,17 +1030,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_account"
+          "name": "_account",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -869,27 +1066,32 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_verifier"
+          "name": "_verifier",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "totalSupply",
       "type": "function",
-      "constant": true,
       "signature": "totalSupply()",
       "encoding": "0x18160ddd",
       "inputs": [],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -901,17 +1103,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -923,17 +1131,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_tokenAddress"
+          "name": "_tokenAddress",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokens"
+          "name": "_tokens",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -945,21 +1159,29 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_from"
+          "name": "_from",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -971,40 +1193,51 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_to"
+          "name": "_to",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "_transferMetaData"
+          "name": "_transferMetaData",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
     {
       "name": "updatedAt",
       "type": "function",
-      "constant": true,
       "signature": "updatedAt(uint256)",
       "encoding": "0xc818faec",
       "inputs": [
         {
           "type": "uint256",
-          "name": "_id"
+          "name": "_id",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "uint256",
-          "name": "ret_0"
+          "name": "ret_0",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -1016,17 +1249,23 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_account"
+          "name": "_account",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "_verifyMetaData"
+          "name": "_verifyMetaData",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
           "type": "bool",
-          "name": "success"
+          "name": "success",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -1039,7 +1278,9 @@
       "outputs": [
         {
           "type": "uint256",
-          "name": "amount"
+          "name": "amount",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -1052,7 +1293,9 @@
       "outputs": [
         {
           "type": "uint256",
-          "name": "paymentMade"
+          "name": "paymentMade",
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -1064,24 +1307,33 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_etherAmount"
+          "name": "_etherAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_acceptor",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1095,20 +1347,26 @@
         {
           "type": "address",
           "name": "_sender",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_account",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_affirmDate"
+          "name": "_affirmDate",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1122,16 +1380,20 @@
         {
           "type": "address",
           "name": "_owner",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_spender",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1144,11 +1406,15 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_balance"
+          "name": "_balance",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1161,20 +1427,27 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_sender",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_deposit"
+          "name": "_deposit",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_amount"
+          "name": "_amount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1187,28 +1460,39 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_key"
+          "name": "_key",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_date"
+          "name": "_date",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_dollarPrice"
+          "name": "_dollarPrice",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint8",
-          "name": "_requestType"
+          "name": "_requestType",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_requester",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1221,11 +1505,15 @@
       "inputs": [
         {
           "type": "string",
-          "name": "fName"
+          "name": "fName",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "message"
+          "name": "message",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1238,11 +1526,15 @@
       "inputs": [
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_balance"
+          "name": "_balance",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1256,11 +1548,14 @@
         {
           "type": "address",
           "name": "_from",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_tokenAmount"
+          "name": "_tokenAmount",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1273,15 +1568,21 @@
       "inputs": [
         {
           "type": "address",
-          "name": "_admin"
+          "name": "_admin",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint8",
-          "name": "_setting"
+          "name": "_setting",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1295,11 +1596,14 @@
         {
           "type": "address",
           "name": "_verifier",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "bool",
-          "name": "_isTrustedVerifier"
+          "name": "_isTrustedVerifier",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1313,16 +1617,20 @@
         {
           "type": "address",
           "name": "_from",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_to",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1336,20 +1644,26 @@
         {
           "type": "address",
           "name": "_from",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_to",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_value"
+          "name": "_value",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "_transferMetaData"
+          "name": "_transferMetaData",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1363,20 +1677,26 @@
         {
           "type": "address",
           "name": "_verifier",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "address",
           "name": "_account",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_verifyDate"
+          "name": "_verifyDate",
+          "indexed": false,
+          "is_array": false
         },
         {
           "type": "string",
-          "name": "_verifyMetaData"
+          "name": "_verifyMetaData",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -1390,11 +1710,14 @@
         {
           "type": "address",
           "name": "_account",
-          "indexed": true
+          "indexed": true,
+          "is_array": false
         },
         {
           "type": "uint256",
-          "name": "_payment"
+          "name": "_payment",
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []

@@ -139,7 +139,8 @@
                   "name": "_acceptor",
                   "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
                 }
-              ]
+              ],
+              "outputs": []
             }
           },
           {
@@ -173,7 +174,8 @@
                   "name": "_acceptor",
                   "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
                 }
-              ]
+              ],
+              "outputs": []
             }
           }
         ],
@@ -194,7 +196,8 @@
             "name": "_dollarPrices",
             "value": "[2000000000000000000, 2000000000000000000]"
           }
-        ]
+        ],
+        "outputs": []
       },
       "traces": [
         {
@@ -215,7 +218,8 @@
                 "name": "_dollarPrices",
                 "value": "[2000000000000000000, 2000000000000000000]"
               }
-            ]
+            ],
+            "outputs": []
           },
           "action": {
             "address": "0x0",

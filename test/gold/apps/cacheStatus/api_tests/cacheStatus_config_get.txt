@@ -72,6 +72,7 @@
               "name": "accountName",
               "value": "--account name--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -79,6 +80,7 @@
               "name": "balancerecord",
               "value": "--balance record--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -86,6 +88,7 @@
               "name": "block",
               "value": "--block--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -93,6 +96,7 @@
               "name": "ethstate",
               "value": "--eth state--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -100,6 +104,7 @@
               "name": "function",
               "value": "--function--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -107,6 +112,7 @@
               "name": "logentry",
               "value": "--logentry--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -114,6 +120,7 @@
               "name": "pricequote",
               "value": "--pricequote--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -121,6 +128,7 @@
               "name": "receipt",
               "value": "--receipt--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -128,6 +136,7 @@
               "name": "trace",
               "value": "--trace--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -135,6 +144,7 @@
               "name": "transaction",
               "value": "--transaction--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -142,6 +152,7 @@
               "name": "whenblock",
               "value": "--when block--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             },
@@ -149,6 +160,7 @@
               "name": "whereblock",
               "value": "--where block--",
               "type": "display string",
+              "tip": "",
               "required": false,
               "read_only": false
             }
@@ -242,17 +254,31 @@
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
+                  "description": "",
                   "group": "81-Custom",
                   "group_sort": "81",
+                  "logo": "",
                   "name": "TestWallet1",
-                  "raw_group": "Custom"
+                  "raw_group": "Custom",
+                  "raw_subgroup": "",
+                  "source": "",
+                  "subgroup": "",
+                  "subgroup_sort": "",
+                  "symbol": ""
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
+                  "description": "",
                   "group": "81-Custom",
                   "group_sort": "81",
+                  "logo": "",
                   "name": "TestWallet2",
-                  "raw_group": "Custom"
+                  "raw_group": "Custom",
+                  "raw_subgroup": "",
+                  "source": "",
+                  "subgroup": "",
+                  "subgroup_sort": "",
+                  "symbol": ""
                 }
               ]
             }

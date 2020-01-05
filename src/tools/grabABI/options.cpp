@@ -24,7 +24,9 @@ static const COption params[] = {
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),  // NOLINT
     COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),  // NOLINT
-    COption("known", "k", "", OPT_HIDDEN | OPT_SWITCH, "load common 'known' ABIs from cache"),
+    COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
+    COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
+    COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,7 +42,9 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool canonical = false;
+    bool monitored = false;
     bool known = false;
+    bool addr = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -58,8 +62,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--noconst") {
             noconst = true;
 
+        } else if (arg == "-m" || arg == "--monitored") {
+            monitored = true;
+
         } else if (arg == "-k" || arg == "--known") {
             known = true;
+
+        } else if (arg == "-a" || arg == "--addr") {
+            addr = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -75,18 +85,18 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!addrs.size() && !known)
+    if (!addrs.size() && !known && !monitored)
         return usage("Please supply at least one Ethereum address.\n");
 
-    for (auto addr : addrs) {
-        if (!isContractAt(addr) &&
-            addr != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to
-                                                                     // ignore during testing
-            cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
+    for (auto a : addrs) {
+        if (!isContractAt(a) &&
+            a != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to
+                                                                  // ignore during testing
+            cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
 
-        } else if (fileExists(addr + ".sol")) {
+        } else if (fileExists(a + ".sol")) {
             CAbi abi;
-            sol_2_Abi(abi, addr);
+            sol_2_Abi(abi, a);
             bool first1 = true;
             expContext().spcs = 2;
             ostringstream os;
@@ -101,8 +111,8 @@ bool COptions::parseArguments(string_q& command) {
             }
             decIndent();
             os << endl << "]" << endl;
-            ::remove((addr + ".json").c_str());
-            stringToAsciiFile(addr + ".json", os.str());
+            ::remove((a + ".json").c_str());
+            stringToAsciiFile(a + ".json", os.str());
             isRaw = false;
         }
     }
@@ -122,15 +132,15 @@ bool COptions::parseArguments(string_q& command) {
         parts |= SIG_DETAILS;
 
     if (isRaw) {
-        for (auto addr : addrs) {
-            string_q fileName = getCachePath("abis/" + addr + ".json");
-            string_q localFile("./" + addr + ".json");
+        for (auto a : addrs) {
+            string_q fileName = getCachePath("abis/" + a + ".json");
+            string_q localFile("./" + a + ".json");
             if (fileExists(localFile)) {
                 cerr << "Local file found\n";
                 fileName = localFile;
             }
             if (!fileExists(fileName))
-                return usage("ABI for '" + addr + "' not found. Quitting...");
+                return usage("ABI for '" + a + "' not found. Quitting...");
             string_q contents;
             asciiFileToString(fileName, contents);
             cout << contents << "\n";
@@ -138,16 +148,18 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    for (auto addr : addrs) {
+    for (auto a : addrs) {
         CAbi abi;
-        loadAbiAndCache(abi, addr, isRaw, errors);
+        loadAbiAndCache(abi, a, isRaw, errors);
         if (errors.size() > 0) {
             ostringstream os;
             for (auto err : errors)
                 os << err;
             return usage(os.str());
         }
-        abi.address = addr;
+        abi.address = a;
+        for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
+            i->address = a;
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abis.push_back(abi);
     }
@@ -165,11 +177,33 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (monitored) {
+        CAbi abi;
+        abi.loadAbiFromCache("all");
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+        abis.push_back(abi);
+    }
+
     if (generate)
         handle_generate();
 
     // Display formatting
-    configureDisplay("grabABI", "CAbi", STR_DISPLAY_ABI);
+    string_q format = STR_DISPLAY_ABI;
+    string_q funcFields = "CFunction:address,name,type,signature,encoding,input_names,output_names";
+
+    if (!addr) {
+        replace(format, "[{ADDRESS}]\t", "");
+        replace(funcFields, "address,", "");
+    }
+
+    if (verbose && (exportFmt == JSON1 || exportFmt == API1)) {
+        replaceAll(funcFields, "_name", "");
+        replaceAll(format, "_NAME", "");
+    }
+
+    configureDisplay("grabABI", "CAbi", format);
+    manageFields("CFunction:all", false);
+    manageFields(funcFields, true);
     manageFields("CParameter:all", false);
     manageFields("CParameter:type,name,is_array,indexed", true);
 
@@ -228,35 +262,6 @@ bool visitABIs(const string_q& path, void* dataPtr) {
     }
     return true;
 }
-
-//---------------------------------------------------------------------------
-// void rebuildFourByteDB(void) {
-//
-//    string_q fileList;
-//    string_q abiPath = getCachePath("abis/");
-//    cout << abiPath << "\n";
-//    forEveryFileInFolder(abiPath+"*", visitABIs, &fileList);
-//
-//    CFunctionArray funcArray;
-//    while (!fileList.empty()) {
-//        string_q fileName = nextTokenClear(fileList, '\n');
-//        CAbi abi;
-//        abi.loadAbiFromFile(fileName, false);
-//        sort(abi.interfaces.begin(), abi.interfaces.end());
-//        for (auto interface : abi.interfaces) {
-//            funcArray.push_back(interface);
-//            cout << interface.encoding << " : ";
-//            cout << interface.name << " : ";
-//            cout << interface.signature << "\n";
-//        }
-//    }
-//    sort(funcArray.begin(), funcArray.end());
-//    CArchive funcCache(WRITING_ARCHIVE);
-//    if (funcCache.Lock(abiPath+"abis.bin", modeWriteCreate, LOCK_CREATE)) {
-//        funcCache << funcArray;
-//        funcCache.Release();
-//    }
-//}
 
 //-----------------------------------------------------------------------
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {

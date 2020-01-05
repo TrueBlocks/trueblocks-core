@@ -226,7 +226,7 @@ bool COptions::parseArguments(string_q& command) {
         LOG4("Loading ABIs");
         abis.loadAbiKnown("all");
         if (all_abis)
-            abis.loadCachedAbis("all");
+            abis.loadAbiFromCache("all");
         LOG4("Finished loading ABIs");
     }
 

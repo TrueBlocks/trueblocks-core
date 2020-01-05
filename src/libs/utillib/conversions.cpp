@@ -367,6 +367,8 @@ string_q bool_2_Str(bool num) {
 
 //--------------------------------------------------------------------------------
 string_q bool_2_Str_t(bool num) {
+    if (isApiMode())
+        return bool_2_Str(num);
     if (!num)
         return "";
     return "true";

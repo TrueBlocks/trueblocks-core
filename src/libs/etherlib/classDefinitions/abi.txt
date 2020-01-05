@@ -4,4 +4,4 @@ fields = address address|CFunctionArray interfaces
 includes = function.h|parameter.h
 cpp_includes = node.h
 serializable = true
-display_str = address, encoding, type, constant, name, signature, input_names
+display_str = address, encoding, type, name, signature, input_names, output_names

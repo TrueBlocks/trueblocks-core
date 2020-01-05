@@ -290,15 +290,15 @@ const char* STR_DISPLAY_ABI =
     "[{ADDRESS}]\t"
     "[{ENCODING}]\t"
     "[{TYPE}]\t"
-    "[{CONSTANT}]\t"
     "[{NAME}]\t"
     "[{SIGNATURE}]\t"
-    "[{INPUT_NAMES}]";
+    "[{INPUT_NAMES}]\t"
+    "[{OUTPUT_NAMES}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool visitABI(const qblocks::string_q& path, void* data) {
+bool visitBuiltin(const qblocks::string_q& path, void* data) {
     if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
         return true;
     CAbi* abi = (CAbi*)data;  // NOLINT
@@ -308,12 +308,22 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
+bool visitABI(const qblocks::string_q& path, void* data) {
+    if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
+        return true;
+    CAbi* abi = (CAbi*)data;  // NOLINT
+    if (!abi->loadAbiFromFile(path, false))
+        return false;
+    return true;
+}
+
+//---------------------------------------------------------------------------
 bool CAbi::loadAbiKnown(const string_q& which) {
     bool ret = true;
     if (which == "all") {
-        ret = forEveryFileInFolder(configPath("known_abis/*"), visitABI, this);
+        ret = forEveryFileInFolder(configPath("known_abis/*"), visitBuiltin, this);
     } else {
-        ret = loadAbiFromFile(configPath("known_abis/" + which + ".json"), true);
+        ret = visitBuiltin(configPath("known_abis/" + toLower(which) + ".json"), this);
     }
     if (ret)
         sort(interfaces.begin(), interfaces.end());
@@ -321,12 +331,12 @@ bool CAbi::loadAbiKnown(const string_q& which) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadCachedAbis(const string_q& which) {
+bool CAbi::loadAbiFromCache(const string_q& which) {
     bool ret = true;
     if (which == "all") {
         ret = forEveryFileInFolder(getCachePath("abis/*"), visitABI, this);
     } else {
-        ret = loadAbiFromFile(getCachePath("abis/" + which + ".json"), true);
+        ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
     }
     if (ret)
         sort(interfaces.begin(), interfaces.end());
@@ -334,12 +344,10 @@ bool CAbi::loadCachedAbis(const string_q& which) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiByAddress(address_t addrIn) {
-    if (isZeroAddr(addrIn))
+bool CAbi::loadAbiByAddress(const address_t& which) {
+    if (isZeroAddr(which))
         return false;
-    string_q addr = toLower(addrIn);
-    string_q fileName = getCachePath("abis/" + addr + ".json");
-    bool ret = loadAbiFromFile(fileName, false);
+    bool ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
     if (ret)
         sort(interfaces.begin(), interfaces.end());
     return ret;
@@ -364,6 +372,10 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
     asciiFileToString(fileName, contents);
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
+        string_q addr = substitute(
+            substitute(substitute(fileName, configPath("known_abis/"), ""), getCachePath("abis/"), ""), ".json", "");
+        for (auto i = interfaces.begin(); i != interfaces.end(); i++)
+            i->address = addr;
         sort(interfaces.begin(), interfaces.end());
         //        CArchive archive(WRITING_ARCHIVE);
         //        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {

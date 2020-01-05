@@ -1,0 +1,115 @@
+{
+  "type": "CAccountName",
+  "fieldList": [
+    {
+      "name": "group_sort",
+      "type": "text"
+    },
+    {
+      "name": "raw_group",
+      "type": "text"
+    },
+    {
+      "name": "subgroup_sort",
+      "type": "text"
+    },
+    {
+      "name": "raw_subgroup",
+      "type": "text"
+    }
+  ],
+  "data": [
+    {
+      "group_sort": "30",
+      "raw_group": "Contracts",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "01",
+      "raw_subgroup": "Core"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "01",
+      "raw_subgroup": "Core Caller"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "02",
+      "raw_subgroup": "Modules"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "03",
+      "raw_subgroup": "Factories"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "04",
+      "raw_subgroup": "Libraries"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "05",
+      "raw_subgroup": "Wrappers"
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "06",
+      "raw_subgroup": "Other"
+    },
+    {
+      "group_sort": "50",
+      "raw_group": "Tokens",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "60",
+      "raw_group": "Airdrops",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "80",
+      "raw_group": "Prefund",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "81",
+      "raw_group": "Custom",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "82",
+      "raw_group": "Known",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "",
+      "raw_group": "",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

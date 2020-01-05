@@ -76,8 +76,8 @@ current = "0.6.2-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("custom", "list", "[
-	{ "group": "81-Custom", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001", "group_sort": "81", "raw_group": "Custom" },
-	{ "group": "81-Custom", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002", "group_sort": "81", "raw_group": "Custom" }
+	{ "group": "81-Custom", "subgroup": "", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001", "symbol": "", "description": "", "source": "", "logo": "", "group_sort": "81", "raw_group": "Custom", "subgroup_sort": "", "raw_subgroup": "" },
+	{ "group": "81-Custom", "subgroup": "", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002", "symbol": "", "description": "", "source": "", "logo": "", "group_sort": "81", "raw_group": "Custom", "subgroup_sort": "", "raw_subgroup": "" }
 ]");
 ------------------------------------------------------------------------------------------------------------------------
 Would have written: ./tests/ethNames.toml:

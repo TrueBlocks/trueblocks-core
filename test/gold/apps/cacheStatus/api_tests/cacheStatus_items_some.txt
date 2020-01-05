@@ -142,11 +142,22 @@
               "deleted": false,
               "curBalance": 10000,
               "enabled": true,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
               "nRecords": 18446744073709552000,
-              "sizeInBytes": 18446744073709552000
+              "sizeInBytes": 18446744073709552000,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CMonitorCache",
@@ -179,9 +190,22 @@
             {
               "type": "CPriceCacheItem",
               "pair": "---pair---",
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "0x0",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
+              "firstAppearance": "",
+              "latestAppearance": "",
               "nRecords": 36910963,
-              "sizeInBytes": 36910963
+              "sizeInBytes": 36910963,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CPriceCache",

@@ -100,6 +100,9 @@ inline bool isTestMode(void) {
 
 //---------------------------------------------------------------------------
 inline bool isApiMode(void) {
-    return (getEnvStr("API_MODE") == "true");
+    static uint64_t api_mode = NOPOS;
+    if (api_mode == NOPOS)
+        api_mode = getEnvStr("API_MODE") == "true";
+    return api_mode;
 }
 }  // namespace qblocks

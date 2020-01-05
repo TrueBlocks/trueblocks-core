@@ -401,11 +401,6 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "date");
     ADD_FIELD(CBlock, "age", T_DATE, ++fieldNum);
     HIDE_FIELD(CBlock, "age");
-    if (isApiMode()) {
-        UNHIDE_FIELD(CBlock, "date");
-        UNHIDE_FIELD(CBlock, "age");
-        UNHIDE_FIELD(CBlock, "name");
-    }
     // EXISTING_CODE
 }
 

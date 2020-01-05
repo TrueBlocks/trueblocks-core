@@ -59,9 +59,22 @@
             {
               "type": "CPriceCacheItem",
               "pair": "---pair---",
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "0x0",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
+              "firstAppearance": "",
+              "latestAppearance": "",
               "nRecords": 36910963,
-              "sizeInBytes": 36910963
+              "sizeInBytes": 36910963,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CPriceCache",

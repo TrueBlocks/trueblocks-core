@@ -41,7 +41,8 @@
             "name": "_dollarPrices",
             "value": "[2000000000000000000, 2000000000000000000]"
           }
-        ]
+        ],
+        "outputs": []
       },
       "action": {
         "address": "0x0",
