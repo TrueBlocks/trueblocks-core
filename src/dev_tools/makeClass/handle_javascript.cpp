@@ -20,6 +20,7 @@ extern const char* STR_EXTRACT_CASE;
 extern const char* STR_TEXT_ACTIONS;
 extern const char* STR_TEXT_IMPORTS;
 extern const char* STR_TEXT_CODE;
+extern const char* STR_NAVLINK;
 extern bool visitField(const CFieldData& field, void* data);
 
 //---------------------------------------------------------------------------------------------------
@@ -96,24 +97,21 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
 
     uint32_t cnt = 0;
     ostringstream commands, menu_items, text_imports, text_code;
-    map<string, string> extactorMap;
-    string_q def_menu;
+    map<string, string> extractMap;
     for (auto item : page.subpages) {
         replaceAll(code, "[{SUBPAGE}]", item.subpage);
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
-        commands << "export const " << toUpper(item.subpage) << " = '" << item.route << "/" << item.options << "';"
+        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';"
                  << endl;
         if (!menu_items.str().empty())
             menu_items << "," << endl;
-        menu_items << "      { header: '" << substitute(toProper(item.subpage), "_", " ")
-                   << "', value: 'VAL', action: " << toUpper(item.subpage) << " }";
-        if (cnt == 0)
-            def_menu = (item.route + "/" + item.options);
+        menu_items << "    { subpage: '" << substitute(toLower(item.subpage), "_", " ");
+        menu_items << "', route: '" + item.route + "', query: " << page.twoName << "." << toUpper(item.subpage) << " }";
         cnt++;
-        string_q curVal = extactorMap[item.extract];
-        extactorMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
+        string_q curVal = extractMap[item.extract];
+        extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
 
         if (item.from_text) {
             if (text_imports.str() != "")
@@ -125,17 +123,15 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
                                     toUpper(item.subpage));
         }
     }
-
     while (cnt < 7) {
         if (!menu_items.str().empty())
             menu_items << "," << endl;
-        menu_items << "      { header: '" << page.twoName << "-" << padNum4(cnt) << "' }";
+        menu_items << "    { subpage: '" << page.twoName << "-" << padNum4(cnt) << "' }";
         cnt++;
     }
     menu_items << endl;
     replaceAll(code, "[{COMMANDS}];", commands.str());
     replaceAll(code, "[{MENU_ITEMS}]", menu_items.str());
-    replaceAll(code, "[{DEFAULT_MENU}]", def_menu);
 
     replaceAll(code, "[{TEXT_ACTIONS}]", (page.has_text ? STR_TEXT_ACTIONS : ""));
     replaceAll(code, "[{TEXT_IMPORTS}]", (page.has_text ? text_imports.str() : ""));
@@ -144,7 +140,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? tc : ""));
 
     ostringstream reducers;
-    for (auto e : extactorMap) {
+    for (auto e : extractMap) {
         string_q extract = e.first;
         CStringArray cmds;
         explode(cmds, e.second, '|');
@@ -220,23 +216,22 @@ bool visitField(const CFieldData& field, void* data) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_frontend_app(void) {
-    string_q app_import = "import [{PROPER}] from './pages/[{LOWER}]';\n";
-    string_q navlink =
-        "      <NavLink activeClassName=\"is-active\" [{EXACT}]to=\"[{PATH2}]\">\n        [{PROPER}]\n      "
-        "</NavLink>\n";
-    string_q route = "      <Route [{EXACT}]path=\"[{PATH}]\" component={[{PROPER}]} />\n";
+    string_q app_import = "import [{PROPER}], { [{LOWER}]_menu } from './pages/[{LOWER}]';\n";
+    string_q route = "          <Route component={[{PROPER}]} [{EXACT}]path=\"[{PATH}]\" />\n";
     string_q red_import = "import reducer_[{PROPER}] from './pages/[{LOWER}]/reducers';\n";
     string_q reducer = "  reducer_[{PROPER}],\n";
-    ostringstream app_imports, red_imports, navlinks, routes, reducers;
+
     CToml toml("./classDefinitions/app.txt");
     string_q str = toml.getConfigStr("settings", "pages", "");
     CStringArray pages;
     explode(pages, str, '|');
+    ostringstream app_imports, red_imports, routes, reducers, navlinks;
     for (auto exact : pages) {
         string_q lower = nextTokenClear(exact, ',');
         string_q proper = toProper(lower);
         string_q path = nextTokenClear(exact, ',');
         string_q path2 = path;
+        string_q navpath = path.empty() ? "" : "path=\"" + path + "\" ";
         if (path.empty()) {
             path = "/[{LOWER}]/:subpage?";
             path2 = "/[{LOWER}]";
@@ -244,24 +239,25 @@ bool COptions::handle_generate_frontend_app(void) {
         if (!exact.empty())
             exact += "={true} ";
         app_imports << substitute(substitute(app_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
-        navlinks << substitute(
-            substitute(substitute(substitute(navlink, "[{PATH2}]", path2), "[{EXACT}]", exact), "[{PROPER}]", proper),
-            "[{LOWER}]", lower);
         replace(exact, "={true}", "");
         routes << substitute(
             substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
             "[{LOWER}]", lower);
         red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
         reducers << substitute(reducer, "[{PROPER}]", proper);
+        if (!navlinks.str().empty())
+            navlinks << "," << endl;
+        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower);
     }
+
     string_q contents = asciiFileToString("./blank-app.js");
     string_q orig = asciiFileToString("../../App.js");
     replaceAll(contents, "[{IMPORTS}]", app_imports.str());
-    replaceAll(contents, "[{NAVLINKS}]", navlinks.str());
+    replaceAll(contents, "[{NAVLINKS}]", (navlinks.str() + "\n"));
     replaceAll(contents, "[{ROUTES}]", routes.str());
     if (orig != contents) {
         stringToAsciiFile("../../App.js", contents);
-        LOG_INFO("Writing: ", cTeal, "App.js", cOff);
+        LOG_INFO("Writing: ", cTeal, "./App.js", cOff);
     }
 
     contents = asciiFileToString("./blank-root-reducers.js");
@@ -270,7 +266,7 @@ bool COptions::handle_generate_frontend_app(void) {
     replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
     if (orig != contents) {
         stringToAsciiFile("../../root-reducers.js", contents);
-        LOG_INFO("Writing: ", cTeal, "root-reducers.js", cOff);
+        LOG_INFO("Writing: ", cTeal, "./root-reducers.js", cOff);
     }
 
     return true;
@@ -321,3 +317,10 @@ const char* STR_TEXT_CODE =
     "    } else if (this.state.subpage === [{TWO}].[{SP_UPPER}]) {\n"
     "      return [{SUBPAGE}]Text();\n"
     "    }";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_NAVLINK =
+"  {\n"
+"    menu_data: [{LOWER}]_menu\n"
+"  }";
+
