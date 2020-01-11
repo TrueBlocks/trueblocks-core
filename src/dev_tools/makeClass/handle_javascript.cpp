@@ -103,8 +103,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
-        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';"
-                 << endl;
+        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';" << endl;
         if (!menu_items.str().empty())
             menu_items << "," << endl;
         menu_items << "    { subpage: '" << substitute(toLower(item.subpage), "_", " ");
@@ -320,7 +319,6 @@ const char* STR_TEXT_CODE =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_NAVLINK =
-"  {\n"
-"    menu_data: [{LOWER}]_menu\n"
-"  }";
-
+    "  {\n"
+    "    menu_data: [{LOWER}]_menu\n"
+    "  }";
