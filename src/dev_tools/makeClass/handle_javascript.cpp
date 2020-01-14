@@ -232,7 +232,7 @@ bool COptions::handle_generate_frontend_app(void) {
         string_q path2 = path;
         string_q navpath = path.empty() ? "" : "path=\"" + path + "\" ";
         if (path.empty()) {
-            path = "/[{LOWER}]/:subpage?";
+            path = "/[{LOWER}]/:subpage?/:query?";
             path2 = "/[{LOWER}]";
         }
         if (!exact.empty())

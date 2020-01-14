@@ -4,14 +4,14 @@ data-dog
 difficulty
 solPack
 perot
-addrs_extract
+addrs_text_extract
 monetary-base
 shareTheIndex
 callsPerDay
 logging
 bloomBuilder
 addrs_reorder
-addrs_writeBack
+addrs_writeBack/sorted
 junk
 addrs_read
 *output*
