@@ -11,7 +11,6 @@ callsPerDay
 logging
 bloomBuilder
 addrs_reorder
-addrs_writeBack/sorted
 junk
 addrs_read
 *output*
