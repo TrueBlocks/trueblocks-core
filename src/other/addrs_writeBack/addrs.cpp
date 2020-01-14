@@ -31,10 +31,10 @@ bool visitFile(const string_q& path, void* data) {
             timestamp_t unused;
             blknum_t end;
             blknum_t begin =
-                bnFromPath(path, end, unused);
+            bnFromPath(path, end, unused);
             // if (begin < 5998901 || begin > 7000000) {
-            if (begin < 750000 || begin > 1000000) {
-//                cout << "skipping " << path << endl;
+            if (begin < 800000 || begin > 1000000) {
+                //                cout << "skipping " << path << endl;
                 return true;
             }
 
@@ -90,9 +90,8 @@ bool visitFile(const string_q& path, void* data) {
                     CAppearance_base* app = &blocksOnFile[r];
                     ostringstream os;
                     os << bytes_2_Addr(record->bytes) << "\t" << padNum9(app->blk) << "\t" << padNum5(app->txid)
-                       << endl;
-                    if (app->blk < 250000)
-                        output.WriteLine(os.str());
+                    << endl;
+                    output.WriteLine(os.str());
                 }
                 if (!(a % 1000))
                     cout << (a / 1000);
