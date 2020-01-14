@@ -33,7 +33,7 @@ bool visitFile(const string_q& path, void* data) {
             blknum_t begin =
                 bnFromPath(path, end, unused);
             // if (begin < 5998901 || begin > 7000000) {
-            if (begin > 750166) {
+            if (begin > 250000) {
 //                cout << "skipping " << path << endl;
                 return true;
             }
@@ -74,8 +74,9 @@ bool visitFile(const string_q& path, void* data) {
             nAddrs = h->nAddrs;
             // uint32_t nRows = h->nRows; not used
 
+            outFile = "./data.txt";
             CArchive output(WRITING_ARCHIVE);
-            if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT)) {
+            if (!output.Lock(outFile, modeWriteAppend, LOCK_NOWAIT)) {
                 cout << "Could not lock file: " << outFile << endl;
                 return true;
             }
@@ -91,7 +92,8 @@ bool visitFile(const string_q& path, void* data) {
                     ostringstream os;
                     os << bytes_2_Addr(record->bytes) << "\t" << padNum9(app->blk) << "\t" << padNum5(app->txid)
                        << endl;
-                    output.WriteLine(os.str());
+                    if (app->blk < 250000)
+                        output.WriteLine(os.str());
                 }
                 if (!(a % 1000))
                     cout << (a / 1000);
