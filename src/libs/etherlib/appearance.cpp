@@ -209,4 +209,39 @@ int findAppearance(const void* v1, const void* v2) {
     }
     return 0;
 }
+
+//----------------------------------------------------------------
+CIndexArchive::CIndexArchive(bool mode) : CArchive(mode) {
+    nAddrs = nApps = 0;
+    addresses = NULL;
+    appearances = NULL;
+}
+
+//----------------------------------------------------------------
+CIndexArchive::~CIndexArchive(void) {
+    nAddrs = nApps = 0;
+    if (addresses) {
+        delete [] addresses;
+        addresses = NULL;
+    }
+    if (appearances) {
+        delete [] appearances;
+        appearances = NULL;
+    }
+    Release();
+}
+
+//----------------------------------------------------------------
+bool CIndexArchive::ReadIndexFromBinary(const string_q& fn) {
+    if (m_isReading && !fileExists(fn))
+        return false;
+    if (!m_isReading && fileExists(fn))
+        return false;
+    if (!Lock(fn, (m_isReading ? modeReadOnly : modeWriteCreate), (m_isReading ? LOCK_NOWAIT : LOCK_WAIT)))
+        return false;
+    if (Read(&header, sizeof(CHeaderRecord_base), 1) != sizeof(CHeaderRecord_base))
+        return false;
+    return true;
+}
+
 }  // namespace qblocks

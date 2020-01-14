@@ -33,7 +33,7 @@ bool visitFile(const string_q& path, void* data) {
             blknum_t begin =
                 bnFromPath(path, end, unused);
             // if (begin < 5998901 || begin > 7000000) {
-            if (begin > 250000) {
+            if (begin < 750000 || begin > 1000000) {
 //                cout << "skipping " << path << endl;
                 return true;
             }
@@ -74,14 +74,13 @@ bool visitFile(const string_q& path, void* data) {
             nAddrs = h->nAddrs;
             // uint32_t nRows = h->nRows; not used
 
-            outFile = "./data.txt";
+            cout << endl << outFile << " (" << fileSize(path) << "-" << nAddrs << "): " << endl;
+
             CArchive output(WRITING_ARCHIVE);
-            if (!output.Lock(outFile, modeWriteAppend, LOCK_NOWAIT)) {
+            if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT)) {
                 cout << "Could not lock file: " << outFile << endl;
                 return true;
             }
-
-            cout << endl << outFile << " (" << fileSize(path) << "-" << nAddrs << "): " << endl;
 
             CAddressRecord_base* addrsOnFile = (CAddressRecord_base*)(rawData + sizeof(CHeaderRecord_base));
             CAppearance_base* blocksOnFile = (CAppearance_base*)&addrsOnFile[nAddrs];
