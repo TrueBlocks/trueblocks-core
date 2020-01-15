@@ -144,10 +144,13 @@ bool COptions::parseArguments(string_q& command) {
     n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
     n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
 
+#ifdef MAC
+// TODO(tjayrush): fix this on non-mac machines
     if (nRunning("blockScrape")) {
         LOG_WARN("The " + getProgName() + " process may only run once. Quitting...");
         return false;
     }
+#endif
 
     return true;
 }

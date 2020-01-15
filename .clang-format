@@ -19,7 +19,7 @@ AlignTrailingComments: true
 AlignEscapedNewlines: Right
 AlwaysBreakBeforeMultilineStrings: true
 BreakBeforeTernaryOperators: true
-SpaceBeforeRangeBasedForLoopColon: true
+#SpaceBeforeRangeBasedForLoopColon: true
 SpacesBeforeTrailingComments: 2
 FixNamespaceComments: true
 #SpaceAfterLogicalNot: true

@@ -12,12 +12,19 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
+typedef struct {
+    CIndexHashMap hashes;
+    CIndexHashMap blooms;
+} Thing;
+
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    CIndexHashMap hashes;
-    loadHashes(hashes, "finalized");
-    forEveryFileInFolder(getIndexPath("finalized"), visitFile, &hashes);
+    Thing thing;
+    loadHashes(thing.hashes, "finalized");
+    loadHashes(thing.blooms, "blooms");
+    cout << "start,end,nAddrs,nRows,fileSize,bloomSize,hash,bloom_hash\n";
+    forEveryFileInFolder(getIndexPath("finalized"), visitFile, &thing);
     etherlib_cleanup();
     return 1;
 }
@@ -31,21 +38,17 @@ bool visitFile(const string_q& path, void* data) {
             blknum_t end;
             timestamp_t unused2;
             blknum_t start = bnFromPath(path, end, unused2);
-            CIndexHashMap *hashes = (CIndexHashMap*)data;
+            Thing *thing = (Thing*)data;
             CIndexArchive index(READING_ARCHIVE);
             if (index.ReadIndexFromBinary(path)) {
                 cout << start << ",";
                 cout << end << ",";
-//                cout << index.header.magic << ",";
-//                for (int i=0;i<32;i++)
-//                    cout << index.header.hash[i];
-//                cout << ",";
                 cout << index.header.nAddrs << ",";
                 cout << index.header.nRows << ",";
                 cout << fileSize(path) << ",";
                 cout << fileSize(substitute(substitute(path, "finalized", "blooms"),".bin",".bloom")) << ",";
-                CIndexChunk chunk = hashes->operator[](start);
-                cout << chunk.hash << "\n";
+                cout << (thing->hashes.operator[](start).hash) << ",";
+                cout << (thing->blooms.operator[](start).hash) << "\n";
 
             }
         }

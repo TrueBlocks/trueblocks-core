@@ -30,13 +30,13 @@ bool visitFile(const string_q& path, void* data) {
         if (contains(path, ".bin")) {
             timestamp_t unused;
             blknum_t end;
-            blknum_t begin =
+//            blknum_t begin =
             bnFromPath(path, end, unused);
             // if (begin < 5998901 || begin > 7000000) {
-            if (begin < 800000 || begin > 1000000) {
-                //                cout << "skipping " << path << endl;
-                return true;
-            }
+//            if (begin < 800000 || begin > 1000000) {
+//                //                cout << "skipping " << path << endl;
+//                return true;
+//            }
 
             string_q outFile = substitute(substitute(path, indexFolder_finalized, "./sorted/"), ".bin", ".txt");
             string_q three = substitute(outFile, "./sorted/", "").substr(0, 3);

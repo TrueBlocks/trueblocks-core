@@ -87,10 +87,13 @@ bool COptions::handle_scrape(void) {
     } else {
         //---------------------------------------------------------------------------------
         // If it's already running, don't start it again...
+#ifdef MAC
+// TODO(tjayrush): fix this on non-mac machines
         if (nRunning("chifra scrape") > 1) {
-            LOG_WARN("Scraper is alreary running. Cannot start it again...");
+            LOG_WARN("Scraper is already running. Cannot start it again...");
             return false;
         }
+#endif
 
         // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
