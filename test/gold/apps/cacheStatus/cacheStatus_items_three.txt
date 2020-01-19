@@ -2,7 +2,7 @@ cacheStatus argc: 7 [1:--details] [2:abis] [3:caches] [4:monitors] [5:--types] [
 cacheStatus --details abis caches monitors --types slurps 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",

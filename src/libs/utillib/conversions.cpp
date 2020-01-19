@@ -354,11 +354,6 @@ bloom_t str_2_Bloom(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-topic_t str_2_Topic(const string_q& str) {
-    return str_2_Wei(str);
-}
-
-//--------------------------------------------------------------------------------
 string_q bool_2_Str(bool num) {
     if (!num)
         return "false";
@@ -444,13 +439,8 @@ string_q bloom_2_Str(const bloom_t& bloom) {
 }
 
 //--------------------------------------------------------------------------------
-string_q topic_2_Str(const topic_t& topic) {
-    return ("0x" + padLeft(toLower(bnu_2_Hex(topic)), 64, '0'));
-}
-
-//--------------------------------------------------------------------------------
 biguint_t topic_2_BigUint(const topic_t& topic) {
-    return topic;
+    return str_2_Wei(topic);
 }
 
 //--------------------------------------------------------------------------------

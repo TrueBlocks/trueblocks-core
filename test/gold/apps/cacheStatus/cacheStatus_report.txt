@@ -1,7 +1,7 @@
 cacheStatus argc: 4 [1:--report] [2:--fmt] [3:txt] 
 cacheStatus --report --fmt txt 
   Client version:     --version--
-  Trueblocks version: GHC-TrueBlocks//0.6.2-alpha--git-hash---git-ts-
+  Trueblocks version: GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-
   RPC provider:       --rpc_provider--
   Cache location:     --cache_dir--
   Host (user):        --host (user)--

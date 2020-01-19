@@ -36,7 +36,7 @@ cname               	1004	0	131122	T_TEXT TS_STRING
 address             	1005	0	131127	T_ADDRESS TS_STRING
 interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
-  "schema": 6002,
+  "schema": 6005,
   "deleted": 0,
   "showing": 1,
   "cname": "Abi",

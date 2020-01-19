@@ -30,7 +30,7 @@ using hash_t = string_q;
 using ipfshash_t = string_q;
 using bloom_t = biguint_t;
 using wei_t = biguint_t;
-using topic_t = biguint_t;
+using topic_t = string_q;
 using uchar_t = unsigned char;
 using addrbytes_t = vector<uint8_t>;
 using hashbytes_t = vector<uint8_t>;
@@ -62,7 +62,9 @@ extern address_t str_2_Addr(const string_q& str);
 extern hash_t str_2_Hash(const string_q& str);
 extern biguint_t str_2_Wei(const string_q& str);
 extern bloom_t str_2_Bloom(const string_q& str);
-extern topic_t str_2_Topic(const string_q& str);
+inline topic_t str_2_Topic(const string_q& str) {
+    return str;
+}
 extern timestamp_t str_2_Ts(const string_q& str);
 #define str_2_Enum(en, str) (en) str_2_Uint(str)
 
@@ -79,7 +81,9 @@ extern string_q addr_2_Str(const address_t& addr);
 extern string_q hash_2_Str(const hash_t& hash);
 extern string_q wei_2_Str(const wei_t& wei);
 extern string_q bloom_2_Str(const bloom_t& bloom);
-extern string_q topic_2_Str(const topic_t& topic);
+inline string_q topic_2_Str(const topic_t& topic) {
+    return topic;
+}
 extern string_q ts_2_Str(timestamp_t ts);
 
 //----------------------------------------------------------------------------

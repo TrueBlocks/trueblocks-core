@@ -404,20 +404,20 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CLogEntry::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    //    if (m_schema <= getVersionNum(0, 6, 4)) {
-    //        // topic_t changed from biguint_t to string_q
-    //        archive >> address;
-    //        archive >> data;
-    //        archive >> logIndex;
-    //        CBigUintArray old_topics;
-    //        archive >> old_topics;
-    //        for (auto o : old_topics) {
-    //            string_q str = "0x" + bnu_2_Str(o);
-    //            topics.push_back(str);
-    //        }
-    //        finishParse();
-    //        done = true;
-    //    }
+    if (m_schema <= getVersionNum(0, 6, 4)) {
+        // topic_t changed from biguint_t to string_q
+        archive >> address;
+        archive >> data;
+        archive >> logIndex;
+        CBigUintArray old_topics;
+        archive >> old_topics;
+        for (auto o : old_topics) {
+            string_q str = ("0x" + padLeft(toLower(bnu_2_Hex(o)), 64, '0'));
+            topics.push_back(str);
+        }
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }

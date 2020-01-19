@@ -47,7 +47,7 @@ logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1008	0	131137	T_BLOOM TS_STRING
 isError             	1009	0	65556	T_BOOL TS_NUMERAL
 {
-  "schema": 6002,
+  "schema": 6005,
   "deleted": 0,
   "showing": 1,
   "cname": "NewReceipt",

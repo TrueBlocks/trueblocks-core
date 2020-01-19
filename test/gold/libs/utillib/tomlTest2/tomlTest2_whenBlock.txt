@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:whenBlock.toml]
 tomlTest2 whenBlock.toml 
 tests/whenBlock.toml
 [version]
-current = "0.6.2-alpha"
+current = "0.6.5-alpha"
 
 [[specials]]
 list = [
