@@ -61,5 +61,6 @@ cacheStatus --details abis caches monitors --types slurps
       "sizeInBytes": 0,
       "valid_counts": true
     }
-  ]
+  ],
+  "date": "--date--"
 }

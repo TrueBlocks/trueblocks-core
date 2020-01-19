@@ -123,6 +123,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "trueblocks_version") {
                 return trueblocks_version;
             }
+            if (fieldName % "ts") {
+                return ts_2_Str(ts);
+            }
             break;
         default:
             break;
@@ -201,6 +204,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 't':
             if (fieldName % "trueblocks_version") {
                 trueblocks_version = fieldValue;
+                return true;
+            }
+            if (fieldName % "ts") {
+                ts = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -321,6 +328,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "index_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -333,6 +341,9 @@ void CStatus::registerClass(void) {
 
     // EXISTING_CODE
     SHOW_FIELD(CStatus, "caches");
+    HIDE_FIELD(CStatus, "ts");
+    ADD_FIELD(CStatus, "date", T_DATE, ++fieldNum);
+    SHOW_FIELD(CStatus, "date");
     // EXISTING_CODE
 }
 
@@ -342,6 +353,10 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (sta) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "date")
+                    return isTestMode() ? "--date--" : ts_2_Date(sta->ts).Format(FMT_JSON);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

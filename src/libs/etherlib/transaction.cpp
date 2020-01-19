@@ -543,7 +543,8 @@ void CTransaction::registerClass(void) {
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
-    if (isApiMode()) {
+
+    if (isTestMode() && isApiMode()) {
         UNHIDE_FIELD(CTransaction, "datesh");
         UNHIDE_FIELD(CTransaction, "time");
         UNHIDE_FIELD(CTransaction, "date");

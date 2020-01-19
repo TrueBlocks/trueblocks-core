@@ -28,10 +28,13 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     // Do not run if the index is being searched...
+#ifdef MAC
+    // TODO(tjayrush): fix this on non-mac machines
     if (isRunning_better("acctScrape")) {
         LOG_WARN("Refusing to run while acctScrape is running. Will restart shortly...");
         return false;
     }
+#endif
 
     // Remove anything that may be residule from the last run. (For example, if the user hit control+c)
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
@@ -112,10 +115,13 @@ bool COptions::handle_scrape(void) {
     // may use them. acctScrape is responsible to report to the user that the unripe data may be
     // unsafe to use. Here, we quit if acctScrape is running. We can quit safely without cleaning
     // up. The next run will pick up where we left off.
+#ifdef MAC
+    // TODO(tjayrush): fix this on non-mac machines
     if (isRunning_better("acctScrape")) {
         LOG_WARN("acctScrape is running. blockScrape will re-run in a moment.");
         return false;
     }
+#endif
 
     // cout << indexFolder_staging << ": " << folderExists(indexFolder_staging) << endl;
     // cout << indexFolder_ripe << ": " << folderExists(indexFolder_ripe) << endl;

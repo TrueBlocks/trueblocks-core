@@ -87,10 +87,13 @@ bool COptions::handle_scrape(void) {
     } else {
         //---------------------------------------------------------------------------------
         // If it's already running, don't start it again...
+#ifdef MAC
+        // TODO(tjayrush): fix this on non-mac machines
         if (nRunning("chifra scrape") > 1) {
-            LOG_WARN("Scraper is alreary running. Cannot start it again...");
+            LOG_WARN("Scraper is already running. Cannot start it again...");
             return false;
         }
+#endif
 
         // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
@@ -142,18 +145,21 @@ bool COptions::handle_scrape(void) {
             if (!isTestMode() && daemonMode) {
                 CStringArray files;
                 listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
-                CAddressArray runs;
+                CAddressArray monitors;
                 if (files.size()) {
                     for (auto file : files) {
                         file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
                         if (isAddress(file))
-                            runs.push_back(file);
+                            monitors.push_back(file);
                     }
-                    if (runs.size()) {
-                        freshen_internal(FM_PRODUCTION, runs, "--daemon", freshen_flags);
-                        for (auto addr : runs) {
+                    CFreshenArray fa;
+                    for (auto a : monitors)
+                        fa.push_back(CFreshen(a));
+                    freshen_internal(FM_PRODUCTION, fa, "--daemon", freshen_flags);
+                    for (auto f : fa) {
+                        if (f.cntBefore != f.cntAfter) {
                             ostringstream os1;
-                            os1 << "acctExport " << addr << " --freshen";  // << " >/dev/null";
+                            os1 << "acctExport " << f.address << " --freshen";  // << " >/dev/null";
                             LOG_CALL(os1.str());
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings

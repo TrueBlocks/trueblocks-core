@@ -1098,23 +1098,28 @@ string_q exportPreamble(format_t fmt, const string_q& format, const string_q& cl
             break;
         case API1: {
             os << "{ \"type\": \"" << className << "\", ";
+            //#define NO_FIELDLIST
             os << "\"fieldList\": [";
-            CBaseNode* obj = createObjectOfType(className);
-            if (obj) {
-                const CRuntimeClass* pClass = obj->getRuntimeClass();
-                bool first = true;
-                for (auto field : pClass->fieldList) {
-                    if (!field.isHidden()) {
-                        if (!first)
-                            os << ", ";
-                        string_q t = toLower(fieldTypeName(field.getType()));
-                        t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
-                        os << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
-                        first = false;
+            //#ifndef NO_FIELDLIST
+            if (isTestMode()) {
+                CBaseNode* obj = createObjectOfType(className);
+                if (obj) {
+                    const CRuntimeClass* pClass = obj->getRuntimeClass();
+                    bool first = true;
+                    for (auto field : pClass->fieldList) {
+                        if (!field.isHidden()) {
+                            if (!first)
+                                os << ", ";
+                            string_q t = toLower(fieldTypeName(field.getType()));
+                            t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
+                            os << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
+                            first = false;
+                        }
                     }
+                    delete obj;
                 }
-                delete obj;
             }
+            //#endif
             os << "], ";
             os << "\"data\": [";
         } break;

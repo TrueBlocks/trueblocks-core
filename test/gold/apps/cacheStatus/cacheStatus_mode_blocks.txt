@@ -19,5 +19,6 @@ cacheStatus caches --types blocks
       "sizeInBytes": 0,
       "valid_counts": true
     }
-  ]
+  ],
+  "date": "--date--"
 }

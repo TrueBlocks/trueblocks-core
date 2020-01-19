@@ -57,6 +57,25 @@ struct CHeaderRecord_base {
     uint32_t nAddrs;
     uint32_t nRows;
 };
+
+//---------------------------------------------------------------------------
+class CIndexArchive : public CArchive {
+  public:
+    CHeaderRecord_base header;
+    uint64_t nAddrs;
+    uint64_t nApps;
+    CAddressRecord_base* addresses;
+    CAppearance_base* appearances;
+
+    CIndexArchive(bool mode);
+    ~CIndexArchive(void);
+    bool ReadIndexFromBinary(const string_q& fn);
+
+  private:
+    CIndexArchive(void) : CArchive(READING_ARCHIVE) {
+    }
+};
+
 //---------------------------------------------------------------------------
 class CAppearance {
   public:

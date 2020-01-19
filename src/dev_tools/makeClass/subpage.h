@@ -30,7 +30,7 @@ class CSubpage : public CBaseNode {
     string_q route;
     string_q options;
     string_q extract;
-    bool from_text;
+    string_q table_type;
 
   public:
     CSubpage(void);
@@ -98,7 +98,7 @@ inline void CSubpage::initialize(void) {
     route = "";
     options = "";
     extract = "";
-    from_text = false;
+    table_type = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -114,7 +114,7 @@ inline void CSubpage::duplicate(const CSubpage& su) {
     route = su.route;
     options = su.options;
     extract = su.extract;
-    from_text = su.from_text;
+    table_type = su.table_type;
 
     // EXISTING_CODE
     // EXISTING_CODE

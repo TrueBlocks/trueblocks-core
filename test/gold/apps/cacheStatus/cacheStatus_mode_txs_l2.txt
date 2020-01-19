@@ -23,5 +23,6 @@ cacheStatus caches --types transactions --details --depth 2
       "sizeInBytes": 0,
       "valid_counts": false
     }
-  ]
+  ],
+  "date": "--date--"
 }

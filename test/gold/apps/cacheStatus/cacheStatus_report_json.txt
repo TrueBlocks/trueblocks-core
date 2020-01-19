@@ -58,6 +58,7 @@ cacheStatus --report --fmt json
       "sizeInBytes": 0,
       "valid_counts": true
     }
-  ]
+  ],
+  "date": "--date--"
 }
 ] }

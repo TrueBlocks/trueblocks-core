@@ -23,7 +23,10 @@ bool COptions::handle_list(void) {
     if (addrs.empty())
         EXIT_USAGE("'chifra list' requires an Ethereum address.");
 
-    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
+    CFreshenArray fa;
+    for (auto a : addrs)
+        fa.push_back(CFreshen(a));
+    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
         EXIT_FAIL("'chifra list' freshen_internal returned false");
 
     for (auto addr : addrs) {

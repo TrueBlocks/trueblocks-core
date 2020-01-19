@@ -47,7 +47,19 @@ class COptions : public COptionsBase {
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(freshen_e mode, const CAddressArray& list, const string_q& tool_flags,
+class CFreshen {
+  public:
+    address_t address;
+    uint64_t cntBefore;
+    uint64_t cntAfter;
+    CFreshen(const address_t& addr) {
+        address = addr;
+        cntBefore = fileSize(getMonitorPath(addr)) / sizeof(CAppearance_base);
+        cntAfter = cntBefore;
+    }
+};
+typedef vector<CFreshen> CFreshenArray;
+extern bool freshen_internal(freshen_e mode, CFreshenArray& list, const string_q& tool_flags,
                              const string_q& freshen_flags);
 
 //--------------------------------------------------------------------------------

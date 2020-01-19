@@ -458,9 +458,6 @@
       "address": "0x24dcc881e7dd730546834452f21872d5cb4b5293"
     },
     {
-      "address": "0x24ddff6d8b8a42d835af3b440de91f3386554aa4"
-    },
-    {
       "address": "0x25c499e7306248c308cef403d9824110817b305c"
     },
     {
@@ -507,6 +504,9 @@
     },
     {
       "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f"
     },
     {
       "address": "0x713b73c3994442b533e6a083ec968e40606810ec"

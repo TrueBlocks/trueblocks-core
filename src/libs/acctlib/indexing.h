@@ -51,6 +51,8 @@ typedef map<blknum_t, CIndexChunk> CIndexHashMap;
 extern hash_t versionHash;
 extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
 extern void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern size_t readIndexFromBinary(const string_q& inFn, uint64_t& nAppearances, const CStringArray& lines);
+extern bool readIndexHeaderFromBinary(const string_q& inFn, CHeaderRecord_base* header);
 extern void loadHashes(CIndexHashMap& map, const string_q& which);
 
 }  // namespace qblocks

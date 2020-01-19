@@ -1951,19 +1951,6 @@
       "is_shared": true
     },
     {
-      "group": "50-Tokens",
-      "subgroup": "",
-      "name": "IUNGO",
-      "address": "0x24ddff6d8b8a42d835af3b440de91f3386554aa4",
-      "symbol": "ING",
-      "description": "Decentralised global wireless internet provider",
-      "source": "Etherscan.io",
-      "logo": "iungo.png",
-      "is_contract": true,
-      "is_private": false,
-      "is_shared": true
-    },
-    {
       "group": "33-Set Protocol",
       "subgroup": "06-Other",
       "name": "Transfer Proxy",
@@ -2174,6 +2161,19 @@
     {
       "group": "30-Contracts",
       "subgroup": "",
+      "name": "Dai Stablecoin v2.0",
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "description": "No description",
+      "source": "Etherscan.io",
+      "logo": "dai_stablecoin.png",
+      "is_contract": true,
+      "is_private": false,
+      "is_shared": true
+    },
+    {
+      "group": "30-Contracts",
+      "subgroup": "",
       "name": "Eth Early Adoption Reg",
       "address": "0x713b73c3994442b533e6a083ec968e40606810ec",
       "symbol": "EEAR",
@@ -2278,12 +2278,12 @@
     {
       "group": "30-Contracts",
       "subgroup": "",
-      "name": "Dai Stablecoin v1.0",
+      "name": "Sai Stablecoin v1.0",
       "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "symbol": "DAI",
+      "symbol": "SAI",
       "description": "No description",
       "source": "Etherscan.io",
-      "logo": "dai_stablecoin.png",
+      "logo": "sai_stablecoin.png",
       "is_contract": true,
       "is_private": false,
       "is_shared": true

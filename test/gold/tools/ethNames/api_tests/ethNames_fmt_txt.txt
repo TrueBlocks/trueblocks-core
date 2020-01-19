@@ -149,7 +149,6 @@ group	subgroup	address	name	symbol
 50-Tokens		0x23352036e911a22cfc692b5e2e196692658aded9	Friendz Coin	FDZ
 50-Tokens		0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET
 50-Tokens		0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT
-50-Tokens		0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS
 33-Set Protocol	06-Other	0x25c499e7306248c308cef403d9824110817b305c	Transfer Proxy
 33-Set Protocol	04-Libraries	0x293dcc7c8350ce9f1283572ac89861f768158151	Standard Settle Rebalance Library
 30-Contracts		0x304a554a310c7e546dfe434669c62820b7d83490	DarkDAO
@@ -166,6 +165,7 @@ group	subgroup	address	name	symbol
 30-Contracts		0x5adf43dd006c6c36506e2b2dfa352e60002d22dc	Giveth Donations Vault	GHT
 33-Set Protocol	01-Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Set Protocol Vault
 30-Contracts		0x6090a6e47849629b7245dfa1ca21d94cd15878ef	ENS Related	ENS
+30-Contracts		0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin v2.0	DAI
 30-Contracts		0x713b73c3994442b533e6a083ec968e40606810ec	Eth Early Adoption Reg	EEAR
 33-Set Protocol	01-Core	0x75fbbdeafe23a48c0736b2731b956b7a03adcfb2	Set Protocol Core
 30-Contracts		0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3	Moloch Paying Proxy
@@ -174,7 +174,7 @@ group	subgroup	address	name	symbol
 33-Set Protocol	06-Other	0x818c639ca5f986115eacf77e58d4804de1dd5d40	Linear Auction Price Curve
 33-Set Protocol	02-Modules	0x8440f6a2c42118bed0d6e6a89bf170ffd13e21c0	Issuance Order Module
 30-Contracts		0x8942595a2dc5181df0465af0d7be08c8f23c93af	Gnosis Safe for Moloch
-30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Dai Stablecoin v1.0	DAI
+30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	SAI
 33-Set Protocol	06-Other	0x8d5cf870354fffae0586b639da6d4e4f6c659c69	WhiteList
 30-Contracts		0x8f951903c9360345b4e1b536c7f5ae8f88a64e79	Giveth Donations
 30-Contracts		0x914d1b8b43e92723e64fd0a06f5bdb8dd9b10c79	DarkDAOextraBalance

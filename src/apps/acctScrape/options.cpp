@@ -138,9 +138,9 @@ bool COptions::parseArguments(string_q& command) {
     if (scanRange.first >= scanRange.second) {  // nothing to do?
         for (auto watch : monitors) {
             if (isContractAt(watch.address) && latest > scanRange.first) {
-                LOG_INFO("The monitor for contract '", watch.address, "' is caught up to address indexer. Quitting...");
+                LOG_INFO("Monitor for contract '", watch.address, "' is caught up to address indexer.");
             } else {
-                LOG_INFO("Monitor is for address '", watch.address, "' is caught up to address indexer. Quitting...");
+                LOG_INFO("Monitor for address  '", watch.address, "' is caught up to address indexer.");
             }
         }
         EXIT_NOMSG(false);

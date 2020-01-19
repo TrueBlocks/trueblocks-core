@@ -21,6 +21,8 @@ extern const char* STR_TEXT_ACTIONS;
 extern const char* STR_TEXT_IMPORTS;
 extern const char* STR_TEXT_CODE;
 extern const char* STR_NAVLINK;
+extern const char* STR_EMPTY_INNER;
+extern const char* STR_EMPTY_INNER_COLLAPSE;
 extern bool visitField(const CFieldData& field, void* data);
 
 //---------------------------------------------------------------------------------------------------
@@ -50,7 +52,7 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     while (item.parseJson3(subpages)) {
         replaceAll(item.options, "_EQ_", "=");
         replaceAll(item.extract, "_0", "[0]");
-        if (item.from_text)
+        if (item.route.empty())
             page.has_text = true;
         page.subpages.push_back(item);
         item = CSubpage();
@@ -99,20 +101,22 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     ostringstream commands, menu_items, text_imports, text_code;
     map<string, string> extractMap;
     for (auto item : page.subpages) {
+        replaceAll(code, "[{DT_TYPE}]", item.table_type == "object" ? "ObjectTable" : "DataTable");
         replaceAll(code, "[{SUBPAGE}]", item.subpage);
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
         commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';" << endl;
         if (!menu_items.str().empty())
-            menu_items << "," << endl;
+            menu_items << ",";
+        menu_items << endl;
         menu_items << "    { subpage: '" << substitute(toLower(item.subpage), "_", " ");
         menu_items << "', route: '" + item.route + "', query: " << page.twoName << "." << toUpper(item.subpage) << " }";
         cnt++;
         string_q curVal = extractMap[item.extract];
         extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
 
-        if (item.from_text) {
+        if (item.route.empty()) {
             if (text_imports.str() != "")
                 text_imports << endl;
             text_imports << substitute(STR_TEXT_IMPORTS, "[{SUBPAGE}]", item.subpage);
@@ -122,13 +126,16 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
                                     toUpper(item.subpage));
         }
     }
-    while (cnt < 7) {
-        if (!menu_items.str().empty())
-            menu_items << "," << endl;
-        menu_items << "    { subpage: '" << page.twoName << "-" << padNum4(cnt) << "' }";
-        cnt++;
+    if (cnt == 0) {
+    } else {
+        while (cnt < 7) {
+            if (!menu_items.str().empty())
+                menu_items << "," << endl;
+            menu_items << "    { subpage: '" << page.twoName << "-" << padNum4(cnt) << "' }";
+            cnt++;
+        }
+        menu_items << endl;
     }
-    menu_items << endl;
     replaceAll(code, "[{COMMANDS}];", commands.str());
     replaceAll(code, "[{MENU_ITEMS}]", menu_items.str());
 
@@ -136,7 +143,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{TEXT_IMPORTS}]", (page.has_text ? text_imports.str() : ""));
     string_q tc = text_code.str();
     replace(tc, "} else ", "");  // remove one
-    replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? tc : ""));
+    replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? tc + "\n    }" : ""));
 
     ostringstream reducers;
     for (auto e : extractMap) {
@@ -153,6 +160,13 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     string_q thing = "";  // page.subpage;
     replaceAll(code, "[{STATE_FIELDS_2}]", nextTokenClear(thing, ':') + ": value");
 
+    if (page.menuType == "DashMenu") {
+        replaceAll(code, "[{MENU_TYPE}]", page.menuType);
+        replaceAll(code, "[{MENU_CLICK}]", "changePage={this.changePage}");
+        replaceAll(code, "[{MENU_FILE}]", "dash-menu");
+        replaceAll(code, "[{MENU_COMMENT}]", "");
+    }
+
     CStringArray lines;
     explode(lines, code, '\n', false);
     code = "";
@@ -166,6 +180,8 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
             include = false;
         if (!page.has_text && contains(line, "[{NO_TEXT}]"))
             include = false;
+        if (contains(line, "[{MENU_"))
+            include = false;
         if (include)
             code += (line + '\n');
     }
@@ -178,14 +194,11 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{LOWER}]", page.longName);
     replaceAll(code, "[{SEVEN}]", page.sevenName);
     replaceAll(code, "[{TWO}]", page.twoName);
-    replaceAll(code, "[{PAGENOTES}]", substitute(page.pageNotes, "|", " \n            "));
+    replaceAll(code, "[{PAGENOTES}]", substitute(page.pageNotes, "|", " \\\n        "));
     replaceAll(code, "[{PROPER}]", page.properName);
     replaceAll(code, "[{COLOR}]", page.color);
-    replaceAll(code, "[{MENU_TYPE}]", page.menuType);
-    replaceAll(code, "[{MENU_CLICK}]",
-               (page.menuType == "DashMenu" ? "changePage={this.changePage}" : "innerEar={this.innerEar}"));
-    replaceAll(code, "[{MENU_FILE}]", page.menuType == "LocalMenu" ? "local-menu" : "dash-menu");
     replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
+    replaceAll(code, STR_EMPTY_INNER, STR_EMPTY_INNER_COLLAPSE);
 
     // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test'
     // is true, it doesn't actually write the file
@@ -232,7 +245,7 @@ bool COptions::handle_generate_frontend_app(void) {
         string_q path2 = path;
         string_q navpath = path.empty() ? "" : "path=\"" + path + "\" ";
         if (path.empty()) {
-            path = "/[{LOWER}]/:subpage?";
+            path = "/[{LOWER}]/:subpage?/:query?";
             path2 = "/[{LOWER}]";
         }
         if (!exact.empty())
@@ -244,15 +257,13 @@ bool COptions::handle_generate_frontend_app(void) {
             "[{LOWER}]", lower);
         red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
         reducers << substitute(reducer, "[{PROPER}]", proper);
-        if (!navlinks.str().empty())
-            navlinks << "," << endl;
-        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower) << endl;
     }
 
     string_q contents = asciiFileToString("./blank-app.js");
     string_q orig = asciiFileToString("../../App.js");
     replaceAll(contents, "[{IMPORTS}]", app_imports.str());
-    replaceAll(contents, "[{NAVLINKS}]", (navlinks.str() + "\n"));
+    replaceAll(contents, "[{NAVLINKS}]", (navlinks.str()));
     replaceAll(contents, "[{ROUTES}]", routes.str());
     if (orig != contents) {
         stringToAsciiFile("../../App.js", contents);
@@ -313,12 +324,19 @@ const char* STR_TEXT_IMPORTS = "import { [{SUBPAGE}]Text } from './text/[{SUBPAG
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TEXT_CODE =
-    "    } else if (this.state.subpage === [{TWO}].[{SP_UPPER}]) {\n"
-    "      return [{SUBPAGE}]Text();\n"
-    "    }";
+    "    } else if (this.state.cur_submenu.query === [{TWO}].[{SP_UPPER}]) {\n"
+    "      return [{SUBPAGE}]Text();";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_NAVLINK =
-    "  {\n"
-    "    menu_data: [{LOWER}]_menu\n"
-    "  }";
+const char* STR_NAVLINK = "mainMenu.push([{LOWER}]_menu);";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_EMPTY_INNER =
+    "    return (\n"
+    "      <Fragment>\n"
+    "        {this.getInnerMost()}\n"
+    "      </Fragment>\n"
+    "    );\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_EMPTY_INNER_COLLAPSE = "    return <Fragment>{this.getInnerMost()}</Fragment>;\n";

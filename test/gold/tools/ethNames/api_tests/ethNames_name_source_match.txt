@@ -2497,14 +2497,14 @@
       "is_shared": true
     },
     {
-      "group": "50-Tokens",
+      "group": "30-Contracts",
       "subgroup": "",
-      "name": "UNetworkToken",
-      "address": "0x3543638ed4a9006e4840b105944271bcea15605d",
-      "symbol": "UUU",
-      "description": "A Decentralized Protocol for Publishing and Valuing Online Content",
+      "name": "Dai Stablecoin v2.0",
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "description": "No description",
       "source": "Etherscan.io",
-      "logo": "unetwork_28.png",
+      "logo": "dai_stablecoin.png",
       "is_contract": true,
       "is_private": false,
       "is_shared": true
@@ -2512,12 +2512,12 @@
     {
       "group": "30-Contracts",
       "subgroup": "",
-      "name": "Dai Stablecoin v1.0",
+      "name": "Sai Stablecoin v1.0",
       "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "symbol": "DAI",
+      "symbol": "SAI",
       "description": "No description",
       "source": "Etherscan.io",
-      "logo": "dai_stablecoin.png",
+      "logo": "sai_stablecoin.png",
       "is_contract": true,
       "is_private": false,
       "is_shared": true
