@@ -644,7 +644,7 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void* data
         for (size_t t = 0; t < log->topics.size(); t++) {
             address_t addr;
             string_q topId = uint_2_Str(t);
-            if (isPotentialAddr(log->topics[t], addr)) {
+            if (isPotentialAddr(topic_2_BigUint(log->topics[t]), addr)) {
                 if (!foundOne(funcy, data, blockNumber, tr, 0, addr, logId + "topic_" + topId))
                     return false;
             }

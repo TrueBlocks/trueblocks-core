@@ -449,6 +449,11 @@ string_q topic_2_Str(const topic_t& topic) {
 }
 
 //--------------------------------------------------------------------------------
+biguint_t topic_2_BigUint(const topic_t& topic) {
+    return topic;
+}
+
+//--------------------------------------------------------------------------------
 bool isZeroHash(const hash_t& hash) {
     if (!isNumeral(hash) && !isHexStr(hash))
         return false;

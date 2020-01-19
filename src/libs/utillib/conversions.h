@@ -57,6 +57,7 @@ extern gas_t str_2_Gas(const string_q& str);
 extern double str_2_Double(const string_q& str);
 extern bigint_t str_2_BigInt(const string_q& str, size_t bits = 257);
 extern biguint_t str_2_BigUint(const string_q& str, size_t bits = 257);
+extern biguint_t topic_2_BigUint(const topic_t& topic);
 extern address_t str_2_Addr(const string_q& str);
 extern hash_t str_2_Hash(const string_q& str);
 extern biguint_t str_2_Wei(const string_q& str);

@@ -176,7 +176,7 @@ TEST_F(CThisTest, TestConverts_3) {
     wei *= x;
     ASSERT_EQ("time8", str_2_Wei("16000000000000000000"), wei);
     ASSERT_EQ("time9", str_2_Bloom("16000000000000000000"), wei);
-    ASSERT_EQ("timeA", str_2_Topic("16000000000000000000"), wei);
+    ASSERT_EQ("timeA", str_2_BigUint("16000000000000000000"), wei);
 
     return true;
 }

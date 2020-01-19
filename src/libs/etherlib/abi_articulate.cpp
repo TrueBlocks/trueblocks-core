@@ -59,8 +59,7 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
 }
 
 // Significant speed improvement if we handle these items without regular processing
-static const biguint_t transferTopic =
-    str_2_BigUint("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+static const topic_t transferTopic = str_2_Topic("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
 //-----------------------------------------------------------------------
 bool parseTransferEvent(CLogEntry* p) {
     static CFunction* transDef = NULL;

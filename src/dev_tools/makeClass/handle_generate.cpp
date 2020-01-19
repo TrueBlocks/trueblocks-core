@@ -13,6 +13,7 @@
 #include "acctlib.h"
 #include "options.h"
 
+extern const char* STR_CASE_CODE_STRINGARRAY;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
     //------------------------------------------------------------------------------------------------
@@ -392,35 +393,11 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return uint_2_Str(" + p.name + ");");
 
                 } else if (contains(p.type, "CStringArray") || contains(p.type, "CAddressArray")) {
-                    const char* STR_CASE_CODE_STRINGARRAY =
-                        "size_t cnt = [{PTR}][{FIELD}].size();\n"
-                        "if (endsWith(toLower(fieldName), \"cnt\"))\n"
-                        "`return uint_2_Str(cnt);\n"
-                        "if (!cnt)\n"
-                        "`return \"\";\n"
-                        "string_q retS;\n"
-                        "for (size_t i = 0; i < cnt; i++) {\n"
-                        "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-                        "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
-                        "}\n"
-                        "return retS;";
                     string_q str = substitute(STR_CASE_CODE_STRINGARRAY, "\n", "\n````");
                     replaceAll(str, "[{FIELD}]", p.name);
                     outStream << (str);
 
                 } else if (contains(p.type, "CBigUintArray") || contains(p.type, "CTopicArray")) {
-                    const char* STR_CASE_CODE_STRINGARRAY =
-                        "size_t cnt = [{PTR}][{FIELD}].size();\n"
-                        "if (endsWith(toLower(fieldName), \"cnt\"))\n"
-                        "`return uint_2_Str(cnt);\n"
-                        "if (!cnt)\n"
-                        "`return \"\";\n"
-                        "string_q retS;\n"
-                        "for (size_t i = 0; i < cnt; i++) {\n"
-                        "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-                        "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
-                        "}\n"
-                        "return retS;";
                     string_q str = substitute(STR_CASE_CODE_STRINGARRAY, "\n", "\n````");
                     // hack for size clause
                     replace(str, "[{FIELD}]", p.name);
@@ -774,4 +751,17 @@ const char* STR_READFMT = "`archive >> [{NAME}];\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_WRITEFMT = "`archive << [{NAME}];\n";
+
 //------------------------------------------------------------------------------------------------------------
+const char* STR_CASE_CODE_STRINGARRAY =
+    "size_t cnt = [{PTR}][{FIELD}].size();\n"
+    "if (endsWith(toLower(fieldName), \"cnt\"))\n"
+    "`return uint_2_Str(cnt);\n"
+    "if (!cnt)\n"
+    "`return \"\";\n"
+    "string_q retS;\n"
+    "for (size_t i = 0; i < cnt; i++) {\n"
+    "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
+    "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
+    "}\n"
+    "return retS;";
