@@ -1939,19 +1939,6 @@ ethNames --named --custom --owned --fmt api
     "is_shared": true
   },
   {
-    "group": "50-Tokens",
-    "subgroup": "",
-    "name": "Vice",
-    "address": "0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c",
-    "symbol": "VIT",
-    "description": "No description",
-    "source": "Etherscan.io",
-    "logo": "viceindustry_28.png",
-    "is_contract": true,
-    "is_private": false,
-    "is_shared": true
-  },
-  {
     "group": "33-Set Protocol",
     "subgroup": "06-Other",
     "name": "Transfer Proxy",
@@ -2570,6 +2557,19 @@ ethNames --named --custom --owned --fmt api
     "symbol": "",
     "description": "",
     "source": "TrueBlocks.io",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
+    "group": "30-Contracts",
+    "subgroup": "",
+    "name": "GitCoin Grants",
+    "address": "0xdf869fad6db91f437b59f1edefab319493d4c4ce",
+    "symbol": "",
+    "description": "",
+    "source": "Gitcoin grants contract",
     "logo": "",
     "is_contract": true,
     "is_private": false,

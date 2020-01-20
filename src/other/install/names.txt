@@ -34,6 +34,7 @@ group	subgroup	address	name	description	symbol	source	logo	is_contract	is_privat
 30-Contracts		0xd2e16a20dd7b1ae54fb0312209784478d069c7b0	DaoManagedAcct			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0xDa4a4626d3E16e094De3225A751aAb7128e96526	DAO Curator			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	The ethereum tip jar	TIP	Ethereum.org		TRUE	FALSE	TRUE
+30-Contracts		0xdf869fad6db91f437b59f1edefab319493d4c4ce	GitCoin Grants			Gitcoin grants contract		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Set Protocol Vault			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core	0x75fbbdeafe23a48c0736b2731b956b7a03adcfb2	Set Protocol Core			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core Caller	0xf3862af14cbb4d9b781e41a3d4d74e7c2cdb73e2	Set Protocol Core Caller			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE

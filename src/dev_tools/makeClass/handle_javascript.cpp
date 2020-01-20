@@ -167,6 +167,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{MENU_COMMENT}]", "");
     }
 
+    bool hasEar = contains(asciiFileToString(destFile), "innerEar");
+    replace(code, "[IE]", (hasEar ? "innerEar={this.innerEar} " : ""));
+
     CStringArray lines;
     explode(lines, code, '\n', false);
     code = "";

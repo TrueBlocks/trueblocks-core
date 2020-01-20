@@ -1938,19 +1938,6 @@
       "is_shared": true
     },
     {
-      "group": "50-Tokens",
-      "subgroup": "",
-      "name": "SCRL",
-      "address": "0x24dcc881e7dd730546834452f21872d5cb4b5293",
-      "symbol": "SCRL",
-      "description": "Scroll is a data storage, management and logistics platform that uses blockchain technology to add better cryptography and more transparency to the Internet of Information.",
-      "source": "Etherscan.io",
-      "logo": "scrollnetwork2_28.png",
-      "is_contract": true,
-      "is_private": false,
-      "is_shared": true
-    },
-    {
       "group": "33-Set Protocol",
       "subgroup": "06-Other",
       "name": "Transfer Proxy",
@@ -2569,6 +2556,19 @@
       "symbol": "",
       "description": "",
       "source": "TrueBlocks.io",
+      "logo": "",
+      "is_contract": true,
+      "is_private": false,
+      "is_shared": true
+    },
+    {
+      "group": "30-Contracts",
+      "subgroup": "",
+      "name": "GitCoin Grants",
+      "address": "0xdf869fad6db91f437b59f1edefab319493d4c4ce",
+      "symbol": "",
+      "description": "",
+      "source": "Gitcoin grants contract",
       "logo": "",
       "is_contract": true,
       "is_private": false,
