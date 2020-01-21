@@ -67,14 +67,25 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
 
     } else {
-        queryBlock(gold, uint_2_Str(num), (isApiMode() ? false : true));
-        if (gold.blockNumber == 0 && gold.timestamp == 0)
-            gold.timestamp = blockZeroTs;
-        gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
-        if (opt.force) {  // turn this on to force a write of the block to the disc
-            LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
-                 bool_2_Str(fileExists(fileName)));
-            writeBlockToBinary(gold, fileName);
+        if (opt.hashes_only) {
+            getBlock_light(gold, num);
+            if (gold.blockNumber == 0 && gold.timestamp == 0)
+                gold.timestamp = blockZeroTs;
+            HIDE_FIELD(CTransaction, "datesh");
+            HIDE_FIELD(CTransaction, "time");
+            HIDE_FIELD(CTransaction, "date");
+            HIDE_FIELD(CTransaction, "age");
+            HIDE_FIELD(CTransaction, "ether");
+        } else {
+            queryBlock(gold, uint_2_Str(num), (isApiMode() ? false : true));
+            if (gold.blockNumber == 0 && gold.timestamp == 0)
+                gold.timestamp = blockZeroTs;
+            gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);
+            if (opt.force) {  // turn this on to force a write of the block to the disc
+                LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
+                     bool_2_Str(fileExists(fileName)));
+                writeBlockToBinary(gold, fileName);
+            }
         }
         result = gold.Format(expContext().fmtMap["format"]);
     }

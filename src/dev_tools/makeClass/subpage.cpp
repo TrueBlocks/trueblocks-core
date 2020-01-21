@@ -165,6 +165,10 @@ bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& field
 //---------------------------------------------------------------------------------------------------
 void CSubpage::finishParse() {
     // EXISTING_CODE
+    if (subpage == "dashboard") {
+        route = subpage;
+        options = page;
+    }
     // EXISTING_CODE
 }
 
