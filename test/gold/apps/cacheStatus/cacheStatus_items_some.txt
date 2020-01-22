@@ -75,7 +75,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [],
@@ -97,7 +97,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CNameCache",
@@ -105,7 +105,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [],
@@ -115,7 +115,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "items": [
@@ -132,7 +132,7 @@ cacheStatus --details some --start 3000000 --end 3100000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
   ],
   "date": "--date--"

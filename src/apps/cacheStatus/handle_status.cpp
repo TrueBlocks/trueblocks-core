@@ -47,7 +47,7 @@ bool COptions::handle_status(ostream& os) {
             } else {
                 forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
                 if (monitors.addrs.size() == 0)
-                    monitors.valid_counts = true;
+                    monitors.is_valid = true;
             }
             LOG8("\tre-writing monitors cache");
             monitors.writeBinaryCache("monitors", details);
@@ -78,7 +78,7 @@ bool COptions::handle_status(ostream& os) {
             } else {
                 forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
                 if (names.addrs.size() == 0)
-                    names.valid_counts = true;
+                    names.is_valid = true;
             }
             LOG8("\tre-writing names cache");
             names.writeBinaryCache("names", details);
@@ -166,7 +166,7 @@ bool COptions::handle_status(ostream& os) {
                 HIDE_FIELD(CSlurpCache, "addrs");
                 forEveryFileInFolder(getCachePath("slurps/"), noteMonitor_light, &counter);
                 if (slurps.addrs.size() == 0)
-                    slurps.valid_counts = true;
+                    slurps.is_valid = true;
             }
             LOG8("\tre-writing slurps cache");
             slurps.writeBinaryCache("slurps", details);
@@ -222,7 +222,7 @@ bool countFilesInCache(const string_q& path, void* data) {
     } else {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->valid_counts = true;
+        counter->is_valid = true;
         if (isTestMode()) {
             counter->items.push_back("CachePath/00/00/00/file1.bin");
             counter->items.push_back("CachePath/00/01/00/file2.bin");
@@ -246,7 +246,7 @@ bool countFiles(const string_q& path, void* data) {
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->valid_counts = true;
+        counter->is_valid = true;
     }
     return !shouldQuit();
 }

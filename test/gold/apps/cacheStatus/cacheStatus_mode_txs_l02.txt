@@ -21,7 +21,7 @@ cacheStatus caches --types transactions --details --depth 0
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": false
+      "is_valid": false
     }
   ],
   "date": "--date--"

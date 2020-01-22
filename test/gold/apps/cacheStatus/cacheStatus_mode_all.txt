@@ -18,7 +18,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [
@@ -31,7 +31,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CNameCache",
@@ -39,7 +39,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CAbiCache",
@@ -47,7 +47,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CChainCache",
@@ -55,7 +55,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CChainCache",
@@ -63,7 +63,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CChainCache",
@@ -71,7 +71,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CSlurpCache",
@@ -79,7 +79,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CPriceCache",
@@ -87,7 +87,7 @@ cacheStatus all
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
   ],
   "date": "--date--"

@@ -167,7 +167,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
     // BEG_CODE_INIT
     hashes_only = false;

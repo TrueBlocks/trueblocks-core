@@ -111,7 +111,7 @@ int main(int argc, const char* argv[]) {
         cache.nFiles = 12;
         cache.nFolders = 13;
         cache.sizeInBytes = 14;
-        cache.valid_counts = true;
+        cache.is_valid = true;
         cout << cache << endl;
 
         cout << endl << "Show a status" << endl << string_q(80, '-') << endl;

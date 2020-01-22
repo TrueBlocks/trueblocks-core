@@ -18,7 +18,7 @@ cacheStatus some
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [
@@ -31,7 +31,7 @@ cacheStatus some
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CNameCache",
@@ -39,7 +39,7 @@ cacheStatus some
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CSlurpCache",
@@ -47,7 +47,7 @@ cacheStatus some
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "type": "CPriceCache",
@@ -55,7 +55,7 @@ cacheStatus some
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
   ],
   "date": "--date--"

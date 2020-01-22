@@ -31,7 +31,7 @@ cacheStatus --details abis caches monitors --types slurps
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "items": [
@@ -49,7 +49,7 @@ cacheStatus --details abis caches monitors --types slurps
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [],
@@ -59,7 +59,7 @@ cacheStatus --details abis caches monitors --types slurps
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
   ],
   "date": "--date--"

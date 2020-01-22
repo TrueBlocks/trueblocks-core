@@ -70,6 +70,11 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "is_valid") {
+                return bool_2_Str_t(is_valid);
+            }
+            break;
         case 'n':
             if (fieldName % "nFiles") {
                 return uint_2_Str(nFiles);
@@ -93,11 +98,6 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
                 return type;
             }
             break;
-        case 'v':
-            if (fieldName % "valid_counts") {
-                return bool_2_Str_t(valid_counts);
-            }
-            break;
         default:
             break;
     }
@@ -118,6 +118,12 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "is_valid") {
+                is_valid = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 'n':
             if (fieldName % "nFiles") {
                 nFiles = str_2_Uint(fieldValue);
@@ -143,12 +149,6 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         case 't':
             if (fieldName % "type") {
                 type = fieldValue;
-                return true;
-            }
-            break;
-        case 'v':
-            if (fieldName % "valid_counts") {
-                valid_counts = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -182,7 +182,7 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFiles;
     archive >> nFolders;
     archive >> sizeInBytes;
-    archive >> valid_counts;
+    archive >> is_valid;
     finishParse();
     return true;
 }
@@ -199,7 +199,7 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFiles;
     archive << nFolders;
     archive << sizeInBytes;
-    archive << valid_counts;
+    archive << is_valid;
 
     return true;
 }
@@ -241,7 +241,7 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "valid_counts", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCache, "is_valid", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCache, "schema");

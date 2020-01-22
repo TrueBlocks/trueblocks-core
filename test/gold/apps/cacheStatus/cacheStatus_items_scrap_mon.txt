@@ -579,7 +579,7 @@ cacheStatus --details index --start 1000000 --end 2200000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
   ],
   "date": "--date--"
