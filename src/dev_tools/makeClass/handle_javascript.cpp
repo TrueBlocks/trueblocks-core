@@ -39,6 +39,7 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.no_error = toml.getConfigBool("settings", "no_error", false);
     page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
     page.no_dt = page.no_data || toml.getConfigBool("settings", "no_dt", false);
+    page.no_dash = classDef.base_lower % "dashboard";
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
 
@@ -175,6 +176,8 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     code = "";
     for (auto line : lines) {
         bool include = true;
+        if (page.no_dash && contains(line, "[{NO_DASH}]"))
+            include = false;
         if (page.no_error && contains(line, "[{NO_ERROR}]"))
             include = false;
         if (page.no_data && contains(line, "[{NO_DATA}]"))
@@ -188,6 +191,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         if (include)
             code += (line + '\n');
     }
+    replaceAll(code, "[{NO_DASH}]", "");
     replaceAll(code, "[{NO_ERROR}]", "");
     replaceAll(code, "[{NO_DATA}]", "");
     replaceAll(code, "[{NO_DT}]", "");

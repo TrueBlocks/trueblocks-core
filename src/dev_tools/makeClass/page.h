@@ -38,6 +38,7 @@ class CPage : public CBaseNode {
     bool no_error;
     bool no_data;
     bool no_dt;
+    bool no_dash;
     bool has_text;
     string_q color;
 
@@ -116,6 +117,7 @@ inline void CPage::initialize(void) {
     no_error = false;
     no_data = false;
     no_dt = false;
+    no_dash = false;
     has_text = false;
     color = "";
 
@@ -140,6 +142,7 @@ inline void CPage::duplicate(const CPage& pa) {
     no_error = pa.no_error;
     no_data = pa.no_data;
     no_dt = pa.no_dt;
+    no_dash = pa.no_dash;
     has_text = pa.has_text;
     color = pa.color;
 
