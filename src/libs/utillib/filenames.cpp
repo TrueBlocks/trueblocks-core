@@ -11,6 +11,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
+#include <dirent.h>
 #include "filenames.h"
 #include "sfos.h"
 
@@ -71,6 +72,27 @@ size_t listFilesInFolder(CStringArray& items, const string_q& folder, bool recur
     filename_local::CFileListState state(folder, items, recurse);
     forEveryFileInFolder(folder, filename_local::visitFile, &state);
     return items.size();
+}
+
+//------------------------------------------------------------------------------------------------
+size_t nFilesInFolder(const string& path, bool recurse) {
+    if (recurse) {
+        cerr << "recursive counting not implemented." << endl;
+        return 0;
+    }
+
+    DIR *dp = opendir(path.c_str());
+    if (!dp) {
+        cerr << "Could not open directory " << path << "." << endl;
+        return 0;
+    }
+
+    size_t ret = 0;
+    struct dirent *ep = NULL;
+    while ((ep = readdir(dp)) != NULL)
+        ret++;
+    closedir (dp);
+    return ret;
 }
 
 //--------------------------------------------------------------
