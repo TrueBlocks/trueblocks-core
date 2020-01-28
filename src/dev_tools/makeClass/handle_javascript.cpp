@@ -116,7 +116,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     ostringstream commands, menu_items, text_imports, text_code;
     map<string, string> extractMap;
     for (auto item : page.subpages) {
-        replaceAll(code, "[{DT_TYPE}]", item.table_type == "object" ? "ObjectTable" : "DataTable");
+        replaceAll(code, "[{DT_TYPE}]", item.table_type == "object" ? "DataTableObject" : "DataTable");
         replaceAll(code, "[{SUBPAGE}]", item.subpage);
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
