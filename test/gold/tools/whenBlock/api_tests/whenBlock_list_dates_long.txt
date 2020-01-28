@@ -1,5 +1,23 @@
 {
   "type": "CBlock",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp"
+    },
+    {
+      "name": "name",
+      "type": "text"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    }
+  ],
   "data": [
     {
       "blockNumber": 0,
@@ -116,16 +134,40 @@
       "date": "2017-11-23 05:41:19 UTC"
     },
     {
-      "blockNumber": 6610279,
-      "timestamp": 1540886395,
+      "blockNumber": 4620855,
+      "timestamp": 1511634257,
+      "name": "makerdao",
+      "date": "2017-11-25 18:24:17 UTC"
+    },
+    {
+      "blockNumber": 6610517,
+      "timestamp": 1540890000,
       "name": "devcon4",
-      "date": "2018-10-30 07:59:55 UTC"
+      "date": "2018-10-30 09:00:00 UTC"
     },
     {
       "blockNumber": 7280000,
       "timestamp": 1551383524,
       "name": "constantinople",
       "date": "2019-02-28 19:52:04 UTC"
+    },
+    {
+      "blockNumber": 8700401,
+      "timestamp": 1570525179,
+      "name": "devcon5",
+      "date": "2019-10-08 08:59:39 UTC"
+    },
+    {
+      "blockNumber": 9069000,
+      "timestamp": 1575764709,
+      "name": "istanbul",
+      "date": "2019-12-08 00:25:09 UTC"
+    },
+    {
+      "blockNumber": 9200000,
+      "timestamp": 1577953849,
+      "name": "muirglacier",
+      "date": "2020-01-02 08:30:49 UTC"
     }
   ],
   "meta": {

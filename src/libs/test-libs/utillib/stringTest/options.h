@@ -15,11 +15,14 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     uint64_t testNum;
 
-    COptions(void)  { Init(); }
-    ~COptions(void) { }
+    COptions(void) {
+        Init();
+    }
+    ~COptions(void) {
+    }
 
     bool parseArguments(string_q& command);
     void Init(void);

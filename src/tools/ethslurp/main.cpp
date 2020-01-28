@@ -16,7 +16,7 @@
 
 extern void findInternalTxIndex(CTransaction& trans);
 //--------------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(defaultQuitHandler);
 
     COptions options;
@@ -35,7 +35,6 @@ int main(int argc, const char *argv[]) {
             }
 
         } else {
-
             sort(theAccount.transactions.begin(), theAccount.transactions.end(), sortByBlockNumTxId);
             blknum_t lastBlock = NOPOS;
             blknum_t lastTxId = NOPOS;
@@ -61,15 +60,16 @@ int main(int argc, const char *argv[]) {
 
 //--------------------------------------------------------------------------------
 bool Slurp(CAccount& theAccount, COptions& options) {
-
     theAccount.transactions.clear();
     theAccount = CAccount();
     theAccount.addr = options.addrs[0];
-    cerr << "\t" << "Slurping " << theAccount.addr << "\n";
+    cerr << "\t"
+         << "Slurping " << theAccount.addr << "\n";
 
     bool first = true;
     for (auto type : options.typesList) {
-        string_q cacheFilename = getCachePath("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "."+type) + ".bin");
+        string_q cacheFilename =
+            getCachePath("slurps/" + theAccount.addr + (type == "ext" || type.empty() ? "" : "." + type) + ".bin");
         if (fileExists(cacheFilename)) {
             CArchive inArchive(READING_ARCHIVE);
             if (inArchive.Lock(cacheFilename, modeReadOnly, LOCK_NOWAIT)) {
@@ -84,11 +84,9 @@ bool Slurp(CAccount& theAccount, COptions& options) {
         bool done = false;
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
-                                        "&action="  + toEtherscan(type) +
-                                        "&address=" + theAccount.addr +
-                                        "&page="    + uint_2_Str(theAccount.latestPage) +
-                                        "&offset="  + uint_2_Str(5000) +
-                                        "&apikey="  + options.api.getKey();
+                           "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
+                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
+                           "&apikey=" + options.api.getKey();
 
             string_q responseStr = urlToString(url);
             if (!contains(responseStr, "\"message\":\"OK\"")) {
@@ -101,7 +99,8 @@ bool Slurp(CAccount& theAccount, COptions& options) {
                 uint64_t nRecords = countOf(response.result, '}');
                 LOG4("Downloaded ", nRecords, " records from EtherScan.\r");
 
-                // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size needed)
+                // pre allocate the array (probably wrong input here--reserve takes max needed size, not addition size
+                // needed)
                 theAccount.transactions.reserve(theAccount.transactions.size() + nRecords);
 
                 uint64_t nAdded = 0;

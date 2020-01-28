@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAbiCache : public CCache {
-public:
+  public:
     CAbiCacheItemArray items;
 
-public:
+  public:
     CAbiCache(void);
     CAbiCache(const CAbiCache& ab);
     virtual ~CAbiCache(void);
@@ -36,16 +36,18 @@ public:
 
     DECLARE_NODE(CAbiCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CAbiCache& item) const;
-    bool operator!=(const CAbiCache& item) const { return !operator==(item); }
+    bool operator!=(const CAbiCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAbiCache& v1, const CAbiCache& v2);
     friend ostream& operator<<(ostream& os, const CAbiCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAbiCache& ab);
@@ -136,14 +138,9 @@ extern CArchive& operator>>(CArchive& archive, CAbiCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAbiCache& abi);
-extern CArchive& operator>>(CArchive& archive, CAbiCache& abi);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ABICACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

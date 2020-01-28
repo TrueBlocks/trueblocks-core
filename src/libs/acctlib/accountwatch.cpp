@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountWatch, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextAccountwatchChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,9 +48,9 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) c
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextAccountwatchChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccountWatch *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccountWatch*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -58,241 +58,63 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void *dataPtr) {
     return fldNotFound(fieldIn);
 }
 
-//---------------------------------------------------------------------------------------------------
-bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
-    string_q fieldName = fieldNameIn;
-    string_q fieldValue = fieldValueIn;
-
-    // EXISTING_CODE
-    if (fieldName % "statement") {
-        string_q str = fieldValue;
-        return statement.parseJson3(str);
-    }
-    if (fieldName % "balance") {
-        statement.endBal = statement.begBal = str_2_Wei(fieldValue);
-        return true;
-    }
-    if (fieldName % "address") {
-        if (getCurlContext()->nodeRequired)
-            bloom = makeBloom(fieldValue);
-    }
-    // EXISTING_CODE
-
-    if (CAccountName::setValueByName(fieldName, fieldValue))
-        return true;
-
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "abi_spec" ) { return abi_spec.parseJson3(fieldValue); }
-            break;
-        case 'c':
-            if ( fieldName % "curBalance" ) { curBalance = str_2_Wei(fieldValue); return true; }
-            break;
-        case 'e':
-            if ( fieldName % "enabled" ) { enabled = str_2_Bool(fieldValue); return true; }
-            break;
-        case 'f':
-            if ( fieldName % "fm_mode" ) { fm_mode = str_2_Enum(freshen_e,fieldValue); return true; }
-            break;
-        case 's':
-            if ( fieldName % "statement" ) { return statement.parseJson3(fieldValue); }
-            if ( fieldName % "stateHistory" ) {
-                CEthState item;
-                string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    stateHistory.push_back(item);
-                    item = CEthState();  // reset
-                }
-                return true;
-            }
-            break;
-        default:
-            break;
-    }
-    return false;
-}
-
-//---------------------------------------------------------------------------------------------------
-void CAccountWatch::finishParse() {
-    // EXISTING_CODE
-    if (getCurlContext()->nodeRequired)
-        bloom = makeBloom(address);
-    // EXISTING_CODE
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CAccountWatch::Serialize(CArchive& archive) {
-
-    if (archive.isWriting())
-        return SerializeC(archive);
-
-    // Always read the base class (it will handle its own backLevels if any, then
-    // read this object's back level (if any) or the current version.
-    CAccountName::Serialize(archive);
-    if (readBackLevel(archive))
-        return true;
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive >> abi_spec;
-    archive >> statement;
-    archive >> stateHistory;
-    archive >> curBalance;
-    archive >> enabled;
-//    archive >> fm_mode;
-    finishParse();
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool CAccountWatch::SerializeC(CArchive& archive) const {
-
-    // Writing always write the latest version of the data
-    CAccountName::SerializeC(archive);
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-    archive << abi_spec;
-    archive << statement;
-    archive << stateHistory;
-    archive << curBalance;
-    archive << enabled;
-//    archive << fm_mode;
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
-    uint64_t count;
-    archive >> count;
-    array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
-        ASSERT(i < array.capacity());
-        array.at(i).Serialize(archive);
-    }
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
-    uint64_t count = array.size();
-    archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
-        array[i].SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-void CAccountWatch::registerClass(void) {
-    // only do this once
-    if (HAS_FIELD(CAccountWatch, "schema")) return;
-
-    CAccountName::registerClass();
-
-    size_t fieldNum = 1000;
-    ADD_FIELD(CAccountWatch, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "curBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "fm_mode");
-
-    // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAccountWatch, "schema");
-    HIDE_FIELD(CAccountWatch, "deleted");
-    HIDE_FIELD(CAccountWatch, "showing");
-    HIDE_FIELD(CAccountWatch, "cname");
-
-    builtIns.push_back(_biCAccountWatch);
-
-    // EXISTING_CODE
-    ADD_FIELD(CAccountWatch, "curEther", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "curEther");
-    ADD_FIELD(CAccountWatch, "curDollars", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "curDollars");
-    // EXISTING_CODE
-}
-
-//---------------------------------------------------------------------------
-string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CAccountWatch *acc = reinterpret_cast<const CAccountWatch *>(dataPtr);
-    if (acc) {
-        switch (tolower(fieldIn[0])) {
-            // EXISTING_CODE
-            case 'c':
-                if ( startsWith(fieldIn, "cur") && acc->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
-                    return "\"n/a\"";
-                if ( fieldIn % "curEther" ) return wei_2_Ether(wei_2_Str(acc->curBalance));
-                if ( fieldIn % "curDollars" ) return "not-implemented";
-                break;
-            // EXISTING_CODE
-            case 'p':
-                // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, acc);
-                // EXISTING_CODE
-                // EXISTING_CODE
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    return "";
-}
-
-//---------------------------------------------------------------------------
-bool CAccountWatch::readBackLevel(CArchive& archive) {
-
-    bool done = false;
-    // EXISTING_CODE
-    // EXISTING_CODE
-    return done;
-}
-
 //---------------------------------------------------------------------------
 string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
-
     // Give customized code a chance to override first
     string_q ret = nextAccountwatchChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
+    // EXISTING_CODE
+    // EXISTING_CODE
+
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "abi_spec" ) { expContext().noFrst=true; return abi_spec.Format(); }
+            if (fieldName % "abi_spec") {
+                if (abi_spec == CAbi())
+                    return "";
+                expContext().noFrst = true;
+                return abi_spec.Format();
+            }
             break;
         case 'c':
-            if ( fieldName % "curBalance" ) return wei_2_Str(curBalance);
+            if (fieldName % "curBalance") {
+                return wei_2_Str(curBalance);
+            }
             break;
         case 'e':
-            if ( fieldName % "enabled" ) return bool_2_Str_t(enabled);
+            if (fieldName % "enabled") {
+                return bool_2_Str(enabled);
+            }
             break;
         case 'f':
-            if ( fieldName % "fm_mode" ) return uint_2_Str(fm_mode);
+            if (fieldName % "fm_mode") {
+                return uint_2_Str(fm_mode);
+            }
             break;
         case 's':
-            if ( fieldName % "statement" ) { expContext().noFrst=true; return statement.Format(); }
-            if ( fieldName % "stateHistory" || fieldName % "stateHistoryCnt" ) {
+            if (fieldName % "statement") {
+                if (statement == CIncomeStatement())
+                    return "";
+                expContext().noFrst = true;
+                return statement.Format();
+            }
+            if (fieldName % "stateHistory" || fieldName % "stateHistoryCnt") {
                 size_t cnt = stateHistory.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
-                if (!cnt) return "";
+                if (!cnt)
+                    return "";
                 string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
+                for (size_t i = 0; i < cnt; i++) {
                     retS += stateHistory[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
+            break;
+        default:
             break;
     }
 
@@ -320,6 +142,218 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
     return CAccountName::getValueByName(fieldName);
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+    string_q fieldName = fieldNameIn;
+    string_q fieldValue = fieldValueIn;
+
+    // EXISTING_CODE
+    if (fieldName % "statement") {
+        string_q str = fieldValue;
+        return statement.parseJson3(str);
+    }
+    if (fieldName % "balance") {
+        statement.endBal = statement.begBal = str_2_Wei(fieldValue);
+        return true;
+    }
+    if (fieldName % "address") {
+        if (getCurlContext()->nodeRequired)
+            bloom = makeBloom(fieldValue);
+    }
+    // EXISTING_CODE
+
+    if (CAccountName::setValueByName(fieldName, fieldValue))
+        return true;
+
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "abi_spec") {
+                return abi_spec.parseJson3(fieldValue);
+            }
+            break;
+        case 'c':
+            if (fieldName % "curBalance") {
+                curBalance = str_2_Wei(fieldValue);
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "enabled") {
+                enabled = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'f':
+            if (fieldName % "fm_mode") {
+                fm_mode = str_2_Enum(freshen_e, fieldValue);
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "statement") {
+                return statement.parseJson3(fieldValue);
+            }
+            if (fieldName % "stateHistory") {
+                CEthState item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    stateHistory.push_back(item);
+                    item = CEthState();  // reset
+                }
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+void CAccountWatch::finishParse() {
+    // EXISTING_CODE
+    if (getCurlContext()->nodeRequired)
+        bloom = makeBloom(address);
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CAccountWatch::Serialize(CArchive& archive) {
+    if (archive.isWriting())
+        return SerializeC(archive);
+
+    // Always read the base class (it will handle its own backLevels if any, then
+    // read this object's back level (if any) or the current version.
+    CAccountName::Serialize(archive);
+    if (readBackLevel(archive))
+        return true;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    archive >> abi_spec;
+    archive >> statement;
+    archive >> stateHistory;
+    archive >> curBalance;
+    archive >> enabled;
+    // archive >> fm_mode;
+    finishParse();
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CAccountWatch::SerializeC(CArchive& archive) const {
+    // Writing always write the latest version of the data
+    CAccountName::SerializeC(archive);
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+    archive << abi_spec;
+    archive << statement;
+    archive << stateHistory;
+    archive << curBalance;
+    archive << enabled;
+    // archive << fm_mode;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
+    uint64_t count;
+    archive >> count;
+    array.resize(count);
+    for (size_t i = 0; i < count; i++) {
+        ASSERT(i < array.capacity());
+        array.at(i).Serialize(archive);
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
+    uint64_t count = array.size();
+    archive << count;
+    for (size_t i = 0; i < array.size(); i++)
+        array[i].SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+void CAccountWatch::registerClass(void) {
+    // only do this once
+    if (HAS_FIELD(CAccountWatch, "schema"))
+        return;
+
+    CAccountName::registerClass();
+
+    size_t fieldNum = 1000;
+    ADD_FIELD(CAccountWatch, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "curBalance", T_WEI, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "fm_mode");
+
+    // Hide our internal fields, user can turn them on if they like
+    HIDE_FIELD(CAccountWatch, "schema");
+    HIDE_FIELD(CAccountWatch, "deleted");
+    HIDE_FIELD(CAccountWatch, "showing");
+    HIDE_FIELD(CAccountWatch, "cname");
+
+    builtIns.push_back(_biCAccountWatch);
+
+    // EXISTING_CODE
+    ADD_FIELD(CAccountWatch, "curEther", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "curEther");
+    ADD_FIELD(CAccountWatch, "curDollars", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CAccountWatch, "curDollars");
+    // EXISTING_CODE
+}
+
+//---------------------------------------------------------------------------
+string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAccountWatch* acc = reinterpret_cast<const CAccountWatch*>(dataPtr);
+    if (acc) {
+        switch (tolower(fieldIn[0])) {
+            // EXISTING_CODE
+            case 'c':
+                if (startsWith(fieldIn, "cur") && acc->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
+                    return "\"n/a\"";
+                if (fieldIn % "curEther")
+                    return wei_2_Ether(wei_2_Str(acc->curBalance));
+                if (fieldIn % "curDollars")
+                    return "not-implemented";
+                break;
+            // EXISTING_CODE
+            case 'p':
+                // Display only the fields of this node, not it's parent type
+                if (fieldIn % "parsed")
+                    return nextBasenodeChunk(fieldIn, acc);
+                // EXISTING_CODE
+                // EXISTING_CODE
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return "";
+}
+
+//---------------------------------------------------------------------------
+bool CAccountWatch::readBackLevel(CArchive& archive) {
+    bool done = false;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return done;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAccountWatch& item) {
     // EXISTING_CODE
@@ -331,12 +365,12 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "abi_spec" )
+const CBaseNode* CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "abi_spec")
         return &abi_spec;
-    if ( fieldName % "statement" )
+    if (fieldName % "statement")
         return &statement;
-    if ( fieldName % "stateHistory" && index < stateHistory.size() )
+    if (fieldName % "stateHistory" && index < stateHistory.size())
         return &stateHistory[index];
     return NULL;
 }
@@ -349,13 +383,12 @@ const char* STR_DISPLAY_ACCOUNTWATCH = "";
 //---------------------------------------------------------------------------
 // This assumes there are valid watches. Caller is expected to check
 void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
-
     string_q watchStr = toml.getConfigJson("watches", key, "");
     CAccountWatch watch;
     while (watch.parseJson3(watchStr)) {
         // cleanup and add to list of watches
         watch.address = str_2_Addr(toLower(watch.address));
-        watch.color   = convertColor(watch.color);
+        watch.color = convertColor(watch.color);
         monitors.push_back(watch);
         watch = CAccountWatch();  // reset
     }
@@ -400,4 +433,3 @@ void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

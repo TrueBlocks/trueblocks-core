@@ -1939,32 +1939,6 @@ ethNames --fmt json
     "is_shared": true
   },
   {
-    "group": "50-Tokens",
-    "subgroup": "",
-    "name": "SCRL",
-    "address": "0x24dcc881e7dd730546834452f21872d5cb4b5293",
-    "symbol": "SCRL",
-    "description": "Scroll is a data storage, management and logistics platform that uses blockchain technology to add better cryptography and more transparency to the Internet of Information.",
-    "source": "Etherscan.io",
-    "logo": "scrollnetwork2_28.png",
-    "is_contract": true,
-    "is_private": false,
-    "is_shared": true
-  },
-  {
-    "group": "50-Tokens",
-    "subgroup": "",
-    "name": "IUNGO",
-    "address": "0x24ddff6d8b8a42d835af3b440de91f3386554aa4",
-    "symbol": "ING",
-    "description": "Decentralised global wireless internet provider",
-    "source": "Etherscan.io",
-    "logo": "iungo.png",
-    "is_contract": true,
-    "is_private": false,
-    "is_shared": true
-  },
-  {
     "group": "33-Set Protocol",
     "subgroup": "06-Other",
     "name": "Transfer Proxy",
@@ -2175,6 +2149,19 @@ ethNames --fmt json
   {
     "group": "30-Contracts",
     "subgroup": "",
+    "name": "Dai Stablecoin v2.0",
+    "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "symbol": "DAI",
+    "description": "No description",
+    "source": "Etherscan.io",
+    "logo": "dai_stablecoin.png",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
+    "group": "30-Contracts",
+    "subgroup": "",
     "name": "Eth Early Adoption Reg",
     "address": "0x713b73c3994442b533e6a083ec968e40606810ec",
     "symbol": "EEAR",
@@ -2279,12 +2266,12 @@ ethNames --fmt json
   {
     "group": "30-Contracts",
     "subgroup": "",
-    "name": "Dai Stablecoin v1.0",
+    "name": "Sai Stablecoin v1.0",
     "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-    "symbol": "DAI",
+    "symbol": "SAI",
     "description": "No description",
     "source": "Etherscan.io",
-    "logo": "dai_stablecoin.png",
+    "logo": "sai_stablecoin.png",
     "is_contract": true,
     "is_private": false,
     "is_shared": true
@@ -2570,6 +2557,19 @@ ethNames --fmt json
     "symbol": "",
     "description": "",
     "source": "TrueBlocks.io",
+    "logo": "",
+    "is_contract": true,
+    "is_private": false,
+    "is_shared": true
+  },
+  {
+    "group": "30-Contracts",
+    "subgroup": "",
+    "name": "GitCoin Grants",
+    "address": "0xdf869fad6db91f437b59f1edefab319493d4c4ce",
+    "symbol": "",
+    "description": "",
+    "source": "Gitcoin grants contract",
     "logo": "",
     "is_contract": true,
     "is_private": false,

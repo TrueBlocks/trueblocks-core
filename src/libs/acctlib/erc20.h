@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTokenState_erc20 : public CAccountWatch {
-public:
+  public:
     address_t address;
     wei_t totalSupply;
     uint64_t decimals;
@@ -32,7 +32,7 @@ public:
     string_q symbol;
     CAddressArray holders;
 
-public:
+  public:
     CTokenState_erc20(void);
     CTokenState_erc20(const CTokenState_erc20& to);
     virtual ~CTokenState_erc20(void);
@@ -45,11 +45,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CTokenState_erc20& item) const;
-    bool operator!=(const CTokenState_erc20& item) const { return !operator==(item); }
+    bool operator!=(const CTokenState_erc20& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2);
     friend ostream& operator<<(ostream& os, const CTokenState_erc20& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTokenState_erc20& to);
@@ -160,4 +162,3 @@ extern const char* STR_DISPLAY_TOKENSTATE_ERC20;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

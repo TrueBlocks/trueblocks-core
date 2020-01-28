@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CMonitorCacheItem, CAccountWatch);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CMonitorCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CMonitorCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,47 @@ void CMonitorCacheItem::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
 }
 
 //---------------------------------------------------------------------------
-string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CMonitorCacheItem *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CMonitorCacheItem*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextMonitorcacheitemChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'd':
+            if (fieldName % "deleted") {
+                return bool_2_Str(deleted);
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                return type;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CAccountWatch::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -70,8 +103,17 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
         return true;
 
     switch (tolower(fieldName[0])) {
+        case 'd':
+            if (fieldName % "deleted") {
+                deleted = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 't':
-            if ( fieldName % "type" ) { type = fieldValue; return true; }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -87,7 +129,6 @@ void CMonitorCacheItem::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CMonitorCacheItem::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -100,19 +141,20 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
+    archive >> deleted;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CAccountWatch::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
+    archive << deleted;
 
     return true;
 }
@@ -122,7 +164,7 @@ CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -133,7 +175,7 @@ CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array) {
 CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -141,16 +183,18 @@ CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array) {
 //---------------------------------------------------------------------------
 void CMonitorCacheItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CMonitorCacheItem, "schema")) return;
+    if (HAS_FIELD(CMonitorCacheItem, "schema"))
+        return;
 
     CAccountWatch::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CMonitorCacheItem, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMonitorCacheItem, "schema");
@@ -165,15 +209,15 @@ void CMonitorCacheItem::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CMonitorCacheItem *mon = reinterpret_cast<const CMonitorCacheItem *>(dataPtr);
+string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CMonitorCacheItem* mon = reinterpret_cast<const CMonitorCacheItem*>(dataPtr);
     if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, mon);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -189,45 +233,10 @@ string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void *d
 
 //---------------------------------------------------------------------------
 bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon) {
-    mon.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon) {
-    mon.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextMonitorcacheitemChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CAccountWatch::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -247,4 +256,3 @@ const char* STR_DISPLAY_MONITORCACHEITEM = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -24,17 +24,17 @@ namespace qblocks {
 // EXISTING_CODE
 class CBlock;
 class CAppearance;
-typedef bool (*ADDRESSFUNC)(const CAppearance& item, void *data);
-typedef bool (*TRANSFUNC)(const CTransaction *trans, void *data);
+typedef bool (*ADDRESSFUNC)(const CAppearance& item, void* data);
+typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CTransaction : public CBaseNode {
-public:
+  public:
     hash_t hash;
     hash_t blockHash;
     blknum_t blockNumber;
-    uint64_t transactionIndex;
+    blknum_t transactionIndex;
     uint64_t nonce;
     timestamp_t timestamp;
     address_t from;
@@ -51,7 +51,7 @@ public:
     bool finalized;
     CTraceArray traces;
 
-public:
+  public:
     CTransaction(void);
     CTransaction(const CTransaction& tr);
     virtual ~CTransaction(void);
@@ -59,22 +59,24 @@ public:
 
     DECLARE_NODE(CTransaction);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    const CBlock *pBlock;
-    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
-    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
-    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void *data = NULL);
+    const CBlock* pBlock;
+    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool loadAsPrefund(const address_t& addr, const wei_t& amount);
     bool loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
-    bool operator!=(const CTransaction& item) const { return !operator==(item); }
+    bool operator!=(const CTransaction& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
     friend ostream& operator<<(ostream& os, const CTransaction& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTransaction& tr);
@@ -136,7 +138,7 @@ inline void CTransaction::initialize(void) {
     receipt = CReceipt();
     articulatedTx = CFunction();
     compressedTx = "";
-    finalized = 0;
+    finalized = false;
     traces.clear();
 
     // EXISTING_CODE
@@ -214,7 +216,6 @@ extern const char* STR_DISPLAY_TRANSACTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
-extern string_q nextBlockChunk(const string_q& fieldIn, const void *data);
+extern string_q nextBlockChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

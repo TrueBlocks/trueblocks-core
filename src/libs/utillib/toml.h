@@ -20,95 +20,98 @@
 
 namespace qblocks {
 
+//-------------------------------------------------------------------------
+class CToml : public CSharedResource {
+  private:
+    // no default construction or copies
+    CToml(void) {
+    }
+    CToml(const CToml& toml);
+    CToml& operator=(const CToml& toml);
+
     //-------------------------------------------------------------------------
-    class CToml : public CSharedResource {
-    private:
-        // no default construction or copies
-        CToml(void) {}
-        CToml(const CToml& toml);
-        CToml& operator= (const CToml& toml);
+    // support class for toml file
+    class CTomlKey {
+      public:
+        string_q keyName;
+        string_q value;
+        bool comment;
+        bool deleted;
 
-        //-------------------------------------------------------------------------
-        // support class for toml file
-        class CTomlKey {
-        public:
-            string_q keyName;
-            string_q value;
-            bool     comment;
-            bool     deleted;
-
-            CTomlKey(void);
-            CTomlKey(const string_q& n, const string_q& v, bool c)
-                : keyName(n), value(v), comment(c), deleted(false) { }
-            CTomlKey(const CTomlKey& key);
-            CTomlKey& operator=(const CTomlKey& key);
-        };
-
-        //-------------------------------------------------------------------------
-        // support class for toml file
-        class CTomlGroup {
-        public:
-            string_q         groupName;
-            bool             isArray;
-            bool             isComment;
-            vector<CTomlKey> keys;
-
-            CTomlGroup(void);
-            CTomlGroup(const string_q& n, bool a, bool c) : groupName(n), isArray(a), isComment(c) { }
-            CTomlGroup(const CTomlGroup& group);
-
-            ~CTomlGroup(void);
-
-            CTomlGroup& operator=(const CTomlGroup& group);
-            void addKey(const string_q& keyName, const string_q& val, bool commented);
-
-        private:
-            void clear(void);
-            void copy(const CTomlGroup& group);
-
-        };
-
-    protected:
-        void addGroup(const string_q& group, bool commented, bool array);
-        void addKey  (const string_q& group, const string_q& key, const string_q& val, bool commented);
-
-        CTomlGroup *findGroup(const string_q& group) const;
-        CTomlKey   *findKey  (const string_q& group, const string_q& key) const;
-
-    public:
-        void        deleteKey(const string_q& group, const string_q& key);
-
-    public:
-        vector<CTomlGroup> groups;
-
-        explicit CToml(const string_q& fileName);
-        ~CToml(void);
-
-        void clear(void);
-
-        string_q getType(void) const override { return "CToml"; }
-
-        string_q  getConfigStr   (const string_q& group, const string_q& key, const string_q& def) const;
-        string_q  getConfigJson  (const string_q& group, const string_q& key, const string_q& def) const;
-        uint64_t  getConfigInt   (const string_q& group, const string_q& key, uint64_t def) const;
-        biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
-        bool      getConfigBool  (const string_q& group, const string_q& key, bool def) const;
-        uint64_t  getVersion     (void) const;
-
-        void setConfigArray(const string_q& group, const string_q& key, const string_q& value);
-        void setConfigStr  (const string_q& group, const string_q& key, const string_q& value);
-        void setConfigInt  (const string_q& group, const string_q& key, uint64_t value);
-        void setConfigBool (const string_q& group, const string_q& key, bool value);
-
-        bool writeFile(void);
-        bool readFile(const string_q& filename);
-        void mergeFile(CToml *tomlIn);
-
-        bool isBackLevel(void) const;
-        friend ostream& operator<<(ostream& os, const CToml& tomlIn);
+        CTomlKey(void);
+        CTomlKey(const string_q& n, const string_q& v, bool c) : keyName(n), value(v), comment(c), deleted(false) {
+        }
+        CTomlKey(const CTomlKey& key);
+        CTomlKey& operator=(const CTomlKey& key);
     };
 
     //-------------------------------------------------------------------------
-    extern ostream& operator<<(ostream& os, const CToml& t);
+    // support class for toml file
+    class CTomlGroup {
+      public:
+        string_q groupName;
+        bool isArray;
+        bool isComment;
+        vector<CTomlKey> keys;
+
+        CTomlGroup(void);
+        CTomlGroup(const string_q& n, bool a, bool c) : groupName(n), isArray(a), isComment(c) {
+        }
+        CTomlGroup(const CTomlGroup& group);
+
+        ~CTomlGroup(void);
+
+        CTomlGroup& operator=(const CTomlGroup& group);
+        void addKey(const string_q& keyName, const string_q& val, bool commented);
+
+      private:
+        void clear(void);
+        void copy(const CTomlGroup& group);
+    };
+
+  protected:
+    void addGroup(const string_q& group, bool commented, bool array);
+    void addKey(const string_q& group, const string_q& key, const string_q& val, bool commented);
+
+    CTomlGroup* findGroup(const string_q& group) const;
+    CTomlKey* findKey(const string_q& group, const string_q& key) const;
+
+  public:
+    void deleteKey(const string_q& group, const string_q& key);
+
+  public:
+    vector<CTomlGroup> groups;
+
+    explicit CToml(const string_q& fileName);
+    ~CToml(void);
+
+    void clear(void);
+
+    string_q getType(void) const override {
+        return "CToml";
+    }
+
+    string_q getConfigStr(const string_q& group, const string_q& key, const string_q& def) const;
+    string_q getConfigJson(const string_q& group, const string_q& key, const string_q& def) const;
+    uint64_t getConfigInt(const string_q& group, const string_q& key, uint64_t def) const;
+    biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
+    bool getConfigBool(const string_q& group, const string_q& key, bool def) const;
+    uint64_t getVersion(void) const;
+
+    void setConfigArray(const string_q& group, const string_q& key, const string_q& value);
+    void setConfigStr(const string_q& group, const string_q& key, const string_q& value);
+    void setConfigInt(const string_q& group, const string_q& key, uint64_t value);
+    void setConfigBool(const string_q& group, const string_q& key, bool value);
+
+    bool writeFile(void);
+    bool readFile(const string_q& filename);
+    void mergeFile(CToml* tomlIn);
+
+    bool isBackLevel(void) const;
+    friend ostream& operator<<(ostream& os, const CToml& tomlIn);
+};
+
+//-------------------------------------------------------------------------
+extern ostream& operator<<(ostream& os, const CToml& t);
 
 }  // namespace qblocks

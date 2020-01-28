@@ -22,7 +22,10 @@ namespace qblocks {
 // EXISTING_CODE
 typedef enum {
     ST_NONE = 0,
-    ST_BALANCE = (1 << 1), ST_NONCE = (1 << 2), ST_CODE = (1 << 3), ST_STORAGE = (1 << 4),
+    ST_BALANCE = (1 << 1),
+    ST_NONCE = (1 << 2),
+    ST_CODE = (1 << 3),
+    ST_STORAGE = (1 << 4),
     ST_DEPLOYED = (1 << 5),
     ST_ACCTTYPE = (1 << 6),
     ST_SOME = (ST_BALANCE | ST_NONCE | ST_CODE | ST_ACCTTYPE),
@@ -32,9 +35,9 @@ typedef enum {
 
 //--------------------------------------------------------------------------
 class CEthState : public CBaseNode {
-public:
+  public:
     blknum_t blockNumber;
-    biguint_t balance;
+    wei_t balance;
     uint64_t nonce;
     string_q code;
     string_q storage;
@@ -42,7 +45,7 @@ public:
     blknum_t deployed;
     string_q accttype;
 
-public:
+  public:
     CEthState(void);
     CEthState(const CEthState& et);
     virtual ~CEthState(void);
@@ -53,11 +56,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CEthState& item) const;
-    bool operator!=(const CEthState& item) const { return !operator==(item); }
+    bool operator!=(const CEthState& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CEthState& v1, const CEthState& v2);
     friend ostream& operator<<(ostream& os, const CEthState& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CEthState& et);
@@ -166,15 +171,14 @@ extern const char* STR_DISPLAY_ETHSTATE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t,CEthState> CEthStateMap;  // NOLINT
+typedef map<address_t, CEthState> CEthStateMap;  // NOLINT
 //-------------------------------------------------------------------------
-extern wei_t    getBalanceAt   (const address_t& addr, blknum_t blockNum = NOPOS);
-extern bool     isContractAt   (const address_t& addr, blknum_t blockNum = NOPOS);
-extern string_q getCodeAt      (const address_t& addr, blknum_t blockNum = NOPOS);
-extern string_q getStorageAt   (const address_t& addr, uint64_t pos, blknum_t blockNum = NOPOS);
-extern uint64_t getNonceAt     (const address_t& addr, blknum_t num = NOPOS);
-extern blknum_t getDeployBlock (const address_t& addr);
-extern bool     nodeHasBalances(bool showErrors);
+extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum = NOPOS);
+extern bool isContractAt(const address_t& addr, blknum_t blockNum = NOPOS);
+extern string_q getCodeAt(const address_t& addr, blknum_t blockNum = NOPOS);
+extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t blockNum = NOPOS);
+extern uint64_t getNonceAt(const address_t& addr, blknum_t num = NOPOS);
+extern blknum_t getDeployBlock(const address_t& addr);
+extern bool nodeHasBalances(bool showErrors);
 // EXISTING_CODE
 }  // namespace qblocks
-

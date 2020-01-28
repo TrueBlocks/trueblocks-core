@@ -21,34 +21,42 @@ namespace qblocks {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-#define SIG_FTYPE     (1<<1)
-#define SIG_FNAME     (1<<2)
-#define SIG_FSPACE    (1<<3)
-#define SIG_ITYPE     (1<<4)
-#define SIG_INAME     (1<<5)
-#define SIG_IINDEXED  (1<<6)
-#define SIG_ENCODE    (1<<7)
-#define SIG_CONST     (1<<8)
-#define SIG_ANONYMOUS (1<<9)
-#define SIG_PAYABLE   (1<<10)
-#define SIG_CANONICAL (SIG_FNAME|SIG_ITYPE)
-#define SIG_DEFAULT   (SIG_FTYPE|SIG_FNAME|SIG_FSPACE|SIG_ITYPE|SIG_INAME|SIG_IINDEXED)
-#define SIG_DETAILS   (SIG_DEFAULT|SIG_CONST|SIG_ANONYMOUS|SIG_PAYABLE|SIG_ENCODE)
+// Signature parts
+#define SIG_FTYPE (1 << 1)
+#define SIG_FNAME (1 << 2)
+#define SIG_FSPACE (1 << 3)
+#define SIG_ITYPE (1 << 4)
+#define SIG_INAME (1 << 5)
+#define SIG_IINDEXED (1 << 6)
+#define SIG_ENCODE (1 << 7)
+#define SIG_CONST (1 << 8)
+#define SIG_ANONYMOUS (1 << 9)
+#define SIG_PAYABLE (1 << 10)
+#define SIG_CANONICAL (SIG_FNAME | SIG_ITYPE)
+#define SIG_DEFAULT (SIG_FTYPE | SIG_FNAME | SIG_FSPACE | SIG_ITYPE | SIG_INAME | SIG_IINDEXED)
+#define SIG_DETAILS (SIG_DEFAULT | SIG_CONST | SIG_ANONYMOUS | SIG_PAYABLE | SIG_ENCODE)
+// bitfield for 'is_flags'
+#define IS_NOT (0)
+#define IS_POINTER (1 << 1)
+#define IS_ARRAY (1 << 2)
+#define IS_OBJECT (1 << 3)
+#define IS_BUILTIN (1 << 4)
+#define IS_MINIMAL (1 << 5)
+#define IS_ENABLED (1 << 6)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CParameter : public CBaseNode {
-public:
-    bool indexed;
-    string_q name;
+  public:
     string_q type;
-    bool isPointer;
-    bool isArray;
-    bool isObject;
-    string_q strDefault;
+    string_q name;
+    string_q str_default;
     string_q value;
+    bool indexed;
+    bool no_write;
+    uint64_t is_flags;
 
-public:
+  public:
     CParameter(void);
     CParameter(const CParameter& pa);
     virtual ~CParameter(void);
@@ -68,15 +76,15 @@ public:
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     bool fromDefinition(const string_q& input);
     bool isValid(void) const;
-    bool noWrite;
-    bool noWrite_min;
     // EXISTING_CODE
     bool operator==(const CParameter& item) const;
-    bool operator!=(const CParameter& item) const { return !operator==(item); }
+    bool operator!=(const CParameter& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CParameter& v1, const CParameter& v2);
     friend ostream& operator<<(ostream& os, const CParameter& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CParameter& pa);
@@ -120,18 +128,15 @@ inline void CParameter::clear(void) {
 inline void CParameter::initialize(void) {
     CBaseNode::initialize();
 
-    indexed = 0;
-    name = "";
     type = "";
-    isPointer = 0;
-    isArray = 0;
-    isObject = 0;
-    strDefault = "";
+    name = "";
+    str_default = "";
     value = "";
+    indexed = false;
+    no_write = false;
+    is_flags = IS_ENABLED;
 
     // EXISTING_CODE
-    noWrite = false;
-    noWrite_min = false;
     // EXISTING_CODE
 }
 
@@ -140,18 +145,15 @@ inline void CParameter::duplicate(const CParameter& pa) {
     clear();
     CBaseNode::duplicate(pa);
 
-    indexed = pa.indexed;
-    name = pa.name;
     type = pa.type;
-    isPointer = pa.isPointer;
-    isArray = pa.isArray;
-    isObject = pa.isObject;
-    strDefault = pa.strDefault;
+    name = pa.name;
+    str_default = pa.str_default;
     value = pa.value;
+    indexed = pa.indexed;
+    no_write = pa.no_write;
+    is_flags = pa.is_flags;
 
     // EXISTING_CODE
-    noWrite = pa.noWrite;
-    noWrite_min = pa.noWrite_min;
     // EXISTING_CODE
 }
 
@@ -189,6 +191,6 @@ extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+size_t explode(CParameterArray& result, const string& input, char needle);
 // EXISTING_CODE
 }  // namespace qblocks
-

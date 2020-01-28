@@ -1,605 +1,271 @@
 {
-  "type": "CAbi",
+  "type": "CFunction",
+  "fieldList": [
+    {
+      "name": "name",
+      "type": "text"
+    },
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "signature",
+      "type": "text"
+    },
+    {
+      "name": "encoding",
+      "type": "text"
+    },
+    {
+      "name": "input_names",
+      "type": "text"
+    },
+    {
+      "name": "output_names",
+      "type": "text"
+    }
+  ],
   "data": [
     {
+      "name": "",
       "type": "constructor",
       "signature": "(address,address,uint256,uint256,uint256,address)",
       "encoding": "0xd9fdb088",
-      "inputs": [
-        {
-          "name": "_curator",
-          "type": "address"
-        },
-        {
-          "name": "_daoCreator",
-          "type": "address"
-        },
-        {
-          "name": "_proposalDeposit",
-          "type": "uint256"
-        },
-        {
-          "name": "_minTokensToCreate",
-          "type": "uint256"
-        },
-        {
-          "name": "_closingTime",
-          "type": "uint256"
-        },
-        {
-          "name": "_privateCreation",
-          "type": "address"
-        }
-      ],
-      "outputs": []
+      "input_names": "_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,",
+      "output_names": ""
     },
     {
       "name": "approve",
       "type": "function",
       "signature": "approve(address,uint256)",
       "encoding": "0x095ea7b3",
-      "inputs": [
-        {
-          "name": "_spender",
-          "type": "address"
-        },
-        {
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_spender,_amount,",
+      "output_names": "success,"
     },
     {
       "name": "changeAllowedRecipients",
       "type": "function",
       "signature": "changeAllowedRecipients(address,bool)",
       "encoding": "0x749f9889",
-      "inputs": [
-        {
-          "name": "_recipient",
-          "type": "address"
-        },
-        {
-          "name": "_allowed",
-          "type": "bool"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_recipient,_allowed,",
+      "output_names": "_success,"
     },
     {
       "name": "changeProposalDeposit",
       "type": "function",
       "signature": "changeProposalDeposit(uint256)",
       "encoding": "0xe33734fd",
-      "inputs": [
-        {
-          "name": "_proposalDeposit",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "_proposalDeposit,",
+      "output_names": ""
     },
     {
       "name": "createTokenProxy",
       "type": "function",
       "signature": "createTokenProxy(address)",
       "encoding": "0xbaac5300",
-      "inputs": [
-        {
-          "name": "_tokenHolder",
-          "type": "address"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_tokenHolder,",
+      "output_names": "success,"
     },
     {
       "name": "executeProposal",
       "type": "function",
       "signature": "executeProposal(uint256,bytes)",
       "encoding": "0x237e9492",
-      "inputs": [
-        {
-          "name": "_proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "_transactionData",
-          "type": "bytes"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_proposalID,_transactionData,",
+      "output_names": "_success,"
     },
     {
       "name": "getMyReward",
       "type": "function",
       "signature": "getMyReward()",
       "encoding": "0xcc9ae3f6",
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "",
+      "output_names": "_success,"
     },
     {
       "name": "halveMinQuorum",
       "type": "function",
       "signature": "halveMinQuorum()",
       "encoding": "0x78524b2e",
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "",
+      "output_names": "_success,"
     },
     {
       "name": "newContract",
       "type": "function",
       "signature": "newContract(address)",
       "encoding": "0x6837ff1e",
-      "inputs": [
-        {
-          "name": "_newContract",
-          "type": "address"
-        }
-      ],
-      "outputs": []
+      "input_names": "_newContract,",
+      "output_names": ""
     },
     {
       "name": "newProposal",
       "type": "function",
       "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
       "encoding": "0x612e45a3",
-      "inputs": [
-        {
-          "name": "_recipient",
-          "type": "address"
-        },
-        {
-          "name": "_amount",
-          "type": "uint256"
-        },
-        {
-          "name": "_description",
-          "type": "string"
-        },
-        {
-          "name": "_transactionData",
-          "type": "bytes"
-        },
-        {
-          "name": "_debatingPeriod",
-          "type": "uint256"
-        },
-        {
-          "name": "_newCurator",
-          "type": "bool"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_proposalID",
-          "type": "uint256"
-        }
-      ]
+      "input_names": "_recipient,_amount,_description,_transactionData,_debatingPeriod,_newCurator,",
+      "output_names": "_proposalID,"
     },
     {
       "name": "receiveEther",
       "type": "function",
       "signature": "receiveEther()",
       "encoding": "0xa3912ec8",
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "val_0",
-          "type": "bool"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "refund",
       "type": "function",
       "signature": "refund()",
       "encoding": "0x590e1ae3",
-      "inputs": [],
-      "outputs": []
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "retrieveDAOReward",
       "type": "function",
       "signature": "retrieveDAOReward(bool)",
       "encoding": "0xa1da2fb9",
-      "inputs": [
-        {
-          "name": "_toMembers",
-          "type": "bool"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_toMembers,",
+      "output_names": "_success,"
     },
     {
       "name": "splitDAO",
       "type": "function",
       "signature": "splitDAO(uint256,address)",
       "encoding": "0x82661dc4",
-      "inputs": [
-        {
-          "name": "_proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "_newCurator",
-          "type": "address"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_proposalID,_newCurator,",
+      "output_names": "_success,"
     },
     {
       "name": "transfer",
       "type": "function",
       "signature": "transfer(address,uint256)",
       "encoding": "0xa9059cbb",
-      "inputs": [
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_to,_value,",
+      "output_names": "success,"
     },
     {
       "name": "transferFrom",
       "type": "function",
       "signature": "transferFrom(address,address,uint256)",
       "encoding": "0x23b872dd",
-      "inputs": [
-        {
-          "name": "_from",
-          "type": "address"
-        },
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_from,_to,_value,",
+      "output_names": "success,"
     },
     {
       "name": "transferFromWithoutReward",
       "type": "function",
       "signature": "transferFromWithoutReward(address,address,uint256)",
       "encoding": "0xdbde1988",
-      "inputs": [
-        {
-          "name": "_from",
-          "type": "address"
-        },
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_from,_to,_value,",
+      "output_names": "success,"
     },
     {
       "name": "transferWithoutReward",
       "type": "function",
       "signature": "transferWithoutReward(address,uint256)",
       "encoding": "0x4e10c3ee",
-      "inputs": [
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "success",
-          "type": "bool"
-        }
-      ]
+      "input_names": "_to,_value,",
+      "output_names": "success,"
     },
     {
       "name": "unblockMe",
       "type": "function",
       "signature": "unblockMe()",
       "encoding": "0x2632bf20",
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "val_0",
-          "type": "bool"
-        }
-      ]
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "vote",
       "type": "function",
       "signature": "vote(uint256,bool)",
       "encoding": "0xc9d27afe",
-      "inputs": [
-        {
-          "name": "_proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "_supportsProposal",
-          "type": "bool"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "_voteID",
-          "type": "uint256"
-        }
-      ]
+      "input_names": "_proposalID,_supportsProposal,",
+      "output_names": "_voteID,"
     },
     {
       "name": "AllowedRecipientChanged",
       "type": "event",
       "signature": "AllowedRecipientChanged(address,bool)",
       "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "_recipient",
-          "type": "address"
-        },
-        {
-          "name": "_allowed",
-          "type": "bool"
-        }
-      ],
-      "outputs": []
+      "input_names": "_recipient,_allowed,",
+      "output_names": ""
     },
     {
       "name": "Approval",
       "type": "event",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "_owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "_spender",
-          "type": "address"
-        },
-        {
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "_owner,_spender,_amount,",
+      "output_names": ""
     },
     {
       "name": "CreatedToken",
       "type": "event",
       "signature": "CreatedToken(address,uint256)",
       "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "to,amount,",
+      "output_names": ""
     },
     {
       "name": "FuelingToDate",
       "type": "event",
       "signature": "FuelingToDate(uint256)",
       "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
-      "inputs": [
-        {
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "value,",
+      "output_names": ""
     },
     {
       "name": "NewCurator",
       "type": "event",
       "signature": "NewCurator(address)",
       "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "_newCurator",
-          "type": "address"
-        }
-      ],
-      "outputs": []
+      "input_names": "_newCurator,",
+      "output_names": ""
     },
     {
       "name": "ProposalAdded",
       "type": "event",
       "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
       "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "name": "newCurator",
-          "type": "bool"
-        },
-        {
-          "name": "description",
-          "type": "string"
-        }
-      ],
-      "outputs": []
+      "input_names": "proposalID,recipient,amount,newCurator,description,",
+      "output_names": ""
     },
     {
       "name": "ProposalTallied",
       "type": "event",
       "signature": "ProposalTallied(uint256,bool,uint256)",
       "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "result",
-          "type": "bool"
-        },
-        {
-          "name": "quorum",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "proposalID,result,quorum,",
+      "output_names": ""
     },
     {
       "name": "Refund",
       "type": "event",
       "signature": "Refund(address,uint256)",
       "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "to,value,",
+      "output_names": ""
     },
     {
       "name": "Transfer",
       "type": "event",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "_from",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "outputs": []
+      "input_names": "_from,_to,_amount,",
+      "output_names": ""
     },
     {
       "name": "Voted",
       "type": "event",
       "signature": "Voted(uint256,bool,address)",
       "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "position",
-          "type": "bool"
-        },
-        {
-          "indexed": true,
-          "name": "voter",
-          "type": "address"
-        }
-      ],
-      "outputs": []
+      "input_names": "proposalID,position,voter,",
+      "output_names": ""
     }
   ],
   "meta": {

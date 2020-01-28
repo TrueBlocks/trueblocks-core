@@ -1,483 +1,236 @@
-{ "data": [
 {
-  "type": "constructor",
-  "signature": "(address[],uint256,uint256)",
-  "encoding": "0xaf8342fe",
-  "inputs": [
+  "data": [
     {
-      "name": "_owners",
-      "type": "address[]"
+      "name": "",
+      "type": "constructor",
+      "signature": "(address[],uint256,uint256)",
+      "encoding": "0xaf8342fe",
+      "input_names": "_owners,_required,_daylimit,",
+      "output_names": ""
     },
     {
-      "name": "_required",
-      "type": "uint256"
+      "name": "addOwner",
+      "type": "function",
+      "signature": "addOwner(address)",
+      "encoding": "0x7065cb48",
+      "input_names": "_owner,",
+      "output_names": ""
     },
     {
-      "name": "_daylimit",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "addOwner",
-  "type": "function",
-  "signature": "addOwner(address)",
-  "encoding": "0x7065cb48",
-  "inputs": [
-    {
-      "name": "_owner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "changeOwner",
-  "type": "function",
-  "signature": "changeOwner(address,address)",
-  "encoding": "0xf00d4b5d",
-  "inputs": [
-    {
-      "name": "_from",
-      "type": "address"
+      "name": "changeOwner",
+      "type": "function",
+      "signature": "changeOwner(address,address)",
+      "encoding": "0xf00d4b5d",
+      "input_names": "_from,_to,",
+      "output_names": ""
     },
     {
-      "name": "_to",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "changeRequirement",
-  "type": "function",
-  "signature": "changeRequirement(uint256)",
-  "encoding": "0xba51a6df",
-  "inputs": [
+      "name": "changeRequirement",
+      "type": "function",
+      "signature": "changeRequirement(uint256)",
+      "encoding": "0xba51a6df",
+      "input_names": "_newRequired,",
+      "output_names": ""
+    },
     {
-      "name": "_newRequired",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "confirm",
-  "type": "function",
-  "signature": "confirm(bytes32)",
-  "encoding": "0x797af627",
-  "inputs": [
+      "name": "confirm",
+      "type": "function",
+      "signature": "confirm(bytes32)",
+      "encoding": "0x797af627",
+      "input_names": "_h,",
+      "output_names": "val_0,"
+    },
     {
-      "name": "_h",
-      "type": "bytes32"
-    }
-  ],
-  "outputs": [
+      "name": "execute",
+      "type": "function",
+      "signature": "execute(address,uint256,bytes)",
+      "encoding": "0xb61d27f6",
+      "input_names": "_to,_value,_data,",
+      "output_names": "_r,"
+    },
     {
-      "name": "val_0",
-      "type": "bool"
+      "name": "hasConfirmed",
+      "type": "function",
+      "signature": "hasConfirmed(bytes32,address)",
+      "encoding": "0xc2cf7326",
+      "input_names": "_operation,_owner,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "isOwner",
+      "type": "function",
+      "signature": "isOwner(address)",
+      "encoding": "0x2f54bf6e",
+      "input_names": "_addr,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "kill",
+      "type": "function",
+      "signature": "kill(address)",
+      "encoding": "0xcbf0b0c0",
+      "input_names": "_to,",
+      "output_names": ""
+    },
+    {
+      "name": "m_dailyLimit",
+      "type": "function",
+      "signature": "m_dailyLimit()",
+      "encoding": "0xf1736d86",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "m_lastDay",
+      "type": "function",
+      "signature": "m_lastDay()",
+      "encoding": "0x52375093",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "m_numOwners",
+      "type": "function",
+      "signature": "m_numOwners()",
+      "encoding": "0x4123cb6b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "m_required",
+      "type": "function",
+      "signature": "m_required()",
+      "encoding": "0x746c9171",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "m_spentToday",
+      "type": "function",
+      "signature": "m_spentToday()",
+      "encoding": "0x659010e7",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "removeOwner",
+      "type": "function",
+      "signature": "removeOwner(address)",
+      "encoding": "0x173825d9",
+      "input_names": "_owner,",
+      "output_names": ""
+    },
+    {
+      "name": "resetSpentToday",
+      "type": "function",
+      "signature": "resetSpentToday()",
+      "encoding": "0x5c52c2f5",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "revoke",
+      "type": "function",
+      "signature": "revoke(bytes32)",
+      "encoding": "0xb75c7dc6",
+      "input_names": "_operation,",
+      "output_names": ""
+    },
+    {
+      "name": "setDailyLimit",
+      "type": "function",
+      "signature": "setDailyLimit(uint256)",
+      "encoding": "0xb20d30a9",
+      "input_names": "_newLimit,",
+      "output_names": ""
+    },
+    {
+      "name": "version",
+      "type": "function",
+      "signature": "version()",
+      "encoding": "0x54fd4d50",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Confirmation",
+      "type": "event",
+      "signature": "Confirmation(address,bytes32)",
+      "encoding": "0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda",
+      "input_names": "owner,operation,",
+      "output_names": ""
+    },
+    {
+      "name": "ConfirmationNeeded",
+      "type": "event",
+      "signature": "ConfirmationNeeded(bytes32,address,uint256,address,bytes)",
+      "encoding": "0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32",
+      "input_names": "operation,initiator,value,to,data,",
+      "output_names": ""
+    },
+    {
+      "name": "Deposit",
+      "type": "event",
+      "signature": "Deposit(address,uint256)",
+      "encoding": "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
+      "input_names": "from,value,",
+      "output_names": ""
+    },
+    {
+      "name": "MultiTransact",
+      "type": "event",
+      "signature": "MultiTransact(address,bytes32,uint256,address,bytes)",
+      "encoding": "0xe7c957c06e9a662c1a6c77366179f5b702b97651dc28eee7d5bf1dff6e40bb4a",
+      "input_names": "owner,operation,value,to,data,",
+      "output_names": ""
+    },
+    {
+      "name": "OwnerAdded",
+      "type": "event",
+      "signature": "OwnerAdded(address)",
+      "encoding": "0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3",
+      "input_names": "newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "OwnerChanged",
+      "type": "event",
+      "signature": "OwnerChanged(address,address)",
+      "encoding": "0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c",
+      "input_names": "oldOwner,newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "OwnerRemoved",
+      "type": "event",
+      "signature": "OwnerRemoved(address)",
+      "encoding": "0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da",
+      "input_names": "oldOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "RequirementChanged",
+      "type": "event",
+      "signature": "RequirementChanged(uint256)",
+      "encoding": "0xacbdb084c721332ac59f9b8e392196c9eb0e4932862da8eb9beaf0dad4f550da",
+      "input_names": "newRequirement,",
+      "output_names": ""
+    },
+    {
+      "name": "Revoke",
+      "type": "event",
+      "signature": "Revoke(address,bytes32)",
+      "encoding": "0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b",
+      "input_names": "owner,operation,",
+      "output_names": ""
+    },
+    {
+      "name": "SingleTransact",
+      "type": "event",
+      "signature": "SingleTransact(address,uint256,address,bytes)",
+      "encoding": "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004",
+      "input_names": "owner,value,to,data,",
+      "output_names": ""
     }
   ]
-},
-{
-  "name": "execute",
-  "type": "function",
-  "signature": "execute(address,uint256,bytes)",
-  "encoding": "0xb61d27f6",
-  "inputs": [
-    {
-      "name": "_to",
-      "type": "address"
-    },
-    {
-      "name": "_value",
-      "type": "uint256"
-    },
-    {
-      "name": "_data",
-      "type": "bytes"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "_r",
-      "type": "bytes32"
-    }
-  ]
-},
-{
-  "name": "hasConfirmed",
-  "type": "function",
-  "constant": true,
-  "signature": "hasConfirmed(bytes32,address)",
-  "encoding": "0xc2cf7326",
-  "inputs": [
-    {
-      "name": "_operation",
-      "type": "bytes32"
-    },
-    {
-      "name": "_owner",
-      "type": "address"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "isOwner",
-  "type": "function",
-  "signature": "isOwner(address)",
-  "encoding": "0x2f54bf6e",
-  "inputs": [
-    {
-      "name": "_addr",
-      "type": "address"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "kill",
-  "type": "function",
-  "signature": "kill(address)",
-  "encoding": "0xcbf0b0c0",
-  "inputs": [
-    {
-      "name": "_to",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "m_dailyLimit",
-  "type": "function",
-  "constant": true,
-  "signature": "m_dailyLimit()",
-  "encoding": "0xf1736d86",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "m_lastDay",
-  "type": "function",
-  "constant": true,
-  "signature": "m_lastDay()",
-  "encoding": "0x52375093",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "m_numOwners",
-  "type": "function",
-  "constant": true,
-  "signature": "m_numOwners()",
-  "encoding": "0x4123cb6b",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "m_required",
-  "type": "function",
-  "constant": true,
-  "signature": "m_required()",
-  "encoding": "0x746c9171",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "m_spentToday",
-  "type": "function",
-  "constant": true,
-  "signature": "m_spentToday()",
-  "encoding": "0x659010e7",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "removeOwner",
-  "type": "function",
-  "signature": "removeOwner(address)",
-  "encoding": "0x173825d9",
-  "inputs": [
-    {
-      "name": "_owner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "resetSpentToday",
-  "type": "function",
-  "signature": "resetSpentToday()",
-  "encoding": "0x5c52c2f5",
-  "inputs": [],
-  "outputs": []
-},
-{
-  "name": "revoke",
-  "type": "function",
-  "signature": "revoke(bytes32)",
-  "encoding": "0xb75c7dc6",
-  "inputs": [
-    {
-      "name": "_operation",
-      "type": "bytes32"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "setDailyLimit",
-  "type": "function",
-  "signature": "setDailyLimit(uint256)",
-  "encoding": "0xb20d30a9",
-  "inputs": [
-    {
-      "name": "_newLimit",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "version",
-  "type": "function",
-  "constant": true,
-  "signature": "version()",
-  "encoding": "0x54fd4d50",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "Confirmation",
-  "type": "event",
-  "signature": "Confirmation(address,bytes32)",
-  "encoding": "0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda",
-  "inputs": [
-    {
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "name": "operation",
-      "type": "bytes32"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "ConfirmationNeeded",
-  "type": "event",
-  "signature": "ConfirmationNeeded(bytes32,address,uint256,address,bytes)",
-  "encoding": "0x1733cbb53659d713b79580f79f3f9ff215f78a7c7aa45890f3b89fc5cddfbf32",
-  "inputs": [
-    {
-      "name": "operation",
-      "type": "bytes32"
-    },
-    {
-      "name": "initiator",
-      "type": "address"
-    },
-    {
-      "name": "value",
-      "type": "uint256"
-    },
-    {
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "name": "data",
-      "type": "bytes"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "Deposit",
-  "type": "event",
-  "signature": "Deposit(address,uint256)",
-  "encoding": "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
-  "inputs": [
-    {
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "MultiTransact",
-  "type": "event",
-  "signature": "MultiTransact(address,bytes32,uint256,address,bytes)",
-  "encoding": "0xe7c957c06e9a662c1a6c77366179f5b702b97651dc28eee7d5bf1dff6e40bb4a",
-  "inputs": [
-    {
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "name": "operation",
-      "type": "bytes32"
-    },
-    {
-      "name": "value",
-      "type": "uint256"
-    },
-    {
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "name": "data",
-      "type": "bytes"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "OwnerAdded",
-  "type": "event",
-  "signature": "OwnerAdded(address)",
-  "encoding": "0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3",
-  "inputs": [
-    {
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "OwnerChanged",
-  "type": "event",
-  "signature": "OwnerChanged(address,address)",
-  "encoding": "0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c",
-  "inputs": [
-    {
-      "name": "oldOwner",
-      "type": "address"
-    },
-    {
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "OwnerRemoved",
-  "type": "event",
-  "signature": "OwnerRemoved(address)",
-  "encoding": "0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da",
-  "inputs": [
-    {
-      "name": "oldOwner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "RequirementChanged",
-  "type": "event",
-  "signature": "RequirementChanged(uint256)",
-  "encoding": "0xacbdb084c721332ac59f9b8e392196c9eb0e4932862da8eb9beaf0dad4f550da",
-  "inputs": [
-    {
-      "name": "newRequirement",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "Revoke",
-  "type": "event",
-  "signature": "Revoke(address,bytes32)",
-  "encoding": "0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b",
-  "inputs": [
-    {
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "name": "operation",
-      "type": "bytes32"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "SingleTransact",
-  "type": "event",
-  "signature": "SingleTransact(address,uint256,address,bytes)",
-  "encoding": "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004",
-  "inputs": [
-    {
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "name": "value",
-      "type": "uint256"
-    },
-    {
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "name": "data",
-      "type": "bytes"
-    }
-  ],
-  "outputs": []
-}] }
+}

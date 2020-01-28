@@ -14,14 +14,13 @@
 #include "handle_maker.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(defaultQuitHandler);
 
-#if 0
-    for (blknum_t bl = 3684349 ; bl < getLastBlock_client() ; bl = bl + 5000)
-        cout << bl << "\t" << bn_2_Date(bl).Format(FMT_JSON) << "\t" << wei_2_Ether(getUsdFromMakerAt(bl)) << endl;
+    //    for (blknum_t bl = 3684349 ; bl < getLatestBlock_client() ; bl = bl + 5000)
+    //        cout << bl << "\t" << bn_2_Date(bl).Format(FMT_JSON) << "\t" << wei_2_Ether(getUsdFromMakerAt(bl)) <<
+    //        endl;
 
-#else
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -40,24 +39,22 @@ int main(int argc, const char *argv[]) {
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CPriceQuote));
 
         size_t step = (options.freq / 5);
-        for (size_t i = 0 ; i < quotes.size() ; i = i + step) {
+        for (size_t i = 0; i < quotes.size(); i = i + step) {
             if (!visitPrice(quotes[i], &options))
                 break;
         }
         once = false;
     }
     cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
-#endif
 
     etherlib_cleanup();
     return 0;
 }
 
 //--------------------------------------------------------------
-bool visitPrice(CPriceQuote& quote, void *data) {
-
-    COptions *opt = reinterpret_cast<COptions *>(data);
-    bool isText = (opt->exportFmt & (TXT1|CSV1));
+bool visitPrice(CPriceQuote& quote, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
 
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////

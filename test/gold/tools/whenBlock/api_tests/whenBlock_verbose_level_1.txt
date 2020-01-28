@@ -1,5 +1,23 @@
 {
   "type": "CBlock",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp"
+    },
+    {
+      "name": "name",
+      "type": "text"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    }
+  ],
   "data": [
     {
       "blockNumber": 1000,

@@ -53,7 +53,8 @@
             "name": "_key",
             "value": "1"
           }
-        ]
+        ],
+        "outputs": []
       },
       "action": {
         "address": "0x0",

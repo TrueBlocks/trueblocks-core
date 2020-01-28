@@ -26,12 +26,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CRPCResult : public CBaseNode {
-public:
+  public:
     string_q jsonrpc;
     string_q result;
     string_q id;
 
-public:
+  public:
     CRPCResult(void);
     CRPCResult(const CRPCResult& rp);
     virtual ~CRPCResult(void);
@@ -42,11 +42,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CRPCResult& item) const;
-    bool operator!=(const CRPCResult& item) const { return !operator==(item); }
+    bool operator!=(const CRPCResult& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
     friend ostream& operator<<(ostream& os, const CRPCResult& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CRPCResult& rp);
@@ -148,4 +150,3 @@ extern const char* STR_DISPLAY_RPCRESULT;
 extern string_q extractRPCError(const string_q& resultIn);
 // EXISTING_CODE
 }  // namespace qblocks
-

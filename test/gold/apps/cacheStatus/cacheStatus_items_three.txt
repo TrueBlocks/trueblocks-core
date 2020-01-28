@@ -1,18 +1,22 @@
-cacheStatus argc: 5 [1:--details] [2:abis] [3:slurps] [4:monitors] 
-cacheStatus --details abis slurps monitors 
+cacheStatus argc: 7 [1:--details] [2:abis] [3:caches] [4:monitors] [5:--types] [6:slurps] 
+cacheStatus --details abis caches monitors --types slurps 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
+  "is_scraping": false,
   "caches": [
     {
       "addrs": [],
       "items": [
         {
           "type": "CMonitorCacheItem",
+          "deleted": false,
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",
@@ -23,11 +27,11 @@ cacheStatus --details abis slurps monitors
         }
       ],
       "type": "CMonitorCache",
-      "path": "CachePath",
+      "path": "monitorsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "items": [
@@ -41,21 +45,22 @@ cacheStatus --details abis slurps monitors
         }
       ],
       "type": "CAbiCache",
-      "path": "CachePath",
+      "path": "abisPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     },
     {
       "addrs": [],
       "items": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
-  ]
+  ],
+  "date": "--date--"
 }

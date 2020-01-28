@@ -1,0 +1,38 @@
+---
+# We'll use defaults from the LLVM style, but with 4 columns indentation.
+BasedOnStyle: Google
+IndentWidth: 4
+---
+Language: Cpp
+DerivePointerAlignment: false
+PointerAlignment: Left
+ColumnLimit: 120
+BreakStringLiterals: true
+SortIncludes: false
+AccessModifierOffset: -2
+AllowShortLoopsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+AlignTrailingComments: true
+AlignEscapedNewlines: Right
+AlwaysBreakBeforeMultilineStrings: true
+BreakBeforeTernaryOperators: true
+#SpaceBeforeRangeBasedForLoopColon: true
+SpacesBeforeTrailingComments: 2
+FixNamespaceComments: true
+#SpaceAfterLogicalNot: true
+#InsertFinalNewline: true
+#TrimFinalNewlines: true
+#ColumnLimit: 0
+#AlignConsecutiveAssignments: true
+#SpaceInEmptyBlock: true
+---
+Language: JavaScript
+# Use 100 columns for JS.
+ColumnLimit: 100
+---
+Language: Proto
+# Don't format .proto files.
+DisableFormat: true

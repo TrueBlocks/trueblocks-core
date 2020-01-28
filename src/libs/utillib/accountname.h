@@ -26,11 +26,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
-public:
+  public:
     string_q group;
     string_q subgroup;
     string_q name;
-    string_q address;
+    address_t address;
     string_q symbol;
     string_q description;
     string_q source;
@@ -46,7 +46,7 @@ public:
     uint64_t nRecords;
     uint64_t sizeInBytes;
 
-public:
+  public:
     CAccountName(void);
     CAccountName(const CAccountName& ac);
     virtual ~CAccountName(void);
@@ -58,11 +58,13 @@ public:
     explicit CAccountName(const string_q& strIn);
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
-    bool operator!=(const CAccountName& item) const { return !operator==(item); }
+    bool operator!=(const CAccountName& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAccountName& v1, const CAccountName& v2);
     friend ostream& operator<<(ostream& os, const CAccountName& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAccountName& ac);
@@ -116,9 +118,9 @@ inline void CAccountName::initialize(void) {
     logo = "";
     path = "";
     color = "";
-    is_contract = 0;
-    is_private = 0;
-    is_shared = 0;
+    is_contract = false;
+    is_private = false;
+    is_shared = false;
     firstAppearance = 0;
     latestAppearance = 0;
     lastExport = 0;
@@ -195,4 +197,3 @@ extern const char* STR_DISPLAY_ACCOUNTNAME;
 typedef map<address_t, CAccountName> CAccountNameMap;
 // EXISTING_CODE
 }  // namespace qblocks
-

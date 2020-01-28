@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTestCase : public CBaseNode {
-public:
+  public:
     string_q origLine;
     bool builtin;
     string_q onOff;
@@ -32,7 +32,7 @@ public:
     string_q speed;
     string_q route;
     string_q tool;
-    string_q filename;
+    string_q name;
     string_q post;
     string_q options;
     string_q extra;
@@ -41,7 +41,7 @@ public:
     string_q workPath;
     string_q fileName;
 
-public:
+  public:
     CTestCase(void);
     CTestCase(const CTestCase& te);
     virtual ~CTestCase(void);
@@ -50,15 +50,17 @@ public:
     DECLARE_NODE(CTestCase);
 
     // EXISTING_CODE
-    CTestCase(const string_q& line);
+    explicit CTestCase(const string_q& line);
     void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& item) const;
-    bool operator!=(const CTestCase& item) const { return !operator==(item); }
+    bool operator!=(const CTestCase& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTestCase& v1, const CTestCase& v2);
     friend ostream& operator<<(ostream& os, const CTestCase& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTestCase& te);
@@ -103,13 +105,13 @@ inline void CTestCase::initialize(void) {
     CBaseNode::initialize();
 
     origLine = "";
-    builtin = 0;
+    builtin = false;
     onOff = "";
     mode = "";
     speed = "";
     route = "";
     tool = "";
-    filename = "";
+    name = "";
     post = "";
     options = "";
     extra = "";
@@ -134,7 +136,7 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     speed = te.speed;
     route = te.route;
     tool = te.tool;
-    filename = te.filename;
+    name = te.name;
     post = te.post;
     options = te.options;
     extra = te.extra;
@@ -159,8 +161,8 @@ inline CTestCase& CTestCase::operator=(const CTestCase& te) {
 inline bool CTestCase::operator==(const CTestCase& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (route % item.route && tool % item.tool && name % item.name);
 }
 
 //-------------------------------------------------------------------------
@@ -183,4 +185,3 @@ extern const char* STR_DISPLAY_TESTCASE;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

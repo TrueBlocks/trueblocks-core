@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     int32_t testNum;
     string_q className;
 

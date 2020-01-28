@@ -25,35 +25,37 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNewReceipt : public CBaseNode {
-public:
+  public:
     address_t contractAddress;
     gas_t gasUsed;
     CLogEntryArray logs;
     bloom_t logsBloom;
     bool isError;
 
-public:
+  public:
     CNewReceipt(void);
-    CNewReceipt(const CNewReceipt& ne);
+    CNewReceipt(const CNewReceipt& newr);
     virtual ~CNewReceipt(void);
-    CNewReceipt& operator=(const CNewReceipt& ne);
+    CNewReceipt& operator=(const CNewReceipt& newr);
 
     DECLARE_NODE(CNewReceipt);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     friend class CTransaction;
     // EXISTING_CODE
     bool operator==(const CNewReceipt& item) const;
-    bool operator!=(const CNewReceipt& item) const { return !operator==(item); }
+    bool operator!=(const CNewReceipt& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CNewReceipt& v1, const CNewReceipt& v2);
     friend ostream& operator<<(ostream& os, const CNewReceipt& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CNewReceipt& ne);
+    void duplicate(const CNewReceipt& newr);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -68,10 +70,10 @@ inline CNewReceipt::CNewReceipt(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CNewReceipt::CNewReceipt(const CNewReceipt& ne) {
+inline CNewReceipt::CNewReceipt(const CNewReceipt& newr) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ne);
+    duplicate(newr);
 }
 
 // EXISTING_CODE
@@ -98,30 +100,30 @@ inline void CNewReceipt::initialize(void) {
     gasUsed = 0;
     logs.clear();
     logsBloom = 0;
-    isError = 0;
+    isError = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CNewReceipt::duplicate(const CNewReceipt& ne) {
+inline void CNewReceipt::duplicate(const CNewReceipt& newr) {
     clear();
-    CBaseNode::duplicate(ne);
+    CBaseNode::duplicate(newr);
 
-    contractAddress = ne.contractAddress;
-    gasUsed = ne.gasUsed;
-    logs = ne.logs;
-    logsBloom = ne.logsBloom;
-    isError = ne.isError;
+    contractAddress = newr.contractAddress;
+    gasUsed = newr.gasUsed;
+    logs = newr.logs;
+    logsBloom = newr.logsBloom;
+    isError = newr.isError;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& ne) {
-    duplicate(ne);
+inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& newr) {
+    duplicate(newr);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
@@ -149,14 +151,9 @@ extern CArchive& operator>>(CArchive& archive, CNewReceiptArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNewReceipt& newp);
-extern CArchive& operator>>(CArchive& archive, CNewReceipt& newp);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NEWRECEIPT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

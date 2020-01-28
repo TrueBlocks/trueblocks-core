@@ -14,7 +14,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
@@ -28,50 +28,27 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.mode & LIST)
-            cout << "Classes found in the classDefinitions folder:\n";
-
+        options.counter = CCounter();  // reset
+        LOG_INFO(cYellow, "handling generate...", cOff);
         for (auto classDef : options.classDefs) {
-
-            if (!fileExists(classDef.inputPath)) {
-                return options.usage("No class definition file found at " + classDef.inputPath + "\n");
+            CToml toml(classDef.input_path);
+            toml.readFile(classDef.input_path);
+            if (options.mode & EDIT) {
+                editFile(classDef.input_path);
 
             } else {
-                CToml toml(classDef.inputPath);
-                toml.readFile(classDef.inputPath);
-
-                if (options.mode & LIST) {
-                    if (verbose) {
-                        cout << string_q(80, '-') << "\nFile (dest): " << classDef.inputPath << "\n";
-                        cout << toml << "\n";
-
-                    } else {
-                        cout << "\t" << toml.getConfigStr("settings", "class", "") << "\n";
-
-                    }
-
-                } else if (options.mode & EDIT) {
-                    editFile(classDef.inputPath);
-
+                ASSERT(options.mode & RUN);
+                if (verbose)
+                    cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
+                if (isTestMode()) {
+                    cout << "  Test mode - code not generated" << endl;
                 } else {
-                    ASSERT(options.mode & RUN);
-                    if (isTestMode())
-                        cout << "Would run class definition file: " << classDef.className << " (not run, testing)\n";
-                    else if (verbose)
-                        cerr << "Running class definition file '" << classDef.className << "'\n";
-
-                    if (!isTestMode()) {
-                        if (toml.getConfigBool("settings", "disabled", false)) {
-                            if (verbose)
-                                cerr << "Disabled class not processed " << classDef.className << "\n";
-                        } else {
-                            options.handle_generate(toml, classDef, options.nspace);
-
-                        }
-                    }
+                    options.handle_generate(toml, classDef, options.nspace, false);
                 }
             }
         }
+        LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
+                 options.counter.nProcessed, ").", string_q(40, ' '));
     }
 
     acctlib_cleanup();

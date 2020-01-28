@@ -19,12 +19,14 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("parts", "p", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "one or more parts of the token information to retreive"),
-    COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),
+    // clang-format off
+    COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),  // NOLINT
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
+    COption("parts", "p", "enum[name|decimals|totalSupply|version|symbol|all]", OPT_FLAG, "one or more parts of the token information to retreive"),  // NOLINT
+    COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),  // NOLINT
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),  // NOLINT
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -32,7 +34,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -40,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -102,8 +103,9 @@ bool COptions::parseArguments(string_q& command) {
                 watch.address = addr;
                 watch.abi_spec.loadAbiByAddress(addr);
                 watches.push_back(watch);
-            } else
+            } else {
                 holders.push_back(addr);
+            }
         }
     }
 
@@ -151,10 +153,10 @@ void COptions::Init(void) {
     watches.clear();
     holders.clear();
 
-    optionOff(OPT_DOLLARS|OPT_ETHER);
+    optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLastBlock_client();
+    newestBlock = oldestBlock = getLatestBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -162,12 +164,14 @@ COptions::COptions(void) : CHistoryOptions() {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
-    notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");
+    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
+    notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

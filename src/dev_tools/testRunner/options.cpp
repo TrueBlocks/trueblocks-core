@@ -20,6 +20,7 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
@@ -27,13 +28,13 @@ static const COption params[] = {
     COption("no_post", "o", "", OPT_SWITCH, "do not complete the post processing step"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -166,13 +167,13 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chifra");
     }
 
-    // If there are tests in libs, we do not need to sleep here to allow the API to set up, otherwise, we do need to sleep
+    // If there are tests in libs, we do NOT need to sleep so the API can set up, otherwise, we do need to sleep
     bool hasLibs = false;
     for (auto test : tests)
         if (contains(test, "/libs/"))
             hasLibs = true;
     if (!hasLibs)
-        sleep(1.);  
+        sleep(1.);
 
     perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE, CSV1), "\"", "");
 
@@ -201,6 +202,8 @@ COptions::COptions(void) {
     Init();
     CMeasure::registerClass();
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -216,10 +219,16 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     if (!clean)
         return true;
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    if (system(os.str().c_str())) {}  // do not remove, squelches warning
+    os << "find ../../../working/" << path << "/" << testName;
+    os << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName;
+    os << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName;
+    os << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName;
+    os << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    // clang-format off
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
     return true;
 }

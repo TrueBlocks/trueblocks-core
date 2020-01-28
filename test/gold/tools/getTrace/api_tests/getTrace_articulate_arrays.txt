@@ -1,5 +1,27 @@
 {
   "type": "CTrace",
+  "fieldList": [
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "error",
+      "type": "text"
+    },
+    {
+      "name": "articulatedTrace",
+      "type": "object"
+    },
+    {
+      "name": "action",
+      "type": "object"
+    },
+    {
+      "name": "result",
+      "type": "object"
+    }
+  ],
   "data": [
     {
       "type": "call",
@@ -19,7 +41,8 @@
             "name": "_dollarPrices",
             "value": "[2000000000000000000, 2000000000000000000]"
           }
-        ]
+        ],
+        "outputs": []
       },
       "action": {
         "address": "0x0",

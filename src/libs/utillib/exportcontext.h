@@ -16,37 +16,39 @@
 
 namespace qblocks {
 
-    //----------------------------------------------------------------------------
-    class CExportOptions {
-    public:
-        size_t lev, spcs;
-        bool noFrst;
-        char tab, nl;
-        bool quoteNums;
-        bool hexNums;
-        bool hashesOnly;
-        bool colored;
-        bool asEther;
-        bool asDollars;
-        bool asWei;
-        bool isParity;
-        CNameValueMap fmtMap;
-        CExportOptions(void) {
-            noFrst = false;
-            lev = 0; spcs = 2;
-            tab = ' '; nl = '\n';
-            quoteNums = false;
-            hexNums = false;
-            hashesOnly = false;
-            colored = false;
-            asEther = false;
-            asDollars = false;
-            asWei = true;
-            isParity = false;
-        }
-    };
-    extern CExportOptions& expContext(void);
-    extern void incIndent(void);
-    extern void decIndent(void);
-    extern string_q indent(void);
+//----------------------------------------------------------------------------
+class CExportOptions {
+  public:
+    size_t lev, spcs;
+    bool noFrst;
+    char tab, nl;
+    bool quoteNums;
+    bool hexNums;
+    bool hashesOnly;
+    bool colored;
+    bool asEther;
+    bool asDollars;
+    bool asWei;
+    bool isParity;
+    CNameValueMap fmtMap;
+    CExportOptions(void) {
+        noFrst = false;
+        lev = 0;
+        spcs = 2;
+        tab = ' ';
+        nl = '\n';
+        quoteNums = false;
+        hexNums = false;
+        hashesOnly = false;
+        colored = false;
+        asEther = false;
+        asDollars = false;
+        asWei = true;
+        isParity = false;
+    }
+};
+extern CExportOptions& expContext(void);
+extern void incIndent(void);
+extern void decIndent(void);
+extern string_q indent(void);
 }  // namespace qblocks

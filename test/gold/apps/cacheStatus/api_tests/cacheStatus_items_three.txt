@@ -1,34 +1,95 @@
 {
   "type": "CStatus",
+  "fieldList": [
+    {
+      "name": "client_version",
+      "type": "text"
+    },
+    {
+      "name": "trueblocks_version",
+      "type": "text"
+    },
+    {
+      "name": "rpc_provider",
+      "type": "text"
+    },
+    {
+      "name": "api_provider",
+      "type": "text"
+    },
+    {
+      "name": "balance_provider",
+      "type": "text"
+    },
+    {
+      "name": "cache_path",
+      "type": "text"
+    },
+    {
+      "name": "index_path",
+      "type": "text"
+    },
+    {
+      "name": "host",
+      "type": "text"
+    },
+    {
+      "name": "is_scraping",
+      "type": "bool"
+    },
+    {
+      "name": "caches",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    }
+  ],
   "data": [
     {
       "client_version": "Parity version",
-      "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "api_provider": "--providers--",
       "balance_provider": "--providers--",
+      "cache_path": "--paths--",
+      "index_path": "--paths--",
       "host": "--hostname-- (--username--)",
+      "is_scraping": false,
       "caches": [
         {
           "addrs": [],
           "items": [
             {
               "type": "CMonitorCacheItem",
+              "deleted": false,
               "curBalance": 10000,
               "enabled": true,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
               "nRecords": 18446744073709552000,
-              "sizeInBytes": 18446744073709552000
+              "sizeInBytes": 18446744073709552000,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CMonitorCache",
-          "path": "CachePath",
+          "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "items": [
@@ -37,28 +98,43 @@
               "nFunctions": 36963,
               "nEvents": 36963,
               "nOther": 36963,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
-              "sizeInBytes": 36963
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
+              "firstAppearance": "",
+              "latestAppearance": "",
+              "nRecords": "",
+              "sizeInBytes": 36963,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CAbiCache",
-          "path": "CachePath",
+          "path": "abisPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "addrs": [],
           "items": [],
           "type": "CSlurpCache",
-          "path": "SlurpPath",
+          "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         }
-      ]
+      ],
+      "date": "--date--"
     }
   ],
   "meta": {

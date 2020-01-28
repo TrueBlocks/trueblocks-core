@@ -17,8 +17,9 @@
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
-public:
-    CThisTest(void) : Test() {}
+  public:
+    CThisTest(void) : Test() {
+    }
     virtual void SetUp() {
     }
     virtual void TearDown() {
@@ -27,7 +28,6 @@ public:
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, Test01) {
-
     cerr << "Running " << testName << "\n";
 
     uint64_t val64u = uint64_t(-1);
@@ -36,21 +36,22 @@ TEST_F(CThisTest, Test01) {
     string_q sVal = int_2_Str(val64);
 
     cout << "val64u: " << val64u << "\n";
-    cout << "sValu: "  << sValu  << "\n";
-    cout << "val64: "  << val64  << "\n";
-    cout << "sVal: "   << sVal   << "\n";
+    cout << "sValu: " << sValu << "\n";
+    cout << "val64: " << val64 << "\n";
+    cout << "sVal: " << sVal << "\n";
 
-    ASSERT_EQ("Testing 1",          val64u, str_2_Uint(sValu));
-    ASSERT_EQ("Testing 2",          val64,  str_2_Int(sVal));
+    ASSERT_EQ("Testing 1", val64u, str_2_Uint(sValu));
+    ASSERT_EQ("Testing 2", val64, str_2_Int(sVal));
     ASSERT_EQ("Testing 3", (int64_t)val64u, -1);
-    ASSERT_EQ("Testing 4",          val64,  -1);
+    ASSERT_EQ("Testing 4", val64, -1);
 
     return true;
-}}
+}
+}
 
 #include "options.h"
 //------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;

@@ -6,8 +6,7 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     acctlib_init(quickQuitHandler);
 
@@ -27,14 +26,19 @@ int main(int argc, const char *argv[]) {
 
         } else if (options.isConfig) {
             if (once)
-                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CConfiguration));
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
+                                       GETRUNTIME_CLASS(CConfiguration));
             options.handle_config(cout);
+
+        } else if (!options.heatmap.empty()) {
+            if (once)
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CHeatmap));
+            options.handle_heatmap(cout);
 
         } else {
             if (once)
                 cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
             options.handle_status(cout);
-
         }
         once = false;
     }

@@ -23,24 +23,24 @@ namespace qblocks {
 
 // EXISTING_CODE
 typedef uint32_t cache_t;
-#define CT_BLOCKS   uint32_t(1<<0)
-#define CT_BLOOMS   uint32_t(1<<1)
-#define CT_TXS      uint32_t(1<<2)
-#define CT_TRACES   uint32_t(1<<3)
-#define CT_ACCTS    uint32_t(1<<4)
-#define CT_MONITORS uint32_t(1<<5)
-#define CT_INDEX    uint32_t(1<<6)
+#define CT_BLOCKS uint32_t(1 << 0)
+#define CT_BLOOMS uint32_t(1 << 1)
+#define CT_TXS uint32_t(1 << 2)
+#define CT_TRACES uint32_t(1 << 3)
+#define CT_ACCTS uint32_t(1 << 4)
+#define CT_MONITORS uint32_t(1 << 5)
+#define CT_INDEX uint32_t(1 << 6)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CCacheEntry : public CBaseNode {
-public:
+  public:
     uint64_t type;
     string_q extra;
     bool cached;
     string_q path;
 
-public:
+  public:
     CCacheEntry(void);
     CCacheEntry(const CCacheEntry& ca);
     virtual ~CCacheEntry(void);
@@ -51,11 +51,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CCacheEntry& item) const;
-    bool operator!=(const CCacheEntry& item) const { return !operator==(item); }
+    bool operator!=(const CCacheEntry& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CCacheEntry& v1, const CCacheEntry& v2);
     friend ostream& operator<<(ostream& os, const CCacheEntry& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CCacheEntry& ca);
@@ -101,7 +103,7 @@ inline void CCacheEntry::initialize(void) {
 
     type = 0;
     extra = "";
-    cached = 0;
+    cached = false;
     path = "";
 
     // EXISTING_CODE
@@ -159,4 +161,3 @@ extern const char* STR_DISPLAY_CACHEENTRY;
 typedef map<uint64_t, CCacheEntry> CCacheEntryMap;
 // EXISTING_CODE
 }  // namespace qblocks
-

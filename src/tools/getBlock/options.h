@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool hashes_only;
     bool count_only;
@@ -44,5 +44,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitBlock(uint64_t num, void *data);
+extern bool visitBlock(uint64_t num, void* data);
 extern void interumReport(ostream& os, blknum_t i);

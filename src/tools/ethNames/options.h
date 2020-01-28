@@ -21,19 +21,20 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { OWNED = (1<<1), CUSTOM = (1<<2), NAMED = (1<<3), PREFUND = (1<<4), OTHER = (1<<5) };
+enum account_t { OWNED = (1 << 1), CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), OTHER = (1 << 5) };
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool match_case;
+    bool groups;
     // END_CODE_DECLARE
 
     CAccountNameMap items;
-    CStringArray    searches;
-    string_q        searchFields;
-    uint64_t        types;
+    CStringArray searches;
+    string_q searchFields;
+    uint64_t types;
 
     COptions(void);
     ~COptions(void);

@@ -13,16 +13,17 @@
 #include "utillib.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-
+int main(int argc, const char* argv[]) {
     CDefaultOptions options;
     options.minArgs = 0;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
     size_t recurse = (argc == 2 && contains(string_q(argv[1]), "recurse"));
-    size_t first   = (argc == 2 && contains(string_q(argv[1]), "first"));
-    size_t last    = (argc == 2 && contains(string_q(argv[1]), "last"));
+    size_t first = (argc == 2 && contains(string_q(argv[1]), "first"));
+    size_t last = (argc == 2 && contains(string_q(argv[1]), "last"));
+    size_t copy = (argc == 2 && contains(string_q(argv[1]), "copy"));
+    size_t rm = (argc == 2 && contains(string_q(argv[1]), "rm"));
 
     if (last) {
         string_q lastFile = getLastFileInFolder("../", recurse);
@@ -32,9 +33,20 @@ int main(int argc, const char *argv[]) {
         string_q firstFile = getFirstFileInFolder("../", recurse);
         cout << "First file in folder: " << firstFile << endl;
 
+    } else if (copy) {
+        stringToAsciiFile("old.txt", "This is the string");
+        copyFile("old.txt", "new.txt");
+        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
+        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+    } else if (rm) {
+        ::remove("old.txt");
+        ::remove("new.txt");
+        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
+        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+
     } else {
-        string_q tests[] = { "Non-recursive", "Recursive" };
-        bool vals[] = { false, true };
+        string_q tests[] = {"Non-recursive", "Recursive"};
+        bool vals[] = {false, true};
 
         cout << tests[recurse] << " from ../" << endl;
         CStringArray files;

@@ -13,7 +13,7 @@
 #include <algorithm>
 #include "options.h"
 
-//TODO(tjayrush): This is terrible code
+// TODO(tjayrush): This is terrible code
 extern void snagSignatures(string_q& str);
 extern void removeComments(string_q& code);
 //-----------------------------------------------------------------------
@@ -69,8 +69,8 @@ void snagSignatures(string_q& str) {
 
 //-----------------------------------------------------------------------
 void removeComments(string_q& code) {
-    replaceAll(code, "`", ""); // easier
-    replaceAll(code, "*/", "`"); // easier
+    replaceAll(code, "`", "");    // easier
+    replaceAll(code, "*/", "`");  // easier
     string_q ret;
     char endChar = '\0';
     typedef enum { OUT, START, STOP, IN } State;
@@ -91,7 +91,7 @@ void removeComments(string_q& code) {
                 switch (ch) {
                     case '*':
                         state = IN;
-                        endChar = '`'; // easier
+                        endChar = '`';  // easier
                         break;
                     case '/':
                         state = IN;
@@ -115,4 +115,3 @@ void removeComments(string_q& code) {
     }
     code = substitute(substitute(ret, "\t", " "), "  ", " ");
 }
-

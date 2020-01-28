@@ -6,6 +6,6 @@ convertTest 2
 	000.002 wei3                             ==> passed 'three' is equal to '1004000001'
 	000.003 wei4                             ==> passed 'bnu_2_Str(val)' is equal to '"1240944001236000000000000001"'
 	000.004 eth1                             ==> passed 'wei_2_Ether(val)' is equal to '"1240944001.236000000000000001"'
-	000.005 eth2                             ==> passed 'wei_2_Ether(val/1000000)' is equal to '"1240.944001236"'
+	000.005 eth2                             ==> passed 'wei_2_Ether(val / 1000000)' is equal to '"1240.944001236"'
 	000.006 eth2                             ==> passed 'wei_2_Ether(bnu_2_Str(val))' is equal to '"1240944001.236000000000000001"'
-	000.007 eth2                             ==> passed 'wei_2_Ether(bnu_2_Str(val/1000000))' is equal to '"1240.944001236000000000"'
+	000.007 eth2                             ==> passed 'wei_2_Ether(bnu_2_Str(val / 1000000))' is equal to '"1240.944001236000000000"'

@@ -13,14 +13,19 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define IMPLEMENT_UNUSED(CLASS_NAME) \
-inline void CLASS_NAME::finishParse(void) {} \
-inline bool CLASS_NAME::Serialize(CArchive& archive) {return true;} \
-inline bool CLASS_NAME::SerializeC(CArchive& archive) const {return true;} \
+#define IMPLEMENT_UNUSED(CLASS_NAME)                                                                                   \
+    inline void CLASS_NAME::finishParse(void) {                                                                        \
+    }                                                                                                                  \
+    inline bool CLASS_NAME::Serialize(CArchive& archive) {                                                             \
+        return true;                                                                                                   \
+    }                                                                                                                  \
+    inline bool CLASS_NAME::SerializeC(CArchive& archive) const {                                                      \
+        return true;                                                                                                   \
+    }
 
 //-----------------------------------------------------------------------------
 class CBloomReceipt : public CBaseNode {
-public:
+  public:
     string_q logsBloom;
     DECLARE_NODE(CBloomReceipt);
     CBloomReceipt(void);
@@ -29,25 +34,25 @@ IMPLEMENT_UNUSED(CBloomReceipt);
 
 //-----------------------------------------------------------------------------
 class CBloomTrans : public CBaseNode {
-public:
+  public:
     string_q hash;
     blknum_t transactionIndex;
     CBloomReceipt receipt;
     DECLARE_NODE(CBloomTrans);
     CBloomTrans(void);
-    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
+    const CBaseNode* getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomTrans);
 typedef vector<CBloomTrans> CBloomTransArray;
 
 //-----------------------------------------------------------------------------
 class CBloomBlock : public CBaseNode {
-public:
+  public:
     string_q logsBloom;
     blknum_t number;
     CBloomTransArray transactions;
     DECLARE_NODE(CBloomBlock);
     CBloomBlock(void);
-    const CBaseNode *getObjectAt(const string_q& name, size_t i) const override;
+    const CBaseNode* getObjectAt(const string_q& name, size_t i) const override;
 };
 IMPLEMENT_UNUSED(CBloomBlock);

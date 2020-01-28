@@ -15,7 +15,8 @@
 
 namespace qblocks {
 
-    void unused2(void) {}
+void unused2(void) {
+}
 
 }  // namespace qblocks
 

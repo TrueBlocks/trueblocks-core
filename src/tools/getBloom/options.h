@@ -23,7 +23,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool block_only;
     bool receipt_only;
@@ -45,4 +45,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern size_t foundFile(const string_q& path, void *data);
+extern size_t foundFile(const string_q& path, void* data);

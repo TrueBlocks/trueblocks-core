@@ -1,414 +1,204 @@
-{ "data": [
 {
-  "type": "constructor",
-  "signature": "(address,uint256,address)",
-  "encoding": "0x522f3752",
-  "inputs": [
+  "data": [
     {
-      "name": "_legacyRepContract",
-      "type": "address"
+      "name": "",
+      "type": "constructor",
+      "signature": "(address,uint256,address)",
+      "encoding": "0x522f3752",
+      "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,",
+      "output_names": ""
     },
     {
-      "name": "_amountUsedToFreeze",
-      "type": "uint256"
+      "name": "allowance",
+      "type": "function",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
+      "input_names": "_owner,_spender,",
+      "output_names": "remaining,"
     },
     {
-      "name": "_accountToSendFrozenRepTo",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "allowance",
-  "type": "function",
-  "constant": true,
-  "signature": "allowance(address,address)",
-  "encoding": "0xdd62ed3e",
-  "inputs": [
-    {
-      "name": "_owner",
-      "type": "address"
+      "name": "approve",
+      "type": "function",
+      "signature": "approve(address,uint256)",
+      "encoding": "0x095ea7b3",
+      "input_names": "_spender,_value,",
+      "output_names": "val_0,"
     },
     {
-      "name": "_spender",
-      "type": "address"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "remaining",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "approve",
-  "type": "function",
-  "signature": "approve(address,uint256)",
-  "encoding": "0x095ea7b3",
-  "inputs": [
-    {
-      "name": "_spender",
-      "type": "address"
+      "name": "balanceOf",
+      "type": "function",
+      "signature": "balanceOf(address)",
+      "encoding": "0x70a08231",
+      "input_names": "_owner,",
+      "output_names": "balance,"
     },
     {
-      "name": "_value",
-      "type": "uint256"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "balanceOf",
-  "type": "function",
-  "constant": true,
-  "signature": "balanceOf(address)",
-  "encoding": "0x70a08231",
-  "inputs": [
-    {
-      "name": "_owner",
-      "type": "address"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "balance",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "decimals",
-  "type": "function",
-  "constant": true,
-  "signature": "decimals()",
-  "encoding": "0x313ce567",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "initialized",
-  "type": "function",
-  "constant": true,
-  "signature": "initialized()",
-  "encoding": "0x158ef93e",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "legacyRepContract",
-  "type": "function",
-  "constant": true,
-  "signature": "legacyRepContract()",
-  "encoding": "0xb85e0aca",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "address"
-    }
-  ]
-},
-{
-  "name": "migrateBalance",
-  "type": "function",
-  "signature": "migrateBalance(address)",
-  "encoding": "0x2988e36b",
-  "inputs": [
-    {
-      "name": "_holder",
-      "type": "address"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "migrateBalances",
-  "type": "function",
-  "signature": "migrateBalances(address[])",
-  "encoding": "0x4b92738e",
-  "inputs": [
-    {
-      "name": "_holders",
-      "type": "address[]"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "name",
-  "type": "function",
-  "constant": true,
-  "signature": "name()",
-  "encoding": "0x06fdde03",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "string"
-    }
-  ]
-},
-{
-  "name": "owner",
-  "type": "function",
-  "constant": true,
-  "signature": "owner()",
-  "encoding": "0x8da5cb5b",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "address"
-    }
-  ]
-},
-{
-  "name": "pause",
-  "type": "function",
-  "signature": "pause()",
-  "encoding": "0x8456cb59",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "paused",
-  "type": "function",
-  "constant": true,
-  "signature": "paused()",
-  "encoding": "0x5c975abb",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "symbol",
-  "type": "function",
-  "constant": true,
-  "signature": "symbol()",
-  "encoding": "0x95d89b41",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "string"
-    }
-  ]
-},
-{
-  "name": "targetSupply",
-  "type": "function",
-  "constant": true,
-  "signature": "targetSupply()",
-  "encoding": "0x2a1eafd9",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "totalSupply",
-  "type": "function",
-  "constant": true,
-  "signature": "totalSupply()",
-  "encoding": "0x18160ddd",
-  "inputs": [],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "uint256"
-    }
-  ]
-},
-{
-  "name": "transfer",
-  "type": "function",
-  "signature": "transfer(address,uint256)",
-  "encoding": "0xa9059cbb",
-  "inputs": [
-    {
-      "name": "_to",
-      "type": "address"
+      "name": "decimals",
+      "type": "function",
+      "signature": "decimals()",
+      "encoding": "0x313ce567",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
-      "name": "_value",
-      "type": "uint256"
-    }
-  ],
-  "outputs": [
-    {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "transferFrom",
-  "type": "function",
-  "signature": "transferFrom(address,address,uint256)",
-  "encoding": "0x23b872dd",
-  "inputs": [
-    {
-      "name": "_from",
-      "type": "address"
+      "name": "initialized",
+      "type": "function",
+      "signature": "initialized()",
+      "encoding": "0x158ef93e",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
-      "name": "_to",
-      "type": "address"
+      "name": "legacyRepContract",
+      "type": "function",
+      "signature": "legacyRepContract()",
+      "encoding": "0xb85e0aca",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
-      "name": "_value",
-      "type": "uint256"
-    }
-  ],
-  "outputs": [
+      "name": "migrateBalance",
+      "type": "function",
+      "signature": "migrateBalance(address)",
+      "encoding": "0x2988e36b",
+      "input_names": "_holder,",
+      "output_names": "val_0,"
+    },
     {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "transferOwnership",
-  "type": "function",
-  "signature": "transferOwnership(address)",
-  "encoding": "0xf2fde38b",
-  "inputs": [
+      "name": "migrateBalances",
+      "type": "function",
+      "signature": "migrateBalances(address[])",
+      "encoding": "0x4b92738e",
+      "input_names": "_holders,",
+      "output_names": "val_0,"
+    },
     {
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "unpause",
-  "type": "function",
-  "signature": "unpause()",
-  "encoding": "0x3f4ba83a",
-  "inputs": [],
-  "outputs": [
+      "name": "name",
+      "type": "function",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
     {
-      "name": "val_0",
-      "type": "bool"
-    }
-  ]
-},
-{
-  "name": "Approval",
-  "type": "event",
-  "signature": "Approval(address,address,uint256)",
-  "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-  "inputs": [
-    {
-      "indexed": true,
       "name": "owner",
-      "type": "address"
+      "type": "function",
+      "signature": "owner()",
+      "encoding": "0x8da5cb5b",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
-      "indexed": true,
-      "name": "spender",
-      "type": "address"
+      "name": "pause",
+      "type": "function",
+      "signature": "pause()",
+      "encoding": "0x8456cb59",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
-      "name": "value",
-      "type": "uint256"
+      "name": "paused",
+      "type": "function",
+      "signature": "paused()",
+      "encoding": "0x5c975abb",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "symbol",
+      "type": "function",
+      "signature": "symbol()",
+      "encoding": "0x95d89b41",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "targetSupply",
+      "type": "function",
+      "signature": "targetSupply()",
+      "encoding": "0x2a1eafd9",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "totalSupply",
+      "type": "function",
+      "signature": "totalSupply()",
+      "encoding": "0x18160ddd",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transfer",
+      "type": "function",
+      "signature": "transfer(address,uint256)",
+      "encoding": "0xa9059cbb",
+      "input_names": "_to,_value,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transferFrom",
+      "type": "function",
+      "signature": "transferFrom(address,address,uint256)",
+      "encoding": "0x23b872dd",
+      "input_names": "_from,_to,_value,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transferOwnership",
+      "type": "function",
+      "signature": "transferOwnership(address)",
+      "encoding": "0xf2fde38b",
+      "input_names": "newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "unpause",
+      "type": "function",
+      "signature": "unpause()",
+      "encoding": "0x3f4ba83a",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Approval",
+      "type": "event",
+      "signature": "Approval(address,address,uint256)",
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "input_names": "owner,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "Migrated",
+      "type": "event",
+      "signature": "Migrated(address,uint256)",
+      "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
+      "input_names": "holder,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "Pause",
+      "type": "event",
+      "signature": "Pause()",
+      "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "Transfer",
+      "type": "event",
+      "signature": "Transfer(address,address,uint256)",
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "input_names": "from,to,value,",
+      "output_names": ""
+    },
+    {
+      "name": "Unpause",
+      "type": "event",
+      "signature": "Unpause()",
+      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
+      "input_names": "",
+      "output_names": ""
     }
-  ],
-  "outputs": []
-},
-{
-  "name": "Migrated",
-  "type": "event",
-  "signature": "Migrated(address,uint256)",
-  "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
-  "inputs": [
-    {
-      "indexed": true,
-      "name": "holder",
-      "type": "address"
-    },
-    {
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "Pause",
-  "type": "event",
-  "signature": "Pause()",
-  "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
-  "inputs": [],
-  "outputs": []
-},
-{
-  "name": "Transfer",
-  "type": "event",
-  "signature": "Transfer(address,address,uint256)",
-  "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-  "inputs": [
-    {
-      "indexed": true,
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
-  "outputs": []
-},
-{
-  "name": "Unpause",
-  "type": "event",
-  "signature": "Unpause()",
-  "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
-  "inputs": [],
-  "outputs": []
-}] }
+  ]
+}

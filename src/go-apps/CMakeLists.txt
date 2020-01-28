@@ -1,5 +1,5 @@
 # minimum cmake version supported
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
 # folder project
 project (go-apps)
@@ -8,7 +8,7 @@ project (go-apps)
 include_directories(${BASE_INCLUDE})
 
 # messaging
-# message (WARNING  "*** Entering apps folder ***")
+# message (MESSAGE "Entering go-apps folder")
 
 # Compilation order of the src subdirectories
 add_subdirectory(blaze)

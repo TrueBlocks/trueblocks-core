@@ -16,9 +16,9 @@
 #include "utillib.h"
 
 //----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
-//    etherlib_init(quickQuitHandler);
+int main(int argc, const char* argv[]) {
+    //    etherlib_init(quickQuitHandler);
 
-    cout << substitute(urlToString("https:/""/quickblocks.io"), "\r", "") << "\n";
+    cout << substitute(urlToString("https://quickblocks.io"), "\r", "") << endl;
     return 0;
 }

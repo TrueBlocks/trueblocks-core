@@ -16,18 +16,19 @@
 namespace qblocks {
 
 // known timestamps
-#define blockZeroTs        1438269960
+#define blockZeroTs ((timestamp_t)1438269960)
+#define istanbulTs ((timestamp_t)1575764709)
 
 // known blocks
-#define firstTransactionBlock   46147
-#define firstTraceBlock         50871
-#define byzantiumBlock        4370000
-#define constantinopleBlock   7280000
+#define firstTransactionBlock 46147
+#define firstTraceBlock 50871
+#define byzantiumBlock 4370000
+#define constantinopleBlock 7280000
+#define instanbulBlock 9069000
 
-    //-----------------------------------------------------------------------
-    inline bool ddosRange(blknum_t bn) {
-        return (bn >= 2283440 && bn <= 2718436);
-    }
+//-----------------------------------------------------------------------
+inline bool ddosRange(blknum_t bn) {
+    return (bn >= 2283440 && bn <= 2718436);
+}
 
 }  // namespace qblocks
-

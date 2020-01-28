@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CESResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextEsresultChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextEsresultChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextEsresultChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextEsresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CESResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CESResult::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,52 @@ void CESResult::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const
 }
 
 //---------------------------------------------------------------------------
-string_q nextEsresultChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextEsresultChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CESResult *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CESResult*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CESResult::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextEsresultChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'm':
+            if (fieldName % "message") {
+                return message;
+            }
+            break;
+        case 'r':
+            if (fieldName % "result") {
+                return result;
+            }
+            break;
+        case 's':
+            if (fieldName % "status") {
+                return status;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,13 +106,22 @@ bool CESResult::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'm':
-            if ( fieldName % "message" ) { message = fieldValue; return true; }
+            if (fieldName % "message") {
+                message = fieldValue;
+                return true;
+            }
             break;
         case 'r':
-            if ( fieldName % "result" ) { result = fieldValue; return true; }
+            if (fieldName % "result") {
+                result = fieldValue;
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "status" ) { status = fieldValue; return true; }
+            if (fieldName % "status") {
+                status = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -90,7 +137,6 @@ void CESResult::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CESResult::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -111,7 +157,6 @@ bool CESResult::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CESResult::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -129,7 +174,7 @@ CArchive& operator>>(CArchive& archive, CESResultArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -140,7 +185,7 @@ CArchive& operator>>(CArchive& archive, CESResultArray& array) {
 CArchive& operator<<(CArchive& archive, const CESResultArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -148,13 +193,14 @@ CArchive& operator<<(CArchive& archive, const CESResultArray& array) {
 //---------------------------------------------------------------------------
 void CESResult::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CESResult, "schema")) return;
+    if (HAS_FIELD(CESResult, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CESResult, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CESResult, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CESResult, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CESResult, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CESResult, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CESResult, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CESResult, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CESResult, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CESResult, "status", T_TEXT, ++fieldNum);
     ADD_FIELD(CESResult, "message", T_TEXT, ++fieldNum);
     ADD_FIELD(CESResult, "result", T_TEXT, ++fieldNum);
@@ -172,15 +218,15 @@ void CESResult::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextEsresultChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CESResult *esr = reinterpret_cast<const CESResult *>(dataPtr);
+string_q nextEsresultChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CESResult* esr = reinterpret_cast<const CESResult*>(dataPtr);
     if (esr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, esr);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -196,39 +242,10 @@ string_q nextEsresultChunk_custom(const string_q& fieldIn, const void *dataPtr) 
 
 //---------------------------------------------------------------------------
 bool CESResult::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CESResult::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextEsresultChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'm':
-            if ( fieldName % "message" ) return message;
-            break;
-        case 'r':
-            if ( fieldName % "result" ) return result;
-            break;
-        case 's':
-            if ( fieldName % "status" ) return status;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -248,4 +265,3 @@ const char* STR_DISPLAY_ESRESULT = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

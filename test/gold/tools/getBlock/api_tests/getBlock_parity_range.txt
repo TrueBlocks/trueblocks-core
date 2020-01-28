@@ -1,8 +1,6 @@
 {
   "data": [
     {
-      "age": "100",
-      "date": "2015-10-09 17:31:10 UTC",
       "difficulty": "0x5a5753781c6",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -142,8 +140,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:31:29 UTC",
       "difficulty": "0x5a4c088dad8",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -183,8 +179,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:31:42 UTC",
       "difficulty": "0x5a40bf0c9bf",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -198,8 +192,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:31:57 UTC",
       "difficulty": "0x5a3576f4ba8",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -239,8 +231,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:32:00 UTC",
       "difficulty": "0x5a40bda3993",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -254,8 +244,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:32:10 UTC",
       "difficulty": "0x5a4c05bb4dc",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -295,8 +283,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:32:30 UTC",
       "difficulty": "0x5a40bc3a968",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -336,8 +322,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:33:14 UTC",
       "difficulty": "0x5a3574230f5",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -577,8 +561,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:33:35 UTC",
       "difficulty": "0x5a2a2d748b1",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -643,8 +625,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:33:43 UTC",
       "difficulty": "0x5a3572ba39c",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -658,8 +638,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:33:53 UTC",
       "difficulty": "0x5a40b968912",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -673,8 +651,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:34:27 UTC",
       "difficulty": "0x5a357151643",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -764,8 +740,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:34:51 UTC",
       "difficulty": "0x5a2a2aa33a3",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -805,8 +779,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:35:11 UTC",
       "difficulty": "0x5a1ee55de5f",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -896,8 +868,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:35:36 UTC",
       "difficulty": "0x5a13a1813a6",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -937,8 +907,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:35:40 UTC",
       "difficulty": "0x5a1ee3f56aa",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -952,8 +920,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:35:52 UTC",
       "difficulty": "0x5a2a27d1e96",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -967,8 +933,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:35:54 UTC",
       "difficulty": "0x5a356d16e3b",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1008,8 +972,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:36:45 UTC",
       "difficulty": "0x5a2a2669410",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1049,8 +1011,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:36:59 UTC",
       "difficulty": "0x5a1ee124740",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1115,8 +1075,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:37:08 UTC",
       "difficulty": "0x5a2a250098a",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1130,8 +1088,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:37:20 UTC",
       "difficulty": "0x5a356a4538d",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1196,8 +1152,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:38:26 UTC",
       "difficulty": "0x5a2a2397f05",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1237,8 +1191,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:38:36 UTC",
       "difficulty": "0x5a3568dc636",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1252,8 +1204,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:39:12 UTC",
       "difficulty": "0x5a2a222f480",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1267,8 +1217,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:39:33 UTC",
       "difficulty": "0x5a1edceb024",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1358,8 +1306,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:39:36 UTC",
       "difficulty": "0x5a2a20c69fc",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1724,8 +1670,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:39:45 UTC",
       "difficulty": "0x5a35660ab8b",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1739,8 +1683,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:39:58 UTC",
       "difficulty": "0x5a2a1f5df78",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1754,8 +1696,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:40:02 UTC",
       "difficulty": "0x5a3564a1e35",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1820,8 +1760,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:40:14 UTC",
       "difficulty": "0x5a40ab4e77a",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1936,8 +1874,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:40:27 UTC",
       "difficulty": "0x5a3563390e0",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1951,8 +1887,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:40:29 UTC",
       "difficulty": "0x5a40a9e5754",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -1992,8 +1926,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:40:44 UTC",
       "difficulty": "0x5a3561d038c",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2007,8 +1939,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:41:02 UTC",
       "difficulty": "0x5a2a1b23fee",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2022,8 +1952,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:41:17 UTC",
       "difficulty": "0x5a1ed5e09a9",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2138,8 +2066,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:41:31 UTC",
       "difficulty": "0x5a139205dea",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2329,8 +2255,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:41:47 UTC",
       "difficulty": "0x5a084f939e1",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2445,8 +2369,6 @@
       ]
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:41:59 UTC",
       "difficulty": "0x5a13909d90a",
       "finalized": "true",
       "gasLimit": "0x2fefd8",
@@ -2460,8 +2382,6 @@
       "transactions": []
     },
     {
-      "age": "100",
-      "date": "2015-10-09 17:42:02 UTC",
       "difficulty": "0x5a1ed30fa47",
       "finalized": "true",
       "gasLimit": "0x2fefd8",

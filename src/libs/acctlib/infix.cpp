@@ -24,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode);
 
 //---------------------------------------------------------------------------
-static string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextInfixChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextInfixChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CInfix::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CInfix::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -49,14 +49,44 @@ void CInfix::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextInfixChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextInfixChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CInfix *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CInfix*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CInfix::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextInfixChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'n':
+            if (fieldName % "next") {
+                if (next)
+                    return next->Format();
+                return "";
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CTreeNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -72,13 +102,14 @@ bool CInfix::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'n':
-            if ( fieldName % "next" ) {
-                clear();
-                next = new CTreeNode;
-                if (next) {
-                    string_q str = fieldValue;
-                    return next->parseJson3(str);
-                }
+            if (fieldName % "next") {
+                // This drops memory, so we comment it out for now
+                // clear();
+                // next = new CTreeNode;
+                // if (next) {
+                //     string_q str = fieldValue;
+                //     return next->parseJson3(str);
+                // }
                 return false;
             }
             break;
@@ -96,7 +127,6 @@ void CInfix::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -114,7 +144,7 @@ bool CInfix::Serialize(CArchive& archive) {
     if (has_next) {
         string_q className;
         archive >> className;
-        next = reinterpret_cast<CTreeNode *>(createObjectOfType(className));
+        next = reinterpret_cast<CTreeNode*>(createObjectOfType(className));
         if (!next)
             return false;
         next->Serialize(archive);
@@ -125,7 +155,6 @@ bool CInfix::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CInfix::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CTreeNode::SerializeC(archive);
 
@@ -145,7 +174,7 @@ CArchive& operator>>(CArchive& archive, CInfixArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -156,7 +185,7 @@ CArchive& operator>>(CArchive& archive, CInfixArray& array) {
 CArchive& operator<<(CArchive& archive, const CInfixArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -164,15 +193,16 @@ CArchive& operator<<(CArchive& archive, const CInfixArray& array) {
 //---------------------------------------------------------------------------
 void CInfix::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CInfix, "schema")) return;
+    if (HAS_FIELD(CInfix, "schema"))
+        return;
 
     CTreeNode::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CInfix, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CInfix, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CInfix, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CInfix, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CInfix, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CInfix, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CInfix, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CInfix, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CInfix, "next", T_POINTER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -188,15 +218,15 @@ void CInfix::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CInfix *inf = reinterpret_cast<const CInfix *>(dataPtr);
+string_q nextInfixChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CInfix* inf = reinterpret_cast<const CInfix*>(dataPtr);
     if (inf) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, inf);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -212,37 +242,10 @@ string_q nextInfixChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CInfix::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CInfix::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextInfixChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "next" ) {
-                if (next)
-                    return next->Format();
-                return "";
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CTreeNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -256,113 +259,123 @@ ostream& operator<<(ostream& os, const CInfix& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode* CInfix::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "next")
+        return next;
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_INFIX = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-    //-----------------------------------------------------------------------------
-    string_q CInfix::at(const string_q& _key) const {
-        ASSERT(next);
-        return contains(_key) ? next->at(extract(_key, prefixS.length())) : "";
+//-----------------------------------------------------------------------------
+string_q CInfix::at(const string_q& _key) const {
+    ASSERT(next);
+    return contains(_key) ? next->at(extract(_key, prefixS.length())) : "";
+}
+
+//-----------------------------------------------------------------------------
+bool CInfix::contains(const string_q& _key) const {
+    size_t l1 = _key.length();
+    size_t l2 = prefixS.length();
+    const char* s1 = _key.c_str();
+    const char* s2 = prefixS.c_str();
+    bool found = !memcmp(s1, s2, l2);
+
+    return l1 >= l2 && found;
+}
+
+//-----------------------------------------------------------------------------
+CTreeNode* CInfix::insert(const string_q& _key, const string_q& _value) {
+    if (verbose == 2) {
+        cerr << "\tinfix inserting " << _key << " at " << _value << "\n";
     }
+    ASSERT(_value.length());
+    if (contains(_key)) {
+        next = next->insert(extract(_key, prefixS.length()), _value);
+        return this;
 
-    //-----------------------------------------------------------------------------
-    bool CInfix::contains(const string_q& _key) const {
-        size_t l1 = _key.length();
-        size_t l2 = prefixS.length();
-        const char *s1 = _key.c_str();
-        const char *s2 = prefixS.c_str();
-        bool found = !memcmp(s1, s2, l2);
-
-        return
-        l1 >= l2 && found;
-    }
-
-    //-----------------------------------------------------------------------------
-    CTreeNode* CInfix::insert(const string_q& _key, const string_q& _value) {
-        if (verbose == 2) { cerr << "\tinfix inserting " << _key << " at " << _value << "\n"; }
-        ASSERT(_value.length());
-        if (contains(_key)) {
-            next = next->insert(extract(_key, prefixS.length()), _value);
-            return this;
+    } else {
+        unsigned prefixA = commonPrefix(_key, prefixS);
+        if (prefixA) {
+            // one infix becomes two infixes, then insert into the second
+            // instead of pop_front()...
+            prefixS = extract(prefixS, prefixA);
+            return new CInfix(extract(_key, 0, prefixA), insert(extract(_key, prefixA), _value));
 
         } else {
-            unsigned prefixA = commonPrefix(_key, prefixS);
-            if (prefixA) {
-                // one infix becomes two infixes, then insert into the second
-                // instead of pop_front()...
-                prefixS = extract(prefixS, prefixA);
-                return new CInfix(extract(_key, 0, prefixA), insert(extract(_key, prefixA), _value));
-
-            } else {
-                // split here.
-                auto f = prefixS[0];
-                prefixS = extract(prefixS, 1);
-                CTreeNode* n = prefixS.empty() ? next : this;
-                if (n != this) {
-                    next = NULL;
-                    delete this;
-                }
-                CBranch* ret = new CBranch(f, n);
-                ret->insert(_key, _value);
-                return ret;
-            }
-        }
-    }
-
-    string_q idnt = "";
-    //-----------------------------------------------------------------------------
-    CTreeNode* CInfix::remove(const string_q& _key) {
-        if (verbose) {
-            cerr << endl << endl<< endl
-            << idnt << string_q(80, '-') << endl
-            << idnt << string_q(80, '-') << endl
-            << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
-            idnt+="\t";
-        }
-
-        if (contains(_key)) {
-            string_q newKey = extract(_key, prefixS.length());
-            next = next->remove(newKey);
-            if (auto p = next) {
-                // merge with child...
-                p->prefixS = prefixS + p->prefixS;
-                next = nullptr;
+            // split here.
+            auto f = prefixS[0];
+            prefixS = extract(prefixS, 1);
+            CTreeNode* n = prefixS.empty() ? next : this;
+            if (n != this) {
+                next = NULL;
                 delete this;
-                if (verbose) cerr << idnt << "removed infix replaced with [" << p->prefixS << "]";
-                replace(idnt, "\t", "");
-                return p;
             }
-
-            if (!next) {
-                // we've cleaned up all the children
-                delete this;
-                replace(idnt, "\t", "");
-                return NULL;
-            }
+            CBranch* ret = new CBranch(f, n);
+            ret->insert(_key, _value);
+            return ret;
         }
-        replace(idnt, "\t", "");
-        return this;
+    }
+}
+
+string_q idnt = "";
+//-----------------------------------------------------------------------------
+CTreeNode* CInfix::remove(const string_q& _key) {
+    if (verbose) {
+        cerr << endl
+             << endl
+             << endl
+             << idnt << string_q(80, '-') << endl
+             << idnt << string_q(80, '-') << endl
+             << idnt << "remove infix [" << prefixS << "] at [" << _key << "]: ";
+        idnt += "\t";
     }
 
-    //------------------------------------------------------------------
-    bool CInfix::visitItems(ACCTVISITOR func, void *data) const {
-        ASSERT(func);
-        CVisitData *vd = reinterpret_cast<CVisitData*>(data);
-        uint64_t save = vd->type;
-        vd->counter = 0;
-        vd->type = T_INFIX;
-        vd->strs = vd->strs + "+" + prefixS;
-        (*func)(this, data);
-        if (next) {
-            vd->level++;
-            next->visitItems(func, data);
-            vd->level--;
+    if (contains(_key)) {
+        string_q newKey = extract(_key, prefixS.length());
+        next = next->remove(newKey);
+        if (auto p = next) {
+            // merge with child...
+            p->prefixS = prefixS + p->prefixS;
+            next = nullptr;
+            delete this;
+            if (verbose)
+                cerr << idnt << "removed infix replaced with [" << p->prefixS << "]";
+            replace(idnt, "\t", "");
+            return p;
         }
-        nextTokenClearReverse(vd->strs, '+');
-        vd->type = save;
-        return true;
+
+        if (!next) {
+            // we've cleaned up all the children
+            delete this;
+            replace(idnt, "\t", "");
+            return NULL;
+        }
     }
+    replace(idnt, "\t", "");
+    return this;
+}
+
+//------------------------------------------------------------------
+bool CInfix::visitItems(ACCTVISITOR func, void* data) const {
+    ASSERT(func);
+    CVisitData* vd = reinterpret_cast<CVisitData*>(data);
+    uint64_t save = vd->type;
+    vd->counter = 0;
+    vd->type = T_INFIX;
+    vd->strs = vd->strs + "+" + prefixS;
+    (*func)(this, data);
+    if (next) {
+        vd->level++;
+        next->visitItems(func, data);
+        vd->level--;
+    }
+    nextTokenClearReverse(vd->strs, '+');
+    vd->type = save;
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks
-

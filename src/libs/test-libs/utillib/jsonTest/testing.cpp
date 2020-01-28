@@ -16,7 +16,7 @@
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTraceArray& array) {
     cout << "[\n";
-    for (size_t i = 0 ; i < array.size() ; i++) {
+    for (size_t i = 0; i < array.size(); i++) {
         array[i].Format(os, "", nullptr);
         if (i < array.size() - 1)
             cout << ",";
@@ -27,7 +27,7 @@ ostream& operator<<(ostream& os, const CTraceArray& array) {
 }
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -65,7 +65,6 @@ int main(int argc, const char *argv[]) {
                 cout << trace << "\n";
 
         } else if (options.fileName == "big") {
-
             CRPCResult generic;
             while (generic.parseJson3(contents)) {
                 CTrace trace;
@@ -74,7 +73,6 @@ int main(int argc, const char *argv[]) {
             }
 
         } else {
-
             GETRUNTIME_CLASS(CTrace)->sortFieldList();
             CTraceArray array;
             CTrace trace;

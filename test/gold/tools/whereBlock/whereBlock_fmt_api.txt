@@ -1,6 +1,6 @@
 whereBlock argc: 4 [1:1001001] [2:--fmt] [3:api] 
 whereBlock 1001001 --fmt api 
-{ "type": "CCacheEntry", "data": [
+{ "type": "CCacheEntry", "fieldList": [{ "name": "blockNumber", "type": "text" }, { "name": "cached", "type": "bool" }, { "name": "path", "type": "text" }], "data": [
   {
     "blockNumber": "1001001",
     "cached": true,

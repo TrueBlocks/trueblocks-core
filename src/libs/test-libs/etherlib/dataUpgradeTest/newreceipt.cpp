@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CNewReceipt, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextNewreceiptChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CNewReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CNewReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,70 @@ void CNewReceipt::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextNewreceiptChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextNewreceiptChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CNewReceipt *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CNewReceipt*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextNewreceiptChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "contractAddress") {
+                return addr_2_Str(contractAddress);
+            }
+            break;
+        case 'g':
+            if (fieldName % "gasUsed") {
+                return gas_2_Str(gasUsed);
+            }
+            break;
+        case 'i':
+            if (fieldName % "isError") {
+                return bool_2_Str_t(isError);
+            }
+            break;
+        case 'l':
+            if (fieldName % "logs" || fieldName % "logsCnt") {
+                size_t cnt = logs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += logs[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            if (fieldName % "logsBloom") {
+                return bloom_2_Bytes(logsBloom);
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,16 +124,25 @@ bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "contractAddress" ) { contractAddress = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "contractAddress") {
+                contractAddress = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "gasUsed" ) { gasUsed = str_2_Gas(fieldValue); return true; }
+            if (fieldName % "gasUsed") {
+                gasUsed = str_2_Gas(fieldValue);
+                return true;
+            }
             break;
         case 'i':
-            if ( fieldName % "isError" ) { isError = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "isError") {
+                isError = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'l':
-            if ( fieldName % "logs" ) {
+            if (fieldName % "logs") {
                 CLogEntry item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -86,7 +151,10 @@ bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fi
                 }
                 return true;
             }
-            if ( fieldName % "logsBloom" ) { logsBloom = str_2_Bloom(fieldValue); return true; }
+            if (fieldName % "logsBloom") {
+                logsBloom = str_2_Bloom(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -102,7 +170,6 @@ void CNewReceipt::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewReceipt::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -125,7 +192,6 @@ bool CNewReceipt::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewReceipt::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
@@ -146,7 +212,7 @@ CArchive& operator>>(CArchive& archive, CNewReceiptArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -157,7 +223,7 @@ CArchive& operator>>(CArchive& archive, CNewReceiptArray& array) {
 CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -165,16 +231,17 @@ CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array) {
 //---------------------------------------------------------------------------
 void CNewReceipt::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CNewReceipt, "schema")) return;
+    if (HAS_FIELD(CNewReceipt, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CNewReceipt, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CNewReceipt, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNewReceipt, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CNewReceipt, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CNewReceipt, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CNewReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CNewReceipt, "logs", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "logs", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logsBloom", T_BLOOM, ++fieldNum);
     ADD_FIELD(CNewReceipt, "isError", T_BOOL, ++fieldNum);
 
@@ -191,16 +258,16 @@ void CNewReceipt::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CNewReceipt *newp = reinterpret_cast<const CNewReceipt *>(dataPtr);
-    if (newp) {
+string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CNewReceipt* newr = reinterpret_cast<const CNewReceipt*>(dataPtr);
+    if (newr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
-                    return nextBasenodeChunk(fieldIn, newp);
+                if (fieldIn % "parsed")
+                    return nextBasenodeChunk(fieldIn, newr);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -215,66 +282,10 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CNewReceipt::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CNewReceipt& newp) {
-    newp.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CNewReceipt& newp) {
-    newp.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextNewreceiptChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "contractAddress" ) return addr_2_Str(contractAddress);
-            break;
-        case 'g':
-            if ( fieldName % "gasUsed" ) return gas_2_Str(gasUsed);
-            break;
-        case 'i':
-            if ( fieldName % "isError" ) return bool_2_Str_t(isError);
-            break;
-        case 'l':
-            if ( fieldName % "logs" || fieldName % "logsCnt" ) {
-                size_t cnt = logs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += logs[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            if ( fieldName % "logsBloom" ) return bloom_2_Bytes(logsBloom);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -288,8 +299,8 @@ ostream& operator<<(ostream& os, const CNewReceipt& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CNewReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "logs" && index < logs.size() )
+const CBaseNode* CNewReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "logs" && index < logs.size())
         return &logs[index];
     return NULL;
 }
@@ -301,4 +312,3 @@ const char* STR_DISPLAY_NEWRECEIPT = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

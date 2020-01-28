@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CCacheEntry, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCacheentryChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextCacheentryChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CCacheEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CCacheEntry::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,57 @@ void CCacheEntry::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheentryChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextCacheentryChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CCacheEntry *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCacheEntry*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CCacheEntry::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextCacheentryChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "cached") {
+                return bool_2_Str(cached);
+            }
+            break;
+        case 'e':
+            if (fieldName % "extra") {
+                return extra;
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                return path;
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                return uint_2_Str(type);
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,16 +111,28 @@ bool CCacheEntry::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "cached" ) { cached = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "cached") {
+                cached = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'e':
-            if ( fieldName % "extra" ) { extra = fieldValue; return true; }
+            if (fieldName % "extra") {
+                extra = fieldValue;
+                return true;
+            }
             break;
         case 'p':
-            if ( fieldName % "path" ) { path = fieldValue; return true; }
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "type" ) { type = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "type") {
+                type = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -93,7 +148,6 @@ void CCacheEntry::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CCacheEntry::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -115,7 +169,6 @@ bool CCacheEntry::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CCacheEntry::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -134,7 +187,7 @@ CArchive& operator>>(CArchive& archive, CCacheEntryArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -145,7 +198,7 @@ CArchive& operator>>(CArchive& archive, CCacheEntryArray& array) {
 CArchive& operator<<(CArchive& archive, const CCacheEntryArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -153,14 +206,15 @@ CArchive& operator<<(CArchive& archive, const CCacheEntryArray& array) {
 //---------------------------------------------------------------------------
 void CCacheEntry::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CCacheEntry, "schema")) return;
+    if (HAS_FIELD(CCacheEntry, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CCacheEntry, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCacheEntry, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCacheEntry, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCacheEntry, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CCacheEntry, "type", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCacheEntry, "type", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCacheEntry, "extra", T_TEXT, ++fieldNum);
     ADD_FIELD(CCacheEntry, "cached", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheEntry, "path", T_TEXT, ++fieldNum);
@@ -178,18 +232,19 @@ void CCacheEntry::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CCacheEntry *cac = reinterpret_cast<const CCacheEntry *>(dataPtr);
+string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCacheEntry* cac = reinterpret_cast<const CCacheEntry*>(dataPtr);
     if (cac) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'b':
-                if ( fieldIn % "blockNumber") return cac->extra;
+                if (fieldIn % "blockNumber")
+                    return cac->extra;
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, cac);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -205,42 +260,10 @@ string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CCacheEntry::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CCacheEntry::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextCacheentryChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "cached" ) return bool_2_Str(cached);
-            break;
-        case 'e':
-            if ( fieldName % "extra" ) return extra;
-            break;
-        case 'p':
-            if ( fieldName % "path" ) return path;
-            break;
-        case 't':
-            if ( fieldName % "type" ) return uint_2_Str(type);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -260,4 +283,3 @@ const char* STR_DISPLAY_CACHEENTRY = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

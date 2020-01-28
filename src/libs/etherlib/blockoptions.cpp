@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "blockoptions.h"
 
-static uint64_t findBlockNumByHash(const hash_t& hash, void *data);
+static uint64_t findBlockNumByHash(const hash_t& hash, void* data);
 //--------------------------------------------------------------------------------
 CBlockOptions::CBlockOptions(void) {
     Init();
@@ -25,7 +25,7 @@ void CBlockOptions::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-uint64_t findBlockNumByHash(const hash_t& hash, void *data) {
+uint64_t findBlockNumByHash(const hash_t& hash, void* data) {
     ASSERT(isHash(hash));
     CBlock block;
     getBlock(block, hash);  // getBlock returns true if it has transactions and false otherwise
@@ -37,9 +37,9 @@ uint64_t findBlockNumByHash(const hash_t& hash, void *data) {
 }
 
 //--------------------------------------------------------------------------------
-bool blockNumToString(uint64_t num, void *data) {
+bool blockNumToString(uint64_t num, void* data) {
     if (num != NOPOS) {
-        string_q *str = (string_q*)data;  // NOLINT
+        string_q* str = (string_q*)data;  // NOLINT
         *str += (uint_2_Str(num) + "|");
     }
     return true;
@@ -81,7 +81,6 @@ string_q getDispBal(blknum_t bn, biguint_t bal) {
 
 //--------------------------------------------------------------------------------
 bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
-
     if (contains(argOut, "0x"))
         return true;
 
@@ -99,10 +98,11 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     }
 
     // txnum_t txid;
-    if (parts.size() == 0 ||  // there are not enough
+    if (parts.size() == 0 ||                            // there are not enough
         (parts.size() == 1 && parts[0] != "latest") ||  // there's only one and it's not 'latest'
-        ((parts.size() == 2 || parts.size() == 3) && (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
-        parts.size() > 3) {  // too many
+        ((parts.size() == 2 || parts.size() == 3) &&
+         (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
+        parts.size() > 3) {                                  // too many
         errorMsg = argOut + " does not appear to be a valid transaction index.";
         return false;
     }
@@ -130,8 +130,7 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
 
 //--------------------------------------------------------------------------------
 bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg) {
-
-    blknum_t lastBlock = getLastBlock_client();
+    blknum_t lastBlock = getLatestBlock_client();
 
     if (bn < firstTransactionBlock) {
         argOut = uint_2_Str(firstTransactionBlock) + ".0";
@@ -169,7 +168,7 @@ bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q
 }
 
 //--------------------------------------------------------------------------------
-bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn) {
+bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const string_q& argIn) {
     string_q errorMsg;
     string_q arg = argIn;
     if (!wrangleTxId(arg, errorMsg))
@@ -181,7 +180,7 @@ bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const stri
 }
 
 //--------------------------------------------------------------------------------
-bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_q& argIn, blknum_t latest) {
+bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_q& argIn, blknum_t latest) {
     string_q ret = blocks.parseBlockList(argIn, latest);
     if (endsWith(ret, "\n")) {
         cerr << "\n  " << ret << "\n";
@@ -193,15 +192,16 @@ bool parseBlockList2(COptionsBase *opt, COptionsBlockList& blocks, const string_
 }
 
 //--------------------------------------------------------------------------------
-bool parseAddressList2(COptionsBase *opt, CAddressArray& addrs, const string_q& argIn) {
+bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
     if (!isAddress(argIn))
-        return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) + ") is not equal to 40 characters (20 bytes).");
+        return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
+                          ") is not equal to 40 characters (20 bytes).");
     addrs.push_back(toLower(str_2_Addr(argIn)));
     return true;
 }
 
 //--------------------------------------------------------------------------------
-bool parseStringList2(COptionsBase *opt, CStringArray& strings, const string& argIn) {
+bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
     strings.push_back(argIn);
     return true;
 }

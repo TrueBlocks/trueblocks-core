@@ -1,5 +1,5 @@
 # minimum cmake version supported
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
 # application project
 project (findFirst)
@@ -18,5 +18,4 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
 # Additional target to make the README.md
-#set(README_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-#add_custom_target(readme COMMAND ${TEST_EXE} "-th" ">" "${README_FILE}" "2>&1")
+build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})

@@ -20,34 +20,39 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
-    COption("list", "l", "", OPT_SWITCH, "list all definition files found in the local ./classDefinitions folder"),
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("js", "j", "<string>", OPT_FLAG, "export javaScript code from the class definition"),
+    COption("js", "j", "", OPT_SWITCH, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
+    COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
+    COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
-    COption("filter", "f", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),
+    COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
+    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
     // BEG_CODE_LOCAL_INIT
     CStringArray files;
-    bool list = false;
     bool run = false;
     bool edit = false;
-    string_q js = "";
+    bool js = false;
     bool options = false;
+    bool format = false;
+    bool lint = false;
+    bool dump = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -56,9 +61,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-l" || arg == "--list") {
-            list = true;
-
         } else if (arg == "-r" || arg == "--run") {
             run = true;
 
@@ -68,17 +70,26 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (startsWith(arg, "-j:") || startsWith(arg, "--js:")) {
-            js = substitute(substitute(arg, "-j:", ""), "--js:", "");
+        } else if (arg == "-j" || arg == "--js") {
+            js = true;
 
         } else if (arg == "-o" || arg == "--options") {
             options = true;
 
+        } else if (arg == "-f" || arg == "--format") {
+            format = true;
+
+        } else if (arg == "-l" || arg == "--lint") {
+            lint = true;
+
+        } else if (arg == "-d" || arg == "--dump") {
+            dump = true;
+
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
             nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
 
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
+            filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
 
         } else if (arg == "-t" || arg == "--test") {
             test = true;
@@ -97,53 +108,94 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // If the user has explicitly specified a classDef, use that
+    LOG8("pwd: ", getCWD());
     for (auto file : files) {
         CClassDefinition cl;
         if (fileExists(file)) {
-            cl.className = substitute(substitute(file, "./classDefinitions/", ""), ".txt", "");
-            cl.inputPath = file;
+            cl.short_fn = substitute(substitute(file, "./classDefinitions/", ""), ".txt", "");
+            cl.input_path = file;
         } else {
-            cl.className = file;
-            cl.inputPath = "./classDefinitions/" + file + ".txt";
+            cl.short_fn = file;
+            cl.input_path = "./classDefinitions/" + file + ".txt";
         }
         classDefs.push_back(cl);
     }
 
-    if (options)
-        return !handle_options();
-
-    if (!js.empty())
-        return handle_json_export(js);
-
-    if (contains(command, "-j"))
-        return usage(errStrs[ERR_EMPTYJSFILE]);
-
-    if (!all && !folderExists("./classDefinitions/"))
-        return usage(errStrs[ERR_CLASSDEFNOTEXIST]);
-
-    if (!folderExists(configPath("makeClass/")))
-        return usage(errStrs[ERR_CONFIGMISSING]);
-
-    if ((run + list + edit) > 1)
-        return usage(errStrs[ERR_CHOOSEONE]);
-
-    if (!run && !list && !edit && !all)
-        return usage(errStrs[ERR_CHOOSEONE]);
-
-    mode = (run ? RUN : edit ? EDIT : LIST);
-    LOG8("run: ", run, " edit: ", edit, " list: ", list, " classes: ", all, " mode: ", mode);
-    if (list || all) {
-        classDefs.clear();
-        if (!folderExists("./classDefinitions")) {  // if not in a folder with one class def, try to produce all classDefs
+    // If the user has not specified a classDef, try to find some
+    if (classDefs.empty()) {
+        // If not in a folder with a specific classDef, try to produce all classDefs
+        if (!folderExists("./classDefinitions")) {
             nspace = "qblocks";
-            forEveryFileInFolder("../", listClasses, this);
-        }  else {
+            forEveryFileInFolder("./", listClasses, this);
+        } else {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
 
+    // Handle the weird javaScript code export first just to get it out of the way
+    if (js)
+        return handle_json_export();
+    if (contains(command, "-j"))
+        return usage(errStrs[ERR_EMPTYJSFILE]);
+
+    // Ignoring classDefs for a moment, process special options. Note: order matters
+    if (options && !handle_options())
+        return false;
+    if (format && !handle_format())
+        return false;
+    if (lint && !handle_lint())
+        return false;
+
+    // Default to run if we get only all
+    if (!run && !edit && !dump && all)
+        run = true;
+
+    // Maybe the user only wants to generate code, format, or lint...
+    if ((run + edit + dump) == 0 && (options + format + lint) > 0)
+        return false;
+
+    // If not, we need classDefs to work with...
     if (classDefs.empty())
-            return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
+        return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
+
+    // If we're dumping, dump...
+    if (dump) {
+        for (auto cl : classDefs) {
+            CToml toml(cl.input_path);
+            toml.readFile(cl.input_path);
+            if (verbose) {
+                SHOW_FIELD(CClassDefinition, "fieldArray");
+                HIDE_FIELD(CClassDefinition, "field_str");
+                manageFields("CParameter:is_enabled,is_flags", false);
+                CClassDefinition d(toml);
+                cout << d << endl;
+                HIDE_FIELD(CClassDefinition, "fieldArray");
+                SHOW_FIELD(CClassDefinition, "field_str");
+            } else {
+                cout << string_q(120, '-') << endl << cl.input_path << endl << string_q(120, '-') << endl;
+                cout << toml << endl;
+            }
+        }
+        // Maybe we're done..
+        if ((run + edit) == 0)
+            return false;
+    }
+
+    // We need the template files
+    if (!folderExists(configPath("makeClass/")))
+        return usage(errStrs[ERR_CONFIGMISSING]);
+
+    // If we got this far, user needs to tell us what to do...
+    if (!run && !edit)
+        return usage(errStrs[ERR_CHOOSEONE]);
+
+    // ..but only one thing to do.
+    if ((run + edit) > 1)
+        return usage(errStrs[ERR_CHOOSEONE]);
+
+    mode = (edit ? EDIT : RUN);
+    LOG8("run: ", run, " edit: ", edit, " classes: ", all, " mode: ", mode);
 
     return true;
 }
@@ -162,6 +214,12 @@ void COptions::Init(void) {
 
     mode = NONE;
     classDefs.clear();
+    counter = CCounter();
+
+    CToml toml(configPath("makeClass.toml"));
+    lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
+    lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
+    toml.Release();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -170,9 +228,11 @@ COptions::COptions(void) : classFile("") {
     Init();
 
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
     notes.push_back("The `--class` flag generates c++ code for each definition found in the local folder.");
     notes.push_back("More information on class definition files is found in the documentation.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -184,14 +244,21 @@ COptions::COptions(void) : classFile("") {
     errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}]. Quitting...";
     errStrs[ERR_NEEDONECLASS] = "Please specify at least one className. Quitting...";
     // END_ERROR_MSG
+
+    updateTemplates();
+
+    CCommandOption::registerClass();
+    CClassDefinition::registerClass();
+    CPage::registerClass();
+    CSubpage::registerClass();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
 
-//---------------------------------------------------------------------------------------------------
-bool listClasses(const string_q& path, void *data) {
+//--------------------------------------------------------------------------------
+bool listClasses(const string_q& path, void* data) {
     if (contains(path, "/test/"))
         return true;
 
@@ -200,7 +267,7 @@ bool listClasses(const string_q& path, void *data) {
 
     } else {
         if (contains(path, "classDefinitions/") && contains(path, ".txt")) {
-            COptions *opts = reinterpret_cast<COptions*>(data);
+            COptions* opts = reinterpret_cast<COptions*>(data);
 
             string_q class_name = path;
             class_name = substitute(nextTokenClearReverse(class_name, '/'), ".txt", "");
@@ -214,12 +281,33 @@ bool listClasses(const string_q& path, void *data) {
 
             if (include) {
                 CClassDefinition cl;
-                cl.className = class_name;
-                cl.inputPath = path;
-                LOG8("Adding: ", cl.className, " ", cl.inputPath, " ", cl.outputPath(".cpp"));
+                cl.short_fn = class_name;
+                cl.input_path = path;
+                LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
                 opts->classDefs.push_back(cl);
             }
         }
     }
     return true;
+}
+
+//--------------------------------------------------------------------------------
+void copyIfNewer(const string_q& src, const string_q& dest) {
+    time_q src_time = fileLastModifyDate(src);
+    time_q dest_time = fileLastModifyDate(dest);
+    if (dest_time > src_time)
+        copyFile(dest, src);
+}
+
+//--------------------------------------------------------------------------------
+string_q getSourcePath(const string_q& part) {
+    // TODO(tjayrush) hard coded path
+    return "/Users/jrush/src.GitHub/trueblocks-core/src/" + part;
+}
+
+//--------------------------------------------------------------------------------
+void updateTemplates(void) {
+    // TODO(tjayrush): hard coded path
+    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.cpp"), configPath("makeClass/blank.cpp"));
+    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.h"), configPath("makeClass/blank.h"));
 }

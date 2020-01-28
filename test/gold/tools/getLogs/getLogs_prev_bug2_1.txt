@@ -1,6 +1,6 @@
 getLogs argc: 5 [1:4279119.46] [2:--fmt] [3:api] [4:--parity] 
 getLogs 4279119.46 --fmt api --parity 
-{ "type": "CLogEntry", "data": [
+{ "type": "CLogEntry", "fieldList": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "compressedLog", "type": "text" }, { "name": "type", "type": "text" }], "data": [
   {
     "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",
     "data": "0x000000000000000000000000000000000000000000000051889acfe625dbffad",

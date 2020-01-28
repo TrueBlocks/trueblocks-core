@@ -1,7 +1,9 @@
 acctScrape argc: 1 
 acctScrape 
+TIME ~ CLOCK - <INFO>  : Scraping 0 addresses.
+TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments): 
 
-  You must provide at least one Ethereum address. Quitting...
+  Please provide at least one Ethereum address to scrape. Quitting...
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).
@@ -10,14 +12,15 @@ acctScrape
 	addrs                 one or more Ethereum addresses (required)
 
 #### Hidden options (shown during testing only)
-	-s  (--staging)       produce results in the staging folder instead of production folder
-	-u  (--unripe)        visit unripe (not old enough and not yet staged or finalized) blocks
+	-f  (--finalized)     toggle search of finalized folder ('on' by default)
+	-s  (--staging)       toggle search of staging (not yet finalized) folder ('off' by default)
+	-u  (--unripe)        toggle search of unripe (neither staged nor finalized) folder ('off' by default)
 	-d  (--daemon)        we are being called in daemon mode which causes us to print results differently
-	-S  (--start <num>)   first block to process(inclusive)
+	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 #### Hidden options (shown during testing only)
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

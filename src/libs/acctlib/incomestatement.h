@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CIncomeStatement : public CBaseNode {
-public:
+  public:
     bigint_t begBal;
     bigint_t inflow;
     bigint_t outflow;
@@ -32,7 +32,7 @@ public:
     bigint_t endBal;
     blknum_t blockNum;
 
-public:
+  public:
     CIncomeStatement(void);
     CIncomeStatement(const CIncomeStatement& in);
     virtual ~CIncomeStatement(void);
@@ -42,18 +42,26 @@ public:
 
     // EXISTING_CODE
     bigint_t curBalance;
-    void operator+=(const CIncomeStatement &x);
-    bool balanced(void) const { return ((curBalance - endBal) == 0); }
-    bigint_t difference(void) const { return (curBalance - endBal); }
-    void correct(void) { endBal = curBalance; }
+    void operator+=(const CIncomeStatement& x);
+    bool balanced(void) const {
+        return ((curBalance - endBal) == 0);
+    }
+    bigint_t difference(void) const {
+        return (curBalance - endBal);
+    }
+    void correct(void) {
+        endBal = curBalance;
+    }
     friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CIncomeStatement& item) const;
-    bool operator!=(const CIncomeStatement& item) const { return !operator==(item); }
+    bool operator!=(const CIncomeStatement& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
     friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CIncomeStatement& in);
@@ -163,7 +171,7 @@ extern const char* STR_DISPLAY_INCOMESTATEMENT;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //------------------------------------------------------------
-inline void CIncomeStatement::operator+=(const CIncomeStatement &x) {
+inline void CIncomeStatement::operator+=(const CIncomeStatement& x) {
     begBal += x.begBal;
     inflow += x.inflow;
     outflow += x.outflow;
@@ -173,4 +181,3 @@ inline void CIncomeStatement::operator+=(const CIncomeStatement &x) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

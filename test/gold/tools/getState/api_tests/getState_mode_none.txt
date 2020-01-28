@@ -1,5 +1,19 @@
 {
   "type": "CEthState",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "balance",
+      "type": "wei"
+    },
+    {
+      "name": "address",
+      "type": "address"
+    }
+  ],
   "data": [
     {
       "blockNumber": 2500000,

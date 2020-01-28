@@ -20,16 +20,16 @@
 #include <string>
 #include "utillib.h"
 
-CMemMapFile::CMemMapFile()
-: _file(0), _filename(), _filesize(0), _hint(Normal), _mappedBytes(0), _mappedView(NULL) { }
+CMemMapFile::CMemMapFile() : _file(0), _filename(), _filesize(0), _hint(Normal), _mappedBytes(0), _mappedView(NULL) {
+}
 
 CMemMapFile::CMemMapFile(const string_q& filename)
-: _file(0), _filename(filename), _filesize(0), _hint(Normal), _mappedBytes(WholeFile), _mappedView(NULL) {
+    : _file(0), _filename(filename), _filesize(0), _hint(Normal), _mappedBytes(WholeFile), _mappedView(NULL) {
     open(filename, _mappedBytes, _hint);
 }
 
 CMemMapFile::CMemMapFile(const string_q& filename, size_t mappedBytes, CacheHint hint)
-: _file(0), _filename(filename), _filesize(0), _hint(hint), _mappedBytes(mappedBytes), _mappedView(NULL) {
+    : _file(0), _filename(filename), _filesize(0), _hint(hint), _mappedBytes(mappedBytes), _mappedView(NULL) {
     open(filename, mappedBytes, hint);
 }
 
@@ -41,9 +41,9 @@ bool CMemMapFile::open(const string_q& filename, size_t mappedBytes, CacheHint h
     if (isValid())
         return false;
 
-    _file       = 0;
-    _filesize   = 0;
-    _hint       = hint;
+    _file = 0;
+    _filesize = 0;
+    _hint = hint;
     _mappedView = NULL;
 
     _file = ::open(filename.c_str(), O_RDONLY);  // | O_LARGEFILE);
@@ -125,7 +125,7 @@ bool CMemMapFile::remap(uint64_t offset, size_t mappedBytes) {
     _mappedView = ::mmap(NULL, mappedBytes, PROT_READ, MAP_SHARED, _file, (int64_t)offset);
     if (_mappedView == MAP_FAILED) {
         _mappedBytes = 0;
-        _mappedView  = NULL;
+        _mappedView = NULL;
         return false;
     }
 
@@ -133,10 +133,17 @@ bool CMemMapFile::remap(uint64_t offset, size_t mappedBytes) {
 
     int linuxHint = 0;
     switch (_hint) {
-        case Normal:         linuxHint = MADV_NORMAL;     break;
-        case SequentialScan: linuxHint = MADV_SEQUENTIAL; break;
-        case RandomAccess:   linuxHint = MADV_RANDOM;     break;
-        default: break;
+        case Normal:
+            linuxHint = MADV_NORMAL;
+            break;
+        case SequentialScan:
+            linuxHint = MADV_SEQUENTIAL;
+            break;
+        case RandomAccess:
+            linuxHint = MADV_RANDOM;
+            break;
+        default:
+            break;
     }
 
     ::madvise(_mappedView, _mappedBytes, linuxHint);

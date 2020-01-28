@@ -15,22 +15,25 @@
 
 //-----------------------------------------------------------------------
 bool COptions::displayFromCache(uint64_t st artBlock) {
-
     // Make sure we have a cache file...
-    string_q cacheFileName = getMonitorPath(watches[0].address);
+    string_q cacheFileName = get MonitorPath(watches[0].address);
     if (!fileExists(cacheFileName))
         return false;
 
     // ...and that it's not locked...
     if (fileExists(cacheFileName + ".lck"))
-        return usage("The cache lock file is present. The program is either already "
-                         "running or it did not end cleanly the\n\tlast time it ran. "
-                         "Quit the already running program or, if it is not running, "
-                         "remove the lock\n\tfile: " + cacheFileName + ".lck'. Quitting...");
+        return usage(
+            "The cache lock file is present. The program is either already "
+            "running or it did not end cleanly the\n\tlast time it ran. "
+            "Quit the already running program or, if it is not running, "
+            "remove the lock\n\tfile: " +
+            cacheFileName + ".lck'. Quitting...");
 
     if (export_on) {
         CTransaction t;
-        cout << toLower(t.Format(substitute(substitute(substitute(transFmt, "{IS","{IS_"), "w:10:INPUT","encoding"), "{", "{p:"))) << "\n";
+        cout << toLower(t.Format(
+                    substitute(substitute(substitute(transFmt, "{IS", "{IS_"), "w:10:INPUT", "encoding"), "{", "{p:")))
+             << "\n";
     }
 
     CBlock latest;
@@ -42,25 +45,21 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
 
     CArchive txCache(READING_ARCHIVE);
     if (txCache.Lock(cacheFileName, modeReadOnly, LOCK_NOWAIT)) {
-
-        txCache.Seek( (-1 * (long)(2*sizeof(uint64_t))), SEEK_END);  // NOLINT
+        txCache.Seek((-1 * (long)(2 * sizeof(uint64_t))), SEEK_END);  // NOLINT
         txCache.Read(endBlock);
-        txCache.Seek( 0, SEEK_SET);
+        txCache.Seek(0, SEEK_SET);
         if (json_on)
             cout << "[";
 
         while (!txCache.Eof()) {
-
             uint64_t transID = NOPOS, blockNum = NOPOS;
             txCache >> blockNum >> transID;
             if (blockNum != NOPOS && transID != NOPOS && blockNum >= startBlock) {
-
                 if (blockNum > lastBlock) {
-
                     if (!closeIncomeStatement(block)) {
                         cerr << "Quitting debugger.\r\n";
                         txCache.Release();
-                        return false; // return false since user hit 'quit' on debugger
+                        return false;  // return false since user hit 'quit' on debugger
                     }
 
                     // If we switched blocks, try to read the next block...
@@ -78,10 +77,10 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
                         }
                     }
 
-                    if (!openIncomeStatement(block))  {
+                    if (!openIncomeStatement(block)) {
                         cerr << "Quitting debugger.\r\n";
                         txCache.Release();
-                        return false; // return false since user hit 'quit' on debugger
+                        return false;  // return false since user hit 'quit' on debugger
                     }
 
                     lastBlock = blockNum;
@@ -89,7 +88,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
 
                 // this will always be true, but we just protect ourselves here
                 if (transID < block.transactions.size()) {
-                    CTransaction *trans = &block.transactions.at(transID);
+                    CTransaction* trans = &block.transactions.at(transID);
                     trans->pBlock = &block;
                     // TODO(tjayrush) we only get traces on non-Ddos blocks. We need to handle this better
                     if ((json_on || accounting_on || trace_on) &&
@@ -101,7 +100,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
                     ostringstream os;
                     displayTrans(os, trans);
                     if (json_on && blockNum < endBlock)
-                            os << ",";
+                        os << ",";
                     os << endl;
                     os.flush();
                     cout << annotate(os.str());
@@ -111,7 +110,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
                         nodelay(stdscr, true);
                         int ch = getch();
                         esc_hit = (ch == 27 || ch == 'q');
-                        if (ch == 27) // esc comes with an extra key
+                        if (ch == 27)  // esc comes with an extra key
                             getch();
                         nodelay(stdscr, false);
                     }
@@ -132,15 +131,15 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
 void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
     for (auto watch : watchArray) {
         if (json_on) {
-            CStringArray fields = { "to", "from", "address", "contractAddress" };
+            CStringArray fields = {"to", "from", "address", "contractAddress"};
             for (auto field : fields) {
                 string_q target = "\"" + field + "\": \"" + watch.address + "\"";
                 str = substitute(str, target, target + ", \"" + field + "Name\": \"" + watch.name + "\"");
             }
         } else {
-            str = substitute(str, watch.address, watch.color + watch.displayName(false,true,true,8) + cOff);
+            str = substitute(str, watch.address, watch.color + watch.displayName(false, true, true, 8) + cOff);
             str = substitute(str, "000000000000000000000000" + extract(watch.address, 2),
-                                watch.color + "000000000000000000000000" + extract(watch.address, 2) + cWhite);
+                             watch.color + "000000000000000000000000" + extract(watch.address, 2) + cWhite);
         }
     }
 }
@@ -155,7 +154,6 @@ string_q COptions::annotate(const string_q& strIn) const {
 
 //-----------------------------------------------------------------------
 bool COptions::loadWatches(const CToml& toml) {
-
     // okay if it's empty
     loadWatchList(toml, named, "named");
 
@@ -169,16 +167,15 @@ bool COptions::loadWatches(const CToml& toml) {
     blockStats.maxWatchBlock = 0;
 
     // Check the watches for validity
-    for (uint32_t i = 0 ; i < watches.size() ; i++) {
-
-        CAccountWatch *watch = &watches.at(i);
+    for (uint32_t i = 0; i < watches.size(); i++) {
+        CAccountWatch* watch = &watches.at(i);
         if (!isAddress(watch->address))
             return usage("Invalid watch address " + watch->address + "\n");
 
         if (watch->name.empty())
             return usage("Empty watch name " + watch->name + "\n");
 
-        watch->curBalance = get NodeBal(watch->stateHistory, watch->address, watch->firstBlock-1);
+        watch->curBalance = get NodeBal(watch->stateHistory, watch->address, watch->firstBlock - 1);
 
         blockStats.minWatchBlock = min(blockStats.minWatchBlock, watch->firstBlock);
         blockStats.maxWatchBlock = max(blockStats.maxWatchBlock, watch->lastBlock);

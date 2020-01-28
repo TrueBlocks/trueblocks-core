@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CBalanceRecord : public CBaseNode {
-public:
+  public:
     blknum_t blockNumber;
     blknum_t transactionIndex;
     address_t address;
@@ -32,7 +32,7 @@ public:
     wei_t balance;
     bigint_t diff;
 
-public:
+  public:
     CBalanceRecord(void);
     CBalanceRecord(const CBalanceRecord& ba);
     virtual ~CBalanceRecord(void);
@@ -44,11 +44,13 @@ public:
     explicit CBalanceRecord(string_q& line);
     // EXISTING_CODE
     bool operator==(const CBalanceRecord& item) const;
-    bool operator!=(const CBalanceRecord& item) const { return !operator==(item); }
+    bool operator!=(const CBalanceRecord& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CBalanceRecord& v1, const CBalanceRecord& v2);
     friend ostream& operator<<(ostream& os, const CBalanceRecord& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBalanceRecord& ba);
@@ -159,4 +161,3 @@ extern const char* STR_DISPLAY_BALANCERECORD;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

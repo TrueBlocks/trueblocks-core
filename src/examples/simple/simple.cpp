@@ -17,7 +17,7 @@
  * Purpose: To provide the easiest introduction to the QBlocks library.
  *          Simply request a block from Infura and print it to the screen.
  *------------------------------------------------------------------------*/
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     // Initialize the system and tell it where to find the blockchain data.
     etherlib_init(quickQuitHandler);
 

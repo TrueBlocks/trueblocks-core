@@ -1,34 +1,73 @@
 {
-  "type": "CAbi",
+  "type": "CFunction",
+  "fieldList": [
+    {
+      "name": "name",
+      "type": "text"
+    },
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "signature",
+      "type": "text"
+    },
+    {
+      "name": "encoding",
+      "type": "text"
+    },
+    {
+      "name": "inputs",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "outputs",
+      "type": "object|ts_array"
+    }
+  ],
   "data": [
     {
+      "name": "",
       "type": "constructor",
       "signature": "(address,address,uint256,uint256,uint256,address)",
       "encoding": "0xd9fdb088",
       "inputs": [
         {
+          "type": "address",
           "name": "_curator",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "_daoCreator",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_proposalDeposit",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_minTokensToCreate",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_closingTime",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "_privateCreation",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -40,18 +79,24 @@
       "encoding": "0x095ea7b3",
       "inputs": [
         {
+          "type": "address",
           "name": "_spender",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -62,18 +107,24 @@
       "encoding": "0x749f9889",
       "inputs": [
         {
+          "type": "address",
           "name": "_recipient",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "_allowed",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -84,8 +135,10 @@
       "encoding": "0xe33734fd",
       "inputs": [
         {
+          "type": "uint256",
           "name": "_proposalDeposit",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -97,14 +150,18 @@
       "encoding": "0xbaac5300",
       "inputs": [
         {
+          "type": "address",
           "name": "_tokenHolder",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -115,18 +172,24 @@
       "encoding": "0x237e9492",
       "inputs": [
         {
+          "type": "uint256",
           "name": "_proposalID",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bytes",
           "name": "_transactionData",
-          "type": "bytes"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -138,8 +201,10 @@
       "inputs": [],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -151,8 +216,10 @@
       "inputs": [],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -163,8 +230,10 @@
       "encoding": "0x6837ff1e",
       "inputs": [
         {
+          "type": "address",
           "name": "_newContract",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -176,34 +245,48 @@
       "encoding": "0x612e45a3",
       "inputs": [
         {
+          "type": "address",
           "name": "_recipient",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "string",
           "name": "_description",
-          "type": "string"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bytes",
           "name": "_transactionData",
-          "type": "bytes"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_debatingPeriod",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "_newCurator",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "uint256",
           "name": "_proposalID",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -215,8 +298,10 @@
       "inputs": [],
       "outputs": [
         {
+          "type": "bool",
           "name": "val_0",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -235,14 +320,18 @@
       "encoding": "0xa1da2fb9",
       "inputs": [
         {
+          "type": "bool",
           "name": "_toMembers",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -253,18 +342,24 @@
       "encoding": "0x82661dc4",
       "inputs": [
         {
+          "type": "uint256",
           "name": "_proposalID",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "_newCurator",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "_success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -275,18 +370,24 @@
       "encoding": "0xa9059cbb",
       "inputs": [
         {
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -297,22 +398,30 @@
       "encoding": "0x23b872dd",
       "inputs": [
         {
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -323,22 +432,30 @@
       "encoding": "0xdbde1988",
       "inputs": [
         {
+          "type": "address",
           "name": "_from",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -349,18 +466,24 @@
       "encoding": "0x4e10c3ee",
       "inputs": [
         {
+          "type": "address",
           "name": "_to",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "_value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "bool",
           "name": "success",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -372,8 +495,10 @@
       "inputs": [],
       "outputs": [
         {
+          "type": "bool",
           "name": "val_0",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -384,18 +509,24 @@
       "encoding": "0xc9d27afe",
       "inputs": [
         {
+          "type": "uint256",
           "name": "_proposalID",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "_supportsProposal",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": [
         {
+          "type": "uint256",
           "name": "_voteID",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ]
     },
@@ -406,13 +537,16 @@
       "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_recipient",
-          "type": "address"
+          "indexed": true,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "_allowed",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -424,18 +558,22 @@
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_owner",
-          "type": "address"
-        },
-        {
           "indexed": true,
-          "name": "_spender",
-          "type": "address"
+          "is_array": false
         },
         {
+          "type": "address",
+          "name": "_spender",
+          "indexed": true,
+          "is_array": false
+        },
+        {
+          "type": "uint256",
           "name": "_amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -447,13 +585,16 @@
       "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "to",
-          "type": "address"
+          "indexed": true,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -465,8 +606,10 @@
       "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
       "inputs": [
         {
+          "type": "uint256",
           "name": "value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -478,9 +621,10 @@
       "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_newCurator",
-          "type": "address"
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -492,25 +636,34 @@
       "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "proposalID",
-          "type": "uint256"
+          "indexed": true,
+          "is_array": false
         },
         {
+          "type": "address",
           "name": "recipient",
-          "type": "address"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "newCurator",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "string",
           "name": "description",
-          "type": "string"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -522,17 +675,22 @@
       "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "proposalID",
-          "type": "uint256"
+          "indexed": true,
+          "is_array": false
         },
         {
+          "type": "bool",
           "name": "result",
-          "type": "bool"
+          "indexed": false,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "quorum",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -544,13 +702,16 @@
       "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "to",
-          "type": "address"
+          "indexed": true,
+          "is_array": false
         },
         {
+          "type": "uint256",
           "name": "value",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -562,18 +723,22 @@
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "inputs": [
         {
-          "indexed": true,
+          "type": "address",
           "name": "_from",
-          "type": "address"
-        },
-        {
           "indexed": true,
-          "name": "_to",
-          "type": "address"
+          "is_array": false
         },
         {
+          "type": "address",
+          "name": "_to",
+          "indexed": true,
+          "is_array": false
+        },
+        {
+          "type": "uint256",
           "name": "_amount",
-          "type": "uint256"
+          "indexed": false,
+          "is_array": false
         }
       ],
       "outputs": []
@@ -585,18 +750,22 @@
       "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
       "inputs": [
         {
-          "indexed": true,
+          "type": "uint256",
           "name": "proposalID",
-          "type": "uint256"
-        },
-        {
-          "name": "position",
-          "type": "bool"
-        },
-        {
           "indexed": true,
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "position",
+          "indexed": false,
+          "is_array": false
+        },
+        {
+          "type": "address",
           "name": "voter",
-          "type": "address"
+          "indexed": true,
+          "is_array": false
         }
       ],
       "outputs": []

@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
     bool generate;
@@ -40,12 +40,18 @@ public:
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool isToken(void) const { return prefix % "tokenlib"; }
-    bool isWallet(void) const { return prefix % "walletlib"; }
-    bool isBuiltIn(void) const { return isToken() || isWallet(); }
+    bool isToken(void) const {
+        return prefix % "tokenlib";
+    }
+    bool isWallet(void) const {
+        return prefix % "walletlib";
+    }
+    bool isBuiltIn(void) const {
+        return isToken() || isWallet();
+    }
     void handle_generate(void);
 };
 
 //-----------------------------------------------------------------------
-extern string_q getPrefix (const string_q& in);
+extern string_q getPrefix(const string_q& in);
 extern bool sol_2_Abi(CAbi& abi, const string_q& solFile);

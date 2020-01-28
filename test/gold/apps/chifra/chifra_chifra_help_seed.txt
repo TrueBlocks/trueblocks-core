@@ -1,4 +1,3 @@
 chifra argc: 3 [1:seed] [2:--help] 
 chifra seed --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 Should not happen.

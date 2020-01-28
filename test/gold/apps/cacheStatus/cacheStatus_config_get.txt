@@ -14,20 +14,24 @@ cacheStatus --get_config
               "value": "--rpc Provider--",
               "type": "url",
               "tip": "the Ethereum node's RPC endpoint",
-              "required": true
+              "required": true,
+              "read_only": false
             },
             {
               "name": "balanceProvider",
               "value": "--balance Prov--",
               "type": "url",
-              "tip": "alternative node endpoint for account balances"
+              "tip": "alternative node endpoint for account balances",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "apiProvider",
               "value": "--api Provider--",
               "type": "url",
               "tip": "TrueBlocks' API endpoint",
-              "required": true
+              "required": true,
+              "read_only": false
             }
           ]
         },
@@ -47,13 +51,17 @@ cacheStatus --get_config
               "name": "cachePath",
               "value": "--cache Path--",
               "type": "path",
-              "tip": "location of cache (on external SSD, for example)"
+              "tip": "location of cache (on external SSD, for example)",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "indexPath",
               "value": "--index Path--",
               "type": "path",
-              "tip": "location of index (on internal SSD for speed)"
+              "tip": "location of index (on internal SSD for speed)",
+              "required": false,
+              "read_only": false
             }
           ]
         },
@@ -64,62 +72,86 @@ cacheStatus --get_config
             {
               "name": "accountName",
               "value": "--account name--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "balancerecord",
               "value": "--balance record--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "block",
               "value": "--block--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "ethstate",
               "value": "--eth state--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "function",
               "value": "--function--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "logentry",
               "value": "--logentry--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "pricequote",
               "value": "--pricequote--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "receipt",
               "value": "--receipt--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "trace",
               "value": "--trace--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "transaction",
               "value": "--transaction--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "whenblock",
               "value": "--when block--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "whereblock",
               "value": "--where block--",
-              "type": "display string"
+              "type": "display string",
+              "required": false,
+              "read_only": false
             }
           ]
         }
@@ -137,21 +169,24 @@ cacheStatus --get_config
               "value": "--n Blocks--",
               "type": "uint",
               "tip": "number of blocks to process per invocation of blaze (> 50)",
-              "required": true
+              "required": true,
+              "read_only": false
             },
             {
               "name": "n_addr_procs",
               "value": "--n Addr Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process addresses (> 0)",
-              "required": true
+              "required": true,
+              "read_only": false
             },
             {
               "name": "n_block_procs",
               "value": "--n Block Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process blocks (> 0)",
-              "required": true
+              "required": true,
+              "read_only": false
             }
           ]
         }
@@ -168,19 +203,25 @@ cacheStatus --get_config
               "name": "write_blocks",
               "value": --write Blocks--,
               "type": "bool",
-              "tip": "write blocks to the TrueBlocks binary cache"
+              "tip": "write blocks to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "write_txs",
               "value": --write Txs--,
               "type": "bool",
-              "tip": "write transactions to the TrueBlocks binary cache"
+              "tip": "write transactions to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
             },
             {
               "name": "write_traces",
               "value": --write Traces--,
               "type": "bool",
-              "tip": "write traces to the TrueBlocks binary cache"
+              "tip": "write traces to the TrueBlocks binary cache",
+              "required": false,
+              "read_only": false
             }
           ]
         }
@@ -197,16 +238,22 @@ cacheStatus --get_config
               "name": "list",
               "type": "json array",
               "tip": "user specific list of names for addresses -- private data -- not shared",
+              "required": false,
+              "read_only": false,
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
                   "group": "81-Custom",
-                  "name": "TestWallet1"
+                  "group_sort": "81",
+                  "name": "TestWallet1",
+                  "raw_group": "Custom"
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
                   "group": "81-Custom",
-                  "name": "TestWallet2"
+                  "group_sort": "81",
+                  "name": "TestWallet2",
+                  "raw_group": "Custom"
                 }
               ]
             }
@@ -225,7 +272,9 @@ cacheStatus --get_config
               "name": "etherscan",
               "value": "--api_key--",
               "type": "string",
-              "tip": "api key required to use EtherScan apis -- private data -- not shared"
+              "tip": "api key required to use EtherScan apis -- private data -- not shared",
+              "required": false,
+              "read_only": false
             }
           ]
         }

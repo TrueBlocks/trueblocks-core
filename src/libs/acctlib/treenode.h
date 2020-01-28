@@ -21,16 +21,16 @@ namespace qblocks {
 
 // EXISTING_CODE
 class CTreeNode;
-using ACCTVISITOR = bool (*)(const CTreeNode *v, void *data);
+using ACCTVISITOR = bool (*)(const CTreeNode* v, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CTreeNode : public CBaseNode {
-public:
+  public:
     uint64_t index;
     string_q prefixS;
 
-public:
+  public:
     CTreeNode(void);
     CTreeNode(const CTreeNode& tr);
     virtual ~CTreeNode(void);
@@ -39,18 +39,28 @@ public:
     DECLARE_NODE(CTreeNode);
 
     // EXISTING_CODE
-    virtual string_q at(const string_q& _key) const { return ""; }
-    virtual CTreeNode* insert(const string_q& _key, const string_q& _value) { return NULL; }
-    virtual CTreeNode* remove(const string_q& _key) { return NULL; }
-    virtual bool visitItems(ACCTVISITOR func, void *data) const { return true; }
+    virtual string_q at(const string_q& _key) const {
+        return "";
+    }
+    virtual CTreeNode* insert(const string_q& _key, const string_q& _value) {
+        return NULL;
+    }
+    virtual CTreeNode* remove(const string_q& _key) {
+        return NULL;
+    }
+    virtual bool visitItems(ACCTVISITOR func, void* data) const {
+        return true;
+    }
     CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
     bool operator==(const CTreeNode& item) const;
-    bool operator!=(const CTreeNode& item) const { return !operator==(item); }
+    bool operator!=(const CTreeNode& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTreeNode& v1, const CTreeNode& v2);
     friend ostream& operator<<(ostream& os, const CTreeNode& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTreeNode& tr);
@@ -150,11 +160,10 @@ extern const char* STR_DISPLAY_TREENODE;
 //---------------------------------------------------------------------------
 inline unsigned commonPrefix(const string_q& _t, const string_q& _u) {
     size_t s = min(_t.length(), _u.length());
-    for (size_t i = 0 ; ; ++i)
+    for (size_t i = 0;; ++i)
         if (i == s || (_t[i] != _u[i]))
             return (unsigned)i;
     return (unsigned)s;
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

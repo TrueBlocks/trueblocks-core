@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTraceAction : public CBaseNode {
-public:
+  public:
     address_t address;
     wei_t balance;
     string_q callType;
@@ -36,7 +36,7 @@ public:
     address_t to;
     wei_t value;
 
-public:
+  public:
     CTraceAction(void);
     CTraceAction(const CTraceAction& tr);
     virtual ~CTraceAction(void);
@@ -48,11 +48,13 @@ public:
     friend class CTrace;
     // EXISTING_CODE
     bool operator==(const CTraceAction& item) const;
-    bool operator!=(const CTraceAction& item) const { return !operator==(item); }
+    bool operator!=(const CTraceAction& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTraceAction& v1, const CTraceAction& v2);
     friend ostream& operator<<(ostream& os, const CTraceAction& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTraceAction& tr);
@@ -144,16 +146,9 @@ inline bool CTraceAction::operator==(const CTraceAction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((address == item.address) &&
-             (balance == item.balance) &&
-             (callType == item.callType) &&
-             (from == item.from) &&
-             (gas == item.gas) &&
-             (init == item.init) &&
-             (input == item.input) &&
-             (refundAddress == item.refundAddress) &&
-             (to == item.to) &&
-             (value == item.value));
+    return ((address == item.address) && (balance == item.balance) && (callType == item.callType) &&
+            (from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&
+            (refundAddress == item.refundAddress) && (to == item.to) && (value == item.value));
 }
 
 //-------------------------------------------------------------------------
@@ -180,4 +175,3 @@ extern const char* STR_DISPLAY_TRACEACTION;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -25,7 +25,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNewBlock : public CBaseNode {
-public:
+  public:
     gas_t gasLimit;
     gas_t gasUsed;
     hash_t hash;
@@ -38,28 +38,30 @@ public:
     timestamp_t timestamp;
     CTransactionArray transactions;
 
-public:
+  public:
     CNewBlock(void);
-    CNewBlock(const CNewBlock& ne);
+    CNewBlock(const CNewBlock& newb);
     virtual ~CNewBlock(void);
-    CNewBlock& operator=(const CNewBlock& ne);
+    CNewBlock& operator=(const CNewBlock& newb);
 
     DECLARE_NODE(CNewBlock);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     explicit CNewBlock(const CBlock& block);
     // EXISTING_CODE
     bool operator==(const CNewBlock& item) const;
-    bool operator!=(const CNewBlock& item) const { return !operator==(item); }
+    bool operator!=(const CNewBlock& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
     friend ostream& operator<<(ostream& os, const CNewBlock& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CNewBlock& ne);
+    void duplicate(const CNewBlock& newb);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,10 +76,10 @@ inline CNewBlock::CNewBlock(void) {
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock::CNewBlock(const CNewBlock& ne) {
+inline CNewBlock::CNewBlock(const CNewBlock& newb) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ne);
+    duplicate(newb);
 }
 
 // EXISTING_CODE
@@ -108,7 +110,7 @@ inline void CNewBlock::initialize(void) {
     miner = "";
     difficulty = 0;
     price = 0.0;
-    finalized = 0;
+    finalized = false;
     timestamp = 0;
     transactions.clear();
 
@@ -117,29 +119,29 @@ inline void CNewBlock::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CNewBlock::duplicate(const CNewBlock& ne) {
+inline void CNewBlock::duplicate(const CNewBlock& newb) {
     clear();
-    CBaseNode::duplicate(ne);
+    CBaseNode::duplicate(newb);
 
-    gasLimit = ne.gasLimit;
-    gasUsed = ne.gasUsed;
-    hash = ne.hash;
-    blockNumber = ne.blockNumber;
-    parentHash = ne.parentHash;
-    miner = ne.miner;
-    difficulty = ne.difficulty;
-    price = ne.price;
-    finalized = ne.finalized;
-    timestamp = ne.timestamp;
-    transactions = ne.transactions;
+    gasLimit = newb.gasLimit;
+    gasUsed = newb.gasUsed;
+    hash = newb.hash;
+    blockNumber = newb.blockNumber;
+    parentHash = newb.parentHash;
+    miner = newb.miner;
+    difficulty = newb.difficulty;
+    price = newb.price;
+    finalized = newb.finalized;
+    timestamp = newb.timestamp;
+    transactions = newb.transactions;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CNewBlock& CNewBlock::operator=(const CNewBlock& ne) {
-    duplicate(ne);
+inline CNewBlock& CNewBlock::operator=(const CNewBlock& newb) {
+    duplicate(newb);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
@@ -167,10 +169,6 @@ extern CArchive& operator>>(CArchive& archive, CNewBlockArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNewBlockArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNewBlock& newp);
-extern CArchive& operator>>(CArchive& archive, CNewBlock& newp);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NEWBLOCK;
 
 //---------------------------------------------------------------------------
@@ -179,4 +177,3 @@ bool readOneNewBlock_fromBinary(CNewBlock& block, const string_q& fileName);
 bool readOneNewBlock_fromJson(CNewBlock& block, const string_q& fileName);
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -25,12 +25,12 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CConfigGroup : public CBaseNode {
-public:
+  public:
     string_q section;
     string_q name;
     CConfigItemArray keys;
 
-public:
+  public:
     CConfigGroup(void);
     CConfigGroup(const CConfigGroup& co);
     virtual ~CConfigGroup(void);
@@ -38,17 +38,20 @@ public:
 
     DECLARE_NODE(CConfigGroup);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CConfigGroup(const string_q& s, const string_q& n) : section(s), name(n) { }
+    explicit CConfigGroup(const string_q& s, const string_q& n) : section(s), name(n) {
+    }
     // EXISTING_CODE
     bool operator==(const CConfigGroup& item) const;
-    bool operator!=(const CConfigGroup& item) const { return !operator==(item); }
+    bool operator!=(const CConfigGroup& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CConfigGroup& v1, const CConfigGroup& v2);
     friend ostream& operator<<(ostream& os, const CConfigGroup& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CConfigGroup& co);
@@ -143,14 +146,9 @@ extern CArchive& operator>>(CArchive& archive, CConfigGroupArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigGroupArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CConfigGroup& con);
-extern CArchive& operator>>(CArchive& archive, CConfigGroup& con);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGGROUP;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

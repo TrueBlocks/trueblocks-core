@@ -14,7 +14,7 @@
 #include "options.h"
 
 //--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -27,12 +27,16 @@ int main(int argc, const char *argv[]) {
             return 0;
 
         CToml toml(options.filename);
-        cout << options.filename << "\n" << toml << "\n";
-        cout << "name: " << "\t\t" << toml.getConfigStr("settings", "name", "NONAME") << "\n";
-        cout << "max_width: " << "\t" << toml.getConfigInt("display", "max_width", 10000) << "\n";
-        cout << "version: " << "\t\t" << toml.getConfigStr("version", "version", "0.0.0") << "\n";
+        cout << options.filename << endl << toml << endl;
+        cout << "name: "
+             << "\t\t" << toml.getConfigStr("settings", "name", "NONAME") << endl;
+        cout << "max_width: "
+             << "\t" << toml.getConfigInt("display", "max_width", 10000) << endl;
+        cout << "version: "
+             << "\t\t" << toml.getConfigStr("version", "version", "0.0.0") << endl;
         if (!toml.getConfigStr("display", "fmt_whale_field", "").empty())
-            cout << "whale: " << "\t\t" << toml.getConfigStr("display", "fmt_whale_field", "") << "\n";
+            cout << "whale: "
+                 << "\t\t" << toml.getConfigStr("display", "fmt_whale_field", "") << endl;
 
         string_q contents;
         asciiFileToString(options.filename, contents);
@@ -50,10 +54,10 @@ int main(int argc, const char *argv[]) {
 
     if (options.filename == "empty.toml") {
         const char* STR_THING =
-        "{\n"
-        "\t{ \"thing1\": \"Value 1 with spaces\" }\n"
-        "\t{ \"thing2\": \"Value 2 with spaces\" }\n"
-        "}";
+            "{\n"
+            "\t{ \"thing1\": \"Value 1 with spaces\" }\n"
+            "\t{ \"thing2\": \"Value 2 with spaces\" }\n"
+            "}";
 
         string_q str = STR_THING;
         cout << str << endl;

@@ -7,7 +7,6 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportData(void) {
-
     ENTER8("exportData");
 
     bool shouldDisplay = !freshen;
@@ -17,9 +16,8 @@ bool COptions::exportData(void) {
         cout << "[";
 
     bool first = true;
-    for (size_t i = 0 ; i < items.size() && !shouldQuit() && items[i].blk < ts_cnt ; i++) {
-
-        const CAppearance_base *item = &items[i];
+    for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk < ts_cnt; i++) {
+        const CAppearance_base* item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             if (appearances) {
                 if (isJson && shouldDisplay && !first)
@@ -32,8 +30,7 @@ bool COptions::exportData(void) {
                 first = false;
 
             } else {
-
-                CBlock block; // do not move this from this scope
+                CBlock block;  // do not move this from this scope
                 block.blockNumber = item->blk;
                 CTransaction trans;
                 trans.pBlock = &block;
@@ -43,7 +40,7 @@ bool COptions::exportData(void) {
                     readTransFromBinary(trans, txFilename);
                     trans.finishParse();
                     trans.pBlock = &block;
-                    block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
+                    block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
 
                 } else {
                     if (item->blk == 0) {
@@ -59,17 +56,16 @@ bool COptions::exportData(void) {
                         getFullReceipt(&trans, true);
                     }
                     trans.pBlock = &block;
-                    trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk*2)+1];
-                    if (write_txs && !fileExists(txFilename))
+                    trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
+                    if ((write_opt & CACHE_TXS) && !fileExists(txFilename))
                         writeTransToBinary(trans, txFilename);
                 }
 
                 if (traces) {
-
                     // acctExport --traces
-                    loadTraces(trans, item->blk, item->txid, write_traces, (skip_ddos && excludeTrace(&trans, max_traces)));
+                    loadTraces(trans, item->blk, item->txid, (write_opt & CACHE_TRACES),
+                               (skip_ddos && excludeTrace(&trans, max_traces)));
                     for (auto trace : trans.traces) {
-
                         bool isSuicide = trace.action.address != "";
                         bool isCreation = trace.result.address != "";
 
@@ -79,7 +75,9 @@ bool COptions::exportData(void) {
                             } else {
                                 if (!isTestMode() && isApiMode()) {
                                     qblocks::eLogger->setEndline('\r');
-                                    LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".", trans.transactionIndex, "-", trace.getValueByName("traceAddress"), string_q(50,' '));
+                                    LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".",
+                                             trans.transactionIndex, "-", trace.getValueByName("traceAddress"),
+                                             string_q(50, ' '));
                                     qblocks::eLogger->setEndline('\n');
                                 }
                                 if (articulate)
@@ -93,7 +91,7 @@ bool COptions::exportData(void) {
                             }
                         }
 
-                        if (isSuicide) { // suicide
+                        if (isSuicide) {  // suicide
                             CTrace copy = trace;
                             copy.action.from = trace.action.address;
                             copy.action.to = trace.action.refundAddress;
@@ -113,7 +111,7 @@ bool COptions::exportData(void) {
                             }
                         }
 
-                        if (isCreation) { // contract creation
+                        if (isCreation) {  // contract creation
                             CTrace copy = trace;
                             copy.action.from = "0x0";
                             copy.action.to = trace.result.address;
@@ -138,9 +136,7 @@ bool COptions::exportData(void) {
                     }
 
                 } else {
-
                     if (receipts) {
-
                         // acctExport --receipts
                         if (articulate)
                             abis.articulateTransaction(&trans);
@@ -152,7 +148,6 @@ bool COptions::exportData(void) {
                         first = false;
 
                     } else if (logs) {
-
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
                             if (isJson && shouldDisplay && !first)
@@ -166,7 +161,6 @@ bool COptions::exportData(void) {
                         }
 
                     } else {
-
                         // we only articulate the transaction if we're JSON
                         if (isJson && articulate)
                             abis.articulateTransaction(&trans);
@@ -181,12 +175,14 @@ bool COptions::exportData(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (isRedirected()) {  // we are in --output mode
-                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ", "\r");
+                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
+                             trans.transactionIndex, ")      ", "\r");
 
                 } else {
                     static size_t cnt = 0;
-                    if (!(++cnt % 71)) { // not reporting every tx is way faster
-                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".", trans.transactionIndex, ")      ", "\r");
+                    if (!(++cnt % 11)) {  // not reporting every tx is way faster
+                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
+                                 trans.transactionIndex, ")      ", "\r");
                     }
                 }
             }
@@ -194,11 +190,11 @@ bool COptions::exportData(void) {
     }
 
     if (!isTestMode() && shouldDisplay)
-        LOG_INFO(string_q(120,' '), "\r");
+        LOG_INFO(string_q(120, ' '), "\r");
 
     if (grab_abis) {
         // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
-        for (pair<address_t,bool> item : abiMap) {
+        for (pair<address_t, bool> item : abiMap) {
             if (isContractAt(item.first)) {
                 CAbi unused;
                 loadAbiAndCache(unused, item.first, false, errors);
@@ -215,7 +211,7 @@ bool COptions::exportData(void) {
 
     for (auto watch : monitors)
         if (items.size() > 0)
-            watch.writeLastExport(items[items.size()-1].blk);
+            watch.writeLastExport(items[items.size() - 1].blk);
 
     EXIT_NOMSG8(true);
 }

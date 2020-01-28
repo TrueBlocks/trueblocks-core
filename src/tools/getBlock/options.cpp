@@ -19,14 +19,16 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
+    // clang-format off
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),  // NOLINT
+    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),  // NOLINT
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -37,7 +39,6 @@ extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -48,7 +49,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -115,17 +116,17 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "isError");
         HIDE_FIELD(CTransaction, "receipt");
         HIDE_FIELD(CTransaction, "gasUsed");
-        HIDE_FIELD(CReceipt,     "contractAddress");
-        HIDE_FIELD(CReceipt,     "gasUsed");
-        HIDE_FIELD(CReceipt,     "logs");
-        HIDE_FIELD(CReceipt,     "status");
-        HIDE_FIELD(CBlock,       "gasLimit");
-        HIDE_FIELD(CBlock,       "gasUsed");
-        HIDE_FIELD(CBlock,       "parentHash");
-        HIDE_FIELD(CBlock,       "miner");
-        HIDE_FIELD(CBlock,       "difficulty");
-        HIDE_FIELD(CBlock,       "price");
-        HIDE_FIELD(CBlock,       "finalized");
+        HIDE_FIELD(CReceipt, "contractAddress");
+        HIDE_FIELD(CReceipt, "gasUsed");
+        HIDE_FIELD(CReceipt, "logs");
+        HIDE_FIELD(CReceipt, "status");
+        HIDE_FIELD(CBlock, "gasLimit");
+        HIDE_FIELD(CBlock, "gasUsed");
+        HIDE_FIELD(CBlock, "parentHash");
+        HIDE_FIELD(CBlock, "miner");
+        HIDE_FIELD(CBlock, "difficulty");
+        HIDE_FIELD(CBlock, "price");
+        HIDE_FIELD(CBlock, "finalized");
     }
 
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
@@ -138,7 +139,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
-    secsFinal = (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
+    secsFinal =
+        (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
     if (exportFmt == NONE1)
         exportFmt = (filterType.empty() ? JSON1 : TXT1);
@@ -165,7 +167,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    optionOn(OPT_RAW | OPT_OUTPUT);
 
     // BEG_CODE_INIT
     hashes_only = false;
@@ -173,8 +175,8 @@ void COptions::Init(void) {
     force = false;
     // END_CODE_INIT
 
-    filterType  = "";
-    secsFinal   = (60 * 5);
+    filterType = "";
+    secsFinal = (60 * 5);
     addrCounter = 0;
     blocks.Init();
     CBlockOptions::Init();
@@ -187,9 +189,11 @@ COptions::COptions(void) {
     first = true;
     exportFmt = NONE1;
     // BEG_CODE_NOTES
-    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    // clang-format off
+    notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -207,32 +211,30 @@ bool COptions::isMulti(void) const {
 
 //--------------------------------------------------------------------------------
 void interumReport(ostream& os, blknum_t i) {
-    os << (!(i%150) ? "." : (!(i%1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
+    os << (!(i % 150) ? "." : (!(i % 1000)) ? "+" : "");  // dots '.' at every 150, '+' at every 1000
     os.flush();
 }
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_COUNT_JSON =
-"{\n"
-" \"blockNumber\": [{BLOCKNUMBER}],\n"
-" \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
-" \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
-"}\n";
+    "{\n"
+    " \"blockNumber\": [{BLOCKNUMBER}],\n"
+    " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+    " \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]"
+    "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_COUNT_TXT =
-"[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =
-"{\n"
-" \"bn\": \"[{BN}]\",\n"
-" \"tx\": \"[{TX}]\",\n"
-" \"tc\": \"[{TC}]\",\n"
-" \"addr\": \"[{ADDR}]\",\n"
-" \"reason\": \"[{REASON}]\"\n"
-"}\n";
+    "{\n"
+    " \"bn\": \"[{BN}]\",\n"
+    " \"tx\": \"[{TX}]\",\n"
+    " \"tc\": \"[{TC}]\",\n"
+    " \"addr\": \"[{ADDR}]\",\n"
+    " \"reason\": \"[{REASON}]\"\n"
+    "}\n";
 
 //--------------------------------------------------------------------------------
-const char* STR_FORMAT_FILTER_TXT =
-"[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";
+const char* STR_FORMAT_FILTER_TXT = "[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";

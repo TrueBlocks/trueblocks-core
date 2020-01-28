@@ -24,13 +24,13 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CAbiCacheItem : public CAccountName {
-public:
+  public:
     string_q type;
     uint64_t nFunctions;
     uint64_t nEvents;
     uint64_t nOther;
 
-public:
+  public:
     CAbiCacheItem(void);
     CAbiCacheItem(const CAbiCacheItem& ab);
     virtual ~CAbiCacheItem(void);
@@ -41,11 +41,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CAbiCacheItem& item) const;
-    bool operator!=(const CAbiCacheItem& item) const { return !operator==(item); }
+    bool operator!=(const CAbiCacheItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CAbiCacheItem& v1, const CAbiCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CAbiCacheItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CAbiCacheItem& ab);
@@ -142,14 +144,9 @@ extern CArchive& operator>>(CArchive& archive, CAbiCacheItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi);
-extern CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ABICACHEITEM;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

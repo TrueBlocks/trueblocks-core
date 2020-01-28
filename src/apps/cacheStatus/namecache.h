@@ -25,11 +25,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CNameCache : public CCache {
-public:
+  public:
     CAddressArray addrs;
     CNameCacheItemArray items;
 
-public:
+  public:
     CNameCache(void);
     CNameCache(const CNameCache& na);
     virtual ~CNameCache(void);
@@ -37,17 +37,19 @@ public:
 
     DECLARE_NODE(CNameCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CNameCache& item) const;
-    bool operator!=(const CNameCache& item) const { return !operator==(item); }
+    bool operator!=(const CNameCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CNameCache& v1, const CNameCache& v2);
     friend ostream& operator<<(ostream& os, const CNameCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CNameCache& na);
@@ -140,14 +142,9 @@ extern CArchive& operator>>(CArchive& archive, CNameCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNameCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CNameCache& nam);
-extern CArchive& operator>>(CArchive& archive, CNameCache& nam);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NAMECACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

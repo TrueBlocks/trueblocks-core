@@ -1,6 +1,6 @@
 [settings]
 class = CMonitorCacheItem
 base_class = CAccountWatch
-fields = string type
+fields = string type|bool deleted
 includes = etherlib.h|accountwatch.h
 serialize = true

@@ -1,21 +1,24 @@
-cacheStatus argc: 2 [1:slurps] 
-cacheStatus slurps 
+cacheStatus argc: 4 [1:caches] [2:--types] [3:slurps] 
+cacheStatus caches --types slurps 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
+  "is_scraping": false,
   "caches": [
     {
-      "addrs": [],
       "type": "CSlurpCache",
-      "path": "SlurpPath",
+      "path": "slurpsPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
-  ]
+  ],
+  "date": "--date--"
 }

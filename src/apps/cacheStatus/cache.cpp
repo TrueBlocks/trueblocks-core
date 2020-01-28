@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "cache.h"
+#include "status.h"
 
 namespace qblocks {
 
@@ -23,11 +24,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CCache, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCacheChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextCacheChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CCache::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +49,65 @@ void CCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextCacheChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CCache *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCache*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CCache::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextCacheChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "is_valid") {
+                return bool_2_Str(is_valid);
+            }
+            break;
+        case 'n':
+            if (fieldName % "nFiles") {
+                return uint_2_Str(nFiles);
+            }
+            if (fieldName % "nFolders") {
+                return uint_2_Str(nFolders);
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                return path;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes") {
+                return uint_2_Str(sizeInBytes);
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                return type;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -67,21 +119,39 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "is_valid") {
+                is_valid = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 'n':
-            if ( fieldName % "nFiles" ) { nFiles = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "nFolders" ) { nFolders = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "nFiles") {
+                nFiles = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "nFolders") {
+                nFolders = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'p':
-            if ( fieldName % "path" ) { path = fieldValue; return true; }
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "sizeInBytes" ) { sizeInBytes = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "sizeInBytes") {
+                sizeInBytes = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "type" ) { type = fieldValue; return true; }
-            break;
-        case 'v':
-            if ( fieldName % "valid_counts" ) { valid_counts = str_2_Bool(fieldValue); return true; }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -97,7 +167,6 @@ void CCache::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CCache::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -114,14 +183,13 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFiles;
     archive >> nFolders;
     archive >> sizeInBytes;
-    archive >> valid_counts;
+    archive >> is_valid;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CCache::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -132,7 +200,7 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFiles;
     archive << nFolders;
     archive << sizeInBytes;
-    archive << valid_counts;
+    archive << is_valid;
 
     return true;
 }
@@ -142,7 +210,7 @@ CArchive& operator>>(CArchive& archive, CCacheArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -153,7 +221,7 @@ CArchive& operator>>(CArchive& archive, CCacheArray& array) {
 CArchive& operator<<(CArchive& archive, const CCacheArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -161,19 +229,20 @@ CArchive& operator<<(CArchive& archive, const CCacheArray& array) {
 //---------------------------------------------------------------------------
 void CCache::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CCache, "schema")) return;
+    if (HAS_FIELD(CCache, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CCache, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCache, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CCache, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CCache, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCache, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCache, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCache, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CCache, "path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "nFiles", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "nFolders", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "sizeInBytes", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "valid_counts", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCache, "is_valid", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCache, "schema");
@@ -188,15 +257,15 @@ void CCache::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CCache *cac = reinterpret_cast<const CCache *>(dataPtr);
+string_q nextCacheChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCache* cac = reinterpret_cast<const CCache*>(dataPtr);
     if (cac) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, cac);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -212,58 +281,10 @@ string_q nextCacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CCache::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CCache& cac) {
-    cac.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CCache& cac) {
-    cac.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CCache::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextCacheChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'n':
-            if ( fieldName % "nFiles" ) return uint_2_Str(nFiles);
-            if ( fieldName % "nFolders" ) return uint_2_Str(nFolders);
-            break;
-        case 'p':
-            if ( fieldName % "path" ) return path;
-            break;
-        case 's':
-            if ( fieldName % "sizeInBytes" ) return uint_2_Str(sizeInBytes);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            break;
-        case 'v':
-            if ( fieldName % "valid_counts" ) return bool_2_Str_t(valid_counts);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -281,6 +302,52 @@ const char* STR_DISPLAY_CACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
+#if 1
+    return false;
+#else
+    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    if (!fileExists(fn))
+        return false;
+    CArchive archive(READING_ARCHIVE);
+    if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+        CStatus status;
+        status.Serialize(archive);
+        CCache* cache = status.caches[0];
+        *this = *cache;  // copy the values from the parent class
+        const CRuntimeClass* pClass = cache->getRuntimeClass();
+        if (pClass) {  // copy the values from this class
+            for (auto field : pClass->fieldList) {
+                string_q ff = field.getName();
+                string_q val = cache->getValueByName(ff);
+                replaceAll(val, "\"", "");
+                replaceAll(val, "\n", "");
+                setValueByName(ff, val);
+            }
+        }
+        archive.Release();
+        return true;
+    }
+    return false;
+#endif
+}
+
+//---------------------------------------------------------------------------
+bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
+#if 1
+    return false;
+#else
+    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
+        CStatus status;
+        status.caches.push_back(this);
+        status.SerializeC(archive);
+        archive.Release();
+        return true;
+    }
+    return false;
+#endif
+}
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -24,11 +24,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CPriceQuote : public CBaseNode {
-public:
+  public:
     timestamp_t timestamp;
     double close;
 
-public:
+  public:
     CPriceQuote(void);
     CPriceQuote(const CPriceQuote& pr);
     virtual ~CPriceQuote(void);
@@ -40,11 +40,13 @@ public:
     time_q date;
     // EXISTING_CODE
     bool operator==(const CPriceQuote& item) const;
-    bool operator!=(const CPriceQuote& item) const { return !operator==(item); }
+    bool operator!=(const CPriceQuote& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
     friend ostream& operator<<(ostream& os, const CPriceQuote& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPriceQuote& pr);
@@ -149,4 +151,3 @@ extern string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn);
 extern string_q displayDollars(timestamp_t ts, biguint_t weiIn);
 // EXISTING_CODE
 }  // namespace qblocks
-

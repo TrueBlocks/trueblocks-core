@@ -15,13 +15,11 @@
 uint64_t cnt = 0;
 #define indexFolder_sorted (getIndexPath("sorted/"))
 //----------------------------------------------------------------
-bool visitFile(const string_q& path, void *data) {
-
+bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", visitFile, data);
 
     } else {
-
         string_q asciiFn = substitute(path, indexFolder_sorted, "./ascii/");
         bool asciiExists = fileExists(asciiFn);
 
@@ -49,7 +47,8 @@ bool visitFile(const string_q& path, void *data) {
         if (asciiExists)
             cerr << "\t" << greenCheck << " Ascii file " << asciiFn << " exists..." << endl;
         if (!asciiExists) {
-            writeIndexAsAscii(asciiFn, lines);asciiExists=true;
+            writeIndexAsAscii(asciiFn, lines);
+            asciiExists = true;
             string_q zipPath = substitute(asciiFn, "/ascii/", "/ascii.zips/");
             if (!fileExists(zipPath)) {
                 cerr << "\tCopying zip files..." << endl;
@@ -98,7 +97,7 @@ bool visitFile(const string_q& path, void *data) {
 }
 
 //----------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     etherlib_init(defaultQuitHandler);
 

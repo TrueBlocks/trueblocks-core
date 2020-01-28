@@ -1,5 +1,11 @@
 {
   "type": "CAccountName",
+  "fieldList": [
+    {
+      "name": "address",
+      "type": "address"
+    }
+  ],
   "data": [
     {
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376"
@@ -449,12 +455,6 @@
       "address": "0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b"
     },
     {
-      "address": "0x24dcc881e7dd730546834452f21872d5cb4b5293"
-    },
-    {
-      "address": "0x24ddff6d8b8a42d835af3b440de91f3386554aa4"
-    },
-    {
       "address": "0x25c499e7306248c308cef403d9824110817b305c"
     },
     {
@@ -501,6 +501,9 @@
     },
     {
       "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f"
     },
     {
       "address": "0x713b73c3994442b533e6a083ec968e40606810ec"
@@ -594,6 +597,9 @@
     },
     {
       "address": "0xda4a4626d3e16e094de3225a751aab7128e96526"
+    },
+    {
+      "address": "0xdf869fad6db91f437b59f1edefab319493d4c4ce"
     },
     {
       "address": "0xf3862af14cbb4d9b781e41a3d4d74e7c2cdb73e2"

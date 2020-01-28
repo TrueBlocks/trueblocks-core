@@ -19,18 +19,19 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
+    // clang-format off
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -80,11 +81,11 @@ bool COptions::parseArguments(string_q& command) {
         // show certain fields and hide others
         manageFields(defHide, false);
         manageFields(defShow, true);
-        manageFields("CParameter:strDefault", false);  // hide
-        manageFields("CTransaction:price", false);  // hide
-        manageFields("CFunction:outputs", true);  // show
-        manageFields("CTransaction:input", true);  // show
-        manageFields("CLogEntry:data,topics", true);  // show
+        manageFields("CParameter:str_default", false);  // hide
+        manageFields("CTransaction:price", false);      // hide
+        manageFields("CFunction:outputs", true);        // show
+        manageFields("CTransaction:input", true);       // show
+        manageFields("CLogEntry:data,topics", true);    // show
         abi_spec.loadAbiKnown("all");
     }
 
@@ -115,10 +116,12 @@ COptions::COptions(void) {
     Init();
     first = true;
     // BEG_CODE_NOTES
-    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");
-    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    // clang-format off
+    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

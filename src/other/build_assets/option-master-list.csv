@@ -19,9 +19,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10300,apps,export,acctExport,hashes_only,e,,false,false,true,true,header,switch,<boolean>,export the IPFS hashes of the index chunks the address appears in
 10320,apps,export,acctExport,count_only,c,,false,false,true,true,header,switch,<boolean>,display only the count of the number of data items requested
 10220,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10340,apps,export,acctExport,write_blocks,w,false,false,true,true,false,header,toggle,<boolean>,toggle writing blocks to the binary cache ([{DEF}] by default)
-10360,apps,export,acctExport,write_txs,i,true,false,true,true,false,header,toggle,<boolean>,toggle writing transactions to the cache ([{DEF}] by default)
-10380,apps,export,acctExport,write_traces,R,true,false,true,true,false,header,toggle,<boolean>,toggle writing traces to the cache ([{DEF}] by default)
+10340,apps,export,acctExport,write_blocks,w,false,false,true,true,false,local,switch,<boolean>,write blocks to the binary cache ('off' by default)
+10360,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
+10380,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
 10400,apps,export,acctExport,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10420,apps,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
 10440,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
@@ -32,14 +32,18 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10540,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10560,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10562,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+10563,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
 
 10600,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
 10620,apps,scrape,blockScrape,n_block_procs,p,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
 10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
-10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>,one or more types of data to retrieve
+10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
+10730,apps,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
+10735,apps,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
+10730,apps,status,cacheStatus,heatmap,a,,false,false,false,false,header,flag,enum[blocks|transactions|traces],for cache mode only&#44; return a heatmap of the given (single) cache
 10740,apps,status,cacheStatus,list,l,,false,false,true,true,header,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
 10760,apps,status,cacheStatus,report,r,,false,false,true,true,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
 10780,apps,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
@@ -48,10 +52,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10840,apps,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,config,,addrs,,,false,false,true,true,--,positional,list<addr>,show or edit one or more addresses' config file
-10920,apps,config,,mode,,,false,false,true,true,--,flag,enum[show|edit],whether to show or edit the config
-10940,apps,config,,get,,,false,false,false,false,--,switch,<boolean>,retrieve current configuration values
-10960,apps,config,,set,,,false,false,false,false,--,flag,<string>,set new configuration values
+10940,apps,settings,,get,,,false,false,false,false,--,switch,<boolean>,retrieve current configuration values
+10960,apps,settings,,set,,,false,false,false,false,--,flag,<string>,set new configuration values
 
 11000,apps,rm,,addrs,,,true,false,true,true,--,positional,list<addr>,remove one or more monitors
 11020,apps,rm,,header,,,false,false,true,true,--,switch,<boolean>,must be present for remove to occur
@@ -63,12 +65,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 11160,apps,seed,,,,,false,false,true,true,--,flag,<string>,seed the address index to IPFS
 
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>,which command to run
+11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed]>,which command to run
 11220,apps,,chifra,sleep,s,14,false,false,true,false,header,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
-11240,apps,,chifra,set,e,,false,false,false,false,--weird,switch,<boolean>,for status config only&#44; indicates that this is config --sef
+11240,apps,,chifra,set,e,,false,false,false,false,--weird,switch,<boolean>,for 'settings' only&#44; indicates that this is a --set
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-11320,apps,,chifra,,,,false,false,true,true,--,description,,Create a TrueBlocks monitor configuration.
+11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
 
 11360,apps,,cacheMan,files,,,true,false,true,true,local,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
 11380,apps,,cacheMan,check,c,,false,false,true,false,local,switch,<boolean>,check for duplicates and other problems in the cache
@@ -86,14 +88,16 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11620,apps,,cacheMan,,,,false,false,true,false,--,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
 11660,dev_tools,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
-11680,dev_tools,,makeClass,list,l,,false,false,true,false,local,switch,<boolean>,list all definition files found in the local ./classDefinitions folder
 11700,dev_tools,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
 11720,dev_tools,,makeClass,edit,e,,false,false,false,false,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
 11740,dev_tools,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11760,dev_tools,,makeClass,js,j,,false,false,true,false,local,flag,<string>,export javaScript code from the class definition
+11760,dev_tools,,makeClass,js,j,,false,false,true,false,local,switch,<boolean>,export javaScript code from the class definition
 11780,dev_tools,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
+11782,dev_tools,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
 11800,dev_tools,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
-11820,dev_tools,,makeClass,filter,f,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
+11820,dev_tools,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
 11822,dev_tools,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
 11824,dev_tools,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
@@ -115,8 +119,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11980,dev_tools,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
 
 12020,tools,quotes,ethQuote,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
-12040,tools,quotes,ethQuote,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440],display prices in this increment
+12040,tools,quotes,ethQuote,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,quotes,ethQuote,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
+12060,tools,quotes,ethQuote,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
 12080,tools,quotes,ethQuote,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
 12082,tools,quotes,ethQuote,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
 12082,tools,quotes,ethQuote,,,,false,false,false,false,--,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
@@ -138,6 +143,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12400,tools,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
 12420,tools,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12440,tools,names,ethNames,add,d,,false,false,false,false,local,flag,<string>,add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
+12445,tools,names,ethNames,groups,g,,false,false,false,false,header,switch,<boolean>,export the list of groups and subgroups only
 12460,tools,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
 12462,tools,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
 12464,tools,names,ethNames,,,,false,false,false,false,--,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.
@@ -242,17 +248,21 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13680,tools,abi,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
 13700,tools,abi,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
 13740,tools,abi,grabABI,noconst,n,,false,false,true,true,header,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
-13840,tools,abi,grabABI,known,k,,false,false,false,false,local,switch,<boolean>,load common 'known' ABIs from cache
+13840,tools,abi,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
+13850,tools,abi,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
+13855,tools,abi,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
 13880,tools,abi,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 13885,tools,abi,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
 13940,tools,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 13960,tools,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
+13962,tools,when,whenBlock,timestamps,t,,false,false,true,true,local,switch,<boolean>,ignore other options and generate timestamps only
+13962,tools,when,whenBlock,skip,s,,false,false,true,true,local,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block numbers in the export
 13980,tools,when,whenBlock,,,,false,false,true,false,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are provided are currently configured:
+13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
 
 14020,tools,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 14040,tools,where,whereBlock,,,,false,false,true,false,--,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.

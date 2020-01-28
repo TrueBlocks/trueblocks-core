@@ -18,7 +18,6 @@ hash_t versionHash = "0x00000000000000000000000000000000000000000000000000000000
 
 //----------------------------------------------------------------
 void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
-
     ASSERT(!fileExists(outFn));
 
     address_t prev;
@@ -73,7 +72,6 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
 
 //----------------------------------------------------------------
 void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
-
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
@@ -95,7 +93,7 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
     archive.Write(nAddrs);
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
-    for (size_t l = 0 ; l < lines.size() ; l++) {
+    for (size_t l = 0; l < lines.size(); l++) {
         string_q line = lines[l];
         ASSERT(countOf(line, '\t') == 2);
         CStringArray parts;
@@ -144,8 +142,8 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     lockSection(true);  // disallow control+c
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
     writeNewBloom(bloomFile, blooms);  // write the bloom file
-    copyFile(tmpFile, outFn);  // move the index file
-    ::remove(tmpFile.c_str());  // remove the tmp file
+    copyFile(tmpFile, outFn);          // move the index file
+    ::remove(tmpFile.c_str());         // remove the tmp file
     lockSection(false);
 
     cerr << "\t" << greenCheck << " Binary file created..." << endl;
@@ -171,4 +169,3 @@ void loadHashes(CIndexHashMap& map, const string_q& which) {
 }
 
 }  // namespace qblocks
-

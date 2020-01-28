@@ -25,11 +25,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CLeaf : public CTreeNode {
-public:
+  public:
     CBlockNumArray blocks;
     uint64_t counter;
 
-public:
+  public:
     CLeaf(void);
     CLeaf(const CLeaf& le);
     virtual ~CLeaf(void);
@@ -44,17 +44,19 @@ public:
     string_q at(const string_q& _key) const override;
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
-    bool visitItems(ACCTVISITOR func, void *data) const override;
+    bool visitItems(ACCTVISITOR func, void* data) const override;
 
-private:
+  private:
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
     bool operator==(const CLeaf& item) const;
-    bool operator!=(const CLeaf& item) const { return !operator==(item); }
+    bool operator!=(const CLeaf& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CLeaf& v1, const CLeaf& v2);
     friend ostream& operator<<(ostream& os, const CLeaf& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CLeaf& le);
@@ -151,7 +153,6 @@ extern const char* STR_DISPLAY_LEAF;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

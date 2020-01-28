@@ -22,7 +22,7 @@
 #include <stdexcept>
 
 class CMemMapFile {
-public:
+  public:
     enum CacheHint {
         Normal,          ///< good overall performance
         SequentialScan,  ///< read file only once with few seeks
@@ -30,7 +30,7 @@ public:
     };
 
     enum MapRange {
-        WholeFile = 0    ///< everything ... be careful when file is larger than memory
+        WholeFile = 0  ///< everything ... be careful when file is larger than memory
     };
 
     CMemMapFile(void);
@@ -48,24 +48,25 @@ public:
     const unsigned char* getData(void) const;
 
     bool isValid(void) const;
-    bool is_open(void) const { return _file != 0; }
+    bool is_open(void) const {
+        return _file != 0;
+    }
 
     uint64_t size(void) const;
-    size_t   mappedSize(void) const;
+    size_t mappedSize(void) const;
 
     bool remap(uint64_t offset, size_t mappedBytes);
 
-private:
+  private:
     CMemMapFile(const CMemMapFile&);
     CMemMapFile& operator=(const CMemMapFile&);
 
     static int getpagesize(void);
 
-    int         _file;
+    int _file;
     std::string _filename;
-    uint64_t    _filesize;
-    CacheHint   _hint;
-    size_t      _mappedBytes;
-    void*       _mappedView;
+    uint64_t _filesize;
+    CacheHint _hint;
+    size_t _mappedBytes;
+    void* _mappedView;
 };
-

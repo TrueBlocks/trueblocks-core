@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CConfiguration, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextConfigurationChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextConfigurationChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextConfigurationChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextConfigurationChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CConfiguration::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CConfiguration::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,52 @@ void CConfiguration::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfigurationChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextConfigurationChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CConfiguration *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CConfiguration*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CConfiguration::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextConfigurationChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'f':
+            if (fieldName % "files" || fieldName % "filesCnt") {
+                size_t cnt = files.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += files[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,7 +106,7 @@ bool CConfiguration::setValueByName(const string_q& fieldNameIn, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'f':
-            if ( fieldName % "files" ) {
+            if (fieldName % "files") {
                 CConfigFile item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -92,7 +130,6 @@ void CConfiguration::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CConfiguration::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -111,7 +148,6 @@ bool CConfiguration::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CConfiguration::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -127,7 +163,7 @@ CArchive& operator>>(CArchive& archive, CConfigurationArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -138,7 +174,7 @@ CArchive& operator>>(CArchive& archive, CConfigurationArray& array) {
 CArchive& operator<<(CArchive& archive, const CConfigurationArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -146,14 +182,15 @@ CArchive& operator<<(CArchive& archive, const CConfigurationArray& array) {
 //---------------------------------------------------------------------------
 void CConfiguration::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CConfiguration, "schema")) return;
+    if (HAS_FIELD(CConfiguration, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CConfiguration, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CConfiguration, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfiguration, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfiguration, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CConfiguration, "files", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfiguration, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CConfiguration, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfiguration, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfiguration, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CConfiguration, "files", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CConfiguration, "schema");
@@ -168,15 +205,15 @@ void CConfiguration::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfigurationChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CConfiguration *con = reinterpret_cast<const CConfiguration *>(dataPtr);
+string_q nextConfigurationChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CConfiguration* con = reinterpret_cast<const CConfiguration*>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, con);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -192,56 +229,10 @@ string_q nextConfigurationChunk_custom(const string_q& fieldIn, const void *data
 
 //---------------------------------------------------------------------------
 bool CConfiguration::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CConfiguration& con) {
-    con.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CConfiguration& con) {
-    con.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CConfiguration::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextConfigurationChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'f':
-            if ( fieldName % "files" || fieldName % "filesCnt" ) {
-                size_t cnt = files.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += files[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -255,8 +246,8 @@ ostream& operator<<(ostream& os, const CConfiguration& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CConfiguration::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "files" && index < files.size() )
+const CBaseNode* CConfiguration::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "files" && index < files.size())
         return &files[index];
     return NULL;
 }
@@ -268,4 +259,3 @@ const char* STR_DISPLAY_CONFIGURATION = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

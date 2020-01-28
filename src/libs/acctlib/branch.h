@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CBranch : public CTreeNode {
-public:
+  public:
     string_q branchValue;
 
-public:
+  public:
     CBranch(void);
     CBranch(const CBranch& br);
     virtual ~CBranch(void);
@@ -37,25 +37,27 @@ public:
     DECLARE_NODE(CBranch);
 
     // EXISTING_CODE
-    CTreeNode *nodes[16];
+    CTreeNode* nodes[16];
     explicit CBranch(const string_q& _value);
     CBranch(char _i1, CTreeNode* _n1, const string_q& _value = "");
     CBranch(char _i1, CTreeNode* _n1, char _i2, CTreeNode* _n2);
     string_q at(const string_q& _key) const override;
     CTreeNode* insert(const string_q& _key, const string_q& _value) override;
     CTreeNode* remove(const string_q& _key) override;
-    bool visitItems(ACCTVISITOR func, void *data) const override;
+    bool visitItems(ACCTVISITOR func, void* data) const override;
 
-private:
+  private:
     char activeBranch() const;
-    CTreeNode *rejig();
+    CTreeNode* rejig();
     // EXISTING_CODE
     bool operator==(const CBranch& item) const;
-    bool operator!=(const CBranch& item) const { return !operator==(item); }
+    bool operator!=(const CBranch& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CBranch& v1, const CBranch& v2);
     friend ostream& operator<<(ostream& os, const CBranch& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CBranch& br);
@@ -92,7 +94,7 @@ inline CBranch::~CBranch(void) {
 //--------------------------------------------------------------------------
 inline void CBranch::clear(void) {
     // EXISTING_CODE
-    for (int i = 0 ; i < 16 ; i++)
+    for (int i = 0; i < 16; i++)
         if (nodes[i])
             delete nodes[i];
     memset(nodes, 0, sizeof(CTreeNode*) * 16);
@@ -118,7 +120,7 @@ inline void CBranch::duplicate(const CBranch& br) {
     branchValue = br.branchValue;
 
     // EXISTING_CODE
-    for (int i = 0 ; i < 16 ; i++)
+    for (int i = 0; i < 16; i++)
         if (br.nodes[i])
             *nodes[i] = *br.nodes[i];
     // EXISTING_CODE
@@ -158,7 +160,6 @@ extern const char* STR_DISPLAY_BRANCH;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void *data);
+extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

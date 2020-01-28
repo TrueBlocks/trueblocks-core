@@ -25,10 +25,10 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CIndexCache : public CCache {
-public:
+  public:
     CIndexCacheItemArray items;
 
-public:
+  public:
     CIndexCache(void);
     CIndexCache(const CIndexCache& in);
     virtual ~CIndexCache(void);
@@ -36,16 +36,18 @@ public:
 
     DECLARE_NODE(CIndexCache);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CIndexCache& item) const;
-    bool operator!=(const CIndexCache& item) const { return !operator==(item); }
+    bool operator!=(const CIndexCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CIndexCache& v1, const CIndexCache& v2);
     friend ostream& operator<<(ostream& os, const CIndexCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CIndexCache& in);
@@ -136,14 +138,9 @@ extern CArchive& operator>>(CArchive& archive, CIndexCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CIndexCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CIndexCache& ind);
-extern CArchive& operator>>(CArchive& archive, CIndexCache& ind);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_INDEXCACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

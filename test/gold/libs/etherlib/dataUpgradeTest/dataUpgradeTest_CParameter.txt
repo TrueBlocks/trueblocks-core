@@ -7,14 +7,19 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+type                	1005	0	131122	T_TEXT TS_STRING
 name                	1006	0	131122	T_TEXT TS_STRING
-type                	1007	0	131122	T_TEXT TS_STRING
-isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
-isArray             	1009	0	65556	T_BOOL TS_NUMERAL
-isObject            	1010	0	65556	T_BOOL TS_NUMERAL
-strDefault          	1011	0	131122	T_TEXT TS_STRING
-value               	1012	0	131122	T_TEXT TS_STRING
+str_default         	1007	0	131122	T_TEXT TS_STRING
+value               	1008	0	131122	T_TEXT TS_STRING
+indexed             	1009	0	65556	T_BOOL TS_NUMERAL
+no_write            	1010	0	65556	T_BOOL TS_NUMERAL
+is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
+is_array            	1013	0	65556	T_BOOL TS_NUMERAL
+is_object           	1014	0	65556	T_BOOL TS_NUMERAL
+is_builtin          	1015	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
+is_enabled          	1017	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -25,14 +30,19 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-indexed             	1005	1	65556	T_BOOL TS_NUMERAL
+type                	1005	1	131122	T_TEXT TS_STRING
 name                	1006	1	131122	T_TEXT TS_STRING
-type                	1007	1	131122	T_TEXT TS_STRING
-isPointer           	1008	1	65556	T_BOOL TS_NUMERAL
-isArray             	1009	1	65556	T_BOOL TS_NUMERAL
-isObject            	1010	1	65556	T_BOOL TS_NUMERAL
-strDefault          	1011	1	131122	T_TEXT TS_STRING
-value               	1012	1	131122	T_TEXT TS_STRING
+str_default         	1007	1	131122	T_TEXT TS_STRING
+value               	1008	1	131122	T_TEXT TS_STRING
+indexed             	1009	1	65556	T_BOOL TS_NUMERAL
+no_write            	1010	1	65556	T_BOOL TS_NUMERAL
+is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1012	1	65556	T_BOOL TS_NUMERAL
+is_array            	1013	1	65556	T_BOOL TS_NUMERAL
+is_object           	1014	1	65556	T_BOOL TS_NUMERAL
+is_builtin          	1015	1	65556	T_BOOL TS_NUMERAL
+is_minimal          	1016	1	65556	T_BOOL TS_NUMERAL
+is_enabled          	1017	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -43,18 +53,25 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-indexed             	1005	0	65556	T_BOOL TS_NUMERAL
+type                	1005	0	131122	T_TEXT TS_STRING
 name                	1006	0	131122	T_TEXT TS_STRING
-type                	1007	0	131122	T_TEXT TS_STRING
-isPointer           	1008	0	65556	T_BOOL TS_NUMERAL
-isArray             	1009	0	65556	T_BOOL TS_NUMERAL
-isObject            	1010	0	65556	T_BOOL TS_NUMERAL
-strDefault          	1011	0	131122	T_TEXT TS_STRING
-value               	1012	0	131122	T_TEXT TS_STRING
+str_default         	1007	0	131122	T_TEXT TS_STRING
+value               	1008	0	131122	T_TEXT TS_STRING
+indexed             	1009	0	65556	T_BOOL TS_NUMERAL
+no_write            	1010	0	65556	T_BOOL TS_NUMERAL
+is_flags            	1011	0	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
+is_array            	1013	0	65556	T_BOOL TS_NUMERAL
+is_object           	1014	0	65556	T_BOOL TS_NUMERAL
+is_builtin          	1015	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
+is_enabled          	1017	0	65556	T_BOOL TS_NUMERAL
 {
-  "schema": 6001,
+  "schema": 6005,
   "deleted": 0,
   "showing": 1,
-  "cname": "Parameter"
+  "cname": "Parameter",
+  "is_flags": 64,
+  "is_enabled": true
 }
 

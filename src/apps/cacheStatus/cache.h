@@ -24,15 +24,15 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CCache : public CBaseNode {
-public:
+  public:
     string_q type;
     string_q path;
     uint64_t nFiles;
     uint64_t nFolders;
     uint64_t sizeInBytes;
-    bool valid_counts;
+    bool is_valid;
 
-public:
+  public:
     CCache(void);
     CCache(const CCache& ca);
     virtual ~CCache(void);
@@ -41,16 +41,27 @@ public:
     DECLARE_NODE(CCache);
 
     // EXISTING_CODE
-    void noteFile(const string_q& p) { nFiles++; sizeInBytes += fileSize(p); }
-    void noteFolder(const string_q& p) { nFolders++; }
-    void reset(void) { initialize(); }
+    void noteFile(const string_q& p) {
+        nFiles++;
+        sizeInBytes += fileSize(p);
+    }
+    void noteFolder(const string_q& p) {
+        nFolders++;
+    }
+    void reset(void) {
+        initialize();
+    }
+    bool readBinaryCache(const string_q& type, bool details);
+    bool writeBinaryCache(const string_q& type, bool details);
     // EXISTING_CODE
     bool operator==(const CCache& item) const;
-    bool operator!=(const CCache& item) const { return !operator==(item); }
+    bool operator!=(const CCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CCache& v1, const CCache& v2);
     friend ostream& operator<<(ostream& os, const CCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CCache& ca);
@@ -99,7 +110,7 @@ inline void CCache::initialize(void) {
     nFiles = 0;
     nFolders = 0;
     sizeInBytes = 0;
-    valid_counts = false;
+    is_valid = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -115,7 +126,7 @@ inline void CCache::duplicate(const CCache& ca) {
     nFiles = ca.nFiles;
     nFolders = ca.nFolders;
     sizeInBytes = ca.sizeInBytes;
-    valid_counts = ca.valid_counts;
+    is_valid = ca.is_valid;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -151,10 +162,6 @@ extern CArchive& operator>>(CArchive& archive, CCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CCache& cac);
-extern CArchive& operator>>(CArchive& archive, CCache& cac);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CACHE;
 
 //---------------------------------------------------------------------------
@@ -162,4 +169,3 @@ extern const char* STR_DISPLAY_CACHE;
 typedef vector<CCache*> CCachePtrArray;
 // EXISTING_CODE
 }  // namespace qblocks
-

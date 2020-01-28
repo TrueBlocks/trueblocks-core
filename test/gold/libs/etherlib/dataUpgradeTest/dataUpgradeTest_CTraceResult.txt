@@ -42,7 +42,7 @@ code                	1006	0	131122	T_TEXT TS_STRING
 gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1008	0	131122	T_TEXT TS_STRING
 {
-  "schema": 6001,
+  "schema": 6005,
   "deleted": 0,
   "showing": 1,
   "cname": "TraceResult",

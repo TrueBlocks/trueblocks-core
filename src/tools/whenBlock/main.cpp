@@ -13,7 +13,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -25,17 +25,20 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        bool isText = (options.exportFmt & (TXT1|CSV1));
+        bool isText = (options.exportFmt & (TXT1 | CSV1));
         if (isText && options.items.size() == 0) {
             LOG_INFO("No results");
 
         } else {
             for (auto item : options.items) {
                 if (first)
-                    cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], item.second.getRuntimeClass());
-                if (isText)
+                    cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
+                                           item.second.getRuntimeClass());
+
+                if (isText) {
                     cout << item.second.Format(expContext().fmtMap["format"]) << endl;
-                else {
+
+                } else {
                     if (!first)
                         cout << "," << endl;
                     cout << "  ";
@@ -54,23 +57,29 @@ int main(int argc, const char *argv[]) {
 }
 
 //---------------------------------------------------------------
-bool lookupDate(const COptions *options, CBlock& block, const timestamp_t& ts) {
+bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts) {
     time_q date = ts_2_Date(ts);
 
     // speed up
-    blknum_t start = 1, stop = getLastBlock_client();
+    blknum_t start = 1, stop = getLatestBlock_client();
     if (date.GetYear() >= 2019) {
         start = 6988614;
     } else if (date.GetYear() >= 2018) {
-        start = 4832685; stop = 6988614;
+        start = 4832685;
+        stop = 6988614;
     } else if (date.GetYear() >= 2017) {
-        start = 2912406; stop = 4832685;
+        start = 2912406;
+        stop = 4832685;
     } else if (date.GetYear() >= 2016) {
-        start = 778482; stop = 2912406;
+        start = 778482;
+        stop = 2912406;
     }
 
     block.timestamp = ts;
     bool ret = findTimestamp_binarySearch(block, start, stop, true);
-    if (!isTestMode()) { cerr << "\r"; cerr.flush(); }
+    if (!isTestMode()) {
+        cerr << "\r";
+        cerr.flush();
+    }
     return ret;
 }

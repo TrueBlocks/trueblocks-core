@@ -12,10 +12,12 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -23,7 +25,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern const char* STR_ERROR_MSG;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -31,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -105,7 +106,8 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        LOG_INFO("Origin block index (" + zeroBin + ") not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
+        LOG_INFO("Origin block index (" + zeroBin + ") not found. Building it from " +
+                 uint_2_Str(prefundWeiMap.size()) + " prefunds.");
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
@@ -117,11 +119,11 @@ bool COptions::parseArguments(string_q& command) {
             appearances.push_back(os.str());
         }
         LOG_INFO("Writing index...");
-        writeIndexAsBinary(zeroBin, appearances); // also writes the bloom file
+        writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
         LOG_INFO("Done...");
     }
 
-    const CToml *config = getGlobalConfig("blockScrape");
+    const CToml* config = getGlobalConfig("blockScrape");
     bool needsParity = config->getConfigBool("requires", "parity", true);
     if (needsParity && !isParity())
         return usage("This tool requires Parity. Quitting...");
@@ -138,14 +140,17 @@ bool COptions::parseArguments(string_q& command) {
     if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
-    n_blocks      = config->getConfigInt("settings", "n_blocks",      (n_blocks      == NOPOS ? 2000 : n_blocks     ));
-    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ?   10 : n_block_procs));
-    n_addr_procs  = config->getConfigInt("settings", "n_addr_procs",  (n_addr_procs  == NOPOS ?   20 : n_addr_procs ));
+    n_blocks = config->getConfigInt("settings", "n_blocks", (n_blocks == NOPOS ? 2000 : n_blocks));
+    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
+    n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
 
+#ifdef MAC
+    // TODO(tjayrush): fix this on non-mac machines
     if (nRunning("blockScrape")) {
         LOG_WARN("The " + getProgName() + " process may only run once. Quitting...");
         return false;
     }
+#endif
 
     return true;
 }
@@ -162,12 +167,12 @@ void COptions::Init(void) {
     n_addr_procs = NOPOS;
     // END_CODE_INIT
     if (getEnvStr("DOCKER_MODE") == "true") {
-        n_blocks      = 100;
+        n_blocks = 100;
         n_block_procs = 5;
-        n_addr_procs  = 10;
+        n_addr_procs = 10;
     }
 
-    minArgs     = 0;
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -175,6 +180,8 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -187,11 +194,11 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 const char* STR_ERROR_MSG =
-"{\n"
-"  \"message\": \"Reporting for test mode only\",\n"
-"  \"errors\": [\n"
-"    \"n_blocks [N_BLOCKS]\",\n"
-"    \"n_block_procs [N_BLOCK_PROCS]\",\n"
-"    \"n_addr_procs [N_ADDR_PROCS]\"\n"
-"  ]\n"
-"}\n";
+    "{\n"
+    "  \"message\": \"Reporting for test mode only\",\n"
+    "  \"errors\": [\n"
+    "    \"n_blocks [N_BLOCKS]\",\n"
+    "    \"n_block_procs [N_BLOCK_PROCS]\",\n"
+    "    \"n_addr_procs [N_ADDR_PROCS]\"\n"
+    "  ]\n"
+    "}\n";

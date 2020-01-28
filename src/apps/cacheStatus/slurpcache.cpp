@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CSlurpCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextSlurpcacheChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextSlurpcacheChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CSlurpCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CSlurpCache::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,67 @@ void CSlurpCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextSlurpcacheChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextSlurpcacheChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CSlurpCache *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CSlurpCache*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CSlurpCache::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextSlurpcacheChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "addrs" || fieldName % "addrsCnt") {
+                size_t cnt = addrs.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += ("\"" + addrs[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'i':
+            if (fieldName % "items" || fieldName % "itemsCnt") {
+                size_t cnt = items.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += items[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CCache::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -71,7 +124,7 @@ bool CSlurpCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "addrs" ) {
+            if (fieldName % "addrs") {
                 string_q str = fieldValue;
                 while (!str.empty()) {
                     addrs.push_back(str_2_Addr(nextTokenClear(str, ',')));
@@ -80,7 +133,7 @@ bool CSlurpCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             break;
         case 'i':
-            if ( fieldName % "items" ) {
+            if (fieldName % "items") {
                 CMonitorCacheItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -104,7 +157,6 @@ void CSlurpCache::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CSlurpCache::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -124,7 +176,6 @@ bool CSlurpCache::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CSlurpCache::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CCache::SerializeC(archive);
 
@@ -141,7 +192,7 @@ CArchive& operator>>(CArchive& archive, CSlurpCacheArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -152,7 +203,7 @@ CArchive& operator>>(CArchive& archive, CSlurpCacheArray& array) {
 CArchive& operator<<(CArchive& archive, const CSlurpCacheArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -160,17 +211,18 @@ CArchive& operator<<(CArchive& archive, const CSlurpCacheArray& array) {
 //---------------------------------------------------------------------------
 void CSlurpCache::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CSlurpCache, "schema")) return;
+    if (HAS_FIELD(CSlurpCache, "schema"))
+        return;
 
     CCache::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CSlurpCache, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CSlurpCache, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CSlurpCache, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CSlurpCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CSlurpCache, "addrs", T_ADDRESS|TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CSlurpCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "addrs", T_ADDRESS | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "items", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSlurpCache, "schema");
@@ -185,15 +237,15 @@ void CSlurpCache::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CSlurpCache *slu = reinterpret_cast<const CSlurpCache *>(dataPtr);
+string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CSlurpCache* slu = reinterpret_cast<const CSlurpCache*>(dataPtr);
     if (slu) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, slu);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -209,70 +261,10 @@ string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CSlurpCache::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CSlurpCache& slu) {
-    slu.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CSlurpCache& slu) {
-    slu.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CSlurpCache::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextSlurpcacheChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "addrs" || fieldName % "addrsCnt" ) {
-                size_t cnt = addrs.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + addrs[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'i':
-            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
-                size_t cnt = items.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += items[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CCache::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -286,15 +278,15 @@ ostream& operator<<(ostream& os, const CSlurpCache& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CSlurpCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "items" && index < items.size() )
+const CBaseNode* CSlurpCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "items" && index < items.size())
         return &items[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
 const string_q CSlurpCache::getStringAt(const string_q& fieldName, size_t i) const {
-    if ( fieldName % "addrs" && i < addrs.size() )
+    if (fieldName % "addrs" && i < addrs.size())
         return (addrs[i]);
     return "";
 }
@@ -306,4 +298,3 @@ const char* STR_DISPLAY_SLURPCACHE = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

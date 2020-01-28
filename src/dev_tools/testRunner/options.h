@@ -21,13 +21,13 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-#define API (1<<0)
-#define CMD (1<<1)
+#define API (1 << 0)
+#define CMD (1 << 1)
 #define BOTH (API | CMD)
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     string_q filter;
     bool clean;
@@ -53,8 +53,8 @@ public:
 };
 
 //-----------------------------------------------------------------------
-extern bool saveAndCopy(const string_q& path, void *data);
-extern bool replaceFile(const string_q& path, void *data);
+extern bool saveAndCopy(const string_q& path, void* data);
+extern bool replaceFile(const string_q& path, void* data);
 extern double verySlow;
 extern double tooSlow;
 extern double fastEnough;

@@ -1,4 +1,6 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, status, apps/cacheStatus, CLEANUP,         n, CLEANUP
+
 on, cmd,  fast, status, apps/cacheStatus, README,          n, @th
 on, cmd,  fast, status, apps/cacheStatus, help,            n, @h
 on, cmd,  fast, status, apps/cacheStatus, help_long,       n, help
@@ -13,23 +15,34 @@ on, both, fast, status, apps/cacheStatus, index_start_bad, y, modes = index & st
 on, both, slow, status, apps/cacheStatus, mode_monitors,   y, modes = monitors
 on, both, slow, status, apps/cacheStatus, mode_names,      y, modes = names
 on, both, slow, status, apps/cacheStatus, mode_abis,       y, modes = abis
-on, both, slow, status, apps/cacheStatus, mode_blocks,     y, modes = blocks
-on, both, slow, status, apps/cacheStatus, mode_txs,        y, modes = transactions
-on, both, slow, status, apps/cacheStatus, mode_traces,     y, modes = traces
-on, both, slow, status, apps/cacheStatus, mode_slurps,     y, modes = slurps
-on, both, slow, status, apps/cacheStatus, mode_prices,     y, modes = prices
-on, both, slow, status, apps/cacheStatus, mode_some,       y, modes = some
-on, both, fast, status, apps/cacheStatus, mode_all,        y, modes = all
-on, both, slow, status, apps/cacheStatus, config_bad,      y, modes = config
-on, both, slow, status, apps/cacheStatus, three,           y, modes = abis slurps monitors
 
-on, both, slow, status, apps/cacheStatus, items_monitors,  y, details & modes = monitors
-on, both, slow, status, apps/cacheStatus, items_abis,      y, details & modes = abis
-on, both, slow, status, apps/cacheStatus, items_slurps,    y, details & modes = slurps
-on, both, slow, status, apps/cacheStatus, items_prices,    y, details & modes = prices
+on, both, fast, status, apps/cacheStatus, mode_blocks,     y, modes = caches & types = blocks
+on, both, fast, status, apps/cacheStatus, mode_txs,        y, modes = caches & types = transactions
+on, both, fast, status, apps/cacheStatus, mode_traces,     y, modes = caches & types = traces
+on, both, fast, status, apps/cacheStatus, mode_cache_fail, y, modes = caches & types = junk
+on, both, fast, status, apps/cacheStatus, mode_cache_all,  y, modes = caches & types = all
+on, both, fast, status, apps/cacheStatus, mode_txs_l01,    y, modes = caches & types = transactions & details
+on, both, fast, status, apps/cacheStatus, mode_txs_l02,    y, modes = caches & types = transactions & details & depth = 0
+on, both, fast, status, apps/cacheStatus, mode_txs_l1,     y, modes = caches & types = transactions & details  & depth = 1
+on, both, fast, status, apps/cacheStatus, mode_txs_l2,     y, modes = caches & types = transactions & details  & depth = 2
+on, both, fast, status, apps/cacheStatus, mode_txs_l3,     y, modes = caches & types = transactions & details  & depth = 3
+on, both, fast, status, apps/cacheStatus, mode_txs_l4_bad, y, modes = caches & types = transactions & details  & depth = 4
+on, both, fast, status, apps/cacheStatus, mode_txs_blks,   y, modes = caches & types = transactions & types = blocks
+
+on, both, fast, status, apps/cacheStatus, mode_slurps,     y, modes = caches & types = slurps
+on, both, fast, status, apps/cacheStatus, mode_prices,     y, modes = caches & types = prices
+on, both, fast, status, apps/cacheStatus, mode_some,       y, modes = some
+on, both, fast, status, apps/cacheStatus, mode_all,        y, modes = all
+on, both, fast, status, apps/cacheStatus, config_bad,      y, modes = config
+on, both, fast, status, apps/cacheStatus, three,           y, modes = abis caches monitors --types slurps
+
+on, both, fast, status, apps/cacheStatus, items_monitors,  y, details & modes = monitors
+on, both, fast, status, apps/cacheStatus, items_abis,      y, details & modes = abis
+on, both, fast, status, apps/cacheStatus, items_slurps,    y, details & modes = caches & types = slurps
+on, both, fast, status, apps/cacheStatus, items_prices,    y, details & modes = caches & types = prices
 on, both, fast, status, apps/cacheStatus, items_some,      y, details & modes = some & start = 3000000 & end = 3100000
 on, both, fast, status, apps/cacheStatus, items_scrap_mon, y, details & modes = index & start = 1000000 & end = 2200000
-on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = abis slurps monitors
+on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = abis caches monitors --types slurps
 
 on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
 on, both, fast, status, apps/cacheStatus, config_set,      n, set_config

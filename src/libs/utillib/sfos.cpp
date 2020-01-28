@@ -22,272 +22,276 @@
 
 namespace qblocks {
 
-    #define remove unlink
+#define remove unlink
 
-    //------------------------------------------------------------------
-    static string_q escapePath(const string_q& nameIn) {
-        string_q name = nameIn;
-        replaceAll(name, " ", "\\ ");
-        replaceAll(name, "&", "\\&");
-        replaceAll(name, "(", "\\(");
-        replaceAll(name, ")", "\\)");
-        replaceAll(name, "'", "\\'");
-        return name;
+//------------------------------------------------------------------
+static int globErrFunc(const char* epath, int eerrno) {
+    //  perror(epath);
+    return 0;
+}
+
+//--------------------------------------------------------------------------------
+int cleanFolder(const string_q& path, bool recurse, bool interactive) {
+    CStringArray files;
+    listFilesInFolder(files, path, true);
+    for (auto file : files)
+        ::remove(file.c_str());
+    return static_cast<int>(files.size());
+}
+
+//------------------------------------------------------------------
+int moveFile(const string_q& from, const string_q& to) {
+    if (from % to)
+        return true;
+    if (copyFile(from, to)) {
+        int ret = ::remove(from.c_str());  // remove file returns '0' on success
+        return !ret;
     }
+    return false;
+}
 
-    //------------------------------------------------------------------
-    static int globErrFunc(const char *epath, int eerrno) {
-        //  perror(epath);
-        return 0;
-    }
+//------------------------------------------------------------------
+static string_q escapePath(const string_q& nameIn) {
+    string_q name = nameIn;
+    replaceAll(name, " ", "\\ ");
+    replaceAll(name, "&", "\\&");
+    replaceAll(name, "(", "\\(");
+    replaceAll(name, ")", "\\)");
+    replaceAll(name, "'", "\\'");
+    return name;
+}
 
+//------------------------------------------------------------------
+int copyFile(const string_q& fromIn, const string_q& toIn) {
+    ifstream src(escapePath(fromIn), ios::binary);
+    ofstream dst(escapePath(toIn), ios::binary);
+    dst << src.rdbuf();
+    return static_cast<int>(fileExists(toIn));
+}
 
-    //--------------------------------------------------------------------------------
-    int cleanFolder(const string_q& path, bool recurse, bool interactive) {
-        CStringArray files;
-        listFilesInFolder(files, path, true);
-        for (auto file : files)
-            ::remove(file.c_str());
-        return static_cast<int>(files.size());
-    }
+//------------------------------------------------------------------
+// Returns a list of either files or folders, but not both.
+//------------------------------------------------------------------
+void doGlob(size_t& nStrs, string_q* strs, const string_q& maskIn, int wantFiles) {
+    ASSERT(!strs || nStrs);
 
-    //------------------------------------------------------------------
-    int moveFile(const string_q& from, const string_q& to) {
-        if (from % to)
-            return true;
-        if (copyFile(from, to)) {
-            int ret = ::remove(from.c_str());  // remove file returns '0' on success
-            return !ret;
+    glob_t globBuf;
+
+    string_q mask = maskIn;
+
+    // should check return code
+    glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
+
+    size_t n = globBuf.gl_pathc;
+    size_t mx = nStrs;
+    nStrs = 0;
+    char c;
+
+    for (size_t i = 0; i < n; i++) {
+        // get path
+        char* tmp = globBuf.gl_pathv[i];
+        // last char
+        c = tmp[strlen(tmp) - 1];
+
+        // if path ends in '/' then this is directory, filter accordingly
+
+        bool isDir = ('/' == c);
+        bool listEm = ((isDir) ? !wantFiles : wantFiles);
+        if (wantFiles == ANY_FILETYPE)
+            listEm = true;
+
+        if (listEm) {
+            if (NULL != strs) {
+                string_q path = globBuf.gl_pathv[i];
+
+                // filter specified directories and remove trailing '/'
+                if (endsWith(path, '/'))
+                    path = extract(path, 0, path.length() - 1);
+
+                // trim path to last directory / file
+                path = CFilename(path).getFilename();
+                if (startsWith(path, '/'))
+                    path = extract(path, 1);
+                // The path we return is always just the name of the folder or file
+                // without any leading (or even existing) '/'
+                ASSERT(path.length() && path[0] != '/');
+
+                if (wantFiles == ANY_FILETYPE) {
+                    if (isDir)
+                        path = "d-" + path;
+                    else
+                        path = "f-" + path;
+                }
+
+                strs[nStrs] = path;
+            }
+
+            nStrs++;
+            if (NULL != strs && nStrs >= mx) {
+                break;
+            }
         }
+    }
+
+    globfree(&globBuf);
+}
+
+//-------------------------------------------------------------------------------------------------------------
+inline bool waitForCreate(const string_q& filename) {
+    size_t mx = 1000;
+    size_t cnt = 0;
+    while (cnt < mx && !fileExists(filename))
+        cnt++;
+
+    return fileExists(filename);
+}
+
+//---------------------------------------------------------------------------------------
+static const char* CHR_VALID_NAME =
+    "\t\n\r()<>[]{}`\\|; "
+    "'!$^*~@"
+    "?&#+%"
+    ",:/=\"";
+//---------------------------------------------------------------------------------------
+string_q makeValidName(const string_q& inOut) {
+    string_q ret = inOut;
+    replaceAny(ret, CHR_VALID_NAME, "_");
+    if (!ret.empty() && isdigit(ret[0]))
+        ret = "_" + ret;
+    return ret;
+}
+
+//------------------------------------------------------------------------------------------
+string_q doCommand(const string_q& cmd) {
+    time_q now = Now();
+    string_q tmpPath = "/tmp/";
+    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
+    string_q theCommand = (cmd + " >" + filename);
+    // clang-format off
+    if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+
+    // Check twice for existance since the previous command creates the file but may take some time
+    waitForCreate(filename);
+    string_q ret;
+    asciiFileToString(filename, ret);
+    remove(filename.c_str());
+    return trim(ret, '\n');
+}
+
+//------------------------------------------------------------------
+string_q getCWD(const string_q& filename) {
+    string_q folder;
+    size_t kMaxPathSize = _POSIX_PATH_MAX;
+    char buffer[kMaxPathSize];
+    if (::getcwd(buffer, kMaxPathSize))
+        folder = buffer;
+    if (!endsWith(folder, '/'))
+        folder += "/";
+    return folder + filename;  // may be empty
+}
+
+//------------------------------------------------------------------
+bool fileExists(const string_q& file) {
+    struct stat statBuf;
+    return !file.empty() && stat(file.c_str(), &statBuf) == 0;
+}
+
+//------------------------------------------------------------------
+bool folderExists(const string_q& folderName) {
+    if (folderName.empty())
         return false;
+
+    string_q folder = folderName;
+    if (!endsWith(folder, '/'))
+        folder += '/';
+
+    size_t nFiles = 0;
+    string_q mask = folder + "*.*";
+    doGlob(nFiles, NULL, mask, true);
+
+    // check to see if it is just folders
+    if (!nFiles)
+        doGlob(nFiles, NULL, mask, false);
+    if (!nFiles) {
+        mask = folder + ".";
+        doGlob(nFiles, NULL, mask, false);
     }
 
-    //------------------------------------------------------------------
-    int copyFile(const string_q& fromIn, const string_q& toIn) {
-        string_q from = escapePath(fromIn);
-        string_q to   = escapePath(toIn);
+    return (nFiles > 0);
+}
 
-        string_q command = "cp -f " + from + " " + to;
-        if (system(command.c_str())) { }  // do not remove. The test just silences compiler warnings
-        return static_cast<int>(fileExists(to));
-    }
+//------------------------------------------------------------------
+uint64_t fileSize(const string_q& filename) {
+    if (!fileExists(filename))
+        return 0;
 
-    //------------------------------------------------------------------
-    // Returns a list of either files or folders, but not both.
-    //------------------------------------------------------------------
-    void doGlob(size_t& nStrs, string_q *strs, const string_q& maskIn, int wantFiles ) {
-        ASSERT(!strs || nStrs);
+    struct stat statBuf;
+    stat(filename.c_str(), &statBuf);
+    return (uint64_t)statBuf.st_size;
+}
 
-        glob_t globBuf;
+//----------------------------------------------------------------------------
+bool establishFolder(const string_q& path, string_q& created) {
+    if (fileExists(path) || folderExists(path))
+        return true;
 
-        string_q mask = maskIn;
-
-        // should check return code
-        glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
-
-        size_t n = globBuf.gl_pathc;
-        size_t mx = nStrs;
-        nStrs = 0;
-        char c;
-
-        for (size_t i = 0 ; i < n ; i++) {
-            // get path
-            char *tmp = globBuf.gl_pathv[i];
-            // last char
-            c   = tmp[strlen(tmp) - 1];
-
-            // if path ends in '/' then this is directory, filter accordingly
-
-            bool isDir = ('/' == c);
-            bool listEm = ((isDir) ? !wantFiles : wantFiles);
-            if (wantFiles == ANY_FILETYPE)
-                listEm = true;
-
-            if (listEm) {
-                if (NULL != strs) {
-                    string_q path = globBuf.gl_pathv[i];
-
-                    // filter specified directories and remove trailing '/'
-                    if (endsWith(path, '/'))
-                        path = extract(path, 0, path.length() - 1);
-
-                    // trim path to last directory / file
-                    path = basename((char*)path.c_str());  // NOLINT
-                    if (startsWith(path, '/'))
-                         path = extract(path, 1);
-                    // The path we return is always just the name of the folder or file
-                    // without any leading (or even existing) '/'
-                    ASSERT(path.length() && path[0] != '/');
-
-                    if (wantFiles == ANY_FILETYPE) {
-                        if (isDir)
-                            path = "d-" + path;
-                        else
-                            path = "f-" + path;
-                    }
-
-                    strs[nStrs] = path;
-                }
-
-                nStrs++;
-                if (NULL != strs && nStrs >= mx) {
-                    break;
-                }
-            }
+    CFilename fullPath(path);
+    string_q targetFolder = fullPath.getFullPath();
+    size_t find = targetFolder.rfind('/');
+    targetFolder = extract(targetFolder, 0, find) + "/";
+    string_q folder = targetFolder;
+    string_q curFolder = "/";
+    while (!folder.empty()) {
+        curFolder += nextTokenClear(folder, '/') + "/";
+        if (!folderExists(curFolder)) {
+            mkdir(curFolder.c_str(), (mode_t)0755);
+            if (created.empty())
+                created = curFolder;
         }
-
-        globfree(&globBuf);
     }
+    return folderExists(targetFolder);
+}
 
-    //-------------------------------------------------------------------------------------------------------------
-    inline bool waitForCreate(const string_q& filename) {
-        size_t mx = 1000;
-        size_t cnt = 0;
-        while (cnt < mx && !fileExists(filename))
-            cnt++;
+//----------------------------------------------------------------------------
+string_q listRunning(const string_q& progName) {
+    string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
+    return doCommand(cmd);
+}
 
-        return fileExists(filename);
+//----------------------------------------------------------------------------
+bool isRunning(const string_q& progName) {
+    if (isTestMode()) {
+        string_q cmd1 = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
+        cerr << endl << doCommand(cmd1) << endl;
     }
+    string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
+    string_q result = doCommand(cmd);
+    uint64_t cnt = str_2_Uint(result);
+    if (!cnt || !contains(result, getEffectiveUserName()))  // not running or not running by this user
+        return false;
+    return (cnt > 1);
+}
 
-    //---------------------------------------------------------------------------------------
-    static const char* CHR_VALID_NAME  = "\t\n\r()<>[]{}`\\|; " "'!$^*~@" "?&#+%" ",:/=\"";
-    //---------------------------------------------------------------------------------------
-    string_q makeValidName(const string_q& inOut) {
-        string_q ret = inOut;
-        replaceAny(ret, CHR_VALID_NAME, "_");
-        if (!ret.empty() && isdigit(ret[0]))
-            ret = "_" + ret;
-        return ret;
+//----------------------------------------------------------------------------
+size_t nRunning(const string_q& progName) {
+    if (isTestMode()) {
+        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
+        cerr << endl << doCommand(cmd1) << endl;
     }
+    string_q cmd = "pgrep -lf \"" + progName + "\" | wc -l";
+    string_q result = doCommand(cmd);
+    return str_2_Uint(result);
+}
 
-    //------------------------------------------------------------------------------------------
-    string_q doCommand(const string_q& cmd) {
-
-        time_q now = Now();
-        string_q tmpPath = "/tmp/";
-        string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
-        string_q theCommand = (cmd + " >" + filename);
-        if (system(theCommand.c_str())) { }  // Don't remove. Silences compiler warnings
-
-        // Check twice for existance since the previous command creates the file but may take some time
-        waitForCreate(filename);
-        string_q ret;
-        asciiFileToString(filename, ret);
-        remove(filename.c_str());
-        return trim(ret, '\n');
+//----------------------------------------------------------------------------
+bool isRunning_better(const string_q& progName) {
+    if (isTestMode()) {
+        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
+        cerr << endl << cmd1 << endl << doCommand(cmd1) << " " << !doCommand(cmd1).empty() << endl;
     }
-
-    //------------------------------------------------------------------
-    string_q getCWD(const string_q& filename) {
-        char buffer[kMaxPathSize];
-        if (::getcwd(buffer, kMaxPathSize)) { }  // do not remove. The test just silences compiler warnings
-        string_q folder = buffer;
-        if (!endsWith(folder, '/'))
-            folder += "/";
-        return folder + filename;  // may be empty
-    }
-
-    //------------------------------------------------------------------
-    bool fileExists(const string_q& file) {
-        struct stat statBuf;
-        return !file.empty() && stat(file.c_str(), &statBuf) == 0;
-    }
-
-    //------------------------------------------------------------------
-    bool folderExists(const string_q& folderName) {
-        if (folderName.empty())
-            return false;
-
-        string_q folder = folderName;
-        if (!endsWith(folder, '/'))
-            folder += '/';
-
-        size_t nFiles = 0;
-        string_q mask = folder + "*.*";
-        doGlob(nFiles, NULL, mask, true);
-
-        // check to see if it is just folders
-        if (!nFiles)
-            doGlob(nFiles, NULL, mask, false);
-        if (!nFiles) {
-            mask = folder + ".";
-            doGlob(nFiles, NULL, mask, false);
-        }
-
-        return (nFiles > 0);
-    }
-
-    //------------------------------------------------------------------
-    uint64_t fileSize(const string_q& filename) {
-        if (!fileExists(filename))
-            return 0;
-
-        struct stat statBuf;
-        stat(filename.c_str(), &statBuf);
-        return (uint64_t)statBuf.st_size;
-    }
-
-    //----------------------------------------------------------------------------
-    bool establishFolder(const string_q& path, string_q& created) {
-        if (fileExists(path) || folderExists(path))
-            return true;
-
-        CFilename fullPath(path);
-        string_q targetFolder = fullPath.getFullPath();
-        size_t find = targetFolder.rfind('/');
-        targetFolder = extract(targetFolder, 0, find) + "/";
-        string_q folder = targetFolder;
-        string_q curFolder = "/";
-        while (!folder.empty()) {
-            curFolder += nextTokenClear(folder, '/') + "/";
-            if (!folderExists(curFolder)) {
-                mkdir(curFolder.c_str(), (mode_t)0755);
-                if (created.empty())
-                    created = curFolder;
-            }
-        }
-        return folderExists(targetFolder);
-    }
-
-    //----------------------------------------------------------------------------
-    string_q listRunning(const string_q& progName) {
-        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
-        return doCommand(cmd);
-    }
-
-    //----------------------------------------------------------------------------
-    bool isRunning(const string_q& progName) {
-        if (isTestMode()) {
-            string_q cmd1 = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \"";
-            cerr << endl << doCommand(cmd1) << endl;
-        }
-        string_q cmd = "ps -ef | grep -i \"" + progName + "\" | grep -v grep | grep -v \"sh -c \" | wc -l";
-        string_q result = doCommand(cmd);
-        uint64_t cnt = str_2_Uint(result);
-        if (!cnt || !contains(result, getEffectiveUserName()))  // not running or not running by this user
-            return false;
-        return (cnt > 1);
-    }
-
-    //----------------------------------------------------------------------------
-    size_t nRunning(const string_q& progName) {
-        if (isTestMode()) {
-            string_q cmd1 = "pgrep -lf " + progName;
-            cerr << endl << doCommand(cmd1) << endl;
-        }
-        string_q cmd = "pgrep -lf " + progName + " | wc -l";
-        string_q result = doCommand(cmd);
-        return str_2_Uint(result);
-    }
-
-    //----------------------------------------------------------------------------
-    bool isRunning_better(const string_q& progName) {
-        if (isTestMode()) {
-            string_q cmd1 = "pgrep -lf " + progName;
-            cerr << endl << cmd1 << endl << doCommand(cmd1) << " " << !doCommand(cmd1).empty() << endl;
-        }
-        string_q cmd = "pgrep -lf " + progName;
-        return !doCommand(cmd).empty();
-    }
+    string_q cmd = "pgrep -lf \"" + progName + "\"";
+    return !doCommand(cmd).empty();
+}
 
 }  // namespace qblocks

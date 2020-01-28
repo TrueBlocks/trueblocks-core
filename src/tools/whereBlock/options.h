@@ -22,8 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
-public:
-
+  public:
     // BEG_CODE_DECLARE
     // END_CODE_DECLARE
 

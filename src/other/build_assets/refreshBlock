@@ -1,4 +1,0 @@
-#!/bin/sh
-value=`NO_COLOR=true whereBlock "$@" -v | grep "found at cache" | cut -f2 -d: | xargs`
-getBlock --force "$value"
-whereBlock "$value"

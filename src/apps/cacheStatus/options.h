@@ -18,15 +18,18 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
+#include "heatmap.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool details;
+    uint64_t depth;
+    string_q heatmap;
     bool list;
     blknum_t start;
     blknum_t end;
@@ -47,32 +50,35 @@ public:
     bool handle_status(ostream& os);
     bool handle_listing(ostream& os);
     bool handle_config(ostream& os);
+    bool handle_heatmap(ostream& os);
     bool handle_config_get(ostream& os);
     bool handle_config_set(ostream& os);
 };
 
 //-------------------------------------------------------------------------
-extern bool countFiles(const string_q& path, void *data);
-extern bool noteMonitor_light(const string_q& path, void *data);
-extern bool noteMonitor(const string_q& path, void *data);
-extern bool noteABI(const string_q& path, void *data);
-extern bool notePrice(const string_q& path, void *data);
-extern bool noteIndex(const string_q& path, void *data);
+extern bool countFiles(const string_q& path, void* data);
+extern bool countFilesInCache(const string_q& path, void* data);
+extern bool listFilesInCache(const string_q& path, void* data);
+extern bool noteMonitor_light(const string_q& path, void* data);
+extern bool noteMonitor(const string_q& path, void* data);
+extern bool noteABI(const string_q& path, void* data);
+extern bool notePrice(const string_q& path, void* data);
+extern bool noteIndex(const string_q& path, void* data);
 extern void getIndexMetrics(const string_q& path, uint32_t& nRecords, uint32_t& nAddresses);
 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {
-public:
-    COptions               *options;
-    CCache                 *cachePtr;
-    CIndexCacheItemArray   *indexArray;
-    CMonitorCacheItemArray *monitorArray;
-    CAbiCacheItemArray     *abiArray;
-    CPriceCacheItemArray   *priceArray;
-    uint32_t               *ts_array;
-    size_t                  ts_cnt;
-    blkrange_t              scanRange;
-    CItemCounter(COptions *opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
+  public:
+    COptions* options;
+    CCache* cachePtr;
+    CIndexCacheItemArray* indexArray;
+    CMonitorCacheItemArray* monitorArray;
+    CAbiCacheItemArray* abiArray;
+    CPriceCacheItemArray* priceArray;
+    uint32_t* ts_array;
+    size_t ts_cnt;
+    blkrange_t scanRange;
+    CItemCounter(COptions* opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;
         monitorArray = NULL;
@@ -83,6 +89,8 @@ public:
         scanRange.first = start;
         scanRange.second = end;
     }
-public:
-    CItemCounter(void) : CCache() {}
+
+  public:
+    CItemCounter(void) : CCache() {
+    }
 };

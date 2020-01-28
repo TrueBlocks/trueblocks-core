@@ -22,31 +22,31 @@ CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
-    cerr.rdbuf( cout.rdbuf() );
+    cerr.rdbuf(cout.rdbuf());
 
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0,10);
+    total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
+    string_q testFolder = getCWD() + "../../../../src/other/testCases/";
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
 
         for (auto testName : options.tests) {
-
             string_q path = nextTokenClear(testName, '/');
             LOG1("Processing file: ", path);
             options.cleanTest(path, testName);
             if (options.modes & API)
                 options.cleanTest(path, testName + "/api_tests");
 
-            string_q testFile = getCWD() + "../../../../src/other/testCases/" + path + "/" + testName + ".csv";
+            string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
                 return options.usage("Cannot find test file " + testFile + ". Quitting.");
 
@@ -56,18 +56,22 @@ int main(int argc, const char *argv[]) {
             CStringArray lines;
             explode(lines, contents, '\n');
 
-            CTestCaseArray testArray;
+            map<string_q, CTestCase> testMap;
             for (auto line : lines) {
-
                 bool ignore1 = startsWith(line, "#");
                 bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
                 bool ignore3 = contains(line, ", route,");
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
-                    if (contains(line, " all,")) { /* do nothing */ }
-                    else if (options.filter == "fast" ) ignore4 = !contains(line, "fast,");
-                    else if (options.filter == "slow" ) ignore4 = !contains(line, "slow,");
-                    else if (options.filter == "medi" ) ignore4 = !contains(line, "medi,");
+                    if (contains(line, " all,")) {
+                        printf("%s", "");  // do nothing - do not remove cruft - squelches compiler warning
+                    } else if (options.filter == "fast") {
+                        ignore4 = !contains(line, "fast,");
+                    } else if (options.filter == "slow") {
+                        ignore4 = !contains(line, "slow,");
+                    } else if (options.filter == "medi") {
+                        ignore4 = !contains(line, "medi,");
+                    }
                 }
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
@@ -77,8 +81,18 @@ int main(int argc, const char *argv[]) {
 
                 } else {
                     CTestCase test(line);
-                    testArray.push_back(test);
+                    string_q key = test.Format("[{KEY}]");
+                    if (testMap[key] != CTestCase()) {
+                        LOG_ERR("Duplicate test names: ", key, ". Quitting...");
+                        return 1;
+                    }
+                    testMap[key] = test;
                 }
+            }
+
+            CTestCaseArray testArray;
+            for (auto t : testMap) {
+                testArray.push_back(t.second);
             }
 
             if (!options.doTests(testArray, path, testName, API))
@@ -92,25 +106,28 @@ int main(int argc, const char *argv[]) {
         }
     }
 
-    cerr << total.Format(STR_SCREEN_REPORT) << endl;
-    for (auto fail : fails)
-        cerr << fail;
-    cerr << endl;
-
     if (total.nTests == total.nPassed) {
         perf << total.Format(options.perf_format) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report)
             appendToAsciiFile(configPath("performance.csv"), perf.str());
         appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+        if (folderExists("/Users/jrush/Desktop/files/")) {
+            copyFile(configPath("performance.csv"), "/Users/jrush/Desktop/files/performance.csv");
+            copyFile(configPath("performance_slow.csv"), "/Users/jrush/Desktop/files/performance_slow.csv");
+        }
     }
+
+    cerr << total.Format(STR_SCREEN_REPORT) << endl;
+    for (auto fail : fails)
+        cerr << fail;
+    cerr << endl;
 
     return 0;
 }
 
 //-----------------------------------------------------------------------
 bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
-
     if (!(modes & whichTest))
         return true;
 
@@ -120,8 +137,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
-    for (auto test: testArray) {
-
+    for (auto test : testArray) {
         test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
@@ -133,19 +149,18 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             return usage("Folder " + test.workPath + " not found. Quitting...");
 
         } else {
-
             ostringstream cmd;
             if (cmdTests) {
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
                 string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 cmd << e << c;
             } else {
-                cmd << "curl -s \"http:/""/localhost:8080/" << test.route;
+                cmd << "curl -s \"http://localhost:8080/" << test.route;
                 if (!test.builtin && !test.options.empty())
                     cmd << "?" << test.options;
                 cmd << "\"";
                 if (!no_post && !test.post.empty())
-                    cmd << " | " <<  test.post << " ";
+                    cmd << " | " << test.post << " ";
                 cmd << " >" << test.workPath + test.fileName;
             }
 
@@ -154,12 +169,16 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + test.options;
             LOG4(theCmd);
 
-            string_q customized = substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/", "/api_tests", "");
+            string_q customized =
+                substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
+                           "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.nTests++;
-            int ret = system(theCmd.c_str());  { if (ret) { printf("%s",""); } }  // do not remove, squelches warning
+            // clang-format off
+            if (system(theCmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
@@ -172,7 +191,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             double thisTime = str_2_Double(TIC());
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.totSecs += thisTime;
-            string_q timeRep = (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
+            string_q timeRep =
+                (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
@@ -191,30 +211,35 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             } else {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
-                os << test.filename << ".txt " << cOff << "(" << (test.builtin?"":measure.cmd) << " " << trim(test.options) << ")" << cRed;
-//                if (newText.empty())    os << " working file is empty ";
-//                if (ret)                os << " system call returned non-zero ";
-//                if (newText != oldText) {
-//                    os << " files differ " << endl;
-//                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size() << endl;
-////                    os << cYellow << newText << endl;
-//                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size() << endl;
-////                    os << cBlue << oldText;
-//                }
+                os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
+                   << trim(test.options) << ")" << cRed;
+                //                if (newText.empty())    os << " working file is empty ";
+                //                if (ret)                os << " system call returned non-zero ";
+                //                if (newText != oldText) {
+                //                    os << " files differ " << endl;
+                //                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size()
+                //                    << endl;
+                ////                    os << cYellow << newText << endl;
+                //                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size()
+                //                    << endl;
+                ////                    os << cBlue << oldText;
+                //                }
                 os << cOff << endl;
                 fails.push_back(os.str());
                 result = redX;
             }
 
             if (!contains(test.origLine, " all,")) {
-                reverse(test.filename);
-                test.filename = substitute(padLeft(test.filename, 30).substr(0,30), " ", ".");
-                reverse(test.filename);
-                cerr << "   " << timeRep << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
-                cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0,90) << endl;
+                reverse(test.name);
+                test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
+                reverse(test.name);
+                cerr << "   " << timeRep << " - "
+                     << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
+                cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
                 if (thisTime > verySlow) {
-                    slow << "   " << double_2_Str(thisTime) << " - " << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
-                    slow << trim(test.filename) << " " << trim(test.options).substr(0,90) << endl;
+                    slow << "   " << double_2_Str(thisTime) << " - "
+                         << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
+                    slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
                 }
             }
 
@@ -240,22 +265,22 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 }
 
 //-----------------------------------------------------------------------
-bool saveAndCopy(const string_q& customFile, void *data) {
+bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size()-1]);
-    string_q saveFile = getCachePath("tmp/" + parts[parts.size()-1] + ".save");
+    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool replaceFile(const string_q& customFile, void *data) {
+bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size()-1]);
-    string_q saveFile = getCachePath("tmp/" + parts[parts.size()-1] + ".save");
+    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());
     return true;
@@ -268,4 +293,5 @@ double fastEnough = .2;
 
 //-----------------------------------------------------------------------
 const char* STR_SCREEN_REPORT =
-"   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in [{TOTSECS}] seconds [{AVGSECS}] avg.";
+    "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in [{TOTSECS}] "
+    "seconds [{AVGSECS}] avg.";

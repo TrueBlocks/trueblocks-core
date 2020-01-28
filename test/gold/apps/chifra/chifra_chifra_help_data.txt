@@ -1,5 +1,4 @@
 chifra argc: 3 [1:data] [2:--help] 
 chifra data --help 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
 TIME ~ CLOCK - <WARNG> : Exit(chifra,handle_data): 
 Invalid option: data --help 

@@ -8,7 +8,7 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	1	131127	T_ADDRESS TS_STRING
@@ -16,10 +16,10 @@ gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	1	131122	T_TEXT TS_STRING
 root                	1013	1	131122	T_TEXT TS_STRING
-status              	1014	0	65561	T_NUMBER TS_NUMERAL
+status              	1014	0	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	1	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	1	131132	T_HASH TS_STRING
-transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -35,7 +35,7 @@ deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
 blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	1	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	1	131127	T_ADDRESS TS_STRING
@@ -43,10 +43,10 @@ gasUsed             	1010	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	1	131122	T_TEXT TS_STRING
 root                	1013	1	131122	T_TEXT TS_STRING
-status              	1014	1	65561	T_NUMBER TS_NUMERAL
+status              	1014	1	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	1	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	1	131132	T_HASH TS_STRING
-transactionIndex    	1017	1	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
 }
 
@@ -58,7 +58,7 @@ deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
 blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	65561	T_NUMBER TS_NUMERAL
+blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
 cumulativeGasUsed   	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 from                	1009	0	131127	T_ADDRESS TS_STRING
@@ -66,12 +66,12 @@ gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 logs                	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 logsBloom           	1012	0	131122	T_TEXT TS_STRING
 root                	1013	0	131122	T_TEXT TS_STRING
-status              	1014	0	65561	T_NUMBER TS_NUMERAL
+status              	1014	0	65563	T_UNUMBER TS_NUMERAL
 to                  	1015	0	131127	T_ADDRESS TS_STRING
 transactionHash     	1016	0	131132	T_HASH TS_STRING
-transactionIndex    	1017	0	65561	T_NUMBER TS_NUMERAL
+transactionIndex    	1017	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
-  "schema": 6001,
+  "schema": 6005,
   "deleted": 0,
   "showing": 1,
   "cname": "Receipt",

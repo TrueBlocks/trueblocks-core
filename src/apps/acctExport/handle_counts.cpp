@@ -7,7 +7,6 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportCounts(void) {
-
     ENTER8("exportCounts");
 
     bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);

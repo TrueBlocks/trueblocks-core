@@ -24,13 +24,13 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
-public:
+  public:
     address_t address;
     string_q code;
     gas_t gasUsed;
     string_q output;
 
-public:
+  public:
     CTraceResult(void);
     CTraceResult(const CTraceResult& tr);
     virtual ~CTraceResult(void);
@@ -42,11 +42,13 @@ public:
     friend class CTrace;
     // EXISTING_CODE
     bool operator==(const CTraceResult& item) const;
-    bool operator!=(const CTraceResult& item) const { return !operator==(item); }
+    bool operator!=(const CTraceResult& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
     friend ostream& operator<<(ostream& os, const CTraceResult& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CTraceResult& tr);
@@ -126,10 +128,7 @@ inline bool CTraceResult::operator==(const CTraceResult& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((address == item.address) &&
-             (code == item.code) &&
-             (gasUsed == item.gasUsed) &&
-             (output == item.output));
+    return ((address == item.address) && (code == item.code) && (gasUsed == item.gasUsed) && (output == item.output));
 }
 
 //-------------------------------------------------------------------------
@@ -156,4 +155,3 @@ extern const char* STR_DISPLAY_TRACERESULT;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

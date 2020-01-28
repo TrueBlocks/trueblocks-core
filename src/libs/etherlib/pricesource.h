@@ -15,23 +15,21 @@
 
 namespace qblocks {
 
-    typedef bool (*PRICEPARSEFUNC)(CPriceQuote& quote, string_q& str);
-    extern bool parsePoloniex(CPriceQuote& quote, string_q& str);
-    extern const char* STR_PRICE_URL;
+typedef bool (*PRICEPARSEFUNC)(CPriceQuote& quote, string_q& str);
+extern bool parsePoloniex(CPriceQuote& quote, string_q& str);
+extern const char* STR_PRICE_URL;
 
-    class CPriceSource {
-    public:
-        string_q url;
-        string_q pair;
-        PRICEPARSEFUNC func;
-        CPriceSource(const string_q& u = STR_PRICE_URL,
-                     const string_q& p = "USDT_ETH",
-                     PRICEPARSEFUNC f = parsePoloniex)
-            : url(u), pair(p), func(f) {}
-        string_q getDatabasePath(string& source) const;
-    };
+class CPriceSource {
+  public:
+    string_q url;
+    string_q pair;
+    PRICEPARSEFUNC func;
+    CPriceSource(const string_q& u, const string_q& p, PRICEPARSEFUNC f) : url(u), pair(p), func(f) {
+    }
+    string_q getDatabasePath(string& source) const;
+};
 
-    extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes,
-                    bool freshen, string_q& message, uint64_t step = 1);
+extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message,
+                          uint64_t step = 1);
 
 }  // namespace qblocks

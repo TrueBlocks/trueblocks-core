@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class CBlockOptions : public COptionsBase {
-public:
+  public:
     COptionsBlockList blocks;
     CBlockOptions(void);
     string_q getBlockNumList(void);
@@ -24,12 +24,18 @@ public:
 
 //-----------------------------------------------------------------------------
 class CHistoryOptions : public CBlockOptions {
-public:
+  public:
     blknum_t newestBlock;
     blknum_t oldestBlock;
-    CHistoryOptions(void) { Init(); }
-    ~CHistoryOptions(void) { }
-    void Init(void) override { CBlockOptions::Init(); newestBlock = oldestBlock = NOPOS; }
+    CHistoryOptions(void) {
+        Init();
+    }
+    ~CHistoryOptions(void) {
+    }
+    void Init(void) override {
+        CBlockOptions::Init();
+        newestBlock = oldestBlock = NOPOS;
+    }
     bool requestsHistory(void) const;
 };
 
@@ -37,10 +43,10 @@ public:
 extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
 
 //-----------------------------------------------------------------------------
-extern bool parseBlockList2(COptionsBase *opts, COptionsBlockList& blocks, const string_q& arg, blknum_t latest);
-extern bool parseTransList2(COptionsBase *opt, COptionsTransList& transList, const string_q& argIn);
-extern bool parseAddressList2(COptionsBase *opt, CAddressArray& addrs, const string_q& argIn);
-extern bool parseStringList2(COptionsBase *opt, CStringArray& strings, const string_q& argIn);
+extern bool parseBlockList2(COptionsBase* opts, COptionsBlockList& blocks, const string_q& arg, blknum_t latest);
+extern bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const string_q& argIn);
+extern bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn);
+extern bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string_q& argIn);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);
 extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
 

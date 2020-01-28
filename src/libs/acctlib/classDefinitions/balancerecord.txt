@@ -2,5 +2,5 @@
 class = CBalanceRecord
 fields = blknum blockNumber|blknum transactionIndex|address address (nowrite)|wei priorBalance|wei balance|int256 diff
 includes = etherlib.h
-serialize = true
+serializable = true
 display_str = blockNumber, transactionIndex, address, priorBalance, balance, diff

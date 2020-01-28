@@ -1,6 +1,6 @@
 ethQuote argc: 3 [1:--fmt] [2:api] 
 ethQuote --fmt api 
-{ "type": "CPriceQuote", "data": [
+{ "type": "CPriceQuote", "fieldList": [{ "name": "timestamp", "type": "timestamp" }, { "name": "close", "type": "double" }, { "name": "date", "type": "date" }], "data": [
   {
     "timestamp": 1439078400,
     "close": 1.40000,

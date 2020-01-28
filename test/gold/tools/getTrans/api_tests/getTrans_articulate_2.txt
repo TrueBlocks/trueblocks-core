@@ -36,7 +36,8 @@
                   "name": "registrationDate",
                   "value": "1494329242"
                 }
-              ]
+              ],
+              "outputs": []
             }
           },
           {
@@ -58,7 +59,8 @@
                   "name": "registrationDate",
                   "value": "1494329242"
                 }
-              ]
+              ],
+              "outputs": []
             }
           },
           {
@@ -80,7 +82,8 @@
                   "name": "registrationDate",
                   "value": "1494329242"
                 }
-              ]
+              ],
+              "outputs": []
             }
           },
           {
@@ -107,7 +110,8 @@
                   "name": "deposit",
                   "value": "10000000000000000"
                 }
-              ]
+              ],
+              "outputs": []
             }
           }
         ],
@@ -124,7 +128,8 @@
             "name": "sealedBid",
             "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
           }
-        ]
+        ],
+        "outputs": []
       },
       "traces": [
         {
@@ -141,7 +146,8 @@
                 "name": "sealedBid",
                 "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
               }
-            ]
+            ],
+            "outputs": []
           },
           "action": {
             "address": "0x0",

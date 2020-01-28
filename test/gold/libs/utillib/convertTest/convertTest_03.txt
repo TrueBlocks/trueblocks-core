@@ -11,4 +11,4 @@ convertTest 3
 	000.007 time7                            ==> passed 'str_2_Gas("4000000000")' is equal to '4000000000'
 	000.008 time8                            ==> passed 'str_2_Wei("16000000000000000000")' is equal to 'wei'
 	000.009 time9                            ==> passed 'str_2_Bloom("16000000000000000000")' is equal to 'wei'
-	000.010 timeA                            ==> passed 'str_2_Topic("16000000000000000000")' is equal to 'wei'
+	000.010 timeA                            ==> passed 'str_2_BigUint("16000000000000000000")' is equal to 'wei'

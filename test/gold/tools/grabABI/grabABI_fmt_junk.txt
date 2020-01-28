@@ -3,7 +3,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    grabABI [-c|-g|-n|-v|-h] <address> [address...]  
+  Usage:    grabABI [-c|-g|-n|-m|-k|-a|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
   Where:  
@@ -11,11 +11,9 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
 	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-
-#### Hidden options (shown during testing only)
+	-m  (--monitored)     load ABIs from monitored addresses
 	-k  (--known)         load common 'known' ABIs from cache
-#### Hidden options (shown during testing only)
-
+	-a  (--addr)          include address of smart contract for the abi in output
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

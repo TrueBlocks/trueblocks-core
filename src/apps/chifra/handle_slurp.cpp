@@ -7,15 +7,16 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_slurp(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "ethslurp --help";
-        NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
         EXIT_NOMSG8(true);
     }
 
@@ -25,8 +26,10 @@ bool COptions::handle_slurp(void) {
     for (auto addr : addrs) {
         ostringstream os;
         os << "ethslurp " << tool_flags << " " << addr;
-        NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
     }
 
     EXIT_NOMSG8(true);

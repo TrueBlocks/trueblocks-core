@@ -13,7 +13,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     nodeNotRequired();
     etherlib_init(quickQuitHandler);
 
@@ -26,17 +26,18 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        bool isText = (options.exportFmt & (TXT1|CSV1));
+        bool isText = (options.exportFmt & (TXT1 | CSV1));
         if (isText && options.items.size() == 0) {
             LOG_INFO("No results");
 
         } else {
             for (auto item : options.items) {
                 if (first)
-                    cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], item.second.getRuntimeClass());
-                if (isText)
+                    cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
+                                           item.second.getRuntimeClass());
+                if (isText) {
                     cout << item.second.Format(expContext().fmtMap["format"]) << endl;
-                else {
+                } else {
                     if (!first)
                         cout << "," << endl;
                     cout << "  ";

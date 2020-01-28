@@ -20,7 +20,7 @@ namespace qblocks {
 //---------------------------------------------------------------------------
 size_t bloom_nt::nBitsHit(void) const {
     size_t cnt = 0;
-    for (size_t b = 0 ; b < bloom_nt::BYTE_SIZE ; b++) {
+    for (size_t b = 0; b < bloom_nt::BYTE_SIZE; b++) {
         string_q bitStr = byte_2_Bits(bits[b]);
         for (auto ch : bitStr) {
             if (ch == '1')
@@ -35,7 +35,7 @@ bloom_nt addr_2_Bloom(const address_t& addrIn, CUintArray& litBits) {
     bloom_nt ret;
     if (isAddress(addrIn)) {
         string_q sha = addrIn;  // getSha3(addrIn);
-        for (size_t k = 0 ; k < K ; k++) {
+        for (size_t k = 0; k < K; k++) {
             string_q dbl_byte = ("0x" + extract(sha, 2 + (k * NIBBLE_WID), NIBBLE_WID));
             uint64_t bit = (str_2_Uint(dbl_byte) % bloom_nt::BIT_SIZE());
             ret.lightBit(bit);
@@ -47,7 +47,6 @@ bloom_nt addr_2_Bloom(const address_t& addrIn, CUintArray& litBits) {
 
 //----------------------------------------------------------------------
 bool addToSet(CNewBloomArray& blooms, const address_t& addr) {
-
     CUintArray litBits;
     bloom_nt zeroBloom = addr_2_Bloom("0x0", litBits);
     if (blooms.size() == 0)

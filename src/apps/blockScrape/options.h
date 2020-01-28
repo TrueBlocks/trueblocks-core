@@ -15,7 +15,7 @@
 
 //--------------------------------------------------------------------------
 class CConsolidator {
-public:
+  public:
     ofstream tmp_file;
     string_q tmp_fn;
 
@@ -25,17 +25,18 @@ public:
     //    blknum_t ts_bn;
 
     blknum_t prevBlock;
-    CConsolidator(blknum_t p);
+    explicit CConsolidator(blknum_t p);
     // TS_SCRAPER
     //    bool checkTimestamps(void);
 
-private:
-    CConsolidator(void) {}
+  private:
+    CConsolidator(void) {
+    }
 };
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     blknum_t n_blocks;
     uint64_t n_block_procs;
@@ -43,7 +44,7 @@ public:
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;
-    blknum_t    latestBlockNum;
+    blknum_t latestBlockNum;
 
     COptions(void);
     ~COptions(void);
@@ -52,8 +53,8 @@ public:
     void Init(void);
 
     bool handle_scrape(void);
-    bool finalize_chunks(CConsolidator *cons);
+    bool finalize_chunks(CConsolidator* cons);
 };
 
 //-----------------------------------------------------------------------------
-extern bool copyRipeToStage(const string_q& path, void *data);
+extern bool copyRipeToStage(const string_q& path, void* data);

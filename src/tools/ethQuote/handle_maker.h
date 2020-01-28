@@ -18,7 +18,9 @@ extern wei_t getUsdFromMakerAt(blknum_t blk);
 
 //-----------------------------------------------------------------------------
 inline wei_t getUsdFromMakerAt(const string_q& blk) {
-    if (blk == "first") return getUsdFromMakerAt(0);
-    if (blk == "latest") return getUsdFromMakerAt(getLastBlock_client());
-    return getUsdFromMakerAt(str_2_Uint(blk)); // handles hex
+    if (blk == "first")
+        return getUsdFromMakerAt(0);
+    if (blk == "latest")
+        return getUsdFromMakerAt(getLatestBlock_client());
+    return getUsdFromMakerAt(str_2_Uint(blk));  // handles hex
 }

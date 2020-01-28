@@ -24,7 +24,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CChainCache : public CCache {
-public:
+  public:
+    uint64_t max_depth;
+    CStringArray items;
+
+  public:
     CChainCache(void);
     CChainCache(const CChainCache& ch);
     virtual ~CChainCache(void);
@@ -32,14 +36,18 @@ public:
 
     DECLARE_NODE(CChainCache);
 
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
+
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CChainCache& item) const;
-    bool operator!=(const CChainCache& item) const { return !operator==(item); }
+    bool operator!=(const CChainCache& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CChainCache& v1, const CChainCache& v2);
     friend ostream& operator<<(ostream& os, const CChainCache& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CChainCache& ch);
@@ -83,6 +91,9 @@ inline void CChainCache::clear(void) {
 inline void CChainCache::initialize(void) {
     CCache::initialize();
 
+    max_depth = NOPOS;
+    items.clear();
+
     // EXISTING_CODE
     // EXISTING_CODE
 }
@@ -91,6 +102,9 @@ inline void CChainCache::initialize(void) {
 inline void CChainCache::duplicate(const CChainCache& ch) {
     clear();
     CCache::duplicate(ch);
+
+    max_depth = ch.max_depth;
+    items = ch.items;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,14 +140,9 @@ extern CArchive& operator>>(CArchive& archive, CChainCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CChainCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CChainCache& cha);
-extern CArchive& operator>>(CArchive& archive, CChainCache& cha);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CHAINCACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

@@ -1,4 +1,5 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd, fast, null, apps/cacheMan, CLEANUP,        n, CLEANUP
 
 #
 # Note: we use the hotkey options in some of these test cases to test that feature. Generally we don't test hotkeys elswhere
@@ -13,8 +14,8 @@ on, cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
 on, cmd, fast, null, apps/cacheMan, invalid_param_2, n, @l & junk
 on, cmd, fast, null, apps/cacheMan, noFile,          n, stats
 
-on, cmd, fast, null, apps/cacheMan, copy_1,          n, COPYFILE -f ./testing_data/0x1111122222111112222211111222221111122222.history ./0x1111122222111112222211111222221111122222.acct.bin
-on, cmd, fast, null, apps/cacheMan, copy_2,          n, COPYFILE -f ./testing_data/0x5555533333555553333355555333335555533333.history ./0x5555533333555553333355555333335555533333.acct.bin
+# on, cmd, fast, null, apps/cacheMan, copy_1,          n, COPYFILE -f ./testing_data/0x1111122222111112222211111222221111122222.history ./0x1111122222111112222211111222221111122222.acct.bin
+# on, cmd, fast, null, apps/cacheMan, copy_2,          n, COPYFILE -f ./testing_data/0x5555533333555553333355555333335555533333.history ./0x5555533333555553333355555333335555533333.acct.bin
 on, cmd, fast, null, apps/cacheMan, copy_3,          n, COPYFILE -f ./testing_data/0x9876543210987654321098765432109876543210.history ./0x9876543210987654321098765432109876543210.acct.bin
 on, cmd, fast, null, apps/cacheMan, copy_4,          n, COPYFILE -f ./testing_data/*.txt ./
 
@@ -53,9 +54,9 @@ on, cmd, fast, null, apps/cacheMan, truncate_unused, n, truncate 1001001
 on, cmd, fast, null, apps/cacheMan, skip_unused,     n, skip
 
 on, cmd, fast, null, apps/cacheMan, rm_0x9,          n, RMFILE -f ./0x*.*
-on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./merged.*
-on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./import.*
-on, cmd, fast, null, apps/cacheMan, rm_merge,        n, RMFILE -f ./remove.*
+on, cmd, fast, null, apps/cacheMan, rm_merge1,       n, RMFILE -f ./merged.*
+on, cmd, fast, null, apps/cacheMan, rm_merge2,       n, RMFILE -f ./import.*
+on, cmd, fast, null, apps/cacheMan, rm_merge3,       n, RMFILE -f ./remove.*
 
 # 11360,apps,,cacheMan,files,,,TRUE,FALSE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
 # 11380,apps,,cacheMan,check,c,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,check for duplicates and other problems in the cache

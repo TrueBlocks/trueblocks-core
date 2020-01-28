@@ -1,10 +1,8 @@
 [settings]
 class = CLogEntry
-fields = address address|hash blockHash (nowrite-min)|blknum blockNumber (nowrite-min)|string data|uint64 logIndex|sbool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|hash transactionHash (nowrite-min)|blknum transactionIndex (nowrite-min)|blknum transactionLogIndex (nowrite)|string type (nowrite)
-backfields1 = address address|string data|uint64 logIndex|bool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|blknum transactionLogIndex (nowrite)|string type (nowrite)
-backfields2 = address address|string data|uint64 logIndex|CTopicArray topics|CFunction articulatedLog (nowrite)
+fields = address address|hash blockHash (nowrite-min)|blknum blockNumber (nowrite-min)|string data|blknum logIndex|sbool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|hash transactionHash (nowrite-min)|blknum transactionIndex (nowrite-min)|blknum transactionLogIndex (nowrite)|string type (nowrite)
 includes = abilib.h
 cpp_includes = etherlib.h
 scope = extern
-serialize = true
+serializable = true
 display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog

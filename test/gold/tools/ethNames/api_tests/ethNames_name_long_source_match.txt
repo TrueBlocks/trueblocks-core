@@ -191,8 +191,8 @@ group	subgroup	address	name	symbol	source	description	logo	is_contract	is_privat
 50-Tokens		0x33c623a2baafeb8d15dfaf3ce44095efec83d72c	SGPay	SGP	Etherscan.io	SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.	sgpay_28.png	true	false	true
 50-Tokens		0x33f90dee07c6e8b9682dd20f73e6c358b2ed0f03	Trident Group	TRDT	Etherscan.io	The Trident Group Cryptographic Token (TRDT) is the lifeblood of the Trident Blockchain Platform, allowing the instant & secure transmission of information worldwide while securing the Trident Network.	trident28.png	true	false	true
 50-Tokens		0x340d2bde5eb28c1eed91b2f790723e3b160613b7	BLOCKv	VEE	Etherscan.io	Create and Public Digital virtual goods on the blockchain	blockv_28.png	true	false	true
-50-Tokens		0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU	Etherscan.io	A Decentralized Protocol for Publishing and Valuing Online Content	unetwork_28.png	true	false	true
-30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Dai Stablecoin v1.0	DAI	Etherscan.io	No description	dai_stablecoin.png	true	false	true
+30-Contracts		0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin v2.0	DAI	Etherscan.io	No description	dai_stablecoin.png	true	false	true
+30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	SAI	Etherscan.io	No description	sai_stablecoin.png	true	false	true
 30-Contracts		0x960b236a07cf122663c4303350609a66a7b288c0	Aragon	ANT	Etherscan.io	Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.	aragon_28.png	true	false	true
 30-Contracts		0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	Maker	MKR	Etherscan.io	Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain	mkr-etherscan-35.png	true	false	true
 30-Contracts		0xa1eb40c284c5b44419425c4202fa8dabff31006b	Proof of Attendance Token	POAP	Etherscan.io	Proof of Attendance Token		true	false	true

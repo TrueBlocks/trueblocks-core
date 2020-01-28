@@ -1,28 +1,33 @@
-cacheStatus argc: 3 [1:--details] [2:prices] 
-cacheStatus --details prices 
+cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:prices] 
+cacheStatus --details caches --types prices 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
+  "is_scraping": false,
   "caches": [
     {
       "items": [
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
+          "address": "0x0",
           "nRecords": 36910963,
           "sizeInBytes": 36910963
         }
       ],
       "type": "CPriceCache",
-      "path": "PricePath",
+      "path": "pricesPath",
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "valid_counts": true
+      "is_valid": true
     }
-  ]
+  ],
+  "date": "--date--"
 }

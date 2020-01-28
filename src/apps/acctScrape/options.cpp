@@ -12,23 +12,25 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),
-    COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
+    COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),  // NOLINT
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),  // NOLINT
+    COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
+    ENTER8("parseArguments");
     if (!standardOptions(command))
-        return false;
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
@@ -40,8 +42,9 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
+    LOG8("Setting up...");
     blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk;
-    getLastBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
+    getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, clientBlk);
     blknum_t latest = clientBlk;
 
     Init();
@@ -86,16 +89,17 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto addr : addrs) {
         CAccountWatch watch;
-        watch.setValueByName("address", toLower(addr)); // don't change, sets bloom value also
+        watch.setValueByName("address", toLower(addr));  // don't change, sets bloom value also
         watch.setValueByName("name", toLower(addr));
         watch.extra_data = getVersionStr() + "/" + watch.address;
         watch.color = cBlue;
         watch.finishParse();
         monitors.push_back(watch);
     }
+    LOG_INFO("Scraping ", monitors.size(), " addresses.");
 
     if (monitors.size() == 0)
-        return usage("Please provide at least one Ethereum address to scrape. Quitting...");
+        EXIT_USAGE("Please provide at least one Ethereum address to scrape. Quitting...");
 
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -104,33 +108,44 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_ripe);
 
-    if (unripe)  visitTypes |= VIS_UNRIPE;
-    if (staging) visitTypes |= VIS_STAGING;
+    if (unripe)
+        visitTypes |= VIS_UNRIPE;
+    if (staging)
+        visitTypes |= VIS_STAGING;
 
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
     // Scan the monitors to see if any are locked (fail if yes). While we're at it, find the block the monitors think we
-    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet and
-    // it's a smart contract, or zero).
+    // should start with (that is, one more than the last block they've seen, its deploy block if we haven't seen it yet
+    // and it's a smart contract, or zero).
+    LOG8("Checking locks...");
     blknum_t earliestBlock = NOPOS;
     for (auto monitor : monitors) {
         if (!checkLocks(monitor.address))
-            return false;
+            EXIT_NOMSG(false);
         earliestBlock = min(earliestBlock, nextBlockAsPerMonitor(monitor.address));
     }
-    blknum_t latestBlock = (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
+    blknum_t latestBlock =
+        (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
 
     scanRange = make_pair(earliestBlock, latestBlock);
-    if (start != NOPOS) scanRange.first  = start;  // the user is always right
-    if (end   != NOPOS) scanRange.second = end;    // the user is always right
+    if (start != NOPOS)
+        scanRange.first = start;  // the user is always right
+    if (end != NOPOS)
+        scanRange.second = end;  // the user is always right
 
     if (scanRange.first >= scanRange.second) {  // nothing to do?
-        for (auto watch : monitors)
-            LOG_INFO("Nothing to do for ", watch.address, "\r");
-        return false;
+        for (auto watch : monitors) {
+            if (isContractAt(watch.address) && latest > scanRange.first) {
+                LOG_INFO("Monitor for contract '", watch.address, "' is caught up to address indexer.");
+            } else {
+                LOG_INFO("Monitor for address  '", watch.address, "' is caught up to address indexer.");
+            }
+        }
+        EXIT_NOMSG(false);
     }
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -141,7 +156,7 @@ void COptions::Init(void) {
     daemon = false;
     // END_CODE_INIT
 
-    minArgs    = 0;
+    minArgs = 0;
     visitTypes = VIS_FINAL;
     monitors.clear();
 }
@@ -151,7 +166,9 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -169,24 +186,38 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::checkLocks(const address_t& address) const {
-    string_q fn1 = getMonitorPath(address); if (fileExists(fn1 + ".lck")) return usage("The cache file '" + fn1 + "' is locked. Quitting...");
-    string_q fn2 = getMonitorLast(address); if (fileExists(fn2 + ".lck")) return usage("The last block file '" + fn2 + "' is locked. Quitting...");
-    string_q fn3 = getMonitorExpt(address); if (fileExists(fn3 + ".lck")) return usage("The last export file '" + fn3 + "' is locked. Quitting...");
-    string_q fn4 = getMonitorBals(address); if (fileExists(fn4 + ".lck")) return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    string_q fn1 = getMonitorPath(address);
+    if (fileExists(fn1 + ".lck"))
+        return usage("The cache file '" + fn1 + "' is locked. Quitting...");
+    string_q fn2 = getMonitorLast(address);
+    if (fileExists(fn2 + ".lck"))
+        return usage("The last block file '" + fn2 + "' is locked. Quitting...");
+    string_q fn3 = getMonitorExpt(address);
+    if (fileExists(fn3 + ".lck"))
+        return usage("The last export file '" + fn3 + "' is locked. Quitting...");
+    string_q fn4 = getMonitorBals(address);
+    if (fileExists(fn4 + ".lck"))
+        return usage("The last export file '" + fn4 + "' is locked. Quitting...");
+    string_q fn5 = getMonitorCnfg(address);
+    if (fileExists(fn5 + ".lck"))
+        return usage("The config file '" + fn5 + "' is locked. Quitting...");
+    string_q fn6 = getMonitorPath(address + ".deleted");
+    if (fileExists(fn6 + ".lck"))
+        return usage("The marker file '" + fn6 + "' is locked. Quitting...");
     return true;
 }
 
 //--------------------------------------------------------------------------------
 blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
+    ENTER8("nextBlockAsPerMonitor: " + address);
 
-    blknum_t nextBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // will be zero if never monitored before
-    blknum_t deployed = 0;
+    if (fileExists(getMonitorLast(address)))
+        return str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
-        deployed = getDeployBlock(address);  // returns NOPOS if not a contract, block deployed otherwise
-        if (deployed == NOPOS)
-            deployed = 0;
+        blknum_t deployed = getDeployBlock(address);
+        EXIT_NOMSG8(deployed == NOPOS ? 0 : deployed);
     }
 
-    return max(nextBlock, deployed);
+    EXIT_NOMSG8(0);
 }

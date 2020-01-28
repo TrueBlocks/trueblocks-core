@@ -13,33 +13,29 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     // Initialize the library
     etherlib_init(quickQuitHandler);
 
     // Visit every block between the first and the most recent
-    forEveryBlockOnDisc(visitBlock, NULL, 3055641, getLastBlock_cache_final());
+    forEveryBlockOnDisc(visitBlock, NULL, 3055641, getLatestBlock_cache_final());
 
     return 1;
 }
 
 //----------------------------------------------------------------
 // for each block
-bool visitBlock(CBlock& block, void *data) {
-
+bool visitBlock(CBlock& block, void* data) {
     // Visit each tranaction and show it seperately
     for (auto trans : block.transactions)
         visitTransaction(trans, data);
     return true;
-
 }
 
 //----------------------------------------------------------------
 // for each transaction in the block
-bool visitTransaction(CTransaction& trans, void *data) {
-
+bool visitTransaction(CTransaction& trans, void* data) {
     // simply print the transaction to the screen
     cout << trans << endl;
     return true;
-
 }

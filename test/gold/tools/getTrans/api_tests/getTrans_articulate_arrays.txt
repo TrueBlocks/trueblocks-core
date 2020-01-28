@@ -1,5 +1,95 @@
 {
   "type": "CTransaction",
+  "fieldList": [
+    {
+      "name": "hash",
+      "type": "hash"
+    },
+    {
+      "name": "blockHash",
+      "type": "hash"
+    },
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "transactionIndex",
+      "type": "blocknum"
+    },
+    {
+      "name": "timestamp",
+      "type": "timestamp"
+    },
+    {
+      "name": "from",
+      "type": "address"
+    },
+    {
+      "name": "to",
+      "type": "address"
+    },
+    {
+      "name": "value",
+      "type": "wei"
+    },
+    {
+      "name": "gas",
+      "type": "gas"
+    },
+    {
+      "name": "gasPrice",
+      "type": "gas"
+    },
+    {
+      "name": "input",
+      "type": "text"
+    },
+    {
+      "name": "isError",
+      "type": "unumber"
+    },
+    {
+      "name": "receipt",
+      "type": "object"
+    },
+    {
+      "name": "articulatedTx",
+      "type": "object"
+    },
+    {
+      "name": "traces",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "gasCost",
+      "type": "wei"
+    },
+    {
+      "name": "gasUsed",
+      "type": "gas"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "datesh",
+      "type": "date"
+    },
+    {
+      "name": "time",
+      "type": "date"
+    },
+    {
+      "name": "age",
+      "type": "date"
+    },
+    {
+      "name": "ether",
+      "type": "ether"
+    }
+  ],
   "data": [
     {
       "hash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
@@ -49,7 +139,8 @@
                   "name": "_acceptor",
                   "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
                 }
-              ]
+              ],
+              "outputs": []
             }
           },
           {
@@ -83,7 +174,8 @@
                   "name": "_acceptor",
                   "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
                 }
-              ]
+              ],
+              "outputs": []
             }
           }
         ],
@@ -104,7 +196,8 @@
             "name": "_dollarPrices",
             "value": "[2000000000000000000, 2000000000000000000]"
           }
-        ]
+        ],
+        "outputs": []
       },
       "traces": [
         {
@@ -125,7 +218,8 @@
                 "name": "_dollarPrices",
                 "value": "[2000000000000000000, 2000000000000000000]"
               }
-            ]
+            ],
+            "outputs": []
           },
           "action": {
             "address": "0x0",

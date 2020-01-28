@@ -1,3 +1,14 @@
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *
+ * The LICENSE at the root of this repo details your rights (if any)
+ *------------------------------------------------------------------------*/
+/*
+ * This code was generated automatically from grabABI and makeClass. You may
+ * edit the file, but keep your edits inside the 'EXISTING_CODE' tags.
+ */
 #include <ncurses.h>
 #include <stdlib.h>
 #include "etherlib.h"
@@ -20,7 +31,8 @@ static const COption debugCmds[] = {
     COption("-!cmd", "c", "<cmd>", OPT_FLAG, "Run a system command"),
     COption("-(q)uit", "q", "", OPT_SWITCH, "Quit the current monitor program"),
     COption("-(h)elp", "h", "", OPT_SWITCH, "Display this screen"),
-    COption("", "", "", OPT_DESCRIPTION, "Press enter to continue without correction, up or down arrows to recall commands"),
+    COption("", "", "", OPT_DESCRIPTION,
+            "Press enter to continue without correction, up or down arrows to recall commands"),
 };
 static const size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
 
@@ -29,8 +41,7 @@ static const size_t nDebugCmds = sizeof(debugCmds) / sizeof(COption);
 
 //---------------------------------------------------------------------
 string_q completeCommand(const string_q& cmd) {
-
-    for (size_t i=0;i<nDebugCmds-1;i++) {
+    for (size_t i = 0; i < nDebugCmds - 1; i++) {
         if (extract(debugCmds[i].longName, 1, cmd.length()) == cmd) {
             return extract(debugCmds[i].longName, 1);
         }
@@ -44,17 +55,17 @@ string_q completeCommand(const string_q& cmd) {
 }
 
 //---------------------------------------------------------------------
-#define history(aa) { cmds.push_back(aa); }
+#define history(aa)                                                                                                    \
+    { cmds.push_back(aa); }
 #endif
 
 //---------------------------------------------------------------------
 bool COptions::enterDebugger(const CBlock& block) {
-
 #ifdef DEBUGGER_ON
-    //TODO(tjayrush): global data
+    // TODO(tjayrush): global data
     static CStringArray cmds;
     string_q curCmd;
-    size_t cursor=0;
+    size_t cursor = 0;
     bool showKeys = false;
 
     establishFolder(configPath("cache/tmp/"));
@@ -62,11 +73,11 @@ bool COptions::enterDebugger(const CBlock& block) {
     cout << ">> ";
     cout.flush();
 
-    bool done=false;
+    bool done = false;
     while (!done) {
         cout << "\r" << string_q(80, ' ') << "\r";
         int ch = getch();
-        switch(ch) {
+        switch (ch) {
             case KEY_UP:
                 if (cursor < cmds.size()) {
                     size_t index = cmds.size() - (++cursor);
@@ -75,7 +86,7 @@ bool COptions::enterDebugger(const CBlock& block) {
                 break;
             case KEY_DOWN:
                 if (cursor > 0) {
-                    curCmd = cursor > 0 ? cmds[cmds.size()-cursor--] : "";
+                    curCmd = cursor > 0 ? cmds[cmds.size() - cursor--] : "";
                 } else {
                     curCmd = "";
                 }
@@ -85,14 +96,14 @@ bool COptions::enterDebugger(const CBlock& block) {
             case KEY_RIGHT:
                 break;
             case 127:  // backspace
-                curCmd = extract(curCmd, 0, curCmd.length()-1);
+                curCmd = extract(curCmd, 0, curCmd.length() - 1);
                 break;
             case 9:  // tab
                 curCmd = completeCommand(curCmd);
                 break;
             case 10:  // 'enter'
                 if (curCmd == "c" || curCmd == "correct") {
-                    for (size_t i = 0 ; i < watches.size() ; i++)
+                    for (size_t i = 0; i < watches.size(); i++)
                         watches.at(i).statement.correct();
                     done = true;
                     history(curCmd);
@@ -130,10 +141,12 @@ bool COptions::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "b" || curCmd == "buffer") {
                     if (tBuffer.size()) {
                         cout << "\r\nTransaction buffer:\r\n";
-                        for (size_t i=0;i<tBuffer.size();i++) {
-                            size_t pointer = ((tBuffer.writeCursor == 0) ? tBuffer.size() - 1 : tBuffer.writeCursor - 1);
+                        for (size_t i = 0; i < tBuffer.size(); i++) {
+                            size_t pointer =
+                                ((tBuffer.writeCursor == 0) ? tBuffer.size() - 1 : tBuffer.writeCursor - 1);
                             cout << ((pointer == i) ? "==> " : "    ");
-                            cout << i << " " << tBuffer[i].bn << "." << tBuffer[i].tx << " " << tBuffer[i].hash << "\r\n";
+                            cout << i << " " << tBuffer[i].bn << "." << tBuffer[i].tx << " " << tBuffer[i].hash
+                                 << "\r\n";
                         }
                     } else {
                         cout << "\r\nThere are no items in the transaction buffer\r\n";
@@ -143,22 +156,22 @@ bool COptions::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
                     cout << cOff << "[";
-                    for (size_t i=0;i<watches.size()-1;i++) {
+                    for (size_t i = 0; i < watches.size() - 1; i++) {
                         cout << " { ";
-                        cout << "\"address\": \""  << watches[i].color << watches[i].address    << cOff << "\", ";
-                        cout << "\"firstBlock\": " << bRed                     << watches[i].firstBlock << cOff << ", ";
-                        cout << "\"name\": \""     << watches[i].color << watches[i].name       << cOff << "\"";
-                        cout << " }" << (i<watches.size()-2 ? ",\r\n " : " ]\r\n");
+                        cout << "\"address\": \"" << watches[i].color << watches[i].address << cOff << "\", ";
+                        cout << "\"firstBlock\": " << bRed << watches[i].firstBlock << cOff << ", ";
+                        cout << "\"name\": \"" << watches[i].color << watches[i].name << cOff << "\"";
+                        cout << " }" << (i < watches.size() - 2 ? ",\r\n " : " ]\r\n");
                     }
                     history(curCmd);
 
                 } else if (startsWith(curCmd, "s ") || startsWith(curCmd, "s:") || startsWith(curCmd, "source")) {
                     history(curCmd);
-                    replace(curCmd, "s:","");
-                    replace(curCmd, "s ","");
-                    replace(curCmd, "source:","");
-                    replace(curCmd, "source ","");
-                    for (size_t i=0;i<watches.size();i++) {
+                    replace(curCmd, "s:", "");
+                    replace(curCmd, "s ", "");
+                    replace(curCmd, "source:", "");
+                    replace(curCmd, "source ", "");
+                    for (size_t i = 0; i < watches.size(); i++) {
                         if (watches[i].address == curCmd || watches[i].name == curCmd)
                             curCmd = ("source/" + watches[i].name + ".sol");
                     }
@@ -166,8 +179,8 @@ bool COptions::enterDebugger(const CBlock& block) {
 
                 } else if (startsWith(curCmd, "!") || startsWith(curCmd, "! ")) {
                     history(curCmd);
-                    replace(curCmd, "! ","");
-                    replace(curCmd, "!","");
+                    replace(curCmd, "! ", "");
+                    replace(curCmd, "!", "");
                     string_q ret = substitute(doCommand("NO_COLOR=true " + curCmd + " 2>/dev/null "), "\n", "\r\n");
                     cout << "\r\n" << ret << "\r\n";
 
@@ -177,16 +190,16 @@ bool COptions::enterDebugger(const CBlock& block) {
 
                 } else if (startsWith(curCmd, "e ") || startsWith(curCmd, "e:") || startsWith(curCmd, "ethscan")) {
                     history(curCmd);
-                    replace(curCmd, "e:","");
-                    replace(curCmd, "e ","");
-                    replace(curCmd, "ethscan:","");
-                    replace(curCmd, "ethscan ","");
+                    replace(curCmd, "e:", "");
+                    replace(curCmd, "e ", "");
+                    replace(curCmd, "ethscan:", "");
+                    replace(curCmd, "ethscan ", "");
                     string_q cmd = "ethscan.py " + curCmd;
                     doCommand(cmd);
 
                 } else if (curCmd == "h" || curCmd == "help") {
                     cout << "\r\n" << bBlue << "Help:" << cOff << "\r\n";
-                    for (size_t i=0;i<nDebugCmds;i++) {
+                    for (size_t i = 0; i < nDebugCmds; i++) {
                         string_q name = debugCmds[i].longName;
                         string_q cmd;
                         if (name.length()) {
@@ -194,7 +207,7 @@ bool COptions::enterDebugger(const CBlock& block) {
                             replace(name, hotKey, "(" + hotKey + ")");
                             cmd = extract(name, 1);
                         }
-                        cout << "    " << padRight(cmd,15) << "    " << debugCmds[i].description << "\r\n";
+                        cout << "    " << padRight(cmd, 15) << "    " << debugCmds[i].description << "\r\n";
                     }
                     cout << "\r\n";
                     history(curCmd);
@@ -213,18 +226,15 @@ bool COptions::enterDebugger(const CBlock& block) {
                 break;
             default: {
                 bool allowDigits = startsWith(curCmd, 't');
-                bool allowHex    = startsWith(curCmd, 's')||startsWith(curCmd, 'e');
-                bool isSys       = startsWith(curCmd, "!");
-                if (!isSys && ch == 107) // 'k'
+                bool allowHex = startsWith(curCmd, 's') || startsWith(curCmd, 'e');
+                bool isSys = startsWith(curCmd, "!");
+                if (!isSys && ch == 107)  // 'k'
                     showKeys = !showKeys;
                 if (showKeys)
-                    cout << "\t\t\t\t" << (char)ch << " : " << ch << "\r\n";
-                if (
-                     (islower(ch)) || ch == '!' || isSys ||
-                     (allowDigits && (isdelim(ch) || isdigit(ch))) ||
-                     (allowHex    && (isdelim(ch) || ch == 'x' || isxdigit(ch)))
-                    )
-                    curCmd += (char)ch;
+                    cout << "\t\t\t\t" << static_cast<char>(ch) << " : " << ch << "\r\n";
+                if ((islower(ch)) || ch == '!' || isSys || (allowDigits && (isdelim(ch) || isdigit(ch))) ||
+                    (allowHex && (isdelim(ch) || ch == 'x' || isxdigit(ch))))
+                    curCmd += static_cast<char>(ch);
             }
         }
         cout << "\r>> " << curCmd;

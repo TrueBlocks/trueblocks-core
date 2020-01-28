@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CApiSpec, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextApispecChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextApispecChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextApispecChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextApispecChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CApiSpec::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CApiSpec::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,52 @@ void CApiSpec::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 }
 
 //---------------------------------------------------------------------------
-string_q nextApispecChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextApispecChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CApiSpec *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CApiSpec*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CApiSpec::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextApispecChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'h':
+            if (fieldName % "headers") {
+                return headers;
+            }
+            break;
+        case 'm':
+            if (fieldName % "method") {
+                return method;
+            }
+            break;
+        case 'u':
+            if (fieldName % "uri") {
+                return uri;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,13 +106,22 @@ bool CApiSpec::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'h':
-            if ( fieldName % "headers" ) { headers = fieldValue; return true; }
+            if (fieldName % "headers") {
+                headers = fieldValue;
+                return true;
+            }
             break;
         case 'm':
-            if ( fieldName % "method" ) { method = fieldValue; return true; }
+            if (fieldName % "method") {
+                method = fieldValue;
+                return true;
+            }
             break;
         case 'u':
-            if ( fieldName % "uri" ) { uri = fieldValue; return true; }
+            if (fieldName % "uri") {
+                uri = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -90,7 +137,6 @@ void CApiSpec::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CApiSpec::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -111,7 +157,6 @@ bool CApiSpec::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CApiSpec::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -129,7 +174,7 @@ CArchive& operator>>(CArchive& archive, CApiSpecArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -140,7 +185,7 @@ CArchive& operator>>(CArchive& archive, CApiSpecArray& array) {
 CArchive& operator<<(CArchive& archive, const CApiSpecArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -148,13 +193,14 @@ CArchive& operator<<(CArchive& archive, const CApiSpecArray& array) {
 //---------------------------------------------------------------------------
 void CApiSpec::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CApiSpec, "schema")) return;
+    if (HAS_FIELD(CApiSpec, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CApiSpec, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CApiSpec, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CApiSpec, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CApiSpec, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CApiSpec, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CApiSpec, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CApiSpec, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CApiSpec, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CApiSpec, "method", T_TEXT, ++fieldNum);
     ADD_FIELD(CApiSpec, "uri", T_TEXT, ++fieldNum);
     ADD_FIELD(CApiSpec, "headers", T_TEXT, ++fieldNum);
@@ -172,15 +218,15 @@ void CApiSpec::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextApispecChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CApiSpec *api = reinterpret_cast<const CApiSpec *>(dataPtr);
+string_q nextApispecChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CApiSpec* api = reinterpret_cast<const CApiSpec*>(dataPtr);
     if (api) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, api);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -196,7 +242,6 @@ string_q nextApispecChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CApiSpec::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -215,34 +260,6 @@ CArchive& operator>>(CArchive& archive, CApiSpec& api) {
     return archive;
 }
 
-//---------------------------------------------------------------------------
-string_q CApiSpec::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextApispecChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'h':
-            if ( fieldName % "headers" ) return headers;
-            break;
-        case 'm':
-            if ( fieldName % "method" ) return method;
-            break;
-        case 'u':
-            if ( fieldName % "uri" ) return uri;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
-}
-
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CApiSpec& item) {
     // EXISTING_CODE
@@ -259,14 +276,13 @@ const char* STR_DISPLAY_APISPEC = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CApiSpec::sendData(const string_q& data) {
-
     // TODO(tjayrush): global data
     CURLcode ret = CURLE_SEND_ERROR;
-    CURL *curl_handle = curl_easy_init();
+    CURL* curl_handle = curl_easy_init();
     if (curl_handle) {
         curl_easy_setopt(curl_handle, CURLOPT_CUSTOMREQUEST, method.c_str());
         curl_easy_setopt(curl_handle, CURLOPT_URL, uri.c_str());
-        struct curl_slist *curl_headers = NULL;
+        struct curl_slist* curl_headers = NULL;
         curl_headers = curl_slist_append(curl_headers, "cache-control: no-cache");
         if (curl_headers) {
             CStringArray heads;
@@ -291,4 +307,3 @@ string_q CApiSpec::getData(const string_q& params) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-

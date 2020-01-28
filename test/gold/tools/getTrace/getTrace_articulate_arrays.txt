@@ -1,6 +1,6 @@
 getTrace argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--articulate] [3:--fmt] [4:api] [5:--verbose] 
 getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose 
-{ "type": "CTrace", "data": [
+{ "type": "CTrace", "fieldList": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
   {
     "type": "call",
     "error": "",

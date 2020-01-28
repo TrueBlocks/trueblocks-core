@@ -27,10 +27,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CMonitorCacheItem : public CAccountWatch {
-public:
+  public:
     string_q type;
+    bool deleted;
 
-public:
+  public:
     CMonitorCacheItem(void);
     CMonitorCacheItem(const CMonitorCacheItem& mo);
     virtual ~CMonitorCacheItem(void);
@@ -41,11 +42,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CMonitorCacheItem& item) const;
-    bool operator!=(const CMonitorCacheItem& item) const { return !operator==(item); }
+    bool operator!=(const CMonitorCacheItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CMonitorCacheItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CMonitorCacheItem& mo);
@@ -90,6 +93,7 @@ inline void CMonitorCacheItem::initialize(void) {
     CAccountWatch::initialize();
 
     type = "";
+    deleted = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -101,6 +105,7 @@ inline void CMonitorCacheItem::duplicate(const CMonitorCacheItem& mo) {
     CAccountWatch::duplicate(mo);
 
     type = mo.type;
+    deleted = mo.deleted;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -136,14 +141,9 @@ extern CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon);
-extern CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MONITORCACHEITEM;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

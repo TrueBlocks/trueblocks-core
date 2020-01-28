@@ -6,5 +6,5 @@ backfields2 = gas gasLimit|gas gasUsed|hash hash|bloom logsBloom|blknum blockNum
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 scope = extern
-serialize = true
+serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, miner, hash, parentHash, transactionsCnt, finalized

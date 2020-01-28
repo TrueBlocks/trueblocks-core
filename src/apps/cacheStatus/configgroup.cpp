@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CConfigGroup, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextConfiggroupChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextConfiggroupChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CConfigGroup::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CConfigGroup::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,62 @@ void CConfigGroup::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) co
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfiggroupChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextConfiggroupChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CConfigGroup *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CConfigGroup*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CConfigGroup::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextConfiggroupChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'k':
+            if (fieldName % "keys" || fieldName % "keysCnt") {
+                size_t cnt = keys.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += keys[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
+            }
+            break;
+        case 's':
+            if (fieldName % "section") {
+                return section;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,7 +116,7 @@ bool CConfigGroup::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     switch (tolower(fieldName[0])) {
         case 'k':
-            if ( fieldName % "keys" ) {
+            if (fieldName % "keys") {
                 CConfigItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -79,10 +127,16 @@ bool CConfigGroup::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'n':
-            if ( fieldName % "name" ) { name = fieldValue; return true; }
+            if (fieldName % "name") {
+                name = fieldValue;
+                return true;
+            }
             break;
         case 's':
-            if ( fieldName % "section" ) { section = fieldValue; return true; }
+            if (fieldName % "section") {
+                section = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -98,7 +152,6 @@ void CConfigGroup::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CConfigGroup::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -119,7 +172,6 @@ bool CConfigGroup::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CConfigGroup::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -137,7 +189,7 @@ CArchive& operator>>(CArchive& archive, CConfigGroupArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -148,7 +200,7 @@ CArchive& operator>>(CArchive& archive, CConfigGroupArray& array) {
 CArchive& operator<<(CArchive& archive, const CConfigGroupArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -156,16 +208,17 @@ CArchive& operator<<(CArchive& archive, const CConfigGroupArray& array) {
 //---------------------------------------------------------------------------
 void CConfigGroup::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CConfigGroup, "schema")) return;
+    if (HAS_FIELD(CConfigGroup, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CConfigGroup, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CConfigGroup, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfigGroup, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CConfigGroup, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CConfigGroup, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CConfigGroup, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigGroup, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigGroup, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigGroup, "section", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigGroup, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigGroup, "keys", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfigGroup, "keys", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CConfigGroup, "schema");
@@ -180,13 +233,13 @@ void CConfigGroup::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CConfigGroup *con = reinterpret_cast<const CConfigGroup *>(dataPtr);
+string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CConfigGroup* con = reinterpret_cast<const CConfigGroup*>(dataPtr);
     if (con) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'k':
-                if ( fieldIn % "keys" ) {
+                if (fieldIn % "keys") {
                     for (auto key : con->keys) {
                         if (key.named.size() > 0) {
                             manageFields("CConfigItem:value", false);
@@ -201,7 +254,7 @@ string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void *dataPt
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, con);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -217,62 +270,10 @@ string_q nextConfiggroupChunk_custom(const string_q& fieldIn, const void *dataPt
 
 //---------------------------------------------------------------------------
 bool CConfigGroup::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CConfigGroup& con) {
-    con.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CConfigGroup& con) {
-    con.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CConfigGroup::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextConfiggroupChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'k':
-            if ( fieldName % "keys" || fieldName % "keysCnt" ) {
-                size_t cnt = keys.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += keys[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'n':
-            if ( fieldName % "name" ) return name;
-            break;
-        case 's':
-            if ( fieldName % "section" ) return section;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -286,8 +287,8 @@ ostream& operator<<(ostream& os, const CConfigGroup& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CConfigGroup::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "keys" && index < keys.size() )
+const CBaseNode* CConfigGroup::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "keys" && index < keys.size())
         return &keys[index];
     return NULL;
 }
@@ -299,4 +300,3 @@ const char* STR_DISPLAY_CONFIGGROUP = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

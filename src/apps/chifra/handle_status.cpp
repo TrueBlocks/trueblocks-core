@@ -7,14 +7,15 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_status(void) {
-
     ENTER8("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
     os << "cacheStatus " << tool_flags;
-    NOTE_CALL(os.str());
-    if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+    LOG_CALL(os.str());
+    // clang-format off
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
 
     EXIT_NOMSG8(true);
 }

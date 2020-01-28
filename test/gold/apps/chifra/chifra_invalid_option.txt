@@ -2,17 +2,17 @@ chifra argc: 2 [1:not_a_mode]
 chifra not_a_mode 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
-  Please specify which command to run, one or more of [list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed].
+  Please specify which command to run, one or more of [list|export|slurp|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed].
 
   Usage:    chifra [-s|-v|-h] commands  
-  Purpose:  Create a TrueBlocks monitor configuration.
+  Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run, one or more of [list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed] (required)
+	commands              which command to run, one or more of [list|export|slurp|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed] (required)
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
-	-e  (--set)           for status config only, indicates that this is config --sef
+	-e  (--set)           for 'settings' only, indicates that this is a --set
 	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
 #### Hidden options (shown during testing only)

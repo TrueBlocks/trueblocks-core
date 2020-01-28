@@ -24,9 +24,9 @@ CWebAPI::~CWebAPI(void) {
 
 //--------------------------------------------------------------------------------
 bool CWebAPI::checkKey(void) {
-    key      = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_key",      "");
+    key = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_key", "");
     provider = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_provider", "EtherScan");
-    url      = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_url",      "http://etherscan.io/apis");
+    url = getGlobalConfig("ethslurp")->getConfigStr("settings", "api_url", "http://etherscan.io/apis");
 
     if (!key.empty() && key != "<NOT_SET>")
         return true;
@@ -36,13 +36,12 @@ bool CWebAPI::checkKey(void) {
     char buffer[256];
     bzero(buffer, sizeof(buffer));
 
-    cerr
-    << cRed << "\n  ***Warning***" << cOff << "\n"
-    << "  " << cYellow
-        << "This program" << cOff << " needs an api_key from " + provider + " in order to work. You may get one at\n"
-    << "  " + url + ". See our online help file for more information.\n"
-    << "  Please provide an API key or type 'exit'\n"
-    << "  > ";
+    cerr << cRed << "\n  ***Warning***" << cOff << "\n"
+         << "  " << cYellow << "This program" << cOff
+         << " needs an api_key from " + provider + " in order to work. You may get one at\n"
+         << "  " + url + ". See our online help file for more information.\n"
+         << "  Please provide an API key or type 'exit'\n"
+         << "  > ";
     cerr.flush();
 
     if (!isTestMode())
@@ -53,9 +52,9 @@ bool CWebAPI::checkKey(void) {
 
     // Save the key for later
     CToml toml(configPath("ethslurp.toml"));
-    toml.setConfigStr("settings", "api_key",      key);
+    toml.setConfigStr("settings", "api_key", key);
     toml.setConfigStr("settings", "api_provider", "EtherScan");
-    toml.setConfigStr("settings", "api_url",      "http://etherscan.io/apis");
+    toml.setConfigStr("settings", "api_url", "http://etherscan.io/apis");
     toml.writeFile();
 
     return true;

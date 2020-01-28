@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextPricecacheChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextPricecacheChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPriceCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CPriceCache::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,52 @@ void CPriceCache::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) con
 }
 
 //---------------------------------------------------------------------------
-string_q nextPricecacheChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextPricecacheChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPriceCache *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPriceCache*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CPriceCache::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextPricecacheChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'i':
+            if (fieldName % "items" || fieldName % "itemsCnt") {
+                size_t cnt = items.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += items[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CCache::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -71,7 +109,7 @@ bool CPriceCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if ( fieldName % "items" ) {
+            if (fieldName % "items") {
                 CPriceCacheItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
@@ -95,7 +133,6 @@ void CPriceCache::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceCache::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -114,7 +151,6 @@ bool CPriceCache::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceCache::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CCache::SerializeC(archive);
 
@@ -130,7 +166,7 @@ CArchive& operator>>(CArchive& archive, CPriceCacheArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -141,7 +177,7 @@ CArchive& operator>>(CArchive& archive, CPriceCacheArray& array) {
 CArchive& operator<<(CArchive& archive, const CPriceCacheArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -149,16 +185,17 @@ CArchive& operator<<(CArchive& archive, const CPriceCacheArray& array) {
 //---------------------------------------------------------------------------
 void CPriceCache::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPriceCache, "schema")) return;
+    if (HAS_FIELD(CPriceCache, "schema"))
+        return;
 
     CCache::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPriceCache, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPriceCache, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPriceCache, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CPriceCache, "cname", T_TEXT,  ++fieldNum);
-    ADD_FIELD(CPriceCache, "items", T_OBJECT|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPriceCache, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPriceCache, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPriceCache, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPriceCache, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPriceCache, "items", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceCache, "schema");
@@ -173,15 +210,15 @@ void CPriceCache::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CPriceCache *pri = reinterpret_cast<const CPriceCache *>(dataPtr);
+string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPriceCache* pri = reinterpret_cast<const CPriceCache*>(dataPtr);
     if (pri) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, pri);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -197,56 +234,10 @@ string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void *dataPtr
 
 //---------------------------------------------------------------------------
 bool CPriceCache::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPriceCache& pri) {
-    pri.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPriceCache& pri) {
-    pri.Serialize(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-string_q CPriceCache::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextPricecacheChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'i':
-            if ( fieldName % "items" || fieldName % "itemsCnt" ) {
-                size_t cnt = items.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += items[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CCache::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -260,8 +251,8 @@ ostream& operator<<(ostream& os, const CPriceCache& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode *CPriceCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if ( fieldName % "items" && index < items.size() )
+const CBaseNode* CPriceCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "items" && index < items.size())
         return &items[index];
     return NULL;
 }
@@ -273,4 +264,3 @@ const char* STR_DISPLAY_PRICECACHE = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

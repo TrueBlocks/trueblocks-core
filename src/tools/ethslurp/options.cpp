@@ -19,18 +19,19 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
+    // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
-    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
+    COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
+    COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -39,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -49,7 +50,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
             string_q types_tmp;
             if (!confirmEnum("types", types_tmp, arg))
-              return false;
+                return false;
             types.push_back(types_tmp);
 
         } else if (arg == "-p" || arg == "--appearances") {
@@ -79,14 +80,13 @@ bool COptions::parseArguments(string_q& command) {
             typesList.push_back("ext");
             typesList.push_back("int");
             typesList.push_back("token");
-            //typesList.push_back("miner");
+            // typesList.push_back("miner");
         } else {
             typesList.push_back(type);
         }
     }
     if (typesList.empty())
         typesList.push_back("ext");
-
 
     if (exportFmt == TXT1)
         exportFormat = "txt";
@@ -153,12 +153,14 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CTransaction, "date");
     UNHIDE_FIELD(CTransaction, "ether");
 
-    HIDE_FIELD  (CTransaction, "toContract");
-    HIDE_FIELD  (CTransaction, "receipt");
-    HIDE_FIELD  (CTransaction, "traces");
+    HIDE_FIELD(CTransaction, "toContract");
+    HIDE_FIELD(CTransaction, "receipt");
+    HIDE_FIELD(CTransaction, "traces");
 
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("Portions of this software are Powered by Etherscan.io APIs.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
@@ -170,15 +172,14 @@ COptions::~COptions(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool buildFieldList(const CFieldData& fld, void *data) {
-    string_q *s = reinterpret_cast<string_q *>(data);
+bool buildFieldList(const CFieldData& fld, void* data) {
+    string_q* s = reinterpret_cast<string_q*>(data);
     *s += (fld.getName() + "|");
     return true;
 }
 
 //--------------------------------------------------------------------------------
 bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q& fmtOut) {
-
     if (which == "file")
         if (!buildDisplayStrings())
             return false;
@@ -204,10 +205,10 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
         errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
-        const char *ERR_NO_DISPLAY_STR =
-        "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
-        "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
-        "  Please see the full documentation for more information on display strings.";
+        const char* ERR_NO_DISPLAY_STR =
+            "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
+            "  was not found in the configuration file (which is stored here: ~/.quickBlocks/quickBlocks.toml).\n"
+            "  Please see the full documentation for more information on display strings.";
         errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
     }
 
@@ -217,7 +218,6 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::buildDisplayStrings(void) {
-
     // Set the default if it's not set
     if (exportFormat.empty())
         exportFormat = "json";
@@ -252,8 +252,8 @@ bool COptions::buildDisplayStrings(void) {
 
     ASSERT(!fmtForFields.empty());
     string_q defList = getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_fieldList", "");
-    string_q fieldList = getGlobalConfig("ethslurp")->getConfigStr("display",
-                                                                   "fmt_" + exportFormat + "_fieldList", defList);
+    string_q fieldList =
+        getGlobalConfig("ethslurp")->getConfigStr("display", "fmt_" + exportFormat + "_fieldList", defList);
     if (fieldList.empty())
         GETRUNTIME_CLASS(CTransaction)->forEveryField(buildFieldList, &fieldList);
 
@@ -266,7 +266,7 @@ bool COptions::buildDisplayStrings(void) {
         bool force = contains(fieldName, "*");
         replace(fieldName, "*", "");
 
-        const CFieldData *field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
+        const CFieldData* field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
         if (!field) {
             cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
             exit(0);
@@ -277,18 +277,15 @@ bool COptions::buildDisplayStrings(void) {
             string_q resolved = fieldName;
             if (exportFormat != "json")
                 resolved = getGlobalConfig("ethslurp")->getConfigStr("field_str", fieldName, fieldName);
-            displayString +=
-            substitute(
-                       substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved)+"}"), "{p:FIELD}", "{p:"+resolved+"}");
+            displayString += substitute(substitute(fmtForFields, "{FIELD}", "{" + toUpper(resolved) + "}"), "{p:FIELD}",
+                                        "{p:" + resolved + "}");
             header +=
-            substitute(
-                       substitute(
-                                  substitute(
-                                             substitute(fmtForFields, "{FIELD}", resolved), "[", ""), "]", ""), "<td ", "<th ");
+                substitute(substitute(substitute(substitute(fmtForFields, "{FIELD}", resolved), "[", ""), "]", ""),
+                           "<td ", "<th ");
         }
     }
     displayString = trimWhitespace(displayString);
-    header        = trimWhitespace(header);
+    header = trimWhitespace(header);
 
     displayString = trim(substitute(fmtForRecords, "[{FIELDS}]", displayString), '\t');
     if (exportFormat == "json") {

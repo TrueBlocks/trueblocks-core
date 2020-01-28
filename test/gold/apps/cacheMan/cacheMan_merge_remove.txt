@@ -1,11 +1,11 @@
 cacheMan argc: 3 [1:-r] [2:0x1111111111111111111111111111111111111111] 
 cacheMan -r 0x1111111111111111111111111111111111111111 
 Found removal file...
-TIME ~ CLOCK - <INFO>  : 	removal instruction: 1-989198.3TIME ~ CLOCK - <INFO>  : 	removal instruction: 2-989332.2TIME ~ CLOCK - <INFO>  : 	removal instruction: 3-989345.2TIME ~ CLOCK - <INFO>  : 	removal instruction: 4-992893.13	Reading cache: 0x1111111111111111111111111111111111111111.acct.bin...7047 existing records read.
+TIME ~ CLOCK - <INFO>  : 	removal instruction: 1-989198.3TIME ~ CLOCK - <INFO>  : 	removal instruction: 2-989332.2TIME ~ CLOCK - <INFO>  : 	removal instruction: 3-989345.2TIME ~ CLOCK - <INFO>  : 	removal instruction: 4-992893.13	Reading cache: $CACHE/0x1111111111111111111111111111111111111111.acct.bin....10912 existing records read.
 	Sorting...done
 	Will remove item 989198.3 if found
 	Will remove item 989332.2 if found
 	Will remove item 989345.2 if found
 	Will remove item 992893.13 if found
-	Writing....7045 records written, 2 records removed.
-	Written to 0x1111111111111111111111111111111111111111.acct.bin
+	Writing.....10910 records written, 2 records removed.
+	Written to $CACHE/0x1111111111111111111111111111111111111111.acct.bin

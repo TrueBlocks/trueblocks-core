@@ -1,15 +1,16 @@
 ethQuote argc: 3 [1:--period] [2:12] 
 ethQuote --period 12 
 
-  Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440] required. Quitting...
+  Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440|10080|hourly|daily|weekly] required. Quitting...
 
-  Usage:    ethQuote [-f|-p|-a|-v|-h]  
+  Usage:    ethQuote [-f|-p|-a|-e|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.
 
   Where:  
 	-f  (--freshen)       Freshen price database (append new data)
-	-p  (--period <val>)  display prices in this increment, one of [5|15|30|60|120*|240|1440]
+	-p  (--period <val>)  increment of display, one of [5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]
 	-a  (--pair <str>)    which price pair to freshen or list (see Poloniex)
+	-e  (--feed <val>)    the feed for the price data, one of [poloniex*|maker|tellor]
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

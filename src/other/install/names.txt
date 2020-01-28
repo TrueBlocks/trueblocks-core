@@ -17,7 +17,8 @@ group	subgroup	address	name	description	symbol	source	logo	is_contract	is_privat
 30-Contracts		0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3	Moloch Paying Proxy			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0x807640a13483f8ac783c557fcdf27be11ea4ac7a	The Dao Extra Balance Account			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0x8942595a2dc5181df0465af0d7be08c8f23c93af	Gnosis Safe for Moloch			TrueBlocks.io		TRUE	FALSE	TRUE
-30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Dai Stablecoin v1.0	No description	DAI	Etherscan.io	dai_stablecoin.png	TRUE	FALSE	TRUE
+30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	No description	SAI	Etherscan.io	sai_stablecoin.png	TRUE	FALSE	TRUE
+30-Contracts		0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin v2.0	No description	DAI	Etherscan.io	dai_stablecoin.png	TRUE	FALSE	TRUE
 30-Contracts		0x8f951903c9360345b4e1b536c7f5ae8f88a64e79	Giveth Donations			Giveth website		TRUE	FALSE	TRUE
 30-Contracts		0x914d1b8b43e92723e64fd0a06f5bdb8dd9b10c79	DarkDAOextraBalance			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0x960b236a07cf122663c4303350609a66a7b288c0	Aragon	Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.	ANT	Etherscan.io	aragon_28.png	TRUE	FALSE	TRUE
@@ -33,6 +34,7 @@ group	subgroup	address	name	description	symbol	source	logo	is_contract	is_privat
 30-Contracts		0xd2e16a20dd7b1ae54fb0312209784478d069c7b0	DaoManagedAcct			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0xDa4a4626d3E16e094De3225A751aAb7128e96526	DAO Curator			TrueBlocks.io		TRUE	FALSE	TRUE
 30-Contracts		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	The ethereum tip jar	TIP	Ethereum.org		TRUE	FALSE	TRUE
+30-Contracts		0xdf869fad6db91f437b59f1edefab319493d4c4ce	GitCoin Grants			Gitcoin grants contract		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Set Protocol Vault			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core	0x75fbbdeafe23a48c0736b2731b956b7a03adcfb2	Set Protocol Core			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE
 33-Set Protocol	01-Core Caller	0xf3862af14cbb4d9b781e41a3d4d74e7c2cdb73e2	Set Protocol Core Caller			https://github.com/SetProtocol/set-protocol-contracts		TRUE	FALSE	TRUE

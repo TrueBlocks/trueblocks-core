@@ -17,12 +17,12 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------------------------------
 class CWebAPI {
-private:
+  private:
     string_q key;
     string_q provider;
     string_q url;
 
-public:
+  public:
     CWebAPI(void);
     ~CWebAPI(void);
 

@@ -25,11 +25,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class QFromTransferFrom : public QTransferFrom {
-public:
+  public:
     address_t whop;
     address_t werp;
 
-public:
+  public:
     QFromTransferFrom(void);
     QFromTransferFrom(const QFromTransferFrom& fr);
     virtual ~QFromTransferFrom(void);
@@ -40,11 +40,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const QFromTransferFrom& item) const;
-    bool operator!=(const QFromTransferFrom& item) const { return !operator==(item); }
+    bool operator!=(const QFromTransferFrom& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const QFromTransferFrom& v1, const QFromTransferFrom& v2);
     friend ostream& operator<<(ostream& os, const QFromTransferFrom& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const QFromTransferFrom& fr);
@@ -143,4 +145,3 @@ extern const char* STR_DISPLAY_FROMTRANSFERFROM;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

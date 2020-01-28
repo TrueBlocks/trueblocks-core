@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
-public:
+  public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
     bool changes;
@@ -43,4 +43,4 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitBlock(uint64_t num, void *data);
+extern bool visitBlock(uint64_t num, void* data);

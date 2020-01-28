@@ -24,7 +24,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CConfigItem : public CBaseNode {
-public:
+  public:
     string_q name;
     string_q value;
     string_q type;
@@ -33,7 +33,7 @@ public:
     bool read_only;
     CAccountNameArray named;
 
-public:
+  public:
     CConfigItem(void);
     CConfigItem(const CConfigItem& co);
     virtual ~CConfigItem(void);
@@ -41,18 +41,21 @@ public:
 
     DECLARE_NODE(CConfigItem);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     explicit CConfigItem(const string_q& n, const string_q& v, const string_q& t, const string_q& p, bool r, bool o)
-        : name(n), value(v), type(t), tip(p), required(r), read_only(o) { }
+        : name(n), value(v), type(t), tip(p), required(r), read_only(o) {
+    }
     // EXISTING_CODE
     bool operator==(const CConfigItem& item) const;
-    bool operator!=(const CConfigItem& item) const { return !operator==(item); }
+    bool operator!=(const CConfigItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CConfigItem& v1, const CConfigItem& v2);
     friend ostream& operator<<(ostream& os, const CConfigItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CConfigItem& co);
@@ -100,8 +103,8 @@ inline void CConfigItem::initialize(void) {
     value = "";
     type = "";
     tip = "";
-    required = 0;
-    read_only = 0;
+    required = false;
+    read_only = false;
     named.clear();
 
     // EXISTING_CODE
@@ -155,14 +158,9 @@ extern CArchive& operator>>(CArchive& archive, CConfigItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CConfigItem& con);
-extern CArchive& operator>>(CArchive& archive, CConfigItem& con);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGITEM;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

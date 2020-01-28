@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CMeasure, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextMeasureChunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextMeasureChunk_custom(const string_q& fieldIn, const void *dataPtr);
+static string_q nextMeasureChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CMeasure::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CMeasure::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,76 @@ void CMeasure::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const 
 }
 
 //---------------------------------------------------------------------------
-string_q nextMeasureChunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextMeasureChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CMeasure *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CMeasure*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CMeasure::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextMeasureChunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "cmd") {
+                return cmd;
+            }
+            break;
+        case 'd':
+            if (fieldName % "date") {
+                return date;
+            }
+            break;
+        case 'e':
+            if (fieldName % "epoch") {
+                return uint_2_Str(epoch);
+            }
+            break;
+        case 'g':
+            if (fieldName % "git_hash") {
+                return git_hash;
+            }
+            if (fieldName % "group") {
+                return group;
+            }
+            break;
+        case 'n':
+            if (fieldName % "nTests") {
+                return uint_2_Str(nTests);
+            }
+            if (fieldName % "nPassed") {
+                return uint_2_Str(nPassed);
+            }
+            break;
+        case 't':
+            if (fieldName % "type") {
+                return type;
+            }
+            if (fieldName % "totSecs") {
+                return double_2_Str(totSecs, 5);
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,25 +130,52 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'c':
-            if ( fieldName % "cmd" ) { cmd = fieldValue; return true; }
+            if (fieldName % "cmd") {
+                cmd = fieldValue;
+                return true;
+            }
             break;
         case 'd':
-            if ( fieldName % "date" ) { date = fieldValue; return true; }
+            if (fieldName % "date") {
+                date = fieldValue;
+                return true;
+            }
             break;
         case 'e':
-            if ( fieldName % "epoch" ) { epoch = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "epoch") {
+                epoch = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'g':
-            if ( fieldName % "git_hash" ) { git_hash = fieldValue; return true; }
-            if ( fieldName % "group" ) { group = fieldValue; return true; }
+            if (fieldName % "git_hash") {
+                git_hash = fieldValue;
+                return true;
+            }
+            if (fieldName % "group") {
+                group = fieldValue;
+                return true;
+            }
             break;
         case 'n':
-            if ( fieldName % "nTests" ) { nTests = str_2_Uint(fieldValue); return true; }
-            if ( fieldName % "nPassed" ) { nPassed = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "nTests") {
+                nTests = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "nPassed") {
+                nPassed = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "type" ) { type = fieldValue; return true; }
-            if ( fieldName % "totSecs" ) { totSecs = str_2_Double(fieldValue); return true; }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
+            if (fieldName % "totSecs") {
+                totSecs = str_2_Double(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -102,7 +191,6 @@ void CMeasure::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CMeasure::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -129,7 +217,6 @@ bool CMeasure::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CMeasure::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -153,7 +240,7 @@ CArchive& operator>>(CArchive& archive, CMeasureArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -164,7 +251,7 @@ CArchive& operator>>(CArchive& archive, CMeasureArray& array) {
 CArchive& operator<<(CArchive& archive, const CMeasureArray& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -172,21 +259,22 @@ CArchive& operator<<(CArchive& archive, const CMeasureArray& array) {
 //---------------------------------------------------------------------------
 void CMeasure::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CMeasure, "schema")) return;
+    if (HAS_FIELD(CMeasure, "schema"))
+        return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CMeasure, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CMeasure, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMeasure, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CMeasure, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CMeasure, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMeasure, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "git_hash", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "epoch", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "epoch", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "nTests", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CMeasure, "nPassed", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "nTests", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "nPassed", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "totSecs", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -205,27 +293,27 @@ void CMeasure::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextMeasureChunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CMeasure *mea = reinterpret_cast<const CMeasure *>(dataPtr);
+string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CMeasure* mea = reinterpret_cast<const CMeasure*>(dataPtr);
     if (mea) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-               if ( fieldIn % "avgSecs" )
-                   return double_2_Str(mea->avgSecs(), 5);
-               break;
+                if (fieldIn % "avgSecs")
+                    return double_2_Str(mea->avgSecs(), 5);
+                break;
             case 'c':
-               if ( fieldIn % "check" )
-                   return (mea->nPassed == mea->nTests ? greenCheck : "");
-               break;
+                if (fieldIn % "check")
+                    return (mea->nPassed == mea->nTests ? greenCheck : "");
+                break;
             case 'f':
-               if ( fieldIn % "failed" )
-                   return uint_2_Str(mea->nTests - mea->nPassed);
-               break;
+                if (fieldIn % "failed")
+                    return uint_2_Str(mea->nTests - mea->nPassed);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, mea);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -241,51 +329,10 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void *dataPtr) {
 
 //---------------------------------------------------------------------------
 bool CMeasure::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
-}
-
-//---------------------------------------------------------------------------
-string_q CMeasure::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextMeasureChunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'c':
-            if ( fieldName % "cmd" ) return cmd;
-            break;
-        case 'd':
-            if ( fieldName % "date" ) return date;
-            break;
-        case 'e':
-            if ( fieldName % "epoch" ) return uint_2_Str(epoch);
-            break;
-        case 'g':
-            if ( fieldName % "git_hash" ) return git_hash;
-            if ( fieldName % "group" ) return group;
-            break;
-        case 'n':
-            if ( fieldName % "nTests" ) return uint_2_Str(nTests);
-            if ( fieldName % "nPassed" ) return uint_2_Str(nPassed);
-            break;
-        case 't':
-            if ( fieldName % "type" ) return type;
-            if ( fieldName % "totSecs" ) return double_2_Str(totSecs, 5);
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
 }
 
 //-------------------------------------------------------------------------
@@ -299,20 +346,19 @@ ostream& operator<<(ostream& os, const CMeasure& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MEASURE = 
-"[{GIT_HASH}]\t"
-"[{DATE}]\t"
-"[{EPOCH}]\t"
-"[{GROUP}]\t"
-"[{CMD}]\t"
-"[{TYPE}]\t"
-"[{NTESTS}]\t"
-"[{NPASSED}]\t"
-"[{TOTSECS}]\t"
-"[{AVGSECS}]";
+const char* STR_DISPLAY_MEASURE =
+    "[{GIT_HASH}]\t"
+    "[{DATE}]\t"
+    "[{EPOCH}]\t"
+    "[{GROUP}]\t"
+    "[{CMD}]\t"
+    "[{TYPE}]\t"
+    "[{NTESTS}]\t"
+    "[{NPASSED}]\t"
+    "[{TOTSECS}]\t"
+    "[{AVGSECS}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

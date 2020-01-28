@@ -7,7 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_leech(void) {
-
 #if 0
     // leech mode does not require a running node
     nodeNotRequired();
@@ -52,9 +51,11 @@ bool COptions::handle_leech(void) {
 
             // get the zip file from the IPFS cache
             os << ipfs_cmd.str() << " \"" << zipFile << "\"";
-            NOTE_CALL(os.str());
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(500000); // so Ctrl+C works
+            LOG_CALL(os.str());
+            // clang-format off
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            // clang-format on
+            usleep(500000);  // so Ctrl+C works
 
         } else {
             if (verbose)
@@ -72,9 +73,11 @@ bool COptions::handle_leech(void) {
             os << "gunzip \"" << filename << "\" && cd - >/dev/null";
 
             cerr << "Leeching " << cTeal << textFile << cOff << endl;
-            NOTE_CALL(os.str());
-            if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
-            usleep(500000); // so Ctrl+C works
+            LOG_CALL(os.str());
+            // clang-format off
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            // clang-format on
+            usleep(500000);  // so Ctrl+C works
 
         } else {
             if (verbose)

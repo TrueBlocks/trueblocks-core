@@ -24,11 +24,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CPriceCacheItem : public CAccountName {
-public:
+  public:
     string_q type;
     string_q pair;
 
-public:
+  public:
     CPriceCacheItem(void);
     CPriceCacheItem(const CPriceCacheItem& pr);
     virtual ~CPriceCacheItem(void);
@@ -39,11 +39,13 @@ public:
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CPriceCacheItem& item) const;
-    bool operator!=(const CPriceCacheItem& item) const { return !operator==(item); }
+    bool operator!=(const CPriceCacheItem& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CPriceCacheItem& v1, const CPriceCacheItem& v2);
     friend ostream& operator<<(ostream& os, const CPriceCacheItem& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CPriceCacheItem& pr);
@@ -136,14 +138,9 @@ extern CArchive& operator>>(CArchive& archive, CPriceCacheItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPriceCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPriceCacheItem& pri);
-extern CArchive& operator>>(CArchive& archive, CPriceCacheItem& pri);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PRICECACHEITEM;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

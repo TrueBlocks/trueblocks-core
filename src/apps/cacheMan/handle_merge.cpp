@@ -7,7 +7,6 @@
 
 //-------------------------------------------------------------------------
 bool COptions::handleMerge(void) const {
-
     CAppearanceArray_base dataArray;
     if (!handleRead("Merging", monitors.size(), dataArray))
         return false;

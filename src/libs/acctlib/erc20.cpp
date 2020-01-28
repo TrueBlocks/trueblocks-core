@@ -23,11 +23,11 @@ namespace qblocks {
 IMPLEMENT_NODE(CTokenState_erc20, CAccountWatch);
 
 //---------------------------------------------------------------------------
-extern string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void *dataPtr);
-static string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr);
+extern string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPtr) const {
+void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
@@ -48,14 +48,77 @@ void CTokenState_erc20::Format(ostream& ctx, const string_q& fmtIn, void *dataPt
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void *dataPtr) {
+string_q nextTokenstate_Erc20Chunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CTokenState_erc20 *>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CTokenState_erc20*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
 
     return fldNotFound(fieldIn);
+}
+
+//---------------------------------------------------------------------------
+string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
+    // Give customized code a chance to override first
+    string_q ret = nextTokenstate_Erc20Chunk_custom(fieldName, this);
+    if (!ret.empty())
+        return ret;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Return field values
+    switch (tolower(fieldName[0])) {
+        case 'a':
+            if (fieldName % "address") {
+                return addr_2_Str(address);
+            }
+            break;
+        case 'd':
+            if (fieldName % "decimals") {
+                return uint_2_Str(decimals);
+            }
+            break;
+        case 'h':
+            if (fieldName % "holders" || fieldName % "holdersCnt") {
+                size_t cnt = holders.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += ("\"" + holders[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                }
+                return retS;
+            }
+            break;
+        case 's':
+            if (fieldName % "symbol") {
+                return symbol;
+            }
+            break;
+        case 't':
+            if (fieldName % "totalSupply") {
+                return wei_2_Str(totalSupply);
+            }
+            break;
+        case 'v':
+            if (fieldName % "version") {
+                return version;
+            }
+            break;
+        default:
+            break;
+    }
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    // Finally, give the parent class a chance
+    return CAccountWatch::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -71,13 +134,19 @@ bool CTokenState_erc20::setValueByName(const string_q& fieldNameIn, const string
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if ( fieldName % "address" ) { address = str_2_Addr(fieldValue); return true; }
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             break;
         case 'd':
-            if ( fieldName % "decimals" ) { decimals = str_2_Uint(fieldValue); return true; }
+            if (fieldName % "decimals") {
+                decimals = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'h':
-            if ( fieldName % "holders" ) {
+            if (fieldName % "holders") {
                 string_q str = fieldValue;
                 while (!str.empty()) {
                     holders.push_back(str_2_Addr(nextTokenClear(str, ',')));
@@ -86,13 +155,22 @@ bool CTokenState_erc20::setValueByName(const string_q& fieldNameIn, const string
             }
             break;
         case 's':
-            if ( fieldName % "symbol" ) { symbol = fieldValue; return true; }
+            if (fieldName % "symbol") {
+                symbol = fieldValue;
+                return true;
+            }
             break;
         case 't':
-            if ( fieldName % "totalSupply" ) { totalSupply = str_2_Wei(fieldValue); return true; }
+            if (fieldName % "totalSupply") {
+                totalSupply = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'v':
-            if ( fieldName % "version" ) { version = fieldValue; return true; }
+            if (fieldName % "version") {
+                version = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -108,7 +186,6 @@ void CTokenState_erc20::finishParse() {
 
 //---------------------------------------------------------------------------------------------------
 bool CTokenState_erc20::Serialize(CArchive& archive) {
-
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -125,14 +202,13 @@ bool CTokenState_erc20::Serialize(CArchive& archive) {
     archive >> decimals;
     archive >> version;
     archive >> symbol;
-//    archive >> holders;
+    // archive >> holders;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 bool CTokenState_erc20::SerializeC(CArchive& archive) const {
-
     // Writing always write the latest version of the data
     CAccountWatch::SerializeC(archive);
 
@@ -143,7 +219,7 @@ bool CTokenState_erc20::SerializeC(CArchive& archive) const {
     archive << decimals;
     archive << version;
     archive << symbol;
-//    archive << holders;
+    // archive << holders;
 
     return true;
 }
@@ -153,7 +229,7 @@ CArchive& operator>>(CArchive& archive, CTokenState_erc20Array& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
-    for (size_t i = 0 ; i < count ; i++) {
+    for (size_t i = 0; i < count; i++) {
         ASSERT(i < array.capacity());
         array.at(i).Serialize(archive);
     }
@@ -164,7 +240,7 @@ CArchive& operator>>(CArchive& archive, CTokenState_erc20Array& array) {
 CArchive& operator<<(CArchive& archive, const CTokenState_erc20Array& array) {
     uint64_t count = array.size();
     archive << count;
-    for (size_t i = 0 ; i < array.size() ; i++)
+    for (size_t i = 0; i < array.size(); i++)
         array[i].SerializeC(archive);
     return archive;
 }
@@ -172,21 +248,22 @@ CArchive& operator<<(CArchive& archive, const CTokenState_erc20Array& array) {
 //---------------------------------------------------------------------------
 void CTokenState_erc20::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CTokenState_erc20, "schema")) return;
+    if (HAS_FIELD(CTokenState_erc20, "schema"))
+        return;
 
     CAccountWatch::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CTokenState_erc20, "schema",  T_NUMBER, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "deleted", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "showing", T_BOOL,  ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "cname", T_TEXT,  ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "decimals", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "version", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "symbol", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "holders", T_ADDRESS|TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "holders", T_ADDRESS | TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CTokenState_erc20, "holders");
 
     // Hide our internal fields, user can turn them on if they like
@@ -202,15 +279,15 @@ void CTokenState_erc20::registerClass(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void *dataPtr) {
-    const CTokenState_erc20 *tok = reinterpret_cast<const CTokenState_erc20 *>(dataPtr);
+string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CTokenState_erc20* tok = reinterpret_cast<const CTokenState_erc20*>(dataPtr);
     if (tok) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
-                if ( fieldIn % "parsed" )
+                if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tok);
                 // EXISTING_CODE
                 // EXISTING_CODE
@@ -226,7 +303,6 @@ string_q nextTokenstate_Erc20Chunk_custom(const string_q& fieldIn, const void *d
 
 //---------------------------------------------------------------------------
 bool CTokenState_erc20::readBackLevel(CArchive& archive) {
-
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -245,54 +321,6 @@ CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok) {
     return archive;
 }
 
-//---------------------------------------------------------------------------
-string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
-
-    // Give customized code a chance to override first
-    string_q ret = nextTokenstate_Erc20Chunk_custom(fieldName, this);
-    if (!ret.empty())
-        return ret;
-
-    // Return field values
-    switch (tolower(fieldName[0])) {
-        case 'a':
-            if ( fieldName % "address" ) return addr_2_Str(address);
-            break;
-        case 'd':
-            if ( fieldName % "decimals" ) return uint_2_Str(decimals);
-            break;
-        case 'h':
-            if ( fieldName % "holders" || fieldName % "holdersCnt" ) {
-                size_t cnt = holders.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt) return "";
-                string_q retS;
-                for (size_t i = 0 ; i < cnt ; i++) {
-                    retS += ("\"" + holders[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 's':
-            if ( fieldName % "symbol" ) return symbol;
-            break;
-        case 't':
-            if ( fieldName % "totalSupply" ) return wei_2_Str(totalSupply);
-            break;
-        case 'v':
-            if ( fieldName % "version" ) return version;
-            break;
-    }
-
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    // Finally, give the parent class a chance
-    return CAccountWatch::getValueByName(fieldName);
-}
-
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTokenState_erc20& item) {
     // EXISTING_CODE
@@ -305,7 +333,7 @@ ostream& operator<<(ostream& os, const CTokenState_erc20& item) {
 
 //---------------------------------------------------------------------------
 const string_q CTokenState_erc20::getStringAt(const string_q& fieldName, size_t i) const {
-    if ( fieldName % "holders" && i < holders.size() )
+    if (fieldName % "holders" && i < holders.size())
         return (holders[i]);
     return "";
 }
@@ -317,4 +345,3 @@ const char* STR_DISPLAY_TOKENSTATE_ERC20 = "";
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

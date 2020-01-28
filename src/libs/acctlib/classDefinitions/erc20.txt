@@ -4,4 +4,4 @@ base_class = CAccountWatch
 fields = address address|wei totalSupply|uint64 decimals|string version|string symbol|CAddressArray holders (nowrite)
 includes = acctlib.h
 scope = extern
-serialize = true
+serializable = true

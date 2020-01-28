@@ -1,200 +1,212 @@
 {
   "type": "CStatus",
+  "fieldList": [
+    {
+      "name": "client_version",
+      "type": "text"
+    },
+    {
+      "name": "trueblocks_version",
+      "type": "text"
+    },
+    {
+      "name": "rpc_provider",
+      "type": "text"
+    },
+    {
+      "name": "api_provider",
+      "type": "text"
+    },
+    {
+      "name": "balance_provider",
+      "type": "text"
+    },
+    {
+      "name": "cache_path",
+      "type": "text"
+    },
+    {
+      "name": "index_path",
+      "type": "text"
+    },
+    {
+      "name": "host",
+      "type": "text"
+    },
+    {
+      "name": "is_scraping",
+      "type": "bool"
+    },
+    {
+      "name": "caches",
+      "type": "object|ts_array"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    }
+  ],
   "data": [
     {
       "client_version": "Parity version",
-      "trueblocks_version": "GHC-TrueBlocks//0.6.1-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "api_provider": "--providers--",
       "balance_provider": "--providers--",
+      "cache_path": "--paths--",
+      "index_path": "--paths--",
       "host": "--hostname-- (--username--)",
+      "is_scraping": false,
       "caches": [
         {
           "items": [
             {
               "type": "CIndexCacheItem",
-              "nAddresses": 4294967295,
-              "nAppearances": 4294967295,
-              "firstAppearance": 2986116,
-              "latestAppearance": 3012968,
-              "firstTs": 1484277812,
-              "lastestTs": 1484659811,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/002986116-003012968.bloom",
-              "sizeInBytes": 131080,
-              "hash": "Qmdr...kWX7"
+              "nAddresses": 41556,
+              "nAppearances": 500012,
+              "firstAppearance": 2998252,
+              "latestAppearance": 3025310,
+              "firstTs": 1484450745,
+              "lastestTs": 1484835514,
+              "filename": "/--index-path--/002998252-003025310.bin",
+              "indexSizeBytes": 5163708,
+              "index_hash": "QmUT...a15T",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": "QmYV...w5DU"
             },
             {
               "type": "CIndexCacheItem",
-              "nAddresses": 4294967295,
-              "nAppearances": 4294967295,
-              "firstAppearance": 3012969,
-              "latestAppearance": 3039485,
-              "firstTs": 1484659813,
-              "lastestTs": 1485038618,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003012969-003039485.bloom",
-              "sizeInBytes": 131080,
-              "hash": "QmdM...JYwW"
+              "nAddresses": 40129,
+              "nAppearances": 500008,
+              "firstAppearance": 3025311,
+              "latestAppearance": 3051651,
+              "firstTs": 1484835515,
+              "lastestTs": 1485212476,
+              "filename": "/--index-path--/003025311-003051651.bin",
+              "indexSizeBytes": 5123720,
+              "index_hash": "QmQP...8MbE",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": "QmXC...so5H"
             },
             {
               "type": "CIndexCacheItem",
-              "nAddresses": 4294967295,
-              "nAppearances": 4294967295,
-              "firstAppearance": 3039486,
-              "latestAppearance": 3064476,
-              "firstTs": 1485038623,
-              "lastestTs": 1485396031,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003039486-003064476.bloom",
-              "sizeInBytes": 131080,
-              "hash": "QmNR...npTg"
+              "nAddresses": 39337,
+              "nAppearances": 500024,
+              "firstAppearance": 3051652,
+              "latestAppearance": 3076199,
+              "firstTs": 1485212520,
+              "lastestTs": 1485563875,
+              "filename": "/--index-path--/003051652-003076199.bin",
+              "indexSizeBytes": 5101672,
+              "index_hash": "QmWH...kXwJ",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": "QmSA...raoy"
             },
             {
               "type": "CIndexCacheItem",
-              "nAddresses": 4294967295,
-              "nAppearances": 4294967295,
-              "firstAppearance": 3064477,
-              "latestAppearance": 3090505,
-              "firstTs": 1485396040,
-              "lastestTs": 1485768828,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003064477-003090505.bloom",
-              "sizeInBytes": 131080,
-              "hash": "QmfY...Q1zT"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 4294967295,
-              "nAppearances": 4294967295,
-              "firstAppearance": 3090506,
-              "latestAppearance": 3117476,
-              "firstTs": 1485768838,
-              "lastestTs": 1486156334,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/blooms/003090506-003117476.bloom",
-              "sizeInBytes": 131080,
-              "hash": "QmQE...GhiQ"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 41351,
-              "nAppearances": 500017,
-              "firstAppearance": 2986116,
-              "latestAppearance": 3012968,
-              "firstTs": 1484277812,
-              "lastestTs": 1484659811,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/002986116-003012968.bin",
-              "sizeInBytes": 5158008,
-              "hash": "QmPE...P2RP"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 41408,
-              "nAppearances": 500002,
-              "firstAppearance": 3012969,
-              "latestAppearance": 3039485,
-              "firstTs": 1484659813,
-              "lastestTs": 1485038618,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003012969-003039485.bin",
-              "sizeInBytes": 5159484,
-              "hash": "QmaL...ovMo"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 38949,
+              "nAddresses": 39529,
               "nAppearances": 500006,
-              "firstAppearance": 3039486,
-              "latestAppearance": 3064476,
-              "firstTs": 1485038623,
-              "lastestTs": 1485396031,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003039486-003064476.bin",
-              "sizeInBytes": 5090664,
-              "hash": "QmTY...KUeh"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 38454,
-              "nAppearances": 500000,
-              "firstAppearance": 3064477,
-              "latestAppearance": 3090505,
-              "firstTs": 1485396040,
-              "lastestTs": 1485768828,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003064477-003090505.bin",
-              "sizeInBytes": 5076756,
-              "hash": "QmeX...kcE1"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 40275,
-              "nAppearances": 500000,
-              "firstAppearance": 3090506,
-              "latestAppearance": 3117476,
-              "firstTs": 1485768838,
-              "lastestTs": 1486156334,
-              "path": "/Users/jrush/.quickBlocks/cache/addr_index/finalized/003090506-003117476.bin",
-              "sizeInBytes": 5127744,
-              "hash": "QmUE...Z9Mc"
+              "firstAppearance": 3076200,
+              "latestAppearance": 3103319,
+              "firstTs": 1485563890,
+              "lastestTs": 1485953000,
+              "filename": "/--index-path--/003076200-003103319.bin",
+              "indexSizeBytes": 5106904,
+              "index_hash": "QmPK...KuSU",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": "QmQX...M9eV"
             }
           ],
           "type": "CIndexCache",
-          "path": "IndexPath",
+          "path": "indexPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "addrs": [],
           "items": [
             {
               "type": "CMonitorCacheItem",
+              "deleted": false,
               "curBalance": 10000,
               "enabled": true,
+              "group": "",
+              "subgroup": "",
+              "name": "",
               "address": "---address---",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
               "nRecords": 18446744073709552000,
-              "sizeInBytes": 18446744073709552000
+              "sizeInBytes": 18446744073709552000,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CMonitorCache",
-          "path": "CachePath",
+          "path": "monitorsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "type": "CNameCache",
-          "path": "CachePath",
+          "path": "namesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "addrs": [],
           "items": [],
           "type": "CSlurpCache",
-          "path": "SlurpPath",
+          "path": "slurpsPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         },
         {
           "items": [
             {
               "type": "CPriceCacheItem",
               "pair": "---pair---",
+              "group": "",
+              "subgroup": "",
+              "name": "",
+              "address": "0x0",
+              "symbol": "",
+              "description": "",
+              "source": "",
+              "logo": "",
+              "firstAppearance": "",
+              "latestAppearance": "",
               "nRecords": 36910963,
-              "sizeInBytes": 36910963
+              "sizeInBytes": 36910963,
+              "group_sort": "",
+              "raw_group": "",
+              "subgroup_sort": "",
+              "raw_subgroup": ""
             }
           ],
           "type": "CPriceCache",
-          "path": "PricePath",
+          "path": "pricesPath",
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "valid_counts": true
+          "is_valid": true
         }
-      ]
+      ],
+      "date": "--date--"
     }
   ],
   "meta": {

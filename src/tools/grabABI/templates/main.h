@@ -15,7 +15,7 @@
 // EXISTING_CODE
 
 //-----------------------------------------------------------------------
-//#define BUILD_SQL
+// #define BUILD_SQL
 #include "etherlib.h"
 #include "acctlib.h"
 #include "parselib.h"

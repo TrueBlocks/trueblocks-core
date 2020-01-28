@@ -1,5 +1,19 @@
 {
   "type": "CCacheEntry",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "text"
+    },
+    {
+      "name": "cached",
+      "type": "bool"
+    },
+    {
+      "name": "path",
+      "type": "text"
+    }
+  ],
   "data": [
     {
       "blockNumber": "1001001",

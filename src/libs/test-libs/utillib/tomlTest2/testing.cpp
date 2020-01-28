@@ -13,8 +13,10 @@
 #include "etherlib.h"
 #include "options.h"
 
-//--------------------------------------------------------------
-int main(int argc, const char *argv[]) {
+// namespace qblocks { extern string_q collapseArrays(const string_q& inStr); }  // namespace qblocks
+// extern const char* STR_TEST_TOML;
+//--------------------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -30,5 +32,33 @@ int main(int argc, const char *argv[]) {
         cout << options.filename << endl;
         cout << toml;
     }
+
+    //    cout << string_q(120,'-') << endl;
+    //    cout << "Prior to collapsing arrays" << endl;
+    //    cout << string_q(120,'-') << endl;
+    //    cout << STR_TEST_TOML << endl;
+    //    cout << string_q(120,'-') << endl;
+    //    cout << "After collapsing arrays" << endl;
+    //    cout << collapseArrays(STR_TEST_TOML) << endl;
+    //    cout << string_q(120,'-') << endl;
+
     return 0;
 }
+
+////--------------------------------------------------------------------------------------
+// const char* STR_TEST_TOML =
+// "[settings]\n"
+// "junk = 1\n"
+// "[[folders]]\n"
+// "list = [\n"
+// "        { \"folder\": \"/Users/jrush/Development/trueblocks-core/src\" },\n"
+// "        ]\n"
+// "[[changes]]\n"
+// "list = [\n"
+// "        {\n"
+// "        \"from\": \"\n    // Return field values\n\",\n"
+// "        \"to\": \"\n// EXISTING_CODE\n// EXISTING_CODE\n    // Return field values\n\",\n"
+// "        \"includes\": [ \".cpp\" ],\n"
+// "        \"enabled\": true\n"
+// "        }\n"
+// "        ]\n";

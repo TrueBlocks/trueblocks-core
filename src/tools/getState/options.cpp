@@ -19,13 +19,15 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),
-    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
-    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),
+    // clang-format off
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) from which to retrieve balances"),  // NOLINT
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
+    COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),  // NOLINT
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -42,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -51,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--parts:")) {
             string_q parts_tmp;
             if (!confirmEnum("parts", parts_tmp, arg))
-              return false;
+                return false;
             parts.push_back(parts_tmp);
 
         } else if (arg == "-c" || arg == "--changes") {
@@ -82,15 +84,24 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     for (auto part : parts) {
-        if (part == "none") modeBits = ST_NONE;
-        if (part == "balance") modeBits = ethstate_t(modeBits|ST_BALANCE);
-        if (part == "nonce") modeBits = ethstate_t(modeBits|ST_NONCE);
-        if (part == "code") modeBits = ethstate_t(modeBits|ST_CODE);
-        if (part == "storage") modeBits = ethstate_t(modeBits|ST_STORAGE);
-        if (part == "deployed") modeBits = ethstate_t(modeBits|ST_DEPLOYED);
-        if (part == "accttype") modeBits = ethstate_t(modeBits|ST_ACCTTYPE);
-        if (part == "some") modeBits = ethstate_t(modeBits|ST_SOME);
-        if (part == "all") modeBits = ethstate_t(modeBits|ST_ALL);
+        if (part == "none")
+            modeBits = ST_NONE;
+        if (part == "balance")
+            modeBits = ethstate_t(modeBits | ST_BALANCE);
+        if (part == "nonce")
+            modeBits = ethstate_t(modeBits | ST_NONCE);
+        if (part == "code")
+            modeBits = ethstate_t(modeBits | ST_CODE);
+        if (part == "storage")
+            modeBits = ethstate_t(modeBits | ST_STORAGE);
+        if (part == "deployed")
+            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+        if (part == "accttype")
+            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+        if (part == "some")
+            modeBits = ethstate_t(modeBits | ST_SOME);
+        if (part == "all")
+            modeBits = ethstate_t(modeBits | ST_ALL);
     }
 
     // Data wrangling
@@ -104,31 +115,60 @@ bool COptions::parseArguments(string_q& command) {
 
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(modeBits & ST_BALANCE))  { replace(format, "\t[{BALANCE}]",  ""); } else { UNHIDE_FIELD(CEthState, "balance"); UNHIDE_FIELD(CEthState, "ether"); }
-    if (!(modeBits & ST_NONCE))    { replace(format, "\t[{NONCE}]",    ""); } else { UNHIDE_FIELD(CEthState, "nonce");    }
-    if (!(modeBits & ST_CODE))     { replace(format, "\t[{CODE}]",     ""); } else { UNHIDE_FIELD(CEthState, "code");     }
-    if (!(modeBits & ST_STORAGE))  { replace(format, "\t[{STORAGE}]",  ""); } else { UNHIDE_FIELD(CEthState, "storage");  }
-    if (!(modeBits & ST_DEPLOYED)) { replace(format, "\t[{DEPLOYED}]", ""); } else { UNHIDE_FIELD(CEthState, "deployed"); }
-    if (!(modeBits & ST_ACCTTYPE)) { replace(format, "\t[{ACCTTYPE}]", ""); } else { UNHIDE_FIELD(CEthState, "accttype"); }
+    if (!(modeBits & ST_BALANCE)) {
+        replace(format, "\t[{BALANCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "balance");
+        UNHIDE_FIELD(CEthState, "ether");
+    }
+    if (!(modeBits & ST_NONCE)) {
+        replace(format, "\t[{NONCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "nonce");
+    }
+    if (!(modeBits & ST_CODE)) {
+        replace(format, "\t[{CODE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "code");
+    }
+    if (!(modeBits & ST_STORAGE)) {
+        replace(format, "\t[{STORAGE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "storage");
+    }
+    if (!(modeBits & ST_DEPLOYED)) {
+        replace(format, "\t[{DEPLOYED}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "deployed");
+    }
+    if (!(modeBits & ST_ACCTTYPE)) {
+        replace(format, "\t[{ACCTTYPE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "accttype");
+    }
 
     // Display formatting
     configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
-    if (!requestsHistory()) // if the user did not request historical state, we can return safely
+    if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;
 
     if ((isTestMode() && no_history) || !nodeHasBalances(false)) {
-        // The user requested history, so try to get a different server. Fail silently. The user will be warned in the response
+        // The user requested history, so try to get a different server. Fail silently. The user will be warned in the
+        // response
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
         if ((isTestMode() && no_history) || (rpcProvider == balanceProvider || balanceProvider.empty()))
-            return usage("Request asks for historical state, but the RPC server does not have historical state. Quitting...");
+            return usage(
+                "Request asks for historical state, but the RPC server does not have historical state. Quitting...");
 
         getCurlContext()->baseURL = balanceProvider;
-        getCurlContext()->releaseCurl(); // We release the curl context so we can set it to the new context.
+        getCurlContext()->releaseCurl();  // We release the curl context so we can set it to the new context.
         getCurlContext()->getCurl();
         if (!nodeHasBalances(false))
-            return usage("Request asks for historical state and has 'balanceServer' set, but that server does not have history state. Quitting...");
+            return usage(
+                "Request asks for historical state and has 'balanceServer' set, but that server does not have history "
+                "state. Quitting...");
     }
 
     return true;
@@ -151,7 +191,7 @@ void COptions::Init(void) {
     current = "";
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLastBlock_client();
+    newestBlock = oldestBlock = getLatestBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -160,13 +200,15 @@ COptions::COptions(void) : CHistoryOptions() {
     Init();
     first = true;
     // BEG_CODE_NOTES
+    // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");
+    notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
     notes.push_back("You may specify multiple `modes` on a single line.");
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

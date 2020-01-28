@@ -25,17 +25,20 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CStatus : public CBaseNode {
-public:
+  public:
     string_q client_version;
     string_q trueblocks_version;
     string_q rpc_provider;
     string_q api_provider;
     string_q balance_provider;
+    string_q cache_path;
+    string_q index_path;
     string_q host;
     bool is_scraping;
+    timestamp_t ts;
     CCachePtrArray caches;
 
-public:
+  public:
     CStatus(void);
     CStatus(const CStatus& st);
     virtual ~CStatus(void);
@@ -43,16 +46,18 @@ public:
 
     DECLARE_NODE(CStatus);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
     bool operator==(const CStatus& item) const;
-    bool operator!=(const CStatus& item) const { return !operator==(item); }
+    bool operator!=(const CStatus& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CStatus& v1, const CStatus& v2);
     friend ostream& operator<<(ostream& os, const CStatus& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CStatus& st);
@@ -101,8 +106,11 @@ inline void CStatus::initialize(void) {
     rpc_provider = "";
     api_provider = "";
     balance_provider = "";
+    cache_path = "";
+    index_path = "";
     host = "";
-    is_scraping = 0;
+    is_scraping = false;
+    ts = date_2_Ts(Now());
     caches.clear();
 
     // EXISTING_CODE
@@ -119,8 +127,11 @@ inline void CStatus::duplicate(const CStatus& st) {
     rpc_provider = st.rpc_provider;
     api_provider = st.api_provider;
     balance_provider = st.balance_provider;
+    cache_path = st.cache_path;
+    index_path = st.index_path;
     host = st.host;
     is_scraping = st.is_scraping;
+    ts = st.ts;
     caches = st.caches;
 
     // EXISTING_CODE
@@ -157,14 +168,9 @@ extern CArchive& operator>>(CArchive& archive, CStatusArray& array);
 extern CArchive& operator<<(CArchive& archive, const CStatusArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CStatus& sta);
-extern CArchive& operator>>(CArchive& archive, CStatus& sta);
-
-//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_STATUS;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

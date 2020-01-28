@@ -12,15 +12,20 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
-    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "one or more types of data to retrieve"),
-    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
+    // clang-format off
+    COption("modes", "", "list<enum[index|monitors|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
+    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for cache mode only, which type(s) of cache to report"),  // NOLINT
+    COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
+    COption("heatmap", "a", "enum[blocks|transactions|traces]", OPT_HIDDEN | OPT_FLAG, "for cache mode only, return a heatmap of the given (single) cache"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
-    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
-    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
+    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),  // NOLINT
+    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
+    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
+    // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -34,12 +39,13 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
+    CStringArray types;
     bool report = false;
     bool get_config = false;
     bool set_config = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLastBlock_client();
+    blknum_t latest = getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
@@ -49,6 +55,20 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-d" || arg == "--details") {
             details = true;
+
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--types:")) {
+            string_q types_tmp;
+            if (!confirmEnum("types", types_tmp, arg))
+                return false;
+            types.push_back(types_tmp);
+
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
+            if (!confirmUint("depth", depth, arg))
+                return false;
+
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--heatmap:")) {
+            if (!confirmEnum("heatmap", heatmap, arg))
+                return false;
 
         } else if (arg == "-l" || arg == "--list") {
             list = true;
@@ -86,6 +106,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    establishFolder(getCachePath("tmp/"));
+
+    if (!heatmap.empty())
+        return true;
+
     for (auto m : modes)
         mode += (m + "|");
 
@@ -105,11 +130,27 @@ bool COptions::parseArguments(string_q& command) {
     if (!isConfig) {
         if (mode.empty() || contains(mode, "some"))
             mode = "index|monitors|names|slurps|prices";
-
-        if (contains(mode, "all"))
-            mode = "index|monitors|names|abis|blocks|transactions|traces|slurps|prices";
-
+        if (contains(mode, "all")) {
+            mode = "index|monitors|names|abis|prices|caches";
+            types.push_back("all");
+        }
         mode = "|" + trim(mode, '|') + "|";
+
+        if (contains(mode, "|caches")) {
+            if (details && depth == NOPOS)
+                depth = 0;
+            if (depth != NOPOS && depth > 3)
+                return usage("--depth parameter must be less than 4. Quitting...");
+            replaceAll(mode, "|caches", "");
+            ASSERT(endsWith(mode, '|'));
+            bool hasAll = false;
+            for (auto t : types) {
+                hasAll |= (t == "all");
+                if (t != "all")
+                    mode += (t + "|");
+            }
+            mode += (hasAll ? "blocks|transactions|traces|slurps|" : "");
+        }
     }
 
     if (!details) {
@@ -117,10 +158,12 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CSlurpCache, "items");
         HIDE_FIELD(CPriceCache, "items");
         HIDE_FIELD(CAbiCache, "items");
+        HIDE_FIELD(CChainCache, "items");
     } else {
         loadHashes(indexHashes, "finalized");
         loadHashes(bloomHashes, "blooms");
     }
+    HIDE_FIELD(CChainCache, "max_depth");
 
     if (report) {
         if (exportFmt == TXT1 || exportFmt == CSV1) {
@@ -139,6 +182,8 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     details = false;
+    depth = NOPOS;
+    heatmap = "";
     list = false;
     start = NOPOS;
     end = NOPOS;
@@ -147,8 +192,10 @@ void COptions::Init(void) {
     isConfig = false;
     mode = "";
 
-    char hostname[HOST_NAME_MAX];  gethostname(hostname, HOST_NAME_MAX);
-    char username[LOGIN_NAME_MAX]; getlogin_r(username, LOGIN_NAME_MAX);
+    char hostname[HOST_NAME_MAX];
+    gethostname(hostname, HOST_NAME_MAX);
+    char username[LOGIN_NAME_MAX];
+    getlogin_r(username, LOGIN_NAME_MAX);
     if (!getEnvStr("DOCKER_MODE").empty()) {
         memset(username, 0, LOGIN_NAME_MAX);
         strncpy(username, "nobody", 6);
@@ -157,11 +204,14 @@ void COptions::Init(void) {
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
         status.rpc_provider = status.api_provider = status.balance_provider = "--providers--";
+        status.cache_path = status.index_path = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+        status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpc_provider);
         status.api_provider = getGlobalConfig()->getConfigStr("settings", "apiProvider", "http://localhost:8080");
-        status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.api_provider);
+        status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
+        status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }
     if (!isNodeRunning()) {
         status.client_version = "Not running";
@@ -196,14 +246,14 @@ COptions::COptions(void) {
     CConfigGroup::registerClass();
     CConfigItem::registerClass();
 
-    HIDE_FIELD(CAccountWatch,  "statement");
-    HIDE_FIELD(CAccountWatch,  "stateHistory");
-    HIDE_FIELD(CAccountWatch,  "curBalance");
-    HIDE_FIELD(CAccountWatch,  "abi_spec");
+    HIDE_FIELD(CAccountWatch, "statement");
+    HIDE_FIELD(CAccountWatch, "stateHistory");
+    HIDE_FIELD(CAccountWatch, "curBalance");
+    HIDE_FIELD(CAccountWatch, "abi_spec");
 
-    HIDE_FIELD(CAccountName,   "is_contract");
-    HIDE_FIELD(CAccountName,   "is_private");
-    HIDE_FIELD(CAccountName,   "is_shared");
+    HIDE_FIELD(CAccountName, "is_contract");
+    HIDE_FIELD(CAccountName, "is_private");
+    HIDE_FIELD(CAccountName, "is_shared");
     UNHIDE_FIELD(CAccountName, "nRecords");
     UNHIDE_FIELD(CAccountName, "nAppearances");
     UNHIDE_FIELD(CAccountName, "sizeInBytes");
@@ -213,6 +263,8 @@ COptions::COptions(void) {
     minArgs = 0;
 
     // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG

@@ -1,3 +1,0 @@
-#!/bin/sh
-value=`NO_COLOR=true whereBlock "$@" -v | grep "found at cache" | cut -f2 -d: | xargs`
-rm -i $value

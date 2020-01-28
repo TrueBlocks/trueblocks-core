@@ -1,5 +1,47 @@
 {
   "type": "CTrace",
+  "fieldList": [
+    {
+      "name": "blockHash",
+      "type": "hash"
+    },
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "subtraces",
+      "type": "unumber"
+    },
+    {
+      "name": "traceAddress",
+      "type": "text"
+    },
+    {
+      "name": "transactionHash",
+      "type": "hash"
+    },
+    {
+      "name": "transactionIndex",
+      "type": "blocknum"
+    },
+    {
+      "name": "type",
+      "type": "text"
+    },
+    {
+      "name": "error",
+      "type": "text"
+    },
+    {
+      "name": "action",
+      "type": "object"
+    },
+    {
+      "name": "result",
+      "type": "object"
+    }
+  ],
   "data": [
     {
       "blockHash": "0x96810a6076e621e311a232468bfd3dcfac08f4803b255af0f00300f47981c10f",

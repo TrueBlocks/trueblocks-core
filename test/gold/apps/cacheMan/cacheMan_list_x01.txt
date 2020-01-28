@@ -1,8 +1,5 @@
 cacheMan argc: 3 [1:-l] [2:0x1111122222111112222211111222221111122222] 
 cacheMan -l 0x1111122222111112222211111222221111122222 
-TIME ~ CLOCK - <INFO>  : Listing cache: 0x1111122222111112222211111222221111122222.acct.bin
-[{ "bn": 0,"tx_id": 8858}
-,{ "bn": 1786212,"tx_id": 1}
-,{ "bn": 1786387,"tx_id": 0}
-,{ "bn": 1864930,"tx_id": 2}
+TIME ~ CLOCK - <INFO>  : Listing cache: ${CACHE}/monitors/0x1111122222111112222211111222221111122222.acct.bin
+[{ "bn": 4957876,"tx_id": 8}
 ]

@@ -7,22 +7,26 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
-
     ENTER8("handle_" + mode);
     nodeRequired();
 
     if (contains(tool_flags, "help")) {
         ostringstream os;
         os << "acctExport --help";
-        NOTE_CALL(os.str());
-        if (system(os.str().c_str())) { }  // Don't remove. Silences compiler warnings
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
         EXIT_NOMSG8(true);
     }
 
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 
-    if (!freshen_internal(FM_PRODUCTION, addrs, "", freshen_flags))
+    CFreshenArray fa;
+    for (auto a : addrs)
+        fa.push_back(CFreshen(a));
+    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
         EXIT_FAIL("'chifra export' freshen_internal returned false");
 
     size_t cnt = 0;
@@ -33,15 +37,16 @@ bool COptions::handle_export(void) {
         explode(cmds, os.str(), ';');
         bool quit = false;
         for (size_t i = 0; i < cmds.size() && !quit; i++) {
-            NOTE_CALL(cmds[i]);
-            int ret = system(cmds[i].c_str());
-            quit = (ret != 0);
+            LOG_CALL(cmds[i]);
+            // clang-format off
+            quit = (system(cmds[i].c_str()) != 0);
+            // clang-format on
             if (verbose)
                 cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
         }
 
         if (++cnt < addrs.size())
-            usleep(500000); // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
     EXIT_NOMSG8(true);
 }

@@ -25,7 +25,7 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------
 class CFunction : public CBaseNode {
-public:
+  public:
     string_q name;
     string_q type;
     bool anonymous;
@@ -36,8 +36,9 @@ public:
     string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
+    address_t address;
 
-public:
+  public:
     CFunction(void);
     CFunction(const CFunction& fu);
     virtual ~CFunction(void);
@@ -45,14 +46,15 @@ public:
 
     DECLARE_NODE(CFunction);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     bool checkTypes(void) const;
     bool showOutput;
     bool isBuiltIn;
     string_q origName;
-    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) { }
+    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) {
+    }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
     friend class CTransaction;
@@ -65,11 +67,13 @@ public:
     string_q compressed(void) const;
     // EXISTING_CODE
     bool operator==(const CFunction& item) const;
-    bool operator!=(const CFunction& item) const { return !operator==(item); }
+    bool operator!=(const CFunction& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CFunction& v1, const CFunction& v2);
     friend ostream& operator<<(ostream& os, const CFunction& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CFunction& fu);
@@ -115,14 +119,15 @@ inline void CFunction::initialize(void) {
 
     name = "";
     type = "";
-    anonymous = 0;
-    constant = 0;
-    payable = 0;
+    anonymous = false;
+    constant = false;
+    payable = false;
     signature = "";
     encoding = "";
     message = "";
     inputs.clear();
     outputs.clear();
+    address = "";
 
     // EXISTING_CODE
     showOutput = true;
@@ -146,6 +151,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
     message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
+    address = fu.address;
 
     // EXISTING_CODE
     showOutput = fu.showOutput;
@@ -194,4 +200,3 @@ extern const char* STR_DISPLAY_FUNCTION;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
-

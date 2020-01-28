@@ -17,6 +17,8 @@
  */
 #include "etherlib.h"
 #include "commandoption.h"
+#include "classdefinition.h"
+#include "page.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -28,19 +30,24 @@
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
-class CClassDefinition {
-public:
-    string_q className;
-    string_q inputPath;
-    string_q outputPath(const string_q& t) const {
-        return substitute(substitute(inputPath, "classDefinitions/", ""), ".txt", t);
+class CCounter {
+  public:
+    size_t fileCount;
+    size_t nVisited;
+    size_t nProcessed;
+    bool is_counting;
+    CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
     }
 };
 
-typedef enum { NONE = 0, RUN = (1<<1), EDIT = (1<<2), LIST = (1<<3) } runmode_t;
+typedef enum {
+    NONE = 0,
+    RUN = (1 << 1),
+    EDIT = (1 << 2),
+} runmode_t;
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     // BEG_CODE_DECLARE
     bool all;
     string_q nspace;
@@ -49,9 +56,12 @@ public:
     // END_CODE_DECLARE
 
     runmode_t mode;
-    vector<CClassDefinition> classDefs;
+    CClassDefinitionArray classDefs;
     CToml classFile;
-    ostringstream warnings;
+    ostringstream warnings, pagehelp;
+    CCounter counter;
+    timestamp_t lastFormat;
+    timestamp_t lastLint;
 
     COptions(void);
     ~COptions(void);
@@ -60,27 +70,52 @@ public:
     void Init(void);
 
     bool handle_options(void);
-    bool handle_json_export(const string_q& cl);
-    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& ns);
+    bool handle_lint(void);
+    bool handle_format(void);
+    bool handle_json_export(void);
+    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
+    bool handle_generate_frontend(CToml& toml, const CClassDefinition& classDef);
+    bool handle_generate_frontend_app(void);
+    bool handle_one_frontend_file(const CPage& def, const string_q& folder, const string_q& source);
 
     bool check_option(const CCommandOption& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt="", const string_q& local="", const string_q& init="", const string_q& notes="", const string_q& errors="");
+    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
+                   const string_q& init = "", const string_q& notes = "", const string_q& errors = "");
 };
 
 //-------------------------------------------------------------------
-extern bool listClasses(const string_q& path, void *data);
+extern bool listClasses(const string_q& path, void* data);
+extern bool lintFiles(const string_q& path, void* data);
+extern bool formatFiles(const string_q& path, void* data);
+extern void updateTemplates(void);
+extern string_q getCaseGetCode(const CParameterArray& fields);
+extern string_q getCaseSetCode(const CParameterArray& fields);
+extern string_q convertTypes(const string_q& inStr);
+extern string_q splitIfTooWide(const string_q& in);
+
+//------------------------------------------------------------------------------------------------------------
+inline bool is_reserved(const string_q& str) {
+    CStringArray reserved = {"new", "ret", "do", "or"};
+    for (auto r : reserved)
+        if (startsWith(str, r))
+            return true;
+    return false;
+}
+
+//------------------------------------------------------------------------------------------------------------
+inline string_q short2(const string_q& str) {
+    return extract(str, 0, (is_reserved(str) ? 4 : 2));
+}
+
+//------------------------------------------------------------------------------------------------------------
+inline string_q short3(const string_q& str) {
+    return extract(str, 0, (is_reserved(str) ? 4 : 3));
+}
 
 //------------------------------------------------------------------------------------------------------------
 extern const char* STR_COMMENT_LINE;
-extern const char* STR_CLASS_FILE;
-extern const char* STR_CASE_CODE_ARRAY;
-extern const char* STR_CASE_SET_CODE_ARRAY;
-extern const char* STR_CASE_CODE_STRINGARRAY;
-extern const char* STR_OPERATOR_H;
-extern const char* STR_OPERATOR_C;
-extern const char* STR_SUBCLASS;
-extern const char* PTR_SET_CASE;
-extern const char* PTR_GET_CASE;
+extern const char* STR_OPERATOR_DECL;
+extern const char* STR_OPERATOR_IMPL;
 extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
 extern const char* STR_GETOBJ_CODE;
@@ -99,3 +134,4 @@ extern const char* STR_READFMT;
 extern const char* STR_PTRWRITEFMT;
 extern const char* STR_WRITEFMT;
 extern const char* STR_UNKOWNTYPE;
+extern const char* STR_CHILD_OBJS;

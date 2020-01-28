@@ -8,6 +8,5 @@ backfields4 = version_020|address contractAddress|gas gasUsed|CLogEntryArray log
 includes = abilib.h|logentry.h
 cpp_includes = etherlib.h
 scope = extern
-serialize = true
+serializable = true
 display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
-

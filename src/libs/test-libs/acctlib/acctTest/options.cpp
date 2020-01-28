@@ -18,13 +18,14 @@ static const COption params[] = {
     COption("start", "s", "<uint>", OPT_FLAG, "the first block to process"),
     COption("end", "e", "<uint>", OPT_FLAG, "the last block (less one) to process"),
     COption("nblocks", "n", "<uint>", OPT_FLAG, "the number of blocks to visit (ignored for -a)"),
-    COption("", "", "", OPT_DESCRIPTION, "Build an account tree listing first transaction, latest transaction, and node balance for each account.\n"),
+    COption(
+        "", "", "", OPT_DESCRIPTION,
+        "Build an account tree listing first transaction, latest transaction, and node balance for each account.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -50,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
             arg = substitute(substitute(orig, "-e:", ""), "--end:", "");
             if (arg == "latest") {
-                endBlock = getLastBlock_client();
+                endBlock = getLatestBlock_client();
             } else {
                 endBlock = str_2_Uint(arg);
                 if (!isUnsigned(arg))

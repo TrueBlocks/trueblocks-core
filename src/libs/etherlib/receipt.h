@@ -27,7 +27,7 @@ class CTransaction;
 
 //--------------------------------------------------------------------------
 class CReceipt : public CBaseNode {
-public:
+  public:
     address_t contractAddress;
     wei_t cumulativeGasUsed;
     gas_t gasUsed;
@@ -36,7 +36,7 @@ public:
     string_q root;
     uint32_t status;
 
-public:
+  public:
     CReceipt(void);
     CReceipt(const CReceipt& re);
     virtual ~CReceipt(void);
@@ -44,19 +44,22 @@ public:
 
     DECLARE_NODE(CReceipt);
 
-    const CBaseNode *getObjectAt(const string_q& fieldName, size_t index) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CReceipt(const CTransaction *pT) : pTrans(pT) {}
-    const CTransaction *pTrans;
+    explicit CReceipt(const CTransaction* pT) : pTrans(pT) {
+    }
+    const CTransaction* pTrans;
     friend class CTransaction;
     // EXISTING_CODE
     bool operator==(const CReceipt& item) const;
-    bool operator!=(const CReceipt& item) const { return !operator==(item); }
+    bool operator!=(const CReceipt& item) const {
+        return !operator==(item);
+    }
     friend bool operator<(const CReceipt& v1, const CReceipt& v2);
     friend ostream& operator<<(ostream& os, const CReceipt& item);
 
-protected:
+  protected:
     void clear(void);
     void initialize(void);
     void duplicate(const CReceipt& re);
@@ -170,7 +173,6 @@ extern const char* STR_DISPLAY_RECEIPT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextTransactionChunk(const string_q& fieldIn, const void *data);
+extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks
-

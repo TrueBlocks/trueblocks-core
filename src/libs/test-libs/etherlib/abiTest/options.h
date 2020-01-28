@@ -15,7 +15,7 @@
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     string_q mode;
     uint64_t sub;
 
@@ -27,5 +27,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitNonEmptyBlock(CBlock& node, void *data);
-extern bool visitEmptyBlock(CBlock& node, void *data);
+extern bool visitNonEmptyBlock(CBlock& node, void* data);
+extern bool visitEmptyBlock(CBlock& node, void* data);
