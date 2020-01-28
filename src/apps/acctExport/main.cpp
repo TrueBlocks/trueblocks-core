@@ -30,8 +30,11 @@ int main(int argc, const char* argv[]) {
                                       ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
                                       : (options.balances
                                              ? GETRUNTIME_CLASS(CEthState)->m_ClassName
-                                             : (options.count_only ? "CCounts"
-                                                                   : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
+                                             : (options.count_only
+                                                    ? "CCounts"
+                                                    : (options.hashes_only
+                                                           ? "CIPFSHash"
+                                                           : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))))));
 
         if (once)
             cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], options.className);
@@ -39,14 +42,17 @@ int main(int argc, const char* argv[]) {
         if (options.count_only) {
             options.exportCounts();
 
+        } else if (options.hashes_only) {
+            options.loadAllAppearances();  // allow the balance query to continue even with no appearances
+            options.exportIPFSHashes();
+
         } else if (options.balances) {
             options.loadAllAppearances();  // allow the balance query to continue even with no appearances
             options.exportBalances();
 
         } else {
-            if (!options.loadAllAppearances())
-                return 0;
-            options.exportData();
+            if (options.loadAllAppearances())
+                options.exportData();
         }
 
         once = false;

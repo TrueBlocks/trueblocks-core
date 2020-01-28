@@ -264,7 +264,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
         if (isTestMode()) {
-            if (ptr->addrs.size() < 3)
+            if (ptr->addrs.size() < 2)
                 ptr->addrs.push_back("--address--");
         } else {
             ptr->addrs.push_back(substitute(

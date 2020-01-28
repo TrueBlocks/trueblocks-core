@@ -1,11 +1,9 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, list, apps/acctScrape, CLEANUP,         n, CLEANUP
+
 on, cmd,  fast, null, apps/acctScrape, README,          n, @th
 on, cmd,  fast, null, apps/acctScrape, help,            n, @h
 on, cmd,  fast, null, apps/acctScrape, help_long,       n, help
-
-on, cmd,  fast, rm,   apps/acctScrape, chifra_rm,       n, modes = rm & yes & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & verbose = 10, chifra
-on, cmd,  fast, list, apps/acctScrape, preload_list1,   n, addrs = 0x1234567890123456789012345678901234567890 & end = 2000000 & start = 100000 & verbose = 10
-on, cmd,  fast, list, apps/acctScrape, preload_list2,   n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & end = 2000000 & verbose = 10
 
 on, both, fast, list, apps/acctScrape, no_params,       n,
 on, both, fast, list, apps/acctScrape, fail_list1,      n, list
@@ -13,9 +11,11 @@ on, both, fast, list, apps/acctScrape, fail_list2,      n, addrs = 0x12345678901
 on, both, fast, list, apps/acctScrape, list_test,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
 on, both, fast, list, apps/acctScrape, list_chifra,     y, modes = list & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000, chifra
 
-on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header & verbose = 10
-on, both, fast, list, apps/acctScrape, list_stage,      y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & verbose = 10
-on, both, fast, list, apps/acctScrape, list_unripe,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & verbose = 10
+on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header
+on, both, fast, list, apps/acctScrape, list_stage,      y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+on, both, fast, list, apps/acctScrape, list_unripe,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+
+on, cmd,  slow, list, apps/acctScrape, list_speed_test, y, addrs = 0x1234567890123456789012345678901234567890 & end = 7000000
 
 # 10020, apps, list, acctScrape, addrs,     ,  ,      TRUE,  FALSE, TRUE,  TRUE,  ,      positional, list<addr>, one or more Ethereum addresses
 # 10040, apps, list, acctScrape, finalized, f, true,  FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of finalized folder ([{DEF}] by default)

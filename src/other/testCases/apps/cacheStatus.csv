@@ -1,4 +1,6 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, status, apps/cacheStatus, CLEANUP,         n, CLEANUP
+
 on, cmd,  fast, status, apps/cacheStatus, README,          n, @th
 on, cmd,  fast, status, apps/cacheStatus, help,            n, @h
 on, cmd,  fast, status, apps/cacheStatus, help_long,       n, help

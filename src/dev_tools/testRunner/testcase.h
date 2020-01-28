@@ -32,7 +32,7 @@ class CTestCase : public CBaseNode {
     string_q speed;
     string_q route;
     string_q tool;
-    string_q filename;
+    string_q name;
     string_q post;
     string_q options;
     string_q extra;
@@ -111,7 +111,7 @@ inline void CTestCase::initialize(void) {
     speed = "";
     route = "";
     tool = "";
-    filename = "";
+    name = "";
     post = "";
     options = "";
     extra = "";
@@ -136,7 +136,7 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     speed = te.speed;
     route = te.route;
     tool = te.tool;
-    filename = te.filename;
+    name = te.name;
     post = te.post;
     options = te.options;
     extra = te.extra;
@@ -161,8 +161,8 @@ inline CTestCase& CTestCase::operator=(const CTestCase& te) {
 inline bool CTestCase::operator==(const CTestCase& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (route % item.route && tool % item.tool && name % item.name);
 }
 
 //-------------------------------------------------------------------------

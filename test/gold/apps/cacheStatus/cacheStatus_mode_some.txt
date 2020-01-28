@@ -23,7 +23,6 @@ cacheStatus some
     {
       "addrs": [
         "--address--",
-        "--address--",
         "--address--"
       ],
       "type": "CMonitorCache",

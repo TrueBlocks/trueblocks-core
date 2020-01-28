@@ -12,10 +12,7 @@ TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0x001d14804b399c6ef80e6
 	Reversal skipped at record 4, current 0	2, previous 1501459	2
 	Reversal skipped at record 5, current 202249	0, previous 1501459	2
 	Duplicate removed at record 6, current 1501459	2, previous 1501459	2
-	Reversal skipped at record 7, current 0	2, previous 1501459	2
-	Reversal skipped at record 8, current 202249	0, previous 1501459	2
-	Duplicate removed at record 9, current 1501459	2, previous 1501459	2
-	Re-writing 3 of 9 records to cache: $CACHE/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin (0 truncated)
+	Re-writing 3 of 6 records to cache: $CACHE/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin (0 truncated)
 	The cache was repaired and a backup created.
 acctExport argc: 7 [1:--appearances] [2:--start] [3:100000] [4:--end] [5:2000000] [6:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctExport --appearances --start 100000 --end 2000000 0x001d14804b399c6ef80e64576f657660804fec0b 

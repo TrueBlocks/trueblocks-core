@@ -1,6 +1,6 @@
 cacheMan argc: 3 [1:--fix] [2:0x5555533333555553333355555333335555533333] 
 cacheMan --fix 0x5555533333555553333355555333335555533333 
-TIME ~ CLOCK - <INFO>  : Fixing cache: 0x5555533333555553333355555333335555533333.acct.bin
+TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0x5555533333555553333355555333335555533333.acct.bin
 	Reversal skipped at record 33, current 988725	1, previous 1017545	4
 	Reversal skipped at record 34, current 988728	2, previous 1017545	4
 	Reversal skipped at record 35, current 988732	4, previous 1017545	4
@@ -33,5 +33,5 @@ TIME ~ CLOCK - <INFO>  : Fixing cache: 0x555553333355555333335555533333555553333
 	Reversal skipped at record 62, current 1014512	3, previous 1017545	4
 	Reversal skipped at record 63, current 1016810	6, previous 1017545	4
 	Duplicate removed at record 64, current 1017545	4, previous 1017545	4
-	Re-writing 32 of 64 records to cache: 0x5555533333555553333355555333335555533333.acct.bin (0 truncated)
+	Re-writing 32 of 64 records to cache: $CACHE/monitors/0x5555533333555553333355555333335555533333.acct.bin (0 truncated)
 	The cache was repaired and a backup created.

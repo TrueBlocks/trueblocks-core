@@ -56,7 +56,7 @@ int main(int argc, const char* argv[]) {
             CStringArray lines;
             explode(lines, contents, '\n');
 
-            CTestCaseArray testArray;
+            map<string_q, CTestCase> testMap;
             for (auto line : lines) {
                 bool ignore1 = startsWith(line, "#");
                 bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
@@ -81,8 +81,18 @@ int main(int argc, const char* argv[]) {
 
                 } else {
                     CTestCase test(line);
-                    testArray.push_back(test);
+                    string_q key = test.Format("[{KEY}]");
+                    if (testMap[key] != CTestCase()) {
+                        LOG_ERR("Duplicate test names: ", key, ". Quitting...");
+                        return 1;
+                    }
+                    testMap[key] = test;
                 }
+            }
+
+            CTestCaseArray testArray;
+            for (auto t : testMap) {
+                testArray.push_back(t.second);
             }
 
             if (!options.doTests(testArray, path, testName, API))
@@ -102,8 +112,10 @@ int main(int argc, const char* argv[]) {
         if (options.full_test && options.report)
             appendToAsciiFile(configPath("performance.csv"), perf.str());
         appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-        copyFile(configPath("performance.csv"), testFolder + "performance.csv");
-        copyFile(configPath("performance_slow.csv"), testFolder + "performance_slow.csv");
+        if (folderExists("/Users/jrush/Desktop/files/")) {
+            copyFile(configPath("performance.csv"), "/Users/jrush/Desktop/files/performance.csv");
+            copyFile(configPath("performance_slow.csv"), "/Users/jrush/Desktop/files/performance_slow.csv");
+        }
     }
 
     cerr << total.Format(STR_SCREEN_REPORT) << endl;
@@ -157,9 +169,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + test.options;
             LOG4(theCmd);
 
-            string_q customized = substitute(
-                substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.filename + "/",
-                "/api_tests", "");
+            string_q customized =
+                substitute(substitute(test.workPath, "working", "custom_config") + test.tool + "_" + test.name + "/",
+                           "/api_tests", "");
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", saveAndCopy, NULL);
             if (test.mode == "both" || contains(test.tool, "lib"))
@@ -199,7 +211,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             } else {
                 ostringstream os;
                 os << cRed << "\tFailed: " << cTeal << (endsWith(test.path, "lib") ? test.tool : measure.cmd) << " ";
-                os << test.filename << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
+                os << test.name << ".txt " << cOff << "(" << (test.builtin ? "" : measure.cmd) << " "
                    << trim(test.options) << ")" << cRed;
                 //                if (newText.empty())    os << " working file is empty ";
                 //                if (ret)                os << " system call returned non-zero ";
@@ -218,16 +230,16 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             }
 
             if (!contains(test.origLine, " all,")) {
-                reverse(test.filename);
-                test.filename = substitute(padLeft(test.filename, 30).substr(0, 30), " ", ".");
-                reverse(test.filename);
+                reverse(test.name);
+                test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
+                reverse(test.name);
                 cerr << "   " << timeRep << " - "
                      << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
-                cerr << trim(test.filename) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
+                cerr << trim(test.name) << " " << result << "  " << trim(test.options).substr(0, 90) << endl;
                 if (thisTime > verySlow) {
                     slow << "   " << double_2_Str(thisTime) << " - "
                          << (endsWith(test.path, "lib") ? padRight(test.tool, 16) : measure.cmd) << " ";
-                    slow << trim(test.filename) << " " << trim(test.options).substr(0, 90) << endl;
+                    slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
                 }
             }
 

@@ -200,8 +200,8 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((appearances + receipts + logs + traces + balances) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, traces, or balances. Quitting...");
+    if ((appearances + receipts + logs + traces + balances + hashes_only) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, traces, balances or hashes_only. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
@@ -222,7 +222,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(toml.getConfigStr("fields", "show", ""), true);
 
     // Load as many ABI files as we have
-    if (!appearances && !balances) {
+    if (!appearances && !balances && !hashes_only) {
         LOG4("Loading ABIs");
         abis.loadAbiKnown("all");
         if (all_abis)

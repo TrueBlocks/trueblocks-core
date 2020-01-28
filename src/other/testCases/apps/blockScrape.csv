@@ -1,4 +1,6 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, export, apps/blockScrape, CLEANUP,         n, CLEANUP
+
 on, cmd,  fast, scrape, apps/blockScrape, README,          n, @th
 on, cmd,  fast, scrape, apps/blockScrape, help,            n, @h
 on, cmd,  fast, scrape, apps/blockScrape, help_long,       n, help

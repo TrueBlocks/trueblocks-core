@@ -61,7 +61,6 @@
         {
           "addrs": [
             "--address--",
-            "--address--",
             "--address--"
           ],
           "type": "CMonitorCache",

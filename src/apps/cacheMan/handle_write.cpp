@@ -14,8 +14,12 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
     blknum_t currentLastItem = str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     CArchive txCache(WRITING_ARCHIVE);
-    if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT))
-        return usage("Could not open merge file: " + outputFilename + ". Quitting.");
+    if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT)) {
+        string_q name = outputFilename;
+        if (isTestMode())
+            name = substitute(name, getMonitorPath(""), "$CACHE/");
+        return usage("Could not open merge file: " + name + ". Quitting.");
+    }
 
     // Now that we know we can write to the file, we can make a write array. We do this for two reasons: filtering
     // removals and removing duplicates. It's just easier that way.
@@ -47,7 +51,10 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
         cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records "
              << (filterFunc ? "removed" : "ignored") << ".\n";
-        cerr << "\tWritten to " << cTeal << outputFilename << cOff << "\n";
+        string_q dName = outputFilename;
+        if (isTestMode())
+            dName = substitute(dName, getMonitorPath(""), "$CACHE/");
+        cerr << "\tWritten to " << cTeal << dName << cOff << "\n";
     } else {
         cerr << "\tRecords not written\n";
     }

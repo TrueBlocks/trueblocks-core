@@ -323,7 +323,7 @@ size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
     string_q cmd =
         getHomeFolder() + "source/createDocx \"" + fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
     string_q ret = doCommand(cmd);
-    fprintf(stderr, "ret: %s\n", ret.c_str());
+    cerr << "ret: " << ret << endl;
     return true;
 }
 
@@ -350,7 +350,10 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         lock.WriteLine(contents.c_str());
         lock.Release();
     } else {
-        fprintf(stderr, "%s\n", (string_q("Could not open file: ") + fileName).c_str());
+        string_q dName = fileName;
+        if (isTestMode())
+            dName = "--filename--";
+        cerr << "Could not open file: " << dName << endl;
         return false;
     }
     return true;

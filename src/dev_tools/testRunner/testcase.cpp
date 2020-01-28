@@ -81,9 +81,6 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'f':
-            if (fieldName % "filename") {
-                return filename;
-            }
             if (fieldName % "fileName") {
                 return fileName;
             }
@@ -96,6 +93,11 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
         case 'm':
             if (fieldName % "mode") {
                 return mode;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                return name;
             }
             break;
         case 'o':
@@ -170,10 +172,6 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             }
             break;
         case 'f':
-            if (fieldName % "filename") {
-                filename = fieldValue;
-                return true;
-            }
             if (fieldName % "fileName") {
                 fileName = fieldValue;
                 return true;
@@ -188,6 +186,12 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'm':
             if (fieldName % "mode") {
                 mode = fieldValue;
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
                 return true;
             }
             break;
@@ -271,7 +275,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> speed;
     archive >> route;
     archive >> tool;
-    archive >> filename;
+    archive >> name;
     archive >> post;
     archive >> options;
     archive >> extra;
@@ -297,7 +301,7 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << speed;
     archive << route;
     archive << tool;
-    archive << filename;
+    archive << name;
     archive << post;
     archive << options;
     archive << extra;
@@ -348,7 +352,7 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "speed", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "route", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "tool", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTestCase, "filename", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTestCase, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "post", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "options", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "extra", T_TEXT, ++fieldNum);
@@ -366,6 +370,7 @@ void CTestCase::registerClass(void) {
     builtIns.push_back(_biCTestCase);
 
     // EXISTING_CODE
+    ADD_FIELD(CTestCase, "key", T_TEXT, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -375,6 +380,10 @@ string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     if (tes) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'k':
+                if (fieldIn % "key")
+                    return (tes->route + "-" + tes->tool + "-" + tes->name);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -416,22 +425,56 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv"};
+CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "CLEANUP"};
 
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
     for (auto cmd : commands) {
         string_q match = nextTokenClear(cmd, '|');
         if (startsWith(options, match)) {
-            ostringstream os;
-            bool debug = false;
-            if (debug)
-                os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
-            os << options;
-            if (debug)
-                os << " ; ls -l ; ";
-            options = os.str();
-            replaceAll(options, match, cmd);
+            if (match == "CLEANUP") {
+                CStringArray arr = {
+                    "0x001d14804b399c6ef80e64576f657660804fec0b", "0x1111111111111111111111111111111111111111",
+                    "0x1111122222111112222211111222221111122222", "0x1234567812345678123456781234567812345678",
+                    "0x5555533333555553333355555333335555533333", "0x9876543210987654321098765432109876543210",
+                    "0xfb744b951d094b310262c8f986c860df9ab1de65", "0x1234567890123456789012345678901234567890",
+                    "0x001d14804b399c6ef80e64576f657660804fec0b"};
+                for (auto a : arr) {
+                    ::remove(getMonitorPath(a).c_str());
+                    ::remove(getMonitorLast(a).c_str());
+                    ::remove(getMonitorExpt(a).c_str());
+                    ::remove(getMonitorBals(a).c_str());
+                    ::remove(getMonitorCnfg(a).c_str());
+                }
+
+                string_q loc = getCWD() + "./app_tests/";
+                if (!folderExists(loc)) {
+                    cerr << "apps test files not found at: " << loc << endl;
+                    exit(0);
+                }
+
+                ostringstream os;
+                os << "cp -p " << loc << "app_tests.tar.gz " << getMonitorPath("") << " && ";
+                os << "cd " << getMonitorPath("") << " && ";
+                os << "gunzip *.gz 2>/dev/null && ";
+                os << "tar -xvf *.tar 2>/dev/null && ";
+                os << "rm -f *.tar && ";
+                os << "cd - 2>&1 1>/dev/null";
+                // clang-format off
+                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                // clang-format on
+
+            } else {
+                ostringstream os;
+                bool debug = false;
+                if (debug)
+                    os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
+                os << options;
+                if (debug)
+                    os << " ; ls -l ; ";
+                options = os.str();
+                replaceAll(options, match, cmd);
+            }
             return true;
         }
     }
@@ -449,7 +492,7 @@ CTestCase::CTestCase(const string_q& line) {
     speed = parts.size() > 2 ? trim(parts[2]) : "";
     route = parts.size() > 3 ? trim(parts[3]) : "";
     tool = parts.size() > 4 ? trim(parts[4]) : "";
-    filename = parts.size() > 5 ? trim(parts[5]) : "";
+    name = parts.size() > 5 ? trim(parts[5]) : "";
     post = parts.size() > 6 ? trim(parts[6]) : "";
     options = parts.size() > 7 ? trim(parts[7]) : "";
     extra = parts.size() > 8 ? trim(parts[8]) : "";
@@ -458,7 +501,7 @@ CTestCase::CTestCase(const string_q& line) {
     if (endsWith(path, "lib"))
         path = "libs/" + path;
 
-    fileName = tool + "_" + filename + ".txt";
+    fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq"));

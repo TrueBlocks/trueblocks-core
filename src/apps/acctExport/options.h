@@ -69,4 +69,5 @@ class COptions : public COptionsBase {
     bool exportData(void);
     bool exportCounts(void);
     bool exportBalances(void);
+    bool exportIPFSHashes(void);
 };

@@ -1,4 +1,5 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, null,     apps/chifra, CLEANUP,              n, CLEANUP
 
 on, cmd,  fast, null,     apps/chifra, copy1,                n, COPYFILE -f ./testing_data/* ./
 

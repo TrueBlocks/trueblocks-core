@@ -1,38 +1,6 @@
-acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--hashes] [3:--fmt] [4:csv] [5:--end] [6:001506480] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --hashes --fmt csv --end 001506480 
-
-  Invalid option: --hashes
-
-  Usage:    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-w|-i|-R|-v|-h] <address> [address...]  
-  Purpose:  Export full detail of transactions for one or more Ethereum addresses.
-
-  Where:  
-	addrs                 one or more addresses (0x...) to export (required)
-	-p  (--appearances)   export a list of appearances
-	-r  (--receipts)      export receipts instead of transaction list
-	-l  (--logs)          export logs instead of transaction list
-	-t  (--traces)        export traces instead of transaction list
-	-b  (--balances)      export balance history instead of transaction list
-	-e  (--hashes_only)   export the IPFS hashes of the index chunks the address appears in
-	-c  (--count_only)    display only the count of the number of data items requested
-	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-w  (--write_blocks)  write blocks to the binary cache ('off' by default)
-	-i  (--write_txs)     write transactions to the cache (see notes)
-	-R  (--write_traces)  write traces to the cache (see notes)
-
-#### Hidden options (shown during testing only)
-	-s  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)
-	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
-	-A  (--all_abis)      load all previously cached abi files
-	-g  (--grab_abis)     using each trace's 'to' address, grab the abi for that address (improves articulation)
-	-f  (--freshen)       freshen but do not print the exported data
-	-D  (--deltas)        for --balances option only, export only changes in balances
-	-S  (--start <num>)   first block to process (inclusive)
-	-E  (--end <num>)     last block to process (inclusive)
-#### Hidden options (shown during testing only)
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+acctExport argc: 5 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--hashes_only] [3:--end] [4:001506480] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --hashes_only --end 001506480 
+TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+TIME ~ CLOCK - <WARNG> : Exit(acctExport,exportIPFSHashes): 
+Not implementedTIME ~ CLOCK - <INFO>  : exported 0 ipfshashs from 3 transactions                                                       
