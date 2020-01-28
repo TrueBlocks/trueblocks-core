@@ -55,8 +55,10 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
         "    )\n"
         "  ]";
     if (page.longName != "dashboard")
-        pagehelp << substitute(substitute(substitute(STR_HELPSTR, "[{TEXT}]", substitute(page.pageNotes, "|", "\n        ")),
-                               "[{LOWER}]", page.longName), "[{PROPER}]", page.properName);
+        pagehelp << substitute(
+            substitute(substitute(STR_HELPSTR, "[{TEXT}]", substitute(page.pageNotes, "|", "\n        ")), "[{LOWER}]",
+                       page.longName),
+            "[{PROPER}]", page.properName);
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
