@@ -1,0 +1,10 @@
+acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--dollars] [4:--end] [5:001507000] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --dollars --end 001507000 
+TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
+blocknumber	transactionindex	address	dollarsprior	dollars	dollarsdiff
+1: data
+----------------------------------------------
+0	2	0x001d14804b399c6ef80e64576f657660804fec0b	         $0.00	     $5,880.00	+     $5,880.00
+202249	0	0x001d14804b399c6ef80e64576f657660804fec0b	     $5,628.00	         $0.10	-     $5,627.89
+1501459	2	0x001d14804b399c6ef80e64576f657660804fec0b	         $0.73	         $0.00	-         $0.73
+TIME ~ CLOCK - <INFO>  : exported 3 balances from 3 transactions                                                       

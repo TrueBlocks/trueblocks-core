@@ -1,0 +1,1 @@
+{ "errors": [ "acctExport - Invalid option: --hashes_only" ] }

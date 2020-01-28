@@ -1,5 +1,10 @@
+acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--deltas] [4:--end] [5:001507000] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --deltas --end 001507000 
+TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
+blocknumber	address	balance	diff
 1: data
 ----------------------------------------------
 0	0x001d14804b399c6ef80e64576f657660804fec0b	4200000000000000000000	4200000000000000000000
 202249	0x001d14804b399c6ef80e64576f657660804fec0b	74679320489077336	-4199925320679510922664
 1501459	0x001d14804b399c6ef80e64576f657660804fec0b	0	-74679320489077336
+TIME ~ CLOCK - <INFO>  : exported 3 balances from 3 transactions                                                       
