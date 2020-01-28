@@ -30,7 +30,6 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     CPage page;
     page.longName = classDef.base_lower;
     page.properName = classDef.base_proper;
-    page.pageNotes = toml.getConfigStr("settings", "page_notes", "");
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
     page.polling = toml.getConfigBool("settings", "polling", false);
@@ -42,6 +41,21 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.no_dash = classDef.base_lower % "dashboard";
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
+    page.pageNotes = toml.getConfigStr("settings", "page_notes", "");
+
+    const char* STR_HELPSTR =
+        ",\n"
+        "  [\n"
+        "    '[{LOWER}]',\n"
+        "    () => (\n"
+        "      <span>\n"
+        "        [{TEXT}]\n"
+        "      </span>\n"
+        "    )\n"
+        "  ]";
+    if (page.longName != "dashboard")
+        pagehelp << substitute(substitute(STR_HELPSTR, "[{TEXT}]", substitute(page.pageNotes, "|", "\n        ")),
+                               "[{LOWER}]", page.longName);
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
@@ -107,7 +121,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
-        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';" << endl;
+        if (!commands.str().empty())
+            commands << endl;
+        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';";
         if (!menu_items.str().empty())
             menu_items << ",";
         menu_items << endl;
@@ -137,8 +153,15 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         }
         menu_items << endl;
     }
-    replaceAll(code, "[{COMMANDS}];", commands.str());
+    if (contains(code, "[{COMMANDS}]")) {
+        replaceAll(code, "[{COMMANDS}];", commands.str());
+        if (cnt == 0) {
+            while (endsWith(code, "\n"))
+                replaceReverse(code, "\n", "");
+        }
+    }
     replaceAll(code, "[{MENU_ITEMS}]", menu_items.str());
+    replaceAll(code, "items: [  ],", "items: [],");
 
     replaceAll(code, "[{TEXT_ACTIONS}]", (page.has_text ? STR_TEXT_ACTIONS : ""));
     replaceAll(code, "[{TEXT_IMPORTS}]", (page.has_text ? text_imports.str() : ""));
@@ -209,7 +232,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
 
     // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test'
     // is true, it doesn't actually write the file
-    bool wouldHaveWritten = writeTheCode(destFile, code, nspace, 2, test);
+    bool wouldHaveWritten = writeTheCode(destFile, code, nspace, 2, test, false);
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << destFile << "' changed but was not written because of testing." << endl;
@@ -233,10 +256,19 @@ bool visitField(const CFieldData& field, void* data) {
     return true;
 }
 
+const char* STR_ROUTES =
+    "  {\n"
+    "    name: '[{LOWER}]',\n"
+    "    component: (routeProps) => <[{PROPER}] {...routeProps} />,\n"
+    "    exact: true,\n"
+    "    path: '[{PATH}]'\n"
+    "  }";
+
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_frontend_app(void) {
-    string_q app_import = "import [{PROPER}], { [{LOWER}]_menu } from './pages/[{LOWER}]';\n";
-    string_q route = "          <Route component={[{PROPER}]} [{EXACT}]path=\"[{PATH}]\" />\n";
+    string_q app_import1 = "import { [{LOWER}]_menu } from './pages/[{LOWER}]';\n";
+    string_q app_import2 = "import [{PROPER}] from './pages/[{LOWER}]';\n";
+    string_q route = STR_ROUTES;
     string_q red_import = "import reducer_[{PROPER}] from './pages/[{LOWER}]/reducers';\n";
     string_q reducer = "  reducer_[{PROPER}],\n";
 
@@ -244,7 +276,7 @@ bool COptions::handle_generate_frontend_app(void) {
     string_q str = toml.getConfigStr("settings", "pages", "");
     CStringArray pages;
     explode(pages, str, '|');
-    ostringstream app_imports, red_imports, routes, reducers, navlinks;
+    ostringstream app_imports1, app_imports2, red_imports, routes, reducers, navlinks;
     for (auto exact : pages) {
         string_q lower = nextTokenClear(exact, ',');
         string_q proper = toProper(lower);
@@ -257,33 +289,40 @@ bool COptions::handle_generate_frontend_app(void) {
         }
         if (!exact.empty())
             exact += "={true} ";
-        app_imports << substitute(substitute(app_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        app_imports1 << substitute(substitute(app_import1, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        app_imports2 << substitute(substitute(app_import2, "[{PROPER}]", proper), "[{LOWER}]", lower);
         replace(exact, "={true}", "");
+        red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        reducers << substitute(reducer, "[{PROPER}]", proper);
+        if (!routes.str().empty())
+            routes << ",\n";
         routes << substitute(
             substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
             "[{LOWER}]", lower);
-        red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
-        reducers << substitute(reducer, "[{PROPER}]", proper);
-        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower) << endl;
+        if (!navlinks.str().empty())
+            navlinks << "," << endl;
+        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower);
     }
 
-    string_q contents = asciiFileToString("./blank-app.js");
-    string_q orig = asciiFileToString("../../App.js");
-    replaceAll(contents, "[{IMPORTS}]", app_imports.str());
-    replaceAll(contents, "[{NAVLINKS}]", (navlinks.str()));
-    replaceAll(contents, "[{ROUTES}]", routes.str());
-    if (orig != contents) {
-        stringToAsciiFile("../../App.js", contents);
-        LOG_INFO("Writing: ", cTeal, "./App.js", cOff);
-    }
-
-    contents = asciiFileToString("./blank-root-reducers.js");
-    orig = asciiFileToString("../../root-reducers.js");
-    replaceAll(contents, "[{IMPORTS}]", red_imports.str());
-    replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
-    if (orig != contents) {
-        stringToAsciiFile("../../root-reducers.js", contents);
-        LOG_INFO("Writing: ", cTeal, "./root-reducers.js", cOff);
+    CStringArray files = {"App", "Content", "root-reducers", "routes", "PageHelp"};
+    for (auto file : files) {
+        string dest = (file == "PageHelp" ? "../../components/" : "../../") + file + ".js";
+        string_q source = "./blank-" + toLower(file) + ".js";
+        string_q orig = asciiFileToString(dest);
+        string_q contents = asciiFileToString(source);
+        replaceAll(contents, "[{ ", "[{");  // remove weird editor spacing
+        replaceAll(contents, " }]", "}]");  // remove weird editor spacing
+        replaceAll(contents, "[{IMPORTS1}]", app_imports1.str());
+        replaceAll(contents, "[{IMPORTS2}]", app_imports2.str());
+        replaceAll(contents, "[{NAVLINKS}]", navlinks.str());
+        replaceAll(contents, "[{ROUTES}]", routes.str());
+        replaceAll(contents, "[{PAGEHELP}]", pagehelp.str());
+        replaceAll(contents, "[{REDIMPORTS}]", red_imports.str());
+        replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
+        if (orig != contents) {
+            stringToAsciiFile(dest, contents);
+            LOG_INFO("Writing: ", cTeal, substitute(dest, "../../", "./"), cOff);
+        }
     }
 
     return true;
@@ -335,7 +374,7 @@ const char* STR_TEXT_CODE =
     "      return [{SUBPAGE}]Text();";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_NAVLINK = "mainMenu.push([{LOWER}]_menu);";
+const char* STR_NAVLINK = "  [{LOWER}]_menu";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_EMPTY_INNER =

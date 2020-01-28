@@ -58,7 +58,7 @@ class COptions : public COptionsBase {
     runmode_t mode;
     CClassDefinitionArray classDefs;
     CToml classFile;
-    ostringstream warnings;
+    ostringstream warnings, pagehelp;
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;

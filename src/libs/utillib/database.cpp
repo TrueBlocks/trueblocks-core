@@ -358,7 +358,7 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
 
 //------------------------------------------------------------------------------------------------------------
 bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& namespc, uint32_t nSpaces,
-                  bool testing) {
+                  bool testing, bool stripEOFNL) {
     string_q codeOut = codeOutIn;
     string_q orig;
     asciiFileToString(fileName, orig);
@@ -402,8 +402,10 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     // One final cleanup
     replaceAll(codeOut, "\n\n}", "\n}");
     replaceAll(codeOut, "\n\n\n", "\n\n");
-    if (endsWith(codeOut, "\n"))
-        replaceReverse(codeOut, "\n", "");
+    if (stripEOFNL) {
+        if (endsWith(codeOut, "\n"))
+            replaceReverse(codeOut, "\n", "");
+    }
 
     if (nSpaces)
         replaceAll(codeOut, "\t", string_q(nSpaces, ' '));

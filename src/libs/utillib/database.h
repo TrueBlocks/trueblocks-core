@@ -158,7 +158,8 @@ extern void cleanFileLocks(void);
 extern bool shouldQuit(void);
 extern void lockSection(bool lock);
 extern bool isSectionLocked(void);
-extern bool writeTheCode(const string_q& fileName, const string_q& code, const string_q& namespc, uint32_t nSpaces, bool testing);
+extern bool writeTheCode(const string_q& fileName, const string_q& code, const string_q& namespc, uint32_t nSpaces,
+                         bool testing, bool stripEOFNL = true);
 
 //----------------------------------------------------------------------
 extern size_t asciiFileToString(const string_q& filename, string& contents);

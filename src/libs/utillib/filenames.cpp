@@ -81,17 +81,17 @@ size_t nFilesInFolder(const string& path, bool recurse) {
         return 0;
     }
 
-    DIR *dp = opendir(path.c_str());
+    DIR* dp = opendir(path.c_str());
     if (!dp) {
         cerr << "Could not open directory " << path << "." << endl;
         return 0;
     }
 
     size_t ret = 0;
-    struct dirent *ep = NULL;
+    struct dirent* ep = NULL;
     while ((ep = readdir(dp)) != NULL)
         ret++;
-    closedir (dp);
+    closedir(dp);
     return ret;
 }
 
