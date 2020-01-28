@@ -34,6 +34,7 @@ int main(int argc, const char* argv[]) {
         return 0;
 
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
+    string_q testFolder = getCWD() + "../../../../src/other/testCases/";
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -45,7 +46,7 @@ int main(int argc, const char* argv[]) {
             if (options.modes & API)
                 options.cleanTest(path, testName + "/api_tests");
 
-            string_q testFile = getCWD() + "../../../../src/other/testCases/" + path + "/" + testName + ".csv";
+            string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
                 return options.usage("Cannot find test file " + testFile + ". Quitting.");
 
@@ -101,6 +102,8 @@ int main(int argc, const char* argv[]) {
         if (options.full_test && options.report)
             appendToAsciiFile(configPath("performance.csv"), perf.str());
         appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+        copyFile(configPath("performance.csv"), testFolder + "performance.csv");
+        copyFile(configPath("performance_slow.csv"), testFolder + "performance_slow.csv");
     }
 
     cerr << total.Format(STR_SCREEN_REPORT) << endl;

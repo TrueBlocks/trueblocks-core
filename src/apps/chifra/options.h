@@ -67,4 +67,4 @@ extern string_q colors[];
 extern uint64_t nColors;
 #define indexFolder_sorted (getIndexPath("sorted/"))
 #define LOG_CALL(a)                                                                                                    \
-    { LOG4(bWhite, l_funcName, " ----> ", (a), cOff); }
+    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }

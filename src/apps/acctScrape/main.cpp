@@ -41,8 +41,8 @@ int main(int argc, const char* argv[]) {
 
 //--------------------------------------------------------------------------------
 void doMoveFile(const string_q& from, const string_q& to) {
-    if (verbose)
-        cerr << "Moving " << cTeal << from << cOff << " to " << cTeal << to << cOff << endl;
+#define CLEAN(a) (cTeal + (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)) + cOff)
+    LOG4("Moving ", CLEAN(from), " to ", CLEAN(to));
     if (fileExists(from))
         moveFile(from, to);
 }

@@ -171,9 +171,11 @@ int main(int argc, const char* argv[]) {
                         cerr << "Could not create backup file `" << backFile << ". Quitting...";
                         return 1;
                     }
-                    cout << "\tRe-writing " << cYellow << fixed.size() << cOff << " of " << options.stats.nRecords
-                         << " records to cache: " << cYellow << watch->name << cOff << " (" << options.stats.nTruncs
-                         << " truncated)\n";
+                    ostringstream o;
+                    o << "\tRe-writing " << cYellow << fixed.size() << cOff << " of " << options.stats.nRecords
+                      << " records to cache: " << cYellow << watch->name << cOff << " (" << options.stats.nTruncs
+                      << " truncated)\n";
+                    cout << (isTestMode() ? substitute(o.str(), getCachePath(""), "$CACHE/") : o.str());
 
                     if (fileExists(watch->name))
                         ::remove(watch->name.c_str());
