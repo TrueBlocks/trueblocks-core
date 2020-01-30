@@ -1,0 +1,6 @@
+[settings]
+class = CChangeAllowedRecipients
+base_class = CTransaction
+fields = address _recipient|bool _allowed|
+includes = transaction.h
+cpp_includes = #include "etherlib.h"

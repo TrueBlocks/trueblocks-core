@@ -252,7 +252,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "`", string_q(1, '\t'));
     // w riteTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
-    bool wouldHaveWritten = writeTheCode(headerFile, headSource, namespc, 4, test);
+    bool wouldHaveWritten = writeTheCode(codewrite_t(headerFile, headSource, namespc, 4, test, true, force));
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;
@@ -310,7 +310,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "`", string_q(1, '\t'));
     // w riteTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test' is true, it doesn't
     // actually write the file
-    wouldHaveWritten = writeTheCode(srcFile, srcSource, namespc, 4, test);
+    wouldHaveWritten = writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, test, true, force));
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << headerFile << "' changed but was not written because of testing." << endl;

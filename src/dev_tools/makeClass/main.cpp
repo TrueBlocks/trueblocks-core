@@ -40,11 +40,7 @@ int main(int argc, const char* argv[]) {
                 ASSERT(options.mode & RUN);
                 if (verbose)
                     cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
-                if (isTestMode()) {
-                    cout << "  Test mode - code not generated" << endl;
-                } else {
-                    options.handle_generate(toml, classDef, options.nspace, false);
-                }
+                options.handle_generate(toml, classDef, options.nspace, false);
             }
         }
         LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",

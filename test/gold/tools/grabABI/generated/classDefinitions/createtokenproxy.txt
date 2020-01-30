@@ -1,0 +1,6 @@
+[settings]
+class = CCreateTokenProxy
+base_class = CTransaction
+fields = address _tokenHolder|
+includes = transaction.h
+cpp_includes = #include "etherlib.h"

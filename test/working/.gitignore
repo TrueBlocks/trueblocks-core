@@ -7,3 +7,4 @@ test_file
 *.toml
 *.cache
 cmd_file*
+*/generated/*

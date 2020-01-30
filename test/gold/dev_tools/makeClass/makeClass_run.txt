@@ -1,5 +1,4 @@
 makeClass argc: 3 [1:--run] [2:block] 
 makeClass --run block 
 TIME ~ CLOCK - <INFO>  : handling generate...
-  Test mode - code not generated
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        

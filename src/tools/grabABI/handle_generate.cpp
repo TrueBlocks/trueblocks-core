@@ -35,8 +35,10 @@ static string_q templateFolder = configPath("grabABI/");
 //-----------------------------------------------------------------------
 void COptions::handle_generate(void) {
     verbose = false;
-    classDir = substitute((classDir), "~/", getHomeFolder());
+    classDir = substitute((classDir), "~/", getHomeFolder()) + "generated/";
     string_q classDefs = classDir + "classDefinitions/";
+
+    establishFolder(classDir);
     establishFolder(classDefs);
 
     string_q funcExterns, evtExterns, funcDecls, evtDecls, sigs, evts;
@@ -53,6 +55,8 @@ void COptions::handle_generate(void) {
                 string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
                 if (name == "eventEvent")
                     name = "logEntry";
+                if (name.empty() && interface.type == "constructor")
+                    name = "constructor";
                 if (startsWith(name, '_'))
                     name = extract(name, 1);
                 char ch = static_cast<char>(toupper(name[0]));
@@ -164,20 +168,23 @@ void COptions::handle_generate(void) {
                         replaceAll(out, "int32[]", "CIntArray");
                         stringToAsciiFile(classDefs + fileName, out);
                         if (interface.type == "event")
-                            cout << "Generating class for derived event type: '" << theClass << "'\n";
+                            LOG_INFO("Generating class for derived event type: '", theClass, "'");
                         else
-                            cout << "Generating class for derived transaction type: '" << theClass << "'\n";
+                            LOG_INFO("Generating class for derived transaction type: '", theClass, "'");
 
                         string_q makeClass = configPath("makeClass/makeClass");
                         if (!fileExists(makeClass)) {
-                            cerr << makeClass
-                                 << " was not found. This executable is required "
-                                    "to run grabABI. Quitting...\n";
+                            LOG_ERR(makeClass,
+                                    " was not found. This executable is required to run grabABI. Quitting...");
                             exit(0);
                         }
-                        string_q res = doCommand(makeClass + " -r " + toLower(name));
-                        if (!res.empty())
-                            cout << "\t" << res << "\n";
+                        if (!name.empty()) {
+                            string_q cmd =
+                                makeClass + " -r " + "generated/" + toLower(name) + (isTestMode() ? " --force" : "");
+                            string_q res = doCommand(cmd);
+                            if (!res.empty())
+                                LOG_INFO("\t", res);
+                        }
                     }
                 }
             }
@@ -202,7 +209,7 @@ void COptions::handle_generate(void) {
     evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
     replaceAll(headerCode, "[{EXTERNS}]", comment + funcExterns + "\n" + comment + evtExterns);
     headerCode = substitute(headerCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".h", headerCode, "", 4, false);
+    writeTheCode(codewrite_t(classDir + prefix + ".h", headerCode, "", 4, false, true, isTestMode()));
 
     // The library make file
     replaceReverse(sources, " \\\n", " \\\n" + prefix + ".cpp\n");
@@ -210,7 +217,7 @@ void COptions::handle_generate(void) {
         string_q makefile;
         asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
         replaceAll(makefile, "[{PROJECT_NAME}]", projectName(classDir));
-        writeTheCode(classDir + "CMakeLists.txt", makefile, "", 0, false);
+        writeTheCode(codewrite_t(classDir + "CMakeLists.txt", makefile, "", 0, false, true, isTestMode()));
     }
 
     // The library source file
@@ -259,7 +266,7 @@ void COptions::handle_generate(void) {
     replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
     replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
     sourceCode = substitute(sourceCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
-    writeTheCode(classDir + prefix + ".cpp", sourceCode, "", 4, false);
+    writeTheCode(codewrite_t(classDir + prefix + ".cpp", sourceCode, "", 4, false, true, isTestMode()));
 
     string_q primaryAddr = "";
     // The code
@@ -298,7 +305,7 @@ static void makeTheCode(const string_q& fn, const string_q& addr, const string_q
     asciiFileToString(templateFolder + fn, theCode);
     replaceAll(theCode, "[{ADDR}]", addr);
     replaceAll(theCode, "[{PROJECT_NAME}]", projName);
-    writeTheCode(pathIn + "../" + fn, theCode, "", fn != "CMakeFile.txt", false);
+    writeTheCode(codewrite_t(pathIn + fn, theCode, "", fn != "CMakeFile.txt", false, true, isTestMode()));
 }
 
 //-----------------------------------------------------------------------

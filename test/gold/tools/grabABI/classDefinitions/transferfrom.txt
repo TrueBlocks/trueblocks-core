@@ -1,6 +1,0 @@
-[settings]
-class     = CTransferFrom
-baseClass = CTransaction
-fields    = address _from|address _to|uint256 _value|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

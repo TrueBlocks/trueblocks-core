@@ -233,9 +233,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
     replaceAll(code, STR_EMPTY_INNER, STR_EMPTY_INNER_COLLAPSE);
 
-    // writeTheCode returns true or false depending on if it WOULD HAVE written the file. If 'test'
+    // returns true or false depending on if it WOULD HAVE written the file. If 'test'
     // is true, it doesn't actually write the file
-    bool wouldHaveWritten = writeTheCode(destFile, code, nspace, 2, test, false);
+    bool wouldHaveWritten = writeTheCode(codewrite_t(destFile, code, nspace, 2, test, false, force));
     if (wouldHaveWritten) {
         if (test) {
             cerr << "File '" << destFile << "' changed but was not written because of testing." << endl;

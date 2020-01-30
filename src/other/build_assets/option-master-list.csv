@@ -99,6 +99,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11800,dev_tools,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
 11820,dev_tools,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
 11822,dev_tools,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
+11822,dev_tools,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
 11824,dev_tools,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
 11828,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--class` flag generates c++ code for each definition found in the local folder.

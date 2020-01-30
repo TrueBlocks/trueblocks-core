@@ -1,0 +1,6 @@
+[settings]
+class = CVote
+base_class = CTransaction
+fields = uint256 _proposalID|bool _supportsProposal|
+includes = transaction.h
+cpp_includes = #include "etherlib.h"

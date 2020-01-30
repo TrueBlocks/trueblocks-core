@@ -360,11 +360,10 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const string_q& namespc, uint32_t nSpaces,
-                  bool testing, bool stripEOFNL) {
-    string_q codeOut = codeOutIn;
+bool writeTheCode(const codewrite_t& cw) {
+    string_q codeOut = cw.codeOutIn;
     string_q orig;
-    asciiFileToString(fileName, orig);
+    asciiFileToString(cw.fileName, orig);
     string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
 
     string_q checkCode = existingCode;
@@ -375,9 +374,9 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     }
     if ((cnt % 2))
         codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
-    if (nSpaces) {
-        replaceAll(existingCode, string_q(nSpaces, ' '), "\t");
-        replaceAll(codeOut, string_q(nSpaces, ' '), "\t");
+    if (cw.nSpaces) {
+        replaceAll(existingCode, string_q(cw.nSpaces, ' '), "\t");
+        replaceAll(codeOut, string_q(cw.nSpaces, ' '), "\t");
     }
 
     string_q tabs;
@@ -405,13 +404,13 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
     // One final cleanup
     replaceAll(codeOut, "\n\n}", "\n}");
     replaceAll(codeOut, "\n\n\n", "\n\n");
-    if (stripEOFNL) {
+    if (cw.stripEOFNL) {
         if (endsWith(codeOut, "\n"))
             replaceReverse(codeOut, "\n", "");
     }
 
-    if (nSpaces)
-        replaceAll(codeOut, "\t", string_q(nSpaces, ' '));
+    if (cw.nSpaces)
+        replaceAll(codeOut, "\t", string_q(cw.nSpaces, ' '));
     replaceAll(codeOut, "[PTAB]", "\\t");
 
     if (contains(codeOut, "virtual") || contains(codeOut, "override")) {
@@ -419,16 +418,17 @@ bool writeTheCode(const string_q& fileName, const string_q& codeOutIn, const str
         replace(codeOut, "~Q", "virtual ~Q");
     }
 
+    bool testing = cw.testing;
     if (isTestMode())
         testing = true;
 
-    if (orig != codeOut) {
+    if (cw.force || orig != codeOut) {
         // Do the actual writing of the data only if we're not testing or the user has told us not to
-        if (!testing) {
-            LOG_INFO("Writing: ", cTeal, fileName, cOff);
-            stringToAsciiFile(fileName, codeOut);
+        if (cw.force || !testing) {
+            LOG_INFO("Writing: ", cTeal, cw.fileName, cOff);
+            stringToAsciiFile(cw.fileName, codeOut);
         } else {
-            LOG8("Not writing: ", fileName);
+            LOG8("Not writing: ", cw.fileName);
         }
         // We return 'true' if we WOULD HAVE have written the file (even if we didn't).
         return true;

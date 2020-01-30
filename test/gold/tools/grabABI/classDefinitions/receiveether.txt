@@ -1,6 +1,0 @@
-[settings]
-class     = CReceiveEther
-baseClass = CTransaction
-fields    = 
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

@@ -41,8 +41,9 @@ on, both, fast, abi, tools/grabABI, fmt_api,               y, addrs = 0xe94327d0
 on, both, fast, abi, tools/grabABI, fmt_json,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on, both, fast, abi, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
 
-# on, both, fast, abi, tools/grabABI, generation,          n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
-# on, both, fast, abi, tools/grabABI, verbose5,            n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose & noconst & generate
+#on, cmd,  fast, abi, tools/grabABI, rm_generation,         n, RMFILE -f generated/*
+#on, cmd,  fast, abi, tools/grabABI, rm_generation2,        n, RMFILE -f generated/classDefinitions/*
+on, cmd,  fast, abi, tools/grabABI, generation,            n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose = 10 & generate
 
 # 13660,tools,abi,grabABI,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 # 13680,tools,abi,grabABI,canonical,c,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display

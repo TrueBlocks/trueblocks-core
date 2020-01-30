@@ -1,0 +1,6 @@
+[settings]
+class = CCreatedTokenEvent
+base_class = CLogEntry
+fields = address to|uint256 amount|
+includes = logentry.h
+cpp_includes = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class = CApprovalEvent
+base_class = CLogEntry
+fields = address _owner|address _spender|uint256 _amount|
+includes = logentry.h
+cpp_includes = #include "etherlib.h"

@@ -1,0 +1,6 @@
+[settings]
+class = CProposalTalliedEvent
+base_class = CLogEntry
+fields = uint256 proposalID|bool result|uint256 quorum|
+includes = logentry.h
+cpp_includes = #include "etherlib.h"

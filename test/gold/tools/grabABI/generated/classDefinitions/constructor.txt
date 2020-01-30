@@ -1,0 +1,6 @@
+[settings]
+class = CConstructor
+base_class = CTransaction
+fields = address _curator|address _daoCreator|uint256 _proposalDeposit|uint256 _minTokensToCreate|uint256 _closingTime|address _privateCreation|
+includes = transaction.h
+cpp_includes = #include "etherlib.h"

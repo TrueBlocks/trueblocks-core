@@ -16,6 +16,8 @@ on, both, fast, export, apps/acctExport, export_hashes,         n, addrs = 0x001
 on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt & end = 001506480
 on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & end = 001506480
 
+on, both, fast, export, apps/acctExport, export_dao,            n, addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & receipts & fmt = csv & end = 1430970
+
 on, both, fast, export, apps/acctExport, export_c,              n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count_only
 on, both, fast, export, apps/acctExport, export_apps_c,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count_only
 

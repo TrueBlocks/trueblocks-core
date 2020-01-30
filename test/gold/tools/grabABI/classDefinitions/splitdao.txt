@@ -1,6 +1,0 @@
-[settings]
-class     = CSplitDAO
-baseClass = CTransaction
-fields    = uint256 _proposalID|address _newCurator|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

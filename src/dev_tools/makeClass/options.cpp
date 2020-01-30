@@ -33,6 +33,7 @@ static const COption params[] = {
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
+    COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -93,6 +94,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-t" || arg == "--test") {
             test = true;
+
+        } else if (arg == "-c" || arg == "--force") {
+            force = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -210,6 +214,7 @@ void COptions::Init(void) {
     nspace = "qblocks";
     filter = "";
     test = false;
+    force = false;
     // END_CODE_INIT
 
     mode = NONE;

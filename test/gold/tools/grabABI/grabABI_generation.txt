@@ -1,0 +1,231 @@
+grabABI argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:10] [4:--generate] 
+grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose 10 --generate 
+TIME ~ CLOCK - : 8------Enter(grabABI,parseArguments): 
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CConstructor'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/constructor] [3:--force] 
+makeClass -r generated/constructor --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/constructor.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/constructor.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CApprove'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/approve] [3:--force] 
+makeClass -r generated/approve --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/approve.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/approve.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CChangeAllowedRecipients'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/changeallowedrecipients] [3:--force] 
+makeClass -r generated/changeallowedrecipients --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeallowedrecipients.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeallowedrecipients.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CChangeProposalDeposit'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/changeproposaldeposit] [3:--force] 
+makeClass -r generated/changeproposaldeposit --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeproposaldeposit.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeproposaldeposit.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CCreateTokenProxy'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/createtokenproxy] [3:--force] 
+makeClass -r generated/createtokenproxy --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/createtokenproxy.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/createtokenproxy.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CExecuteProposal'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/executeproposal] [3:--force] 
+makeClass -r generated/executeproposal --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/executeproposal.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/executeproposal.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CGetMyReward'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/getmyreward] [3:--force] 
+makeClass -r generated/getmyreward --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/getmyreward.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/getmyreward.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CHalveMinQuorum'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/halveminquorum] [3:--force] 
+makeClass -r generated/halveminquorum --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/halveminquorum.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/halveminquorum.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CNewContract'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/newcontract] [3:--force] 
+makeClass -r generated/newcontract --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newcontract.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newcontract.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CNewProposal'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/newproposal] [3:--force] 
+makeClass -r generated/newproposal --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newproposal.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newproposal.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CReceiveEther'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/receiveether] [3:--force] 
+makeClass -r generated/receiveether --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/receiveether.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/receiveether.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CRefund'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/refund] [3:--force] 
+makeClass -r generated/refund --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/refund.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/refund.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CRetrieveDAOReward'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/retrievedaoreward] [3:--force] 
+makeClass -r generated/retrievedaoreward --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/retrievedaoreward.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/retrievedaoreward.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CSplitDAO'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/splitdao] [3:--force] 
+makeClass -r generated/splitdao --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/splitdao.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/splitdao.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CTransfer'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/transfer] [3:--force] 
+makeClass -r generated/transfer --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transfer.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transfer.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CTransferFrom'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/transferfrom] [3:--force] 
+makeClass -r generated/transferfrom --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferfrom.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferfrom.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CTransferFromWithoutReward'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/transferfromwithoutreward] [3:--force] 
+makeClass -r generated/transferfromwithoutreward --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferfromwithoutreward.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferfromwithoutreward.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CTransferWithoutReward'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/transferwithoutreward] [3:--force] 
+makeClass -r generated/transferwithoutreward --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferwithoutreward.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferwithoutreward.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CUnblockMe'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/unblockme] [3:--force] 
+makeClass -r generated/unblockme --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/unblockme.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/unblockme.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CVote'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/vote] [3:--force] 
+makeClass -r generated/vote --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/vote.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/vote.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CAllowedRecipientChangedEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/allowedrecipientchangedevent] [3:--force] 
+makeClass -r generated/allowedrecipientchangedevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/allowedrecipientchangedevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/allowedrecipientchangedevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CApprovalEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/approvalevent] [3:--force] 
+makeClass -r generated/approvalevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/approvalevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/approvalevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CCreatedTokenEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/createdtokenevent] [3:--force] 
+makeClass -r generated/createdtokenevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/createdtokenevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/createdtokenevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CFuelingToDateEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/fuelingtodateevent] [3:--force] 
+makeClass -r generated/fuelingtodateevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/fuelingtodateevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/fuelingtodateevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CNewCuratorEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/newcuratorevent] [3:--force] 
+makeClass -r generated/newcuratorevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newcuratorevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/newcuratorevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CProposalAddedEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/proposaladdedevent] [3:--force] 
+makeClass -r generated/proposaladdedevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/proposaladdedevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/proposaladdedevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CProposalTalliedEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/proposaltalliedevent] [3:--force] 
+makeClass -r generated/proposaltalliedevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/proposaltalliedevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/proposaltalliedevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CRefundEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/refundevent] [3:--force] 
+makeClass -r generated/refundevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/refundevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/refundevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CTransferEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/transferevent] [3:--force] 
+makeClass -r generated/transferevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/transferevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Generating class for derived event type: 'CVotedEvent'
+TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/votedevent] [3:--force] 
+makeClass -r generated/votedevent --force 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/votedevent.h
+TIME ~ CLOCK - <INFO>  : Writing: ./generated/votedevent.cpp
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/grabABI.h
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/CMakeLists.txt
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/grabABI.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/rebuild
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/CMakeLists.txt
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/debug.h
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/debug.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/options.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/options.h
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/main.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/main.h
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/visitor.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/visitor.h
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/accounting.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/display.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/processing.cpp
+TIME ~ CLOCK - <INFO>  : Writing: /Users/jrush/Development/trueblocks-core/test/gold/tools/grabABI/generated/processing.h
+encoding	type	name	signature	input_names	output_names

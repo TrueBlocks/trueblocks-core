@@ -1,0 +1,6 @@
+[settings]
+class = CNewCuratorEvent
+base_class = CLogEntry
+fields = address _newCurator|
+includes = logentry.h
+cpp_includes = #include "etherlib.h"

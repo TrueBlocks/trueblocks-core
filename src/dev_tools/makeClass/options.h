@@ -53,6 +53,7 @@ class COptions : public COptionsBase {
     string_q nspace;
     string_q filter;
     bool test;
+    bool force;
     // END_CODE_DECLARE
 
     runmode_t mode;

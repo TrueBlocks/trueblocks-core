@@ -155,11 +155,20 @@ extern void registerQuitHandler(QUITHANDLER qh);
 extern void cleanFileLocks(void);
 
 //----------------------------------------------------------------------
+class codewrite_t {
+  public:
+    string_q fileName, codeOutIn, namespc;
+    uint32_t nSpaces;
+    bool testing, stripEOFNL, force;
+    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool t, bool s = true,
+                bool f = false)
+        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), testing(t), stripEOFNL(s), force(f) {
+    }
+};
 extern bool shouldQuit(void);
 extern void lockSection(bool lock);
 extern bool isSectionLocked(void);
-extern bool writeTheCode(const string_q& fileName, const string_q& code, const string_q& namespc, uint32_t nSpaces,
-                         bool testing, bool stripEOFNL = true);
+extern bool writeTheCode(const codewrite_t& cw);
 
 //----------------------------------------------------------------------
 extern size_t asciiFileToString(const string_q& filename, string& contents);

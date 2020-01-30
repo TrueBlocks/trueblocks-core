@@ -64,7 +64,4 @@ serialize = true
 enabled = false
 
 TIME ~ CLOCK - <INFO>  : handling generate...
-  Test mode - code not generated
-  Test mode - code not generated
-  Test mode - code not generated
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 3 files (changed 6).                                        

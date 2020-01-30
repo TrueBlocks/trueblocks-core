@@ -1,6 +1,0 @@
-[settings]
-class     = CApprove
-baseClass = CTransaction
-fields    = address _spender|uint256 _amount|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"

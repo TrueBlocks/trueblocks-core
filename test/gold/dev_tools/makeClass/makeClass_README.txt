@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 #### Usage
 
-`Usage:`    makeClass [-r|-a|-j|-o|-f|-l|-n|-i|-t|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-j|-o|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`  
@@ -19,6 +19,7 @@ makeClass -th
 | -n | --nspace <str> | surround generated c++ code with a namespace |
 | -i | --filter <str> | process only files whose filename or contents contain 'filter' |
 | -t | --test | for both code generation and options generation, process but do not write changes |
+| -c | --force | for both code generation and options generation, force writing of changes |
 
 #### Hidden options (shown during testing only)
 | -e | --edit | edit <class_name(s)> definition file in local folder |

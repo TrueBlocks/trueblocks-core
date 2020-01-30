@@ -1,6 +1,0 @@
-[settings]
-class     = CNewProposal
-baseClass = CTransaction
-fields    = address _recipient|uint256 _amount|string _description|bytes _transactionData|uint256 _debatingPeriod|bool _newCurator|
-includes  = transaction.h
-cIncs     = #include "etherlib.h"
