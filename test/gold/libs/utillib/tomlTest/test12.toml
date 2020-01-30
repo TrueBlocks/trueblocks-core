@@ -36,7 +36,7 @@ list = [
     { address = "0x0000000000000000000000100001000010000008", name = "Nates Wallet",       firstBlock = 2593109, color = "white_c"   }
 ]
 named = [
-    { address = "0x314159265dd8dbb310642f98f50c066173c1259b", name = "ENS (Main)"          },
+    { address = "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", name = "ENS (Main)"          },
     { address = "0x6090a6e47849629b7245dfa1ca21d94cd15878ef", name = "ENS Registrar"       },
     { address = "0x012233b3c8177f0778d910ed88170b82de3bfe57", name = "Defunct ENS Regist"  },
     { address = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", name = "The DAO"             },

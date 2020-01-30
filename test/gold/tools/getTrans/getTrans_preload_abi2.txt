@@ -1,5 +1,5 @@
-grabABI argc: 4 [1:0x314159265dd8dbb310642f98f50c066173c1259b] [2:0x159cf1e9ae58211b588f5e3bf1d7e423952d959b] [3:0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373] 
-grabABI 0x314159265dd8dbb310642f98f50c066173c1259b 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 
+grabABI argc: 4 [1:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e] [2:0x159cf1e9ae58211b588f5e3bf1d7e423952d959b] [3:0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373] 
+grabABI 0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 
 encoding	type	name	signature	input_names	output_names
 0x02571be3	function	owner	owner(bytes32)	node,	val_0,,
 0x0178b8bf	function	resolver	resolver(bytes32)	node,	val_0,,
