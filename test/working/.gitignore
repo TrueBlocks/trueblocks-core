@@ -6,4 +6,5 @@ test_file
 *.json
 *.toml
 *.cache
+*.gz
 cmd_file*
