@@ -567,6 +567,7 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "address": "0x0",
   "logIndex": 0,
   "topics": [],
+  "articulatedLog": {},
   "transactionLogIndex": 0
 }
 
@@ -770,7 +771,9 @@ date                	1017	1	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0
+  "transactionIndex": 0,
+  "action": {},
+  "result": {}
 }
 
 --------------------------------------------------------------------------------
@@ -826,7 +829,10 @@ date                	1017	0	262149	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0
+  "transactionIndex": 0,
+  "articulatedTrace": {},
+  "action": {},
+  "result": {}
 }
 
 --------------------------------------------------------------------------------
@@ -1137,6 +1143,7 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "logs": [],
     "status": null
   },
+  "articulatedTx": {},
   "traces": [],
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,

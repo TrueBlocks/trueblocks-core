@@ -77,7 +77,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "articulatedLog") {
                 if (articulatedLog == CFunction())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return articulatedLog.Format();
             }

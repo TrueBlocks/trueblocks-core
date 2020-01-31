@@ -1,9 +1,7 @@
-chifra argc: 3 [1:config] [2:--set] 
-chifra config --set 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
+chifra argc: 3 [1:settings] [2:--set] 
+chifra settings --set 
 Chifra to cacheStatus:
 
-TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --set_config
 cacheStatus argc: 2 [1:--set_config] 
 cacheStatus --set_config 
 {"name": "quickBlocks.toml","groups": [{"section": "Providers","name": "settings","keys": [{"name": "rpcProvider","value": "--new rpc Provider--","type": "url"},{"name": "apiProvider","value": "--new api Provider--","type": "url"},{"name": "balanceProvider","value": "--new balance Prov--","type": "url"}]},{"section": "Paths","name": "settings","keys": [{"name": "configPath","value": "--new config Path--","type": "path"},{"name": "cachePath","value": "--new cache Path--","type": "path"},{"name": "indexPath","value": "--new index Path--","type": "path"}]}]},{"section": "Display Strings","name": "display_strs","keys": [{"name": "accountName","value": "--account name--","type": "display_str"},{"name": "balancerecord","value": "--balance record--","type": "display_str"},{"name": "block","value": "--block--","type": "display_str"},{"name": "ethstate","value": "--eth state--","type": "display_str"},{"name": "function","value": "--function--","type": "display_str"},{"name": "logentry","value": "--logentry--","type": "display_str"},{"name": "pricequote","value": "--pricequote--","type": "display_str"},{"name": "receipt","value": "--receipt--","type": "display_str"},{"name": "trace","value": "--trace--","type": "display_str"},{"name": "transaction","value": "--transaction--","type": "display_str"},{"name": "whenblock","value": "--when block--","type": "display_str"},{"name": "whereblock","value": "--where block--","type": "display_str"}]},{"name": "blockScrape.toml","groups": [{"section": "Scraper","name": "settings","keys": [{"name": "n_blocks","value": "--new n Blocks--","type": "number"},{"name": "n_addr_procs","value": "--new n Addr Procs--","type": "number"},{"name": "n_block_procs","value": "--new n Block Procs--","type": "number"}]}]},{"name": "acctExport.toml","groups": [{"section": "Exporter","name": "settings","keys": [{"name": "write_blocks","value": "","type": "bool"},{"name": "write_txs","value": "true","type": "bool"},{"name": "write_traces","value": "","type": "bool"}]}]},{"name": "ethNames.toml","groups": [{"section": "Names","name": "custom","keys": [{"name": "list","type": "json array","named": [{"address": "0x0000100001000010000100001000010000100001","group": "81-Custom","name": "TestWallet1"},{"address": "0x0000200002000020000200002000020000200002","group": "81-Custom","name": "TestWallet2"}]}]}]},{"name": "ethslurp.toml","groups": [{"section": "APIs","name": "settings","keys": [{"name": "etherscan","value": "--new api_key--","type": "string"}]}]}
@@ -11,7 +9,7 @@ cacheStatus --set_config
 As read: ./tests/quickBlocks.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("settings", "rpcProvider", "--new rpc Provider--");
@@ -24,28 +22,28 @@ current = "0.5.8-alpha"
 Would have written: ./tests/quickBlocks.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 As read: ./tests/display_strs:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 Would have written: ./tests/display_strs:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 As read: ./tests/blockScrape.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("settings", "n_blocks", "--new n Blocks--");
@@ -55,14 +53,14 @@ current = "0.5.8-alpha"
 Would have written: ./tests/blockScrape.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 As read: ./tests/acctExport.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigBool("settings", "write_blocks", false);
@@ -72,32 +70,32 @@ current = "0.5.8-alpha"
 Would have written: ./tests/acctExport.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 As read: ./tests/ethNames.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("custom", "list", "[
-	{ "group": "81-Custom", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001" },
-	{ "group": "81-Custom", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002" }
+	{ "group": "81-Custom", "name": "TestWallet1", "address": "0x0000100001000010000100001000010000100001", "group_sort": "81", "raw_group": "Custom" },
+	{ "group": "81-Custom", "name": "TestWallet2", "address": "0x0000200002000020000200002000020000200002", "group_sort": "81", "raw_group": "Custom" }
 ]");
 ------------------------------------------------------------------------------------------------------------------------
 Would have written: ./tests/ethNames.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 As read: ./tests/ethslurp.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("settings", "api_key", "--new api_key--");
@@ -105,6 +103,6 @@ current = "0.5.8-alpha"
 Would have written: ./tests/ethslurp.toml:
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.5.8-alpha"
+current = "0.6.5-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------

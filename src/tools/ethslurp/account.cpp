@@ -83,7 +83,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "latestTx") {
                 if (latestTx == CTransaction())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return latestTx.Format();
             }

@@ -73,7 +73,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 'a':
             if (fieldName % "abi_spec") {
                 if (abi_spec == CAbi())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return abi_spec.Format();
             }
@@ -96,7 +96,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
         case 's':
             if (fieldName % "statement") {
                 if (statement == CIncomeStatement())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return statement.Format();
             }

@@ -439,7 +439,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if ((p.is_flags & IS_OBJECT)) {
                     const char* STR_OBJECT_CASE =
                         "if ([{NAME}] == [{TYPE}]())\n"
-                        "`return \"\";\n"
+                        "`return \"{}\";\n"
                         "expContext().noFrst = true;\n"
                         "return [{PTR}][{NAME}].Format();";
                     string_q objCase = substitute(STR_OBJECT_CASE, "\n", "\n````");

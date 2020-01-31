@@ -2,7 +2,7 @@
 [{
   "type": "call",
   "error": "",
-  "articulatedTrace": ,
+  "articulatedTrace": {},
   "action": {
     "address": "0x0",
     "balance": 0,
@@ -23,7 +23,7 @@
 , {
   "type": "call",
   "error": "",
-  "articulatedTrace": ,
+  "articulatedTrace": {},
   "action": {
     "address": "0x0",
     "balance": 0,

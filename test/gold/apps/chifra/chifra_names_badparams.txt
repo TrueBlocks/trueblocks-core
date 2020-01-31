@@ -1,6 +1,5 @@
-chifra argc: 3 [1:accounts] [2:--not_an_option] 
-chifra accounts --not_an_option 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
+chifra argc: 3 [1:names] [2:--not_an_option] 
+chifra names --not_an_option 
 ethNames argc: 2 [1:--not_an_option] 
 ethNames --not_an_option 
 
@@ -22,9 +21,10 @@ ethNames --not_an_option
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
 	-d  (--add <str>)     add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
-	    (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-g  (--groups)        export the list of groups and subgroups only
 #### Hidden options (shown during testing only)
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 

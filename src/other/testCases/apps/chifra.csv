@@ -1,45 +1,67 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 on, cmd,  fast, null,     apps/chifra, CLEANUP,              n, CLEANUP
-
 on, cmd,  fast, null,     apps/chifra, copy1,                n, COPYFILE -f ./testing_data/* ./
 
 on, cmd,  fast, null,     apps/chifra, README,               n, @th
 on, cmd,  fast, null,     apps/chifra, help,                 n, @h
 on, cmd,  fast, null,     apps/chifra, help_long,            n, help
+on, cmd,  fast, null,     apps/chifra, chifra_help,          n, help
+on, cmd,  fast, null,     apps/chifra, help_list,            n, modes = list & help
+on, cmd,  fast, null,     apps/chifra, help_export,          n, modes = export & help
+on, cmd,  fast, null,     apps/chifra, help_slurp,           n, modes = slurp & help
+on, cmd,  fast, null,     apps/chifra, help_names,           n, modes = names & help
+on, cmd,  fast, null,     apps/chifra, help_abi,             n, modes = abi & help
+on, cmd,  fast, null,     apps/chifra, help_state,           n, modes = state & help
+on, cmd,  fast, null,     apps/chifra, help_tokens,          n, modes = tokens & help
+on, cmd,  fast, null,     apps/chifra, help_data,            n, modes = data & help
+on, cmd,  fast, null,     apps/chifra, help_blocks,          n, modes = blocks & help
+on, cmd,  fast, null,     apps/chifra, help_transactions,    n, modes = transactions & help
+on, cmd,  fast, null,     apps/chifra, help_receipts,        n, modes = receipts & help
+on, cmd,  fast, null,     apps/chifra, help_logs,            n, modes = logs & help
+on, cmd,  fast, null,     apps/chifra, help_traces,          n, modes = traces & help
+on, cmd,  fast, null,     apps/chifra, help_quotes,          n, modes = quotes & help
+on, cmd,  fast, null,     apps/chifra, help_scrape,          n, modes = scrape & help
+on, cmd,  fast, null,     apps/chifra, help_status,          n, modes = status & help
+on, cmd,  fast, null,     apps/chifra, help_config,          n, modes = settings & help
+on, cmd,  fast, null,     apps/chifra, help_rm,              n, modes = rm & help
+on, cmd,  fast, null,     apps/chifra, help_message,         n, modes = message & help
+on, cmd,  fast, null,     apps/chifra, help_leech,           n, modes = leech & help
+on, cmd,  fast, null,     apps/chifra, help_seed,            n, modes = seed & help
 
 on, cmd,  fast, seed,     apps/chifra, no_params,            n,
 on, cmd,  fast, leech,    apps/chifra, invalid_option,       n, modes = not_a_mode
 
 on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-# on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
-# on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
-
 on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & yes & verbose = 10
 
-# on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, modes = blocks
-# on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks & not_an_option
-# on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
-# on, both, fast, blocks,   apps/chifra, blocks2,              y, modes = blocks & blocks = 12 & fmt = csv & no_header
+on, both, fast, names,    apps/chifra, names,                y, modes = names & expand
+on, both, fast, names,    apps/chifra, names_noparams,       n, modes = names & fmt = txt
+on, both, fast, names,    apps/chifra, names_badparams,      y, modes = names & not_an_option
 
-# on, both, fast, names,    apps/chifra, names,                y, modes = names & expand & fmt = txt
-# on, both, fast, names,    apps/chifra, names_noparams,       y, modes = names & fmt = txt
-# on, both, fast, names,    apps/chifra, names_badparams,      y, modes = names & not_an_option
+on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440
+on, both, fast, slurp,    apps/chifra, slurp,                y, modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 
-# on, both, fast, settings, apps/chifra, config_noparms,       y, modes = settings
-# on, both, fast, settings, apps/chifra, config_badparms,      y, modes = settings & bad-param
-# on, both, fast, settings, apps/chifra, config_get,           y, modes = settings & get
-# on, both, fast, settings, apps/chifra, config_set,           y, modes = settings & set
+on, both, fast, blocks,   apps/chifra, blocks_noparams,      y, modes = blocks
+on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks & not_an_option
+on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
+on, both, fast, blocks,   apps/chifra, blocks2,              n, modes = blocks & blocks = 12 & fmt = csv & no_header
 
-# on, both, fast, status,   apps/chifra, status,               y, modes = status all
-# on, both, fast, status,   apps/chifra, status_details,       y, modes = status all & details & start = 1400000 & end = 2000000
+on, both, fast, status,   apps/chifra, status,               y, modes = status all
+on, both, fast, status,   apps/chifra, status_details,       y, modes = status all & details & start = 1400000 & end = 2000000
 
-# on, both, slow, export,   apps/chifra, export,               y, modes = export & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end:10
+on, both, fast, settings, apps/chifra, config_noparms,       y, modes = settings
+on, both, fast, settings, apps/chifra, config_badparms,      y, modes = settings & bad-param
+on, both, fast, settings, apps/chifra, config_get,           n, modes = settings & get
+on, both, fast, settings, apps/chifra, config_set,           n, modes = settings & set
+
+on, both, slow, export,   apps/chifra, export,               y, modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & end = 10
+on, both, fast, null,     apps/chifra, seed,                 y, modes = seed & verbose
+on, both, fast, null,     apps/chifra, leech,                y, modes = leech & verbose
+
 # on, both, fast, null,     apps/chifra, daemon_noparms,      n, modes = scrape & daemon
 # on, both, fast, null,     apps/chifra, daemon_badparms,     n, modes = scrape & daemon & not_an_option
 # on, both, fast, null,     apps/chifra, daemon,              n, modes = scrape & daemon & sleep 10 & filter 0x1 0x2
 # on, both, fast, null,     apps/chifra, scrape,              n, modes = scrape
-# on, both, fast, null,     apps/chifra, seed,                n, modes = seed & verbose
-# on, both, fast, null,     apps/chifra, seed,                n, modes = leech & verbose
 
 #
 # These tests used to work against the ability to customize the exporter per address. This feature has been lost.
@@ -49,29 +71,6 @@ on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & add
 # off, both, fast, null,    apps/chifra, config_show_tip,     n, settings show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 # off, both, fast, null,    apps/chifra, config_edit,         n, settings edit & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 # off, both, fast, null,    apps/chifra, config_show_tip_v,   n, settings show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & verbose:3
-
-on, cmd,  fast, null,     apps/chifra, chifra_help,          n, help
-on, cmd,  fast, null,     apps/chifra, chifra_help_list,     n, modes = list & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_export,   n, modes = export & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_slurp,    n, modes = slurp & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_names,    n, modes = names & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_abi,      n, modes = abi & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_state,    n, modes = state & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_tokens,   n, modes = tokens & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_data,     n, modes = data & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_blocks,   n, modes = blocks & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_transactions, n, modes = transactions & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_receipts, n, modes = receipts & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_logs,     n, modes = logs & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_traces,   n, modes = traces & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_quotes,   n, modes = quotes & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_scrape,   n, modes = scrape & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_status,   n, modes = status & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_config,   n, modes = settings & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_rm,       n, modes = rm & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_message,  n, modes = message & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_leech,    n, modes = leech & help
-on, cmd,  fast, null,     apps/chifra, chifra_help_seed,     n, modes = seed & help
 
 # ./apps/chifra/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Create a TrueBlocks monitor configuration."),
 # ./apps/chifra/options.cpp:    COption("command", "", "list<enum[list|export|slurp|names|abi|state|tokens|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|config|rm|message|leech|seed]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),

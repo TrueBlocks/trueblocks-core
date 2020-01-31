@@ -1,0 +1,2 @@
+chifra argc: 3 [1:leech] [2:--verbose] 
+chifra leech --verbose 

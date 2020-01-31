@@ -4,6 +4,7 @@ TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG
 { "type": "CTrace", "fieldList": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
 [{
   "type": "call",
+  "articulatedTrace": {},
   "action": {
     "address": "0x0",
     "balance": 0,
@@ -23,6 +24,7 @@ TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG
 }
 , {
   "type": "call",
+  "articulatedTrace": {},
   "action": {
     "address": "0x0",
     "balance": 0,

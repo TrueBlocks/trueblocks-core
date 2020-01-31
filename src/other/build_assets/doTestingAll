@@ -15,12 +15,5 @@ make
 
 doTestingApi --filter all --mode both --clean --report $@
 
-echo "Copying working folder to compare folder..."
-cd $TEST_FOLDER/
-rm -fR compare/
-cp -pR working compare
-find compare -name "*gitignore*" -exec rm '{}' ';'
-rm -fR gold/apps/acctScrape/99_1234...7890
-
 cd $BUILD_FOLDER
 echo "Done..."

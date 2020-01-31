@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "cacheStatus - Invalid option '3' for 'depth'. One of [0|1|2] required. Quitting..."
-  ]
-}

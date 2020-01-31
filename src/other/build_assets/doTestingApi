@@ -35,15 +35,4 @@ mv api/server.save api/server.js
 #echo "--------- 4 --------------"
 #grep "^env" api/server.js
 
-cd $TEST_FOLDER
-#echo "Removing compare folder..."
-rm -fR compare/
-
-#echo "Copying working to compare..."
-cp -pR working compare
-find compare -name "*gitignore*" -exec rm '{}' ';'
-rm -fR gold/apps/acctScrape/99_1234...7890
-
 cd $BUILD_FOLDER
-
-#echo "Done..."

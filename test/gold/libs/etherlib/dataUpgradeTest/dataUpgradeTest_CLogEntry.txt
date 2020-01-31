@@ -89,6 +89,7 @@ topic3              	1021	0	131132	T_HASH TS_STRING
   "address": "0x0",
   "logIndex": 0,
   "topics": [],
+  "articulatedLog": {},
   "transactionLogIndex": 0
 }
 

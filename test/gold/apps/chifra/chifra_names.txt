@@ -1,6 +1,5 @@
-chifra argc: 5 [1:accounts] [2:--expand] [3:--fmt] [4:txt] 
-chifra accounts --expand --fmt txt 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
+chifra argc: 3 [1:names] [2:--expand] 
+chifra names --expand 
 ethNames argc: 2 [1:--expand] 
 ethNames --expand 
 group	subgroup	address	name	symbol	source	description	logo	is_contract	is_private	is_shared
@@ -153,8 +152,6 @@ group	subgroup	address	name	symbol	source	description	logo	is_contract	is_privat
 50-Tokens		0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS	Etherscan.io	A smart, secure, user-friendly, multi-coin wallet for all essential crypto needs, from safekeeping, intelligent trading, portfolio management, easy conversion to fiat and spending of cryptocurrencies - MidasProtocol.io	midasprotocol_28.png	true	false	true
 50-Tokens		0x241ba672574a78a3a604cdd0a94429a73a84a324	4NEW	KWATT	Etherscan.io	CLEAN GREEN ENERGY FOR CRYPTO MINING	4newtoken_28.png	true	false	true
 50-Tokens		0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	Etherscan.io	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	unikoingold_28.png	true	false	true
-50-Tokens		0x24dcc881e7dd730546834452f21872d5cb4b5293	SCRL	SCRL	Etherscan.io	Scroll is a data storage, management and logistics platform that uses blockchain technology to add better cryptography and more transparency to the Internet of Information.	scrollnetwork2_28.png	true	false	true
-50-Tokens		0x24ddff6d8b8a42d835af3b440de91f3386554aa4	IUNGO	ING	Etherscan.io	Decentralised global wireless internet provider	iungo.png	true	false	true
 33-Set Protocol	06-Other	0x25c499e7306248c308cef403d9824110817b305c	Transfer Proxy		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 33-Set Protocol	04-Libraries	0x293dcc7c8350ce9f1283572ac89861f768158151	Standard Settle Rebalance Library		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0x304a554a310c7e546dfe434669c62820b7d83490	DarkDAO		TrueBlocks.io			true	false	true
@@ -171,6 +168,7 @@ group	subgroup	address	name	symbol	source	description	logo	is_contract	is_privat
 30-Contracts		0x5adf43dd006c6c36506e2b2dfa352e60002d22dc	Giveth Donations Vault	GHT	Giveth website			true	false	true
 33-Set Protocol	01-Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Set Protocol Vault		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0x6090a6e47849629b7245dfa1ca21d94cd15878ef	ENS Related	ENS	TrueBlocks.io			true	false	true
+30-Contracts		0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin v2.0	DAI	Etherscan.io	No description	dai_stablecoin.png	true	false	true
 30-Contracts		0x713b73c3994442b533e6a083ec968e40606810ec	Eth Early Adoption Reg	EEAR	quickBlocks.io	An early, known-dead address useful for testing		true	false	true
 33-Set Protocol	01-Core	0x75fbbdeafe23a48c0736b2731b956b7a03adcfb2	Set Protocol Core		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3	Moloch Paying Proxy		TrueBlocks.io			true	false	true
@@ -179,7 +177,7 @@ group	subgroup	address	name	symbol	source	description	logo	is_contract	is_privat
 33-Set Protocol	06-Other	0x818c639ca5f986115eacf77e58d4804de1dd5d40	Linear Auction Price Curve		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 33-Set Protocol	02-Modules	0x8440f6a2c42118bed0d6e6a89bf170ffd13e21c0	Issuance Order Module		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0x8942595a2dc5181df0465af0d7be08c8f23c93af	Gnosis Safe for Moloch		TrueBlocks.io			true	false	true
-30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Dai Stablecoin v1.0	DAI	Etherscan.io	No description	dai_stablecoin.png	true	false	true
+30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	SAI	Etherscan.io	No description	sai_stablecoin.png	true	false	true
 33-Set Protocol	06-Other	0x8d5cf870354fffae0586b639da6d4e4f6c659c69	WhiteList		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0x8f951903c9360345b4e1b536c7f5ae8f88a64e79	Giveth Donations		Giveth website			true	false	true
 30-Contracts		0x914d1b8b43e92723e64fd0a06f5bdb8dd9b10c79	DarkDAOextraBalance		TrueBlocks.io			true	false	true
@@ -202,6 +200,7 @@ group	subgroup	address	name	symbol	source	description	logo	is_contract	is_privat
 33-Set Protocol	04-Libraries	0xc6e977741487dd8457397b185709cd89b0cf5e7e	Order Library		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0xd2e16a20dd7b1ae54fb0312209784478d069c7b0	DaoManagedAcct		TrueBlocks.io			true	false	true
 30-Contracts		0xda4a4626d3e16e094de3225a751aab7128e96526	DAO Curator		TrueBlocks.io			true	false	true
+30-Contracts		0xdf869fad6db91f437b59f1edefab319493d4c4ce	GitCoin Grants		Gitcoin grants contract			true	false	true
 33-Set Protocol	01-Core Caller	0xf3862af14cbb4d9b781e41a3d4d74e7c2cdb73e2	Set Protocol Core Caller		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 33-Set Protocol	04-Libraries	0xf8ba20d0307c1b07cdf31bdf6c1efad786e6b448	Standard Place Bid Library		https://github.com/SetProtocol/set-protocol-contracts			true	false	true
 30-Contracts		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP	Ethereum.org	The ethereum tip jar		true	false	true

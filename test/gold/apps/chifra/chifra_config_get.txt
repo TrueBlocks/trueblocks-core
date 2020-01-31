@@ -1,7 +1,5 @@
-chifra argc: 3 [1:config] [2:--get] 
-chifra config --get 
-TIME ~ CLOCK - <INFO>  : Connecting to node...
-TIME ~ CLOCK - <INFO>  : chifra calling: cacheStatus --get_config
+chifra argc: 3 [1:settings] [2:--get] 
+chifra settings --get 
 cacheStatus argc: 2 [1:--get_config] 
 cacheStatus --get_config 
 {
@@ -248,12 +246,16 @@ cacheStatus --get_config
                 {
                   "address": "0x0000100001000010000100001000010000100001",
                   "group": "81-Custom",
-                  "name": "TestWallet1"
+                  "group_sort": "81",
+                  "name": "TestWallet1",
+                  "raw_group": "Custom"
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
                   "group": "81-Custom",
-                  "name": "TestWallet2"
+                  "group_sort": "81",
+                  "name": "TestWallet2",
+                  "raw_group": "Custom"
                 }
               ]
             }

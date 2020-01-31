@@ -1,17 +1,17 @@
-[
-  {
-    "gasLimit": 5000,
-    "gasUsed": 0,
-    "hash": "0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0",
-    "blockNumber": 12,
-    "parentHash": "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242",
-    "miner": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
-    "difficulty": 17179844608,
-    "price": 0,
-    "finalized": 1,
-    "timestamp": 1438270144,
-    "transactions": [],
-    "date": "2015-07-30 15:29:04 UTC",
-    "age": "100"
-  }
-]
+{
+  "data": [
+    {
+      "gasLimit": 5000,
+      "gasUsed": 0,
+      "hash": "0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0",
+      "blockNumber": 12,
+      "parentHash": "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242",
+      "miner": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
+      "difficulty": 17179844608,
+      "price": 0,
+      "finalized": true,
+      "timestamp": 1438270144,
+      "transactions": []
+    }
+  ]
+}

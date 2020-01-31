@@ -74,7 +74,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         case 'a':
             if (fieldName % "articulatedTx") {
                 if (articulatedTx == CFunction())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return articulatedTx.Format();
             }
@@ -132,7 +132,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         case 'r':
             if (fieldName % "receipt") {
                 if (receipt == CReceipt())
-                    return "";
+                    return "{}";
                 expContext().noFrst = true;
                 return receipt.Format();
             }

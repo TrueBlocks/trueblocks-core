@@ -12,12 +12,5 @@ cmake ../src
 make
 doTestingApi --filter fast --mode cmd --no_quit $@
 
-echo "Copying working folder to compare folder..."
-cd $TEST_FOLDER/
-rm -fR compare/
-cp -pR working compare
-find compare -name "*gitignore*" -exec rm '{}' ';'
-rm -fR gold/apps/acctScrape/99_1234...7890
-
 cd $BUILD_FOLDER
 echo "Done..."
