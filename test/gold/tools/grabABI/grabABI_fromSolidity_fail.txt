@@ -1,22 +1,21 @@
 grabABI argc: 3 [1:0x2234567812345678123456781234567812345678] [2:--monitored] 
 grabABI 0x2234567812345678123456781234567812345678 --monitored 
 Address 0x2234567812345678123456781234567812345678 is not a smart contract. Skipping...
-
-  Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run.
-
-  Usage:    grabABI [-c|-g|-n|-m|-k|-a|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-
-  Where:  
-	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
-	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-m  (--monitored)     load ABIs from monitored addresses
-	-k  (--known)         load common 'known' ABIs from cache
-	-a  (--addr)          include address of smart contract for the abi in output
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run.
+encoding	type	name	signature	input_names	output_names
+0xdd62ed3e	function	allowance	allowance(address,address)	owner,spender,	remaining,,
+0x095ea7b3	function	approve	approve(address,uint256)	spender,value,	success,,
+0x70a08231	function	balanceOf	balanceOf(address)	owner,	balance,,
+0x313ce567	function	decimals	decimals()		val_0,,
+0xd8ccd0f3	function	free	free(uint256)	value,	success,,
+0x5f2e2b45	function	freeFrom	freeFrom(address,uint256)	from,value,	success,,
+0x079d229f	function	freeFromUpTo	freeFromUpTo(address,uint256)	from,value,	freed,,
+0x6366b936	function	freeUpTo	freeUpTo(uint256)	value,	freed,,
+0xa0712d68	function	mint	mint(uint256)	value,	,
+0x06fdde03	function	name	name()		val_0,,
+0x95d89b41	function	symbol	symbol()		val_0,,
+0x18160ddd	function	totalSupply	totalSupply()		supply,,
+0xa9059cbb	function	transfer	transfer(address,uint256)	to,value,	success,,
+0x23b872dd	function	transferFrom	transferFrom(address,address,uint256)	from,to,value,	success,,
+0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	Approval	Approval(address,address,uint256)	owner,spender,value,	,
+0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	Transfer	Transfer(address,address,uint256)	from,to,value,	"Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run."

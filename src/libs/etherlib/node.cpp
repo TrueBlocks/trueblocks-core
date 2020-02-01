@@ -102,6 +102,8 @@ bool getObjectViaRPC(CBaseNode& node, const string_q& method, const string_q& pa
 
 //--------------------------------------------------------------------------------
 bool getBlock_light(CBlock& block, const string_q& val) {
+    if (str_2_Uint(val) != 0 && fileSize(getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val))) > 0)
+        return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, str_2_Uint(val)));
     block.light = true;
     getObjectViaRPC(block, "eth_getBlockByNumber", "[" + quote(val) + ",false]");
     return true;
@@ -1319,6 +1321,10 @@ bool freshenTimestampFile(blknum_t minBlock) {
 
 //-----------------------------------------------------------------------
 bool loadTimestampArray(uint32_t** theArray, size_t& cnt) {
+    // We can always get the size if the file exits
+    string_q fn = configPath("ts.bin");
+    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+
     // If user does not tell us where to put the data, we can't process it...
     if (theArray == NULL)
         return false;
@@ -1330,9 +1336,6 @@ bool loadTimestampArray(uint32_t** theArray, size_t& cnt) {
         cnt = 0;
     }
 
-    // Let's try to get the data...
-    string_q fn = configPath("ts.bin");
-    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
     *theArray = new uint32_t[cnt * 2];  // blknum, timestamp both uint32_t
 
     // If we didn't get the space to store our data, fail...

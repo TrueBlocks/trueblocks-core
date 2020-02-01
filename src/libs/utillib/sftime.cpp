@@ -880,6 +880,40 @@ time_q SubtractOneDay(const time_q& date) {
     return time_q(year, month, --day, hour, minute, sec);
 }
 
+//---------------------------------------------------------------------------------------------
+time_q AddOneHour(const time_q& date) {
+    if (BOH(date).GetHour() == 23)
+        return BOD(AddOneDay(date));
+    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, 0, 0);
+}
+
+//---------------------------------------------------------------------------------------------
+time_q AddOneWeek(const time_q& date) {
+    time_q ret = date;
+    for (size_t i = 0; i < 7; i++)
+        ret = AddOneDay(ret);
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------
+time_q AddOneMonth(const time_q& date) {
+    if (date.GetMonth() == 12)
+        return time_q(date.GetYear() + 1, 1, 1, 0, 0, 0);
+    return time_q(date.GetYear(), date.GetMonth() + 1, 1, 0, 0, 0);
+}
+
+//---------------------------------------------------------------------------------------------
+time_q AddOneQuarter(const time_q& date) {
+    if (date.GetMonth() > 9)
+        return time_q(date.GetYear() + 1, ((date.GetMonth() + 3) % 12) + 1, 1, 0, 0, 0);
+    return time_q(date.GetYear(), date.GetMonth() + 3, 1, 0, 0, 0);
+}
+
+//---------------------------------------------------------------------------------------------
+time_q AddOneYear(const time_q& date) {
+    return time_q(date.GetYear() + 1, 1, 1, 0, 0, 0);
+}
+
 //----------------------------------------------------------------------------------------------------
 time_q BOW(const time_q& tm) {
     time_q ret = BOD(tm);
@@ -894,6 +928,50 @@ time_q EOW(const time_q& tm) {
     while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
         ret = AddOneDay(ret);
     return ret;
+}
+
+//------------------------------------------------------------------------
+typedef time_q (*PTF)(const time_q& date);
+
+//------------------------------------------------------------------------
+bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, bool fallback, PTF BOP, PTF BONP) {
+    if (fallback)
+        ta.push_back(BOP(startIn));
+    for (time_q t = BONP(startIn); t <= BONP(stop);) {
+        ta.push_back(t);
+        t = BONP(t);
+    }
+    return true;
+}
+
+//------------------------------------------------------------------------
+bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOH, BONH);
+}
+
+//------------------------------------------------------------------------
+bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOD, BOND);
+}
+
+//------------------------------------------------------------------------
+bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOW, BONW);
+}
+
+//------------------------------------------------------------------------
+bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOM, BONM);
+}
+
+//------------------------------------------------------------------------
+bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOQ, BONQ);
+}
+
+//------------------------------------------------------------------------
+bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback) {
+    return expandTimeArray(ta, start, stop, fallback, BOY, BONY);
 }
 
 //----------------------------------------------------------------------------------------------------

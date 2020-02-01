@@ -155,7 +155,8 @@ bool COptions::parseArguments(string_q& command) {
             ostringstream os;
             for (auto err : errors)
                 os << err;
-            return usage(os.str());
+            // report but do not quit processing
+            cerr << os.str() << endl;
         }
         abi.address = a;
         for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)

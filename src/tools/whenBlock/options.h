@@ -25,10 +25,14 @@ class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
     bool list;
+    bool timestamps;
+    uint64_t skip;
     // END_CODE_DECLARE
 
-    CBlockMap items;
     CNameValueArray requests;
+    bool isText;
+    blknum_t stop;
+    bool first;
 
     COptions(void);
     ~COptions(void);
@@ -38,7 +42,6 @@ class COptions : public CBlockOptions {
 
     void applyFilter(void);
     string_q listSpecials(format_t fmt) const;
-    bool presentTimestamps(uint64_t skip);
 };
 
 extern bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts);

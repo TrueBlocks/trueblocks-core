@@ -60,6 +60,13 @@ on, both, fast, state, tools/getState, fmt_junk,                       y, addrs 
 
 on, cmd,  fast, state, tools/getState, from_file,                      y, file:cmd_file
 
+#on, both, fast, state, tools/getState, balance_10,                     y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46100-46300:10
+#on, both, fast, state, tools/getState, balance_annually,               y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-4900000:annually
+#on, both, fast, state, tools/getState, balance_quarterly,              y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-2900000:quarterly
+#on, both, fast, state, tools/getState, balance_monthly,                y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-780000:monthly
+#on, both, fast, state, tools/getState, balance_weekly,                 y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-260000:weekly
+#on, both, fast, state, tools/getState, balance_daily,                  y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 25000-60000:daily
+#on, both, fast, state, tools/getState, balance_hourly,                 y, addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46000-48000:hourly
 
 # run_state_test("getState_accttype"     "${TIP}" " --mode" " accttype" " 2500000")
 # run_state_test("getState_all"          "${TIP}" " --mode" " all" " 2500000")

@@ -144,6 +144,7 @@ class time_q {
 
     friend uint32_t getDayOfWeek(const CDate& date);
 };
+typedef vector<time_q> CTimeArray;
 
 //-----------------------------------------------------------------------------------
 extern time_q Now(void);
@@ -158,11 +159,6 @@ extern const time_q earliestDate;
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 #define FMT_EXPORT string_q("%Y-%m-%dT%H:%M:%S")
 #define FMT_SHORT string_q("%Y%m%d")
-
-//---------------------------------------------------------------------------------------------
-extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
-extern time_q AddOneDay(const time_q& date);
-extern time_q SubtractOneDay(const time_q& date);
 
 //---------------------------------------------------------------------------------------------
 inline time_q BOH(const time_q& date) {
@@ -191,6 +187,24 @@ inline time_q EOD(const time_q& date) {
 //---------------------------------------------------------------------------------------------
 extern time_q BOW(const time_q& tm);
 extern time_q EOW(const time_q& tm);
+
+//---------------------------------------------------------------------------------------------
+inline time_q BOM(const time_q& date) {
+    return time_q(date.GetYear(), date.GetMonth(), 1, 0, 0, 0);
+}
+extern time_q EOM(const time_q& tm);
+
+//---------------------------------------------------------------------------------------------
+inline time_q BOQ(const time_q& date) {
+    return time_q(date.GetYear(), uint32_t((date.GetMonth() - 1) / 3) * 3 + 1, 1, 0, 0, 0);
+}
+extern time_q EOQ(const time_q& tm);
+
+//---------------------------------------------------------------------------------------------
+inline time_q BOY(const time_q& date) {
+    return time_q(date.GetYear(), 1, 1, 0, 0, 0);
+}
+extern time_q EOM(const time_q& tm);
 
 //---------------------------------------------------------------------------------------------
 inline time_q MIDDAY(const time_q& date) {
@@ -227,11 +241,54 @@ inline uint32_t get2Digit(uint32_t year) {
 }
 
 //---------------------------------------------------------------------------------------------
+extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
+extern time_q AddOneDay(const time_q& date);
+extern time_q SubtractOneDay(const time_q& date);
+extern time_q AddOneHour(const time_q& date);
+extern time_q AddOneWeek(const time_q& date);
+extern time_q AddOneMonth(const time_q& date);
+extern time_q AddOneQuarter(const time_q& date);
+extern time_q AddOneYear(const time_q& date);
+
+//---------------------------------------------------------------------------------------------
+inline time_q BONH(const time_q& date) {
+    return BOH(earlierOf(latestDate, AddOneHour(date)));
+}
+
+//---------------------------------------------------------------------------------------------
 inline time_q BOND(const time_q& date) {
     return BOD(earlierOf(latestDate, AddOneDay(date)));
 }
 
+//---------------------------------------------------------------------------------------------
+inline time_q BONW(const time_q& date) {
+    return BOW(earlierOf(latestDate, AddOneWeek(date)));
+}
+
+//---------------------------------------------------------------------------------------------
+inline time_q BONM(const time_q& date) {
+    return BOM(earlierOf(latestDate, AddOneMonth(date)));
+}
+
+//---------------------------------------------------------------------------------------------
+inline time_q BONQ(const time_q& date) {
+    return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
+}
+
+//---------------------------------------------------------------------------------------------
+inline time_q BONY(const time_q& date) {
+    return BOY(earlierOf(latestDate, AddOneYear(date)));
+}
+
 //------------------------------------------------------------------
 extern time_q fileLastModifyDate(const string_q& filename);
+
+//------------------------------------------------------------------------
+extern bool expandHourly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
+extern bool expandDaily(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
+extern bool expandWeekly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
+extern bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
+extern bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
+extern bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
 
 }  // namespace qblocks

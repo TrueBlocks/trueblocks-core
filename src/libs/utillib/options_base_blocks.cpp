@@ -55,6 +55,10 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
     return ret;
 }
 
+typedef enum { NONE = 0, HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY } skip_t;
+
+//--------------------------------------------------------------------------------
+static string_q skip_markers = "hourly|daily|weekly|monthly|quarterly|annually";
 //--------------------------------------------------------------------------------
 string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
     string_q arg = argIn;
@@ -62,11 +66,34 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
     direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
     arg = substitute(substitute(arg, ".next", ""), ".prev", "");
 
+    skip_t skip_type = NONE;
+
     // scrape off the skip marker if any
     if (contains(arg, ":")) {
-        string_q s = arg;
-        arg = nextTokenClear(s, ':');
-        skip = max(blknum_t(1), str_2_Uint(s));
+        string_q skip_marker = arg;
+        arg = nextTokenClear(skip_marker, ':');
+        if (isNumeral(skip_marker)) {
+            skip = max(blknum_t(1), str_2_Uint(skip_marker));
+        } else {
+            if (!contains(skip_markers, skip_marker))
+                return "Input argument appears to be invalid. No such skip marker: " + argIn;
+            if (contains(skip_marker, "annually"))
+                skip_type = ANNUALLY;
+            else if (contains(skip_marker, "quarterly"))
+                skip_type = QUARTERLY;
+            else if (contains(skip_marker, "monthly"))
+                skip_type = MONTHLY;
+            else if (contains(skip_marker, "weekly"))
+                skip_type = WEEKLY;
+            else if (contains(skip_marker, "daily"))
+                skip_type = DAILY;
+            else if (contains(skip_marker, "hourly"))
+                skip_type = HOURLY;
+            else {
+                ASSERT(0);  // should never happen
+                skip = 1;
+            }
+        }
     }
 
     if (contains(arg, "-") || contains(arg, "+")) {
@@ -114,6 +141,15 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
             if (!msg.empty())
                 return msg;
             numList.push_back(num);
+
+            //            CTimeArray times;
+            //            extern bool expandHourly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            //            extern bool expandDaily(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            //            extern bool expandWeekly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            //            extern bool expandMonthly(CTimeArray& ta, const time_q& start, size_t n, bool fallback =
+            //            true); extern bool expandQuarterly(CTimeArray& ta, const time_q& start, size_t n, bool
+            //            fallback = true); extern bool expandAnnually(CTimeArray& ta, const time_q& start, size_t n,
+            //            bool fallback = true);
         }
     }
 

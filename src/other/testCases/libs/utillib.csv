@@ -57,6 +57,8 @@ on, cmd,  fast, null, utillib/stringTest,   Extract,        n, val = 4
 on, cmd,  fast, null, utillib/stringTest,   Relational,     n, val = 0
 
 on, cmd,  fast, null, utillib/timeTest,     test00,         n, val = 0
+on, cmd,  fast, null, utillib/timeTest,     test01,         n, val = 1
+on, cmd,  fast, null, utillib/timeTest,     test02,         n, val = 2
 
 on, cmd,  fast, null, utillib/tomlTest,     empty,          n, val = empty.toml
 on, cmd,  fast, null, utillib/tomlTest,     test00,         n, val = test00.toml

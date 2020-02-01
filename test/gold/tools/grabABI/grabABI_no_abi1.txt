@@ -1,22 +1,6 @@
 grabABI argc: 2 [1:0x1728039ce0d18a799c081c5c7fa2090dd365a8d0] 
 grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 
 Address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract. Skipping...
-
-  Could not get the ABI for 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0.json in the current folder and re-run.
-
-  Usage:    grabABI [-c|-g|-n|-m|-k|-a|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-
-  Where:  
-	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
-	-n  (--noconst)       generate encodings for non-constant functions and events only (always true when generating)
-	-m  (--monitored)     load ABIs from monitored addresses
-	-k  (--known)         load common 'known' ABIs from cache
-	-a  (--addr)          include address of smart contract for the abi in output
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+Could not get the ABI for 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0.json in the current folder and re-run.
+encoding	type	name	signature	input_names	output_names
+"Could not get the ABI for 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0.json in the current folder and re-run."

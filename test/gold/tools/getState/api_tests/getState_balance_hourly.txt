@@ -1,0 +1,150 @@
+{
+  "type": "CEthState",
+  "fieldList": [
+    {
+      "name": "blockNumber",
+      "type": "blocknum"
+    },
+    {
+      "name": "balance",
+      "type": "wei"
+    },
+    {
+      "name": "address",
+      "type": "address"
+    },
+    {
+      "name": "ether",
+      "type": "number"
+    }
+  ],
+  "data": [
+    {
+      "blockNumber": 46000,
+      "balance": 2e+21,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 2000
+    },
+    {
+      "blockNumber": 46200,
+      "balance": 1.99895e+21,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1998.95
+    },
+    {
+      "blockNumber": 46400,
+      "balance": 1996775200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.7751999999998
+    },
+    {
+      "blockNumber": 46600,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 46800,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 47000,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 47200,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 47400,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 47600,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 47800,
+      "balance": 1996535200000000000000,
+      "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+      "ether": 1996.5351999999998
+    },
+    {
+      "blockNumber": 46000,
+      "balance": 0,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 0
+    },
+    {
+      "blockNumber": 46200,
+      "balance": 31337,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 3.1337e-14
+    },
+    {
+      "blockNumber": 46400,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 46600,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 46800,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 47000,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 47200,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 47400,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 47600,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    },
+    {
+      "blockNumber": 47800,
+      "balance": 62674,
+      "address": "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+      "ether": 6.2674e-14
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

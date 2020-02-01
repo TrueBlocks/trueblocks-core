@@ -31,6 +31,13 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+//-------------------------------------------------------------------------
+size_t nTimestamps(void) {
+    size_t nTs;
+    loadTimestampArray(NULL, nTs);
+    return nTs;
+}
+
 extern const char* STR_DISPLAY_WHEN;
 extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
@@ -40,8 +47,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray block_list;
-    bool timestamps = false;
-    uint64_t skip = NOPOS;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -108,25 +113,30 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // timestamp mode dominates
-    if (timestamps)
-        return presentTimestamps(skip);
-
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
 
-    // Data verifictions
-    if (requests.size() == 0)
-        return usage("Please supply either a JSON formatted date or a blockNumber.");
-
     // Display formatting
-    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
-    configureDisplay("whenBlock", "CBlock", format);
-    if (exportFmt == API1 || exportFmt == JSON1)
+    // timestamp mode dominates
+    if (timestamps) {
+        string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "fmt_ts", STR_DISPLAY_TIMESTAMP);
+        configureDisplay("whenBlock", "CBlock", format);
         manageFields("CBlock:" + string_q(format));
-
-    // Collect together results for later display
-    applyFilter();
+        isText = (exportFmt == TXT1 || exportFmt == CSV1);
+        if (!isText)
+            expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
+        stop = (nTimestamps() * 2);
+        if (stop == 0)
+            return usage("Could not open timestamp file.");
+    } else {
+        // Data verifictions
+        if (requests.size() == 0)
+            return usage("Please supply either a JSON formatted date or a blockNumber.");
+        string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
+        configureDisplay("whenBlock", "CBlock", format);
+        if (exportFmt == API1 || exportFmt == JSON1)
+            manageFields("CBlock:" + string_q(format));
+    }
 
     return true;
 }
@@ -138,9 +148,13 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     list = false;
+    timestamps = false;
+    skip = NOPOS;
     // END_CODE_INIT
 
-    items.clear();
+    stop = 0;
+    skip = NOPOS;
+    isText = false;
     requests.clear();
     blocks.Init();
 }
@@ -171,46 +185,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-void COptions::applyFilter() {
-    for (auto request : requests) {
-        CBlock block;
-        if (request.first == "block") {
-            string_q bnStr = nextTokenClear(request.second, '|');
-            if (request.second == "latest") {
-                if (isTestMode())
-                    continue;  // latest changes per test, so skip
-                else
-                    bnStr = "latest";
-            }
-
-            getBlock_light(block, str_2_Uint(bnStr));
-
-            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
-            if (block.blockNumber == 0) {
-                blknum_t bn = str_2_Uint(bnStr);
-                if (bn != 0) {
-                    // We've been asked to find a block that is in the future...estimate 14 blocks
-                    block.timestamp = istanbulTs + timestamp_t(14 * (bn - instanbulBlock));
-                    block.blockNumber = bn;
-                    request.second += " (est)";
-
-                } else {
-                    block.timestamp = blockZeroTs;
-                }
-            }
-            block.name = request.second;
-            items[block.blockNumber] = block;
-
-        } else if (request.first == "date") {
-            if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
-                items[block.blockNumber] = block;
-            else
-                LOG_WARN("Could not find a block at date " + request.second);
-        }
-    }
 }
 
 //--------------------------------------------------------------------------------
@@ -273,51 +247,6 @@ bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const strin
     }
     requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::presentTimestamps(uint64_t skip) {
-    uint32_t* tsArray = NULL;
-    size_t nItems;
-    if (!loadTimestampArray(&tsArray, nItems))
-        return usage("Could not open timestamp file.");
-    if (!tsArray)
-        return usage("Could not allocate memory for timestamp option.");
-
-    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "fmt_ts", STR_DISPLAY_TIMESTAMP);
-    configureDisplay("whenBlock", "CBlock", format);
-    manageFields("CBlock:" + string_q(format));
-
-    bool isText = (exportFmt == TXT1 || exportFmt == CSV1);
-    if (!isText)
-        expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
-
-    cout << exportPreamble(exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
-
-    size_t start = 0;
-    size_t n_elements = (nItems * 2);
-    size_t step = 2 * (skip == NOPOS ? 1 : skip);
-
-    for (size_t bn = start; bn < n_elements; bn += step) {
-        CBlock block;
-        block.blockNumber = tsArray[bn];
-        block.timestamp = tsArray[bn + 1];
-        if (isText) {
-            cout << block.Format(expContext().fmtMap["format"]) << endl;
-
-        } else {
-            if (bn != start)
-                cout << "," << endl;
-            cout << "  ";
-            incIndent();
-            block.doExport(cout);
-            decIndent();
-        }
-    }
-    ASSERT(tsArray)
-    delete[] tsArray;
-
-    return false;
 }
 
 //-----------------------------------------------------------------------
