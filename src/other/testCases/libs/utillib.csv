@@ -95,3 +95,5 @@ on, cmd,  fast, null, utillib/typesTest,    README,         n, @th
 on, cmd,  fast, null, utillib/typesTest,    01,             n, val = 0
 
 # on, cmd,  fast, null, utillib/runningTest,  01,             n, val = 0
+
+on, cmd,  fast, null, utillib/yamlTest,     01,             n, val = 0
