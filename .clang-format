@@ -1,7 +1,7 @@
 ---
 # We'll use defaults from the LLVM style, but with 4 columns indentation.
 BasedOnStyle: Google
-IndentWidth: 2
+IndentWidth: 4
 ---
 Language: Cpp
 DerivePointerAlignment: false
@@ -28,7 +28,7 @@ FixNamespaceComments: true
 #ColumnLimit: 0
 #AlignConsecutiveAssignments: true
 #SpaceInEmptyBlock: true
-NamespaceIndentation: All
+#NamespaceIndentation: All
 ---
 Language: JavaScript
 # Use 100 columns for JS.

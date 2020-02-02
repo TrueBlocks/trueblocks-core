@@ -1,0 +1,81 @@
+specVersion: 0.0.2
+description: Sablier is the protocol for real-time finance on Ethereum
+repository: https://github.com/sablierhq/sablier-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: CTokenManager
+    network: {{networkName}}
+    source:
+      abi: CTokenManager
+      address: "{{contracts.cTokenManager.address}}"
+      startBlock: {{contracts.cTokenManager.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      abis:
+        - name: CTokenManager
+          file: ./abis/CTokenManager.json
+      entities:
+        - CToken
+      eventHandlers:
+        - event: WhitelistCToken(indexed address)
+          handler: handleWhitelistCToken
+        - event: DiscardCToken(indexed address)
+          handler: handleDiscardCToken
+      file: ./src/mappings/cTokenManager.ts
+      language: wasm/assemblyscript
+  - kind: ethereum/contract
+    name: Sablier
+    network: {{networkName}}
+    source:
+      abi: Sablier
+      address: "{{contracts.sablier.address}}"
+      startBlock: {{contracts.sablier.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      abis:
+        - name: Sablier
+          file: ./abis/Sablier.json
+      entities:
+        - Cancellation
+        - Stream
+        - Token
+        - Transaction
+        - Withdrawal
+      eventHandlers:
+        - event: CreateStream(indexed uint256,indexed address,indexed
+            address,uint256,address,uint256,uint256)
+          handler: handleCreateStream
+        - event: CreateCompoundingStream(indexed uint256,uint256,uint256,uint256)
+          handler: handleCreateCompoundingStream
+        - event: WithdrawFromStream(indexed uint256,indexed address,uint256)
+          handler: handleWithdrawFromStream
+        - event: CancelStream(indexed uint256,indexed address,indexed address,uint256,uint256)
+          handler: handleCancelStream
+        - event: PayInterest(indexed uint256,uint256,uint256,uint256)
+          handler: handlePayInterest
+      file: ./src/mappings/sablier.ts
+      language: wasm/assemblyscript
+  - kind: ethereum/contract
+    name: Payroll
+    network: {{networkName}}
+    source:
+      abi: Payroll
+      address: "{{contracts.payroll.address}}"
+      startBlock: {{contracts.payroll.startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      abis:
+        - name: Payroll
+          file: ./abis/Payroll.json
+      entities:
+        - ProxyStream
+      eventHandlers:
+        - event: CreateSalary(indexed uint256,indexed uint256,indexed address)
+          handler: handleCreateSalary
+      file: ./src/mappings/payroll.ts
+      language: wasm/assemblyscript
