@@ -1,29 +1,33 @@
 {
-  "type": "CBlock",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "timestamp",
-      "type": "timestamp"
-    },
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "date",
-      "type": "date"
-    }
-  ],
   "data": [
     {
       "blockNumber": 1000000,
       "timestamp": 1455404053,
       "name": "",
       "date": "2016-02-13 22:54:13 UTC"
+    }
+  ],
+  "types": [
+    {
+      "type": "CBlock",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        }
+      ]
     }
   ],
   "meta": {

@@ -28,4 +28,6 @@ getTrace 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --
       "gasUsed": 0,
       "output": "0x"
     }
-  }] }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+] }

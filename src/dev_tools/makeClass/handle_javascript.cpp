@@ -170,7 +170,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{TEXT_IMPORTS}]", (page.has_text ? text_imports.str() : ""));
     string_q tc = text_code.str();
     replace(tc, "} else ", "");  // remove one
-    replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? tc + "\n    }" : ""));
+    replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? trim(tc) + "\n    }" : ""));
 
     ostringstream reducers;
     for (auto e : extractMap) {
@@ -194,8 +194,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{MENU_COMMENT}]", "");
     }
 
-    bool hasEar = contains(asciiFileToString(destFile), "innerEar");
-    replace(code, "[IE]", (hasEar ? "innerEar={this.innerEar} " : ""));
+    bool hasEar = contains(asciiFileToString(destFile), "pageEar");
+    replace(code, "[IE1]", (hasEar ? "pageEar={this.pageEar}" : ""));
+    replace(code, "[IE2]", (hasEar ? "pageEar={this.pageEar}" : ""));
 
     CStringArray lines;
     explode(lines, code, '\n', false);
@@ -232,6 +233,13 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{COLOR}]", page.color);
     replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
     replaceAll(code, STR_EMPTY_INNER, STR_EMPTY_INNER_COLLAPSE);
+    if (contains(destFile, "inner")) {
+        string_q orig = asciiFileToString(destFile);
+        if (!contains(substitute(orig, ", { Fragment }", ""), "Fragment"))
+            replace(code, ", { Fragment }", "");
+        if (contains(code, "DataTableObject"))
+            replace(code, "fields={null} rows={this.props.data}", "object={object}");
+    }
 
     // returns true or false depending on if it WOULD HAVE written the file. If 'test'
     // is true, it doesn't actually write the file
@@ -359,7 +367,7 @@ const char* STR_EXTRACT_CASE =
     "      return {\n"
     "        ...state,\n"
     "        data: action.payload.data_EXTRACT_,\n"
-    "        fieldList: action.payload.fieldList,\n"
+    "        fieldList: action.payload.types[0].fields,\n"
     "        meta: action.payload.meta,\n"
     "        isLoading: false,\n"
     "        error: null\n"

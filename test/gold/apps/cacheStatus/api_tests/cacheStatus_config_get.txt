@@ -1,4 +1,4 @@
-{ "type": "CConfiguration", "fieldList": [{ "name": "files", "type": "object|ts_array" }], "data": [
+{"data": [
 {
   "files": [
     {
@@ -254,7 +254,10 @@
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
+                  "appearanceInterval": 0,
+                  "appearanceRange": 0,
                   "description": "",
+                  "display_name": "",
                   "group": "81-Custom",
                   "group_sort": "81",
                   "logo": "",
@@ -268,7 +271,10 @@
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
+                  "appearanceInterval": 0,
+                  "appearanceRange": 0,
                   "description": "",
+                  "display_name": "",
                   "group": "81-Custom",
                   "group_sort": "81",
                   "logo": "",
@@ -307,4 +313,6 @@
     }
   ]
 }
+], "types": [
+{ "type": "CConfiguration", "fields": [{ "name": "files", "type": "object|ts_array" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

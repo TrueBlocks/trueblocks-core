@@ -1,6 +1,6 @@
 getTrace argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--articulate] [3:--fmt] [4:api] [5:--verbose] 
 getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose 
-{ "type": "CTrace", "fieldList": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
+{"data": [
   {
     "type": "call",
     "error": "",
@@ -105,4 +105,6 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
       "gasUsed": 537,
       "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
     }
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

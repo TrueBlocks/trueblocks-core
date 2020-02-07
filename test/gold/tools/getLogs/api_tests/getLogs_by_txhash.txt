@@ -1,31 +1,4 @@
 {
-  "type": "CLogEntry",
-  "fieldList": [
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "data",
-      "type": "text"
-    },
-    {
-      "name": "logIndex",
-      "type": "blocknum"
-    },
-    {
-      "name": "topics",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "compressedLog",
-      "type": "text"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    }
-  ],
   "data": [
     {
       "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -46,6 +19,37 @@
       ],
       "compressedLog": "",
       "type": "mined"
+    }
+  ],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

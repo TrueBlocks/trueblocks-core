@@ -48,4 +48,6 @@ getLogs --file:cmd_file --verbose --fmt json
         }
       ]
     }
-  }] }
+  }], "types": [
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }] }
+] }

@@ -172,6 +172,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (expContext().asEther) {
+        SHOW_FIELD(CAccountWatch, "curEther");
+        HIDE_FIELD(CAccountWatch, "curBalance");
+    } else {
+        HIDE_FIELD(CAccountWatch, "curEther");
+        SHOW_FIELD(CAccountWatch, "curBalance");
+    }
+
     EXIT_NOMSG8(true);
 }
 
@@ -254,11 +262,13 @@ COptions::COptions(void) {
     HIDE_FIELD(CAccountName, "is_contract");
     HIDE_FIELD(CAccountName, "is_private");
     HIDE_FIELD(CAccountName, "is_shared");
-    UNHIDE_FIELD(CAccountName, "nRecords");
     UNHIDE_FIELD(CAccountName, "nAppearances");
     UNHIDE_FIELD(CAccountName, "sizeInBytes");
     UNHIDE_FIELD(CAccountName, "firstAppearance");
     UNHIDE_FIELD(CAccountName, "latestAppearance");
+    UNHIDE_FIELD(CAccountName, "display_name");
+    UNHIDE_FIELD(CAccountName, "appearanceRange");
+    UNHIDE_FIELD(CAccountName, "appearanceInterval")
 
     minArgs = 0;
 

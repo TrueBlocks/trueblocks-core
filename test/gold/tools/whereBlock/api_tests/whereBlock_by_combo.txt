@@ -1,19 +1,4 @@
 {
-  "type": "CCacheEntry",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "text"
-    },
-    {
-      "name": "cached",
-      "type": "bool"
-    },
-    {
-      "name": "path",
-      "type": "text"
-    }
-  ],
   "data": [
     {
       "blockNumber": "43981",
@@ -49,6 +34,25 @@
       "blockNumber": "2001004",
       "cached": false,
       "path": "--nodeVersion--"
+    }
+  ],
+  "types": [
+    {
+      "type": "CCacheEntry",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "text"
+        },
+        {
+          "name": "cached",
+          "type": "bool"
+        },
+        {
+          "name": "path",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

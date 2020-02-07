@@ -1,194 +1,250 @@
 {
-  "type": "CAccountName",
-  "fieldList": [
-    {
-      "name": "group",
-      "type": "text"
-    },
-    {
-      "name": "subgroup",
-      "type": "text"
-    },
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "symbol",
-      "type": "text"
-    },
-    {
-      "name": "description",
-      "type": "text"
-    },
-    {
-      "name": "source",
-      "type": "text"
-    },
-    {
-      "name": "logo",
-      "type": "text"
-    },
-    {
-      "name": "is_contract",
-      "type": "bool"
-    },
-    {
-      "name": "is_private",
-      "type": "bool"
-    },
-    {
-      "name": "is_shared",
-      "type": "bool"
-    }
-  ],
   "data": [
     {
+      "group": "30.2 - Gitcoin Grants",
+      "subgroup": "",
+      "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
+      "name": "Grant 160 - Antiprosynth Twitter Account Activity",
+      "symbol": "",
+      "source": "",
+      "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
+      "description": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    },
+    {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "FuzeX",
       "address": "0x1829aa045e21e0d59580024a951db48096e01782",
+      "name": "FuzeX",
       "symbol": "FXT",
-      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips",
       "source": "Etherscan.io",
       "logo": "fuzex_28.png",
-      "is_contract": true,
+      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "ThoreCoin",
       "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
+      "name": "ThoreCoin",
       "symbol": "THR",
-      "description": "THR represents a basket of top-traded high-demand coins Simply put, it’s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens",
       "source": "Etherscan.io",
       "logo": "thorecoin_28.png",
-      "is_contract": true,
+      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äôs a Basket of Multiple cryptocurrencies in which you can invest by buying tokens",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "Silent Notary Token",
       "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
+      "name": "Silent Notary Token",
       "symbol": "SNTR",
-      "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.",
       "source": "Etherscan.io",
       "logo": "silentnotary.png",
-      "is_contract": true,
+      "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "SkinCoin",
       "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
+      "name": "SkinCoin",
       "symbol": "SKIN",
-      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry.",
       "source": "Etherscan.io",
       "logo": "skincoin_28.png",
-      "is_contract": true,
+      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "EQUAL",
       "address": "0x47dd62d4d075dead71d0e00299fc56a2d747bebb",
+      "name": "EQUAL",
       "symbol": "EQL",
-      "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.",
       "source": "Etherscan.io",
       "logo": "equaltoken_28.png",
-      "is_contract": true,
+      "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
+    },
+    {
+      "group": "20-Friends",
+      "subgroup": "",
+      "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
+      "name": "TrueBlocks Tip Jar Doner",
+      "symbol": "",
+      "source": "",
+      "logo": "",
+      "description": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
+    },
+    {
+      "group": "20-Friends",
+      "subgroup": "",
+      "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
+      "name": "psdev tip jar",
+      "symbol": "",
+      "source": "",
+      "logo": "",
+      "description": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "Unicorns Tokens",
       "address": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
+      "name": "Unicorns Tokens",
       "symbol": "UNI",
-      "description": "Ethereum tip jar unicorn tokens",
       "source": "Ethereum.org",
       "logo": "",
-      "is_contract": true,
+      "description": "Ethereum tip jar unicorn tokens",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
+    },
+    {
+      "group": "81-Custom",
+      "subgroup": "Individual",
+      "address": "0x8f53781799515e5dc8f5d00c528940cae99ac969",
+      "name": "Corey Perry's TipJar",
+      "symbol": "",
+      "source": "https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC",
+      "logo": "",
+      "description": "",
+      "is_contract": false,
+      "is_private": false,
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "ABX Token",
       "address": "0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e",
+      "name": "ABX Token",
       "symbol": "ABX",
-      "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges.",
       "source": "Etherscan.io",
       "logo": "abx_28.png",
-      "is_contract": true,
+      "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "PCHAIN",
       "address": "0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3",
+      "name": "PCHAIN",
       "symbol": "PAI",
-      "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.",
       "source": "Etherscan.io",
       "logo": "pchain_28.png",
-      "is_contract": true,
+      "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "Insights Network",
       "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
+      "name": "Insights Network",
       "symbol": "INSTAR",
-      "description": "The Insights Network’s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.",
       "source": "Etherscan.io",
       "logo": "insightsnetwork28.png",
-      "is_contract": true,
+      "description": "The Insights Network‚Äôs unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "BHPCash",
       "address": "0xee74110fb5a1007b06282e0de5d73a61bf41d9cd",
+      "name": "BHPCash",
       "symbol": "BHPC",
-      "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.",
       "source": "Etherscan.io",
       "logo": "bhpcash_28.png",
-      "is_contract": true,
+      "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
     },
     {
       "group": "30-Contracts",
       "subgroup": "",
-      "name": "Etherum Tip Jar",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "name": "Etherum Tip Jar",
       "symbol": "TIP",
-      "description": "The ethereum tip jar",
-      "source": "Ethereum.org",
+      "source": "",
       "logo": "",
-      "is_contract": true,
+      "description": "The ethereum tip jar",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "logo",
+          "type": "text"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_private",
+          "type": "bool"
+        },
+        {
+          "name": "is_shared",
+          "type": "bool"
+        }
+      ]
     }
   ],
   "meta": {

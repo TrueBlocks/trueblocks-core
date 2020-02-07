@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "accountname.h"
+#include "options_base.h"
 
 namespace qblocks {
 
@@ -74,6 +75,12 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "address") {
                 return addr_2_Str(address);
             }
+            if (fieldName % "appearanceRange") {
+                return uint_2_Str(appearanceRange);
+            }
+            if (fieldName % "appearanceInterval") {
+                return uint_2_Str(appearanceInterval);
+            }
             break;
         case 'c':
             if (fieldName % "color") {
@@ -83,6 +90,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'd':
             if (fieldName % "description") {
                 return description;
+            }
+            if (fieldName % "display_name") {
+                return display_name;
             }
             break;
         case 'f':
@@ -110,19 +120,19 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "logo") {
                 return logo;
             }
-            if (fieldName % "latestAppearance") {
-                return uint_2_Str(latestAppearance);
-            }
             if (fieldName % "lastExport") {
                 return uint_2_Str(lastExport);
+            }
+            if (fieldName % "latestAppearance") {
+                return uint_2_Str(latestAppearance);
             }
             break;
         case 'n':
             if (fieldName % "name") {
                 return name;
             }
-            if (fieldName % "nRecords") {
-                return uint_2_Str(nRecords);
+            if (fieldName % "nAppearances") {
+                return uint_2_Str(nAppearances);
             }
             break;
         case 'p':
@@ -171,6 +181,14 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 address = str_2_Addr(fieldValue);
                 return true;
             }
+            if (fieldName % "appearanceRange") {
+                appearanceRange = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "appearanceInterval") {
+                appearanceInterval = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'c':
             if (fieldName % "color") {
@@ -181,6 +199,10 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'd':
             if (fieldName % "description") {
                 description = fieldValue;
+                return true;
+            }
+            if (fieldName % "display_name") {
+                display_name = fieldValue;
                 return true;
             }
             break;
@@ -215,12 +237,12 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 logo = fieldValue;
                 return true;
             }
-            if (fieldName % "latestAppearance") {
-                latestAppearance = str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "lastExport") {
                 lastExport = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "latestAppearance") {
+                latestAppearance = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -229,8 +251,8 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 name = fieldValue;
                 return true;
             }
-            if (fieldName % "nRecords") {
-                nRecords = str_2_Uint(fieldValue);
+            if (fieldName % "nAppearances") {
+                nAppearances = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -285,22 +307,25 @@ bool CAccountName::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> group;
     archive >> subgroup;
-    archive >> name;
     archive >> address;
+    archive >> name;
     archive >> symbol;
-    archive >> description;
     archive >> source;
     archive >> logo;
-    // archive >> path;
-    // archive >> color;
+    archive >> description;
     archive >> is_contract;
     archive >> is_private;
     archive >> is_shared;
+    // archive >> color;
+    // archive >> nAppearances;
+    // archive >> lastExport;
     // archive >> firstAppearance;
     // archive >> latestAppearance;
-    // archive >> lastExport;
-    // archive >> nRecords;
+    // archive >> appearanceRange;
+    // archive >> appearanceInterval;
+    // archive >> path;
     // archive >> sizeInBytes;
+    // archive >> display_name;
     finishParse();
     return true;
 }
@@ -314,22 +339,25 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << group;
     archive << subgroup;
-    archive << name;
     archive << address;
+    archive << name;
     archive << symbol;
-    archive << description;
     archive << source;
     archive << logo;
-    // archive << path;
-    // archive << color;
+    archive << description;
     archive << is_contract;
     archive << is_private;
     archive << is_shared;
+    // archive << color;
+    // archive << nAppearances;
+    // archive << lastExport;
     // archive << firstAppearance;
     // archive << latestAppearance;
-    // archive << lastExport;
-    // archive << nRecords;
+    // archive << appearanceRange;
+    // archive << appearanceInterval;
+    // archive << path;
     // archive << sizeInBytes;
+    // archive << display_name;
 
     return true;
 }
@@ -368,29 +396,35 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "subgroup", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "path", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CAccountName, "path");
-    ADD_FIELD(CAccountName, "color", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CAccountName, "color");
+    ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "is_contract", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_private", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "color", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountName, "color");
+    ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CAccountName, "nAppearances");
+    ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CAccountName, "lastExport");
     ADD_FIELD(CAccountName, "firstAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "firstAppearance");
     ADD_FIELD(CAccountName, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "latestAppearance");
-    ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "lastExport");
-    ADD_FIELD(CAccountName, "nRecords", T_UNUMBER, ++fieldNum);
-    HIDE_FIELD(CAccountName, "nRecords");
+    ADD_FIELD(CAccountName, "appearanceRange", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CAccountName, "appearanceRange");
+    ADD_FIELD(CAccountName, "appearanceInterval", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CAccountName, "appearanceInterval");
+    ADD_FIELD(CAccountName, "path", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountName, "path");
     ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "sizeInBytes");
+    ADD_FIELD(CAccountName, "display_name", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CAccountName, "display_name");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -465,6 +499,31 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema <= getVersionNum(0, 6, 5)) {
+        archive >> group;
+        archive >> subgroup;
+        archive >> name;
+        archive >> address;
+        archive >> symbol;
+        archive >> description;
+        archive >> source;
+        archive >> logo;
+        // archive >> path;
+        // archive >> color;
+        archive >> is_contract;
+        archive >> is_private;
+        archive >> is_shared;
+        // archive >> firstAppearance;
+        // archive >> latestAppearance;
+        // archive >> lastExport;
+        // archive >> nRecords;
+        // archive >> sizeInBytes;
+        // archive >> display_name;
+        // archive >> appearanceRange;
+        // archive >> appearanceInterval;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -487,8 +546,8 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
     "[{SOURCE}]\t"
-    "[{DESCRIPTION}]\t"
     "[{LOGO}]\t"
+    "[{DESCRIPTION}]\t"
     "[{IS_CONTRACT}]\t"
     "[{IS_PRIVATE}]\t"
     "[{IS_SHARED}]";
@@ -496,43 +555,14 @@ const char* STR_DISPLAY_ACCOUNTNAME =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CAccountName::CAccountName(const string_q& strIn) {
-    string str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
+    initialize();
+    string_q str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
 
-    CStringArray parts;
-    explode(parts, str, '\t');
-    if (parts.size() > 0) {
-        group = parts[0];
-    }
-    if (parts.size() > 1) {
-        subgroup = parts[1];
-    }
-    if (parts.size() > 2) {
-        address = toLower(parts[2]);
-    }
-    if (parts.size() > 3) {
-        name = parts[3];
-    }
-    if (parts.size() > 4) {
-        description = parts[4];
-    }
-    if (parts.size() > 5) {
-        symbol = parts[5];
-    }
-    if (parts.size() > 6) {
-        source = parts[6];
-    }
-    if (parts.size() > 7) {
-        logo = parts[7];
-    }
-    if (parts.size() > 8) {
-        is_contract = str_2_Bool(parts[8]);
-    }
-    if (parts.size() > 9) {
-        is_private = str_2_Bool(parts[9]);
-    }
-    if (parts.size() > 10) {
-        is_shared = str_2_Bool(parts[10]);
-    }
+    CStringArray fields;
+#define disp2FieldList(a) toLower(substitute(substitute(substitute(cleanFmt((a), CSV1), "[{", ""), "}]", ""), "\"", ""))
+    explode(fields, disp2FieldList(STR_DISPLAY_ACCOUNTNAME), ',');
+
+    parseText(fields, str);
 }
 // EXISTING_CODE
 }  // namespace qblocks

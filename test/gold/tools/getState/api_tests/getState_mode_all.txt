@@ -1,43 +1,4 @@
 {
-  "type": "CEthState",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "balance",
-      "type": "wei"
-    },
-    {
-      "name": "nonce",
-      "type": "unumber"
-    },
-    {
-      "name": "code",
-      "type": "text"
-    },
-    {
-      "name": "storage",
-      "type": "text"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "deployed",
-      "type": "blocknum"
-    },
-    {
-      "name": "accttype",
-      "type": "text"
-    },
-    {
-      "name": "ether",
-      "type": "number"
-    }
-  ],
   "data": [
     {
       "blockNumber": 2500000,
@@ -49,6 +10,49 @@
       "deployed": 988725,
       "accttype": "Contract",
       "ether": 3905.6629062050943
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthState",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "nonce",
+          "type": "unumber"
+        },
+        {
+          "name": "code",
+          "type": "text"
+        },
+        {
+          "name": "storage",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "deployed",
+          "type": "blocknum"
+        },
+        {
+          "name": "accttype",
+          "type": "text"
+        },
+        {
+          "name": "ether",
+          "type": "number"
+        }
+      ]
     }
   ],
   "meta": {

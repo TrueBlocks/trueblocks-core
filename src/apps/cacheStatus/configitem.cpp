@@ -294,7 +294,7 @@ string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void* dataPtr
             case 'v':
                 if (fieldIn % "value" && con->named.size() > 0) {
                     bool first = true;
-                    manageFields("CAccountName:firstAppearance,latestAppearance,nRecords,sizeInBytes", false);
+                    manageFields("CAccountName:firstAppearance,latestAppearance,nAppearances,sizeInBytes", false);
                     ostringstream os;
                     for (auto name : con->named) {
                         if (!first)

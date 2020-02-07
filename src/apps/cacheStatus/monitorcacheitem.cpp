@@ -250,7 +250,15 @@ ostream& operator<<(ostream& os, const CMonitorCacheItem& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MONITORCACHEITEM = "";
+const char* STR_DISPLAY_MONITORCACHEITEM =
+    "[{DISPLAY_NAME}]\t"
+    "[{FIRSTAPPEARANCE}]\t"
+    "[{LASTAPPEARANCE}]\t"
+    "[{APPEARANCERANGE}]\t"
+    "[{NRECORDS}]\t"
+    "[{APPEARANCEINTERVAL}]\t"
+    "[{SIZEINBYTES}]\t"
+    "[{CURETHER}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

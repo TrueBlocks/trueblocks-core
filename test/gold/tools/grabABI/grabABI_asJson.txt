@@ -502,4 +502,6 @@ grabABI 0x1234567812345678123456781234567812345678 --raw --fmt json
   "signature": "WithdrawPayment(address,uint256)",
   "encoding": "0x37bf10b25ac7f114ebfb7b1d314deb36f7b89f2d9b3f155f61ea8a23af43339e",
   "input_names": "_account,_payment,"
-}] }
+}], "types": [
+{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
+] }

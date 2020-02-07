@@ -74,7 +74,7 @@ bool COptions::handle_rm(void) {
     }
 
     if (isApiMode()) {
-        cout << exportPreamble(JSON1, "", "X");
+        cout << exportPreamble(JSON1, "", "");
         string_q msg;
         bool first = true;
         for (auto remove : removed) {

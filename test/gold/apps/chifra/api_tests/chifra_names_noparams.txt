@@ -4,7 +4,6 @@ group	subgroup	address	name	symbol
 50-Tokens		0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX
 50-Tokens		0x009e864923b49263c7f10d19b7f8ab7a9a5aad33	Knoxstertoken	FKX
 50-Tokens		0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC
-30-Contracts		0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	dAppNode Donations (Giveth)
 50-Tokens		0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos	PYN
 50-Tokens		0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA
 50-Tokens		0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR
@@ -23,7 +22,6 @@ group	subgroup	address	name	symbol
 50-Tokens		0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect	LCT
 50-Tokens		0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU
 50-Tokens		0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL
-30-Contracts		0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK
 50-Tokens		0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE	ACE
 50-Tokens		0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS
 50-Tokens		0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3
@@ -36,8 +34,7 @@ group	subgroup	address	name	symbol
 50-Tokens		0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	Dentacoin
 50-Tokens		0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT
 50-Tokens		0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND
-50-Tokens		0x0a43edfe106d295e7c1e591a4b04b5598af9474c	DevCon 2 - Token 1
-30-Contracts		0x0abdace70d3790235af448c88547603b945604ea	district0x	DNT
+50-Tokens		0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped Kitties	WCK
 50-Tokens		0x0aef06dcccc531e581f0440059e6ffcc206039ee	Intelligent Trading Technologies	ITT
 50-Tokens		0x0af44e2784637218dd1d32a322d44e603a8f0c6a	Matryx	MTX
 50-Tokens		0x0affa06e7fbe5bc9a764c979aa66e8256a631f02	Polybius	PLBT
@@ -71,7 +68,6 @@ group	subgroup	address	name	symbol
 50-Tokens		0x123ab195dd38b1b40510d467a6a359b201af056f	LGO	LGO
 50-Tokens		0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT
 50-Tokens		0x12759512d326303b45f1cec8f7b6fd96f387778e	TrakInvest Token	TRAK
-33-Set Protocol	05-Wrappers	0x12951b9eaa200237f9080c95ad93cc74c9d9bd45	Zero Ex Exchange Wrapper
 50-Tokens		0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd	GRID	GRID
 50-Tokens		0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf	Spectre.ai D-Token	SXDT
 50-Tokens		0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e	Cofoundit	CFI
@@ -86,7 +82,7 @@ group	subgroup	address	name	symbol
 50-Tokens		0x1460a58096d80a50a2f1f956dda497611fa4f165	Own	CHX
 50-Tokens		0x146d8d942048ad517479c9bab1788712af180fde	Mobile Integrated Blockchain	MIB
 50-Tokens		0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER
-33-Set Protocol	03-Factories	0x14f0321be5e581abf9d5bc76260bf015dc04c53d	Set Token Factory
+50-Tokens		0x14f37b574242d366558db61f3335289a5035c506	Hacker Gold Token
 50-Tokens		0x151202c9c18e495656f372281f493eb7698961d5	DEBITUM	DEB
 50-Tokens		0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9	XOVBank	XOV
 50-Tokens		0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829	Alpha Coin	APC
@@ -100,13 +96,12 @@ group	subgroup	address	name	symbol
 50-Tokens		0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482	Insight Chain	INB
 50-Tokens		0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64	Freyr Coin	FREC
 50-Tokens		0x17fd666fa0784885fa1afec8ac624d9b7e72b752	FLiK	FLIK
-30-Contracts		0x1820a4b7618bde71dce8cdc73aab6c95905fad24	1820 Registry	REG
 50-Tokens		0x1829aa045e21e0d59580024a951db48096e01782	FuzeX	FXT
 50-Tokens		0x1844b21593262668b7248d0f57a220caaba46ab9	Oyster Pearl	PRL
-33-Set Protocol	06-Other	0x18b739aabc019d9ef160d44ba8a9dd6a717372af	Payable Exchange Issue
 50-Tokens		0x1961b3331969ed52770751fc718ef530838b6dee	BitDegree	BDG
 50-Tokens		0x1966d718a565566e8e202792658d7b5ff4ece469	nDEX	NDX
 50-Tokens		0x1985365e9f78359a9b6ad760e32412f4a445e862	Reputation	REP
+50-Tokens		0x19b67f79f8c5d49e950a8754f95aaea93309dcae	HGK Token
 50-Tokens		0x1a0f2ab46ec630f9fd638029027b552afa64b94c	Aston X	ATX
 50-Tokens		0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7	PRASM	PSM
 50-Tokens		0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db	AppCoins	APPC
@@ -123,80 +118,85 @@ group	subgroup	address	name	symbol
 50-Tokens		0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter	FACE
 50-Tokens		0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0	CanYaCoin	CAN
 50-Tokens		0x1d4ccc31dab6ea20f461d329a0562c1c58412515	Talao	TALAO
-33-Set Protocol	02-Modules	0x1db929398958082d2080aa1b501e460503f60467	Rebalance Auction Module
 50-Tokens		0x1dea979ae76f26071870f824088da78979eb91c8	SPINDLE	SPD
 50-Tokens		0x1e26b3d07e57f453cae30f7ddd2f945f5bf3ef33	ClearCoin	XCLR
 50-Tokens		0x1e49ff77c355a3e38d6651ce8404af0e48c5395f	ModulTrade Token	MTRc
 50-Tokens		0x1f54638b7737193ffd86c19ec51907a7c41755d8	Sola Token	SOL
-30-Contracts		0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor	BNT
-33-Set Protocol	02-Modules	0x1f6ee9ce38e6beeb968bb91f755998548d3165e0	Rebalancing Token Issuance Module
-30-Contracts		0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1	Moloch DAO
 50-Tokens		0x1fe70be734e473e5721ea57c8b5b01e6caa52686	RNTB Token	RNTB
 50-Tokens		0x2008e3057bd734e10ad13c9eae45ff132abc1722	Zebi Coin	ZCO
 50-Tokens		0x20e94867794dba030ee287f1406e100d03c84cd3	DEW	DEW
 50-Tokens		0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN
-30-Contracts		0x211a94468ba1e379236b45ca42dc63ee93139c7e	Moloch Guild Bank
-30-Contracts		0x2157a7894439191e520825fe9399ab8655e0f708	Uniswap Exchange Template
 50-Tokens		0x2167fb82309cf76513e83b25123f8b0559d6b48f	LionCoin	LION
+50-Tokens		0x2177ccfa776387f6cc4e3dd5cd83509b06e90c58	BTCETH Token
 50-Tokens		0x21d5678a62dfe63a47062469ebb2fac2817d8832	YoloCash	YLC
 50-Tokens		0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK
 50-Tokens		0x226bb599a12c826476e3a771454697ea52e9e220	Propy	PRO
 50-Tokens		0x228ba514309ffdf03a81a205a6d040e429d6e80c	Global Social Chain	GSC
+50-Tokens		0x22c1f6050e56d2876009903609a2cc3fef83b415	POAP Token
 50-Tokens		0x23352036e911a22cfc692b5e2e196692658aded9	Friendz Coin	FDZ
 50-Tokens		0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET
 50-Tokens		0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT
 50-Tokens		0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS
 50-Tokens		0x241ba672574a78a3a604cdd0a94429a73a84a324	4NEW	KWATT
 50-Tokens		0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG
-33-Set Protocol	06-Other	0x25c499e7306248c308cef403d9824110817b305c	Transfer Proxy
-33-Set Protocol	04-Libraries	0x293dcc7c8350ce9f1283572ac89861f768158151	Standard Settle Rebalance Library
-30-Contracts		0x304a554a310c7e546dfe434669c62820b7d83490	DarkDAO
-33-Set Protocol	05-Wrappers	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper
-30-Contracts		0x37f25bd26848cf02614c29338dd71a4d03b62218	Camp Decentral Donations (Giveth)
-33-Set Protocol	06-Other	0x38891a2d24f71440f58aa1c6b9739fe93aa416d2	Initial Collateral Set
-33-Set Protocol	02-Modules	0x38e5462bbe6a72f79606c1a0007468aa4334a92b	Exchange Issue Module
-33-Set Protocol	05-Wrappers	0x3d9da970fa85cb1fa9d405145d4c485224da045e	ERC 20 Wrapper
-33-Set Protocol	03-Factories	0x4c4c649455c6433dc48ff1571c9e50ac58f0cefa	Rebalancing Set Token Factory
-33-Set Protocol	06-Other	0x504e2230baace0974a61822d8f7ac255be3bf061	Bit Eth Rebalance Manager
-33-Set Protocol	06-Other	0x50711c5cea991d54d37a2384d22568734976d154	Signature Validator
-30-Contracts		0x52c782a023847342274e8e7f12360b820ed8c777	Tennagraph (Giveth) No Vote on ProgPow
-33-Set Protocol	04-Libraries	0x5374e7a0f9e0ad299e094825a220354b6ca6c787	EIP 712 Library
-30-Contracts		0x5adf43dd006c6c36506e2b2dfa352e60002d22dc	Giveth Donations Vault	GHT
-33-Set Protocol	01-Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Set Protocol Vault
-30-Contracts		0x6090a6e47849629b7245dfa1ca21d94cd15878ef	ENS Related	ENS
-30-Contracts		0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin v2.0	DAI
-30-Contracts		0x713b73c3994442b533e6a083ec968e40606810ec	Eth Early Adoption Reg	EEAR
-33-Set Protocol	01-Core	0x75fbbdeafe23a48c0736b2731b956b7a03adcfb2	Set Protocol Core
-30-Contracts		0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3	Moloch Paying Proxy
-33-Set Protocol	06-Other	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	Bit Eth Rebalancing Set Token
-30-Contracts		0x807640a13483f8ac783c557fcdf27be11ea4ac7a	The Dao Extra Balance Account
-33-Set Protocol	06-Other	0x818c639ca5f986115eacf77e58d4804de1dd5d40	Linear Auction Price Curve
-33-Set Protocol	02-Modules	0x8440f6a2c42118bed0d6e6a89bf170ffd13e21c0	Issuance Order Module
-30-Contracts		0x8942595a2dc5181df0465af0d7be08c8f23c93af	Gnosis Safe for Moloch
-30-Contracts		0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	SAI
-33-Set Protocol	06-Other	0x8d5cf870354fffae0586b639da6d4e4f6c659c69	WhiteList
-30-Contracts		0x8f951903c9360345b4e1b536c7f5ae8f88a64e79	Giveth Donations
-30-Contracts		0x914d1b8b43e92723e64fd0a06f5bdb8dd9b10c79	DarkDAOextraBalance
-33-Set Protocol	04-Libraries	0x931a809658b677390c80a443415d16f4fcd37d1e	Rebalancing Helper Library
-33-Set Protocol	05-Wrappers	0x9378ad514c00e4869656ee27b634d852dd48fead	Taker Wallet Wrapper
-30-Contracts		0x960b236a07cf122663c4303350609a66a7b288c0	Aragon	ANT
-30-Contracts		0x9e6316f44baeeee5d41a1070516cc5fa47baf227	ShapeShift 2
-30-Contracts		0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	Maker	MKR
-30-Contracts		0xa1eb40c284c5b44419425c4202fa8dabff31006b	Proof of Attendance Token	POAP
-33-Set Protocol	04-Libraries	0xa71978db8333586c65be76ed559e7e51fc81ec66	Standard Propose Library
-30-Contracts		0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444	ReplaySafeSplit
-33-Set Protocol	04-Libraries	0xadd948fd8ce465a0920bd3678e8b9ec86d00c79c	Standard Fail Auction Library
-33-Set Protocol	04-Libraries	0xb2aa8743633bfcb0bc6aecd6cc0aff96d961f218	Exchange Issue Library
-30-Contracts		0xb9ef770b6a5e12e45983c5d80545258aa38f3b78	0chain	ZCN
-30-Contracts		0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO	DAO
-30-Contracts		0xbf4ed7b27f1d666546e30d74d50d173d20bca754	WithdrawDAO
-30-Contracts		0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	Wrapped Ether	WETH
-30-Contracts		0xc0a47dfe034b400b47bdad5fecda2621de6c4d95	Uniswap Factory Contract	UNI
-33-Set Protocol	04-Libraries	0xc5d96411341d16c4bd16733500d6ab8c5421097e	Standard Start Rebalance Library
-33-Set Protocol	04-Libraries	0xc6e977741487dd8457397b185709cd89b0cf5e7e	Order Library
-30-Contracts		0xd2e16a20dd7b1ae54fb0312209784478d069c7b0	DaoManagedAcct
-30-Contracts		0xda4a4626d3e16e094de3225a751aab7128e96526	DAO Curator
-30-Contracts		0xdf869fad6db91f437b59f1edefab319493d4c4ce	GitCoin Grants
-33-Set Protocol	01-Core Caller	0xf3862af14cbb4d9b781e41a3d4d74e7c2cdb73e2	Set Protocol Core Caller
-33-Set Protocol	04-Libraries	0xf8ba20d0307c1b07cdf31bdf6c1efad786e6b448	Standard Place Bid Library
-30-Contracts		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP
+50-Tokens		0x24dcc881e7dd730546834452f21872d5cb4b5293	SCRL	SCRL
+50-Tokens		0x24ddff6d8b8a42d835af3b440de91f3386554aa4	IUNGO	ING
+50-Tokens		0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden	RDN
+50-Tokens		0x2604fa406be957e542beb89e6754fcde6815e83f	Playkey	PKT
+50-Tokens		0x263c618480dbe35c300d8d5ecda19bbb986acaed	MOT	MOT
+50-Tokens		0x264dc2dedcdcbb897561a57cba5085ca416fb7b4	QunQunCommunities	QUN
+50-Tokens		0x26cb3641aaa43911f1d4cb2ce544eb652aac7c47	CrystalToken	CYL
+50-Tokens		0x26db5439f651caf491a87d48799da81f191bdb6b	CashBetCoin	CBC
+50-Tokens		0x26e75307fc0c021472feb8f727839531f112f317	Crypto20	C20
+50-Tokens		0x27054b13b1b798b345b591a4d22e6562d47ea75a	AirSwap	AST
+50-Tokens		0x27695e09149adc738a978e9a678f99e4c39e9eb9	KickCoin	KICK
+50-Tokens		0x27dce1ec4d3f72c3e457cc50354f1f975ddef488	AirToken	AIR
+50-Tokens		0x27f706edde3ad952ef647dd67e24e38cd0803dd6	UselessEthereumToken	UET
+50-Tokens		0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR
+50-Tokens		0x286708f069225905194673755f12359e6aff6fe1	STACS	STACS
+50-Tokens		0x286bda1413a2df81731d4930ce2f862a35a609fe	WaBi	WaBi
+50-Tokens		0x28b5e12cce51f15594b0b91d5b5adaa70f684a02	NapoleonX	NPX
+50-Tokens		0x28c8d01ff633ea9cd8fc6a451d7457889e698de6	Ethereum Gold	ETG
+50-Tokens		0x28dee01d53fed0edf5f6e310bf8ef9311513ae40	BlitzPredict	XBP
+50-Tokens		0x29d75277ac7f0335b2165d0895e8725cbf658d73	BitDice	CSNO
+50-Tokens		0x2a05d22db079bc40c2f77a1d1ff703a56e631cc1	BitAsean	BAS
+50-Tokens		0x2a093bcf0c98ef744bb6f69d74f2f85605324290	FoodCoin	FOOD
+50-Tokens		0x2aea4add166ebf38b63d09a75de1a7b94aa24163	Kudos Token (KDO)
+50-Tokens		0x2aec18c5500f21359ce1bea5dc1777344df4c0dc	FarmaTrust Token	FTT
+50-Tokens		0x2baac9330cf9ac479d819195794d79ad0c7616e3	AdBank	ADB
+50-Tokens		0x2bba3cf6de6058cc1b4457ce00deb359e2703d7f	HashCoin	HSC
+50-Tokens		0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN
+50-Tokens		0x2c4e8f2d746113d0696ce89b35f0d8bf88e0aeca	Simple Token	ST
+50-Tokens		0x2c82c73d5b34aa015989462b2948cd616a37641f	Spectre.ai U-Token	SXUT
+50-Tokens		0x2c974b2d0ba1716e644c1fc59982a89ddd2ff724	VIB	VIB
+50-Tokens		0x2ccbff3a042c68716ed2a2cb0c544a9f1d1935e1	DMarket	DMT
+50-Tokens		0x2cf618c19041d9db330d8222b860a624021f30fb	CRUISEBIT	CRBT
+50-Tokens		0x2d0e95bd4795d7ace0da3c0ff7b706a5970eb9d3	All Sports Coin	SOC
+50-Tokens		0x2d184014b5658c453443aa87c8e9c4d57285620b	JSE Token	JSE
+50-Tokens		0x2d3e7d4870a51b918919e7b851fe19983e4c38d5	UBCoin	UBC
+50-Tokens		0x2daee1aa61d60a252dc80564499a69802853583a	Authorship	ATS
+50-Tokens		0x2e071d2966aa7d8decb1005885ba1977d6038a65	DICE	ROL
+50-Tokens		0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d	KickICO Token Sender
+50-Tokens		0x2ecb13a8c458c379c4d9a7259e202de03c8f3d19	Block-Chain.com Token	BC
+50-Tokens		0x2f141ce366a2462f02cea3d12cf93e4dca49e4fd	Free Coin	FREE
+50-Tokens		0x2f85e502a988af76f7ee6d83b7db8d6c0a823bf9	LatiumX	LATX
+50-Tokens		0x2f9b6779c37df5707249eeb3734bbfc94763fbe2	CrowdWizToken	WIZ
+50-Tokens		0x2fa32a39fc1c399e0cc7b2935868f5165de7ce97	PayFair	PFR
+50-Tokens		0x2fb12bccf6f5dd338b76be784a93ade072425690	BEAT	BEAT
+50-Tokens		0x30cecb5461a449a90081f5a5f55db4e048397bab	Tracto	TRCT
+50-Tokens		0x3136ef851592acf49ca4c825131e364170fa32b3	CoinFi	COFI
+50-Tokens		0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5	EBCoin	EBC
+50-Tokens		0x3209f98bebf0149b769ce26d71f7aea8e435efea	Traxia Membership Token	TMT
+50-Tokens		0x327682779bab2bf4d1337e8974ab9de8275a7ca8	Blockport	BPT
+50-Tokens		0x32d74896f05204d1b6ae7b0a3cebd7fc0cd8f9c7	Kcash	KCASH
+50-Tokens		0x3363d570f6df3c74d486bb8785d3ebfb9e2347d3	HedgeTrade	HEDG
+50-Tokens		0x336f646f87d9f6bc6ed42dd46e8b3fd9dbd15c22	Crystal Clear Token	CCT
+50-Tokens		0x33c623a2baafeb8d15dfaf3ce44095efec83d72c	SGPay	SGP
+50-Tokens		0x33f90dee07c6e8b9682dd20f73e6c358b2ed0f03	Trident Group	TRDT
+50-Tokens		0x340d2bde5eb28c1eed91b2f790723e3b160613b7	BLOCKv	VEE
+50-Tokens		0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU
+50-Tokens		0x3597bfd533a99c9aa083587b074434e61eb0a258	DENT	DENT
+50-Tokens		0x35a69642857083ba2f30bfab735dacc7f0bac969	BBN	BBN
+50-Tokens		0x36905fc93280f52362a1cbab151f25dc46742fb5	BTOCoin	BTO
+50-Tokens		0x36d10c6800d569bb8c4fe284a05ffe3b752f972c	We Show Token	WET
+50-Tokens		0x378903a03fb2c3ac76bb52773e3ce11340377a32	Clipper Coin Capital	CCCX

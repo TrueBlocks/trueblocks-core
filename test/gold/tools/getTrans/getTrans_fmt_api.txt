@@ -1,6 +1,6 @@
 getTrans argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
 getTrans 2222222.0 2332332.0 --fmt api 
-{ "type": "CTransaction", "fieldList": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }], "data": [
+{"data": [
   {
     "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -54,4 +54,6 @@ getTrans 2222222.0 2332332.0 --fmt api
       "status": null
     },
     "gasUsed": 21298
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "types": [
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

@@ -245,6 +245,8 @@ cacheStatus --get_config
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
+                  "appearanceInterval": 0,
+                  "appearanceRange": 0,
                   "group": "81-Custom",
                   "group_sort": "81",
                   "name": "TestWallet1",
@@ -252,6 +254,8 @@ cacheStatus --get_config
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
+                  "appearanceInterval": 0,
+                  "appearanceRange": 0,
                   "group": "81-Custom",
                   "group_sort": "81",
                   "name": "TestWallet2",

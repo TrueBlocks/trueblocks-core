@@ -1,27 +1,4 @@
 {
-  "type": "CTrace",
-  "fieldList": [
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "error",
-      "type": "text"
-    },
-    {
-      "name": "articulatedTrace",
-      "type": "object"
-    },
-    {
-      "name": "action",
-      "type": "object"
-    },
-    {
-      "name": "result",
-      "type": "object"
-    }
-  ],
   "data": [
     {
       "type": "call",
@@ -130,6 +107,33 @@
         "gasUsed": 537,
         "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
       }
+    }
+  ],
+  "types": [
+    {
+      "type": "CTrace",
+      "fields": [
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "error",
+          "type": "text"
+        },
+        {
+          "name": "articulatedTrace",
+          "type": "object"
+        },
+        {
+          "name": "action",
+          "type": "object"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
     }
   ],
   "meta": {

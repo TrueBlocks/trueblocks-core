@@ -1,55 +1,8 @@
 {
-  "type": "CStatus",
-  "fieldList": [
-    {
-      "name": "client_version",
-      "type": "text"
-    },
-    {
-      "name": "trueblocks_version",
-      "type": "text"
-    },
-    {
-      "name": "rpc_provider",
-      "type": "text"
-    },
-    {
-      "name": "api_provider",
-      "type": "text"
-    },
-    {
-      "name": "balance_provider",
-      "type": "text"
-    },
-    {
-      "name": "cache_path",
-      "type": "text"
-    },
-    {
-      "name": "index_path",
-      "type": "text"
-    },
-    {
-      "name": "host",
-      "type": "text"
-    },
-    {
-      "name": "is_scraping",
-      "type": "bool"
-    },
-    {
-      "name": "caches",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "date",
-      "type": "date"
-    }
-  ],
   "data": [
     {
       "client_version": "Parity version",
-      "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "api_provider": "--providers--",
       "balance_provider": "--providers--",
@@ -67,16 +20,19 @@
               "nOther": 36963,
               "group": "",
               "subgroup": "",
-              "name": "",
               "address": "---address---",
+              "name": "",
               "symbol": "",
-              "description": "",
               "source": "",
               "logo": "",
+              "description": "",
+              "nAppearances": "",
               "firstAppearance": "",
               "latestAppearance": "",
-              "nRecords": "",
+              "appearanceRange": 0,
+              "appearanceInterval": 0,
               "sizeInBytes": 36963,
+              "display_name": "",
               "group_sort": "",
               "raw_group": "",
               "subgroup_sort": "",
@@ -92,6 +48,138 @@
         }
       ],
       "date": "--date--"
+    }
+  ],
+  "types": [
+    {
+      "type": "CAbiCache",
+      "fields": [
+        {
+          "name": "items",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "path",
+          "type": "text"
+        },
+        {
+          "name": "nFiles",
+          "type": "unumber"
+        },
+        {
+          "name": "nFolders",
+          "type": "unumber"
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "is_valid",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "CAbiCacheItem",
+      "fields": [
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "nFunctions",
+          "type": "unumber"
+        },
+        {
+          "name": "nEvents",
+          "type": "unumber"
+        },
+        {
+          "name": "nOther",
+          "type": "unumber"
+        },
+        {
+          "name": "group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "logo",
+          "type": "text"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "nAppearances",
+          "type": "blocknum"
+        },
+        {
+          "name": "firstAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "latestAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "appearanceRange",
+          "type": "blocknum"
+        },
+        {
+          "name": "appearanceInterval",
+          "type": "blocknum"
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "display_name",
+          "type": "text"
+        },
+        {
+          "name": "group_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_subgroup",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

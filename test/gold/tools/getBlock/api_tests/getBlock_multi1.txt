@@ -279,5 +279,56 @@
       },
       "id": "1"
     }
+  ],
+  "types": [
+    {
+      "type": "CBlock",
+      "fields": [
+        {
+          "name": "difficulty",
+          "type": "unumber"
+        },
+        {
+          "name": "finalized",
+          "type": "bool"
+        },
+        {
+          "name": "gasLimit",
+          "type": "gas"
+        },
+        {
+          "name": "gasUsed",
+          "type": "gas"
+        },
+        {
+          "name": "hash",
+          "type": "hash"
+        },
+        {
+          "name": "miner",
+          "type": "address"
+        },
+        {
+          "name": "number",
+          "type": "blocknum"
+        },
+        {
+          "name": "parentHash",
+          "type": "hash"
+        },
+        {
+          "name": "price",
+          "type": "double"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        },
+        {
+          "name": "transactions",
+          "type": "object|ts_array"
+        }
+      ]
+    }
   ]
 }

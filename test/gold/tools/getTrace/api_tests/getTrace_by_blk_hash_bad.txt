@@ -1,50 +1,54 @@
 {
-  "type": "CTrace",
-  "fieldList": [
-    {
-      "name": "blockHash",
-      "type": "hash"
-    },
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "subtraces",
-      "type": "unumber"
-    },
-    {
-      "name": "traceAddress",
-      "type": "text"
-    },
-    {
-      "name": "transactionHash",
-      "type": "hash"
-    },
-    {
-      "name": "transactionIndex",
-      "type": "blocknum"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "error",
-      "type": "text"
-    },
-    {
-      "name": "action",
-      "type": "object"
-    },
-    {
-      "name": "result",
-      "type": "object"
-    }
-  ],
   "data": [],
   "errors": [
     "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."
+  ],
+  "types": [
+    {
+      "type": "CTrace",
+      "fields": [
+        {
+          "name": "blockHash",
+          "type": "hash"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "subtraces",
+          "type": "unumber"
+        },
+        {
+          "name": "traceAddress",
+          "type": "text"
+        },
+        {
+          "name": "transactionHash",
+          "type": "hash"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "error",
+          "type": "text"
+        },
+        {
+          "name": "action",
+          "type": "object"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
+    }
   ],
   "meta": {
     "unripe": "0xdeadbeef",

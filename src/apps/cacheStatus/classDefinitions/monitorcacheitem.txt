@@ -4,3 +4,4 @@ base_class = CAccountWatch
 fields = string type|bool deleted
 includes = etherlib.h|accountwatch.h
 serialize = true
+display_str = display_name, firstAppearance, lastAppearance, appearanceRange, nRecords, appearanceInterval, sizeInBytes, curEther

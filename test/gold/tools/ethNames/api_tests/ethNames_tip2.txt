@@ -1,4 +1,18 @@
-{ "type": "CAccountName", "fieldList": [{ "name": "address", "type": "address" }], "data": [
+{"data": [
+  {
+    "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93"
+  },
+  {
+    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0"
+  },
+  {
+    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3"
+  },
+  {
+    "address": "0x8f53781799515e5dc8f5d00c528940cae99ac969"
+  },
   {
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
+  }], "types": [
+{ "type": "CAccountName", "fields": [{ "name": "address", "type": "address" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

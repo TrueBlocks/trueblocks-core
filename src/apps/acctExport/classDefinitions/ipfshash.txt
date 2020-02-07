@@ -1,0 +1,5 @@
+[settings]
+class = CIpfshash
+fields = hash hash
+includes = etherlib.h
+display_str = hash, hash, hash

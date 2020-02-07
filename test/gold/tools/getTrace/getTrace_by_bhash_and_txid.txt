@@ -1,6 +1,6 @@
 getTrace argc: 5 [1:0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92] [2:--parity] [3:--fmt] [4:api] 
 getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 --parity --fmt api 
-{ "type": "CTrace", "fieldList": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
+{"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",
     "blockNumber": "0x425982",
@@ -82,4 +82,6 @@ getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 -
       "gasUsed": "0x0",
       "output": "0x"
     }
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

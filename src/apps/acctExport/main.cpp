@@ -20,20 +20,20 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         options.className =
-            (options.appearances
-                 ? "CAppearance"
-                 : (options.traces
-                        ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                        : (options.receipts
-                               ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                               : (options.logs
-                                      ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                      : (options.balances
-                                             ? GETRUNTIME_CLASS(CEthState)->m_ClassName
-                                             : (options.count_only
-                                                    ? "CCounts"
-                                                    : (options.hashes_only
-                                                           ? "CIPFSHash"
+            (options.count_only
+                 ? GETRUNTIME_CLASS(CCounts)->m_ClassName
+                 : (options.hashes_only
+                        ? GETRUNTIME_CLASS(CIpfshash)->m_ClassName
+                        : (options.appearances
+                               ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
+                               : (options.balances
+                                      ? GETRUNTIME_CLASS(CEthState)->m_ClassName
+                                      : (options.traces
+                                             ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                                             : (options.receipts
+                                                    ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                                                    : (options.logs
+                                                           ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
                                                            : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))))));
 
         if (once)

@@ -2,7 +2,7 @@ cacheStatus argc: 3 [1:--details] [2:abis]
 cacheStatus --details abis 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
@@ -19,6 +19,8 @@ cacheStatus --details abis
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
+          "appearanceRange": 0,
+          "appearanceInterval": 0,
           "sizeInBytes": 36963
         }
       ],

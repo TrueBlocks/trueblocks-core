@@ -55,4 +55,6 @@ getTrace 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 --fm
       "gasUsed": 79014,
       "output": ""
     }
-  }] }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+] }

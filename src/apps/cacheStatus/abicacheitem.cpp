@@ -91,7 +91,7 @@ string_q CAbiCacheItem::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if (fieldName % "firstAppearance" || fieldName % "latestAppearance" || fieldName % "nRecords")
+    if (fieldName % "firstAppearance" || fieldName % "latestAppearance" || fieldName % "nAppearances")
         return "";
     // EXISTING_CODE
 

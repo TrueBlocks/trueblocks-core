@@ -17,6 +17,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("index");
         if (!index.readBinaryCache("index", details)) {
             index.type = index.getRuntimeClass()->m_ClassName;
+            expContext().types[index.type] = index.getRuntimeClass();
             index.path = pathName("index", getIndexPath(""));
             forEveryFileInFolder(getIndexPath(""), countFiles, &index);
             CItemCounter counter(this, start, end);
@@ -37,6 +38,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("monitors");
         if (!monitors.readBinaryCache("monitors", details)) {
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
+            expContext().types[monitors.type] = monitors.getRuntimeClass();
             monitors.path = pathName("monitors");
             forEveryFileInFolder(getCachePath("monitors/"), countFiles, &monitors);
             CItemCounter counter(this, start, end);
@@ -53,14 +55,6 @@ bool COptions::handle_status(ostream& os) {
             monitors.writeBinaryCache("monitors", details);
         }
         status.caches.push_back(&monitors);
-
-        if (expContext().asEther) {
-            SHOW_FIELD(CAccountWatch, "curEther");
-            HIDE_FIELD(CAccountWatch, "curBalance");
-        } else {
-            HIDE_FIELD(CAccountWatch, "curEther");
-            SHOW_FIELD(CAccountWatch, "curBalance");
-        }
     }
 
     CNameCache names;
@@ -68,6 +62,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("names");
         if (!names.readBinaryCache("names", details)) {
             names.type = names.getRuntimeClass()->m_ClassName;
+            expContext().types[names.type] = names.getRuntimeClass();
             names.path = pathName("names");
             forEveryFileInFolder(getCachePath("monitors/"), countFiles, &names);
             CItemCounter counter(this, start, end);
@@ -91,6 +86,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("abis");
         if (!abis.readBinaryCache("abis", details)) {
             abis.type = abis.getRuntimeClass()->m_ClassName;
+            expContext().types[abis.type] = abis.getRuntimeClass();
             abis.path = pathName("abis");
             forEveryFileInFolder(getCachePath("abis/"), countFiles, &abis);
             if (details) {
@@ -110,6 +106,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("blocks");
         if (!blocks.readBinaryCache("blocks", details)) {
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
+            expContext().types[blocks.type] = blocks.getRuntimeClass();
             blocks.path = pathName("blocks");
             blocks.max_depth = countOf(getCachePath("blocks/"), '/') + depth;
             forEveryFileInFolder(getCachePath("blocks/"), countFilesInCache, &blocks);
@@ -125,6 +122,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("txs");
         if (!txs.readBinaryCache("txs", details)) {
             txs.type = txs.getRuntimeClass()->m_ClassName;
+            expContext().types[txs.type] = txs.getRuntimeClass();
             txs.path = pathName("txs");
             txs.max_depth = countOf(getCachePath("transactions/"), '/') + depth;
             forEveryFileInFolder(getCachePath("txs/"), countFilesInCache, &txs);
@@ -140,6 +138,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("traces");
         if (!traces.readBinaryCache("traces", details)) {
             traces.type = traces.getRuntimeClass()->m_ClassName;
+            expContext().types[traces.type] = traces.getRuntimeClass();
             traces.path = pathName("traces");
             traces.max_depth = countOf(getCachePath("traces/"), '/') + depth;
             forEveryFileInFolder(getCachePath("traces/"), countFilesInCache, &traces);
@@ -155,6 +154,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("slurps");
         if (!slurps.readBinaryCache("slurps", details)) {
             slurps.type = slurps.getRuntimeClass()->m_ClassName;
+            expContext().types[slurps.type] = slurps.getRuntimeClass();
             slurps.path = pathName("slurps");
             forEveryFileInFolder(getCachePath("slurps/"), countFiles, &slurps);
             CItemCounter counter(this, start, end);
@@ -179,6 +179,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("prices");
         if (!prices.readBinaryCache("prices", details)) {
             prices.type = prices.getRuntimeClass()->m_ClassName;
+            expContext().types[prices.type] = prices.getRuntimeClass();
             prices.path = pathName("prices");
             forEveryFileInFolder(getCachePath("prices/"), countFiles, &prices);
             if (details) {
@@ -290,6 +291,7 @@ bool noteMonitor(const string_q& path, void* data) {
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
+        expContext().types[mdi.type] = mdi.getRuntimeClass();
         mdi.address =
             substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
                        ".json", "");
@@ -343,13 +345,20 @@ bool noteMonitor(const string_q& path, void* data) {
                 mdi.firstAppearance = NOPOS;
                 mdi.latestAppearance = NOPOS;
             }
-            mdi.nRecords = fileSize(path) / sizeof(CAppearance_base);
+            mdi.nAppearances = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
+            mdi.display_name =
+                (mdi.group.empty() ? "" : mdi.group + ": ") + (mdi.name.empty() ? mdi.address : mdi.name);
+            mdi.appearanceRange = (mdi.latestAppearance - mdi.firstAppearance);
+            mdi.appearanceInterval = (mdi.nAppearances ? (uint32_t)(mdi.appearanceRange / mdi.nAppearances) : 0);
         } else {
+            mdi.display_name = (mdi.group.empty() ? "" : mdi.group) + (mdi.name.empty() ? mdi.address : mdi.name);
             mdi.firstAppearance = NOPOS;
             mdi.latestAppearance = NOPOS;
-            mdi.nRecords = NOPOS;
+            mdi.nAppearances = NOPOS;
             mdi.sizeInBytes = NOPOS;
+            mdi.appearanceRange = NOPOS;
+            mdi.appearanceInterval = NOPOS;
         }
         mdi.deleted = fileExists(substitute(path, ".acct.bin", ".deleted"));
         counter->monitorArray->push_back(mdi);
@@ -385,6 +394,7 @@ bool noteIndex(const string_q& path, void* data) {
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
+        expContext().types[aci.type] = aci.getRuntimeClass();
         aci.filename = substitute(path, counter->cachePtr->path, "");
         string_q fn = aci.filename;
         if (isTestMode())
@@ -440,6 +450,7 @@ bool noteABI(const string_q& path, void* data) {
 
         CAbiCacheItem abii;
         abii.type = abii.getRuntimeClass()->m_ClassName;
+        expContext().types[abii.type] = abii.getRuntimeClass();
         abii.address =
             substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
                        ".json", "");
@@ -475,19 +486,21 @@ bool notePrice(const string_q& path, void* data) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
 
-        CPriceCacheItem price;
-        price.type = price.getRuntimeClass()->m_ClassName;
+        CPriceCacheItem pri;
+        pri.type = pri.getRuntimeClass()->m_ClassName;
+        expContext().types[pri.type] = pri.getRuntimeClass();
         if (isTestMode()) {
-            price.pair = "---pair---";
-            price.sizeInBytes = price.nRecords = 36910963;
+            pri.pair = "---pair---";
+            pri.sizeInBytes = 1010202;
+            pri.nAppearances = 2020101;
         } else {
-            price.pair = substitute(
+            pri.pair = substitute(
                 substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""), ".json",
                 "");
-            price.sizeInBytes = fileSize(path);
-            price.nRecords = fileSize(path) / sizeof(CPriceQuote);
+            pri.sizeInBytes = fileSize(path);
+            pri.nAppearances = fileSize(path) / sizeof(CPriceQuote);
         }
-        counter->priceArray->push_back(price);
+        counter->priceArray->push_back(pri);
     }
     return !shouldQuit();
 }

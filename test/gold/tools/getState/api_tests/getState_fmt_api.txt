@@ -1,29 +1,33 @@
 {
-  "type": "CEthState",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "balance",
-      "type": "wei"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "ether",
-      "type": "number"
-    }
-  ],
   "data": [
     {
       "blockNumber": 2000000,
       "balance": 97380000000000,
       "address": "0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98",
       "ether": 9.738e-05
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthState",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "ether",
+          "type": "number"
+        }
+      ]
     }
   ],
   "meta": {

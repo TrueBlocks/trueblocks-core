@@ -12,12 +12,13 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
+#include "runtimeclass.h"
 #include "sfos.h"
 
 namespace qblocks {
 
 //----------------------------------------------------------------------------
-class CExportOptions {
+class CExportContext {
   public:
     size_t lev, spcs;
     bool noFrst;
@@ -31,7 +32,8 @@ class CExportOptions {
     bool asWei;
     bool isParity;
     CNameValueMap fmtMap;
-    CExportOptions(void) {
+    map<string_q, const CRuntimeClass*> types;
+    CExportContext(void) {
         noFrst = false;
         lev = 0;
         spcs = 2;
@@ -47,7 +49,7 @@ class CExportOptions {
         isParity = false;
     }
 };
-extern CExportOptions& expContext(void);
+extern CExportContext& expContext(void);
 extern void incIndent(void);
 extern void decIndent(void);
 extern string_q indent(void);

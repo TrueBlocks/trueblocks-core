@@ -1,31 +1,4 @@
 {
-  "type": "CFunction",
-  "fieldList": [
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "signature",
-      "type": "text"
-    },
-    {
-      "name": "encoding",
-      "type": "text"
-    },
-    {
-      "name": "input_names",
-      "type": "text"
-    },
-    {
-      "name": "output_names",
-      "type": "text"
-    }
-  ],
   "data": [
     {
       "name": "",
@@ -2418,6 +2391,37 @@
       "encoding": "0xc0ba8fe4b176c1714197d43b9cc6bcf797a4a7461c5fe8d0ef6e184ae7601e51",
       "input_names": "_transactionId,",
       "output_names": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CFunction",
+      "fields": [
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "signature",
+          "type": "text"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "input_names",
+          "type": "text"
+        },
+        {
+          "name": "output_names",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

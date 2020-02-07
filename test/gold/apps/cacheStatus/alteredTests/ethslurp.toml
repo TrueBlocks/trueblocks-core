@@ -1,5 +1,5 @@
 [version]
-current = "0.6.5-alpha"
+current = "0.6.6-alpha"
 
 [settings]
 api_provider = "EtherScan"

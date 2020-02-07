@@ -1,6 +1,6 @@
 getTrace argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
 getTrace 2222222.0 2332332.0 --fmt api 
-{ "type": "CTrace", "fieldList": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
+{"data": [
   {
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
     "blockNumber": 2222222,
@@ -55,4 +55,6 @@ getTrace 2222222.0 2332332.0 --fmt api
       "gasUsed": 13042,
       "output": "0x"
     }
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

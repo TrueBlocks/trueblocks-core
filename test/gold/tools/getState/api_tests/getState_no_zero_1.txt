@@ -1,24 +1,28 @@
 {
-  "type": "CEthState",
-  "fieldList": [
+  "data": [],
+  "types": [
     {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "balance",
-      "type": "wei"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "ether",
-      "type": "number"
+      "type": "CEthState",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "ether",
+          "type": "number"
+        }
+      ]
     }
   ],
-  "data": [],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

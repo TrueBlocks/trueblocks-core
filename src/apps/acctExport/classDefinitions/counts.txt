@@ -1,0 +1,5 @@
+[settings]
+class = CCounts
+fields = address address|uint64 count
+includes = etherlib.h
+display_str = address, count

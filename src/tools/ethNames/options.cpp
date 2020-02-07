@@ -400,17 +400,8 @@ void COptions::applyFilter() {
         string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
         if (!contents.empty()) {
             CStringArray fields;
-            fields.push_back("group");
-            fields.push_back("subgroup");
-            fields.push_back("address");
-            fields.push_back("name");
-            fields.push_back("description");
-            fields.push_back("symbol");
-            fields.push_back("source");
-            fields.push_back("logo");
-            fields.push_back("is_contract");
-            fields.push_back("is_private");
-            fields.push_back("is_shared");
+#define disp2FieldList(a) toLower(substitute(substitute(substitute(cleanFmt((a), CSV1), "[{", ""), "}]", ""), "\"", ""))
+            explode(fields, disp2FieldList(STR_DISPLAY_ACCOUNTNAME), ',');
             CAccountName item;
             while (item.parseText(fields, contents)) {
                 addIfUnique(item);

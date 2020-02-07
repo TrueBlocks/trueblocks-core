@@ -1,6 +1,4 @@
 {
-  "type": "CAppearance",
-  "fieldList": [],
   "data": [
     [
       {
@@ -9,6 +7,33 @@
         "transactionIndex": 8713
       }
     ]
+  ],
+  "types": [
+    {
+      "type": "CAppearance",
+      "fields": [
+        {
+          "name": "bn",
+          "type": "blocknum"
+        },
+        {
+          "name": "tx",
+          "type": "blocknum"
+        },
+        {
+          "name": "tc",
+          "type": "blocknum"
+        },
+        {
+          "name": "addr",
+          "type": "address"
+        },
+        {
+          "name": "reason",
+          "type": "text"
+        }
+      ]
+    }
   ],
   "meta": {
     "unripe": "0xdeadbeef",

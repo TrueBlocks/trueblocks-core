@@ -11,6 +11,8 @@
 #include "etherlib.h"
 #include "acctlib.h"
 #include "displayapp.h"
+#include "counts.h"
+#include "ipfshash.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

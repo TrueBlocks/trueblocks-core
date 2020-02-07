@@ -1,27 +1,4 @@
 {
-  "type": "CEthState",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "balance",
-      "type": "wei"
-    },
-    {
-      "name": "storage",
-      "type": "text"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "ether",
-      "type": "number"
-    }
-  ],
   "data": [
     {
       "blockNumber": 2500000,
@@ -29,6 +6,33 @@
       "storage": "0x000000000000000000000000d176b08cfcb3872208f44b86f87b32faf32c531b",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "ether": 3905.6629062050943
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthState",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "storage",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "ether",
+          "type": "number"
+        }
+      ]
     }
   ],
   "meta": {

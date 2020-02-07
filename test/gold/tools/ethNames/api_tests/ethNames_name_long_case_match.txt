@@ -2,13 +2,15 @@
   {
     "group": "50-Tokens",
     "subgroup": "",
-    "name": "Storj",
     "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+    "name": "Storj",
     "symbol": "STORJ",
-    "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
     "source": "Etherscan.io",
     "logo": "storj2.png",
-    "is_contract": true,
+    "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
+    "is_contract": false,
     "is_private": false,
-    "is_shared": true
-  }] }
+    "is_shared": false
+  }], "types": [
+{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "subgroup", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }, { "name": "is_contract", "type": "bool" }, { "name": "is_private", "type": "bool" }, { "name": "is_shared", "type": "bool" }] }
+] }

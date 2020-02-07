@@ -31,4 +31,6 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --
     "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
     "transactionIndex": "0x4",
     "value": "0xdda3a6b505a6800"
-  }] }
+  }], "types": [
+{ "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }
+] }

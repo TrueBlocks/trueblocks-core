@@ -18,4 +18,6 @@ TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG
   "transactionIndex": 2
 }
 ]
+], "types": [
+{ "type": "CAppearance", "fields": [{ "name": "bn", "type": "blocknum" }, { "name": "tx", "type": "blocknum" }, { "name": "tc", "type": "blocknum" }, { "name": "addr", "type": "address" }, { "name": "reason", "type": "text" }] }
 ] }TIME ~ CLOCK - <INFO>  : exported 3 appearances from 3 transactions                                                       

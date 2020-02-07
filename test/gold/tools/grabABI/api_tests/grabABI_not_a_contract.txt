@@ -1,34 +1,38 @@
 {
-  "type": "CFunction",
-  "fieldList": [
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "signature",
-      "type": "text"
-    },
-    {
-      "name": "encoding",
-      "type": "text"
-    },
-    {
-      "name": "input_names",
-      "type": "text"
-    },
-    {
-      "name": "output_names",
-      "type": "text"
-    }
-  ],
   "data": [],
   "errors": [
     "Could not get the ABI for 0xf1aa581f353005ba3765b81bf52d6b1c488c2101. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0xf1aa581f353005ba3765b81bf52d6b1c488c2101.json in the current folder and re-run."
+  ],
+  "types": [
+    {
+      "type": "CFunction",
+      "fields": [
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "signature",
+          "type": "text"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "input_names",
+          "type": "text"
+        },
+        {
+          "name": "output_names",
+          "type": "text"
+        }
+      ]
+    }
   ],
   "meta": {
     "unripe": "0xdeadbeef",

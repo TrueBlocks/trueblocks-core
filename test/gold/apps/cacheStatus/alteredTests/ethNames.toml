@@ -1,8 +1,8 @@
 [version]
-current = "0.6.5-alpha"
+current = "0.6.6-alpha"
 
 [[custom]]
 list = [
-	{ "group"= "81-Custom", "name"= "TestWallet1", "address"= "0x0000100001000010000100001000010000100001", "group_sort"= "81", "raw_group"= "Custom" },
-	{ "group"= "81-Custom", "name"= "TestWallet2", "address"= "0x0000200002000020000200002000020000200002", "group_sort"= "81", "raw_group"= "Custom" }
+	{ "group"= "81-Custom", "address"= "0x0000100001000010000100001000010000100001", "name"= "TestWallet1", "appearanceRange"= 0, "appearanceInterval"= 0, "group_sort"= "81", "raw_group"= "Custom" },
+	{ "group"= "81-Custom", "address"= "0x0000200002000020000200002000020000200002", "name"= "TestWallet2", "appearanceRange"= 0, "appearanceInterval"= 0, "group_sort"= "81", "raw_group"= "Custom" }
 ]

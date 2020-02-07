@@ -1,6 +1,6 @@
 grabABI argc: 4 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:api] 
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api 
-{ "type": "CAbi", "fieldList": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }], "data": [
+{"data": [
 {
   "type": "constructor",
   "signature": "(address,uint256,address)",
@@ -179,4 +179,6 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
   "type": "event",
   "signature": "Unpause()",
   "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33"
-}], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+}], "types": [
+{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

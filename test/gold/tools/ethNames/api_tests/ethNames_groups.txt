@@ -1,24 +1,11 @@
 {
-  "type": "CAccountName",
-  "fieldList": [
-    {
-      "name": "group_sort",
-      "type": "text"
-    },
-    {
-      "name": "raw_group",
-      "type": "text"
-    },
-    {
-      "name": "subgroup_sort",
-      "type": "text"
-    },
-    {
-      "name": "raw_subgroup",
-      "type": "text"
-    }
-  ],
   "data": [
+    {
+      "group_sort": "20",
+      "raw_group": "Friends",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
     {
       "group_sort": "30",
       "raw_group": "Contracts",
@@ -26,46 +13,118 @@
       "raw_subgroup": ""
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "01",
-      "raw_subgroup": "Core"
+      "group_sort": "30",
+      "raw_group": "Contracts",
+      "subgroup_sort": "dAppNode",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "30",
+      "raw_group": "Contracts",
+      "subgroup_sort": "Giveeth",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "30",
+      "raw_group": "Contracts",
+      "subgroup_sort": "Moloch",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "30.2 ",
+      "raw_group": " Gitcoin Grants",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "32",
+      "raw_group": "Kickback",
+      "subgroup_sort": "Contracts",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "32",
+      "raw_group": "Kickback",
+      "subgroup_sort": "Friends",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "01",
-      "raw_subgroup": "Core Caller"
+      "subgroup_sort": "",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "02",
-      "raw_subgroup": "Modules"
+      "subgroup_sort": "Core",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "03",
-      "raw_subgroup": "Factories"
+      "subgroup_sort": "Core Caller",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "04",
-      "raw_subgroup": "Libraries"
+      "subgroup_sort": "Factories",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "05",
-      "raw_subgroup": "Wrappers"
+      "subgroup_sort": "Libraries",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "33",
       "raw_group": "Set Protocol",
-      "subgroup_sort": "06",
-      "raw_subgroup": "Other"
+      "subgroup_sort": "Modules",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "Other",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "Wrapers",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "33",
+      "raw_group": "Set Protocol",
+      "subgroup_sort": "Wrappers",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "34",
+      "raw_group": "ENS",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "34",
+      "raw_group": "Humanity DAO",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "34",
+      "raw_group": "Kyber Network",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "40",
+      "raw_group": "Exchanges",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
     },
     {
       "group_sort": "50",
@@ -76,6 +135,18 @@
     {
       "group_sort": "60",
       "raw_group": "Airdrops",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "70",
+      "raw_group": "Vendors",
+      "subgroup_sort": "",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "80",
+      "raw_group": "Malicious",
       "subgroup_sort": "",
       "raw_subgroup": ""
     },
@@ -92,8 +163,14 @@
       "raw_subgroup": ""
     },
     {
-      "group_sort": "82",
-      "raw_group": "Known",
+      "group_sort": "81",
+      "raw_group": "Custom",
+      "subgroup_sort": "Individual",
+      "raw_subgroup": ""
+    },
+    {
+      "group_sort": "90",
+      "raw_group": "DevCon2",
       "subgroup_sort": "",
       "raw_subgroup": ""
     },
@@ -102,6 +179,29 @@
       "raw_group": "",
       "subgroup_sort": "",
       "raw_subgroup": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "group_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_subgroup",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

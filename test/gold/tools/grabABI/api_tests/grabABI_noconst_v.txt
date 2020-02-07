@@ -1,31 +1,4 @@
 {
-  "type": "CFunction",
-  "fieldList": [
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "signature",
-      "type": "text"
-    },
-    {
-      "name": "encoding",
-      "type": "text"
-    },
-    {
-      "name": "inputs",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "outputs",
-      "type": "object|ts_array"
-    }
-  ],
   "data": [
     {
       "name": "",
@@ -769,6 +742,37 @@
         }
       ],
       "outputs": []
+    }
+  ],
+  "types": [
+    {
+      "type": "CFunction",
+      "fields": [
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "signature",
+          "type": "text"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "inputs",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "outputs",
+          "type": "object|ts_array"
+        }
+      ]
     }
   ],
   "meta": {

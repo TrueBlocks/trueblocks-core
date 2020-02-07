@@ -15,4 +15,6 @@ getLogs 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 --
       "inputs": [],
       "outputs": []
     }
-  }] }
+  }], "types": [
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }] }
+] }

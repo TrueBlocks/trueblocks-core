@@ -1,47 +1,4 @@
 {
-  "type": "CTrace",
-  "fieldList": [
-    {
-      "name": "blockHash",
-      "type": "hash"
-    },
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "subtraces",
-      "type": "unumber"
-    },
-    {
-      "name": "traceAddress",
-      "type": "text"
-    },
-    {
-      "name": "transactionHash",
-      "type": "hash"
-    },
-    {
-      "name": "transactionIndex",
-      "type": "blocknum"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    },
-    {
-      "name": "error",
-      "type": "text"
-    },
-    {
-      "name": "action",
-      "type": "object"
-    },
-    {
-      "name": "result",
-      "type": "object"
-    }
-  ],
   "data": [
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",
@@ -98,6 +55,53 @@
         "gasUsed": 13042,
         "output": "0x"
       }
+    }
+  ],
+  "types": [
+    {
+      "type": "CTrace",
+      "fields": [
+        {
+          "name": "blockHash",
+          "type": "hash"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "subtraces",
+          "type": "unumber"
+        },
+        {
+          "name": "traceAddress",
+          "type": "text"
+        },
+        {
+          "name": "transactionHash",
+          "type": "hash"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "error",
+          "type": "text"
+        },
+        {
+          "name": "action",
+          "type": "object"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
     }
   ],
   "meta": {

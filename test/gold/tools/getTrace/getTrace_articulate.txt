@@ -162,4 +162,6 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "gasUsed": 0,
       "output": "0x"
     }
-  }] }
+  }], "types": [
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+] }

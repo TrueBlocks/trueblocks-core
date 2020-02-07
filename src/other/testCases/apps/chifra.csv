@@ -34,8 +34,8 @@ on, cmd,  fast, leech,    apps/chifra, invalid_option,       n, modes = not_a_mo
 on, both, fast, list,     apps/chifra, list,                 y, modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
 on, both, fast, rm,       apps/chifra, rm,                   y, modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & yes & verbose = 10
 
-on, both, fast, names,    apps/chifra, names,                y, modes = names & expand
-on, both, fast, names,    apps/chifra, names_noparams,       n, modes = names & fmt = txt
+on, both, fast, names,    apps/chifra, names,                y, modes = names & names = 50-Tokens & expand
+on, both, fast, names,    apps/chifra, names_noparams,       n, modes = names & names = 50-Tokens & fmt = txt
 on, both, fast, names,    apps/chifra, names_badparams,      y, modes = names & not_an_option
 
 on, both, fast, quotes,   apps/chifra, prices,               y, modes = quotes @ p 1440

@@ -1384,4 +1384,6 @@ grabABI 0x1234567812345678123456781234567812345678 --fmt json --verbose
     }
   ],
   "outputs": []
-}] }
+}], "types": [
+{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
+] }

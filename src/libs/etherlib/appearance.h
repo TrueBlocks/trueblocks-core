@@ -11,98 +11,151 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
 #include "etherlib.h"
-#include "block.h"
-#include "transaction.h"
-#include "node.h"
+#include "zappearance.h"
 
 namespace qblocks {
 
-//----------------------------------------------------------------
-struct CAddressRecord_base {
-    uint8_t bytes[20];
-    uint32_t offset;
-    uint32_t cnt;
-};
+// EXISTING_CODE
+// EXISTING_CODE
 
-//----------------------------------------------------------------
-struct CAppearance_base {
-    uint32_t blk;
-    uint32_t txid;
-    CAppearance_base(void) {
-        blk = txid = 0;
-    }
-    CAppearance_base(uint32_t b, uint32_t t) : blk(b), txid(t) {
-    }
-    CAppearance_base(const string_q& b, const string_q& t)
-        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
-    }
-    CAppearance_base(string_q& line) {  // NOLINT
-        replaceAll(line, ".", "\t");
-        if (!contains(line, "\t"))
-            return;
-        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-    }
-};
-typedef vector<CAppearance_base> CAppearanceArray_base;
-inline bool operator<(const CAppearance_base& v1, const CAppearance_base& v2) {
-    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
-
-//----------------------------------------------------------------
-struct CHeaderRecord_base {
-    uint32_t magic;
-    uint8_t hash[32];
-    uint32_t nAddrs;
-    uint32_t nRows;
-};
-
-//---------------------------------------------------------------------------
-class CIndexArchive : public CArchive {
-  public:
-    CHeaderRecord_base header;
-    uint64_t nAddrs;
-    uint64_t nApps;
-    CAddressRecord_base* addresses;
-    CAppearance_base* appearances;
-
-    CIndexArchive(bool mode);
-    ~CIndexArchive(void);
-    bool ReadIndexFromBinary(const string_q& fn);
-
-  private:
-    CIndexArchive(void) : CArchive(READING_ARCHIVE) {
-    }
-};
-
-//---------------------------------------------------------------------------
-class CAppearance {
+//--------------------------------------------------------------------------
+class CAppearance : public CBaseNode {
   public:
     blknum_t bn;
     blknum_t tx;
     blknum_t tc;
     address_t addr;
     string_q reason;
-    CAppearance(void) : bn(0), tx(0), tc(0), addr(""), reason("") {
-    }
-    CAppearance(const CAppearance& item) : bn(item.bn), tx(item.tx), tc(item.tc), addr(item.addr), reason(item.reason) {
-    }
-    CAppearance& operator=(const CAppearance& item) {
-        bn = item.bn;
-        tx = item.tx;
-        tc = item.tc;
-        addr = item.addr;
-        reason = item.reason;
-        return *this;
-    }
+
+  public:
+    CAppearance(void);
+    CAppearance(const CAppearance& ap);
+    virtual ~CAppearance(void);
+    CAppearance& operator=(const CAppearance& ap);
+
+    DECLARE_NODE(CAppearance);
+
+    // EXISTING_CODE
     CAppearance(blknum_t b, blknum_t x, blknum_t c, const address_t& a, const string_q r)
         : bn(b), tx(x), tc(c), addr(a), reason(r) {
     }
-    string_q Format(const string_q& fmt) const;
+    // string_q Format(const string_q& fmt) const;
+    // EXISTING_CODE
+    bool operator==(const CAppearance& item) const;
+    bool operator!=(const CAppearance& item) const {
+        return !operator==(item);
+    }
+    friend bool operator<(const CAppearance& v1, const CAppearance& v2);
     friend ostream& operator<<(ostream& os, const CAppearance& item);
+
+  protected:
+    void clear(void);
+    void initialize(void);
+    void duplicate(const CAppearance& ap);
+    bool readBackLevel(CArchive& archive) override;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 };
+
+//--------------------------------------------------------------------------
+inline CAppearance::CAppearance(void) {
+    initialize();
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline CAppearance::CAppearance(const CAppearance& ap) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    duplicate(ap);
+}
+
+// EXISTING_CODE
+// EXISTING_CODE
+
+//--------------------------------------------------------------------------
+inline CAppearance::~CAppearance(void) {
+    clear();
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CAppearance::clear(void) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CAppearance::initialize(void) {
+    CBaseNode::initialize();
+
+    bn = 0;
+    tx = 0;
+    tc = 0;
+    addr = "";
+    reason = "";
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline void CAppearance::duplicate(const CAppearance& ap) {
+    clear();
+    CBaseNode::duplicate(ap);
+
+    bn = ap.bn;
+    tx = ap.tx;
+    tc = ap.tc;
+    addr = ap.addr;
+    reason = ap.reason;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
+}
+
+//--------------------------------------------------------------------------
+inline CAppearance& CAppearance::operator=(const CAppearance& ap) {
+    duplicate(ap);
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return *this;
+}
+
+//-------------------------------------------------------------------------
+inline bool CAppearance::operator==(const CAppearance& item) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
+}
+
+//-------------------------------------------------------------------------
+inline bool operator<(const CAppearance& v1, const CAppearance& v2) {
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
+}
+
+//---------------------------------------------------------------------------
 typedef vector<CAppearance> CAppearanceArray;
+extern CArchive& operator>>(CArchive& archive, CAppearanceArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceArray& array);
+
+//---------------------------------------------------------------------------
+extern const char* STR_DISPLAY_APPEARANCE;
+
+//---------------------------------------------------------------------------
+// EXISTING_CODE
 typedef bool (*ADDRESSFUNC)(const CAppearance& item, void* data);
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
 extern bool potentialAddr(ADDRESSFUNC func, void* data, const CAppearance& item, const string_q& potList);
@@ -156,5 +209,5 @@ extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCT
 extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorCnfg(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-
+// EXISTING_CODE
 }  // namespace qblocks

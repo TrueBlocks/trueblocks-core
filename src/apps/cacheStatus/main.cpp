@@ -37,7 +37,7 @@ int main(int argc, const char* argv[]) {
 
         } else {
             if (once)
-                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
+                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], "");
             options.handle_status(cout);
         }
         once = false;

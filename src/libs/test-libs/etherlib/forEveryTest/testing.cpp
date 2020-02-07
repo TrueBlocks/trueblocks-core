@@ -66,7 +66,7 @@ int main(int argc, const char* argv[]) {
 bool visitAddrs(const CAppearance& item, void* data) {
     if (isZeroAddr(item.addr))
         return true;
-    cout << item << "\n";
+    cout << item.Format(STR_DISPLAY_APPEARANCE) << "\n";
     return true;
 }
 
@@ -117,7 +117,7 @@ void everySortedUniqueAddress(CBlock& block) {
     block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
-        cout << elem << "\n";
+        cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";
 }
 
 //--------------------------------------------------------------
@@ -133,7 +133,7 @@ void everySortedUniqueAddressPerTx(CBlock& block) {
     block.forEveryUniqueAddressPerTx(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
-        cout << elem << "\n";
+        cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";
 }
 
 //--------------------------------------------------------------

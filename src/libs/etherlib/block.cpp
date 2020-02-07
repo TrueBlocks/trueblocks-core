@@ -16,7 +16,7 @@
  */
 #include <algorithm>
 #include "block.h"
-#include "appearance.h"
+#include "zappearance.h"
 
 namespace qblocks {
 

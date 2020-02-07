@@ -1,64 +1,68 @@
 {
-  "type": "CAccountName",
-  "fieldList": [
-    {
-      "name": "group",
-      "type": "text"
-    },
-    {
-      "name": "subgroup",
-      "type": "text"
-    },
-    {
-      "name": "name",
-      "type": "text"
-    },
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "symbol",
-      "type": "text"
-    },
-    {
-      "name": "description",
-      "type": "text"
-    },
-    {
-      "name": "source",
-      "type": "text"
-    },
-    {
-      "name": "logo",
-      "type": "text"
-    },
-    {
-      "name": "is_contract",
-      "type": "bool"
-    },
-    {
-      "name": "is_private",
-      "type": "bool"
-    },
-    {
-      "name": "is_shared",
-      "type": "bool"
-    }
-  ],
   "data": [
     {
       "group": "50-Tokens",
       "subgroup": "",
-      "name": "Humaniq",
       "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
+      "name": "Humaniq",
       "symbol": "HMQ",
-      "description": "Humaniq aims to be a simple and secure 4th generation mobile bank.",
       "source": "Etherscan.io",
       "logo": "humaniq.png",
-      "is_contract": true,
+      "description": "Humaniq aims to be a simple and secure 4th generation mobile bank.",
+      "is_contract": false,
       "is_private": false,
-      "is_shared": true
+      "is_shared": false
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "logo",
+          "type": "text"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_private",
+          "type": "bool"
+        },
+        {
+          "name": "is_shared",
+          "type": "bool"
+        }
+      ]
     }
   ],
   "meta": {

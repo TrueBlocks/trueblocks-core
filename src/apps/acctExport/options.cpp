@@ -384,6 +384,8 @@ COptions::COptions(void) {
     ts_cnt = 0;
     Init();
     CDisplayApp::registerClass();
+    CCounts::registerClass();
+    CIpfshash::registerClass();
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");

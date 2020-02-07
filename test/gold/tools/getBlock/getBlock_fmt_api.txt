@@ -1,6 +1,6 @@
 getBlock argc: 5 [1:2222222] [2:2332332] [3:--fmt] [4:api] 
 getBlock 2222222 2332332 --fmt api 
-{ "type": "CBlock", "fieldList": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }], "data": [
+{"data": [
 {
   "gasLimit": 4704588,
   "gasUsed": 1306412,
@@ -709,4 +709,6 @@ getBlock 2222222 2332332 --fmt api
       "gasUsed": 21000
     }
   ]
-}], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+}], "types": [
+{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

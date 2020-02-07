@@ -1,34 +1,38 @@
 {
-  "type": "CLogEntry",
-  "fieldList": [
-    {
-      "name": "address",
-      "type": "address"
-    },
-    {
-      "name": "data",
-      "type": "text"
-    },
-    {
-      "name": "logIndex",
-      "type": "blocknum"
-    },
-    {
-      "name": "topics",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "compressedLog",
-      "type": "text"
-    },
-    {
-      "name": "type",
-      "type": "text"
-    }
-  ],
   "data": [],
   "errors": [
     "Transaction 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 not found."
+  ],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        }
+      ]
+    }
   ],
   "meta": {
     "unripe": "0xdeadbeef",

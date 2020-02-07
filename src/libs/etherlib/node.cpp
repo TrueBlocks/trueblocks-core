@@ -64,6 +64,7 @@ void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
     CFunction::registerClass();
     CParameter::registerClass();
 
+    CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();
     CCacheEntry::registerClass();
@@ -1081,6 +1082,20 @@ string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_
 
 //-----------------------------------------------------------------------
 string_q exportPreamble(format_t fmt, const string_q& format, const string_q& className) {
+    if (!className.empty()) {
+        CBaseNode* obj = createObjectOfType(className);
+        if (obj) {
+            const CRuntimeClass* pClass = obj->getRuntimeClass();
+            if (!pClass)
+                cerr << "Unknown class '" << className << "'. Is it registered?" << endl;
+            else if (pClass->fieldList.size() == 0)
+                cerr << "Class '" << className << "' has no fields. Is it registered?" << endl;
+            else
+                expContext().types[className] = pClass;
+            delete obj;
+        }
+    }
+
     ostringstream os;
     switch (fmt) {
         case NONE1:
@@ -1098,37 +1113,14 @@ string_q exportPreamble(format_t fmt, const string_q& format, const string_q& cl
         case JSON1:
             os << "{ \"data\": [";
             break;
-        case API1: {
-            os << "{ \"type\": \"" << className << "\", ";
-            //#define NO_FIELDLIST
-            os << "\"fieldList\": [";
-            //#ifndef NO_FIELDLIST
-            if (isTestMode()) {
-                CBaseNode* obj = createObjectOfType(className);
-                if (obj) {
-                    const CRuntimeClass* pClass = obj->getRuntimeClass();
-                    bool first = true;
-                    for (auto field : pClass->fieldList) {
-                        if (!field.isHidden()) {
-                            if (!first)
-                                os << ", ";
-                            string_q t = toLower(fieldTypeName(field.getType()));
-                            t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
-                            os << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
-                            first = false;
-                        }
-                    }
-                    delete obj;
-                }
-            }
-            //#endif
-            os << "], ";
-            os << "\"data\": [";
-        } break;
+        case API1:
+            os << "{\"data\": [";
+            break;
         default:
             ASSERT(0);  // shouldn't happen
             break;
     }
+
     return trim(trim(os.str(), ','), '\t') + "\n";
 }
 
@@ -1176,6 +1168,35 @@ string_q exportPostamble(format_t fmt, const CStringArray& errorsIn, const strin
     os << "]";  // finish the data array (or the error array)...
     if (!errStrs.str().empty())
         os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+
+    if (!isText && expContext().types.size() > 0) {
+        ostringstream typeStrs;
+        first = true;
+        for (auto type : expContext().types) {
+            if (!first)
+                typeStrs << ", ";
+            typeStrs << "{ \"type\": \"" << type.first << "\", \"fields\": [";
+            const CRuntimeClass* pClass = type.second;
+            bool fy = true;
+            while (pClass) {
+                for (auto field : pClass->fieldList) {
+                    if (!field.isHidden()) {
+                        if (!fy)
+                            typeStrs << ", ";
+                        string_q t = toLower(fieldTypeName(field.getType()));
+                        t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
+                        typeStrs << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
+                        fy = false;
+                    }
+                }
+                string_q parent = pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "";
+                pClass = (parent == "CBaseClass" ? NULL : pClass->m_BaseClass);
+            }
+            typeStrs << "] }";
+            first = false;
+        }
+        os << ", \"types\": [\n" << typeStrs.str() << "\n]";
+    }
 
     if (fmt == JSON1)
         return os.str() + " }";

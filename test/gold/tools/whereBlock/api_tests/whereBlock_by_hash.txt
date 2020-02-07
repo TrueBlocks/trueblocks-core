@@ -1,24 +1,28 @@
 {
-  "type": "CCacheEntry",
-  "fieldList": [
-    {
-      "name": "blockNumber",
-      "type": "text"
-    },
-    {
-      "name": "cached",
-      "type": "bool"
-    },
-    {
-      "name": "path",
-      "type": "text"
-    }
-  ],
   "data": [
     {
       "blockNumber": "1001010",
       "cached": true,
       "path": "./blocks/00/10/01/001001010.bin"
+    }
+  ],
+  "types": [
+    {
+      "type": "CCacheEntry",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "text"
+        },
+        {
+          "name": "cached",
+          "type": "bool"
+        },
+        {
+          "name": "path",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

@@ -286,4 +286,6 @@ getBlock 4001001 --hashes_only
       "hash": "0xa600632d3a6b343ecd51795291818dbd8c59e4588c08c0cfc5a9f2614edfe567"
     }
   ]
-}] }
+}], "types": [
+{ "type": "CBlock", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+] }

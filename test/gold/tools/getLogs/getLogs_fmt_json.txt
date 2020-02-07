@@ -15,4 +15,6 @@ getLogs 2222222.0 2332332.0 --fmt json
       "inputs": [],
       "outputs": []
     }
-  }] }
+  }], "types": [
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }] }
+] }

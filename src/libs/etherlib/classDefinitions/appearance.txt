@@ -1,0 +1,5 @@
+[settings]
+class = CAppearance
+fields = blknum bn|blknum tx|blknum tc|address addr|string reason
+includes = etherlib.h|zappearance.h
+display_str = bn, tx, tc, addr, reason

@@ -1,7 +1,7 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--traces] [3:--fmt] [4:api] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 001506480 
 TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
-{ "type": "CTrace", "fieldList": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }], "data": [
+{"data": [
 [{
   "type": "call",
   "articulatedTrace": {},
@@ -43,4 +43,6 @@ TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG
   }
 }
 ]
+], "types": [
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }TIME ~ CLOCK - <INFO>  : exported 2 traces from 3 transactions                                                       

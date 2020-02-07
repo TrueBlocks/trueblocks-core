@@ -10,35 +10,35 @@ on, both, fast, slurp, tools/ethslurp, invalid_address_1,             y, addrs =
 on, both, fast, slurp, tools/ethslurp, invalid_address_2,             y, addrs = 0x63c8c29af409bd31ec7ddeea58f
 on, both, fast, slurp, tools/ethslurp, invalid_type1,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = junk
 on, both, fast, slurp, tools/ethslurp, invalid_type2,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types =
-on, cmd,  medi, slurp, tools/ethslurp, no_record_in_block_range,      n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
-on, cmd,  medi, slurp, tools/ethslurp, not_found_address,             n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
+#on, cmd,  medi, slurp, tools/ethslurp, no_record_in_block_range,      n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
+#on, cmd,  medi, slurp, tools/ethslurp, not_found_address,             n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
 
-on, both, medi, slurp, tools/ethslurp, range_of_blocks,               y, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186301
-on, both, fast, slurp, tools/ethslurp, single_block_range,            n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186280
-on, cmd,  medi, slurp, tools/ethslurp, blockByHash,                   n, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
+#on, both, medi, slurp, tools/ethslurp, range_of_blocks,               y, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186301
+#on, both, fast, slurp, tools/ethslurp, single_block_range,            n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 4186279-4186280
+#on, cmd,  medi, slurp, tools/ethslurp, blockByHash,                   n, addrs = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 
-on, both, medi, slurp, tools/ethslurp, type_ext,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext
-on, both, medi, slurp, tools/ethslurp, type_int,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int
-on, both, slow, slurp, tools/ethslurp, type_token,                    y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & types = token & blocks = 1428756-1428758
-on, both, medi, slurp, tools/ethslurp, type_miner,                    y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 1-1000
-on, both, fast, slurp, tools/ethslurp, type_all,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420
+#on, both, medi, slurp, tools/ethslurp, type_ext,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = ext
+#on, both, medi, slurp, tools/ethslurp, type_int,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = int
+#on, both, slow, slurp, tools/ethslurp, type_token,                    y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & types = token & blocks = 1428756-1428758
+#on, both, medi, slurp, tools/ethslurp, type_miner,                    y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 1-1000
+#on, both, fast, slurp, tools/ethslurp, type_all,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420
 
-on, both, fast, slurp, tools/ethslurp, fmt_default,                   y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000
-on, both, fast, slurp, tools/ethslurp, fmt_txt,                       n, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = txt
-on, both, fast, slurp, tools/ethslurp, fmt_csv,                       n, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = csv & no_header
-on, both, fast, slurp, tools/ethslurp, fmt_api,                       y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = api
-on, both, fast, slurp, tools/ethslurp, fmt_json,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = json
-on, both, fast, slurp, tools/ethslurp, fmt_junk,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = junk
+#on, both, fast, slurp, tools/ethslurp, fmt_default,                   y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000
+#on, both, fast, slurp, tools/ethslurp, fmt_txt,                       n, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = txt
+#on, both, fast, slurp, tools/ethslurp, fmt_csv,                       n, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = csv & no_header
+#on, both, fast, slurp, tools/ethslurp, fmt_api,                       y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = api
+#on, both, fast, slurp, tools/ethslurp, fmt_json,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = json
+#on, both, fast, slurp, tools/ethslurp, fmt_junk,                      y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = junk
 
-# COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
-# COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-# COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
-# COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
-# COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
+## COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
+## COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
+## COption("types", "t", "list<enum[ext*|int|token|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),
+## COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),
+## COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
 
-# 12120 ,tools     ,slurp        ,ethslurp     ,addrs         ,       ,        ,TRUE        ,FALSE         ,TRUE         ,TRUE         ,         ,positional  ,list<addr>                                                                                                                                           ,one or more addresses to slurp from Etherscan
-# 12140 ,tools     ,slurp        ,ethslurp     ,blocks        ,       ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,         ,positional  ,list<blknum>                                                                                                                                         ,an optional range of blocks to slurp
-# 12160 ,tools     ,slurp        ,ethslurp     ,types         ,t      ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,local    ,flag        ,list<enum[ext*|int|token|miner|all]>                                                                                                                 ,one or more types of transactions to request
-# 12180 ,tools     ,slurp        ,ethslurp     ,appearances   ,p      ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,yes      ,switch      ,<boolean>                                                                                                                                            ,show only the blocknumer.tx_id appearances of the exported transactions
-# 12220 ,tools     ,slurp        ,ethslurp     ,              ,       ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,--       ,description ,                                                                                                                                                     ,Fetches data from EtherScan for an arbitrary address.
-# 12222 ,tools     ,slurp        ,ethslurp     ,              ,       ,        ,FALSE       ,FALSE         ,FALSE        ,FALSE        ,--       ,note        ,                                                                                                                                                     ,Portions of this software are Powered by Etherscan.io APIs.
+## 12120 ,tools     ,slurp        ,ethslurp     ,addrs         ,       ,        ,TRUE        ,FALSE         ,TRUE         ,TRUE         ,         ,positional  ,list<addr>                                                                                                                                           ,one or more addresses to slurp from Etherscan
+## 12140 ,tools     ,slurp        ,ethslurp     ,blocks        ,       ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,         ,positional  ,list<blknum>                                                                                                                                         ,an optional range of blocks to slurp
+## 12160 ,tools     ,slurp        ,ethslurp     ,types         ,t      ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,local    ,flag        ,list<enum[ext*|int|token|miner|all]>                                                                                                                 ,one or more types of transactions to request
+## 12180 ,tools     ,slurp        ,ethslurp     ,appearances   ,p      ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,yes      ,switch      ,<boolean>                                                                                                                                            ,show only the blocknumer.tx_id appearances of the exported transactions
+## 12220 ,tools     ,slurp        ,ethslurp     ,              ,       ,        ,FALSE       ,FALSE         ,TRUE         ,TRUE         ,--       ,description ,                                                                                                                                                     ,Fetches data from EtherScan for an arbitrary address.
+## 12222 ,tools     ,slurp        ,ethslurp     ,              ,       ,        ,FALSE       ,FALSE         ,FALSE        ,FALSE        ,--       ,note        ,                                                                                                                                                     ,Portions of this software are Powered by Etherscan.io APIs.

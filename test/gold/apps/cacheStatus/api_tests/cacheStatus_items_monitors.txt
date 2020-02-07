@@ -1,55 +1,8 @@
 {
-  "type": "CStatus",
-  "fieldList": [
-    {
-      "name": "client_version",
-      "type": "text"
-    },
-    {
-      "name": "trueblocks_version",
-      "type": "text"
-    },
-    {
-      "name": "rpc_provider",
-      "type": "text"
-    },
-    {
-      "name": "api_provider",
-      "type": "text"
-    },
-    {
-      "name": "balance_provider",
-      "type": "text"
-    },
-    {
-      "name": "cache_path",
-      "type": "text"
-    },
-    {
-      "name": "index_path",
-      "type": "text"
-    },
-    {
-      "name": "host",
-      "type": "text"
-    },
-    {
-      "name": "is_scraping",
-      "type": "bool"
-    },
-    {
-      "name": "caches",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "date",
-      "type": "date"
-    }
-  ],
   "data": [
     {
       "client_version": "Parity version",
-      "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "api_provider": "--providers--",
       "balance_provider": "--providers--",
@@ -68,16 +21,19 @@
               "enabled": true,
               "group": "",
               "subgroup": "",
-              "name": "",
               "address": "---address---",
+              "name": "",
               "symbol": "",
-              "description": "",
               "source": "",
               "logo": "",
+              "description": "",
+              "nAppearances": 18446744073709552000,
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
-              "nRecords": 18446744073709552000,
+              "appearanceRange": 18446744073709552000,
+              "appearanceInterval": 18446744073709552000,
               "sizeInBytes": 18446744073709552000,
+              "display_name": "---address---",
               "group_sort": "",
               "raw_group": "",
               "subgroup_sort": "",
@@ -93,6 +49,142 @@
         }
       ],
       "date": "--date--"
+    }
+  ],
+  "types": [
+    {
+      "type": "CMonitorCache",
+      "fields": [
+        {
+          "name": "addrs",
+          "type": "address|ts_array"
+        },
+        {
+          "name": "items",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "path",
+          "type": "text"
+        },
+        {
+          "name": "nFiles",
+          "type": "unumber"
+        },
+        {
+          "name": "nFolders",
+          "type": "unumber"
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "is_valid",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "CMonitorCacheItem",
+      "fields": [
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "deleted",
+          "type": "bool"
+        },
+        {
+          "name": "curBalance",
+          "type": "wei"
+        },
+        {
+          "name": "enabled",
+          "type": "bool"
+        },
+        {
+          "name": "group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "logo",
+          "type": "text"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "nAppearances",
+          "type": "blocknum"
+        },
+        {
+          "name": "firstAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "latestAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "appearanceRange",
+          "type": "blocknum"
+        },
+        {
+          "name": "appearanceInterval",
+          "type": "blocknum"
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "display_name",
+          "type": "text"
+        },
+        {
+          "name": "group_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_group",
+          "type": "text"
+        },
+        {
+          "name": "subgroup_sort",
+          "type": "text"
+        },
+        {
+          "name": "raw_subgroup",
+          "type": "text"
+        }
+      ]
     }
   ],
   "meta": {

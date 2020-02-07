@@ -2,7 +2,7 @@ cacheStatus argc: 7 [1:--details] [2:some] [3:--start] [4:3000000] [5:--end] [6:
 cacheStatus --details some --start 3000000 --end 3100000 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
@@ -86,10 +86,13 @@ cacheStatus --details some --start 3000000 --end 3100000
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",
+          "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
-          "nRecords": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615
+          "appearanceRange": 18446744073709551615,
+          "appearanceInterval": 18446744073709551615,
+          "sizeInBytes": 18446744073709551615,
+          "display_name": "---address---"
         }
       ],
       "type": "CMonitorCache",
@@ -123,8 +126,10 @@ cacheStatus --details some --start 3000000 --end 3100000
           "type": "CPriceCacheItem",
           "pair": "---pair---",
           "address": "0x0",
-          "nRecords": 36910963,
-          "sizeInBytes": 36910963
+          "nAppearances": 2020101,
+          "appearanceRange": 0,
+          "appearanceInterval": 0,
+          "sizeInBytes": 1010202
         }
       ],
       "type": "CPriceCache",

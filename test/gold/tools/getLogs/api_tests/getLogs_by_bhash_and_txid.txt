@@ -15,5 +15,40 @@
       "compressedLog": "",
       "type": "mined"
     }
+  ],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "articulatedLog",
+          "type": "object"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        }
+      ]
+    }
   ]
 }

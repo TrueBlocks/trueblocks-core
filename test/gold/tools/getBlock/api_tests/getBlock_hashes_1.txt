@@ -286,5 +286,28 @@
         }
       ]
     }
+  ],
+  "types": [
+    {
+      "type": "CBlock",
+      "fields": [
+        {
+          "name": "hash",
+          "type": "hash"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        },
+        {
+          "name": "transactions",
+          "type": "object|ts_array"
+        }
+      ]
+    }
   ]
 }

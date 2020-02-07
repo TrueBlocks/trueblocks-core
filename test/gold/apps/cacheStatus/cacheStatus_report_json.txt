@@ -3,7 +3,7 @@ cacheStatus --report --fmt json
 { "data": [
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.5-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
@@ -60,4 +60,6 @@ cacheStatus --report --fmt json
   ],
   "date": "--date--"
 }
+], "types": [
+{ "type": "CIndexCache", "fields": [{ "name": "items", "type": "object|ts_array" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "number" }, { "name": "nFolders", "type": "number" }, { "name": "sizeInBytes", "type": "number" }, { "name": "is_valid", "type": "bool" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CMonitorCache", "fields": [{ "name": "addrs", "type": "address|ts_array" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CNameCache", "fields": [{ "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CPriceCache", "fields": [{ "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CSlurpCache", "fields": [{ "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }
 ] }

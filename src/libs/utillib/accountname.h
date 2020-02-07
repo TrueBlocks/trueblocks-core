@@ -29,22 +29,25 @@ class CAccountName : public CBaseNode {
   public:
     string_q group;
     string_q subgroup;
-    string_q name;
     address_t address;
+    string_q name;
     string_q symbol;
-    string_q description;
     string_q source;
     string_q logo;
-    string_q path;
-    string_q color;
+    string_q description;
     bool is_contract;
     bool is_private;
     bool is_shared;
+    string_q color;
+    blknum_t nAppearances;
+    blknum_t lastExport;
     blknum_t firstAppearance;
     blknum_t latestAppearance;
-    blknum_t lastExport;
-    uint64_t nRecords;
+    blknum_t appearanceRange;
+    blknum_t appearanceInterval;
+    string_q path;
     uint64_t sizeInBytes;
+    string_q display_name;
 
   public:
     CAccountName(void);
@@ -110,22 +113,25 @@ inline void CAccountName::initialize(void) {
 
     group = "";
     subgroup = "";
-    name = "";
     address = "";
+    name = "";
     symbol = "";
-    description = "";
     source = "";
     logo = "";
-    path = "";
-    color = "";
+    description = "";
     is_contract = false;
     is_private = false;
     is_shared = false;
+    color = "";
+    nAppearances = 0;
+    lastExport = 0;
     firstAppearance = 0;
     latestAppearance = 0;
-    lastExport = 0;
-    nRecords = 0;
+    appearanceRange = 0;
+    appearanceInterval = 0;
+    path = "";
     sizeInBytes = 0;
+    display_name = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -138,22 +144,25 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
 
     group = ac.group;
     subgroup = ac.subgroup;
-    name = ac.name;
     address = ac.address;
+    name = ac.name;
     symbol = ac.symbol;
-    description = ac.description;
     source = ac.source;
     logo = ac.logo;
-    path = ac.path;
-    color = ac.color;
+    description = ac.description;
     is_contract = ac.is_contract;
     is_private = ac.is_private;
     is_shared = ac.is_shared;
+    color = ac.color;
+    nAppearances = ac.nAppearances;
+    lastExport = ac.lastExport;
     firstAppearance = ac.firstAppearance;
     latestAppearance = ac.latestAppearance;
-    lastExport = ac.lastExport;
-    nRecords = ac.nRecords;
+    appearanceRange = ac.appearanceRange;
+    appearanceInterval = ac.appearanceInterval;
+    path = ac.path;
     sizeInBytes = ac.sizeInBytes;
+    display_name = ac.display_name;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -49,7 +49,7 @@ bool COptions::handle_listing(ostream& os) {
             item.lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(item.address)));
             item.m_deleted = fileExists(getMonitorPath(item.address + ".deleted"));
             //            item.lastBalance = 0;
-            item.nRecords = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
+            item.nAppearances = fileSize(getMonitorPath(item.address)) / sizeof(CAppearance_base);
             accts.push_back(item);
         }
     }
@@ -71,7 +71,7 @@ bool COptions::handle_listing(ostream& os) {
         SHOW_FIELD(CAccountName, "sizeInBytes");
         SHOW_FIELD(CAccountName, "latestAppearance");
         SHOW_FIELD(CAccountName, "lastExport");
-        SHOW_FIELD(CAccountName, "nRecords");
+        SHOW_FIELD(CAccountName, "nAppearances");
         ostringstream oss;
         if (accts.size() > 1)
             oss << "[";
@@ -91,13 +91,13 @@ bool COptions::handle_listing(ostream& os) {
     if (stats) {
         for (auto acct : accts) {
             string_q fmt =
-                "[Address:  -c1-{ADDRESS}-off-\n]"
-                "[\tName:        -c2-{NAME}-off-\n]"
-                "[\tFile name:   -c2-{PATH}-off-\n]"
-                "[\tFile size:   -c2-{SIZEINBYTES}-off-\n]"
-                "[\tLast block:  -c2-{LATESTAPPEARANCE}-off-\n]"
-                "[\tLast export: -c2-{LASTEXPORT}-off-\n]"
-                "[\tnRecords:    -c2-{NRECORDS}-off-\n]";
+                "[Address:   -c1-{ADDRESS}-off-\n]"
+                "[\tName:         -c2-{NAME}-off-\n]"
+                "[\tFile name:    -c2-{PATH}-off-\n]"
+                "[\tFile size:    -c2-{SIZEINBYTES}-off-\n]"
+                "[\tLast block:   -c2-{LATESTAPPEARANCE}-off-\n]"
+                "[\tLast export:  -c2-{LASTEXPORT}-off-\n]"
+                "[\tnAppearances: -c2-{NAPPEARANCES}-off-\n]";
             replaceAll(fmt, "-c1-", cTeal);
             replaceAll(fmt, "-c2-", cYellow);
             replaceAll(fmt, "-off-", cOff);

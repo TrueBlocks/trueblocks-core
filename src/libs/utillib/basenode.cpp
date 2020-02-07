@@ -367,8 +367,8 @@ bool CBaseNode::SerializeC(CArchive& archive) const {
 
 //---------------------------------------------------------------------------
 // TODO(tjayrush): global data
-static CExportOptions expC;
-CExportOptions& expContext(void) {
+static CExportContext expC;
+CExportContext& expContext(void) {
     return expC;
 }
 

@@ -325,7 +325,7 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataP
                 if (startsWith(fieldIn, "cur") && acc->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
                     return "\"n/a\"";
                 if (fieldIn % "curEther")
-                    return wei_2_Ether(wei_2_Str(acc->curBalance));
+                    return "\"" + wei_2_Ether(wei_2_Str(acc->curBalance)) + "\"";
                 if (fieldIn % "curDollars")
                     return "not-implemented";
                 break;

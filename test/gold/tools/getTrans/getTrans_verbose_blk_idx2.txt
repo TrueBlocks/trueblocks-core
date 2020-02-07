@@ -1,6 +1,6 @@
 getTrans argc: 4 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4] [2:--fmt] [3:api] 
 getTrans 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 --fmt api 
-{ "type": "CTransaction", "fieldList": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }], "data": [
+{"data": [
   {
     "hash": "0xdf228b93e431c03fb37f124d920a56233b6b43fce19c4233b4b96077eb9635f8",
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -22,4 +22,6 @@ getTrans 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 --
       "status": null
     },
     "gasUsed": 150000
-  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "types": [
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

@@ -1,95 +1,4 @@
 {
-  "type": "CTransaction",
-  "fieldList": [
-    {
-      "name": "hash",
-      "type": "hash"
-    },
-    {
-      "name": "blockHash",
-      "type": "hash"
-    },
-    {
-      "name": "blockNumber",
-      "type": "blocknum"
-    },
-    {
-      "name": "transactionIndex",
-      "type": "blocknum"
-    },
-    {
-      "name": "timestamp",
-      "type": "timestamp"
-    },
-    {
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "name": "value",
-      "type": "wei"
-    },
-    {
-      "name": "gas",
-      "type": "gas"
-    },
-    {
-      "name": "gasPrice",
-      "type": "gas"
-    },
-    {
-      "name": "input",
-      "type": "text"
-    },
-    {
-      "name": "isError",
-      "type": "unumber"
-    },
-    {
-      "name": "receipt",
-      "type": "object"
-    },
-    {
-      "name": "articulatedTx",
-      "type": "object"
-    },
-    {
-      "name": "traces",
-      "type": "object|ts_array"
-    },
-    {
-      "name": "gasCost",
-      "type": "wei"
-    },
-    {
-      "name": "gasUsed",
-      "type": "gas"
-    },
-    {
-      "name": "date",
-      "type": "date"
-    },
-    {
-      "name": "datesh",
-      "type": "date"
-    },
-    {
-      "name": "time",
-      "type": "date"
-    },
-    {
-      "name": "age",
-      "type": "date"
-    },
-    {
-      "name": "ether",
-      "type": "ether"
-    }
-  ],
   "data": [
     {
       "hash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
@@ -246,6 +155,101 @@
       "time": "0:10:08 UTC",
       "age": "100",
       "ether": 0.6072986252967483
+    }
+  ],
+  "types": [
+    {
+      "type": "CTransaction",
+      "fields": [
+        {
+          "name": "hash",
+          "type": "hash"
+        },
+        {
+          "name": "blockHash",
+          "type": "hash"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        },
+        {
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "value",
+          "type": "wei"
+        },
+        {
+          "name": "gas",
+          "type": "gas"
+        },
+        {
+          "name": "gasPrice",
+          "type": "gas"
+        },
+        {
+          "name": "input",
+          "type": "text"
+        },
+        {
+          "name": "isError",
+          "type": "unumber"
+        },
+        {
+          "name": "receipt",
+          "type": "object"
+        },
+        {
+          "name": "articulatedTx",
+          "type": "object"
+        },
+        {
+          "name": "traces",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "gasCost",
+          "type": "wei"
+        },
+        {
+          "name": "gasUsed",
+          "type": "gas"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "name": "datesh",
+          "type": "date"
+        },
+        {
+          "name": "time",
+          "type": "date"
+        },
+        {
+          "name": "age",
+          "type": "date"
+        },
+        {
+          "name": "ether",
+          "type": "ether"
+        }
+      ]
     }
   ],
   "meta": {
