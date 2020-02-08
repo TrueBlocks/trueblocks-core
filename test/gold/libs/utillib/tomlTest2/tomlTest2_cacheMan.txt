@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:cacheMan.toml]
 tomlTest2 cacheMan.toml 
 tests/cacheMan.toml
 [version]
-current = "0.6.6-alpha"
+current = "0.6.7-alpha"
 
 [display]
 # terse = "<not_set>"

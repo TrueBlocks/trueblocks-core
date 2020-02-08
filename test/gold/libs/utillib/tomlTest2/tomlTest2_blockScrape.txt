@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:blockScrape.toml]
 tomlTest2 blockScrape.toml 
 tests/blockScrape.toml
 [version]
-current = "0.6.6-alpha"
+current = "0.6.7-alpha"
 
 [settings]
 # nBlocks = 2000

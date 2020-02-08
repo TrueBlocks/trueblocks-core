@@ -1,5 +1,5 @@
 [version]
-current = "0.6.6-alpha"
+current = "0.6.7-alpha"
 
 [[custom]]
 list = [

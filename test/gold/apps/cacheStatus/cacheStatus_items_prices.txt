@@ -2,7 +2,7 @@ cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:prices]
 cacheStatus --details caches --types prices 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.6-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.6.7-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
