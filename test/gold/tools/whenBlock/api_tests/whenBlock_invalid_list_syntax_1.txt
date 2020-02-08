@@ -127,6 +127,12 @@
       "date": "2018-10-30 09:00:00 UTC"
     },
     {
+      "blockNumber": 6627917,
+      "timestamp": 1541137042,
+      "name": "uniswap",
+      "date": "2018-11-02 05:37:22 UTC"
+    },
+    {
       "blockNumber": 7280000,
       "timestamp": 1551383524,
       "name": "constantinople",
@@ -137,6 +143,12 @@
       "timestamp": 1570525179,
       "name": "devcon5",
       "date": "2019-10-08 08:59:39 UTC"
+    },
+    {
+      "blockNumber": 8928158,
+      "timestamp": 1573672677,
+      "name": "mcdai",
+      "date": "2019-11-13 19:17:57 UTC"
     },
     {
       "blockNumber": 9069000,
