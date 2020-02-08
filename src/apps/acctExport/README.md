@@ -8,7 +8,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    acctExport [-a|-l|-t|-c|-p|-o|-x|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-w|-i|-R|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -16,19 +16,26 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
+| -p | --appearances | export a list of appearances |
+| -r | --receipts | export receipts instead of transaction list |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
-| -c | --balances | export balance history instead of transaction list |
-| -p | --appearances | export a list of appearances |
-| -o | --count_only | display only the count of the number of data items requested |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -b | --balances | export balance history instead of transaction list |
+| -e | --hashes_only | export the IPFS hashes of the index chunks the address appears in |
+| -c | --count_only | display only the count of the number of data items requested |
+| -a | --articulate | articulate transactions, traces, logs, and outputs |
+| -w | --write_blocks | write blocks to the binary cache ('off' by default) |
+| -i | --write_txs | write transactions to the cache (see notes) |
+| -R | --write_traces | write traces to the cache (see notes) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
+- By default, transactions and traces are cached if the number of exported 
+  items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, 
+  your preference predominates.
 
 #### Other Options
 

@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-d|-e|-j|-n|-l|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    grabABI [-c|-g|-n|-m|-k|-a|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
 `Where:`  
@@ -14,16 +14,16 @@
 |  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
-| -d | --data | export the display as data |
-| -e | --encode | generate the encodings for the functions / events in the ABI |
 | -n | --noconst | generate encodings for non-constant functions and events only (always true when generating) |
-| -l | --sol <path> | create the ABI file from a .sol file in the local directory |
+| -m | --monitored | load ABIs from monitored addresses |
+| -k | --known | load common 'known' ABIs from cache |
+| -a | --addr | include address of smart contract for the abi in output |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- Use the `--silent` option, which displays fewer messages, for scripting.
+- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
 #### Other Options
 

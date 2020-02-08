@@ -4,14 +4,14 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 
 #### Usage
 
-`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-t|-k|-m|-x|-v|-h] fn_list  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | fn_list | path(s) of files to check, merge, fix or display (default=display) (required) |
+|  | files | path(s) of files to check, merge, fix or display (default=display) (required) |
 | -c | --check | check for duplicates and other problems in the cache |
 | -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
@@ -19,9 +19,8 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 | -l | --list | list the contents of the cache (the default if no other option) |
 | -i | --import | import transactions if import.txt file exists in current folder |
 | -r | --remove | remove transactions if remove.txt file exists in current folder |
-| -t | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
+| -u | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
 | -m | --merge | merge two or more caches into a single cache |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

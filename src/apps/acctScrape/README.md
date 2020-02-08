@@ -6,7 +6,7 @@
 
 #### Usage
 
-`Usage:`    acctScrape [-o|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
 
 `Where:`  
@@ -21,7 +21,6 @@
 
 - `addresses` must start with '0x' and be forty two characters long.
 
-                                                                                                                        
 #### Other Options
 
 All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):

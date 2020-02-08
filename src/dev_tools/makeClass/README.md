@@ -6,26 +6,32 @@ The format of the classDefinition file is described below.
 
 #### Usage
 
-`Usage:`    makeClass [-o|-r|-j|-f|-l|-h|-c|-n|-s|-a|-v|-h] className  
-`Purpose:`  Creates C++ code based on definition file at ./classDefinition/<className>.
-        
+`Usage:`    makeClass [-r|-a|-j|-o|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
+`Purpose:`  Automatically writes C++ for various purposes.
+
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | className | name of C++ class(es) to process (required) |
-| -o | --open | edit <className(s)> definition file in local folder |
-| -r | --run | run the class maker on associated <className(s)> |
-| -j | --js <class> | export javaScript components for 'class' |
-| -f | --filter <string> | process only files with :filter in their names |
-| -l | --list | list all definition files found in the local folder |
-| -h | --header | write headers files only |
-| -c | --source | write source files only |
-| -n | --namespace <string> | surround the code with a --namespace:ns |
-| -s | --silent | on error (no classDefinition file) exit silently |
-| -a | --all | clear, edit, list, or run all class definitions found in the local folder |
+|  | files | one or more class definition files (required) |
+| -r | --run | run the class maker on associated <class_name(s)> |
+| -a | --all | list, or run all class definitions found in the local folder |
+| -j | --js | export javaScript code from the class definition |
+| -o | --options | export options code (check validity in the process) |
+| -f | --format | format source code files (.cpp and .h) found in local folder and below |
+| -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
+| -n | --nspace <str> | surround generated c++ code with a namespace |
+| -i | --filter <str> | process only files whose filename or contents contain 'filter' |
+| -t | --test | for both code generation and options generation, process but do not write changes |
+| -c | --force | for both code generation and options generation, force writing of changes |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
+
+`Notes:`
+
+- The `--options` flag generates `COption` code for each of the various tools.
+- The `--class` flag generates c++ code for each definition found in the local folder.
+- More information on class definition files is found in the documentation.
 
 #### Other Options
 
@@ -48,5 +54,3 @@ All **QBlocks** command-line tools support the following commands (although in s
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by Qblocks<sup>&trade;</sup>**
-
-
