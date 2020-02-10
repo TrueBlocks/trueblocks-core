@@ -389,16 +389,12 @@ void COptions::applyFilter() {
     if (!isTestMode() && (types & OTHER)) {
         string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
         if (!contents.empty()) {
-            CStringArray fields;
-#define disp2FieldList(a) toLower(substitute(substitute(substitute(cleanFmt((a), CSV1), "[{", ""), "}]", ""), "\"", ""))
-            explode(fields, disp2FieldList(STR_DISPLAY_ACCOUNTNAME), ',');
             CStringArray lines;
             explode(lines, contents, '\n');
             for (auto line : lines) {
                 if (!startsWith(line, '#')) {
-                    CAccountName item;
-                    if (item.parseText(fields, line))
-                        addIfUnique(item);
+                    CAccountName item(line);
+                    addIfUnique(item);
                 }
             }
         }

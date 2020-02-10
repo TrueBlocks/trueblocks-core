@@ -415,10 +415,10 @@ bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 6, 5)) {
-        string_q unused1;
+        string_q subgroup;
         bool unused2, unused3, unused4;
         archive >> group;
-        archive >> unused1;  // used to be subgroup
+        archive >> subgroup;  // subgroup has been removed and added to group with ':' separator
         archive >> name;
         archive >> address;
         archive >> symbol;
@@ -438,6 +438,8 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         // archive >> display_name;
         // archive >> appearanceRange;
         // archive >> appearanceInterval;
+        if (!subgroup.empty())
+            group += (":" + subgroup);
         finishParse();
         done = true;
     }
