@@ -167,6 +167,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/chifra");
     }
 
+    SHOW_FIELD(CTestCase, "test_id");
+
     // If there are tests in libs, we do NOT need to sleep so the API can set up, otherwise, we do need to sleep
     bool hasLibs = false;
     for (auto test : tests)

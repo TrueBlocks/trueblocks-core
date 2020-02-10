@@ -35,6 +35,7 @@ int main(int argc, const char* argv[]) {
 
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getCWD() + "../../../../src/other/testCases/";
+    uint32_t testID = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -80,7 +81,7 @@ int main(int argc, const char* argv[]) {
                     // do nothing
 
                 } else {
-                    CTestCase test(line);
+                    CTestCase test(line, testID++);
                     string_q key = test.Format("[{KEY}]");
                     if (testMap[key] != CTestCase()) {
                         LOG_ERR("Duplicate test names: ", key, ". Quitting...");
@@ -94,10 +95,10 @@ int main(int argc, const char* argv[]) {
             for (auto t : testMap) {
                 testArray.push_back(t.second);
             }
+            sort(testArray.begin(), testArray.end());
 
             if (!options.doTests(testArray, path, testName, API))
                 return 1;
-
             if (!options.doTests(testArray, path, testName, CMD))
                 return 1;
 
@@ -138,6 +139,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
+        if (verbose)
+            cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
         test.prepareTest(cmdTests);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode

@@ -133,6 +133,9 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
             if (fieldName % "tool") {
                 return tool;
             }
+            if (fieldName % "test_id") {
+                return uint_2_Str(test_id);
+            }
             break;
         case 'w':
             if (fieldName % "workPath") {
@@ -236,6 +239,10 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 tool = fieldValue;
                 return true;
             }
+            if (fieldName % "test_id") {
+                test_id = (uint32_t)str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'w':
             if (fieldName % "workPath") {
@@ -283,6 +290,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> goldPath;
     archive >> workPath;
     archive >> fileName;
+    // archive >> test_id;
     finishParse();
     return true;
 }
@@ -309,6 +317,7 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << goldPath;
     archive << workPath;
     archive << fileName;
+    // archive << test_id;
 
     return true;
 }
@@ -360,6 +369,8 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "goldPath", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "workPath", T_TEXT, ++fieldNum);
     ADD_FIELD(CTestCase, "fileName", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTestCase, "test_id", T_UNUMBER, ++fieldNum);
+    HIDE_FIELD(CTestCase, "test_id");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTestCase, "schema");
@@ -425,7 +436,7 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "CLEANUP"};
+CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "CLEANUP"};
 
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
@@ -468,11 +479,14 @@ bool prepareBuiltIn(string_q& options) {
                 ostringstream os;
                 bool debug = false;
                 if (debug)
-                    os << "pwd ; echo \"" << substitute(options, "\"", "'") << "\" ; ls -l ; ";
+                    os << "pwd ; echo \"" << substitute(options, "\"", "'")
+                       << "\" ; find ./testing_data/ -exec ls -l {} ';'; ";
                 os << options;
                 if (debug)
-                    os << " ; ls -l ; ";
-                options = os.str();
+                    os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
+                options = substitute(os.str(), "$CONFIG/", configPath(""));
+                if (debug)
+                    cerr << os.str() << endl;
                 replaceAll(options, match, cmd);
             }
             return true;
@@ -482,11 +496,12 @@ bool prepareBuiltIn(string_q& options) {
 }
 
 //-----------------------------------------------------------------------
-CTestCase::CTestCase(const string_q& line) {
+CTestCase::CTestCase(const string_q& line, uint32_t id) {
     origLine = line;
 
     CStringArray parts;
     explode(parts, line, ',');
+    test_id = id;
     onOff = parts.size() > 0 ? trim(parts[0]) : "";
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";

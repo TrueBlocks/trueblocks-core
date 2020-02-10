@@ -1,8 +1,7 @@
 cacheMan argc: 3 [1:-i] [2:0x1111111111111111111111111111111111111111] 
 cacheMan -i 0x1111111111111111111111111111111111111111 
-	Reading cache: $CACHE/0x1111111111111111111111111111111111111111.acct.bin....10908 existing records read.
-
+	Reading cache: 0x1111111111111111111111111111111111111111.acct.bin...7043 existing records read.
+	Importing record 7046 of 4
 	Sorting...done
-	Writing.....Could not open file: --filename--
-10912 records written, 0 records ignored.
-	Written to $CACHE/0x1111111111111111111111111111111111111111.acct.bin
+	Writing....7045 records written, 2 records ignored.
+	Written to 0x1111111111111111111111111111111111111111.acct.bin

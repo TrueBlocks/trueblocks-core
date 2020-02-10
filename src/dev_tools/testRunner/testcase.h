@@ -40,6 +40,7 @@ class CTestCase : public CBaseNode {
     string_q goldPath;
     string_q workPath;
     string_q fileName;
+    uint32_t test_id;
 
   public:
     CTestCase(void);
@@ -50,7 +51,7 @@ class CTestCase : public CBaseNode {
     DECLARE_NODE(CTestCase);
 
     // EXISTING_CODE
-    explicit CTestCase(const string_q& line);
+    explicit CTestCase(const string_q& line, uint32_t id);
     void prepareTest(bool cmdLine);
     // EXISTING_CODE
     bool operator==(const CTestCase& item) const;
@@ -119,6 +120,7 @@ inline void CTestCase::initialize(void) {
     goldPath = "";
     workPath = "";
     fileName = "";
+    test_id = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -144,6 +146,7 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     goldPath = te.goldPath;
     workPath = te.workPath;
     fileName = te.fileName;
+    test_id = te.test_id;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -169,8 +172,8 @@ inline bool CTestCase::operator==(const CTestCase& item) const {
 inline bool operator<(const CTestCase& v1, const CTestCase& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.test_id < v2.test_id;
 }
 
 //---------------------------------------------------------------------------

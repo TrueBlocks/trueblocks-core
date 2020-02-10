@@ -11,5 +11,4 @@ blocknumber	transactionindex	address	dollarsprior	dollars	dollarsdiff
 0	2	0x001d14804b399c6ef80e64576f657660804fec0b	     $5,880.00	     $5,880.00	+         $0.00
 202249	0	0x001d14804b399c6ef80e64576f657660804fec0b	     $5,628.00	         $0.10	-     $5,627.89
 1501459	2	0x001d14804b399c6ef80e64576f657660804fec0b	         $0.73	         $0.00	-         $0.73
-0	2	0x001d14804b399c6ef80e64576f657660804fec0b	         $0.00	     $5,880.00	+     $5,880.00
-TIME ~ CLOCK - <INFO>  : exported 8 balances from 3 transactions                                                       
+TIME ~ CLOCK - <INFO>  : exported 7 balances from 3 transactions                                                       

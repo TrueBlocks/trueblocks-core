@@ -1,6 +1,22 @@
 [settings]
 class = CTestCase
-fields = string origLine|sbool builtin|string onOff|string mode|string speed|string route|string tool|string name|string post|string options|string extra|string path|string goldPath|string workPath|string fileName
+fields = \
+    string origLine|\
+    sbool builtin|\
+    string onOff|\
+    string mode|\
+    string speed|\
+    string route|\
+    string tool|\
+    string name|\
+    string post|\
+    string options|\
+    string extra|\
+    string path|\
+    string goldPath|\
+    string workPath|\
+    string fileName|\
+    uint32 test_id (nowrite)
 includes = etherlib.h
 equals = (route % item.route && tool % item.tool && name % item.name)
-
+sort = v1.test_id < v2.test_id

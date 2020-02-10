@@ -1,5 +1,5 @@
 {"data": [
-[{ "address": "0x001d14804b399c6ef80e64576f657660804fec0b", "count": 8}
+[{ "address": "0x001d14804b399c6ef80e64576f657660804fec0b", "count": 4}
 ]], "types": [
 { "type": "CCounts", "fields": [{ "name": "address", "type": "address" }, { "name": "count", "type": "unumber" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
