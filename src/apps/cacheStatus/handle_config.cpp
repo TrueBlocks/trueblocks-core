@@ -162,10 +162,16 @@ bool COptions::handle_config_get(ostream& os) {
         CConfigItem i1("list", "", "json array",
                        "user specific list of names for addresses -- private data -- not shared", false, false);
         if (isTestMode()) {
-            i1.named.push_back(
-                CAccountName(CAccountName("81-Custom\t0x0000100001000010000100001000010000100001\tTestWallet1")));
-            i1.named.push_back(
-                CAccountName(CAccountName("81-Custom\t0x0000200002000020000200002000020000200002\tTestWallet2")));
+            CAccountName test1;
+            test1.group = "81-Custom";
+            test1.address = "0x0000100001000010000100001000010000100001";
+            test1.name = "TestWallet1";
+            i1.named.push_back(test1);
+            CAccountName test2;
+            test2.group = "81-Custom";
+            test2.address = "0x0000200002000020000200002000020000200002";
+            test2.name = "TestWallet2";
+            i1.named.push_back(test2);
 
         } else {
             string_q customStr = cc->getConfigJson("custom", "list", "");
