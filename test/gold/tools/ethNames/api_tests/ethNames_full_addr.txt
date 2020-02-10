@@ -2,16 +2,12 @@
   "data": [
     {
       "group": "50-Tokens",
-      "subgroup": "",
       "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
       "name": "Storj",
       "symbol": "STORJ",
       "source": "Etherscan.io",
       "logo": "storj2.png",
-      "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data",
-      "is_contract": false,
-      "is_private": false,
-      "is_shared": false
+      "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data"
     }
   ],
   "types": [
@@ -20,10 +16,6 @@
       "fields": [
         {
           "name": "group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup",
           "type": "text"
         },
         {
@@ -49,18 +41,6 @@
         {
           "name": "description",
           "type": "text"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_private",
-          "type": "bool"
-        },
-        {
-          "name": "is_shared",
-          "type": "bool"
         }
       ]
     }

@@ -186,7 +186,6 @@ bool COptions::parseArguments(string_q& command) {
         // above - don't change, sets bloom value also
         watch.setValueByName("name", toLower(addr));
         watch.extra_data = getVersionStr() + "/" + watch.address;
-        watch.color = cTeal;
         watch.finishParse();
         monitors.push_back(watch);
     }
@@ -242,7 +241,6 @@ bool COptions::parseArguments(string_q& command) {
             CAccountWatch item;
             while (item.parseJson3(str)) {
                 item.address = str_2_Addr(toLower(item.address));
-                item.color = convertColor(item.color);
                 item.extra_data = getVersionStr() + "/" + item.address;
                 item.finishParse();
                 named.push_back(item);

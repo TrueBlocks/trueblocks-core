@@ -163,9 +163,9 @@ bool COptions::handle_config_get(ostream& os) {
                        "user specific list of names for addresses -- private data -- not shared", false, false);
         if (isTestMode()) {
             i1.named.push_back(
-                CAccountName(CAccountName("81-Custom\t\t0x0000100001000010000100001000010000100001\tTestWallet1")));
+                CAccountName(CAccountName("81-Custom\t0x0000100001000010000100001000010000100001\tTestWallet1")));
             i1.named.push_back(
-                CAccountName(CAccountName("81-Custom\t\t0x0000200002000020000200002000020000200002\tTestWallet2")));
+                CAccountName(CAccountName("81-Custom\t0x0000200002000020000200002000020000200002\tTestWallet2")));
 
         } else {
             string_q customStr = cc->getConfigJson("custom", "list", "");

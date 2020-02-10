@@ -338,7 +338,6 @@
               "curBalance": 10000,
               "enabled": true,
               "group": "",
-              "subgroup": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -351,11 +350,7 @@
               "appearanceRange": 18446744073709552000,
               "appearanceInterval": 18446744073709552000,
               "sizeInBytes": 18446744073709552000,
-              "display_name": "---address---",
-              "group_sort": "",
-              "raw_group": "",
-              "subgroup_sort": "",
-              "raw_subgroup": ""
+              "display_name": "---address---"
             }
           ],
           "type": "CMonitorCache",
@@ -389,7 +384,6 @@
               "type": "CPriceCacheItem",
               "pair": "---pair---",
               "group": "",
-              "subgroup": "",
               "address": "0x0",
               "name": "",
               "symbol": "",
@@ -402,11 +396,7 @@
               "appearanceRange": 0,
               "appearanceInterval": 0,
               "sizeInBytes": 1010202,
-              "display_name": "",
-              "group_sort": "",
-              "raw_group": "",
-              "subgroup_sort": "",
-              "raw_subgroup": ""
+              "display_name": ""
             }
           ],
           "type": "CPriceCache",
@@ -592,10 +582,6 @@
           "type": "text"
         },
         {
-          "name": "subgroup",
-          "type": "text"
-        },
-        {
           "name": "address",
           "type": "address"
         },
@@ -645,22 +631,6 @@
         },
         {
           "name": "display_name",
-          "type": "text"
-        },
-        {
-          "name": "group_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_subgroup",
           "type": "text"
         }
       ]
@@ -743,10 +713,6 @@
           "type": "text"
         },
         {
-          "name": "subgroup",
-          "type": "text"
-        },
-        {
           "name": "address",
           "type": "address"
         },
@@ -796,22 +762,6 @@
         },
         {
           "name": "display_name",
-          "type": "text"
-        },
-        {
-          "name": "group_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_subgroup",
           "type": "text"
         }
       ]

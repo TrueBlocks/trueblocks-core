@@ -82,11 +82,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(appearanceInterval);
             }
             break;
-        case 'c':
-            if (fieldName % "color") {
-                return color;
-            }
-            break;
         case 'd':
             if (fieldName % "description") {
                 return description;
@@ -103,17 +98,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'g':
             if (fieldName % "group") {
                 return group;
-            }
-            break;
-        case 'i':
-            if (fieldName % "is_contract") {
-                return bool_2_Str(is_contract);
-            }
-            if (fieldName % "is_private") {
-                return bool_2_Str(is_private);
-            }
-            if (fieldName % "is_shared") {
-                return bool_2_Str(is_shared);
             }
             break;
         case 'l':
@@ -141,9 +125,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "subgroup") {
-                return subgroup;
-            }
             if (fieldName % "symbol") {
                 return symbol;
             }
@@ -190,12 +171,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'c':
-            if (fieldName % "color") {
-                color = fieldValue;
-                return true;
-            }
-            break;
         case 'd':
             if (fieldName % "description") {
                 description = fieldValue;
@@ -215,20 +190,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'g':
             if (fieldName % "group") {
                 group = fieldValue;
-                return true;
-            }
-            break;
-        case 'i':
-            if (fieldName % "is_contract") {
-                is_contract = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_private") {
-                is_private = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "is_shared") {
-                is_shared = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -263,10 +224,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 's':
-            if (fieldName % "subgroup") {
-                subgroup = fieldValue;
-                return true;
-            }
             if (fieldName % "symbol") {
                 symbol = fieldValue;
                 return true;
@@ -306,17 +263,12 @@ bool CAccountName::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> group;
-    archive >> subgroup;
     archive >> address;
     archive >> name;
     archive >> symbol;
     archive >> source;
     archive >> logo;
     archive >> description;
-    archive >> is_contract;
-    archive >> is_private;
-    archive >> is_shared;
-    // archive >> color;
     // archive >> nAppearances;
     // archive >> lastExport;
     // archive >> firstAppearance;
@@ -338,17 +290,12 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << group;
-    archive << subgroup;
     archive << address;
     archive << name;
     archive << symbol;
     archive << source;
     archive << logo;
     archive << description;
-    archive << is_contract;
-    archive << is_private;
-    archive << is_shared;
-    // archive << color;
     // archive << nAppearances;
     // archive << lastExport;
     // archive << firstAppearance;
@@ -395,18 +342,12 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "subgroup", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_contract", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_private", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_shared", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountName, "color", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CAccountName, "color");
     ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "nAppearances");
     ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
@@ -435,10 +376,6 @@ void CAccountName::registerClass(void) {
     builtIns.push_back(_biCAccountName);
 
     // EXISTING_CODE
-    ADD_FIELD(CAccountName, "group_sort", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "raw_group", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "subgroup_sort", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "raw_subgroup", T_TEXT, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -452,31 +389,9 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "name")
                     return substitute(acc->name, "\"", "");
                 break;
-            case 'g':
-                if (fieldIn % "group_sort") {
-                    string_q ret = acc->group;
-                    return nextTokenClear(ret, '-');
-                }
-                break;
-            case 'r':
-                if (fieldIn % "raw_group") {
-                    string_q ret = acc->group;
-                    nextTokenClear(ret, '-');
-                    return ret;
-                }
-                if (fieldIn % "raw_subgroup") {
-                    string_q ret = acc->subgroup;
-                    nextTokenClear(ret, '-');
-                    return ret;
-                }
-                break;
             case 's':
                 if (fieldIn % "source")
                     return substitute(acc->source, "\"", "");
-                if (fieldIn % "subgroup_sort") {
-                    string_q ret = acc->subgroup;
-                    return nextTokenClear(ret, '-');
-                }
                 break;
             // EXISTING_CODE
             case 'p':
@@ -500,8 +415,10 @@ bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 6, 5)) {
+        string_q unused1;
+        bool unused2, unused3, unused4;
         archive >> group;
-        archive >> subgroup;
+        archive >> unused1;  // used to be subgroup
         archive >> name;
         archive >> address;
         archive >> symbol;
@@ -510,9 +427,9 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         archive >> logo;
         // archive >> path;
         // archive >> color;
-        archive >> is_contract;
-        archive >> is_private;
-        archive >> is_shared;
+        archive >> unused2;  // used to be is_contract;
+        archive >> unused3;  // used to be is_private;
+        archive >> unused4;  // used to be is_shared;
         // archive >> firstAppearance;
         // archive >> latestAppearance;
         // archive >> lastExport;
@@ -541,16 +458,12 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_ACCOUNTNAME =
     "[{GROUP}]\t"
-    "[{SUBGROUP}]\t"
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
     "[{SOURCE}]\t"
     "[{LOGO}]\t"
-    "[{DESCRIPTION}]\t"
-    "[{IS_CONTRACT}]\t"
-    "[{IS_PRIVATE}]\t"
-    "[{IS_SHARED}]";
+    "[{DESCRIPTION}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

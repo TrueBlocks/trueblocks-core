@@ -248,18 +248,14 @@ cacheStatus --get_config
                   "appearanceInterval": 0,
                   "appearanceRange": 0,
                   "group": "81-Custom",
-                  "group_sort": "81",
-                  "name": "TestWallet1",
-                  "raw_group": "Custom"
+                  "name": "TestWallet1"
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
                   "appearanceInterval": 0,
                   "appearanceRange": 0,
                   "group": "81-Custom",
-                  "group_sort": "81",
-                  "name": "TestWallet2",
-                  "raw_group": "Custom"
+                  "name": "TestWallet2"
                 }
               ]
             }

@@ -1,4 +1,3 @@
 ethNames argc: 4 [1:0xCB1] [2:--fmt] [3:txt] 
 ethNames 0xCB1 --fmt txt 
-group	subgroup	address	name	symbol
-32-Kickback	Friends	0xcb198e1363479dd3aeb50553aebf189c4c478329	aty
+No results

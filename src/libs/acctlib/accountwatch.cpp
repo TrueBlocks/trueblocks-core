@@ -388,7 +388,6 @@ void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string
     while (watch.parseJson3(watchStr)) {
         // cleanup and add to list of watches
         watch.address = str_2_Addr(toLower(watch.address));
-        watch.color = convertColor(watch.color);
         monitors.push_back(watch);
         watch = CAccountWatch();  // reset
     }

@@ -259,14 +259,9 @@
                   "description": "",
                   "display_name": "",
                   "group": "81-Custom",
-                  "group_sort": "81",
                   "logo": "",
                   "name": "TestWallet1",
-                  "raw_group": "Custom",
-                  "raw_subgroup": "",
                   "source": "",
-                  "subgroup": "",
-                  "subgroup_sort": "",
                   "symbol": ""
                 },
                 {
@@ -276,14 +271,9 @@
                   "description": "",
                   "display_name": "",
                   "group": "81-Custom",
-                  "group_sort": "81",
                   "logo": "",
                   "name": "TestWallet2",
-                  "raw_group": "Custom",
-                  "raw_subgroup": "",
                   "source": "",
-                  "subgroup": "",
-                  "subgroup_sort": "",
                   "symbol": ""
                 }
               ]

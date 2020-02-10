@@ -1,4 +1,4 @@
 ethNames argc: 6 [1:0xb6] [2:torj] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames 0xb6 torj --verbose --fmt txt 
-group	subgroup	address	name	symbol	source
-50-Tokens		0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io
+group	address	name	symbol	source
+50-Tokens	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	Storj	STORJ	Etherscan.io

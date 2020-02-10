@@ -2,17 +2,12 @@
 class = CAccountName
 fields = \
   string group|\
-  string subgroup|\
   address address|\
   string name|\
   string symbol|\
   string source|\
   string logo|\
   string description|\
-  bool is_contract|\
-  bool is_private|\
-  bool is_shared|\
-  string color (nowrite)|\
   blknum nAppearances (nowrite)|\
   blknum lastExport (nowrite)|\
   blknum firstAppearance (nowrite)|\
@@ -24,4 +19,4 @@ fields = \
   string display_name (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
-display_str = group, subgroup, address, name, symbol, source, logo, description, is_contract, is_private, is_shared
+display_str = group, address, name, symbol, source, logo, description

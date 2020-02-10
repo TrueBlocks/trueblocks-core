@@ -28,17 +28,12 @@ namespace qblocks {
 class CAccountName : public CBaseNode {
   public:
     string_q group;
-    string_q subgroup;
     address_t address;
     string_q name;
     string_q symbol;
     string_q source;
     string_q logo;
     string_q description;
-    bool is_contract;
-    bool is_private;
-    bool is_shared;
-    string_q color;
     blknum_t nAppearances;
     blknum_t lastExport;
     blknum_t firstAppearance;
@@ -112,17 +107,12 @@ inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
     group = "";
-    subgroup = "";
     address = "";
     name = "";
     symbol = "";
     source = "";
     logo = "";
     description = "";
-    is_contract = false;
-    is_private = false;
-    is_shared = false;
-    color = "";
     nAppearances = 0;
     lastExport = 0;
     firstAppearance = 0;
@@ -143,17 +133,12 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     CBaseNode::duplicate(ac);
 
     group = ac.group;
-    subgroup = ac.subgroup;
     address = ac.address;
     name = ac.name;
     symbol = ac.symbol;
     source = ac.source;
     logo = ac.logo;
     description = ac.description;
-    is_contract = ac.is_contract;
-    is_private = ac.is_private;
-    is_shared = ac.is_shared;
-    color = ac.color;
     nAppearances = ac.nAppearances;
     lastExport = ac.lastExport;
     firstAppearance = ac.firstAppearance;

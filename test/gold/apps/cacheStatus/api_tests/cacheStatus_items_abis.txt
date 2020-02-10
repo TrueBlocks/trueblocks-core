@@ -19,7 +19,6 @@
               "nEvents": 36963,
               "nOther": 36963,
               "group": "",
-              "subgroup": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -32,11 +31,7 @@
               "appearanceRange": 0,
               "appearanceInterval": 0,
               "sizeInBytes": 36963,
-              "display_name": "",
-              "group_sort": "",
-              "raw_group": "",
-              "subgroup_sort": "",
-              "raw_subgroup": ""
+              "display_name": ""
             }
           ],
           "type": "CAbiCache",
@@ -108,10 +103,6 @@
           "type": "text"
         },
         {
-          "name": "subgroup",
-          "type": "text"
-        },
-        {
           "name": "address",
           "type": "address"
         },
@@ -161,22 +152,6 @@
         },
         {
           "name": "display_name",
-          "type": "text"
-        },
-        {
-          "name": "group_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_subgroup",
           "type": "text"
         }
       ]

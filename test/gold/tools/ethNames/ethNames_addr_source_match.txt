@@ -1,6 +1,6 @@
 ethNames argc: 6 [1:cbCC] [2:Ether] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames cbCC Ether --verbose --fmt txt 
-group	subgroup	address	name	symbol	source
-50-Tokens		0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	Etherscan.io
-50-Tokens		0x5d51fcced3114a8bb5e90cdd0f9d682bcbcc5393	B2BX	B2BX	Etherscan.io
-50-Tokens		0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ	Etherscan.io
+group	address	name	symbol	source
+50-Tokens	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	Etherscan.io
+50-Tokens	0x5d51fcced3114a8bb5e90cdd0f9d682bcbcc5393	B2BX	B2BX	Etherscan.io
+50-Tokens	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ	Etherscan.io

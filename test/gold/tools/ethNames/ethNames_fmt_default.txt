@@ -1,18 +1,19 @@
 ethNames argc: 3 [1:tip] [2:--expand] 
 ethNames tip --expand 
-group	subgroup	address	name	symbol	source	logo	description	is_contract	is_private	is_shared
-30.2 - Gitcoin Grants		0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 - Antiprosynth Twitter Account Activity			https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity		false	false	false
-50-Tokens		0x1829aa045e21e0d59580024a951db48096e01782	FuzeX	FXT	Etherscan.io	fuzex_28.png	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false
-50-Tokens		0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	Etherscan.io	thorecoin_28.png	THR represents a basket of top-traded high-demand coins Simply put, it‚Äôs a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false
-50-Tokens		0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	Etherscan.io	silentnotary.png	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	false	false	false
-50-Tokens		0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	Etherscan.io	skincoin_28.png	SkinCoin is a multipurpose cryptocurrency for gaming industry.	false	false	false
-50-Tokens		0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	Etherscan.io	equaltoken_28.png	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.	false	false	false
-20-Friends		0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner					false	false	false
-20-Friends		0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar					false	false	false
-50-Tokens		0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns Tokens	UNI	Ethereum.org		Ethereum tip jar unicorn tokens	false	false	false
-81-Custom	Individual	0x8f53781799515e5dc8f5d00c528940cae99ac969	Corey Perry's TipJar		https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC			false	false	false
-50-Tokens		0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e	ABX Token	ABX	Etherscan.io	abx_28.png	A blockchain powered trading platform that integrates crypto assets from multiple exchanges.	false	false	false
-50-Tokens		0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3	PCHAIN	PAI	Etherscan.io	pchain_28.png	Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.	false	false	false
-50-Tokens		0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	Etherscan.io	insightsnetwork28.png	The Insights Network‚Äôs unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.	false	false	false
-50-Tokens		0xee74110fb5a1007b06282e0de5d73a61bf41d9cd	BHPCash	BHPC	Etherscan.io	bhpcash_28.png	Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.	false	false	false
-30-Contracts		0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP			The ethereum tip jar	false	false	false
+group	address	name	symbol	source	logo	description
+31-Gitcoin Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 - Antiprosynth Twitter Account Activity			https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity
+50-Tokens	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX	FXT	Etherscan.io	fuzex_28.png	Cryptocurrency, credit, debit and reward payments at your fingertips
+81-Custom:Giveth	0x1a88c052fc7a8401e00b2f76f96ac62a19427731	EtherIDTipJar		Giveth Website
+50-Tokens	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	Etherscan.io	thorecoin_28.png	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens
+50-Tokens	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	Etherscan.io	silentnotary.png	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.
+50-Tokens	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	Etherscan.io	skincoin_28.png	SkinCoin is a multipurpose cryptocurrency for gaming industry.
+50-Tokens	0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	Etherscan.io	equaltoken_28.png	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.
+81-Custom:Individual	0x7a0984e31a65fcdea119943f88858cfc3fe00da9	NiemannTipJar		https://medium.com/@chrisdotn/a-json-parser-for-solidity-9cc73b4b42
+81-Custom:Tip Jars	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	Taylor Van Orden		Slack
+50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns Tokens	UNI	Ethereum.org		Ethereum tip jar unicorn tokens
+81-Custom:Individual	0x8f53781799515e5dc8f5d00c528940cae99ac969	Corey Petty's TipJar		https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC
+50-Tokens	0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e	ABX Token	ABX	Etherscan.io	abx_28.png	A blockchain powered trading platform that integrates crypto assets from multiple exchanges.
+50-Tokens	0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3	PCHAIN	PAI	Etherscan.io	pchain_28.png	Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.
+50-Tokens	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	Etherscan.io	insightsnetwork28.png	The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.
+50-Tokens	0xee74110fb5a1007b06282e0de5d73a61bf41d9cd	BHPCash	BHPC	Etherscan.io	bhpcash_28.png	Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.
+30-Contracts	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP			The ethereum tip jar

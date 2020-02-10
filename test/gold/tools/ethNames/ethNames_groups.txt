@@ -1,33 +1,38 @@
 ethNames argc: 2 [1:--groups] 
 ethNames --groups 
-group_sort	raw_group	subgroup_sort	raw_subgroup
-20	Friends
-30	Contracts
-30	Contracts	dAppNode
-30	Contracts	Giveeth
-30	Contracts	Moloch
-30.2 	 Gitcoin Grants
-32	Kickback	Contracts
-32	Kickback	Friends
-33	Set Protocol
-33	Set Protocol	Core
-33	Set Protocol	Core Caller
-33	Set Protocol	Factories
-33	Set Protocol	Libraries
-33	Set Protocol	Modules
-33	Set Protocol	Other
-33	Set Protocol	Wrapers
-33	Set Protocol	Wrappers
-34	ENS
-34	Humanity DAO
-34	Kyber Network
-40	Exchanges
-50	Tokens
-60	Airdrops
-70	Vendors
-80	Malicious
-80	Prefund
-81	Custom
-81	Custom	Individual
-90	DevCon2
+group
 
+30-Contracts
+30-Contracts:Giveeth
+30-Contracts:Moloch
+30-Contracts:dAppNode
+31-Gitcoin Grants
+32-Kickback:Contracts
+33-Set Protocol
+33-Set Protocol:Core
+33-Set Protocol:Core Caller
+33-Set Protocol:Factories
+33-Set Protocol:Libraries
+33-Set Protocol:Modules
+33-Set Protocol:Other
+33-Set Protocol:Wrapers
+33-Set Protocol:Wrappers
+34-ENS
+34-Humanity DAO
+34-Kyber Network
+40-Exchanges
+50-Tokens
+60-Airdrops
+70-Vendors
+80-Malicious
+80-Prefund
+81-Custom
+81-Custom:Consensys
+81-Custom:DAO Curators
+81-Custom:DAO Related
+81-Custom:DAO Whales
+81-Custom:ENS Related
+81-Custom:Giveth
+81-Custom:Individual
+81-Custom:Tip Jars
+90-DevCon2:Individual

@@ -1,184 +1,109 @@
 {
   "data": [
     {
-      "group_sort": "20",
-      "raw_group": "Friends",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": ""
     },
     {
-      "group_sort": "30",
-      "raw_group": "Contracts",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "30-Contracts"
     },
     {
-      "group_sort": "30",
-      "raw_group": "Contracts",
-      "subgroup_sort": "dAppNode",
-      "raw_subgroup": ""
+      "group": "30-Contracts:Giveeth"
     },
     {
-      "group_sort": "30",
-      "raw_group": "Contracts",
-      "subgroup_sort": "Giveeth",
-      "raw_subgroup": ""
+      "group": "30-Contracts:Moloch"
     },
     {
-      "group_sort": "30",
-      "raw_group": "Contracts",
-      "subgroup_sort": "Moloch",
-      "raw_subgroup": ""
+      "group": "30-Contracts:dAppNode"
     },
     {
-      "group_sort": "30.2 ",
-      "raw_group": " Gitcoin Grants",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "31-Gitcoin Grants"
     },
     {
-      "group_sort": "32",
-      "raw_group": "Kickback",
-      "subgroup_sort": "Contracts",
-      "raw_subgroup": ""
+      "group": "32-Kickback:Contracts"
     },
     {
-      "group_sort": "32",
-      "raw_group": "Kickback",
-      "subgroup_sort": "Friends",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Core"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Core",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Core Caller"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Core Caller",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Factories"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Factories",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Libraries"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Libraries",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Modules"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Modules",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Other"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Other",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Wrapers"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Wrapers",
-      "raw_subgroup": ""
+      "group": "33-Set Protocol:Wrappers"
     },
     {
-      "group_sort": "33",
-      "raw_group": "Set Protocol",
-      "subgroup_sort": "Wrappers",
-      "raw_subgroup": ""
+      "group": "34-ENS"
     },
     {
-      "group_sort": "34",
-      "raw_group": "ENS",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "34-Humanity DAO"
     },
     {
-      "group_sort": "34",
-      "raw_group": "Humanity DAO",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "34-Kyber Network"
     },
     {
-      "group_sort": "34",
-      "raw_group": "Kyber Network",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "40-Exchanges"
     },
     {
-      "group_sort": "40",
-      "raw_group": "Exchanges",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "50-Tokens"
     },
     {
-      "group_sort": "50",
-      "raw_group": "Tokens",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "60-Airdrops"
     },
     {
-      "group_sort": "60",
-      "raw_group": "Airdrops",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "70-Vendors"
     },
     {
-      "group_sort": "70",
-      "raw_group": "Vendors",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "80-Malicious"
     },
     {
-      "group_sort": "80",
-      "raw_group": "Malicious",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "80-Prefund"
     },
     {
-      "group_sort": "80",
-      "raw_group": "Prefund",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "81-Custom"
     },
     {
-      "group_sort": "81",
-      "raw_group": "Custom",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "81-Custom:Consensys"
     },
     {
-      "group_sort": "81",
-      "raw_group": "Custom",
-      "subgroup_sort": "Individual",
-      "raw_subgroup": ""
+      "group": "81-Custom:DAO Curators"
     },
     {
-      "group_sort": "90",
-      "raw_group": "DevCon2",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "81-Custom:DAO Related"
     },
     {
-      "group_sort": "",
-      "raw_group": "",
-      "subgroup_sort": "",
-      "raw_subgroup": ""
+      "group": "81-Custom:DAO Whales"
+    },
+    {
+      "group": "81-Custom:ENS Related"
+    },
+    {
+      "group": "81-Custom:Giveth"
+    },
+    {
+      "group": "81-Custom:Individual"
+    },
+    {
+      "group": "81-Custom:Tip Jars"
+    },
+    {
+      "group": "90-DevCon2:Individual"
     }
   ],
   "types": [
@@ -186,19 +111,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup_sort",
-          "type": "text"
-        },
-        {
-          "name": "raw_subgroup",
+          "name": "group",
           "type": "text"
         }
       ]

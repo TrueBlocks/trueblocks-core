@@ -2,69 +2,58 @@ ethNames argc: 4 [1:tip] [2:--fmt] [3:api]
 ethNames tip --fmt api 
 {"data": [
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 - Antiprosynth Twitter Account Activity",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
-    "name": "TrueBlocks Tip Jar Doner",
+    "group": "81-Custom:Giveth",
+    "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
+    "name": "EtherIDTipJar",
     "symbol": "",
-    "source": "",
+    "source": "Giveth Website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-    "name": "psdev tip jar",
+    "group": "81-Custom:Individual",
+    "address": "0x7a0984e31a65fcdea119943f88858cfc3fe00da9",
+    "name": "NiemannTipJar",
     "symbol": "",
-    "source": "",
+    "source": "https://medium.com/@chrisdotn/a-json-parser-for-solidity-9cc73b4b42",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "81-Custom",
-    "subgroup": "Individual",
+    "group": "81-Custom:Tip Jars",
+    "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
+    "name": "Taylor Van Orden",
+    "symbol": "",
+    "source": "Slack",
+    "logo": "",
+    "description": ""
+  },
+  {
+    "group": "81-Custom:Individual",
     "address": "0x8f53781799515e5dc8f5d00c528940cae99ac969",
-    "name": "Corey Perry's TipJar",
+    "name": "Corey Petty's TipJar",
     "symbol": "",
     "source": "https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "name": "Etherum Tip Jar",
     "symbol": "TIP",
     "source": "",
     "logo": "",
-    "description": "The ethereum tip jar",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "The ethereum tip jar"
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "subgroup", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }, { "name": "is_contract", "type": "bool" }, { "name": "is_private", "type": "bool" }, { "name": "is_shared", "type": "bool" }] }
+{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

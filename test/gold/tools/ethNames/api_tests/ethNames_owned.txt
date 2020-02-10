@@ -2,55 +2,39 @@
   "data": [
     {
       "group": "",
-      "subgroup": "",
       "address": "0x0000000000000000000000000000000000000001",
       "name": "",
       "symbol": "",
       "source": "",
       "logo": "",
-      "description": "",
-      "is_contract": false,
-      "is_private": false,
-      "is_shared": false
+      "description": ""
     },
     {
       "group": "",
-      "subgroup": "",
       "address": "0x0000000000000000000000000000000000000002",
       "name": "",
       "symbol": "",
       "source": "",
       "logo": "",
-      "description": "",
-      "is_contract": false,
-      "is_private": false,
-      "is_shared": false
+      "description": ""
     },
     {
       "group": "",
-      "subgroup": "",
       "address": "0x0000000000000000000000000000000000000003",
       "name": "",
       "symbol": "",
       "source": "",
       "logo": "",
-      "description": "",
-      "is_contract": false,
-      "is_private": false,
-      "is_shared": false
+      "description": ""
     },
     {
       "group": "",
-      "subgroup": "",
       "address": "0x0000000000000000000000000000000000000004",
       "name": "",
       "symbol": "",
       "source": "",
       "logo": "",
-      "description": "",
-      "is_contract": false,
-      "is_private": false,
-      "is_shared": false
+      "description": ""
     }
   ],
   "types": [
@@ -59,10 +43,6 @@
       "fields": [
         {
           "name": "group",
-          "type": "text"
-        },
-        {
-          "name": "subgroup",
           "type": "text"
         },
         {
@@ -88,18 +68,6 @@
         {
           "name": "description",
           "type": "text"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_private",
-          "type": "bool"
-        },
-        {
-          "name": "is_shared",
-          "type": "bool"
         }
       ]
     }

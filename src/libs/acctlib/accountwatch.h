@@ -46,7 +46,7 @@ class CAccountWatch : public CAccountName {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB, const string_q& _color);
+    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CAccountWatch(const address_t& _addr, const string_q& _name);
     bloom_t bloom;
     bool inBlock;
@@ -92,12 +92,10 @@ inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB,
-                                    const string_q& _color) {
+inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB) {
     initialize();
     address = toLower(_addr);
     name = _name;
-    color = _color;
     firstAppearance = fB;
     latestAppearance = lB;
 }
@@ -107,7 +105,6 @@ inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _nam
     initialize();
     address = toLower(_addr);
     name = _name;
-    color = cBlue;
     firstAppearance = 0;
     latestAppearance = 0;
 }

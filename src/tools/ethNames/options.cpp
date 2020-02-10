@@ -171,11 +171,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (groups) {
         manageFields("CAccountName:all", false);
-        SHOW_FIELD(CAccountName, "group_sort");
-        SHOW_FIELD(CAccountName, "raw_group");
-        SHOW_FIELD(CAccountName, "subgroup_sort");
-        SHOW_FIELD(CAccountName, "raw_subgroup");
-        format = "[{GROUP_SORT}]\t[{RAW_GROUP}]\t[{SUBGROUP_SORT}]\t[{RAW_SUBGROUP}]";
+        manageFields("CAccountName:group", true);
+        format = "[{GROUP}]";
         addr_only = false;
         types |= NAMED;
         types |= PREFUND;
@@ -201,15 +198,11 @@ bool COptions::parseArguments(string_q& command) {
     // Data wrangling
     if (addr_only) {
         HIDE_FIELD(CAccountName, "group");
-        HIDE_FIELD(CAccountName, "subgroup");
         HIDE_FIELD(CAccountName, "name");
         HIDE_FIELD(CAccountName, "symbol");
         HIDE_FIELD(CAccountName, "description");
         HIDE_FIELD(CAccountName, "source");
         HIDE_FIELD(CAccountName, "logo");
-        HIDE_FIELD(CAccountName, "is_contract");
-        HIDE_FIELD(CAccountName, "is_private");
-        HIDE_FIELD(CAccountName, "is_shared");
     }
 
     return true;
@@ -267,11 +260,8 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return false;
 
     if (groups) {
-#define to_key(item) toLower(item.group + "_" + item.subgroup)
-        string_q key = to_key(item);
-        CAccountName found = items[key];
-        string_q fkey = to_key(found);
-        if (fkey != "_")
+        string_q key = item.group;
+        if (items[key].group == key)  // already exists
             return false;
         items[key] = item;
         return true;
@@ -402,10 +392,14 @@ void COptions::applyFilter() {
             CStringArray fields;
 #define disp2FieldList(a) toLower(substitute(substitute(substitute(cleanFmt((a), CSV1), "[{", ""), "}]", ""), "\"", ""))
             explode(fields, disp2FieldList(STR_DISPLAY_ACCOUNTNAME), ',');
-            CAccountName item;
-            while (item.parseText(fields, contents)) {
-                addIfUnique(item);
-                item = CAccountName();
+            CStringArray lines;
+            explode(lines, contents, '\n');
+            for (auto line : lines) {
+                if (!startsWith(line, '#')) {
+                    CAccountName item;
+                    if (item.parseText(fields, line))
+                        addIfUnique(item);
+                }
             }
         }
     }
@@ -417,9 +411,6 @@ string_q shortenFormat(const string_q& fmtIn) {
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{LOGO}]", "");
-    replace(ret, "[{IS_CONTRACT}]", "");
-    replace(ret, "[{IS_PRIVATE}]", "");
-    replace(ret, "[{IS_SHARED}]", "");
     while (startsWith(ret, "\t"))
         replace(ret, "\t", "");
     while (endsWith(ret, "\t"))
@@ -433,9 +424,6 @@ string_q getSearchFields(const string_q& fmtIn) {
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{LOGO}]", "");
-    replace(ret, "[{IS_CONTRACT}]", "");
-    replace(ret, "[{IS_PRIVATE}]", "");
-    replace(ret, "[{IS_SHARED}]", "");
     while (startsWith(ret, "\t"))
         replace(ret, "\t", "");
     while (endsWith(ret, "\t"))

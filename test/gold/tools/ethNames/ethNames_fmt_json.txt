@@ -3,2616 +3,1812 @@ ethNames --named --custom --owned --fmt json
 { "data": [
   {
     "group": "",
-    "subgroup": "",
     "address": "0x0000000000000000000000000000000000000001",
     "name": "Account_1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "",
-    "subgroup": "",
     "address": "0x0000000000000000000000000000000000000002",
     "name": "Account_2",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "",
-    "subgroup": "",
     "address": "0x0000000000000000000000000000000000000003",
     "name": "Account_3",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "",
-    "subgroup": "",
     "address": "0x0000000000000000000000000000000000000004",
     "name": "Account_4",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x000000000000000000000000000000000000dead",
-    "name": "Dead Address",
-    "symbol": "",
-    "source": "ENS",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "Homework",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x00000000dd05dd05dd05dd05dd05dd05dd05dd05",
     "name": "Falsified Address Because of Ddos",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
     "name": "Hacker Gold Sender",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x00317cd2da2044840b1ebe775c676530a7c65ba3",
-    "name": "Dixex Presale Whale 01 Sender 1 Recipient 1",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 143 - Dappnode",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
     "name": "Grant 086 - Gitcoin Sustainability Fund",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/12/gitcoin-open-source-support-fund",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
     "name": "Grant 190 - Groundhog",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/190/groundhog",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
     "name": "Grant 031 - Grantops",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/31/grantops",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x04bb33c3a8c2d018836a1f938054ebb59e0036b2",
     "name": "Grant 104 - Walletsreview",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/104/walletsreview",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "MiniMeToken CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4",
     "name": "dAddNode Package 001",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x05b511926dbf932edfd07010eca4c0fedd12a7c2",
-    "name": "Dixex Presale Whale 01 Sender 1",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     "name": "CryptoKitties",
     "symbol": "CK",
     "source": "Etherscan.io",
     "logo": "",
-    "description": "The famous first ERC721 token",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "The famous first ERC721 token"
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x0639092a9c3d9467dd6f89a13213541c8a1e58b2",
     "name": "Grant 194 - Reach Platform",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/194/reach-platform",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
     "name": "Grant 075 - Ethereum Dev Fund Working Group",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
     "name": "Grant 141 - Metamoneymarket",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/141/metamoneymarket",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
     "name": "Grant 268 - Simpleaswater",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/268/simpleaswater",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
     "name": "dAddNode Package 003",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x07995e463f8957b70d683addd00a695ba83bb324",
     "name": "Gavin Wood VouchFor",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
     "name": "Grant 122 - Austin Griffith Ethereum Rampd",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x0abdace70d3790235af448c88547603b945604ea",
     "name": "district0x",
     "symbol": "DNT",
     "source": "Etherscan.io",
     "logo": "district0x.png",
-    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x0c564ca7b948008fb324268d8baedaeb1bd47bce",
     "name": "dAppNode AppProxyUpgradeable",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5",
     "name": "Grant 276 - Winiwallet",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/276/winiwallet",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x0efe994201e2b0136dd40d5033b5f437e4c5f958",
     "name": "Grant 274 - Abridged 2",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/274/abridged-2",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x0f1025f754b3eb32ab3105127b563084bfa03a6f",
     "name": "Grant 155 - Tensortrade Trade Efficiently With Reinforcement L",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/155/tensortrade-trade-efficiently-with-reinforcement-l",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x0f3b8ec182deee2381a9041e30f65f10098a3b91",
     "name": "dAddNode Package 004",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
     "name": "Grant 083 - Poa Network Community Management Grant For Adj",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj-2",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
     "name": "Grant 048 - Uniswap",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/48/uniswap",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 - Antiprosynth Twitter Account Activity",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - GitCoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
     "name": "Grant 120 - Nori",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/120/nori",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
     "name": "Grant 212 - Thx Open Protocol For Online Rewards",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/212/thx-open-protocol-for-online-rewards",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
-    "name": "Pool Together God",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
-    "name": "Jin's Wallet",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x1591b9056822c273252fcea32963223650db18e1",
     "name": "Grant 220 - Cryptorado",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/220/cryptorado",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
     "name": "Grant 211 - Trust Graphic Novel",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/211/trust-graphic-novel",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
     "name": "1820 Registry",
     "symbol": "REG",
     "source": "QuickBlocks",
     "logo": "",
-    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
     "name": "Grant 133 - Abridged",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/133/abridged",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x19076bd01e86fa3d76334e27d4b8e6789688a42d",
     "name": "Gnosis Auction",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
     "name": "Grant 150 - Ethereum Egift Cards",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/150/ethereum-egift-cards",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x1abf8d63ac29be2a8c3411901b3bee6fadca2dc4",
     "name": "dAddNode Package 005",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x1d31bd9b2d6cc17873573dbb619d8b79f7cd390d",
     "name": "dAddNode Package 006",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
     "name": "Bancor",
     "symbol": "BNT",
     "source": "Etherscan.io",
     "logo": "bancor.png",
-    "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Moloch",
+    "group": "30-Contracts:Moloch",
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "name": "Moloch DAO",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30.2 - Gitcoin Grants",
-    "subgroup": "",
+    "group": "31-Gitcoin Grants",
     "address": "0x20a5814b73ef3537c6e099a0d45c798f4bd6e1d6",
     "name": "Grant 222 - Tenderly",
     "symbol": "",
     "source": "",
     "logo": "https://gitcoin.co/grants/222/tenderly",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Moloch",
+    "group": "30-Contracts:Moloch",
     "address": "0x211a94468ba1e379236b45ca42dc63ee93139c7e",
     "name": "Moloch Guild Bank",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x2156e9ed357fcc134161b7df0edfe26591d8d329",
+    "name": "Grant 047 - Evm Evolution",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/47/evm-evolution",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
     "name": "Wrapped Bitcoin",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x250608d0aeeb7489adba2ae5856c80b8714ffabf",
+    "name": "Grant 123 - Gitcoin Product Development Grant",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/123/gitcoin-product-development-grant-2",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x261735653d47683ca21d0ec7716dc0470fd35b55",
+    "name": "Grant 236 - Beginner And Advanced Dapp Programming Tutorials F",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/236/beginner-and-advanced-dapp-programming-tutorials-f",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x26588a9301b0428d95e6fc3a5024fce8bec12d51",
     "name": "Oraclize",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6",
     "name": "Pool Together Pool 1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x27c350caacf45fd935814bdd2a07b2b9bffe9203",
+    "name": "Grant 280 - Fairdrop Secure Private Unstoppable File Transfer",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/280/fairdrop-secure-private-unstoppable-file-transfer",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x28f4a17f8a99ab90c1a401b85d694b2c0ea40c4b",
+    "name": "Grant 119 - Gitcoin Core Support Grant",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/119/gitcoin-core-support-grant",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x2ae09febfd8a811207a378b142d74ffd23073610",
+    "name": "Grant 015 - Whiteblock Testing",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/15/whiteblock-testing-2",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
     "name": "BountiesNetwork",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2b0ec0993a00b2ea625e3b37fcc74742f43a72fe",
     "name": "TheButton",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
     "name": "Kernel CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x2b47c57a4c9fc1649b43500f4c0cda6cf29be278",
+    "name": "Grant 269 - Limit To Win It",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/269/limit-to-win-it",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2b61cd90b5591604b3d969ca9eb944d59be6f5a7",
     "name": "Old_EEAR",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x2ee525f1ae6c822d4205a915586616524a9dac1e",
     "name": "dAddNode Package 007",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x2fe5e394a312acf9d18e8836f04ba92af29ad6d4",
     "name": "Humanity Faucet",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "DarkDAO",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e",
+    "name": "Grant 026 - Peepeth Social Network For A Better World",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
     "name": "Common Stack Donation Address",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
-    "name": "Vlad Zamphir 0x127 Sender 1",
+    "group": "31-Gitcoin Grants",
+    "address": "0x323e5692152cdf04d84ea8aed57ec8a8caf43e92",
+    "name": "Grant 214 - Axiom Finance",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/214/axiom-finance",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x32cefb2dc869bbfe636f7547cda43f561bf88d5a",
+    "name": "Grant 152 - Ethereum For Farsi Speaking Population",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x342e62732b76875da9305083ea8ae63125a4e667",
     "name": "Hacker Gold Sender",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x37b347ee521649b60275ba6fb63670fe7f77a0fa",
-    "name": "Adien H",
+    "group": "31-Gitcoin Grants",
+    "address": "0x35b32b4b66e3fed103288365de66d1fcb2f883ad",
+    "name": "Grant 219 - Blockada Dao",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/219/blockada-dao",
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "31-Gitcoin Grants",
+    "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
+    "name": "Grant 126 - Humans of Ethereum",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/126/humansofethereum",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x36a0356d43ee4168ed24efa1cae3198708667ac0",
+    "name": "Grant 179 - Algebraic General Topology",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/179/algebraic-general-topology",
+    "description": ""
+  },
+  {
+    "group": "30-Contracts:Giveeth",
     "address": "0x37f25bd26848cf02614c29338dd71a4d03b62218",
     "name": "Camp Decentral Donations (Giveth)",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x38298ef8a8306579e21246d5227694b5560d9cb5",
+    "name": "Grant 085 - Tennagraph Minimum Bias Ethereum Signal Aggregat",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3849ba8a4d7193bf550a6e04632b176f9ce1b7e8",
+    "name": "Grant 161 - Poketto Group",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/161/poketto-group",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3945d766185e2264900c84fac10958b3619c2bd4",
+    "name": "Grant 063 - Radicalxchange",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/63/radicalxchange",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x39755357759ce0d7f32dc8dc45414cca409ae24e",
     "name": "Eth2Dai",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x3e575510b9304ff417c2e4d420d1314dc3f13687",
-    "name": "Arron's Wallet",
+    "group": "31-Gitcoin Grants",
+    "address": "0x39e419ba25196794b595b2a595ea8e527ddc9856",
+    "name": "Grant 171 - Tellor",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/171/tellor",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3af494f0cee51d8aa74532d15e7733b6c91158a2",
+    "name": "Grant 270 - Decentralized Science",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/270/decentralized-science",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3c6e0d0c9dba4709e9a8b85d1003e9985b799578",
+    "name": "Grant 095 - Tsskit Threshold Signature Scheme Toolkit",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/95/tsskit-threshold-signature-scheme-toolkit",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3c7bc69e09e387906ff6f60db5a49d3fa2c1ddb0",
+    "name": "Grant 231 - Buidl Honduras",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/231/buidl-honduras",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3e16c13791343713fdb5cadaa4fd43cd185f7799",
+    "name": "Grant 158 - Floyd Economy",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/158/floyd-economy",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3e947a271a37ae7b59921c57be0a3246ee0d887c",
+    "name": "Grant 199 - Fuel Labs",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/199/fuel-labs",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x3ec99c49a14d4973f27ce285bc20a989af9fa0db",
+    "name": "Grant 217 - Topo Finance",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/217/topo-finance",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x3ed7bf997b7a91e9e8ab9ee2f7ce983bd37d6392",
     "name": "Prysmatic Labs Second Signer",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "31-Gitcoin Grants",
+    "address": "0x3efcf2ddd54d841f253a95d8f30d97123568cd7b",
+    "name": "Grant 016 - Cryptoeconomicsstudy Free Open Source Blockchain (kho)",
+    "symbol": "",
+    "source": "",
+    "logo": "TrueBlocks KickBackTrackStack",
+    "description": "TRUE"
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x4194ce73ac3fbbece8ffa878c2b5a8c90333e724",
+    "name": "Grant 225 - Mooni",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/225/mooni",
+    "description": ""
+  },
+  {
+    "group": "30-Contracts:dAppNode",
     "address": "0x41de16c78bf5266867c6af6e03d278fd1a069177",
     "name": "dAddNode Package 008",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x423d2c4c796df65342825d241a42f5ae2aa5d2a4",
     "name": "dAddNode Package 009",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x42c8fcbc73d625f1d258a32915b6a573095de93d",
-    "name": "Suicide Sender",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x4416e22bdbb60e334793b16e9427a8f1305f0a9d",
     "name": "dAddNode Package 010",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x44691b39d1a75dc4e0a0346cbb15e310e6ed1e86",
     "name": "SignatureReg",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
     "name": "AppProxyUpgradeable CS 3",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x47ff6576639c2e94762ea5443978d7681c0e78dc",
-    "name": "Early Miner",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x4804b8bc5112fd4216824c2673ee792f180a1c1e",
     "name": "FixedyLib",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x48a63097e1ac123b1f5a8bbffafa4afa8192fab0",
-    "name": "Made of Tin 1",
+    "group": "31-Gitcoin Grants",
+    "address": "0x4bf66e52f3009cd138e48f142d47661037160001",
+    "name": "Grant 038 - Zero Knowledge Podcast",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/38/zero-knowledge-podcast",
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x4b0c349e73de949d72dfe4c5136d3f2420d23525",
-    "name": "DAO Whale 2",
+    "group": "31-Gitcoin Grants",
+    "address": "0x4c1f7c394b9fdbe23dcbe64e7b537b5354c71b24",
+    "name": "Grant 039 - Plasma Group",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/39/plasma-group",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x4c8def836ff37b9c9c3ccd3c1796efc78bda7998",
+    "name": "Grant 054 - Progpow Full Stack Integration",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/54/progpow-full-stack-integration",
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x4d37f28d2db99e8d35a6c725a5f1749a085850a3",
+    "name": "Grant 246 - 1Split",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/246/1split",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x4ee46dc4962c2c2f6bcd4c098a0e2b28f66a5e90",
     "name": "Humanity Registry",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x4fbdad7173ad2e05922a53ffc830831bb75740df",
+    "name": "Grant 257 - Floatify",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/257/floatify",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
     "name": "PoolTogether - Pool 2",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
-    "name": "TrueBlocks Tip Jar Doner",
+    "group": "31-Gitcoin Grants",
+    "address": "0x51535ca2e01985a7b4d6412958b438aa23111bac",
+    "name": "Grant 108 - Cryptoeconomics Lab",
     "symbol": "",
     "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "logo": "https://gitcoin.co/grants/108/cryptoeconomics-lab",
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "31-Gitcoin Grants",
+    "address": "0x527621278422fff45a66f7086baeac770cf12b69",
+    "name": "Grant 127 - Planet A",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/127/planet-a",
+    "description": ""
+  },
+  {
+    "group": "30-Contracts:Giveeth",
     "address": "0x52c782a023847342274e8e7f12360b820ed8c777",
     "name": "Tennagraph (Giveth) No Vote on ProgPow",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
+  },
+  {
+    "group": "31-Gitcoin Grants",
+    "address": "0x532e757e5d29023c5f3683b192378d15750dfa99",
+    "name": "Grant 113 - Gitcoin Moderation Tools",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/113/gitcoin-moderation-tools",
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5371a8d8d8a86c76de935821ad1a3e9b908cfced",
     "name": "Old Parity Proof of Something",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x544d3606a85d32252b2b63d80b110e5be8cec38d",
     "name": "dAppNode Project",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "31-Gitcoin Grants",
+    "address": "0x57b353818da50c82ffd59664068a5212eaf090b0",
+    "name": "Grant 076 - Inflation Funding Working Group",
+    "symbol": "",
+    "source": "",
+    "logo": "https://gitcoin.co/grants/76/inflation-funding-working-group",
+    "description": ""
+  },
+  {
+    "group": "30-Contracts:Giveeth",
     "address": "0x5adf43dd006c6c36506e2b2dfa352e60002d22dc",
     "name": "Giveth Donations Vault",
     "symbol": "GHT",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5baf422ed4eb0c678642aee99af8292047c76827",
     "name": "Freelance website announcement?",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5ceb19e1890f677c3676d5ecdf7c501eba01a054",
     "name": "CallsScript CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5e569e1ecd56fe30dd97ee233ec1675b60fb6680",
     "name": "HackerGold Kudos Contract",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5f0281910af44bfb5fc7e86a404d0304b0e042f1",
     "name": "TokenReg",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x5f0e15a3a551f0d4f927b72aff944e1e7a058e33",
-    "name": "New Name",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5f742383b6d1298980030d6af943b76cdd902143",
     "name": "etherplay.io",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x5fd72a8a514697232cce4e0166c48993b060f46c",
     "name": "SpringRole Vanity URL",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x60cd862c9c687a9de49aecdc3a99b74a4fc54ab6",
     "name": "MoonCatRescue",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0x6168d70074a11012d2756829d4f480180836af9d",
     "name": "Tennagraph (Giveth related) Abstain Vote on ProgPow",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x62428f78fe0118447b9668ae867b4bf6a40c2d9c",
     "name": "AugurWebWallet",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x6377216fd31061edb18b91d33c3d252abf91c2d4",
-    "name": "Beltran",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-    "name": "psdev tip jar",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6a95f606fc7dede93ef60ccf571e272db80ef11d",
     "name": "Camp Decentral Recipient",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb",
     "name": "One of the Other DAOs",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
     "name": "DAI StableCoin",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
     "name": "AppProxyUpgradeable CS1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x6c57430aac511421c811871fe5375874d0d2742a",
-    "name": "DigEx Presale Whale 01",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b",
     "name": "Piper Meriam's Alarm Clock",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x6d343663e55f734781e278b2b41a36c99e0bac40",
-    "name": "Alex'sWallet",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x6e95c8e8557abc08b46f3c347ba06f8dc012763f",
     "name": "MultiSigWalletWithDailyLimitFactory",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x74aa05a2d0c7de90661e3fcf8244019fd41aa996",
     "name": "MultiSig 1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x762d141b8d9600bde64138762e6fb38efc56dcba",
     "name": "Humanity Universal Basic Income",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x793ea9692ada1900fbd0b80fffec6e431fe8b391",
-    "name": "DAO Deployer",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x794547e50bdcd9f9a52367e7850ea4474504f644",
     "name": "dAddNode Package 011",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Moloch",
+    "group": "30-Contracts:Moloch",
     "address": "0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3",
     "name": "Moloch Paying Proxy",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x7baf96ee63017cc63d7da8df51fb04d4c3a7ef7b",
     "name": "HackerGold Hackathon Kudos",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x7e02ee81df2b100c3292636e0813d71192d8b071",
     "name": "BitrexWallet",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x807640a13483f8ac783c557fcdf27be11ea4ac7a",
     "name": "The Dao Extra Balance Account",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x819b63eb2478a0b2e0ca95c7f9a1045dd59cbafa",
     "name": "dAddNode Package 012",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x81f7564e413586f1f99fde55740ac52b43ca99c9",
     "name": "ACL CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x85cab7143ff3c01b93e88f5b017692374bb939c2",
     "name": "Magician's Registration",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x8702b8d7a1eefec7e54636e26a9323dc96a8dc25",
     "name": "Campaign X",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Moloch",
+    "group": "30-Contracts:Moloch",
     "address": "0x8942595a2dc5181df0465af0d7be08c8f23c93af",
     "name": "Gnosis Safe for Moloch",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
     "name": "Dai Stablecoin v1.0",
     "symbol": "DAI",
     "source": "Etherscan.io",
     "logo": "dai_stablecoin.png",
-    "description": "No description",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "No description"
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x8ce87f39c30396fdfe7f25378363307b3ba3002d",
     "name": "Bankshot",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x8d7dd7b604b4e0a8dd3cc343522caa2aa426e6e7",
     "name": "MetaCartel Demo Day",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0x8f951903c9360345b4e1b536c7f5ae8f88a64e79",
     "name": "Giveth Donations",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x8ff920020c8ad673661c8117f2855c384758c572",
     "name": "White Hat Group MultiSig",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x914d1b8b43e92723e64fd0a06f5bdb8dd9b10c79",
     "name": "DarkDAOextraBalance",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x93916fa230873e168ead051e4c16f76382b535a5",
-    "name": "Ida Jonsson and Simon Saarinen",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x955271c5e77d7bddcece0e0c8d48470a699b372f",
     "name": "dAddNode Package 013",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x960b236a07cf122663c4303350609a66a7b288c0",
     "name": "Aragon",
     "symbol": "ANT",
     "source": "Etherscan.io",
     "logo": "aragon_28.png",
-    "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties."
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x975e833cf7e2b58e5444229aa6646be6c99ff961",
     "name": "Early GitCoin",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x976fd26bc177542c3ade3aa28b374f866e7dde4b",
-    "name": "DAO Whale 2 - 3",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x97e46522e754da786487ec752a1f1c495b9665c1",
     "name": "Crypto Kittie Related",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x9851131b33fd9e084c56fb4a341460e8ea23e737",
     "name": "Malicious?",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x998bd8d043a3ca3eb65d673a80b6a27ec79aa502",
     "name": "Grant 100 - Eth Based Games MultiSig",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x9ae98746eb8a0aeee5ff2b6b15875313a986f103",
     "name": "Parity ProofOfSMS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x9b0a3840dd25e9a9e42829f9c0cadd34bf983da0",
     "name": "dAddNode Package 014",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c",
-    "name": "Suicide Sender",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x9d661f7773be14439b4223f5b516bc7ef67b0369",
     "name": "Twitter Humanity Applicant",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0x9e5adb4e5c299654c2f0619624f7c9eb7b9a3a1a",
-    "name": "Darrell's Wallet",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
     "name": "ShapeShift 2",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0x9f85ae5aefe4a3eff39d9a44212aae21dd15079a",
     "name": "dAppNode Package Manager",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
     "name": "Maker",
     "symbol": "MKR",
     "source": "Etherscan.io",
     "logo": "mkr-etherscan-35.png",
-    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xa145f5436741d9675f84a357249c4b90fae4b77e",
-    "name": "Pool Creator",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain"
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xa1e9111de82087d44d1fcdd5ff3da0042d9889cd",
     "name": "Weird Contract",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xa1eb40c284c5b44419425c4202fa8dabff31006b",
     "name": "Proof of Attendance Token",
     "symbol": "POAP",
     "source": "",
     "logo": "",
-    "description": "Proof of Attendance Token",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "Proof of Attendance Token"
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444",
     "name": "ReplaySafeSplit",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",
     "name": "AppProxyUpgradeable CS 2",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xaca39566a6a46abfa57b2f6d08dd322d62c00f68",
     "name": "dAddNode Package 015",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xb09e09b309273b07516fe6ab3437dbb500fe2b12",
     "name": "Pool Together Internals 1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xb1690c08e213a35ed9bab7b318de14420fb57d8c",
     "name": "CryptoKitties: Sales Auction",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xb55b33a590058c26bd5aeda4cf89382665f49d26",
-    "name": "Giveth Wallet Owner 3",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xb68e4ddcf00f93a89430ab2e4f878724ac7c23d4",
     "name": "dAddNode Package 016",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xb935c3d80229d5d92f3761b17cd81dc2610e3a45",
     "name": "Voting CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0xb94c53b0e67fabac3d97173482663ef597d4174a",
     "name": "Giveth MiniMe Token",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xb9ef770b6a5e12e45983c5d80545258aa38f3b78",
     "name": "0chain",
     "symbol": "ZCN",
     "source": "Etherscan.io",
     "logo": "ochain_28_2.png",
-    "description": "0chain is an infinitely scalable decentralized Cloud for any application.",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "0chain is an infinitely scalable decentralized Cloud for any application."
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbad661c5a1970342ade69857689738b6c8d9da51",
     "name": "proofofphysicaladdress",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbb6365bf44c63971a948d95d80f77ba3e76489df",
     "name": "PoolTogether: Upgradeable Proxy",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
     "name": "The DAO",
     "symbol": "DAO",
     "source": "Etherscan.io",
     "logo": "",
-    "description": "The infamous DAO smart contract",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "The infamous DAO smart contract"
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbbc5ee8be95683983df67260b0ab033c237bde60",
     "name": "Old Parity Proof of Something 2",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbbd1706d16418bb136e1497a73d3af4164586da0",
     "name": "Humanity (ERC20)",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12",
-    "name": "Consensys Grant Sender",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb",
     "name": "EVMScriptRegistry CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xbf4ed7b27f1d666546e30d74d50d173d20bca754",
     "name": "WithdrawDAO",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35",
     "name": "White Hat Group Token Controller",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xc0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89",
     "name": "DarkDAO Voting Proxy Contract 2",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xc28a260c6b2969349eeaa3ba5253b616c1d9ac0b",
     "name": "TrueBlocks Grant on GitCoin",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xc31fce79a354e027f49501c609cf3bd3b12ceae7",
-    "name": "Some Wallet",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xc37df6e11bf81b339cc6c02ec14f7b5c7588013f",
     "name": "Early GitCoin?",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xc430503c9f7cade47eb28958e734ee6255fe143b",
     "name": "GiftOfFriendship",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be",
-    "name": "Simon Sender",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xcccbee234112c5ea3370fb707875a8b1cf6b0fcf",
     "name": "dAddNode Package 017",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xce1cf6b6f671da234a869fa56226b6168a3e37d0",
     "name": "dAddNode Package 018",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xce9645e8d41e4842d841ea83d6d1c9e44badfd09",
     "name": "Tannagraph Factory",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xd2a93a02edd3135fc1acddd511a77eefc613f061",
     "name": "dAddNode Package 019",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xd2e16a20dd7b1ae54fb0312209784478d069c7b0",
     "name": "DaoManagedAcct",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0xd556caf704e39fc728058557a113b226207d2212",
     "name": "White Hat Donations (Giveth)",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
     "name": "KernelProxy CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
     "name": "Data Dump",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0xd84069ad1d0b94c041d2389e791e1453d7008c5a",
     "name": "Tennagraph (Giveth related) Yes Vote on ProgPow",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xda4a4626d3e16e094de3225a751aab7128e96526",
     "name": "DAO Curator",
     "symbol": "",
     "source": "TrueBlocks.io",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xdce86c8925defb5c5cb62afbee7abd07e59ba438",
-    "name": "Wild Inflow 2",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xdd806c4fdad2949a97fda79036cfbb8750181b37",
     "name": "Humanity Governance",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae",
     "name": "EthDev Multisig Wallet",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xde3a93028f2283cc28756b3674bd657eafb992f4",
     "name": "TokenManager CS",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xe19d0e300a13919623720b84487d974a8ff8aab6",
-    "name": "Poap Caller",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xe49e5946591a1ba5ac6bc8b5a94e0c68ddfe9658",
     "name": "QuickNode",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xe504aca1f31b0528fdc2afcc8c411a606032bb58",
     "name": "dAddNode Package 020",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xe7f69ea2a79521136ee0bf3c50f6b5f1ea0ab0cd",
     "name": "Devcon Scholars Program Wallet?",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xeba576ee0a26eba945c43cf951118c420f6aa54b",
-    "name": "DAO Whale 2 - 2",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xef57c67f42af29dd7ca5db8b61b1bd1d2de8dfd8",
-    "name": "Nick D.?",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xf0e9b95e42ec5c28d0b4da7a816bfb7423193a67",
     "name": "New Contract",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xf285bde0bce33e55225c6ee156bfb64b0be9ec9e",
     "name": "proofofphysicaladdress (sender)",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xf35960302a07022aba880dffaec2fdd64d5bf1c1",
-    "name": "Giveth Wallet Owner 2",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xf5dce57282a584d2746faf1593d3121fcac444dc",
     "name": "Pool Together Money Market",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "Giveeth",
+    "group": "30-Contracts:Giveeth",
     "address": "0xf6346cd9d0b90ca55ca8b128788a06d2c0e70dd3",
     "name": "Space Decentral Donations (Giveth)",
     "symbol": "",
     "source": "Giveth website",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xf74a6e92588ee0a524b44b251e0b47d1a15824f7",
     "name": "Parity Badge Registry",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xf835a0247b0063c04ef22006ebe57c5f11977cc4",
     "name": "DarkDAO Voting Proxy Contract 1",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xfa6f0ee1ae473c13f0d8c84fa8712fe785e44aa4",
     "name": "dAddNode Package 021",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xfaa9ea5b01fe68d4fdb66c8a94e31139bdb022b8",
     "name": "Poethry",
     "symbol": "",
     "source": "Poetry Website (http://www.poethry.com)",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "name": "Etherum Tip Jar",
     "symbol": "TIP",
     "source": "",
     "logo": "",
-    "description": "The ethereum tip jar",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": "The ethereum tip jar"
   },
   {
     "group": "30-Contracts",
-    "subgroup": "",
     "address": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
     "name": "AppProxyPinned",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   },
   {
-    "group": "30-Contracts",
-    "subgroup": "dAppNode",
+    "group": "30-Contracts:dAppNode",
     "address": "0xfcb2c44e61031ae29e5c54a700fb6b4fb430da4c",
     "name": "dAddNode Package 022",
     "symbol": "",
     "source": "",
     "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
-  },
-  {
-    "group": "20-Friends",
-    "subgroup": "",
-    "address": "0xffe34e7adbd7ac2569aed16db908e7dda9828b7d",
-    "name": "Wild Inflow 1",
-    "symbol": "",
-    "source": "",
-    "logo": "",
-    "description": "",
-    "is_contract": false,
-    "is_private": false,
-    "is_shared": false
+    "description": ""
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "subgroup", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }, { "name": "is_contract", "type": "bool" }, { "name": "is_private", "type": "bool" }, { "name": "is_shared", "type": "bool" }] }
+{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }] }
 ] }
