@@ -347,12 +347,9 @@ bool noteMonitor(const string_q& path, void* data) {
             }
             mdi.nAppearances = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
-            mdi.display_name =
-                (mdi.group.empty() ? "" : mdi.group + ": ") + (mdi.name.empty() ? mdi.address : mdi.name);
             mdi.appearanceRange = (mdi.latestAppearance - mdi.firstAppearance);
             mdi.appearanceInterval = (mdi.nAppearances ? (uint32_t)(mdi.appearanceRange / mdi.nAppearances) : 0);
         } else {
-            mdi.display_name = (mdi.group.empty() ? "" : mdi.group) + (mdi.name.empty() ? mdi.address : mdi.name);
             mdi.firstAppearance = NOPOS;
             mdi.latestAppearance = NOPOS;
             mdi.nAppearances = NOPOS;

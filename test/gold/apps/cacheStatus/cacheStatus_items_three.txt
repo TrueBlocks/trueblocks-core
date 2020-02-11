@@ -20,13 +20,14 @@ cacheStatus --details abis caches monitors --types slurps
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",
+          "is_custom": false,
+          "is_prefund": false,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
           "appearanceRange": 18446744073709551615,
           "appearanceInterval": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615,
-          "display_name": "---address---"
+          "sizeInBytes": 18446744073709551615
         }
       ],
       "type": "CMonitorCache",
@@ -44,6 +45,8 @@ cacheStatus --details abis caches monitors --types slurps
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
+          "is_custom": false,
+          "is_prefund": false,
           "appearanceRange": 0,
           "appearanceInterval": 0,
           "sizeInBytes": 36963

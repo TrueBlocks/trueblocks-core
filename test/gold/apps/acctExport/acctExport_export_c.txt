@@ -1,5 +1,4 @@
 acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--count_only] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count_only 
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 
 0x001d14804b399c6ef80e64576f657660804fec0b	7

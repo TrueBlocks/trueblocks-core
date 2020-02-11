@@ -19,7 +19,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10300,apps,export,acctExport,hashes_only,e,,false,false,true,true,header,switch,<boolean>,export the IPFS hashes of the index chunks the address appears in
 10320,apps,export,acctExport,count_only,c,,false,false,true,true,header,switch,<boolean>,display only the count of the number of data items requested
 10220,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10340,apps,export,acctExport,write_blocks,w,false,false,true,true,false,local,switch,<boolean>,write blocks to the binary cache ('off' by default)
 10360,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
 10380,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
 10400,apps,export,acctExport,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)

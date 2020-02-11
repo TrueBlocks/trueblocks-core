@@ -202,14 +202,6 @@ cacheStatus --get_config
           "name": "settings",
           "keys": [
             {
-              "name": "write_blocks",
-              "value": --write Blocks--,
-              "type": "bool",
-              "tip": "write blocks to the TrueBlocks binary cache",
-              "required": false,
-              "read_only": false
-            },
-            {
               "name": "write_txs",
               "value": --write Txs--,
               "type": "bool",
@@ -248,6 +240,8 @@ cacheStatus --get_config
                   "appearanceInterval": 0,
                   "appearanceRange": 0,
                   "group": "81-Custom",
+                  "is_custom": false,
+                  "is_prefund": false,
                   "name": "TestWallet1"
                 },
                 {
@@ -255,6 +249,8 @@ cacheStatus --get_config
                   "appearanceInterval": 0,
                   "appearanceRange": 0,
                   "group": "81-Custom",
+                  "is_custom": false,
+                  "is_prefund": false,
                   "name": "TestWallet2"
                 }
               ]

@@ -86,9 +86,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "description") {
                 return description;
             }
-            if (fieldName % "display_name") {
-                return display_name;
-            }
             break;
         case 'f':
             if (fieldName % "firstAppearance") {
@@ -98,6 +95,14 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         case 'g':
             if (fieldName % "group") {
                 return group;
+            }
+            break;
+        case 'i':
+            if (fieldName % "is_custom") {
+                return bool_2_Str(is_custom);
+            }
+            if (fieldName % "is_prefund") {
+                return bool_2_Str(is_prefund);
             }
             break;
         case 'l':
@@ -176,10 +181,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 description = fieldValue;
                 return true;
             }
-            if (fieldName % "display_name") {
-                display_name = fieldValue;
-                return true;
-            }
             break;
         case 'f':
             if (fieldName % "firstAppearance") {
@@ -190,6 +191,16 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'g':
             if (fieldName % "group") {
                 group = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "is_custom") {
+                is_custom = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_prefund") {
+                is_prefund = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -269,6 +280,8 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> source;
     archive >> logo;
     archive >> description;
+    archive >> is_custom;
+    archive >> is_prefund;
     // archive >> nAppearances;
     // archive >> lastExport;
     // archive >> firstAppearance;
@@ -277,7 +290,6 @@ bool CAccountName::Serialize(CArchive& archive) {
     // archive >> appearanceInterval;
     // archive >> path;
     // archive >> sizeInBytes;
-    // archive >> display_name;
     finishParse();
     return true;
 }
@@ -296,6 +308,8 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << source;
     archive << logo;
     archive << description;
+    archive << is_custom;
+    archive << is_prefund;
     // archive << nAppearances;
     // archive << lastExport;
     // archive << firstAppearance;
@@ -304,7 +318,6 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     // archive << appearanceInterval;
     // archive << path;
     // archive << sizeInBytes;
-    // archive << display_name;
 
     return true;
 }
@@ -348,6 +361,8 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "is_custom", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccountName, "is_prefund", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "nAppearances");
     ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
@@ -364,8 +379,6 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "path");
     ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CAccountName, "sizeInBytes");
-    ADD_FIELD(CAccountName, "display_name", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CAccountName, "display_name");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -435,7 +448,6 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         // archive >> lastExport;
         // archive >> nRecords;
         // archive >> sizeInBytes;
-        // archive >> display_name;
         // archive >> appearanceRange;
         // archive >> appearanceInterval;
         if (!subgroup.empty())

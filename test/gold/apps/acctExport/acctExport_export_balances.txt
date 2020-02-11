@@ -1,7 +1,7 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--fmt] [4:txt] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --fmt txt --end 001506480 
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 blocknumber	transactionindex	address	priorbalance	balance	diff
+TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 1: data
 ----------------------------------------------
 0	2	0x001d14804b399c6ef80e64576f657660804fec0b	0	4200000000000000000000	4200000000000000000000

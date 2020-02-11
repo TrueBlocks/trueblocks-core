@@ -20,13 +20,14 @@ cacheStatus --details monitors
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",
+          "is_custom": false,
+          "is_prefund": false,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
           "appearanceRange": 18446744073709551615,
           "appearanceInterval": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615,
-          "display_name": "---address---"
+          "sizeInBytes": 18446744073709551615
         }
       ],
       "type": "CMonitorCache",

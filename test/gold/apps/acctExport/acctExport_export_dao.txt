@@ -1,7 +1,7 @@
 acctExport argc: 7 [1:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [2:--receipts] [3:--fmt] [4:csv] [5:--end] [6:1430970] 
 acctExport 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --receipts --fmt csv --end 1430970 
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 "blocknumber","transactionindex","logindex","address","topic0","topic1","topic2","topic3","data","type","compressedlog"
+TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 "1428757","0","","","","","","","","",""
 "1429038","9","","","","","","","","",""
 "1429053","1","","","","","","","","",""

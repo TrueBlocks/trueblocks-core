@@ -86,13 +86,14 @@ cacheStatus --details some --start 3000000 --end 3100000
           "curBalance": 10000,
           "enabled": true,
           "address": "---address---",
+          "is_custom": false,
+          "is_prefund": false,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
           "appearanceRange": 18446744073709551615,
           "appearanceInterval": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615,
-          "display_name": "---address---"
+          "sizeInBytes": 18446744073709551615
         }
       ],
       "type": "CMonitorCache",
@@ -126,6 +127,8 @@ cacheStatus --details some --start 3000000 --end 3100000
           "type": "CPriceCacheItem",
           "pair": "---pair---",
           "address": "0x0",
+          "is_custom": false,
+          "is_prefund": false,
           "nAppearances": 2020101,
           "appearanceRange": 0,
           "appearanceInterval": 0,

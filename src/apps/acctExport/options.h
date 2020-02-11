@@ -18,7 +18,6 @@
 // END_ERROR_DEFINES
 
 #define CACHE_NONE (0)
-#define CACHE_BLOCKS (1 << 1)
 #define CACHE_TXS (1 << 2)
 #define CACHE_TRACES (1 << 3)
 #define CACHE_BYCONFIG (1 << 4)

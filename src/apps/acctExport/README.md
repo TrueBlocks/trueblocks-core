@@ -24,7 +24,6 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -e | --hashes_only | export the IPFS hashes of the index chunks the address appears in |
 | -c | --count_only | display only the count of the number of data items requested |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
-| -w | --write_blocks | write blocks to the binary cache ('off' by default) |
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

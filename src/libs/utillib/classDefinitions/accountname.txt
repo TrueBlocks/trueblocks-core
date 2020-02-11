@@ -8,6 +8,8 @@ fields = \
   string source|\
   string logo|\
   string description|\
+  bool is_custom|\
+  bool is_prefund|\
   blknum nAppearances (nowrite)|\
   blknum lastExport (nowrite)|\
   blknum firstAppearance (nowrite)|\
@@ -15,8 +17,7 @@ fields = \
   blknum appearanceRange (nowrite)|\
   blknum appearanceInterval (nowrite)|\
   string path (nowrite)|\
-  uint64 sizeInBytes (nowrite)|\
-  string display_name (nowrite)
+  uint64 sizeInBytes (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = group, address, name, symbol, source, logo, description

@@ -7,7 +7,6 @@ current = "0.6.7-alpha"
 # writeTraces = false
 # skipDdos = true
 # maxTraces = 250
-write_blocks = false
 write_txs = true
 write_traces = false
 

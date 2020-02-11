@@ -34,6 +34,8 @@ class CAccountName : public CBaseNode {
     string_q source;
     string_q logo;
     string_q description;
+    bool is_custom;
+    bool is_prefund;
     blknum_t nAppearances;
     blknum_t lastExport;
     blknum_t firstAppearance;
@@ -42,7 +44,6 @@ class CAccountName : public CBaseNode {
     blknum_t appearanceInterval;
     string_q path;
     uint64_t sizeInBytes;
-    string_q display_name;
 
   public:
     CAccountName(void);
@@ -113,6 +114,8 @@ inline void CAccountName::initialize(void) {
     source = "";
     logo = "";
     description = "";
+    is_custom = false;
+    is_prefund = false;
     nAppearances = 0;
     lastExport = 0;
     firstAppearance = 0;
@@ -121,7 +124,6 @@ inline void CAccountName::initialize(void) {
     appearanceInterval = 0;
     path = "";
     sizeInBytes = 0;
-    display_name = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -139,6 +141,8 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     source = ac.source;
     logo = ac.logo;
     description = ac.description;
+    is_custom = ac.is_custom;
+    is_prefund = ac.is_prefund;
     nAppearances = ac.nAppearances;
     lastExport = ac.lastExport;
     firstAppearance = ac.firstAppearance;
@@ -147,7 +151,6 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     appearanceInterval = ac.appearanceInterval;
     path = ac.path;
     sizeInBytes = ac.sizeInBytes;
-    display_name = ac.display_name;
 
     // EXISTING_CODE
     // EXISTING_CODE

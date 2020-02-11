@@ -22,7 +22,6 @@ static const COption params[] = {
     COption("hashes_only", "e", "", OPT_SWITCH, "export the IPFS hashes of the index chunks the address appears in"),
     COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("write_blocks", "w", "", OPT_SWITCH, "write blocks to the binary cache ('off' by default)"),
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
@@ -39,7 +38,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern int xor_options(bool, bool, bool);
+extern int xor_options(bool, bool);
 extern string_q report_cache(int);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
@@ -49,7 +48,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
-    bool write_blocks = false;
     bool write_txs = false;
     bool write_traces = false;
     bool all_abis = false;
@@ -89,9 +87,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
-
-        } else if (arg == "-w" || arg == "--write_blocks") {
-            write_blocks = true;
 
         } else if (arg == "-i" || arg == "--write_txs") {
             write_txs = true;
@@ -147,19 +142,15 @@ bool COptions::parseArguments(string_q& command) {
     const CToml* conf = getGlobalConfig("acctExport");
 
     // Caching options (i.e. write_opt) are as per config file...
-    write_opt = xor_options(conf->getConfigBool("settings", "write_blocks", false),
-                            conf->getConfigBool("settings", "write_txs", false),
+    write_opt = xor_options(conf->getConfigBool("settings", "write_txs", false),
                             conf->getConfigBool("settings", "write_traces", false));
-    if (write_opt) {
+    if (write_opt)
         write_opt |= CACHE_BYCONFIG;
-        LOG_INFO("Cache by config: ", report_cache(write_opt));
-    }
 
     // ...unless user has explicitly told us what to do on the command line...
     if (contains(origCmd, "write")) {
-        write_opt = xor_options(write_blocks, write_txs, write_traces);
+        write_opt = xor_options(write_txs, write_traces);
         write_opt |= (CACHE_BYUSER);
-        LOG_INFO("Cache by user: ", report_cache(write_opt));
     }
 
     // ... but may not be done. In loadAllAppearances, if write_opt is not set by user, we set it to cache transactions
@@ -495,19 +486,17 @@ bool COptions::loadAllAppearances(void) {
 
     // If the user has not told us what to cache via the config file or the command line, we set it to cache
     // transactions and traces if there are less than 1,000 of them...
-    if (!write_opt && items.size() <= 1000) {
+    if (!write_opt && items.size() <= 1000)
         write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
-        LOG_INFO("Cache by default: ", report_cache(write_opt));
-    }
 
+    LOG_INFO("Cache by ", ((write_opt & CACHE_BYCONFIG) ? "config" : ((write_opt & CACHE_BYUSER) ? "user" : "default")),
+             ": ", report_cache(write_opt));
     EXIT_NOMSG8(true);
 }
 
 //------------------------------------------------------------------------
-int xor_options(bool blks, bool txs, bool traces) {
+int xor_options(bool txs, bool traces) {
     int ret = CACHE_NONE;
-    if (blks)
-        ret |= CACHE_BLOCKS;
     if (txs)
         ret |= CACHE_TXS;
     if (traces)
@@ -520,9 +509,6 @@ string_q report_cache(int opt) {
     ostringstream os;
     if (opt == CACHE_NONE) {
         os << "CACHE_NONE ";
-    }
-    if (opt & CACHE_BLOCKS) {
-        os << "CACHE_BLOCKS ";
     }
     if (opt & CACHE_TXS) {
         os << "CACHE_TXS ";

@@ -17,6 +17,8 @@ cacheStatus --details caches --types prices
           "type": "CPriceCacheItem",
           "pair": "---pair---",
           "address": "0x0",
+          "is_custom": false,
+          "is_prefund": false,
           "nAppearances": 2020101,
           "appearanceRange": 0,
           "appearanceInterval": 0,

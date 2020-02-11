@@ -25,13 +25,14 @@
               "source": "",
               "logo": "",
               "description": "",
+              "is_custom": false,
+              "is_prefund": false,
               "nAppearances": "",
               "firstAppearance": "",
               "latestAppearance": "",
               "appearanceRange": 0,
               "appearanceInterval": 0,
-              "sizeInBytes": 36963,
-              "display_name": ""
+              "sizeInBytes": 36963
             }
           ],
           "type": "CAbiCache",
@@ -127,6 +128,14 @@
           "type": "text"
         },
         {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
+        },
+        {
           "name": "nAppearances",
           "type": "blocknum"
         },
@@ -149,10 +158,6 @@
         {
           "name": "sizeInBytes",
           "type": "unumber"
-        },
-        {
-          "name": "display_name",
-          "type": "text"
         }
       ]
     }

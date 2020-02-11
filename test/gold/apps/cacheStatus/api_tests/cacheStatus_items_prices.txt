@@ -23,13 +23,14 @@
               "source": "",
               "logo": "",
               "description": "",
+              "is_custom": false,
+              "is_prefund": false,
               "nAppearances": 2020101,
               "firstAppearance": "",
               "latestAppearance": "",
               "appearanceRange": 0,
               "appearanceInterval": 0,
-              "sizeInBytes": 1010202,
-              "display_name": ""
+              "sizeInBytes": 1010202
             }
           ],
           "type": "CPriceCache",
@@ -117,6 +118,14 @@
           "type": "text"
         },
         {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
+        },
+        {
           "name": "nAppearances",
           "type": "blocknum"
         },
@@ -139,10 +148,6 @@
         {
           "name": "sizeInBytes",
           "type": "unumber"
-        },
-        {
-          "name": "display_name",
-          "type": "text"
         }
       ]
     }

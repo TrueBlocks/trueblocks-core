@@ -139,11 +139,8 @@ bool COptions::handle_config_get(ostream& os) {
         const CToml* cc = getGlobalConfig("acctExport");
         CConfigFile f("acctExport.toml");
         CConfigGroup g1("Exporter", "settings");
-        string_q v1 = (isTestMode() ? "--write Blocks--" : cc->getConfigStr(g1.name, "write_blocks", "false"));
         string_q v2 = (isTestMode() ? "--write Txs--" : cc->getConfigStr(g1.name, "write_txs", "true"));
         string_q v3 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "write_traces", "true"));
-        CConfigItem i1("write_blocks", v1, "bool", "write blocks to the TrueBlocks binary cache", false, false);
-        g1.keys.push_back(i1);
         CConfigItem i2("write_txs", v2, "bool", "write transactions to the TrueBlocks binary cache", false, false);
         g1.keys.push_back(i2);
         CConfigItem i3("write_traces", v3, "bool", "write traces to the TrueBlocks binary cache", false, false);
@@ -347,7 +344,7 @@ const char* STR_TEST_DATA =
     "\"n_addr_procs\",\"value\": \"--new n Addr Procs--\",\"type\": \"number\"},{\"name\": "
     "\"n_block_procs\",\"value\": \"--new n Block Procs--\",\"type\": \"number\"}]}]},{\"name\": "
     "\"acctExport.toml\",\"groups\": [{\"section\": \"Exporter\",\"name\": \"settings\",\"keys\": [{\"name\": "
-    "\"write_blocks\",\"value\": \"\",\"type\": \"bool\"},{\"name\": \"write_txs\",\"value\": \"true\",\"type\": "
+    "\"write_txs\",\"value\": \"true\",\"type\": "
     "\"bool\"},{\"name\": \"write_traces\",\"value\": \"\",\"type\": \"bool\"}]}]},{\"name\": "
     "\"ethNames.toml\",\"groups\": [{\"section\": \"Names\",\"name\": \"custom\",\"keys\": [{\"name\": "
     "\"list\",\"type\": \"json array\",\"named\": [{\"address\": "

@@ -92,13 +92,14 @@
               "source": "",
               "logo": "",
               "description": "",
+              "is_custom": false,
+              "is_prefund": false,
               "nAppearances": 18446744073709552000,
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
               "appearanceRange": 18446744073709552000,
               "appearanceInterval": 18446744073709552000,
-              "sizeInBytes": 18446744073709552000,
-              "display_name": "---address---"
+              "sizeInBytes": 18446744073709552000
             }
           ],
           "type": "CMonitorCache",
@@ -138,13 +139,14 @@
               "source": "",
               "logo": "",
               "description": "",
+              "is_custom": false,
+              "is_prefund": false,
               "nAppearances": 2020101,
               "firstAppearance": "",
               "latestAppearance": "",
               "appearanceRange": 0,
               "appearanceInterval": 0,
-              "sizeInBytes": 1010202,
-              "display_name": ""
+              "sizeInBytes": 1010202
             }
           ],
           "type": "CPriceCache",
@@ -354,6 +356,14 @@
           "type": "text"
         },
         {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
+        },
+        {
           "name": "nAppearances",
           "type": "blocknum"
         },
@@ -376,10 +386,6 @@
         {
           "name": "sizeInBytes",
           "type": "unumber"
-        },
-        {
-          "name": "display_name",
-          "type": "text"
         }
       ]
     },
@@ -485,6 +491,14 @@
           "type": "text"
         },
         {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
+        },
+        {
           "name": "nAppearances",
           "type": "blocknum"
         },
@@ -507,10 +521,6 @@
         {
           "name": "sizeInBytes",
           "type": "unumber"
-        },
-        {
-          "name": "display_name",
-          "type": "text"
         }
       ]
     },

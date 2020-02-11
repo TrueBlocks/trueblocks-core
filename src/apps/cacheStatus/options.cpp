@@ -266,7 +266,6 @@ COptions::COptions(void) {
     UNHIDE_FIELD(CAccountName, "sizeInBytes");
     UNHIDE_FIELD(CAccountName, "firstAppearance");
     UNHIDE_FIELD(CAccountName, "latestAppearance");
-    UNHIDE_FIELD(CAccountName, "display_name");
     UNHIDE_FIELD(CAccountName, "appearanceRange");
     UNHIDE_FIELD(CAccountName, "appearanceInterval")
 
