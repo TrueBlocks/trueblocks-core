@@ -37,7 +37,8 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
     page.no_error = toml.getConfigBool("settings", "no_error", false);
     page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
-    page.no_dt = page.no_data || toml.getConfigBool("settings", "no_dt", false);
+    page.no_table = page.no_data || toml.getConfigBool("settings", "no_table", false);
+    page.obj_table = toml.getConfigBool("settings", "obj_table", false);
     page.no_dash = classDef.base_lower % "dashboard";
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
@@ -119,7 +120,6 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     ostringstream commands, menu_items, text_imports, text_code;
     map<string, string> extractMap;
     for (auto item : page.subpages) {
-        replaceAll(code, "[{DT_TYPE}]", item.table_type == "object" ? "DataTableObject" : "DataTable");
         replaceAll(code, "[{SUBPAGE}]", item.subpage);
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
@@ -172,6 +172,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replace(tc, "} else ", "");  // remove one
     replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? trim(tc) + "\n    }" : ""));
 
+    uint32_t count = 0;
     ostringstream reducers;
     for (auto e : extractMap) {
         string_q extract = e.first;
@@ -180,7 +181,10 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         for (auto c : cmds) {
             reducers << "    case " << page.twoName << "." << c << ":" << endl;
         }
-        reducers << substitute(STR_EXTRACT_CASE, "_EXTRACT_", e.first);
+        string_q s = substitute(STR_EXTRACT_CASE, "_EXTRACT_", e.first);
+        if (page.longName != "digests" && page.longName != "settings")
+            s = substitute(s, "types[0].fields", "types[" + uint_2_Str(count++) + "].fields");
+        reducers << s;
     }
     replaceAll(code, "[{REDUCERS}]", reducers.str());
 
@@ -194,10 +198,6 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{MENU_COMMENT}]", "");
     }
 
-    bool hasEar = contains(asciiFileToString(destFile), "pageEar");
-    replace(code, "[IE1]", (hasEar ? "pageEar={this.pageEar}" : ""));
-    replace(code, "[IE2]", (hasEar ? "pageEar={this.pageEar}" : ""));
-
     CStringArray lines;
     explode(lines, code, '\n', false);
     code = "";
@@ -209,7 +209,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
             include = false;
         if (page.no_data && contains(line, "[{NO_DATA}]"))
             include = false;
-        if (page.no_dt && contains(line, "[{NO_DT}]"))
+        if ((page.no_table || page.obj_table) && contains(line, "[{NO_DT}]"))
+            include = false;
+        if ((page.no_table || !page.obj_table) && contains(line, "[{NO_OBJ}]"))
             include = false;
         if (!page.has_text && contains(line, "[{NO_TEXT}]"))
             include = false;
@@ -222,6 +224,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{NO_ERROR}]", "");
     replaceAll(code, "[{NO_DATA}]", "");
     replaceAll(code, "[{NO_DT}]", "");
+    replaceAll(code, "[{NO_OBJ}]", "");
     replaceAll(code, "[{NO_TEXT}]", "");
 
     replaceAll(code, "[{CONNECT}]", page.polling ? STR_EXPORT_2 : STR_EXPORT_1);
@@ -237,8 +240,6 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         string_q orig = asciiFileToString(destFile);
         if (!contains(substitute(orig, ", { Fragment }", ""), "Fragment"))
             replace(code, ", { Fragment }", "");
-        if (contains(code, "DataTableObject"))
-            replace(code, "fields={null} rows={this.props.data}", "object={object}");
     }
 
     // returns true or false depending on if it WOULD HAVE written the file. If 'test'

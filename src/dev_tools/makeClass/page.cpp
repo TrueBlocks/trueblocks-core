@@ -102,11 +102,16 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
             if (fieldName % "no_data") {
                 return bool_2_Str(no_data);
             }
-            if (fieldName % "no_dt") {
-                return bool_2_Str(no_dt);
+            if (fieldName % "no_table") {
+                return bool_2_Str(no_table);
             }
             if (fieldName % "no_dash") {
                 return bool_2_Str(no_dash);
+            }
+            break;
+        case 'o':
+            if (fieldName % "obj_table") {
+                return bool_2_Str(obj_table);
             }
             break;
         case 'p':
@@ -202,12 +207,18 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 no_data = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "no_dt") {
-                no_dt = str_2_Bool(fieldValue);
+            if (fieldName % "no_table") {
+                no_table = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "no_dash") {
                 no_dash = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'o':
+            if (fieldName % "obj_table") {
+                obj_table = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -282,7 +293,8 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> files;
     archive >> no_error;
     archive >> no_data;
-    archive >> no_dt;
+    archive >> no_table;
+    archive >> obj_table;
     archive >> no_dash;
     archive >> has_text;
     archive >> color;
@@ -308,7 +320,8 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << files;
     archive << no_error;
     archive << no_data;
-    archive << no_dt;
+    archive << no_table;
+    archive << obj_table;
     archive << no_dash;
     archive << has_text;
     archive << color;
@@ -359,7 +372,8 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "files", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "no_error", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "no_data", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "no_dt", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPage, "no_table", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPage, "obj_table", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "no_dash", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "has_text", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "color", T_TEXT, ++fieldNum);

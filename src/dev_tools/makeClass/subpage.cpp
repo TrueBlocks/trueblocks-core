@@ -95,11 +95,6 @@ string_q CSubpage::getValueByName(const string_q& fieldName) const {
                 return subpage;
             }
             break;
-        case 't':
-            if (fieldName % "table_type") {
-                return table_type;
-            }
-            break;
         default:
             break;
     }
@@ -150,12 +145,6 @@ bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return true;
             }
             break;
-        case 't':
-            if (fieldName % "table_type") {
-                table_type = fieldValue;
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -190,7 +179,6 @@ bool CSubpage::Serialize(CArchive& archive) {
     archive >> route;
     archive >> options;
     archive >> extract;
-    archive >> table_type;
     finishParse();
     return true;
 }
@@ -207,7 +195,6 @@ bool CSubpage::SerializeC(CArchive& archive) const {
     archive << route;
     archive << options;
     archive << extract;
-    archive << table_type;
 
     return true;
 }
@@ -249,7 +236,6 @@ void CSubpage::registerClass(void) {
     ADD_FIELD(CSubpage, "route", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "options", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "extract", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "table_type", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSubpage, "schema");

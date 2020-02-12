@@ -37,7 +37,8 @@ class CPage : public CBaseNode {
     string_q files;
     bool no_error;
     bool no_data;
-    bool no_dt;
+    bool no_table;
+    bool obj_table;
     bool no_dash;
     bool has_text;
     string_q color;
@@ -116,7 +117,8 @@ inline void CPage::initialize(void) {
     files = "";
     no_error = false;
     no_data = false;
-    no_dt = false;
+    no_table = false;
+    obj_table = false;
     no_dash = false;
     has_text = false;
     color = "";
@@ -141,7 +143,8 @@ inline void CPage::duplicate(const CPage& pa) {
     files = pa.files;
     no_error = pa.no_error;
     no_data = pa.no_data;
-    no_dt = pa.no_dt;
+    no_table = pa.no_table;
+    obj_table = pa.obj_table;
     no_dash = pa.no_dash;
     has_text = pa.has_text;
     color = pa.color;
