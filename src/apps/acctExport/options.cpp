@@ -30,6 +30,7 @@ static const COption params[] = {
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurence"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -112,6 +113,10 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-D" || arg == "--deltas") {
             deltas = true;
+
+        } else if (startsWith(arg, "-o:") || startsWith(arg, "--occurrence:")) {
+            if (!confirmBlockNum("occurrence", occurrence, arg, latest))
+                return false;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
@@ -319,6 +324,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (occurrence != NOPOS) {
+        if (freshen)
+            EXIT_USAGE("The 'occurrence' option cannot be used with the 'freshe' option. Quitting...");
+    }
+
     if (freshen)
         exportFmt = NONE1;
 
@@ -358,6 +368,7 @@ void COptions::Init(void) {
     grab_abis = false;
     freshen = false;
     deltas = false;
+    occurrence = NOPOS;
     // END_CODE_INIT
 
     nExported = 0;
@@ -421,7 +432,20 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
-            apps.push_back(buffer[i]);
+            if (occurrence == NOPOS || occurrence == i)
+                apps.push_back(buffer[i]);
+        }
+
+        if (expContext().fmtMap["meta"].empty() && occurrence != NOPOS) {
+            blknum_t next = (occurrence == nRecords - 1) ? occurrence : occurrence + 1;
+            blknum_t prev = (occurrence == 0) ? 0 : occurrence - 1;
+            string_q links;
+            links += ",\n\"links\": ";
+            links += "{";
+            links += " \"next\": " + uint_2_Str(next) + ",";
+            links += " \"prev\": " + uint_2_Str(prev);
+            links += "}\n";
+            expContext().fmtMap["meta"] = links;
         }
 
         delete[] buffer;

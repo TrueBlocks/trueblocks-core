@@ -27,6 +27,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10460,apps,export,acctExport,grab_abis,g,,false,false,false,false,header,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
+10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurence
 10520,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10540,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10560,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.

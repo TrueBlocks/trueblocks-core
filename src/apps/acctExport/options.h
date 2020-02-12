@@ -42,6 +42,7 @@ class COptions : public COptionsBase {
     bool grab_abis;
     bool freshen;
     bool deltas;
+    blknum_t occurrence;
     // END_CODE_DECLARE
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)

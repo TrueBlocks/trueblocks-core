@@ -8,6 +8,7 @@ on, cmd,  fast, export, apps/acctExport, help_long,             n, help
 on, both, fast, export, apps/acctExport, no_params,             y,
 
 on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 001506480
+on, both, fast, export, apps/acctExport, export_occ,            n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 1506480 & occurrence = 2
 on, both, fast, export, apps/acctExport, export_apps,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & end = 001506480
 on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt & end = 001506480
 on, both, fast, export, apps/acctExport, export_receipts,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = csv & end = 001506480

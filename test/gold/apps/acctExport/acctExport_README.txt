@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-i|-R|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-i|-R|-o|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -20,6 +20,7 @@ acctExport -th
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |
+| -o | --occurrence <num> | for each loaded list of appearances, export only this occurence |
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
