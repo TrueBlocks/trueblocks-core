@@ -327,6 +327,12 @@ bool COptions::parseArguments(string_q& command) {
     if (occurrence != NOPOS) {
         if (freshen)
             EXIT_USAGE("The 'occurrence' option cannot be used with the 'freshe' option. Quitting...");
+        if (monitors.size() > 1)
+            EXIT_USAGE("The 'occurrence' option is only available for a single address. Quitting...");
+        // weird hack because 'latest' in the sense of an occurrence is different than latest in the sense of a block
+        if ((contains(command, "occurrence:latest") || contains(command, "o:latest")) && occurrence == latest) {
+            occurrence = (NOPOS-1);
+        }
     }
 
     if (freshen)
@@ -432,8 +438,14 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
-            if (occurrence == NOPOS || occurrence == i)
+            if (occurrence == NOPOS) { // no filter
                 apps.push_back(buffer[i]);
+            } else if (occurrence == (NOPOS-1) && i == (nRecords-1)) { // special case for 'latest'
+                apps.push_back(buffer[i]);
+                occurrence = i;
+            } else if (occurrence == i) {
+                apps.push_back(buffer[i]);
+            }
         }
 
         if (expContext().fmtMap["meta"].empty() && occurrence != NOPOS) {
@@ -442,8 +454,9 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
             string_q links;
             links += ",\n\"links\": ";
             links += "{";
-            links += " \"next\": " + uint_2_Str(next) + ",";
-            links += " \"prev\": " + uint_2_Str(prev);
+            links += " \"current\": \"occurrence=" + uint_2_Str(occurrence) + "\",";
+            links += " \"next\": \"occurrence=" + uint_2_Str(next) + "\",";
+            links += " \"prev\": \"occurrence=" + uint_2_Str(prev) + "\"";
             links += "}\n";
             expContext().fmtMap["meta"] = links;
         }

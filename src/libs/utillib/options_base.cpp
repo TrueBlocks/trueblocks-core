@@ -441,10 +441,36 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
 //---------------------------------------------------------------------------------------------------
 bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const string_q& argIn,
                                    blknum_t latest) const {
+    value = NOPOS;
+
+    const COption* param = findParam(name);
+    if (!param)
+        return usage("Unknown parameter `" + name + "'. Quitting...");
+    if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
+        return true;
+
+    string_q arg = argIn;
+    replace(arg, param->shortName + ":", "");
+    replace(arg, name + ":", "");
+    replaceAll(arg, "-", "");
+
+    if (contains(param->type, "blknum")) {
+        if (arg == "first") {
+            value = 0;
+            return true;
+        }
+        if (arg == "latest") {
+            value = latest;
+            return true;
+        }
+    }
+
     if (!confirmUint(name, value, argIn))
         return false;
+
     if (value > latest)
         return usage("Block number (" + argIn + ") is greater than the latest block. Quitting...");
+
     return true;
 }
 
