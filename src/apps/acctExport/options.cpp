@@ -454,9 +454,9 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
             string_q links;
             links += ",\n\"links\": ";
             links += "{";
-            links += " \"current\": \"occurrence=" + uint_2_Str(occurrence) + "\",";
-            links += " \"next\": \"occurrence=" + uint_2_Str(next) + "\",";
-            links += " \"prev\": \"occurrence=" + uint_2_Str(prev) + "\"";
+            links += " \"current\": " + uint_2_Str(occurrence) + ",";
+            links += " \"next\": " + uint_2_Str(next) + ",";
+            links += " \"prev\": " + uint_2_Str(prev);
             links += "}\n";
             expContext().fmtMap["meta"] = links;
         }
