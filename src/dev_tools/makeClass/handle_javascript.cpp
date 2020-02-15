@@ -23,6 +23,7 @@ extern const char* STR_TEXT_CODE;
 extern const char* STR_NAVLINK;
 extern const char* STR_EMPTY_INNER;
 extern const char* STR_EMPTY_INNER_COLLAPSE;
+extern const char* STR_SKIN_EXPORT;
 extern bool visitField(const CFieldData& field, void* data);
 
 //---------------------------------------------------------------------------------------------------
@@ -105,8 +106,56 @@ bool COptions::handle_json_export(void) {
         }
     }
     handle_generate_frontend_app();
+    handle_generate_skins();
     return false;  // we're done processing
 }
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_skins(void) {
+    string_q dataFile = "../../skins/skins.csv";
+    CStringArray lines;
+    asciiFileToLines(dataFile, lines);
+    CStringArray fields;
+    CSkinArray skins;
+    for (auto line : lines) {
+        if (fields.empty()) {
+            explode(fields, line, ',');
+        } else {
+            CSkin skin;
+            skin.parseCSV(fields, line);
+            skins.push_back(skin);
+        }
+    }
+
+    for (auto skin : skins) {
+        ostringstream os;
+        os << skin.Format(STR_SKIN_EXPORT) << endl;
+        string_q thisFile = substitute(dataFile, "skins.csv", skin.name + ".jsx");
+        stringToAsciiFile(thisFile, os.str());
+        cerr << "Wrote " << thisFile << endl;
+    }
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_SKIN_EXPORT =
+    "const [{NAME}] = {\n"
+    "   colorBgPrimary: '[{bgPrimary}]',\n"
+    "   colorBgSecondary: '[{bgSecondary}]',\n"
+    "   colorTextPrimary: '[{textPrimary}]',\n"
+    "   colorBorderPrimary: '[{borderPrimary}]',\n"
+    "\n"
+    "   colorTableBgPrimary: '[{tableBgPrimary}]',\n"
+    "   colorTableBgSecondary: '[{tableBgSecondary}]',\n"
+    "   colorTableTextPrimary: '[{tableTextPrimary}]',\n"
+    "   colorTableBorderPrimary: '[{tableBorderPrimary}]',\n"
+    "\n"
+    "   colorBgHover: '[{bgHover}]',\n"
+    "   colorTextHover: '[{textHover}]'\n"
+    "};\n"
+    "\n"
+    "export default [{NAME}];\n";
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folder, const string_q& source) {
