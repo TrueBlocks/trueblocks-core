@@ -27,7 +27,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10460,apps,export,acctExport,grab_abis,g,,false,false,false,false,header,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
-10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurence
+10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurrence
 10520,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10540,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10560,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
@@ -239,6 +239,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13560,tools,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 13580,tools,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,display the transaction's trace
 13600,tools,transactions,getTrans,force,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
+13605,tools,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in this transaction
 13620,tools,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve an Ethereum transaction from the local cache or a running node.
 13622,tools,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.

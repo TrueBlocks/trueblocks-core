@@ -35,6 +35,24 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 
+//----------------------------------------------------------------
+bool visitAddrs(const CAppearance& item, void* data) {
+    // We do not account for zero addresses or the addresses found in the zeroth trace since
+    // it's identical to the transaction itself
+    if (item.tc == 10 || isZeroAddr(item.addr))
+        return !shouldQuit();
+    cout << item.Format(expContext().fmtMap["format"]) << endl;
+    return !shouldQuit();
+}
+
+//----------------------------------------------------------------
+// Return 'true' if we want the caller NOT to visit the traces of this transaction
+bool transFilter(const CTransaction* trans, void* data) {
+    if (!ddosRange(trans->blockNumber))
+        return false;
+    return (getTraceCount(trans->hash) > 250);
+}
+
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
@@ -44,6 +62,11 @@ bool visitTransaction(CTransaction& trans, void* data) {
         string_q hash = nextTokenClear(trans.hash, ' ');
         opt->errors.push_back("Transaction " + hash + " not found.");
         return true;  // continue even with an invalid item
+    }
+
+    if (opt->uniq) {
+        trans.forEveryUniqueAddressPerTx(visitAddrs, transFilter, opt);
+        return true;
     }
 
     if (opt->isRaw || opt->isVeryRaw) {

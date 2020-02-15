@@ -663,13 +663,19 @@ bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void* data
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void* data) {
-    return true;
+bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+    if (!func)
+        return false;
+    CUniqueState state(func, data, false);
+    return forEveryAddress(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC funcy, TRANSFUNC filt, void* data) {
-    return true;
+bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+    if (!func)
+        return false;
+    CUniqueState state(func, data, true);
+    return forEveryAddress(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------

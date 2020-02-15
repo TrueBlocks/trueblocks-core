@@ -27,6 +27,7 @@ class COptions : public COptionsBase {
     bool articulate;
     bool trace;
     bool force;
+    bool uniq;
     // END_CODE_DECLARE
 
     COptionsTransList transList;

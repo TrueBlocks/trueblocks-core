@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in this transaction"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -52,6 +53,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             force = true;
+
+        } else if (arg == "-u" || arg == "--uniq") {
+            uniq = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -90,8 +94,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Display formatting
-    string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
-    configureDisplay("getTrans", "CTransaction", fmt);
+    if (uniq) {
+        configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
+    } else {
+        string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
+        configureDisplay("getTrans", "CTransaction", fmt);
+    }
 
     return true;
 }
@@ -105,6 +113,7 @@ void COptions::Init(void) {
     articulate = false;
     trace = false;
     force = false;
+    uniq = false;
     // END_CODE_INIT
 
     transList.Init();
