@@ -211,6 +211,12 @@ bool COptions::exportData(void) {
     if (isTestMode())
         cout << endl;
 
+    if (occurrence != NOPOS) {
+        ostringstream os;
+        os << ", \"addresses\": []\n";
+        expContext().fmtMap["meta"] = expContext().fmtMap["meta"] + os.str();
+    }
+
     for (auto watch : monitors)
         if (items.size() > 0)
             watch.writeLastExport(items[items.size() - 1].blk);

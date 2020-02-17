@@ -169,7 +169,7 @@ bool isNodeRunning(void) {
 }
 
 //-------------------------------------------------------------------------
-static const char* STR_CURLERROR = "The request to the Ethereum node resulted|in following error message: [VAL].";
+static const char* STR_CURLERROR = "The request to the Ethereum node ([{METHOD}]:[{PARAMS}]) resulted|in following error message: [VAL].";
 
 //-------------------------------------------------------------------------
 static const char* STR_CURLRESEMPTY = "The Ethereum node returned an empty response.";
@@ -201,7 +201,7 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
     CURLcode res = curl_easy_perform(curlHandle);
     if (res != CURLE_OK && !earlyAbort) {
         PRINT("CURL returned an error: ! CURLE_OK")
-        displayCurlError(STR_CURLERROR, curl_easy_strerror(res));
+        displayCurlError(substitute(substitute(STR_CURLERROR, "[{METHOD}]", method), "[{PARAMS}]", params), curl_easy_strerror(res));
     }
 
     PRINT("CURL returned CURLE_OK")

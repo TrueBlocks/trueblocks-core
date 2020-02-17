@@ -312,6 +312,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
 void COptions::applyFilter() {
     //------------------------
     if (types & OWNED) {
+        nodeRequired();
         if (isTestMode()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;

@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
-    COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurence"),
+    COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurrence"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -331,7 +331,7 @@ bool COptions::parseArguments(string_q& command) {
             EXIT_USAGE("The 'occurrence' option is only available for a single address. Quitting...");
         // weird hack because 'latest' in the sense of an occurrence is different than latest in the sense of a block
         if ((contains(command, "occurrence:latest") || contains(command, "o:latest")) && occurrence == latest) {
-            occurrence = (NOPOS-1);
+            occurrence = (NOPOS - 1);
         }
     }
 
@@ -438,9 +438,9 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
-            if (occurrence == NOPOS) { // no filter
+            if (occurrence == NOPOS) {  // no filter
                 apps.push_back(buffer[i]);
-            } else if (occurrence == (NOPOS-1) && i == (nRecords-1)) { // special case for 'latest'
+            } else if (occurrence == (NOPOS - 1) && i == (nRecords - 1)) {  // special case for 'latest'
                 apps.push_back(buffer[i]);
                 occurrence = i;
             } else if (occurrence == i) {
@@ -454,9 +454,10 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
             string_q links;
             links += ",\n\"links\": ";
             links += "{";
-            links += " \"current\": " + uint_2_Str(occurrence) + ",";
             links += " \"next\": " + uint_2_Str(next) + ",";
-            links += " \"prev\": " + uint_2_Str(prev);
+            links += " \"prev\": " + uint_2_Str(prev) + ",";
+            links += " \"current\": " + uint_2_Str(occurrence) + ",";
+            links += " \"count\": " + uint_2_Str(nRecords);
             links += "}\n";
             expContext().fmtMap["meta"] = links;
         }

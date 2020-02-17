@@ -14,6 +14,7 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    nodeNotRequired();
     etherlib_init(quickQuitHandler);
 
     COptions options;

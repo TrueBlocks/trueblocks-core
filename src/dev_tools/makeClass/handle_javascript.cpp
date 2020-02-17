@@ -92,6 +92,7 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_json_export(void) {
+#if 1
     for (auto classDef : classDefs) {
         if (classDef.short_fn != "app") {
             CBaseNode* item = createObjectOfType(classDef.short_fn);
@@ -106,6 +107,7 @@ bool COptions::handle_json_export(void) {
         }
     }
     handle_generate_frontend_app();
+#endif
     handle_generate_skins();
     return false;  // we're done processing
 }
@@ -131,8 +133,11 @@ bool COptions::handle_generate_skins(void) {
         ostringstream os;
         os << skin.Format(STR_SKIN_EXPORT) << endl;
         string_q thisFile = substitute(dataFile, "skins.csv", skin.name + ".jsx");
-        stringToAsciiFile(thisFile, os.str());
-        cerr << "Wrote " << thisFile << endl;
+        string_q orig = asciiFileToString(thisFile);
+        if (os.str() != orig) {
+            stringToAsciiFile(thisFile, os.str());
+            cerr << "Wrote " << thisFile << endl;
+        }
     }
 
     return true;
