@@ -75,6 +75,11 @@ string_q CSubpage::getValueByName(const string_q& fieldName) const {
                 return extract;
             }
             break;
+        case 'i':
+            if (fieldName % "icon") {
+                return icon;
+            }
+            break;
         case 'o':
             if (fieldName % "options") {
                 return options;
@@ -118,6 +123,12 @@ bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& field
         case 'e':
             if (fieldName % "extract") {
                 extract = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "icon") {
+                icon = fieldValue;
                 return true;
             }
             break;
@@ -179,6 +190,7 @@ bool CSubpage::Serialize(CArchive& archive) {
     archive >> route;
     archive >> options;
     archive >> extract;
+    archive >> icon;
     finishParse();
     return true;
 }
@@ -195,6 +207,7 @@ bool CSubpage::SerializeC(CArchive& archive) const {
     archive << route;
     archive << options;
     archive << extract;
+    archive << icon;
 
     return true;
 }
@@ -236,6 +249,7 @@ void CSubpage::registerClass(void) {
     ADD_FIELD(CSubpage, "route", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "options", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "extract", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "icon", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSubpage, "schema");

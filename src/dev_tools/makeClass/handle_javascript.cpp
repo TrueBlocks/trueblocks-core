@@ -92,7 +92,6 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_json_export(void) {
-#if 1
     for (auto classDef : classDefs) {
         if (classDef.short_fn != "app") {
             CBaseNode* item = createObjectOfType(classDef.short_fn);
@@ -107,7 +106,6 @@ bool COptions::handle_json_export(void) {
         }
     }
     handle_generate_frontend_app();
-#endif
     handle_generate_skins();
     return false;  // we're done processing
 }
@@ -184,8 +182,12 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         if (!menu_items.str().empty())
             menu_items << ",";
         menu_items << endl;
-        menu_items << "    { subpage: '" << substitute(toLower(item.subpage), "_", " ");
-        menu_items << "', route: '" + item.route + "', query: " << page.twoName << "." << toUpper(item.subpage) << " }";
+        menu_items << "    { ";
+        menu_items << "subpage: '" << substitute(toLower(item.subpage), "_", " ") << "'";
+        menu_items << ", route: '" << item.route << "'";
+        menu_items << ", query: " << page.twoName << "." << toUpper(item.subpage);
+        menu_items << (item.icon.empty() ? "" : (", icon: '" + item.icon + "'"));
+        menu_items << " }";
         cnt++;
         string_q curVal = extractMap[item.extract];
         extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
