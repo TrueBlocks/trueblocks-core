@@ -68,7 +68,7 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     if (fieldName % "tc") {
         if (tc < 10)
-            return "";
+            return "\"\"";
         return uint_2_Str(tc - 10);
     }
     // EXISTING_CODE

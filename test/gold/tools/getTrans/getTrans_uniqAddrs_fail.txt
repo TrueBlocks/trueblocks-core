@@ -1,7 +1,7 @@
-getTrans argc: 1 
-getTrans 
+getTrans argc: 7 [1:1301011.0] [2:1301672.0] [3:1301324.0] [4:--uniq_tx] [5:--fmt] [6:json] 
+getTrans 1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json 
 
-  Not enough arguments presented.
+  Invalid option: --uniq_tx
 
   Usage:    getTrans [-a|-t|-u|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.

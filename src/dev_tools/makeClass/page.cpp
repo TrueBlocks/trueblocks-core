@@ -113,13 +113,13 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
             if (fieldName % "obj_table") {
                 return bool_2_Str(obj_table);
             }
+            if (fieldName % "obj_nav") {
+                return bool_2_Str(obj_nav);
+            }
             break;
         case 'p':
             if (fieldName % "properName") {
                 return properName;
-            }
-            if (fieldName % "pageNotes") {
-                return pageNotes;
             }
             if (fieldName % "polling") {
                 return bool_2_Str(polling);
@@ -221,14 +221,14 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 obj_table = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "obj_nav") {
+                obj_nav = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'p':
             if (fieldName % "properName") {
                 properName = fieldValue;
-                return true;
-            }
-            if (fieldName % "pageNotes") {
-                pageNotes = fieldValue;
                 return true;
             }
             if (fieldName % "polling") {
@@ -286,7 +286,6 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> properName;
     archive >> twoName;
     archive >> sevenName;
-    archive >> pageNotes;
     archive >> subpages;
     archive >> polling;
     archive >> menuType;
@@ -295,6 +294,7 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> no_data;
     archive >> no_table;
     archive >> obj_table;
+    archive >> obj_nav;
     archive >> no_dash;
     archive >> has_text;
     archive >> color;
@@ -313,7 +313,6 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << properName;
     archive << twoName;
     archive << sevenName;
-    archive << pageNotes;
     archive << subpages;
     archive << polling;
     archive << menuType;
@@ -322,6 +321,7 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << no_data;
     archive << no_table;
     archive << obj_table;
+    archive << obj_nav;
     archive << no_dash;
     archive << has_text;
     archive << color;
@@ -365,7 +365,6 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "properName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPage, "pageNotes", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CPage, "polling", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "menuType", T_TEXT, ++fieldNum);
@@ -374,6 +373,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "no_data", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "no_table", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "obj_table", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPage, "obj_nav", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "no_dash", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "has_text", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "color", T_TEXT, ++fieldNum);

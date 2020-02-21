@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getTrans - Invalid option: --uniq_tx"
+  ]
+}

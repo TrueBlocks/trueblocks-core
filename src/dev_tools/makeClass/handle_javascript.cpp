@@ -40,27 +40,10 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
     page.no_table = page.no_data || toml.getConfigBool("settings", "no_table", false);
     page.obj_table = toml.getConfigBool("settings", "obj_table", false);
+    page.obj_nav = toml.getConfigBool("settings", "obj_nav", false);
     page.no_dash = classDef.base_lower % "dashboard";
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
-    page.pageNotes = toml.getConfigStr("settings", "page_notes", "");
-
-    const char* STR_HELPSTR =
-        ",\n"
-        "  [\n"
-        "    '[{LOWER}]',\n"
-        "    () => (\n"
-        "      <span>\n"
-        "        <h4>[{PROPER}] Page</h4>\n"
-        "        [{TEXT}]\n"
-        "      </span>\n"
-        "    )\n"
-        "  ]";
-    if (page.longName != "dashboard")
-        pagehelp << substitute(
-            substitute(substitute(STR_HELPSTR, "[{TEXT}]", substitute(page.pageNotes, "|", "\n        ")), "[{LOWER}]",
-                       page.longName),
-            "[{PROPER}]", page.properName);
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
@@ -72,7 +55,7 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     while (item.parseJson3(subpages)) {
         replaceAll(item.options, "_EQ_", "=");
         replaceAll(item.extract, "_0", "[0]");
-        if (item.route.empty())
+        if (item.route.empty() && !item.isSeparator)
             page.has_text = true;
         page.subpages.push_back(item);
         item = CSubpage();
@@ -176,30 +159,33 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
         replaceAll(code, "[{QUERY_URL}]", item.route);
         replaceAll(code, "[{QUERY_OPTS}]", item.options);
         replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
-        if (!commands.str().empty())
-            commands << endl;
-        commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';";
         if (!menu_items.str().empty())
             menu_items << ",";
         menu_items << endl;
-        menu_items << "    { ";
-        menu_items << "subpage: '" << substitute(toLower(item.subpage), "_", " ") << "'";
-        menu_items << ", route: '" << item.route << "'";
-        menu_items << ", query: " << page.twoName << "." << toUpper(item.subpage);
-        menu_items << (item.icon.empty() ? "" : (", icon: '" + item.icon + "'"));
-        menu_items << " }";
-        cnt++;
-        string_q curVal = extractMap[item.extract];
-        extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
-
-        if (item.route.empty()) {
-            if (text_imports.str() != "")
-                text_imports << endl;
-            text_imports << substitute(STR_TEXT_IMPORTS, "[{SUBPAGE}]", item.subpage);
-            if (text_code.str() != "")
-                text_code << endl;
-            text_code << substitute(substitute(STR_TEXT_CODE, "[{SUBPAGE}]", item.subpage), "[{SP_UPPER}]",
-                                    toUpper(item.subpage));
+        if (!item.isSeparator) {
+            menu_items << "    { ";
+            menu_items << "subpage: '" << substitute(toLower(item.subpage), "_", " ") << "'";
+            menu_items << ", route: '" << item.route << "'";
+            menu_items << ", query: " << page.twoName << "." << toUpper(item.subpage);
+            menu_items << (item.icon.empty() ? "" : (", icon: '" + item.icon + "'"));
+            menu_items << " }";
+            cnt++;
+            string_q curVal = extractMap[item.extract];
+            extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
+            if (!commands.str().empty())
+                commands << endl;
+            commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';";
+            if (item.route.empty()) {
+                if (text_imports.str() != "")
+                    text_imports << endl;
+                text_imports << substitute(STR_TEXT_IMPORTS, "[{SUBPAGE}]", item.subpage);
+                if (text_code.str() != "")
+                    text_code << endl;
+                text_code << substitute(substitute(STR_TEXT_CODE, "[{SUBPAGE}]", item.subpage), "[{SP_UPPER}]",
+                                        toUpper(item.subpage));
+            }
+        } else {
+            menu_items << "    { subpage: 'separator' }";
         }
     }
     if (cnt == 0) {
@@ -282,12 +268,13 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{NO_DT}]", "");
     replaceAll(code, "[{NO_OBJ}]", "");
     replaceAll(code, "[{NO_TEXT}]", "");
+    if (page.obj_nav)
+        replaceAll(code, "showNav={false}", "showNav={true}");
 
     replaceAll(code, "[{CONNECT}]", page.polling ? STR_EXPORT_2 : STR_EXPORT_1);
     replaceAll(code, "[{LOWER}]", page.longName);
     replaceAll(code, "[{SEVEN}]", page.sevenName);
     replaceAll(code, "[{TWO}]", page.twoName);
-    replaceAll(code, "[{PAGENOTES}]", substitute(page.pageNotes, "|", " \\\n        "));
     replaceAll(code, "[{PROPER}]", page.properName);
     replaceAll(code, "[{COLOR}]", page.color);
     replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
@@ -351,30 +338,31 @@ bool COptions::handle_generate_frontend_app(void) {
         string_q path = nextTokenClear(exact, ',');
         string_q path2 = path;
         string_q navpath = path.empty() ? "" : "path=\"" + path + "\" ";
+        bool isSeparator = (lower == "separator");
         if (path.empty()) {
             path = "/[{LOWER}]/:subpage?/:query?";
             path2 = "/[{LOWER}]";
         }
         if (!exact.empty())
             exact += "={true} ";
-        app_imports1 << substitute(substitute(app_import1, "[{PROPER}]", proper), "[{LOWER}]", lower);
-        app_imports2 << substitute(substitute(app_import2, "[{PROPER}]", proper), "[{LOWER}]", lower);
-        replace(exact, "={true}", "");
-        red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
-        reducers << substitute(reducer, "[{PROPER}]", proper);
-        if (!routes.str().empty())
-            routes << ",\n";
-        routes << substitute(
-            substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
-            "[{LOWER}]", lower);
+        if (!isSeparator) {
+            app_imports1 << substitute(substitute(app_import1, "[{PROPER}]", proper), "[{LOWER}]", lower);
+            app_imports2 << substitute(substitute(app_import2, "[{PROPER}]", proper), "[{LOWER}]", lower);
+            if (!routes.str().empty())
+                routes << ",\n";
+            routes << substitute(substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper), "[{LOWER}]", lower);
+            red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
+            reducers << substitute(reducer, "[{PROPER}]", proper);
+        }
         if (!navlinks.str().empty())
             navlinks << "," << endl;
-        navlinks << substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower);
+        navlinks << (isSeparator ? "  Separator" : substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower));
+        replace(exact, "={true}", "");
     }
 
-    CStringArray files = {"App", "Content", "root-reducers", "routes", "PageHelp"};
+    CStringArray files = {"App", "Content", "root-reducers", "routes"};
     for (auto file : files) {
-        string dest = (file == "PageHelp" ? "../../components/" : "../../") + file + ".js";
+        string dest = "../../" + file + ".js";
         string_q source = "./blank-" + toLower(file) + ".js";
         string_q orig = asciiFileToString(dest);
         string_q contents = asciiFileToString(source);
@@ -384,7 +372,6 @@ bool COptions::handle_generate_frontend_app(void) {
         replaceAll(contents, "[{IMPORTS2}]", app_imports2.str());
         replaceAll(contents, "[{NAVLINKS}]", navlinks.str());
         replaceAll(contents, "[{ROUTES}]", routes.str());
-        replaceAll(contents, "[{PAGEHELP}]", pagehelp.str());
         replaceAll(contents, "[{REDIMPORTS}]", red_imports.str());
         replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
         if (orig != contents) {

@@ -41,7 +41,19 @@ bool visitAddrs(const CAppearance& item, void* data) {
     // it's identical to the transaction itself
     if (item.tc == 10 || isZeroAddr(item.addr))
         return !shouldQuit();
-    cout << item.Format(expContext().fmtMap["format"]) << endl;
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (opt->exportFmt & (TXT1 | CSV1));
+    if (isText) {
+        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+    } else {
+        if (!opt->first)
+            cout << ",";
+        cout << "  ";
+        incIndent();
+        item.doExport(cout);
+        decIndent();
+        opt->first = false;
+    }
     return !shouldQuit();
 }
 

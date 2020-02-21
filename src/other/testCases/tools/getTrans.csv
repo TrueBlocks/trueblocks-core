@@ -41,7 +41,8 @@ on, both, fast, transactions, tools/getTrans, message,             y, transactio
 on, cmd,  medi, transactions, tools/getTrans, core_dump_bug,       y, transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 @ avt & fmt = api
 on, cmd,  fast, transactions, tools/getTrans, mulit_line_mulit_txs,n, file:cmd_file_1 & fmt = json
 
-on, both, fast, transactions, tools/getTrans, uniqAddrs,           y, transactions = 1301011.0 1301324.0 1301637.0 & uniq_tx & fmt json
+on, both, fast, transactions, tools/getTrans, uniqAddrs_fail,      y, transactions = 1301011.0 1301672.0 1301324.0 & uniq_tx & fmt json
+on, both, fast, transactions, tools/getTrans, uniqAddrs,           y, transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt json
 
 on, both, fast, transactions, tools/getTrans, first,               n, transactions = 40500.0.next & fmt = txt
 on, both, fast, transactions, tools/getTrans, nav_prev1,           n, transactions = 1001001.1.prev & fmt = txt

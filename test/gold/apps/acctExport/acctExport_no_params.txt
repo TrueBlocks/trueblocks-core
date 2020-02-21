@@ -19,7 +19,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments):
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-i  (--write_txs)     write transactions to the cache (see notes)
 	-R  (--write_traces)  write traces to the cache (see notes)
-	-o  (--occurrence <num>)for each loaded list of appearances, export only this occurence
+	-o  (--occurrence <num>)for each loaded list of appearances, export only this occurrence
 
 #### Hidden options (shown during testing only)
 	-s  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)

@@ -41,6 +41,7 @@ class CSubpage : public CBaseNode {
     DECLARE_NODE(CSubpage);
 
     // EXISTING_CODE
+    bool isSeparator;
     // EXISTING_CODE
     bool operator==(const CSubpage& item) const;
     bool operator!=(const CSubpage& item) const {
@@ -101,6 +102,7 @@ inline void CSubpage::initialize(void) {
     icon = "";
 
     // EXISTING_CODE
+    isSeparator = false;
     // EXISTING_CODE
 }
 
@@ -117,6 +119,7 @@ inline void CSubpage::duplicate(const CSubpage& su) {
     icon = su.icon;
 
     // EXISTING_CODE
+    isSeparator = su.isSeparator;
     // EXISTING_CODE
 }
 

@@ -1,4 +1,4 @@
 [settings]
 class = CPage
-fields = string longName|string properName|string twoName|string sevenName|string pageNotes|CSubpageArray subpages|bool polling|string menuType|string files|bool no_error|bool no_data|bool no_table|bool obj_table|bool no_dash|bool has_text|string color
+fields = string longName|string properName|string twoName|string sevenName|CSubpageArray subpages|bool polling|string menuType|string files|bool no_error|bool no_data|bool no_table|bool obj_table|bool obj_nav|bool no_dash|bool has_text|string color
 includes = etherlib.h|subpage.h

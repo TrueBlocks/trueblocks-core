@@ -30,7 +30,6 @@ class CPage : public CBaseNode {
     string_q properName;
     string_q twoName;
     string_q sevenName;
-    string_q pageNotes;
     CSubpageArray subpages;
     bool polling;
     string_q menuType;
@@ -39,6 +38,7 @@ class CPage : public CBaseNode {
     bool no_data;
     bool no_table;
     bool obj_table;
+    bool obj_nav;
     bool no_dash;
     bool has_text;
     string_q color;
@@ -110,7 +110,6 @@ inline void CPage::initialize(void) {
     properName = "";
     twoName = "";
     sevenName = "";
-    pageNotes = "";
     subpages.clear();
     polling = false;
     menuType = "";
@@ -119,6 +118,7 @@ inline void CPage::initialize(void) {
     no_data = false;
     no_table = false;
     obj_table = false;
+    obj_nav = false;
     no_dash = false;
     has_text = false;
     color = "";
@@ -136,7 +136,6 @@ inline void CPage::duplicate(const CPage& pa) {
     properName = pa.properName;
     twoName = pa.twoName;
     sevenName = pa.sevenName;
-    pageNotes = pa.pageNotes;
     subpages = pa.subpages;
     polling = pa.polling;
     menuType = pa.menuType;
@@ -145,6 +144,7 @@ inline void CPage::duplicate(const CPage& pa) {
     no_data = pa.no_data;
     no_table = pa.no_table;
     obj_table = pa.obj_table;
+    obj_nav = pa.obj_nav;
     no_dash = pa.no_dash;
     has_text = pa.has_text;
     color = pa.color;
