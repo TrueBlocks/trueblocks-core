@@ -13,6 +13,7 @@
 #include "basetypes.h"
 #include "options_base.h"
 #include "conversions.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -93,6 +94,7 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
                 ASSERT(0);  // should never happen
                 skip = 1;
             }
+            LOG_INFO("skip_type: ", skip_type);
         }
     }
 
