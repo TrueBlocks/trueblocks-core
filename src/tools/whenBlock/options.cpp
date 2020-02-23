@@ -122,7 +122,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "fmt_ts", STR_DISPLAY_TIMESTAMP);
         configureDisplay("whenBlock", "CBlock", format);
         manageFields("CBlock:" + string_q(format));
-        isText = (exportFmt == TXT1 || exportFmt == CSV1);
+        isText = (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1);
         if (!isText)
             expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
         stop = (nTimestamps() * 2);
@@ -134,7 +134,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("Please supply either a JSON formatted date or a blockNumber.");
         string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
         configureDisplay("whenBlock", "CBlock", format);
-        if (exportFmt == API1 || exportFmt == JSON1)
+        if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1)
             manageFields("CBlock:" + string_q(format));
     }
 
@@ -167,7 +167,7 @@ COptions::COptions(void) {
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
     if (!isApiMode())
-        exportFmt = TXT1;
+        expContext().exportFmt = TXT1;
 
     // BEG_CODE_NOTES
     // clang-format off

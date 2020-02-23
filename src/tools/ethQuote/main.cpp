@@ -36,7 +36,7 @@ int main(int argc, const char* argv[]) {
             return options.usage(message);
 
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CPriceQuote));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CPriceQuote));
 
         size_t step = (options.freq / 5);
         for (size_t i = 0; i < quotes.size(); i = i + step) {
@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
         }
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -54,7 +54,7 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------
 bool visitPrice(CPriceQuote& quote, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = (opt->exportFmt & (TXT1 | CSV1));
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////

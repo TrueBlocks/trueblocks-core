@@ -192,8 +192,8 @@ bool COptions::parseArguments(string_q& command) {
         freshen_flags += " --end " + uint_2_Str(end);
     }
     if (true) {
-        tool_flags += addExportMode(exportFmt);
-        freshen_flags += addExportMode(exportFmt);
+        tool_flags += addExportMode(expContext().exportFmt);
+        freshen_flags += addExportMode(expContext().exportFmt);
     }
     if (true) {
         tool_flags = trim(tool_flags, ' ');

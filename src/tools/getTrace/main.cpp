@@ -25,11 +25,11 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CTrace));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTrace));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -38,7 +38,7 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = (opt->exportFmt & (TXT1 | CSV1));
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');
@@ -150,7 +150,7 @@ bool displayAsSuicide(COptions* opt, const CTrace& trace) {
 
 //--------------------------------------------------------------
 bool displayAsTrace(COptions* opt, const CTrace& trace) {
-    bool isText = (opt->exportFmt & (TXT1 | CSV1));
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
         cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {

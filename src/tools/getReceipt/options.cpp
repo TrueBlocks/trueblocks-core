@@ -71,7 +71,7 @@ bool COptions::parseArguments(string_q& command) {
         SHOW_FIELD(CReceipt, "logs");
 
     if (isRaw)
-        exportFmt = JSON1;
+        expContext().exportFmt = JSON1;
 
     if (articulate) {
         // show certain fields and hide others

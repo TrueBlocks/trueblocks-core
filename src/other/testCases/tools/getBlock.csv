@@ -29,8 +29,8 @@ on, both, fast, blocks, tools/getBlock, multi2,             y, blocks = 2769609 
 on, both, slow, blocks, tools/getBlock, terse_no_raw,       y, blocks = 4001001-4001003 & hashes_only
 on, both, fast, blocks, tools/getBlock, terse_yes_raw,      y, blocks = 4001001 & hashes_only & raw
 on, both, medi, blocks, tools/getBlock, hashes_1,           y, blocks = 4001001 & hashes_only
-on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 & addrs
-on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & addrs & verbose = 1
+on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 & addrs & fmt = csv
+on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & addrs & verbose = 1 & fmt = txt
 on, both, medi, blocks, tools/getBlock, address_uniq1,      n, blocks = 3982128 & uniq
 on, both, medi, blocks, tools/getBlock, address_uniqTx1,    n, blocks = 3982128 & uniq_tx
 on, both, slow, blocks, tools/getBlock, byzantium_1,        y, blocks = 4369999 4370000 4380101 & force

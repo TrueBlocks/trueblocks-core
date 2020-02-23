@@ -48,7 +48,7 @@ int main(int argc, const char* argv[]) {
             theAccount.displayString = options.displayString;
             ostringstream os;
             theAccount.Format(os, options.formatString);
-            if (options.exportFmt == TXT1 || options.exportFmt == CSV1)
+            if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1)
                 cout << trim(trim(os.str(), '\n'), ',') << endl;
             else
                 cout << "[" << trim(trim(substitute(os.str(), "\n", " "), ' '), ',') << "]" << endl;
@@ -85,8 +85,10 @@ bool Slurp(CAccount& theAccount, COptions& options) {
         while (!done) {
             string_q url = string_q("https://api.etherscan.io/api?module=account&sort=asc") +
                            "&action=" + toEtherscan(type) + "&address=" + theAccount.addr +
-                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) +
-                           "&apikey=" + options.api.getKey();
+                           "&page=" + uint_2_Str(theAccount.latestPage) + "&offset=" + uint_2_Str(5000) + "&apikey=" +
+                           getApiKey("Etherscan",
+                                     "http:/"
+                                     "/api.etherscan.io/apis");
 
             string_q responseStr = urlToString(url);
             if (!contains(responseStr, "\"message\":\"OK\"")) {

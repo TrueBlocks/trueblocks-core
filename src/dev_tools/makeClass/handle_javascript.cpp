@@ -350,13 +350,16 @@ bool COptions::handle_generate_frontend_app(void) {
             app_imports2 << substitute(substitute(app_import2, "[{PROPER}]", proper), "[{LOWER}]", lower);
             if (!routes.str().empty())
                 routes << ",\n";
-            routes << substitute(substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper), "[{LOWER}]", lower);
+            routes << substitute(
+                substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
+                "[{LOWER}]", lower);
             red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
             reducers << substitute(reducer, "[{PROPER}]", proper);
         }
         if (!navlinks.str().empty())
             navlinks << "," << endl;
-        navlinks << (isSeparator ? "  Separator" : substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower));
+        navlinks << (isSeparator ? "  Separator"
+                                 : substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower));
         replace(exact, "={true}", "");
     }
 

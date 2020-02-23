@@ -303,12 +303,12 @@ const char* STR_DISPLAY_CACHE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
-#if 1
-    return false;
-#else
+    if (needsRefresh(cacheType, details))
+        return false;
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     if (!fileExists(fn))
         return false;
+    LOG4("\tReading from cache...\r");
     CArchive archive(READING_ARCHIVE);
     if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
         CStatus status;
@@ -326,17 +326,15 @@ bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
             }
         }
         archive.Release();
+        LOG4("\tData was read from cache...");
         return true;
     }
+    LOG4("\tCould not read from cache...");
     return false;
-#endif
 }
 
 //---------------------------------------------------------------------------
 bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
-#if 1
-    return false;
-#else
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
@@ -347,7 +345,6 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
         return true;
     }
     return false;
-#endif
 }
 // EXISTING_CODE
 }  // namespace qblocks

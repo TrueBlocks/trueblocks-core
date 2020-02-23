@@ -32,5 +32,6 @@
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"
+#include "webapi.h"
 
 using namespace qblocks;  // NOLINT

@@ -21,3 +21,5 @@ fields = \
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = group, address, name, symbol, source, logo, description
+sort = v1.address < v2.address
+equals = address % item.address

@@ -88,15 +88,12 @@ bool COptions::parseArguments(string_q& command) {
     if (typesList.empty())
         typesList.push_back("ext");
 
-    if (exportFmt == TXT1)
+    if (expContext().exportFmt == TXT1)
         exportFormat = "txt";
-    else if (exportFmt == CSV1)
+    else if (expContext().exportFmt == CSV1)
         exportFormat = "csv";
     else
         exportFormat = "json";
-
-    if (!api.checkKey())
-        return false;
 
     if (addrs.empty())
         return usage("You must supply an Ethereum account or contract address. ");

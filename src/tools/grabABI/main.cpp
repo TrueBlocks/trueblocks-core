@@ -28,13 +28,13 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"],
+            cout << exportPreamble(expContext().fmtMap["header"],
                                    isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
         if (!options.generate)
             forEveryAbiInArray(visitAbi, &options, options.abis);
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     return 0;
 }
@@ -42,7 +42,7 @@ int main(int argc, const char* argv[]) {
 //-----------------------------------------------------------------------
 bool visitAbi(CAbi& abi, void* data) {
     COptions* opt = (COptions*)data;  // NOLINT
-    bool isText = (opt->exportFmt == (TXT1 | CSV1));
+    bool isText = (expContext().exportFmt == (TXT1 | CSV1));
     if (isText && !opt->isNoHeader)
         cout << expContext().fmtMap["header"] << endl;
 

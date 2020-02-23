@@ -27,12 +27,12 @@ int main(int argc, const char* argv[]) {
 
         for (auto addr : options.addrs) {
             if (once)
-                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
+                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
             options.current = addr;
             options.blocks.forEveryBlockNumber(visitBlock, &options);
             once = false;
         }
-        cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
 
     acctlib_cleanup();
@@ -42,7 +42,7 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------
 bool visitBlock(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = opt->exportFmt & (TXT1 | CSV1);
+    bool isText = expContext().exportFmt & (TXT1 | CSV1);
 
     if (!isTestMode()) {
         cerr << blockNum << "\r";

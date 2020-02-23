@@ -186,13 +186,13 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         } else if (startsWith(arg, "-x:") || startsWith(arg, "--fmt:")) {
             arg = substitute(substitute(arg, "--fmt:", ""), "-x:", "");
             if (arg == "txt") {
-                exportFmt = TXT1;
+                expContext().exportFmt = TXT1;
             } else if (arg == "csv") {
-                exportFmt = CSV1;
+                expContext().exportFmt = CSV1;
             } else if (arg == "json") {
-                exportFmt = JSON1;
+                expContext().exportFmt = JSON1;
             } else if (arg == "api") {
-                exportFmt = API1;
+                expContext().exportFmt = API1;
             } else {
                 return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
             }
@@ -391,15 +391,15 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
 void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
                                     const string_q& meta) {
     string_q format;
-    switch (exportFmt) {
+    switch (expContext().exportFmt) {
         case NONE1:
             format = defFormat;
-            manageFields(dataType + ":" + cleanFmt(format, exportFmt));
+            manageFields(dataType + ":" + cleanFmt(format));
             break;
         case TXT1:
         case CSV1:
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
-            manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format), exportFmt));
+            manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
         case API1:
         case JSON1:
@@ -411,8 +411,8 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
     if (expContext().asDollars)
         format = substitute(format, "{BALANCE}", "{DOLLARS}");
     expContext().fmtMap["meta"] = meta;
-    expContext().fmtMap["format"] = cleanFmt(format, exportFmt);
-    expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    expContext().fmtMap["format"] = cleanFmt(format);
+    expContext().fmtMap["header"] = cleanFmt(format);
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 }
@@ -930,14 +930,10 @@ static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
     if (b1 == 0) {
         if (p1.first == "latest")
             b1 = NOPOS;
-        if (p1.first == "constantinople")
-            b1 = (NOPOS - 2);
     }
     if (b2 == 0) {
         if (p2.first == "latest")
             b2 = NOPOS;
-        if (p2.first == "constantinople")
-            b2 = (NOPOS - 2);
     }
     return b1 < b2;
 }
@@ -987,13 +983,12 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
 }
 
 //---------------------------------------------------------------------------------------------------
-COptionsBase::COptionsBase(void) : namesFile("") {
+COptionsBase::COptionsBase(void) {
     minArgs = 1;
     isReadme = false;
     isRaw = false;
     isVeryRaw = false;
     isNoHeader = false;
-    exportFmt = (isApiMode() ? API1 : TXT1);
     enableBits = OPT_DEFAULT;
     scanRange = make_pair(0, NOPOS);
     for (int i = 0; i < 5; i++)
@@ -1003,7 +998,7 @@ COptionsBase::COptionsBase(void) : namesFile("") {
     hiDown = (isTestMode() ? "" : cOff);
     arguments.clear();
     commandLines.clear();
-    namedAccounts.clear();
+    namedAccounts2.clear();
     pParams = NULL;
     cntParams = 0;
     coutBackup = NULL;
@@ -1040,133 +1035,8 @@ void COptionsBase::closeRedirect(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::loadPrefunds(void) {
-    // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
-    // since it will never change. In that sense, the binary file is always right once it's created.
-    string_q binFile = configPath("prefunds.bin");
-    string_q txtFile = configPath("prefunds.txt");
-    if (!fileExists(binFile)) {
-        if (!fileExists(txtFile))
-            return false;
-        CStringArray lines;
-        asciiFileToLines(txtFile, lines);
-        for (auto line : lines) {
-            CStringArray parts;
-            explode(parts, line, '\t');
-            prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
-        }
-        CArchive archive(WRITING_ARCHIVE);
-        if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
-            return false;
-        addr_wei_mp::iterator it = prefundWeiMap.begin();
-        archive << uint64_t(prefundWeiMap.size());
-        while (it != prefundWeiMap.end()) {
-            archive << it->first << it->second;
-            it++;
-        }
-        archive.Release();
-        return true;
-    }
-    CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT))
-        return false;
-    uint64_t count;
-    archive >> count;
-    for (size_t i = 0; i < count; i++) {
-        string_q key;
-        wei_t wei;
-        archive >> key >> wei;
-        prefundWeiMap[key] = wei;
-    }
-    archive.Release();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) const {
-    if (namedAccounts.size() == 0) {
-        uint64_t save = verbose;
-        verbose = false;
-        COptionsBase* pThis = (COptionsBase*)this;  // NOLINT
-        if (!contains(namesFile.getFullPath(), "names.txt"))
-            pThis->namesFile = CFilename(configPath("names/names.txt"));
-        pThis->loadNames();
-        verbose = save;
-    }
-
-    for (size_t i = 0; i < namedAccounts.size(); i++) {
-        if (namedAccounts[i].address % addr) {
-            acct = namedAccounts[i];
-            return true;
-        }
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-string_q COptionsBase::getNamedAccount(const string_q& addr) const {
-    CAccountName item;
-    item.address = addr;
-    getNamedAccount(item, item.address);
-    return substitute(substitute(item.name, "(", ""), ")", "");
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::loadNames(void) {
-    // If we're already loaded or editing, return
-    if (namedAccounts.size() > 0)
-        return true;
-
-    string_q textFile = namesFile.getFullPath();
-    string_q binFile = substitute(textFile, ".txt", ".bin");
-
-    time_q txtDate = fileLastModifyDate(textFile);
-    time_q binDate = fileLastModifyDate(binFile);
-    if (verbose && !isTestMode())
-        cout << "txtDate: " << txtDate << " binDate: " << binDate << "\n";
-
-    if (binDate > txtDate) {
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            if (verbose && !isTestMode())
-                cout << "Reading from binary cache\n";
-            nameCache >> namedAccounts;
-            nameCache.Release();
-            return true;
-        }
-    }
-
-    if (verbose && !isTestMode())
-        cout << "Reading from text database\n";
-
-    // Read the data from the names database and clean it up if needed
-    CStringArray lines;
-    asciiFileToLines(textFile, lines);
-    for (auto line : lines) {
-        if (!startsWith(line, '#') && contains(line, "0x")) {
-            CAccountName account(line);
-            if (isAddress(account.address))
-                namedAccounts.push_back(account);
-        }
-    }
-    if (lines.size() == 0) {
-        cerr << "Something went wrong loading names file. Quitting...";
-        return false;
-    }
-
-    CArchive nameCache(WRITING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        if (verbose && !isTestMode())
-            cout << "Writing binary cache\n";
-        nameCache << namedAccounts;
-        nameCache.Release();
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str, format_t fmt) {
+string_q cleanFmt(const string_q& str) {
+    format_t fmt = expContext().exportFmt;
     string_q ret = (substitute(substitute(substitute(str, "\n", ""), "\\n", "\n"), "\\t", "\t"));
     if (fmt == CSV1)
         ret = "\"" + substitute(ret, "\t", "\",\"") + "\"";

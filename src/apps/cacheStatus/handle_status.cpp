@@ -33,17 +33,21 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&index);
     }
 
+    LOG4("Processing monitors");
     CMonitorCache monitors;
     if (contains(mode, "|monitors|")) {
-        LOG8("monitors");
+        LOG4("Reading monitors");
         if (!monitors.readBinaryCache("monitors", details)) {
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
             expContext().types[monitors.type] = monitors.getRuntimeClass();
             monitors.path = pathName("monitors");
+            LOG4("counting monitors");
             forEveryFileInFolder(getCachePath("monitors/"), countFiles, &monitors);
+            LOG4("done counting monitors");
             CItemCounter counter(this, start, end);
             counter.cachePtr = &monitors;
             counter.monitorArray = &monitors.items;
+            LOG4("forEvery monitors");
             if (details) {
                 forEveryFileInFolder(getCachePath("monitors/"), noteMonitor, &counter);
             } else {
@@ -51,8 +55,10 @@ bool COptions::handle_status(ostream& os) {
                 if (monitors.addrs.size() == 0)
                     monitors.is_valid = true;
             }
-            LOG8("\tre-writing monitors cache");
-            monitors.writeBinaryCache("monitors", details);
+            LOG4("forEvery monitors done");
+            LOG8("\tWriting monitors cache");
+            //            monitors.writeBinaryCache("monitors", details);
+            LOG4("done writing cache");
         }
         status.caches.push_back(&monitors);
     }
@@ -285,7 +291,8 @@ bool noteMonitor(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
     } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
-        LOG4("Processing: ", path);
+        if (!isTestMode())
+            LOG_INFO("Processing: ", path, (verbose ? "\n" : "\r"));
 
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
@@ -295,39 +302,15 @@ bool noteMonitor(const string_q& path, void* data) {
         mdi.address =
             substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
                        ".json", "");
+
         if (isTestMode()) {
             mdi.address = "---address---";
             mdi.curBalance = 10000;
         } else {
             mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
         }
-        CAccountName item;
-        string_q customStr = getGlobalConfig("ethNames")->getConfigJson("custom", "list", "");
-        while (item.parseJson3(customStr)) {
-            if (mdi.address == item.address) {
-                mdi.group = item.group;
-                mdi.name = item.name;
-                break;
-            }
-            item = CAccountName();
-        }
-        if (mdi.name.empty()) {
-            ASSERT(prefunds.size() == 8893);  // This is a known value
-            uint32_t cnt = 0;
-            for (auto prefund : counter->options->prefundWeiMap) {
-                address_t addr = prefund.first;
-                if (mdi.address == addr) {
-                    mdi.group = "80-Prefund";
-                    mdi.name = "Prefund_" + padNum4(cnt);
-                    mdi.source = "Genesis";
-                    break;
-                }
-                cnt++;
-            }
-        }
 
-        if (mdi.name.empty())
-            counter->options->getNamedAccount(mdi, mdi.address);
+        counter->options->getNamedAccount2(mdi, mdi.address);
 
         if (!isTestMode() && endsWith(path, ".acct.bin")) {
             CArchive archive(READING_ARCHIVE);
@@ -357,6 +340,7 @@ bool noteMonitor(const string_q& path, void* data) {
             mdi.appearanceRange = NOPOS;
             mdi.appearanceInterval = NOPOS;
         }
+
         mdi.deleted = fileExists(substitute(path, ".acct.bin", ".deleted"));
         counter->monitorArray->push_back(mdi);
         if (isTestMode())
@@ -454,7 +438,7 @@ bool noteABI(const string_q& path, void* data) {
         if (isTestMode())
             abii.address = "---address---";
         CAccountName n;
-        counter->options->getNamedAccount(n, abii.address);
+        counter->options->getNamedAccount2(n, abii.address);
         abii.name = n.name;
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;

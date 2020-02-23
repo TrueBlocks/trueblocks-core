@@ -197,7 +197,7 @@ bool COptions::parseArguments(string_q& command) {
         replace(funcFields, "address,", "");
     }
 
-    if (verbose && (exportFmt == JSON1 || exportFmt == API1)) {
+    if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");
         replaceAll(format, "_NAME", "");
     }

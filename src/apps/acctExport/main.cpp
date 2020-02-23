@@ -37,7 +37,7 @@ int main(int argc, const char* argv[]) {
                                                            : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))))));
 
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], options.className);
+            cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
         if (options.count_only) {
             options.exportCounts();
@@ -57,7 +57,7 @@ int main(int argc, const char* argv[]) {
 
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     if (!options.freshen && !options.count_only)
         LOG_INFO("exported ", options.nExported, " ",

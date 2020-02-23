@@ -126,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (list) {
         mode += "list|";  // do 'listing' in order found
-        exportFmt = JSON1;
+        expContext().exportFmt = JSON1;
     }
 
     if (data)

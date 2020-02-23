@@ -26,13 +26,13 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        options.isText = (options.exportFmt & (TXT1 | CSV1));
+        options.isText = (expContext().exportFmt & (TXT1 | CSV1));
         if (options.isText && !options.timestamps && options.requests.size() == 0) {
             LOG_INFO("No results");
 
         } else {
             if (options.first)
-                cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
             if (options.requests.size() > 0) {
                 options.applyFilter();  // for (auto item : options.items)
                                         // visitBlock(item.second, &options);
@@ -42,7 +42,7 @@ int main(int argc, const char* argv[]) {
                                   2 * (options.skip == NOPOS ? 1 : options.skip));
             }
         }
-        cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
 
     etherlib_cleanup();

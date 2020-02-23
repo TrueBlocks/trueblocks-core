@@ -44,7 +44,7 @@ int main(int argc, const char* argv[]) {
                     if (!options.data)
                         LOG_INFO(toProper(mode) + "ing cache: ",
                                  substitute(watch->name, getCachePath(""), "${CACHE}/"));
-                    if (options.exportFmt == JSON1)
+                    if (expContext().exportFmt == JSON1)
                         cout << "[";
 
                     for (auto item : items) {
@@ -118,7 +118,7 @@ int main(int argc, const char* argv[]) {
                             } else if (mode == "list") {
                                 if (!(options.stats.nRecords % options.skip)) {
                                     static bool first = true;
-                                    if (options.exportFmt == JSON1) {
+                                    if (expContext().exportFmt == JSON1) {
                                         if (!first)
                                             cout << ",";
                                         cout << "{ ";
@@ -126,7 +126,7 @@ int main(int argc, const char* argv[]) {
                                         cout << "\"tx_id\": " << item.txid;
                                         cout << "}\n";
                                         first = false;
-                                    } else if (options.exportFmt == CSV1) {
+                                    } else if (expContext().exportFmt == CSV1) {
                                         cout << (isApiMode() ? ("\"" + watch->address + "\",") : "");
                                         cout << item.blk << "," << item.txid << endl;
                                     } else {
@@ -141,7 +141,7 @@ int main(int argc, const char* argv[]) {
                         }
                     }
 
-                    if (options.exportFmt == JSON1)
+                    if (expContext().exportFmt == JSON1)
                         cout << "]";
                 }
 

@@ -481,15 +481,5 @@ const char* STR_DISPLAY_ACCOUNTNAME =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CAccountName::CAccountName(const string_q& strIn) {
-    initialize();
-    string_q str = substitute(substitute(trim(strIn, '\t'), "\n", ""), "\r", "");
-
-    CStringArray fields;
-#define disp2FieldList(a) toLower(substitute(substitute(substitute(cleanFmt((a), CSV1), "[{", ""), "}]", ""), "\"", ""))
-    explode(fields, disp2FieldList(STR_DISPLAY_ACCOUNTNAME), ',');
-
-    parseText(fields, str);
-}
 // EXISTING_CODE
 }  // namespace qblocks

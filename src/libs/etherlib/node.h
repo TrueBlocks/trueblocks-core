@@ -177,11 +177,11 @@ extern const string_q defHide;
 extern const string_q defShow;
 
 //-------------------------------------------------------------------------
-string_q exportPreamble(format_t fmt, const string_q& format, const string_q& className);
-inline string_q exportPreamble(format_t fmt, const string_q& format, const CRuntimeClass* pClass) {
-    return exportPreamble(fmt, format, (pClass ? pClass->m_ClassName : "unknown"));
+string_q exportPreamble(const string_q& format, const string_q& className);
+inline string_q exportPreamble(const string_q& format, const CRuntimeClass* pClass) {
+    return exportPreamble(format, (pClass ? pClass->m_ClassName : "unknown"));
 }
-string_q exportPostamble(format_t fmt, const CStringArray& errors, const string_q& extra);
+string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 
 //-------------------------------------------------------------------------
 extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);

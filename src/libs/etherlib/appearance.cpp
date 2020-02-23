@@ -68,7 +68,7 @@ string_q CAppearance::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     if (fieldName % "tc") {
         if (tc < 10)
-            return "\"\"";
+            return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 ? "\"\"" : "");
         return uint_2_Str(tc - 10);
     }
     // EXISTING_CODE

@@ -15,6 +15,7 @@
 #include "accountname.h"
 #include "filenames.h"
 #include "toml.h"
+#include "exportcontext.h"
 
 // Bit flags to enable / disable various options
 #define OPT_DESCRIPTION (0)
@@ -42,7 +43,6 @@ typedef map<size_t, qblocks::string_q> CErrorStringMap;
 #define ERR_NOERROR 0
 
 //-----------------------------------------------------------------------------
-enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4) };
 namespace qblocks {
 class COption;
 class COptionsBase {
@@ -57,7 +57,6 @@ class COptionsBase {
     bool isRaw;
     bool isVeryRaw;
     bool isNoHeader;
-    format_t exportFmt;
     blkrange_t scanRange;
     CStringArray notes;
 
@@ -94,11 +93,8 @@ class COptionsBase {
     bool loadPrefunds(void);
 
     // supporting named accounts
-    CAccountNameArray namedAccounts;
-    CFilename namesFile;
-    bool loadNames(void);
-    bool getNamedAccount(CAccountName& acct, const string_q& addr) const;
-    string_q getNamedAccount(const string_q& addr) const;
+    CAccountNameArray namedAccounts2;
+    bool getNamedAccount2(CAccountName& acct, const string_q& addr);
 
     // enabling options
     bool isEnabled(uint32_t q) const;
@@ -216,7 +212,7 @@ class COptionsTransList {
 };
 
 extern bool prepareEnv(int argc, const char* argv[]);
-extern string_q cleanFmt(const string_q& str, format_t fmt);
+extern string_q cleanFmt(const string_q& str);
 extern const char* STR_ERROR_JSON;
 
 }  // namespace qblocks

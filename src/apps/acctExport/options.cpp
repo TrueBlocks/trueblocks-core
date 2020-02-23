@@ -246,12 +246,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (exportFmt != JSON1 && exportFmt != API1) {
+    if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
         string_q deflt, format;
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
         format = toml.getConfigStr("formats", "trans_fmt", deflt);
-        expContext().fmtMap["transaction_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
 
         if (format.empty())
             EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
@@ -260,21 +260,21 @@ bool COptions::parseArguments(string_q& command) {
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "receipt_fmt", deflt);
-        expContext().fmtMap["receipt_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         format = toml.getConfigStr("formats", "logentry_fmt", deflt);
-        expContext().fmtMap["logentry_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
         format = toml.getConfigStr("formats", "trace_fmt", deflt);
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["trace_fmt"] = cleanFmt(format);
 
         // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future
         // reference.
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
         format = toml.getConfigStr("formats", "displayapp_fmt", deflt);
-        expContext().fmtMap["displayapp_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
         format = toml.getConfigStr("formats", "balancerecord_fmt", deflt);
@@ -288,7 +288,7 @@ bool COptions::parseArguments(string_q& command) {
             format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
             format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
         }
-        expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format);
 
         deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
         format = toml.getConfigStr("formats", "balancedelta_fmt", deflt);
@@ -300,27 +300,27 @@ bool COptions::parseArguments(string_q& command) {
             format = substitute(format, "{BALANCE}", "{DOLLARS}");
             format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
         }
-        expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format, exportFmt);
+        expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format);
     }
 
     expContext().fmtMap["header"] = "";
     if (!isNoHeader) {
         if (traces) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
         } else if (receipts) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
         } else if (logs) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
         } else if (appearances) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
         } else if (balances) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"]);
             if (deltas)
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"], exportFmt);
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"]);
             SHOW_FIELD(CBalanceRecord, "address");
             SHOW_FIELD(CBalanceDelta, "address");
         } else {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"], exportFmt);
+            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
         }
     }
 
@@ -336,16 +336,16 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (freshen)
-        exportFmt = NONE1;
+        expContext().exportFmt = NONE1;
 
     //    if (count_only && !doAppearances)
     //        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
 
     if (count_only) {
         string_q header;
-        if (exportFmt == TXT1)
+        if (expContext().exportFmt == TXT1)
             header = "address\tcount";
-        else if (exportFmt == CSV1)
+        else if (expContext().exportFmt == CSV1)
             header = ("\"" + substitute(header, "\t", "\",\"") + "\"");
         expContext().fmtMap["header"] = header;
     }

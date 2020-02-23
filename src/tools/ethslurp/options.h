@@ -17,7 +17,6 @@
  */
 #include <algorithm>
 #include "etherlib.h"
-#include "webapi.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -29,7 +28,6 @@ class COptions : public CBlockOptions {
     bool appearances;
     // END_CODE_DECLARE
 
-    CWebAPI api;
     CStringArray typesList;
     string_q header;
     string_q displayString;

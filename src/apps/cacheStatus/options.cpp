@@ -166,7 +166,7 @@ bool COptions::parseArguments(string_q& command) {
     HIDE_FIELD(CChainCache, "max_depth");
 
     if (report) {
-        if (exportFmt == TXT1 || exportFmt == CSV1) {
+        if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1) {
             cout << scraperStatus(false);
             return false;
         }

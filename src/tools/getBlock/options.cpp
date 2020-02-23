@@ -142,8 +142,8 @@ bool COptions::parseArguments(string_q& command) {
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
-    if (exportFmt == NONE1)
-        exportFmt = (filterType.empty() ? JSON1 : TXT1);
+    if (expContext().exportFmt == NONE1)
+        expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
 
     // Display formatting
     if (count_only)
@@ -152,11 +152,11 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
     else
         configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
-    if (exportFmt == API1 || exportFmt == JSON1) {
+    if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
         if (count_only)
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_COUNT_JSON, exportFmt);
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_COUNT_JSON);
         else if (!filterType.empty())
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON, exportFmt);
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
         if (isNoHeader)
             expContext().fmtMap["header"] = "";
     }
@@ -187,7 +187,7 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
-    exportFmt = NONE1;
+    expContext().exportFmt = NONE1;
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT

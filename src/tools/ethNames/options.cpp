@@ -189,8 +189,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
-    if (!groups && (exportFmt == API1 || exportFmt == JSON1))
-        manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME, exportFmt));
+    if (!groups && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
+        manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
 
     // Collect results for later display
     applyFilter();
@@ -230,9 +230,9 @@ COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
     // If you need the names file, you have to add it in the constructor
-    namesFile = CFilename(configPath("names/names.txt"));
-    establishFolder(namesFile.getPath());
-    loadNames();
+    establishFolder(configPath("names/"));
+    CAccountName acct;
+    getNamedAccount2(acct, "0x0");  // loads names database
     Init();
     // BEG_CODE_NOTES
     // clang-format off
@@ -243,8 +243,9 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // clang-format on
     // END_CODE_NOTES
-    notes.push_back("Name file: `" + substitute(namesFile.getFullPath(), getHomeFolder(), "~/") + "` (" +
-                    uint_2_Str(fileSize(namesFile.getFullPath())) + ")");
+    string_q namesFile = configPath("names/names.txt");
+    notes.push_back("Name file: `" + substitute(namesFile, getHomeFolder(), "~/") + "` (" +
+                    uint_2_Str(fileSize(namesFile)) + ")");
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
@@ -258,6 +259,13 @@ COptions::~COptions(void) {
 bool COptions::addIfUnique(const CAccountName& item) {
     if (isZeroAddr(item.address))
         return false;
+
+    if (isTestMode() && items.size() > 200)
+        return true;
+
+    if (isTestMode() &&
+        (contains(item.group, "Kickback") || contains(item.group, "Humanity")))  // don't expose people during testing
+        return true;
 
     if (groups) {
         string_q key = item.group;
@@ -347,57 +355,34 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            CAccountName item;
-            string_q customStr = getGlobalConfig("ethNames")->getConfigJson("custom", "list", "");
-            while (item.parseJson3(customStr)) {
-                if (item.group.empty())
-                    item.group = "81-Custom";
-                item.name = trim(item.name, '\"');
-                item.description = trim(item.description, '\"');
-                addIfUnique(item);
-                item = CAccountName();
+            for (auto item : namedAccounts2) {
+                if (item.is_custom)
+                    addIfUnique(item);
             }
         }
     }
 
     //------------------------
     if (types & NAMED) {
-        for (auto item : namedAccounts) {
-            if (isTestMode() && items.size() > 200)
-                break;
-            addIfUnique(item);
+        for (auto item : namedAccounts2) {
+            if (!item.is_custom && !item.is_prefund && !startsWith(item.group, "81-Other"))
+                addIfUnique(item);
         }
     }
 
     //------------------------
     if (types & PREFUND) {
-        uint32_t cnt = 0;
-        ASSERT(prefunds.size() == 8893);  // This is a known value
-
-        for (auto prefund : prefundWeiMap) {
-            if (isTestMode() && items.size() > 200)
-                break;
-            CAccountName item;
-            item.group = "80-Prefund";
-            item.address = prefund.first;
-            item.name = "Prefund_" + padNum4(cnt++);
-            item.source = "Genesis";
-            addIfUnique(item);
+        for (auto item : namedAccounts2) {
+            if (item.is_prefund)
+                addIfUnique(item);
         }
     }
 
     //------------------------
     if (!isTestMode() && (types & OTHER)) {
-        string_q contents = asciiFileToString(configPath("names/names_custom.txt"));
-        if (!contents.empty()) {
-            CStringArray lines;
-            explode(lines, contents, '\n');
-            for (auto line : lines) {
-                if (!startsWith(line, '#')) {
-                    CAccountName item(line);
-                    addIfUnique(item);
-                }
-            }
+        for (auto item : namedAccounts2) {
+            if (startsWith(item.group, "81-Other"))
+                addIfUnique(item);
         }
     }
 }

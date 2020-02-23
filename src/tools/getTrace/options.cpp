@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please specify at least one transaction identifier.");
 
     if (isRaw)
-        exportFmt = JSON1;
+        expContext().exportFmt = JSON1;
 
     if (articulate) {
         // show certain fields and hide others
@@ -93,29 +93,29 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     string_q format;
-    switch (exportFmt) {
+    switch (expContext().exportFmt) {
         case NONE1:
             format = STR_DISPLAY_TRACE;
-            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-            manageFields("CTrace:" + cleanFmt(format, exportFmt));
-            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
-            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+            manageFields("CTransaction:" + cleanFmt(format));
+            manageFields("CTrace:" + cleanFmt(format));
+            manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
+            manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
         case TXT1:
         case CSV1:
             format = getGlobalConfig("getTrace")
                          ->getConfigStr("display", "format", format.empty() ? STR_DISPLAY_TRACE : format);
-            manageFields("CTransaction:" + cleanFmt(format, exportFmt));
-            manageFields("CTrace:" + cleanFmt(format, exportFmt));
-            manageFields("CTraceAction:" + substitute(cleanFmt(format, exportFmt), "ACTION::", ""));
-            manageFields("CTraceResult:" + substitute(cleanFmt(format, exportFmt), "RESULT::", ""));
+            manageFields("CTransaction:" + cleanFmt(format));
+            manageFields("CTrace:" + cleanFmt(format));
+            manageFields("CTraceAction:" + substitute(cleanFmt(format), "ACTION::", ""));
+            manageFields("CTraceResult:" + substitute(cleanFmt(format), "RESULT::", ""));
             break;
         case API1:
         case JSON1:
             format = "";
             break;
     }
-    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format, exportFmt);
+    expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
     if (count_only)

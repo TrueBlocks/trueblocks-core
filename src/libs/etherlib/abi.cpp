@@ -428,9 +428,14 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         asciiFileToString(fileName, results);
 
     } else {
+        const char* STR_CONTRACT_API =
+            "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
         if (!isTestMode())
             LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
-        string_q url = string_q("http://api.etherscan.io/api?module=contract&action=getabi&address=") + addr;
+        string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]",
+                                  getApiKey("Etherscan",
+                                            "http:/"
+                                            "/api.etherscan.io/apis"));
         results = substitute(urlToString(url), "\\", "");
 
         if (!contains(results, "NOTOK")) {

@@ -2,9 +2,7 @@
 current = "0.5.5-alpha"
 
 [settings]
-api_provider = "EtherScan"
-api_url = "http://etherscan.io/apis"
-api_key = "<NOT_SET>"
+rerun = ""
 
 [display]
 fmt_fieldList = ""

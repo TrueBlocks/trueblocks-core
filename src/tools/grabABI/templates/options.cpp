@@ -34,7 +34,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* defTransFmt;
 extern const char* defTraceFmt;
-extern string_q cleanFmt(const string_q& str);
+extern string_q cleanFmt2(const string_q& str);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -153,8 +153,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // If we're not told to use Json, then we use format strings. No format string == export as json
     if (!json_on) {
-        transFmt = cleanFmt(toml.getConfigStr("formats", "trans_fmt", defTransFmt));
-        traceFmt = cleanFmt(toml.getConfigStr("formats", "trace_fmt", defTraceFmt));
+        transFmt = cleanFmt2(toml.getConfigStr("formats", "trans_fmt", defTransFmt));
+        traceFmt = cleanFmt2(toml.getConfigStr("formats", "trace_fmt", defTraceFmt));
     } else {
         debugger_on = accounting_on = trace_on = logs_on = false;
     }
@@ -212,7 +212,7 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-string_q cleanFmt(const string_q& str) {
+string_q cleanFmt2(const string_q& str) {
     return (substitute(
         substitute(substitute(substitute(substitute((str), "\\n\\\n", "\\n"), "\n", ""), "\\n", "\n"), "\\t", "\t"),
         "\\r", "\r"));

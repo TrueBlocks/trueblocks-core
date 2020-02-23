@@ -10,7 +10,8 @@ bool COptions::exportData(void) {
     ENTER8("exportData");
 
     bool shouldDisplay = !freshen;
-    bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
+    bool isJson =
+        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 
     if (isJson && shouldDisplay)
         cout << "[";

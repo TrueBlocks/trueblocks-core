@@ -177,7 +177,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!hasLibs)
         sleep(1.);
 
-    perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE, CSV1), "\"", "");
+    expContext().exportFmt = CSV1;
+    perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
 
     return true;
 }

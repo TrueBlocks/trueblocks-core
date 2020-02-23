@@ -17,6 +17,8 @@
 
 namespace qblocks {
 
+enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4) };
+
 //----------------------------------------------------------------------------
 class CExportContext {
   public:
@@ -31,6 +33,7 @@ class CExportContext {
     bool asDollars;
     bool asWei;
     bool isParity;
+    format_t exportFmt;
     CNameValueMap fmtMap;
     map<string_q, const CRuntimeClass*> types;
     CExportContext(void) {
@@ -47,6 +50,7 @@ class CExportContext {
         asDollars = false;
         asWei = true;
         isParity = false;
+        exportFmt = (isApiMode() ? API1 : TXT1);
     }
 };
 extern CExportContext& expContext(void);

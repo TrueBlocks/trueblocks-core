@@ -29,11 +29,11 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
         options.blocks.forEveryBlockNumber(visitBlock, &options);
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
     return 0;
@@ -105,7 +105,18 @@ bool visitAddrs(const CAppearance& item, void* data) {
         opt->addrCounter++;
 
     } else {
-        cout << item.Format(expContext().fmtMap["format"]) << endl;
+        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+        if (isText) {
+            cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            if (!opt->first)
+                cout << ",";
+            cout << "  ";
+            incIndent();
+            item.doExport(cout);
+            decIndent();
+            opt->first = false;
+        }
     }
 
     return !shouldQuit();
@@ -122,7 +133,7 @@ bool transFilter(const CTransaction* trans, void* data) {
 //------------------------------------------------------------
 bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = (opt->exportFmt & (TXT1 | CSV1));
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
     if (!opt->first) {
         if (!isText)
@@ -171,18 +182,18 @@ int main(int argc, const char *argv[]) {
         if (!options.parseArguments(command))
             return 0;
         if (once)
-            cout << exportPreamble(options.exportFmt, expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
         once = false;
     }
-    cout << exportPostamble(options.exportFmt, options.errors, expContext().fmtMap["meta"]);
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 }
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void *data) {
 
     // COptions *opt = reinterpret_cast<COptions *>(data);
-    // bool isText = (opt->exportFmt & (TXT1|CSV1));
+    // bool isText = (expContext().exportFmt & (TXT1|CSV1));
 
     if (contains(trans.hash, "invalid")) {
         string_q hash = nextTokenClear(trans.hash, ' ');

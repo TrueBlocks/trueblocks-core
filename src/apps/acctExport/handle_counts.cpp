@@ -9,14 +9,15 @@
 bool COptions::exportCounts(void) {
     ENTER8("exportCounts");
 
-    bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
+    bool isJson =
+        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
     if (isJson)
         cout << "[";
 
     bool first = true;
     for (auto monitor : monitors) {
         size_t count = fileSize(getMonitorPath(monitor.address)) / sizeof(CAppearance_base);
-        switch (exportFmt) {
+        switch (expContext().exportFmt) {
             case NONE1:
             case JSON1:
             case API1:

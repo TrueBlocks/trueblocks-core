@@ -64,7 +64,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please specify at least one transaction identifier.");
 
     if (isRaw)
-        exportFmt = JSON1;
+        expContext().exportFmt = JSON1;
 
     if (articulate) {
         // show certain fields and hide others
@@ -79,12 +79,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
-    if (isApiMode() || exportFmt == API1) {
+    if (isApiMode() || expContext().exportFmt == API1) {
         manageFields("CLogEntry:all", false);
         manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
     }
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
-    if (exportFmt == JSON1) {
+    if (expContext().exportFmt == JSON1) {
         manageFields(defHide, false);
         manageFields(defShow + "|CLogEntry:data,topics", true);
     }

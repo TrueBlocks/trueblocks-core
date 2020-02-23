@@ -54,7 +54,6 @@ class CAccountName : public CBaseNode {
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
-    explicit CAccountName(const string_q& strIn);
     // EXISTING_CODE
     bool operator==(const CAccountName& item) const;
     bool operator!=(const CAccountName& item) const {
@@ -168,8 +167,8 @@ inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
 inline bool CAccountName::operator==(const CAccountName& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return address % item.address;
 }
 
 //-------------------------------------------------------------------------
@@ -177,8 +176,8 @@ inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
     return v1.address < v2.address;
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.address < v2.address;
 }
 
 //---------------------------------------------------------------------------

@@ -34,7 +34,8 @@ bool COptions::exportBalances(void) {
         getCurlContext()->getCurl();
     }
 
-    bool isJson = (exportFmt == JSON1 || exportFmt == API1 || exportFmt == NONE1);
+    bool isJson =
+        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
     if (isJson && !freshen)
         cout << "[";
 

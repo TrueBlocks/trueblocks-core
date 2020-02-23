@@ -74,7 +74,8 @@ bool COptions::handle_rm(void) {
     }
 
     if (isApiMode()) {
-        cout << exportPreamble(JSON1, "", "");
+        expContext().exportFmt = JSON1;
+        cout << exportPreamble("", "");
         string_q msg;
         bool first = true;
         for (auto remove : removed) {
@@ -86,7 +87,7 @@ bool COptions::handle_rm(void) {
         if (msg.empty())
             msg = "{ \"msg\": \"nothing was removed\" }";
         cout << msg;
-        cout << exportPostamble(JSON1, errors, "") << endl;
+        cout << exportPostamble(errors, "") << endl;
     }
 
     EXIT_NOMSG8(true);
