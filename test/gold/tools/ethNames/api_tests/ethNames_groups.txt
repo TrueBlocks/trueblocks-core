@@ -19,9 +19,6 @@
       "group": "31-Gitcoin Grants"
     },
     {
-      "group": "32-Kickback:Contracts"
-    },
-    {
       "group": "33-Set Protocol"
     },
     {
@@ -52,9 +49,6 @@
       "group": "34-ENS"
     },
     {
-      "group": "34-Humanity DAO"
-    },
-    {
       "group": "34-Kyber Network"
     },
     {
@@ -79,31 +73,10 @@
       "group": "81-Custom"
     },
     {
-      "group": "81-Custom:Consensys"
-    },
-    {
-      "group": "81-Custom:DAO Curators"
-    },
-    {
-      "group": "81-Custom:DAO Related"
-    },
-    {
-      "group": "81-Custom:DAO Whales"
-    },
-    {
-      "group": "81-Custom:ENS Related"
-    },
-    {
-      "group": "81-Custom:Giveth"
-    },
-    {
-      "group": "81-Custom:Individual"
-    },
-    {
-      "group": "81-Custom:Tip Jars"
-    },
-    {
       "group": "90-DevCon2:Individual"
+    },
+    {
+      "group": "91-Friends"
     }
   ],
   "types": [

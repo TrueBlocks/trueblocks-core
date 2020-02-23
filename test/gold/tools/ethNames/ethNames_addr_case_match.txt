@@ -3,6 +3,7 @@ ethNames 0xcb --match_case --fmt txt
 group	address	name	symbol
 90-DevCon2:Individual	0xcb4baa0344065655da9e7d2dde781e5efa25995e	Jordi Baylina
 50-Tokens	0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR
+91-Friends	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
 90-DevCon2:Individual	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin
 50-Tokens	0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST
 50-Tokens	0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM

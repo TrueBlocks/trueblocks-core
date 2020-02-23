@@ -12,7 +12,22 @@ cachePath = "--new cache Path--/"
 indexPath = "--new index Path--/"
 apiProvider = "--new api Provider--"
 configPath = "--new config Path--/"
+etherscan_key = "--new api_key--"
 
 # [dev]
 # debug_curl = true
 # debug_ethscan = true
+
+[display_strs]
+accountName = "--account name--"
+balancerecord = "--balance record--"
+block = "--block--"
+ethstate = "--eth state--"
+function = "--function--"
+logentry = "--logentry--"
+pricequote = "--pricequote--"
+receipt = "--receipt--"
+trace = "--trace--"
+transaction = "--transaction--"
+whenblock = "--when block--"
+whereblock = "--where block--"

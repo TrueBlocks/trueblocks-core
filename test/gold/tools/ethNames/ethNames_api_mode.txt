@@ -6,43 +6,25 @@ ethNames tip --fmt api
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 - Antiprosynth Twitter Account Activity",
     "symbol": "",
-    "source": "",
+    "source": "TrueBlocks.io",
     "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
     "description": ""
   },
   {
-    "group": "81-Custom:Giveth",
-    "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
-    "name": "EtherIDTipJar",
+    "group": "91-Friends",
+    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
+    "name": "TrueBlocks Tip Jar Doner",
     "symbol": "",
-    "source": "Giveth Website",
+    "source": "TrueBlocks.io",
     "logo": "",
     "description": ""
   },
   {
-    "group": "81-Custom:Individual",
-    "address": "0x7a0984e31a65fcdea119943f88858cfc3fe00da9",
-    "name": "NiemannTipJar",
+    "group": "91-Friends",
+    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
+    "name": "psdev tip jar",
     "symbol": "",
-    "source": "https://medium.com/@chrisdotn/a-json-parser-for-solidity-9cc73b4b42",
-    "logo": "",
-    "description": ""
-  },
-  {
-    "group": "81-Custom:Tip Jars",
-    "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
-    "name": "Taylor Van Orden",
-    "symbol": "",
-    "source": "Slack",
-    "logo": "",
-    "description": ""
-  },
-  {
-    "group": "81-Custom:Individual",
-    "address": "0x8f53781799515e5dc8f5d00c528940cae99ac969",
-    "name": "Corey Petty's TipJar",
-    "symbol": "",
-    "source": "https://medium.com/the-bitcoin-podcast-blog/a-look-at-the-tokencard-ico-investor-distribution-cddeb6f534f9 GHC",
+    "source": "TrueBlocks.io",
     "logo": "",
     "description": ""
   },
@@ -51,7 +33,7 @@ ethNames tip --fmt api
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "name": "Etherum Tip Jar",
     "symbol": "TIP",
-    "source": "",
+    "source": "TrueBlocks.io",
     "logo": "",
     "description": "The ethereum tip jar"
   }], "types": [

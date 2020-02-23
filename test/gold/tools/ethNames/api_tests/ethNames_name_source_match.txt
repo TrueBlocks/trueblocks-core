@@ -64,15 +64,6 @@
       "description": "No description"
     },
     {
-      "group": "32-Kickback:Contracts",
-      "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
-      "name": "Ethereum Developers' Night",
-      "symbol": "",
-      "source": "https://kickback.events/event/0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
-      "logo": "",
-      "description": "Belgium Jazz Cafe, 20, Teheran-ro 83-gil, Gangnam-gu, Seoul"
-    },
-    {
       "group": "50-Tokens",
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
       "name": "CZR",
@@ -239,7 +230,7 @@
       "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
       "name": "Grant 075 - Ethereum Dev Fund Working Group",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
       "description": ""
     },
@@ -280,6 +271,15 @@
       "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
     },
     {
+      "group": "60-Airdrops",
+      "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
+      "name": "Bulleon Airdrop",
+      "symbol": "BUL",
+      "source": "Etherscan.io",
+      "logo": "bulleon_28.png",
+      "description": "Revolutionizing the way of Financial Transactions"
+    },
+    {
       "group": "50-Tokens",
       "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
       "name": "IBTC",
@@ -311,7 +311,7 @@
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
       "name": "Grant 122 - Austin Griffith Ethereum Rampd",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
       "description": ""
     },
@@ -350,15 +350,6 @@
       "source": "Etherscan.io",
       "logo": "lendingblock_28_2.png",
       "description": "Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way."
-    },
-    {
-      "group": "32-Kickback:Contracts",
-      "address": "0x0ab305931a717b8227d76de52e19a23066150360",
-      "name": "Creating a Decentralized World Together",
-      "symbol": "",
-      "source": "https://kickback.events/event/0x0ab305931a717b8227d76de52e19a23066150360",
-      "logo": "",
-      "description": "Liberte Living-Lab 9 Rue d'Alexandrie 75002 Paris France"
     },
     {
       "group": "30-Contracts",
@@ -640,6 +631,15 @@
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
     {
+      "group": "60-Airdrops",
+      "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
+      "name": "BitClave Airdrop",
+      "symbol": "CAT",
+      "source": "Etherscan.io",
+      "logo": "bitclave2_28.png",
+      "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
+    },
+    {
       "group": "50-Tokens",
       "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
       "name": "LGO",
@@ -764,6 +764,15 @@
       "source": "Etherscan.io",
       "logo": "kanland28.png",
       "description": "A decentralized cryptocurrency-concentrated & content payment community."
+    },
+    {
+      "group": "91-Friends",
+      "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
+      "name": "Pool Together God",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "logo": "",
+      "description": ""
     },
     {
       "group": "50-Tokens",
@@ -1004,7 +1013,7 @@
       "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
       "name": "Grant 150 - Ethereum Egift Cards",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "https://gitcoin.co/grants/150/ethereum-egift-cards",
       "description": ""
     },
@@ -1096,7 +1105,7 @@
       "symbol": "FACE",
       "source": "Etherscan.io",
       "logo": "faceter_28.png",
-      "description": "‚Äì¬∞omputer vision surveillance technology powered by fog network of miners."
+      "description": "A computer vision surveillance technology powered by fog network of miners."
     },
     {
       "group": "50-Tokens",
@@ -1400,7 +1409,7 @@
       "address": "0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6",
       "name": "Pool Together Pool 1",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -1513,301 +1522,292 @@
       "description": "FoodCoin Ecosystem is a blockchain ecosystem, architecturally designed to create a global marketplace of food and agricultural products based on our experience with the active 1000 EcoFarms platform."
     },
     {
+      "group": "50-Tokens",
+      "address": "0x2aec18c5500f21359ce1bea5dc1777344df4c0dc",
+      "name": "FarmaTrust Token",
+      "symbol": "FTT",
+      "source": "Etherscan.io",
+      "logo": "farmatrust_28.png",
+      "description": "The global tracking system which provides security to the pharmaceutical companies, governments, regulators and the public, that counterfeit drugs do not enter the supply chain."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2baac9330cf9ac479d819195794d79ad0c7616e3",
+      "name": "AdBank",
+      "symbol": "ADB",
+      "source": "Etherscan.io",
+      "logo": "adbank_28.png",
+      "description": "Online advertising platform, middleman-free."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2bba3cf6de6058cc1b4457ce00deb359e2703d7f",
+      "name": "HashCoin",
+      "symbol": "HSC",
+      "source": "Etherscan.io",
+      "logo": "hashcoin_28.png",
+      "description": "As a platform and bridge linking the physical and digital world, HashFuture aims to solve the problem of digital assets property rights issues and cross-chain asset transfer."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
+      "name": "SkinCoin",
+      "symbol": "SKIN",
+      "source": "Etherscan.io",
+      "logo": "skincoin_28.png",
+      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2c4e8f2d746113d0696ce89b35f0d8bf88e0aeca",
+      "name": "Simple Token",
+      "symbol": "ST",
+      "source": "Etherscan.io",
+      "logo": "ost_28.png",
+      "description": "OST KIT gives you all the tools you need to run your blockchain-powered economy on open scalable sidechains."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2c82c73d5b34aa015989462b2948cd616a37641f",
+      "name": "Spectre.ai U-Token",
+      "symbol": "SXUT",
+      "source": "Etherscan.io",
+      "logo": "spectre-ai_28.png",
+      "description": "Broker-less financial trading platform."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2c974b2d0ba1716e644c1fc59982a89ddd2ff724",
+      "name": "VIB",
+      "symbol": "VIB",
+      "source": "Etherscan.io",
+      "logo": "viberate2_28.png",
+      "description": "Viberate is a crowdsourced live music ecosystem and a blockchain-based marketplace, where musicians are matched with booking agencies and event organizers."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2ccbff3a042c68716ed2a2cb0c544a9f1d1935e1",
+      "name": "DMarket",
+      "symbol": "DMT",
+      "source": "Etherscan.io",
+      "logo": "dmarket2_28.png",
+      "description": "a blockchain-based cross-game universe for turning virtual items into real assets."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2cf618c19041d9db330d8222b860a624021f30fb",
+      "name": "CRUISEBIT",
+      "symbol": "CRBT",
+      "source": "Etherscan.io",
+      "logo": "cruisebit_28.png",
+      "description": "Cruisebit Coin is crypto currency that represents digital value provided by blockchain technology"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2d0e95bd4795d7ace0da3c0ff7b706a5970eb9d3",
+      "name": "All Sports Coin",
+      "symbol": "SOC",
+      "source": "Etherscan.io",
+      "logo": "allsportschain_28.png",
+      "description": "All Sports public blockchain hopes to fill in the blank of blockchain application in sports industry through blockchain technology."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2d184014b5658c453443aa87c8e9c4d57285620b",
+      "name": "JSE Token",
+      "symbol": "JSE",
+      "source": "Etherscan.io",
+      "logo": "jsecoin_28.png",
+      "description": "JSEcoin is a consumer focused web platform built on top of a browser mined blockchain"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2d3e7d4870a51b918919e7b851fe19983e4c38d5",
+      "name": "UBCoin",
+      "symbol": "UBC",
+      "source": "Etherscan.io",
+      "logo": "ubcoin_28.png",
+      "description": "The Ubcoin is a crypto-goods p2p exchange where anyone can safely and instantly sell any good‚Äö√Ñ√¥s and become a cryptocurrency holder."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2daee1aa61d60a252dc80564499a69802853583a",
+      "name": "Authorship",
+      "symbol": "ATS",
+      "source": "Etherscan.io",
+      "logo": "authorship_28.png",
+      "description": "Aims to make the Internet More Free and Accessible For Authors and Readers."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2e071d2966aa7d8decb1005885ba1977d6038a65",
+      "name": "DICE",
+      "symbol": "ROL",
+      "source": "Etherscan.io",
+      "logo": "etheroll.png",
+      "description": "Provably fair online Ether gaming on the Ethereum Blockchain"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2ecb13a8c458c379c4d9a7259e202de03c8f3d19",
+      "name": "Block-Chain.com Token",
+      "symbol": "BC",
+      "source": "Etherscan.io",
+      "logo": "blockchaincom_28.png",
+      "description": "Block-chain.com is the guide to the world of blockchain and cryptocurrency."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2f141ce366a2462f02cea3d12cf93e4dca49e4fd",
+      "name": "Free Coin",
+      "symbol": "FREE",
+      "source": "Etherscan.io",
+      "logo": "freecoin_28.png",
+      "description": "Social project to promote cryptocurrency usage and increase global wealth"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2f85e502a988af76f7ee6d83b7db8d6c0a823bf9",
+      "name": "LatiumX",
+      "symbol": "LATX",
+      "source": "Etherscan.io",
+      "logo": "latiumx_28.png",
+      "description": "tasking platform to incorporate an automated rating system in tandem with a one-to-many task relationship structure"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2f9b6779c37df5707249eeb3734bbfc94763fbe2",
+      "name": "CrowdWizToken",
+      "symbol": "WIZ",
+      "source": "Etherscan.io",
+      "logo": "",
+      "description": "Democratize the investing process by eliminating intermediaries and placing the power and control where it belongs - entirely into the hands of investors."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2fa32a39fc1c399e0cc7b2935868f5165de7ce97",
+      "name": "PayFair",
+      "symbol": "PFR",
+      "source": "Etherscan.io",
+      "logo": "payfair2_28.png",
+      "description": "PAYFAIR is a decentralized Escrow platform and p2p exchange."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x2fb12bccf6f5dd338b76be784a93ade072425690",
+      "name": "BEAT",
+      "symbol": "BEAT",
+      "source": "Etherscan.io",
+      "logo": "beat_28.png",
+      "description": "Beat aims to unleash the value of verified health and sports data using cutting edge blockchain technology."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x30cecb5461a449a90081f5a5f55db4e048397bab",
+      "name": "Tracto",
+      "symbol": "TRCT",
+      "source": "Etherscan.io",
+      "logo": "tracto_28.png",
+      "description": "A technology for rapid and anonymous coin transaction organization."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x3136ef851592acf49ca4c825131e364170fa32b3",
+      "name": "CoinFi",
+      "symbol": "COFI",
+      "source": "Etherscan.io",
+      "logo": "coinfi_28.png",
+      "description": "CoinFi offers crowdsourced and professionally curated research, analysis, trading signals, trading algorithms, and market-moving news to give cryptocurrency traders the real-time market intelligence needed to gain an edge."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5",
+      "name": "EBCoin",
+      "symbol": "EBC",
+      "source": "Etherscan.io",
+      "logo": "ebcoin_28.png",
+      "description": "The universal cryptocurrency based on Ethereum for travelers in the world"
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x3209f98bebf0149b769ce26d71f7aea8e435efea",
+      "name": "Traxia Membership Token",
+      "symbol": "TMT",
+      "source": "Etherscan.io",
+      "logo": "traxia_28.png",
+      "description": "A decentralized global trade finance ecosystem."
+    },
+    {
+      "group": "50-Tokens",
+      "address": "0x327682779bab2bf4d1337e8974ab9de8275a7ca8",
+      "name": "Blockport",
+      "symbol": "BPT",
+      "source": "Etherscan.io",
+      "logo": "blockport.png",
+      "description": "Social crypto exchange based on a hybrid-decentralized architecture."
+    },
+    {
       "group": "31-Gitcoin Grants",
       "address": "0x32cefb2dc869bbfe636f7547cda43f561bf88d5a",
       "name": "Grant 152 - Ethereum For Farsi Speaking Population",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population",
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
-      "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
-      "name": "Grant 126 - Humans of Ethereum",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/126/humansofethereum",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x38298ef8a8306579e21246d5227694b5560d9cb5",
-      "name": "Grant 085 - Tennagraph Minimum Bias Ethereum Signal Aggregat",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
-      "name": "PoolTogether - Pool 2",
-      "symbol": "",
-      "source": "",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "34-Humanity DAO",
-      "address": "0x57c18a6d2c41bcbdc0cceaa2e97576c169bd6d8e",
-      "name": "ethersummary",
-      "symbol": "",
-      "source": "https://www.humanitydao.org/humans",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0x5f742383b6d1298980030d6af943b76cdd902143",
-      "name": "etherplay.io",
-      "symbol": "",
-      "source": "",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x663d3947f03ef5b387992b880ac85940057c13e3",
-      "name": "Grant 237 - Week In Ethereum News",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/237/week-in-ethereum-news",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x68085e7f88e90fa9247489c83fab30b177ebccb3",
-      "name": "Grant 082 - Official Progpow Technical Audit Funding",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/30/ethereum-all-core-devs-community-project-managem-2",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x726830dbb3e6a7f5009635e61cf4056d11c2dbf7",
-      "name": "Grant 107 - Secure Scuttlebutt Ethereum Fusion",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/107/secure-scuttlebutt-ethereum-fusion",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x7624cf3a128e5801d69a2ea0a13a74a6b3ebad4a",
-      "name": "Grant 196 - Ethereum Dao Game",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/196/ethereum-dao-game",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x7d888a9036b5a96f77b433e65b9be1b122f8a499",
-      "name": "Grant 183 - Tasit Native Mobile Ethereum Dapps",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/183/tasit-native-mobile-ethereum-dapps",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x85cab7143ff3c01b93e88f5b017692374bb939c2",
-      "name": "Grant 223 - Ethereum Magicians",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/223/ethereum-magicians",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "name": "Dai Stablecoin v1.0",
-      "symbol": "DAI",
+      "group": "50-Tokens",
+      "address": "0x32d74896f05204d1b6ae7b0a3cebd7fc0cd8f9c7",
+      "name": "Kcash",
+      "symbol": "KCASH",
       "source": "Etherscan.io",
-      "logo": "dai_stablecoin.png",
-      "description": "No description"
+      "logo": "kcash_28.png",
+      "description": "Kcash, which is positioned to become digital bank on the blockchain, is the first cross-chain digital wallet from China and manages the most types of digital assets in the world."
     },
     {
-      "group": "31-Gitcoin Grants",
-      "address": "0x8ba1f109551bd432803012645ac136ddd64dba72",
-      "name": "Grant 013 - Ethersjs Complete Simple And Tiny",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/13/ethersjs-complete-simple-and-tiny-2",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0x8f684ad5dc8237960a4661381022ae8030a5cd31",
-      "name": "Grant 056 - Training 1000 Ethereum Developers For Free In 2019",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/56/training-1000-ethereum-developers-for-free-in-2019",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0x960b236a07cf122663c4303350609a66a7b288c0",
-      "name": "Aragon",
-      "symbol": "ANT",
+      "group": "50-Tokens",
+      "address": "0x3363d570f6df3c74d486bb8785d3ebfb9e2347d3",
+      "name": "HedgeTrade",
+      "symbol": "HEDG",
       "source": "Etherscan.io",
-      "logo": "aragon_28.png",
-      "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties."
+      "logo": "hedgefundtoken_28.png",
+      "description": "HedgeTrade is a platform uniquely designed for trading predictions, analysis, and education."
     },
     {
-      "group": "30-Contracts",
-      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
-      "name": "Maker",
-      "symbol": "MKR",
+      "group": "50-Tokens",
+      "address": "0x336f646f87d9f6bc6ed42dd46e8b3fd9dbd15c22",
+      "name": "Crystal Clear Token",
+      "symbol": "CCT",
       "source": "Etherscan.io",
-      "logo": "mkr-etherscan-35.png",
-      "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain"
+      "logo": "crystalclear_28.png",
+      "description": "Decentralized Service System"
     },
     {
-      "group": "31-Gitcoin Grants",
-      "address": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
-      "name": "Grant 233 - Ethereumetl",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/233/ethereumetl",
-      "description": ""
-    },
-    {
-      "group": "32-Kickback:Contracts",
-      "address": "0xa4b3761b771a57650fca058be5a5733bb3f87d00",
-      "name": "Ethereans in Paris",
-      "symbol": "",
-      "source": "https://kickback.events/event/0xa4b3761b771a57650fca058be5a5733bb3f87d00",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0xb09e09b309273b07516fe6ab3437dbb500fe2b12",
-      "name": "Pool Together Internals 1",
-      "symbol": "",
-      "source": "",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0xb9ef770b6a5e12e45983c5d80545258aa38f3b78",
-      "name": "0chain",
-      "symbol": "ZCN",
+      "group": "50-Tokens",
+      "address": "0x33c623a2baafeb8d15dfaf3ce44095efec83d72c",
+      "name": "SGPay",
+      "symbol": "SGP",
       "source": "Etherscan.io",
-      "logo": "ochain_28_2.png",
-      "description": "0chain is an infinitely scalable decentralized Cloud for any application."
+      "logo": "sgpay_28.png",
+      "description": "SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together."
     },
     {
-      "group": "30-Contracts",
-      "address": "0xbb6365bf44c63971a948d95d80f77ba3e76489df",
-      "name": "PoolTogether: Upgradeable Proxy",
-      "symbol": "",
-      "source": "",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "name": "The DAO",
-      "symbol": "DAO",
+      "group": "50-Tokens",
+      "address": "0x33f90dee07c6e8b9682dd20f73e6c358b2ed0f03",
+      "name": "Trident Group",
+      "symbol": "TRDT",
       "source": "Etherscan.io",
-      "logo": "",
-      "description": "The infamous DAO smart contract"
+      "logo": "trident28.png",
+      "description": "The Trident Group Cryptographic Token (TRDT) is the lifeblood of the Trident Blockchain Platform, allowing the instant & secure transmission of information worldwide while securing the Trident Network."
     },
     {
-      "group": "31-Gitcoin Grants",
-      "address": "0xbc11295936aa79d594139de1b2e12629414f3bdb",
-      "name": "Grant 273 - History As A Service Untrusted Db",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/273/history-as-a-service-untrusted-db",
-      "description": ""
-    },
-    {
-      "group": "33-Set Protocol:Other",
-      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "name": "Wrapped Ether",
-      "symbol": "",
-      "source": "https://github.com/SetProtocol/set-protocol-contracts",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0xc9a872868afa68ba937f65a1c5b4b252dab15d85",
-      "name": "Grant 025 - Lighthouse Ethereum 20 Client (paulhauner)",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/25/lighthouse-ethereum-20-client",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0xcda84cc75ec5c92a5dacabc13241256beceef964",
-      "name": "Grant 176 - Twigwam Rethereum Mod General Intelligence Relay S",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/176/twigwam-rethereum-mod-general-intelligence-relay-s",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0xd25def1db4f994e2800e438ebb29eae300d56151",
-      "name": "Grant 105 - Tasit Mobile Ethereum Dapps",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/105/tasit-mobile-ethereum-dapps",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0xdcab3ac98dc87a1eb85cf9f81cf75c09ee8e7e5a",
-      "name": "Grant 197 - Play Ethereum 2",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/197/play-ethereum-2",
-      "description": ""
-    },
-    {
-      "group": "31-Gitcoin Grants",
-      "address": "0xdf6c53df56f3992fc44195518a2d8b16306af9ff",
-      "name": "Grant 147 - Trinity Ethereum 20 Client",
-      "symbol": "",
-      "source": "",
-      "logo": "https://gitcoin.co/grants/147/trinity-ethereum-20-client",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0xf5dce57282a584d2746faf1593d3121fcac444dc",
-      "name": "Pool Together Money Market",
-      "symbol": "",
-      "source": "",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "32-Kickback:Contracts",
-      "address": "0xf6912d7ab160aa1645206f6725a0f57840839799",
-      "name": "Cryptoween - a pre-DEVCON4 get-together",
-      "symbol": "",
-      "source": "https://kickback.events/event/0xf6912d7ab160aa1645206f6725a0f57840839799",
-      "logo": "",
-      "description": ""
-    },
-    {
-      "group": "30-Contracts",
-      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "name": "Etherum Tip Jar",
-      "symbol": "TIP",
-      "source": "",
-      "logo": "",
-      "description": "The ethereum tip jar"
+      "group": "50-Tokens",
+      "address": "0x340d2bde5eb28c1eed91b2f790723e3b160613b7",
+      "name": "BLOCKv",
+      "symbol": "VEE",
+      "source": "Etherscan.io",
+      "logo": "blockv_28.png",
+      "description": "Create and Public Digital virtual goods on the blockchain"
     }
   ],
   "types": [

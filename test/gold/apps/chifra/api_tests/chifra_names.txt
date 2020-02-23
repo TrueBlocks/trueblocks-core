@@ -752,7 +752,7 @@
       "address": "0x14f37b574242d366558db61f3335289a5035c506",
       "name": "Hacker Gold Token",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -923,7 +923,7 @@
       "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
       "name": "HGK Token",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -1051,7 +1051,7 @@
       "symbol": "FACE",
       "source": "Etherscan.io",
       "logo": "faceter_28.png",
-      "description": "‚Äì¬∞omputer vision surveillance technology powered by fog network of miners."
+      "description": "A computer vision surveillance technology powered by fog network of miners."
     },
     {
       "group": "50-Tokens",
@@ -1157,7 +1157,7 @@
       "address": "0x2177ccfa776387f6cc4e3dd5cd83509b06e90c58",
       "name": "BTCETH Token",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -1202,7 +1202,7 @@
       "address": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
       "name": "POAP Token",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -1463,7 +1463,7 @@
       "address": "0x2aea4add166ebf38b63d09a75de1a7b94aa24163",
       "name": "Kudos Token (KDO)",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },
@@ -1598,7 +1598,7 @@
       "address": "0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d",
       "name": "KickICO Token Sender",
       "symbol": "",
-      "source": "",
+      "source": "TrueBlocks.io",
       "logo": "",
       "description": ""
     },

@@ -165,6 +165,20 @@
               "read_only": false
             }
           ]
+        },
+        {
+          "section": "APIs",
+          "name": "settings",
+          "keys": [
+            {
+              "name": "etherscan_key",
+              "value": "--api_key--",
+              "type": "string",
+              "tip": "api key for the EtherScan apis -- private data -- not shared",
+              "required": false,
+              "read_only": false
+            }
+          ]
         }
       ]
     },
@@ -271,25 +285,6 @@
                   "symbol": ""
                 }
               ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "ethslurp.toml",
-      "groups": [
-        {
-          "section": "APIs",
-          "name": "settings",
-          "keys": [
-            {
-              "name": "etherscan",
-              "value": "--api_key--",
-              "type": "string",
-              "tip": "api key required to use EtherScan apis -- private data -- not shared",
-              "required": false,
-              "read_only": false
             }
           ]
         }

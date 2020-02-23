@@ -6,7 +6,6 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	Etherscan.io	eximchaintoken_28.png	Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.
 50-Tokens	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos	PYN	Etherscan.io	paycent_28.png	Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time.
 50-Tokens	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA	Etherscan.io	playchip_28.png	No description
-32-Kickback:Contracts	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers' Night		https://kickback.events/event/0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3		Belgium Jazz Cafe, 20, Teheran-ro 83-gil, Gangnam-gu, Seoul
 50-Tokens	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR	Etherscan.io	canonchain_28.png	CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry.
 50-Tokens	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA	Etherscan.io	bitair_28.png	Payments solutions for the travel industry.
 50-Tokens	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG	Etherscan.io	pkg_28.png	Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games.
@@ -25,20 +24,20 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	Etherscan.io	zilliqa_28_2.png	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.
 30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	Etherscan.io		The famous first ERC721 token
 50-Tokens	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE	ACE	Etherscan.io	tokenstars_28.png	ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers.
-31-Gitcoin Grants	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 - Ethereum Dev Fund Working Group			https://gitcoin.co/grants/75/ethereum-dev-fund-working-group
+31-Gitcoin Grants	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 - Ethereum Dev Fund Working Group		TrueBlocks.io	https://gitcoin.co/grants/75/ethereum-dev-fund-working-group
 50-Tokens	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS	Etherscan.io	foglink_28.png	FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources.
 50-Tokens	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3	Etherscan.io	coimatic.png	A global decentralized blockchain deal and discount marketplace.
 50-Tokens	0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	Etherscan.io	qurito_28.png	The online community where you earn for sharing knowledge & ideas.
 50-Tokens	0x076c97e1c869072ee22f8c91978c99b4bcb02591	CommerceBlock	CBT	Etherscan.io	commerceblock.png	Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols
+60-Airdrops	0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon Airdrop	BUL	Etherscan.io	bulleon_28.png	Revolutionizing the way of Financial Transactions
 50-Tokens	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	Etherscan.io	ibtc_28.png	IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.
 50-Tokens	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	Etherscan.io	dalecoin2.png	DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.
 50-Tokens	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT	Etherscan.io	agrello_delta_28.png	Legally Binding Smart Contracts, Powered by AI.
-31-Gitcoin Grants	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 - Austin Griffith Ethereum Rampd			https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd
+31-Gitcoin Grants	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 - Austin Griffith Ethereum Rampd		TrueBlocks.io	https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd
 50-Tokens	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	Etherscan.io	edgeless.png	The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	Dentacoin	Etherscan.io	Dentacoin.png	Aims to be the blockchain solution for the global dental industry.
 50-Tokens	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	Etherscan.io	tierion_28.png	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.
 50-Tokens	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND	Etherscan.io	lendingblock_28_2.png	Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way.
-32-Kickback:Contracts	0x0ab305931a717b8227d76de52e19a23066150360	Creating a Decentralized World Together		https://kickback.events/event/0x0ab305931a717b8227d76de52e19a23066150360		Liberte Living-Lab 9 Rue d'Alexandrie 75002 Paris France
 30-Contracts	0x0abdace70d3790235af448c88547603b945604ea	district0x	DNT	Etherscan.io	district0x.png	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.
 50-Tokens	0x0aef06dcccc531e581f0440059e6ffcc206039ee	Intelligent Trading Technologies	ITT	Etherscan.io	itt_token_28.jpg	Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets.
 50-Tokens	0x0af44e2784637218dd1d32a322d44e603a8f0c6a	Matryx	MTX	Etherscan.io	matryx_28.png	Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.
@@ -70,6 +69,7 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom	BLT	Etherscan.io	hellobloom_28.png	Decentralized credit scoring powered by Ethereum and IPFS.
 50-Tokens	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	Etherscan.io	centrality_28.png	Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points.
 50-Tokens	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT	Etherscan.io	qvolta_28.png	Sell and buy crypto assets around the world for local payment methods.
+60-Airdrops	0x1234567461d3f8db7496581774bd869c83d51c93	BitClave Airdrop	CAT	Etherscan.io	bitclave2_28.png	BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required.
 50-Tokens	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO	LGO	Etherscan.io	legolas_28.png	Exchange with decentralized ledgers
 50-Tokens	0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	Etherscan.io	arbitragect_28.png	Trading crypto-currency terminal for two exchanges simultaneously.
 50-Tokens	0x12759512d326303b45f1cec8f7b6fd96f387778e	TrakInvest Token	TRAK	Etherscan.io	trakinvest_28.png	Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine
@@ -84,6 +84,7 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2	Accelerator	ACC	Etherscan.io	accelerator_28.png	A proof-of-stake smart contract backed by a physical mining facility.
 50-Tokens	0x13f25cd52b21650caa8225c9942337d914c9b030	realchain	RCT	Etherscan.io	realchain_28.png	No description
 50-Tokens	0x1410434b0346f5be678d0fb554e5c7ab620f8f4a	KAN	KAN	Etherscan.io	kanland28.png	A decentralized cryptocurrency-concentrated & content payment community.
+91-Friends	0x14300cd613d6a719ac19de68c2f1042b3217cbff	Pool Together God		TrueBlocks.io
 50-Tokens	0x1460a58096d80a50a2f1f956dda497611fa4f165	Own	CHX	Etherscan.io	owntoken_28_3.png	Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets.
 50-Tokens	0x146d8d942048ad517479c9bab1788712af180fde	Mobile Integrated Blockchain	MIB	Etherscan.io	mibtoken_28.png	MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network.
 50-Tokens	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER	Etherscan.io	bethereum_28.png	Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.
@@ -110,7 +111,7 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7	PRASM	PSM	Etherscan.io	prasm_28.png	AI-Based Decentralized Bioinformatic Network
 50-Tokens	0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db	AppCoins	APPC	Etherscan.io	appcoins_28.png	AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem.
 50-Tokens	0x1a95b271b0535d15fa49932daba31ba612b52946	minereum	MNE	Etherscan.io	minereum.png	Self-mining smart contract.
-31-Gitcoin Grants	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 150 - Ethereum Egift Cards			https://gitcoin.co/grants/150/ethereum-egift-cards
+31-Gitcoin Grants	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 150 - Ethereum Egift Cards		TrueBlocks.io	https://gitcoin.co/grants/150/ethereum-egift-cards
 50-Tokens	0x1b22c32cd936cb97c28c5690a0695a82abf688e6	MyWish	WISH	Etherscan.io	mywish_28.png	Aims to provide a service for funds management in case of different life events, in safe and convenient way.
 50-Tokens	0x1b793e49237758dbd8b752afc9eb4b329d5da016	ViteToken	VITE	Etherscan.io	vite_28.png	High-performance Decentralized Application Platform
 50-Tokens	0x1b9743f556d65e757c4c650b4555baf354cb8bd3	EthBits ETBS Token	ETBS	Etherscan.io	ethbits2_28.png	ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance.
@@ -120,7 +121,7 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7	TEAM	TEAM	Etherscan.io	tokenstars_28.png	TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level.
 50-Tokens	0x1c83501478f1320977047008496dacbd60bb15ef	DigitexFutures	DGTX	Etherscan.io	digitextoken_28.png	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.
 50-Tokens	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	Etherscan.io	thorecoin_28.png	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens
-50-Tokens	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter	FACE	Etherscan.io	faceter_28.png	‚Äì¬∞omputer vision surveillance technology powered by fog network of miners.
+50-Tokens	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter	FACE	Etherscan.io	faceter_28.png	A computer vision surveillance technology powered by fog network of miners.
 50-Tokens	0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0	CanYaCoin	CAN	Etherscan.io	canya2_28.png	Blockchain-Powered Marketplace of Services
 50-Tokens	0x1d4ccc31dab6ea20f461d329a0562c1c58412515	Talao	TALAO	Etherscan.io	talao_28.png	Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain
 34-ENS	0x1da022710df5002339274aadee8d58218e9d6ab5	ENS: Old Resolver		Etherscan.io
@@ -154,7 +155,7 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x26db5439f651caf491a87d48799da81f191bdb6b	CashBetCoin	CBC	Etherscan.io	cashbetcoin1_28.png	Blockchain-Powered iGaming Platform
 50-Tokens	0x26e75307fc0c021472feb8f727839531f112f317	Crypto20	C20	Etherscan.io	crypto20_28.png	Tokenized Crypto Index Fund.
 50-Tokens	0x27054b13b1b798b345b591a4d22e6562d47ea75a	AirSwap	AST	Etherscan.io	airswap_28_2.png	AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens
-30-Contracts	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1
+30-Contracts	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1		TrueBlocks.io
 50-Tokens	0x27695e09149adc738a978e9a678f99e4c39e9eb9	KickCoin	KICK	Etherscan.io	kickcoin_28_2.png	KICKICO is a platform for safe and easy fundraising for ICO, preICO, crowdfunding and crowdinvesting.
 50-Tokens	0x27dce1ec4d3f72c3e457cc50354f1f975ddef488	AirToken	AIR	Etherscan.io	airtoken_28.png	AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees.
 50-Tokens	0x27f706edde3ad952ef647dd67e24e38cd0803dd6	UselessEthereumToken	UET	Etherscan.io	uetoken_28.png	The world's first 100% honest Ethereum ICO.
@@ -167,36 +168,35 @@ group	address	name	symbol	source	logo	description
 50-Tokens	0x29d75277ac7f0335b2165d0895e8725cbf658d73	BitDice	CSNO	Etherscan.io	bitdice28.png	Bitdice Casino.
 50-Tokens	0x2a05d22db079bc40c2f77a1d1ff703a56e631cc1	BitAsean	BAS	Etherscan.io	BitAsean_28.png	BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region.
 50-Tokens	0x2a093bcf0c98ef744bb6f69d74f2f85605324290	FoodCoin	FOOD	Etherscan.io	foodcoin_28.png	FoodCoin Ecosystem is a blockchain ecosystem, architecturally designed to create a global marketplace of food and agricultural products based on our experience with the active 1000 EcoFarms platform.
-31-Gitcoin Grants	0x32cefb2dc869bbfe636f7547cda43f561bf88d5a	Grant 152 - Ethereum For Farsi Speaking Population			https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population
-31-Gitcoin Grants	0x35ca7ae854338dcbc154066f0ea00b636d38e431	Grant 126 - Humans of Ethereum			https://gitcoin.co/grants/126/humansofethereum
-31-Gitcoin Grants	0x38298ef8a8306579e21246d5227694b5560d9cb5	Grant 085 - Tennagraph Minimum Bias Ethereum Signal Aggregat			https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2
-30-Contracts	0x4fc604536134dc64718800361ecbca0df6cbfe08	PoolTogether - Pool 2
-34-Humanity DAO	0x57c18a6d2c41bcbdc0cceaa2e97576c169bd6d8e	ethersummary		https://www.humanitydao.org/humans
-30-Contracts	0x5f742383b6d1298980030d6af943b76cdd902143	etherplay.io
-31-Gitcoin Grants	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 - Week In Ethereum News			https://gitcoin.co/grants/237/week-in-ethereum-news
-31-Gitcoin Grants	0x68085e7f88e90fa9247489c83fab30b177ebccb3	Grant 082 - Official Progpow Technical Audit Funding			https://gitcoin.co/grants/30/ethereum-all-core-devs-community-project-managem-2
-31-Gitcoin Grants	0x726830dbb3e6a7f5009635e61cf4056d11c2dbf7	Grant 107 - Secure Scuttlebutt Ethereum Fusion			https://gitcoin.co/grants/107/secure-scuttlebutt-ethereum-fusion
-31-Gitcoin Grants	0x7624cf3a128e5801d69a2ea0a13a74a6b3ebad4a	Grant 196 - Ethereum Dao Game			https://gitcoin.co/grants/196/ethereum-dao-game
-31-Gitcoin Grants	0x7d888a9036b5a96f77b433e65b9be1b122f8a499	Grant 183 - Tasit Native Mobile Ethereum Dapps			https://gitcoin.co/grants/183/tasit-native-mobile-ethereum-dapps
-31-Gitcoin Grants	0x85cab7143ff3c01b93e88f5b017692374bb939c2	Grant 223 - Ethereum Magicians			https://gitcoin.co/grants/223/ethereum-magicians
-30-Contracts	0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Dai Stablecoin v1.0	DAI	Etherscan.io	dai_stablecoin.png	No description
-31-Gitcoin Grants	0x8ba1f109551bd432803012645ac136ddd64dba72	Grant 013 - Ethersjs Complete Simple And Tiny			https://gitcoin.co/grants/13/ethersjs-complete-simple-and-tiny-2
-31-Gitcoin Grants	0x8f684ad5dc8237960a4661381022ae8030a5cd31	Grant 056 - Training 1000 Ethereum Developers For Free In 2019			https://gitcoin.co/grants/56/training-1000-ethereum-developers-for-free-in-2019
-30-Contracts	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon	ANT	Etherscan.io	aragon_28.png	Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.
-30-Contracts	0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	Maker	MKR	Etherscan.io	mkr-etherscan-35.png	Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain
-31-Gitcoin Grants	0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f	Grant 233 - Ethereumetl			https://gitcoin.co/grants/233/ethereumetl
-32-Kickback:Contracts	0xa4b3761b771a57650fca058be5a5733bb3f87d00	Ethereans in Paris		https://kickback.events/event/0xa4b3761b771a57650fca058be5a5733bb3f87d00
-30-Contracts	0xb09e09b309273b07516fe6ab3437dbb500fe2b12	Pool Together Internals 1
-30-Contracts	0xb9ef770b6a5e12e45983c5d80545258aa38f3b78	0chain	ZCN	Etherscan.io	ochain_28_2.png	0chain is an infinitely scalable decentralized Cloud for any application.
-30-Contracts	0xbb6365bf44c63971a948d95d80f77ba3e76489df	PoolTogether: Upgradeable Proxy
-30-Contracts	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO	DAO	Etherscan.io		The infamous DAO smart contract
-31-Gitcoin Grants	0xbc11295936aa79d594139de1b2e12629414f3bdb	Grant 273 - History As A Service Untrusted Db			https://gitcoin.co/grants/273/history-as-a-service-untrusted-db
-33-Set Protocol:Other	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	Wrapped Ether		https://github.com/SetProtocol/set-protocol-contracts
-31-Gitcoin Grants	0xc9a872868afa68ba937f65a1c5b4b252dab15d85	Grant 025 - Lighthouse Ethereum 20 Client (paulhauner)			https://gitcoin.co/grants/25/lighthouse-ethereum-20-client
-31-Gitcoin Grants	0xcda84cc75ec5c92a5dacabc13241256beceef964	Grant 176 - Twigwam Rethereum Mod General Intelligence Relay S			https://gitcoin.co/grants/176/twigwam-rethereum-mod-general-intelligence-relay-s
-31-Gitcoin Grants	0xd25def1db4f994e2800e438ebb29eae300d56151	Grant 105 - Tasit Mobile Ethereum Dapps			https://gitcoin.co/grants/105/tasit-mobile-ethereum-dapps
-31-Gitcoin Grants	0xdcab3ac98dc87a1eb85cf9f81cf75c09ee8e7e5a	Grant 197 - Play Ethereum 2			https://gitcoin.co/grants/197/play-ethereum-2
-31-Gitcoin Grants	0xdf6c53df56f3992fc44195518a2d8b16306af9ff	Grant 147 - Trinity Ethereum 20 Client			https://gitcoin.co/grants/147/trinity-ethereum-20-client
-30-Contracts	0xf5dce57282a584d2746faf1593d3121fcac444dc	Pool Together Money Market
-32-Kickback:Contracts	0xf6912d7ab160aa1645206f6725a0f57840839799	Cryptoween - a pre-DEVCON4 get-together		https://kickback.events/event/0xf6912d7ab160aa1645206f6725a0f57840839799
-30-Contracts	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP			The ethereum tip jar
+50-Tokens	0x2aec18c5500f21359ce1bea5dc1777344df4c0dc	FarmaTrust Token	FTT	Etherscan.io	farmatrust_28.png	The global tracking system which provides security to the pharmaceutical companies, governments, regulators and the public, that counterfeit drugs do not enter the supply chain.
+50-Tokens	0x2baac9330cf9ac479d819195794d79ad0c7616e3	AdBank	ADB	Etherscan.io	adbank_28.png	Online advertising platform, middleman-free.
+50-Tokens	0x2bba3cf6de6058cc1b4457ce00deb359e2703d7f	HashCoin	HSC	Etherscan.io	hashcoin_28.png	As a platform and bridge linking the physical and digital world, HashFuture aims to solve the problem of digital assets property rights issues and cross-chain asset transfer.
+50-Tokens	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	Etherscan.io	skincoin_28.png	SkinCoin is a multipurpose cryptocurrency for gaming industry.
+50-Tokens	0x2c4e8f2d746113d0696ce89b35f0d8bf88e0aeca	Simple Token	ST	Etherscan.io	ost_28.png	OST KIT gives you all the tools you need to run your blockchain-powered economy on open scalable sidechains.
+50-Tokens	0x2c82c73d5b34aa015989462b2948cd616a37641f	Spectre.ai U-Token	SXUT	Etherscan.io	spectre-ai_28.png	Broker-less financial trading platform.
+50-Tokens	0x2c974b2d0ba1716e644c1fc59982a89ddd2ff724	VIB	VIB	Etherscan.io	viberate2_28.png	Viberate is a crowdsourced live music ecosystem and a blockchain-based marketplace, where musicians are matched with booking agencies and event organizers.
+50-Tokens	0x2ccbff3a042c68716ed2a2cb0c544a9f1d1935e1	DMarket	DMT	Etherscan.io	dmarket2_28.png	a blockchain-based cross-game universe for turning virtual items into real assets.
+50-Tokens	0x2cf618c19041d9db330d8222b860a624021f30fb	CRUISEBIT	CRBT	Etherscan.io	cruisebit_28.png	Cruisebit Coin is crypto currency that represents digital value provided by blockchain technology
+50-Tokens	0x2d0e95bd4795d7ace0da3c0ff7b706a5970eb9d3	All Sports Coin	SOC	Etherscan.io	allsportschain_28.png	All Sports public blockchain hopes to fill in the blank of blockchain application in sports industry through blockchain technology.
+50-Tokens	0x2d184014b5658c453443aa87c8e9c4d57285620b	JSE Token	JSE	Etherscan.io	jsecoin_28.png	JSEcoin is a consumer focused web platform built on top of a browser mined blockchain
+50-Tokens	0x2d3e7d4870a51b918919e7b851fe19983e4c38d5	UBCoin	UBC	Etherscan.io	ubcoin_28.png	The Ubcoin is a crypto-goods p2p exchange where anyone can safely and instantly sell any good‚Äö√Ñ√¥s and become a cryptocurrency holder.
+50-Tokens	0x2daee1aa61d60a252dc80564499a69802853583a	Authorship	ATS	Etherscan.io	authorship_28.png	Aims to make the Internet More Free and Accessible For Authors and Readers.
+50-Tokens	0x2e071d2966aa7d8decb1005885ba1977d6038a65	DICE	ROL	Etherscan.io	etheroll.png	Provably fair online Ether gaming on the Ethereum Blockchain
+50-Tokens	0x2ecb13a8c458c379c4d9a7259e202de03c8f3d19	Block-Chain.com Token	BC	Etherscan.io	blockchaincom_28.png	Block-chain.com is the guide to the world of blockchain and cryptocurrency.
+50-Tokens	0x2f141ce366a2462f02cea3d12cf93e4dca49e4fd	Free Coin	FREE	Etherscan.io	freecoin_28.png	Social project to promote cryptocurrency usage and increase global wealth
+50-Tokens	0x2f85e502a988af76f7ee6d83b7db8d6c0a823bf9	LatiumX	LATX	Etherscan.io	latiumx_28.png	tasking platform to incorporate an automated rating system in tandem with a one-to-many task relationship structure
+50-Tokens	0x2f9b6779c37df5707249eeb3734bbfc94763fbe2	CrowdWizToken	WIZ	Etherscan.io		Democratize the investing process by eliminating intermediaries and placing the power and control where it belongs - entirely into the hands of investors.
+50-Tokens	0x2fa32a39fc1c399e0cc7b2935868f5165de7ce97	PayFair	PFR	Etherscan.io	payfair2_28.png	PAYFAIR is a decentralized Escrow platform and p2p exchange.
+50-Tokens	0x2fb12bccf6f5dd338b76be784a93ade072425690	BEAT	BEAT	Etherscan.io	beat_28.png	Beat aims to unleash the value of verified health and sports data using cutting edge blockchain technology.
+50-Tokens	0x30cecb5461a449a90081f5a5f55db4e048397bab	Tracto	TRCT	Etherscan.io	tracto_28.png	A technology for rapid and anonymous coin transaction organization.
+50-Tokens	0x3136ef851592acf49ca4c825131e364170fa32b3	CoinFi	COFI	Etherscan.io	coinfi_28.png	CoinFi offers crowdsourced and professionally curated research, analysis, trading signals, trading algorithms, and market-moving news to give cryptocurrency traders the real-time market intelligence needed to gain an edge.
+50-Tokens	0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5	EBCoin	EBC	Etherscan.io	ebcoin_28.png	The universal cryptocurrency based on Ethereum for travelers in the world
+50-Tokens	0x3209f98bebf0149b769ce26d71f7aea8e435efea	Traxia Membership Token	TMT	Etherscan.io	traxia_28.png	A decentralized global trade finance ecosystem.
+50-Tokens	0x327682779bab2bf4d1337e8974ab9de8275a7ca8	Blockport	BPT	Etherscan.io	blockport.png	Social crypto exchange based on a hybrid-decentralized architecture.
+31-Gitcoin Grants	0x32cefb2dc869bbfe636f7547cda43f561bf88d5a	Grant 152 - Ethereum For Farsi Speaking Population		TrueBlocks.io	https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population
+50-Tokens	0x32d74896f05204d1b6ae7b0a3cebd7fc0cd8f9c7	Kcash	KCASH	Etherscan.io	kcash_28.png	Kcash, which is positioned to become digital bank on the blockchain, is the first cross-chain digital wallet from China and manages the most types of digital assets in the world.
+50-Tokens	0x3363d570f6df3c74d486bb8785d3ebfb9e2347d3	HedgeTrade	HEDG	Etherscan.io	hedgefundtoken_28.png	HedgeTrade is a platform uniquely designed for trading predictions, analysis, and education.
+50-Tokens	0x336f646f87d9f6bc6ed42dd46e8b3fd9dbd15c22	Crystal Clear Token	CCT	Etherscan.io	crystalclear_28.png	Decentralized Service System
+50-Tokens	0x33c623a2baafeb8d15dfaf3ce44095efec83d72c	SGPay	SGP	Etherscan.io	sgpay_28.png	SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.
+50-Tokens	0x33f90dee07c6e8b9682dd20f73e6c358b2ed0f03	Trident Group	TRDT	Etherscan.io	trident28.png	The Trident Group Cryptographic Token (TRDT) is the lifeblood of the Trident Blockchain Platform, allowing the instant & secure transmission of information worldwide while securing the Trident Network.
+50-Tokens	0x340d2bde5eb28c1eed91b2f790723e3b160613b7	BLOCKv	VEE	Etherscan.io	blockv_28.png	Create and Public Digital virtual goods on the blockchain

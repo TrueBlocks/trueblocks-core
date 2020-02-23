@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,22 +10,26 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "abilib.h"
+#include "webapi.h"
 
 namespace qblocks {
 
-//---------------------------------------------------------------------------------------------------
-class CWebAPI {
-  private:
-    string_q key;
-    string_q provider;
-    string_q url;
+//--------------------------------------------------------------------------------
+string_q getApiKey(const string_q& provider, const string_q& signup) {
+    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(provider) + "_key", "<NOT_SET>");
+    if (!key.empty() && key != "<NOT_SET>")
+        return key;
 
-  public:
-    CWebAPI(void);
-    ~CWebAPI(void);
+    char buffer[256];
+    bzero(buffer, sizeof(buffer));
 
-    bool checkKey(void);
-    string_q getKey(void) const;
-};
+    cerr << endl << cRed << "  ***Warning***" << cOff << endl;
+    cerr << "  This program needs an api_key from " + provider + " in order to work. You may get one at" << endl;
+    cerr << "  " + signup + ". See our online help file for more information. Please" << endl;
+    cerr << "  provide an API key or type 'exit'" << endl;
+    cerr << "  > ";
+    quickQuitHandler(0);
+    return "";
+}
+
 }  // namespace qblocks
