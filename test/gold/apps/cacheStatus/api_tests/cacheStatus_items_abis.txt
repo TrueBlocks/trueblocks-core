@@ -27,9 +27,9 @@
               "description": "",
               "is_custom": false,
               "is_prefund": false,
-              "nAppearances": "",
-              "firstAppearance": "",
-              "latestAppearance": "",
+              "nAppearances": "0",
+              "firstAppearance": "0",
+              "latestAppearance": "0",
               "appearanceRange": 0,
               "appearanceInterval": 0,
               "sizeInBytes": 36963

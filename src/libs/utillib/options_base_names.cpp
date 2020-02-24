@@ -72,25 +72,14 @@ bool COptionsBase::getNamedAccount2(CAccountName& acct, const string_q& addr) {
     if (!loadNames(*this))
         return false;
 
-#if 0
+    using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
     CAccountName search;
     search.address = addr;
-    CAccountNameArray::iterator it = find(namedAccounts2.begin(), namedAccounts2.end(), search);
-    if (it != namedAccounts2.end()) {
-        acct = *it;
-        return true;
-    }
-    return false;
-#else
-    for (size_t i = 0; i < namedAccounts2.size(); i++) {
-        CAccountName* acct1 = &namedAccounts2[i];
-        if (acct1->address % addr) {
-            acct = namedAccounts2[i];
-            return true;
-        }
-    }
-    return false;
-#endif
+    ResultPair range = equal_range(namedAccounts2.begin(), namedAccounts2.end(), search);
+    if (range.first == namedAccounts2.end() || range.first->address != addr)
+        return false;
+    acct = *range.first;
+    return true;
 }
 
 // group(30)    address (42)    name (80)    symbol (10)    source (80)    logo (80)    description (300)

@@ -32,6 +32,7 @@ age                 	1019	1	262149	T_DATE TS_DATE
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
   "price": 0.00000,
+  "finalized": false,
   "timestamp": 1442749586,
   "transactions": [
     {

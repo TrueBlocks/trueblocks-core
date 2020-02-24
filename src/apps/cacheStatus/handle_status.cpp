@@ -200,7 +200,8 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
-    os << status;
+    status.doExport(os);
+
     EXIT_NOMSG8(true);
 }
 

@@ -26,8 +26,8 @@
               "is_custom": false,
               "is_prefund": false,
               "nAppearances": 2020101,
-              "firstAppearance": "",
-              "latestAppearance": "",
+              "firstAppearance": "0",
+              "latestAppearance": "0",
               "appearanceRange": 0,
               "appearanceInterval": 0,
               "sizeInBytes": 1010202

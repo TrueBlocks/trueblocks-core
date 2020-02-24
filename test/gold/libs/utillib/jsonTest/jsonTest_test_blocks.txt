@@ -10,6 +10,7 @@ tests/blocks.json
   "miner": "0x0",
   "difficulty": 0,
   "price": 0.00000,
+  "finalized": false,
   "timestamp": 1504726529,
   "transactions": [
     {

@@ -517,23 +517,33 @@ void CBaseNode::doExport(ostream& os) const {
     if (!pClass)
         return;
 
-    string_q first;
-    for (auto field : pClass->fieldList) {
-        if (!field.isHidden() && first.empty()) {
-            first = field.getName();
+    string_q firstShowing;
+    CFieldDataArray fields;
+    map<string_q, bool> fieldMap;
+    while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
+        for (auto field : pClass->fieldList) {
+            if (!field.isHidden()) {
+                if (firstShowing.empty())
+                    firstShowing = field.getName();
+                if (!fieldMap[field.m_fieldName]) {
+                    fields.push_back(field);
+                    fieldMap[field.m_fieldName] = true;
+                }
+            }
         }
+        pClass = pClass->m_BaseClass;
     }
 
     os << "{";
     if (m_showing) {
         incIndent();
-        for (auto field : pClass->fieldList) {
+        for (auto field : fields) {
             string_q name = field.getName();
             if (!field.isHidden()) {
                 if (field.isArray()) {
                     uint64_t cnt = str_2_Uint(getValueByName(name + "Cnt"));
                     if (cnt || isApiMode() || showEmptyField(name)) {
-                        if (field.getName() != first)
+                        if (field.getName() != firstShowing)
                             os << ",";
                         os << "\n";
                         os << indent() << "\"" << name << "\": ";
@@ -560,7 +570,7 @@ void CBaseNode::doExport(ostream& os) const {
                     }
 
                 } else if (field.isObject()) {
-                    if (field.getName() != first)
+                    if (field.getName() != firstShowing)
                         os << ",";
                     os << "\n";
                     os << indent() << "\"" << name << "\": ";
@@ -572,17 +582,19 @@ void CBaseNode::doExport(ostream& os) const {
                     }
 
                 } else {
-                    if (field.getName() != first)
+                    string_q val = getValueByName(name);
+                    bool isNum = (field.m_fieldType & TS_NUMERAL);
+                    if (field.getName() != firstShowing)
                         os << ",";
                     os << "\n";
                     os << indent() << "\"" << name << "\": ";
-                    string_q val = getValueByName(name);
-                    bool isNum = (field.m_fieldType & TS_NUMERAL);
-                    if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, "."))
+                    if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty())
                         val = str_2_Hex(val);
                     bool quote = (!isNum || expContext().quoteNums) && val != "null";
                     if (isApiMode() && val.empty())
                         quote = true;
+                    if (isNum && val.empty())
+                        val = uint_2_Str(0);
                     if (quote)
                         os << "\"";
                     os << val;

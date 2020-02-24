@@ -16,26 +16,8 @@ TIME ~ CLOCK - <INFO>  : Writing: ./generated/approve.h
 TIME ~ CLOCK - <INFO>  : Writing: ./generated/approve.cpp
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
 TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CChangeAllowedRecipients'
-TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/changeallowedrecipients] [3:--force] 
-makeClass -r generated/changeallowedrecipients --force 
-TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeallowedrecipients.h
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeallowedrecipients.cpp
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
 TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CChangeProposalDeposit'
-TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/changeproposaldeposit] [3:--force] 
-makeClass -r generated/changeproposaldeposit --force 
-TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeproposaldeposit.h
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/changeproposaldeposit.cpp
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
 TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CCreateTokenProxy'
-TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/createtokenproxy] [3:--force] 
-makeClass -r generated/createtokenproxy --force 
-TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/createtokenproxy.h
-TIME ~ CLOCK - <INFO>  : Writing: ./generated/createtokenproxy.cpp
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
 TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CExecuteProposal'
 TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/executeproposal] [3:--force] 
 makeClass -r generated/executeproposal --force 

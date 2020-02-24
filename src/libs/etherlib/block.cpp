@@ -83,7 +83,7 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             break;
         case 'f':
             if (fieldName % "finalized") {
-                return bool_2_Str_t(finalized);
+                return bool_2_Str(finalized);
             }
             break;
         case 'g':
