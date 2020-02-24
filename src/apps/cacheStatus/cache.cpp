@@ -346,5 +346,28 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
     }
     return false;
 }
+
+//---------------------------------------------------------------------------
+#if 0
+bool getNewestFile(const string_q& path, void* data) {
+    time_q *t = (time_q*)data;
+    time_q l = fileLastModifyDate(path);
+    if (l > *t)
+        *t = l;
+    return true;
+}
+#endif
+
+//---------------------------------------------------------------------------
+bool CCache::needsRefresh(const string_q& cacheType, bool details) {
+#if 1
+    return true;
+#else
+    time_q newestFile;
+    forEveryFileInFolder(getCachePath("monitors")+"*", getNewestFile, &newestFile);
+    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    return (fileLastModifyDate(fn) < newestFile);
+#endif
+}
 // EXISTING_CODE
 }  // namespace qblocks

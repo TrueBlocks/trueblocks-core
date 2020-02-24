@@ -51,11 +51,9 @@ class CCache : public CBaseNode {
     void reset(void) {
         initialize();
     }
-    virtual bool readBinaryCache(const string_q& t, bool details);
-    virtual bool writeBinaryCache(const string_q& t, bool details);
-    virtual bool needsRefresh(const string_q& t, bool details) {
-        return true;
-    };
+    virtual bool readBinaryCache(const string_q& cacheType, bool details);
+    virtual bool writeBinaryCache(const string_q& cacheType, bool details);
+    virtual bool needsRefresh(const string_q& cacheType, bool details);
     // EXISTING_CODE
     bool operator==(const CCache& item) const;
     bool operator!=(const CCache& item) const {
