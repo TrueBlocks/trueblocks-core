@@ -282,7 +282,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 14540,all,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
 14560,all,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
 14580,all,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename
-14600,all,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename (if the file exists&#44; it will be overwritten)
+14600,all,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename. (If the file exists&#44; it will be overwritten. If 'fn' ends with .gz&#44; the resulting file will be zipped )
 14620,all,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
 14640,all,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
 14660,all,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command

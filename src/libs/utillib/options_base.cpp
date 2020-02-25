@@ -308,6 +308,8 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         temp = nextTokenClear(temp, ' ');
         if (temp.empty())
             return usage("Please provide a filename for the --output option. Quitting...");
+        zipOnClose = endsWith(temp, ".gz");
+        replace(temp, ".gz", "");
         CFilename fn(temp);
         establishFolder(fn.getPath());
         if (!folderExists(fn.getPath()))
@@ -1010,6 +1012,7 @@ COptionsBase::COptionsBase(void) {
     cntParams = 0;
     coutSaved = NULL;
     outputFilename = "";
+    zipOnClose = false;
     // outputStream
 }
 
@@ -1037,7 +1040,15 @@ void COptionsBase::closeRedirect(void) {
         outputStream.flush();
         outputStream.close();
         coutSaved = NULL;
-        cout << (isTestMode() ? "--output_filename--" : outputFilename);
+        if (zipOnClose) {
+            ostringstream os;
+            os << "gzip " << outputFilename;
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            zipOnClose = false;
+            cout << (isTestMode() ? "--output_filename--" : outputFilename + ".gz");
+        } else {
+            cout << (isTestMode() ? "--output_filename--" : outputFilename);
+        }
         outputFilename = "";
     }
 }

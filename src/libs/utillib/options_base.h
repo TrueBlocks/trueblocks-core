@@ -67,6 +67,7 @@ class COptionsBase {
     ofstream outputStream;  // the redirected stream (if any)
     string_q outputFilename;
     void closeRedirect(void);
+    bool zipOnClose;
 
   public:
     CStringArray commandLines;
