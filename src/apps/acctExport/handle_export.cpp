@@ -175,17 +175,10 @@ bool COptions::exportData(void) {
                 }
 
                 HIDE_FIELD(CFunction, "message");
-                if (isRedirected()) {  // we are in --output mode
+                static size_t cnt = 0;
+                if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
                     LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
                              trans.transactionIndex, ")      ", "\r");
-
-                } else {
-                    static size_t cnt = 0;
-                    if (!(++cnt % 11)) {  // not reporting every tx is way faster
-                        LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
-                                 trans.transactionIndex, ")      ", "\r");
-                    }
-                }
             }
         }
     }

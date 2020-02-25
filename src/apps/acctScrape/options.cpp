@@ -20,6 +20,7 @@ static const COption params[] = {
     COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+    COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -39,6 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
+    bool silent = false;
     // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
@@ -73,6 +75,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
 
+        } else if (arg == "-i" || arg == "--silent") {
+            silent = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -95,7 +100,8 @@ bool COptions::parseArguments(string_q& command) {
         watch.finishParse();
         monitors.push_back(watch);
     }
-    LOG_INFO("Scraping ", monitors.size(), " addresses.");
+    if (!silent)
+        LOG_INFO("Scraping ", monitors.size(), " addresses.");
 
     if (monitors.size() == 0)
         EXIT_USAGE("Please provide at least one Ethereum address to scrape. Quitting...");
@@ -134,14 +140,10 @@ bool COptions::parseArguments(string_q& command) {
     if (end != NOPOS)
         scanRange.second = end;  // the user is always right
 
-    if (scanRange.first >= scanRange.second) {  // nothing to do?
-        for (auto watch : monitors) {
-            if (isContractAt(watch.address) && latest > scanRange.first) {
-                LOG_INFO("Monitor for contract '", watch.address, "' is caught up to address indexer.");
-            } else {
-                LOG_INFO("Monitor for address  '", watch.address, "' is caught up to address indexer.");
-            }
-        }
+    if (!silent && scanRange.first >= scanRange.second && latest > scanRange.first) {  // nothing to do?
+        for (auto watch : monitors)
+            LOG_INFO("Monitor for ", (isContractAt(watch.address) ? "contract" : "address"), " '", watch.address,
+                     "' is caught up to address indexer.");
         EXIT_NOMSG(false);
     }
     EXIT_NOMSG(true);
@@ -156,6 +158,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     minArgs = 0;
+    lastBlockInFile = 0;
     visitTypes = VIS_FINAL;
     monitors.clear();
 }

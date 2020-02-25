@@ -20,7 +20,7 @@ on, cmd,  fast, null, utillib/convertTest,  02,             n, val = 2
 on, cmd,  fast, null, utillib/convertTest,  03,             n, val = 3
 on, cmd,  fast, null, utillib/convertTest,  04,             n, val = 4
 
-on, cmd,  fast, null, utillib/curlTest,     test00,         n,
+# on, cmd,  fast, null, utillib/curlTest,     test00,         n,
 
 on, cmd,  fast, null, utillib/fileTest,     test00,         n,
 on, cmd,  fast, null, utillib/fileTest,     test01,         n, val = recurse

@@ -17,8 +17,6 @@
             {
               "type": "CMonitorCacheItem",
               "deleted": false,
-              "curBalance": 10000,
-              "enabled": true,
               "group": "",
               "address": "---address---",
               "name": "",
@@ -31,8 +29,6 @@
               "nAppearances": 18446744073709552000,
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,
-              "appearanceRange": 18446744073709552000,
-              "appearanceInterval": 18446744073709552000,
               "sizeInBytes": 18446744073709552000
             }
           ],
@@ -62,8 +58,6 @@
               "nAppearances": "0",
               "firstAppearance": "0",
               "latestAppearance": "0",
-              "appearanceRange": 0,
-              "appearanceInterval": 0,
               "sizeInBytes": 36963
             }
           ],
@@ -190,14 +184,6 @@
           "type": "blocknum"
         },
         {
-          "name": "appearanceRange",
-          "type": "blocknum"
-        },
-        {
-          "name": "appearanceInterval",
-          "type": "blocknum"
-        },
-        {
           "name": "sizeInBytes",
           "type": "unumber"
         }
@@ -252,14 +238,6 @@
           "type": "bool"
         },
         {
-          "name": "curBalance",
-          "type": "wei"
-        },
-        {
-          "name": "enabled",
-          "type": "bool"
-        },
-        {
           "name": "group",
           "type": "text"
         },
@@ -305,14 +283,6 @@
         },
         {
           "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "appearanceRange",
-          "type": "blocknum"
-        },
-        {
-          "name": "appearanceInterval",
           "type": "blocknum"
         },
         {

@@ -233,7 +233,10 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             CStringArray lines;
             explode(lines, contents, '\n');
             for (auto command : lines) {
-                if (!command.empty() && !startsWith(command, ";")) {  // ignore comments
+                while (contains(command, "--fmt  "))
+                    replace(command, "--fmt  ", "--fmt ");
+                replace(command, "--fmt ", "--fmt:");
+                if (!command.empty() && !startsWith(command, ";") && !startsWith(command, "#")) {  // ignore comments
                     commandList += (command + toAll + "\n");
                 }
             }
@@ -299,19 +302,23 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     }
 
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
-        redirFilename = substitute(cmdLine, "--output:", "|");
-        nextTokenClear(redirFilename, '|');
-        redirFilename = nextTokenClear(redirFilename, ' ');
-        if (redirFilename.empty())
+        closeRedirect();  // close the current one in case it's open (--file for example)
+        string_q temp = substitute(cmdLine, "--output:", "|");
+        nextTokenClear(temp, '|');
+        temp = nextTokenClear(temp, ' ');
+        if (temp.empty())
             return usage("Please provide a filename for the --output option. Quitting...");
-        if (!isTestMode() && !startsWith(redirFilename, '/'))
-            return usage("Output file (" + redirFilename + ") must be a fully qualified path. Quitting...");
-        establishFolder(redirFilename);
-        ASSERT(!folderExists(outputFn));
-        redirStream.open(redirFilename.c_str());
-        if (redirStream.is_open()) {
-            coutBackup = cout.rdbuf();        // back up cout's streambuf
-            cout.rdbuf(redirStream.rdbuf());  // assign streambuf to cout
+        CFilename fn(temp);
+        establishFolder(fn.getPath());
+        if (!folderExists(fn.getPath()))
+            return usage("Output file path not found and could not be created: '" + fn.getPath() + "'. Quitting...");
+        outputFilename = fn.getFullPath();
+        outputStream.open(outputFilename.c_str());
+        if (outputStream.is_open()) {
+            coutSaved = cout.rdbuf();          // back up cout's streambuf
+            cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
+        } else {
+            return usage("Could not open output stream at '" + outputFilename + ". Quitting...");
         }
     }
 
@@ -1001,9 +1008,9 @@ COptionsBase::COptionsBase(void) {
     namedAccounts2.clear();
     pParams = NULL;
     cntParams = 0;
-    coutBackup = NULL;
-    redirFilename = "";
-    // redirStream
+    coutSaved = NULL;
+    outputFilename = "";
+    // outputStream
 }
 
 //--------------------------------------------------------------------------------
@@ -1020,17 +1027,18 @@ void COptionsBase::setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass*
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::isRedirected(void) const {
-    return (coutBackup != NULL);
+    return (coutSaved != NULL);
 }
 
 //--------------------------------------------------------------------------------
 void COptionsBase::closeRedirect(void) {
-    if (coutBackup != NULL) {
-        cout.rdbuf(coutBackup);  // restore cout's original streambuf
-        redirStream.close();
-        coutBackup = NULL;
-        cout << redirFilename;
-        redirFilename = "";
+    if (coutSaved != NULL) {
+        cout.rdbuf(coutSaved);  // restore cout's original streambuf
+        outputStream.flush();
+        outputStream.close();
+        coutSaved = NULL;
+        cout << (isTestMode() ? "--output_filename--" : outputFilename);
+        outputFilename = "";
     }
 }
 

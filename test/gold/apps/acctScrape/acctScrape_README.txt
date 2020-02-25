@@ -18,6 +18,7 @@ acctScrape -th
 | -d | --daemon | we are being called in daemon mode which causes us to print results differently |
 | -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
+| -i | --silent | lighten the reporting on progress (for use with --daemon switch to `chifra scrape`) |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

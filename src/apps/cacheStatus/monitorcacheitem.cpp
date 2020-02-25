@@ -20,7 +20,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CMonitorCacheItem, CAccountWatch);
+IMPLEMENT_NODE(CMonitorCacheItem, CAccountName);
 
 //---------------------------------------------------------------------------
 static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
@@ -88,7 +88,7 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CAccountWatch::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CAccountWatch::setValueByName(fieldName, fieldValue))
+    if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -134,7 +134,7 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CAccountWatch::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -149,7 +149,7 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CAccountWatch::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -186,7 +186,7 @@ void CMonitorCacheItem::registerClass(void) {
     if (HAS_FIELD(CMonitorCacheItem, "schema"))
         return;
 
-    CAccountWatch::registerClass();
+    CAccountName::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(CMonitorCacheItem, "schema", T_NUMBER, ++fieldNum);

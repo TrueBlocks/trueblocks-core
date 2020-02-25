@@ -55,9 +55,15 @@ int main(int argc, const char* argv[]) {
                 options.exportData();
         }
 
-        once = false;
+        if (options.isRedirected()) {
+            once = true;
+            cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+        } else {
+            once = false;
+        }
     }
-    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+    if (!options.isRedirected())
+        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     if (!options.freshen && !options.count_only)
         LOG_INFO("exported ", options.nExported, " ",

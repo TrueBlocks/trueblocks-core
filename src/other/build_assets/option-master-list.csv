@@ -7,6 +7,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10100,apps,list,acctScrape,daemon,d,,false,false,false,false,header,switch,<boolean>,we are being called in daemon mode which causes us to print results differently
 10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
+10140,apps,list,acctScrape,silent,i,,false,false,false,false,local,switch,<boolean>,lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)
 10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or series of addresses).
 10162,apps,list,acctScrape,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 
@@ -28,6 +29,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
 10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurrence
+10515,apps,export,acctExport,emitter,M,,false,false,true,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
 10520,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10540,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10560,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
@@ -280,7 +282,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 14540,all,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
 14560,all,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
 14580,all,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename
-14600,all,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename
+14600,all,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename (if the file exists&#44; it will be overwritten)
 14620,all,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
 14640,all,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
 14660,all,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command

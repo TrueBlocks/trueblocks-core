@@ -28,8 +28,6 @@
               "nAppearances": 2020101,
               "firstAppearance": "0",
               "latestAppearance": "0",
-              "appearanceRange": 0,
-              "appearanceInterval": 0,
               "sizeInBytes": 1010202
             }
           ],
@@ -135,14 +133,6 @@
         },
         {
           "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "appearanceRange",
-          "type": "blocknum"
-        },
-        {
-          "name": "appearanceInterval",
           "type": "blocknum"
         },
         {

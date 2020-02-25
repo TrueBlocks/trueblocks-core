@@ -337,8 +337,6 @@ cacheStatus all --details --start 1400000 --end 2000000
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "curBalance": 10000,
-          "enabled": true,
           "group": "",
           "address": "---address---",
           "name": "",
@@ -351,8 +349,6 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
-          "appearanceRange": 18446744073709551615,
-          "appearanceInterval": 18446744073709551615,
           "sizeInBytes": 18446744073709551615
         }
       ],
@@ -390,8 +386,6 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,
-          "appearanceRange": 0,
-          "appearanceInterval": 0,
           "sizeInBytes": 36963
         }
       ],
@@ -465,8 +459,6 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nAppearances": 2020101,
           "firstAppearance": 0,
           "latestAppearance": 0,
-          "appearanceRange": 0,
-          "appearanceInterval": 0,
           "sizeInBytes": 1010202
         }
       ],

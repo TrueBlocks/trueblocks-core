@@ -31,6 +31,7 @@ static const COption params[] = {
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurrence"),  // NOLINT
+    COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
@@ -117,6 +118,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-o:") || startsWith(arg, "--occurrence:")) {
             if (!confirmBlockNum("occurrence", occurrence, arg, latest))
                 return false;
+
+        } else if (arg == "-M" || arg == "--emitter") {
+            emitter = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
@@ -258,7 +262,7 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_LOGENTRY);
+        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
         format = toml.getConfigStr("formats", "receipt_fmt", deflt);
         expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
 
@@ -375,6 +379,7 @@ void COptions::Init(void) {
     freshen = false;
     deltas = false;
     occurrence = NOPOS;
+    emitter = false;
     // END_CODE_INIT
 
     nExported = 0;
@@ -527,8 +532,10 @@ bool COptions::loadAllAppearances(void) {
     if (!write_opt && items.size() <= 1000)
         write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
 
-    LOG_INFO("Cache by ", ((write_opt & CACHE_BYCONFIG) ? "config" : ((write_opt & CACHE_BYUSER) ? "user" : "default")),
-             ": ", report_cache(write_opt));
+    if (!freshen)
+        LOG_INFO("Cache by ",
+                 ((write_opt & CACHE_BYCONFIG) ? "config" : ((write_opt & CACHE_BYUSER) ? "user" : "default")), ": ",
+                 report_cache(write_opt));
     EXIT_NOMSG8(true);
 }
 

@@ -14,8 +14,6 @@ fields = \
   blknum lastExport (nowrite)|\
   blknum firstAppearance (nowrite)|\
   blknum latestAppearance (nowrite)|\
-  blknum appearanceRange (nowrite)|\
-  blknum appearanceInterval (nowrite)|\
   string path (nowrite)|\
   uint64 sizeInBytes (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h

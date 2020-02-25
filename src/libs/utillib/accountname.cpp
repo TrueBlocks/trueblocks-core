@@ -75,12 +75,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "address") {
                 return addr_2_Str(address);
             }
-            if (fieldName % "appearanceRange") {
-                return uint_2_Str(appearanceRange);
-            }
-            if (fieldName % "appearanceInterval") {
-                return uint_2_Str(appearanceInterval);
-            }
             break;
         case 'd':
             if (fieldName % "description") {
@@ -165,14 +159,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'a':
             if (fieldName % "address") {
                 address = str_2_Addr(fieldValue);
-                return true;
-            }
-            if (fieldName % "appearanceRange") {
-                appearanceRange = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "appearanceInterval") {
-                appearanceInterval = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -286,8 +272,6 @@ bool CAccountName::Serialize(CArchive& archive) {
     // archive >> lastExport;
     // archive >> firstAppearance;
     // archive >> latestAppearance;
-    // archive >> appearanceRange;
-    // archive >> appearanceInterval;
     // archive >> path;
     // archive >> sizeInBytes;
     finishParse();
@@ -314,8 +298,6 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     // archive << lastExport;
     // archive << firstAppearance;
     // archive << latestAppearance;
-    // archive << appearanceRange;
-    // archive << appearanceInterval;
     // archive << path;
     // archive << sizeInBytes;
 
@@ -371,10 +353,6 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "firstAppearance");
     ADD_FIELD(CAccountName, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "latestAppearance");
-    ADD_FIELD(CAccountName, "appearanceRange", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "appearanceRange");
-    ADD_FIELD(CAccountName, "appearanceInterval", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "appearanceInterval");
     ADD_FIELD(CAccountName, "path", T_TEXT, ++fieldNum);
     HIDE_FIELD(CAccountName, "path");
     ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
@@ -448,8 +426,6 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         // archive >> lastExport;
         // archive >> nRecords;
         // archive >> sizeInBytes;
-        // archive >> appearanceRange;
-        // archive >> appearanceInterval;
         if (!subgroup.empty())
             group += (":" + subgroup);
         finishParse();

@@ -43,6 +43,7 @@ class COptions : public COptionsBase {
     bool freshen;
     bool deltas;
     blknum_t occurrence;
+    bool emitter;
     // END_CODE_DECLARE
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)

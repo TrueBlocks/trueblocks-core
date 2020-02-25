@@ -6,16 +6,16 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
-bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArray_base& dataArray,
+bool COptions::handleWrite(const string_q& outFilename, const CAppearanceArray_base& dataArray,
                            APPEARANCEFILTERFUNC filterFunc) const {
     cerr << "\tWriting...";
 
-    address_t address = substitute(outputFilename, ".acct.bin", "");
+    address_t address = substitute(outFilename, ".acct.bin", "");
     blknum_t currentLastItem = str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
     CArchive txCache(WRITING_ARCHIVE);
-    if (!txCache.Lock(outputFilename, modeWriteCreate, LOCK_WAIT)) {
-        string_q name = outputFilename;
+    if (!txCache.Lock(outFilename, modeWriteCreate, LOCK_WAIT)) {
+        string_q name = outFilename;
         if (isTestMode())
             name = substitute(name, getMonitorPath(""), "$CACHE/");
         return usage("Could not open merge file: " + name + ". Quitting.");
@@ -51,7 +51,7 @@ bool COptions::handleWrite(const string_q& outputFilename, const CAppearanceArra
         cerr << cYellow << writeArray.size() << cOff << " records written, ";
         cerr << cYellow << (dataArray.size() - writeArray.size()) << cOff << " records "
              << (filterFunc ? "removed" : "ignored") << ".\n";
-        string_q dName = outputFilename;
+        string_q dName = outFilename;
         if (isTestMode())
             dName = substitute(dName, getMonitorPath(""), "$CACHE/");
         cerr << "\tWritten to " << cTeal << dName << cOff << "\n";

@@ -11,7 +11,7 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
     nodeNotRequired();
 
     ostringstream base;
-    base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
+    base << "acctScrape " << tool_flags << " " << freshen_flags << " --silent [ADDRS] ;";
 
     // Build groups of five addresses at a time
     size_t cnt = 0;
@@ -25,11 +25,16 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
     }
 
     // Process them until we're done
+    uint64_t cur = 0;
     while (!groupsOfFive.empty()) {
         string_q thisGroup = nextTokenClear(groupsOfFive, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
         LOG_CALL(cmd);
         // clang-format off
+        uint64_t n = countOf(thisGroup, ' ');
+        if (fa.size() > 1)
+            LOG_INFO("Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '));
+        cur += n;
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         if (!groupsOfFive.empty())

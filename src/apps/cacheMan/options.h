@@ -54,7 +54,7 @@ class COptions : public COptionsBase {
     bool handleImport(void) const;
     bool handleRemove(void) const;
     bool handleRead(const string_q& mode, size_t filesToUse, CAppearanceArray_base& dataArray) const;
-    bool handleWrite(const string_q& outputFilename, const CAppearanceArray_base& dataArray,
+    bool handleWrite(const string_q& outFilename, const CAppearanceArray_base& dataArray,
                      APPEARANCEFILTERFUNC filterFunc) const;
 
     bool parseArguments(string_q& command);

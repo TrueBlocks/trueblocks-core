@@ -17,8 +17,6 @@ cacheStatus --details monitors
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "curBalance": 10000,
-          "enabled": true,
           "group": "",
           "address": "---address---",
           "name": "",
@@ -31,8 +29,6 @@ cacheStatus --details monitors
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,
-          "appearanceRange": 18446744073709551615,
-          "appearanceInterval": 18446744073709551615,
           "sizeInBytes": 18446744073709551615
         }
       ],

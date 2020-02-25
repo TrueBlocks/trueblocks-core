@@ -60,12 +60,15 @@ class COptionsBase {
     blkrange_t scanRange;
     CStringArray notes;
 
-    streambuf* coutBackup;  // saves original cout buffer
-    ofstream redirStream;   // the redirected stream (if any)
-    string_q redirFilename;
-    void closeRedirect(void);
     bool isRedirected(void) const;
 
+  private:
+    streambuf* coutSaved;   // saves original cout buffer
+    ofstream outputStream;  // the redirected stream (if any)
+    string_q outputFilename;
+    void closeRedirect(void);
+
+  public:
     CStringArray commandLines;
     uint64_t minArgs;
     CRuntimeClass* sorts[5];

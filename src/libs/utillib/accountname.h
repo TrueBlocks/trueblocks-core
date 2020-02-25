@@ -40,8 +40,6 @@ class CAccountName : public CBaseNode {
     blknum_t lastExport;
     blknum_t firstAppearance;
     blknum_t latestAppearance;
-    blknum_t appearanceRange;
-    blknum_t appearanceInterval;
     string_q path;
     uint64_t sizeInBytes;
 
@@ -119,8 +117,6 @@ inline void CAccountName::initialize(void) {
     lastExport = 0;
     firstAppearance = 0;
     latestAppearance = 0;
-    appearanceRange = 0;
-    appearanceInterval = 0;
     path = "";
     sizeInBytes = 0;
 
@@ -146,8 +142,6 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     lastExport = ac.lastExport;
     firstAppearance = ac.firstAppearance;
     latestAppearance = ac.latestAppearance;
-    appearanceRange = ac.appearanceRange;
-    appearanceInterval = ac.appearanceInterval;
     path = ac.path;
     sizeInBytes = ac.sizeInBytes;
 

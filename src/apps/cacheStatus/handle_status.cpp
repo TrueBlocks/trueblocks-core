@@ -304,13 +304,6 @@ bool noteMonitor(const string_q& path, void* data) {
             substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
                        ".json", "");
 
-        if (isTestMode()) {
-            mdi.address = "---address---";
-            mdi.curBalance = 10000;
-        } else {
-            mdi.curBalance = (isNodeRunning() ? getBalanceAt(mdi.address) : str_2_BigUint(uint_2_Str(NOPOS)));
-        }
-
         counter->options->getNamedAccount2(mdi, mdi.address);
 
         if (!isTestMode() && endsWith(path, ".acct.bin")) {
@@ -331,15 +324,12 @@ bool noteMonitor(const string_q& path, void* data) {
             }
             mdi.nAppearances = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
-            mdi.appearanceRange = (mdi.latestAppearance - mdi.firstAppearance);
-            mdi.appearanceInterval = (mdi.nAppearances ? (uint32_t)(mdi.appearanceRange / mdi.nAppearances) : 0);
         } else {
             mdi.firstAppearance = NOPOS;
             mdi.latestAppearance = NOPOS;
             mdi.nAppearances = NOPOS;
             mdi.sizeInBytes = NOPOS;
-            mdi.appearanceRange = NOPOS;
-            mdi.appearanceInterval = NOPOS;
+            mdi.address = "---address---";
         }
 
         mdi.deleted = fileExists(substitute(path, ".acct.bin", ".deleted"));

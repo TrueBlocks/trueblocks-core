@@ -26,7 +26,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitorCacheItem : public CAccountWatch {
+class CMonitorCacheItem : public CAccountName {
   public:
     string_q type;
     bool deleted;
@@ -90,7 +90,7 @@ inline void CMonitorCacheItem::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CMonitorCacheItem::initialize(void) {
-    CAccountWatch::initialize();
+    CAccountName::initialize();
 
     type = "";
     deleted = false;
@@ -102,7 +102,7 @@ inline void CMonitorCacheItem::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CMonitorCacheItem::duplicate(const CMonitorCacheItem& mo) {
     clear();
-    CAccountWatch::duplicate(mo);
+    CAccountName::duplicate(mo);
 
     type = mo.type;
     deleted = mo.deleted;

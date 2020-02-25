@@ -160,7 +160,7 @@ bool COptions::handle_scrape(void) {
                         if (f.cntBefore != f.cntAfter) {
                             ostringstream os1;
                             os1 << "acctExport " << f.address << " --freshen";  // << " >/dev/null";
-                            LOG_CALL(os1.str());
+                            LOG_INFO("Calling: ", os1.str());
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                             // clang-format on

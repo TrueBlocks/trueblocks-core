@@ -260,8 +260,6 @@
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
-                  "appearanceInterval": 0,
-                  "appearanceRange": 0,
                   "description": "",
                   "group": "81-Custom",
                   "is_custom": false,
@@ -273,8 +271,6 @@
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
-                  "appearanceInterval": 0,
-                  "appearanceRange": 0,
                   "description": "",
                   "group": "81-Custom",
                   "is_custom": false,

@@ -1345,10 +1345,6 @@ bool freshenTimestampFile(blknum_t minBlock) {
 
 //-----------------------------------------------------------------------
 bool loadTimestampArray(uint32_t** theArray, size_t& cnt) {
-    // We can always get the size if the file exits
-    string_q fn = configPath("ts.bin");
-    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-
     // If user does not tell us where to put the data, we can't process it...
     if (theArray == NULL)
         return false;
@@ -1359,6 +1355,10 @@ bool loadTimestampArray(uint32_t** theArray, size_t& cnt) {
         *theArray = NULL;
         cnt = 0;
     }
+
+    // We can always get the size if the file exits
+    string_q fn = configPath("ts.bin");
+    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
 
     *theArray = new uint32_t[cnt * 2];  // blknum, timestamp both uint32_t
 
