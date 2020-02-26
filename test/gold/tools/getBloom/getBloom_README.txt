@@ -30,6 +30,5 @@ getBloom -th
 `Notes:`
 
 - `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
-- This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 - `special` blocks are detailed under `whenBlock --list`.
 

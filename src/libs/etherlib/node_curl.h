@@ -26,7 +26,7 @@ class CCurlContext {
     bool earlyAbort;
     string_q postData;
     string_q result;
-    string_q provider;
+    string_q dataSource;
     bool is_error;
     size_t theID;
     CURL* curlHandle;
@@ -48,14 +48,22 @@ class CCurlContext {
 };
 
 extern CCurlContext* getCurlContext(void);
+inline void setRpcProvider(const string_q& rpc) {
+    getCurlContext()->baseURL = rpc;
+    getCurlContext()->releaseCurl();
+    getCurlContext()->getCurl();
+}
 
 extern void nodeRequired(void);
 extern void nodeNotRequired(void);
 extern void checkNodeRequired(void);
 extern bool isNodeRunning(void);
 extern bool nodeHasTraces(void);
-extern string_q setDataSource(const string_q& newSrc);
 extern void displayCurlError(const string_q& msg, const string_q& val = "");
+extern string_q setDataSource(const string_q& newSrc);
+inline string_q getDataSource(void) {
+    return setDataSource("");
+}
 
 extern string_q callRPC(const string_q& method, const string_q& params, bool raw);
 extern bool getObjectViaRPC(CBaseNode& node, const string_q& method, const string_q& params);

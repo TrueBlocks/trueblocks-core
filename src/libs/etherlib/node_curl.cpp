@@ -195,7 +195,7 @@ string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 
 //-------------------------------------------------------------------------
 string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
-    PRINTL("perform:\n\tmethod:\t\t" + method + "\n\tparams:\t\t" + params + "\n\tsource:\t\t" + provider);
+    PRINTL("perform:\n\tmethod:\t\t" + method + "\n\tparams:\t\t" + params);
     //        getCurlContext()->methodMap[method]++;
     getCurlContext()->methodCnt++;
     getCurlContext()->setPostData(method, params);
@@ -253,10 +253,10 @@ void checkNodeRequired(void) {
 
 //-------------------------------------------------------------------------
 string_q setDataSource(const string_q& newSrc) {
-    string_q old = getCurlContext()->provider;
+    string_q ret = getCurlContext()->dataSource;
     if (newSrc == "local" || newSrc == "binary")
-        getCurlContext()->provider = newSrc;
-    return old;
+        getCurlContext()->dataSource = newSrc;
+    return ret;
 }
 
 //-------------------------------------------------------------------------

@@ -36,8 +36,8 @@ extern size_t dotDot(char* ptr, size_t size, size_t nmemb, void* userdata);
 //---------------------------------------------------------------------------
 bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message,
                    uint64_t step) {
-    string_q dataSource;
-    string_q cacheFile = source.getDatabasePath(dataSource);
+    string_q theSource;
+    string_q cacheFile = source.getDatabasePath(theSource);
 
     // Load and possibly refresh the price database
     time_q lastRead = time_q(2015, 1, 1, 0, 0, 0);
@@ -45,7 +45,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         lastRead = time_q(2009, 1, 1, 0, 0, 0);
 
     if (!fileExists(cacheFile)) {
-        string_q zipFile = configPath("cache/prices/") + dataSource + "_" + source.pair + ".bin.gz";
+        string_q zipFile = configPath("cache/prices/") + theSource + "_" + source.pair + ".bin.gz";
         if (zipFile != cacheFile + ".gz") {
             string_q cmd = "cp -f " + zipFile + " " + cacheFile + ".gz";
             cmd += (" ; cd " + getCachePath("prices/") + " ; gunzip *.gz");

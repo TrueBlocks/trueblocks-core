@@ -16,22 +16,18 @@ int nn = 0;
 bool COptions::exportBalances(void) {
     ENTER8("exportBalances");
 
-    // If the node we're running against does not provide balances...
     bool nodeHasBals = nodeHasBalances(false);
     string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
     if (!nodeHasBals) {
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
 
         // ...and the user has told us about another balance provider...
-        if (rpcProvider == balanceProvider || balanceProvider.empty()) {
-            EXIT_FAIL("Balances not available.");
-        }
+        if (rpcProvider == balanceProvider || balanceProvider.empty())
+            EXIT_FAIL("The RPC server does not have historical state. Quitting...");
 
-        // ..then we release the curl context, change the node server, and get a new context. We will replace this
-        // below.
-        getCurlContext()->baseURL = balanceProvider;
-        getCurlContext()->releaseCurl();
-        getCurlContext()->getCurl();
+        setRpcProvider(balanceProvider);
+        if (!nodeHasBalances(false))
+            return usage("balanceServer set but it does not have historical state. Quitting...");
     }
 
     bool isJson =
@@ -153,11 +149,8 @@ bool COptions::exportBalances(void) {
         cout << "]";
 
     // return to the default provider
-    if (!nodeHasBals) {
-        getCurlContext()->baseURL = rpcProvider;
-        getCurlContext()->releaseCurl();
-        getCurlContext()->getCurl();
-    }
+    if (!nodeHasBals)
+        setRpcProvider(rpcProvider);
 
     EXIT_NOMSG8(true);
 }

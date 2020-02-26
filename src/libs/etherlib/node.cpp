@@ -19,7 +19,7 @@ namespace qblocks {
 // TODO(tjayrush): global data
 static QUITHANDLER theQuitHandler = NULL;
 //-------------------------------------------------------------------------
-void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
+void etherlib_init(QUITHANDLER qh) {
     {
         // Keep the frame
         mutex aMutex;
@@ -36,7 +36,7 @@ void etherlib_init(const string_q& sourceIn, QUITHANDLER qh) {
     extern void loadParseMap(void);
     loadParseMap();
 
-    getCurlContext()->provider = ((sourceIn == "local") ? "local" : "binary");
+    setDataSource("binary");
 
     // if curl has already been initialized, we want to clear it out
     getCurlContext()->releaseCurl();
@@ -132,9 +132,9 @@ bool getBlock_header(CBlock& block, blknum_t bn) {
 
 //-------------------------------------------------------------------------
 bool getBlock(CBlock& block, blknum_t blockNum) {
-    getCurlContext()->provider = fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local";
+    string_q prev = setDataSource(fileExists(getBinaryCacheFilename(CT_BLOCKS, blockNum)) ? "binary" : "local");
     bool ret = queryBlock(block, uint_2_Str(blockNum), true);
-    getCurlContext()->provider = "binary";
+    setDataSource(prev);
     return ret;
 }
 
@@ -302,7 +302,7 @@ bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
 
     } else {
         uint64_t num = str_2_Uint(datIn);
-        if (getCurlContext()->provider == "binary" && fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
+        if (getDataSource() == "binary" && fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0) {
             block = CBlock();
             return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));
         }
@@ -979,8 +979,6 @@ string_q scraperStatus(bool terse) {
     ostringstream pNeighbors;
     pNeighbors << showLastBlocks(pRipe - pUnripe, pStaging - pRipe, pFinalized - pStaging, 0, 0);
 
-    string_q rpcProvider = getCurlContext()->baseURL;
-
 #define showOne(a, b) cYellow << (isTestMode() ? a : b) << cOff
 #define showOne1(a) showOne(a, a)
 
@@ -988,7 +986,7 @@ string_q scraperStatus(bool terse) {
     if (!terse) {
         os << cGreen << "  Client version:     " << showOne("--version--", getVersionFromClient()) << endl;
         os << cGreen << "  Trueblocks version: " << showOne1(getVersionStr()) << endl;
-        os << cGreen << "  RPC provider:       " << showOne("--rpc_provider--", rpcProvider) << endl;
+        os << cGreen << "  RPC provider:       " << showOne("--rpc_provider--", getCurlContext()->baseURL) << endl;
         os << cGreen << "  Cache location:     " << showOne("--cache_dir--", getCachePath("")) << endl;
         os << cGreen << "  Host (user):        " << showOne("--host (user)--", hostUser) << endl;
         os << cGreen << "  Heights:            " << heights.str() << endl;

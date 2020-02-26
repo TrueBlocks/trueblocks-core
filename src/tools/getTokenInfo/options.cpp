@@ -123,18 +123,17 @@ bool COptions::parseArguments(string_q& command) {
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;
+    // fall through...
 
-    // We need history, so try to get a different server. Fail silently. The user will be warned in the response
+    // We need history, we don't have it, so try a different server. Fail silently. The user will be warned in the
+    // response
     string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
     string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
     if (rpcProvider == balanceProvider || balanceProvider.empty())
         return true;
 
     // We release the curl context so we can set it to the new context.
-    getCurlContext()->baseURL = balanceProvider;
-    getCurlContext()->releaseCurl();
-    getCurlContext()->getCurl();
-
+    setRpcProvider(balanceProvider);
     return true;
 }
 
@@ -167,7 +166,6 @@ COptions::COptions(void) : CHistoryOptions() {
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
     notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");

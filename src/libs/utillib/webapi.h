@@ -15,6 +15,6 @@
 
 namespace qblocks {
 
-string_q getApiKey(const string_q& provider, const string_q& signup);
+string_q getApiKey(const string_q& apiName, const string_q& signup);
 
 }  // namespace qblocks

@@ -15,8 +15,8 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-string_q getApiKey(const string_q& provider, const string_q& signup) {
-    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(provider) + "_key", "<NOT_SET>");
+string_q getApiKey(const string_q& apiName, const string_q& signup) {
+    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(apiName) + "_key", "<NOT_SET>");
     if (!key.empty() && key != "<NOT_SET>")
         return key;
 
@@ -24,7 +24,7 @@ string_q getApiKey(const string_q& provider, const string_q& signup) {
     bzero(buffer, sizeof(buffer));
 
     cerr << endl << cRed << "  ***Warning***" << cOff << endl;
-    cerr << "  This program needs an api_key from " + provider + " in order to work. You may get one at" << endl;
+    cerr << "  This program needs an api_key from " + apiName + " in order to work. You may get one at" << endl;
     cerr << "  " + signup + ". See our online help file for more information. Please" << endl;
     cerr << "  provide an API key or type 'exit'" << endl;
     cerr << "  > ";

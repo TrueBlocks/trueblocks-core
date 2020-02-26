@@ -163,7 +163,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12620,tools,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
 12640,tools,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
 12882,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12884,tools,blocks,getBlock,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 12886,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
 12680,tools,blooms,getBloom,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
@@ -178,7 +177,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12860,tools,blooms,getBloom,force,o,,false,false,false,false,local,switch,<boolean>,force a re-write of the bloom to the cache
 12880,tools,blooms,getBloom,,,,false,false,true,true,--,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
 12882,tools,blooms,getBloom,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12884,tools,blooms,getBloom,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 12886,tools,blooms,getBloom,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
 12920,tools,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
@@ -186,7 +184,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12960,tools,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the local cache or a running node.
 12960,tools,logs,getLogs,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 12964,tools,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-12966,tools,logs,getLogs,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 12968,tools,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
 13000,tools,receipts,getReceipt,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
@@ -195,7 +192,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13060,tools,receipts,getReceipt,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the local cache or a running node.
 13062,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13066,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13068,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 13070,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
 13100,tools,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
@@ -203,11 +199,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13140,tools,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
 13160,tools,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13200,tools,state,getState,no_history,s,,false,false,false,false,local,switch,<boolean>,for testing only&#44; hide the server's historical state
 13220,tools,state,getState,,,,false,false,true,true,--,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
 13222,tools,state,getState,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 13224,tools,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-13226,tools,state,getState,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 13228,tools,state,getState,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13230,tools,state,getState,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 13232,tools,state,getState,,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
@@ -221,7 +215,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13360,tools,tokens,getTokenInfo,,,,false,false,true,true,--,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
 13362,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 13364,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-13366,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 13368,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
 13370,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
@@ -234,7 +227,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13500,tools,traces,getTrace,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the local cache or a running node.
 13622,tools,traces,getTrace,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,traces,getTrace,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13626,tools,traces,getTrace,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 13629,tools,traces,getTrace,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
 13540,tools,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
@@ -245,7 +237,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13620,tools,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve an Ethereum transaction from the local cache or a running node.
 13622,tools,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13626,tools,transactions,getTrans,,,,false,false,false,false,--,note,,This tool retrieves information from the local node or rpcProvider if configured (see documentation).
 13629,tools,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
 13660,tools,abi,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan

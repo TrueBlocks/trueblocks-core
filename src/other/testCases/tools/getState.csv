@@ -12,7 +12,6 @@ on, both, fast, state, tools/getState, invalid_address_1,              y, addrs 
 on, both, fast, state, tools/getState, invalid_address_2,              y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
 on, both, fast, state, tools/getState, invalid_block_1,                y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 fdfsdf
 
-on, both, fast, state, tools/getState, dao_1500000,                    n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1500000 & fmt = txt & no_history
 on, both, fast, state, tools/getState, two_accts,                      y, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 & fmt = api
 on, both, fast, state, tools/getState, tip_4,                          y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & blocks = 1500000 2000000 2500000 3000000
 on, both, fast, state, tools/getState, multiple_accounts,              y, addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 0x6f46cf5569aefa1acc1009290c8e043747172d89 & blocks = 4000000
@@ -114,5 +113,4 @@ on, cmd,  fast, state, tools/getState, from_file,                      y, file:c
 # ./tools/getState/options.cpp:    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),
 # ./tools/getState/options.cpp:    COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
 # ./tools/getState/options.cpp:    COption("mode", "m", "enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]", OPT_FLAG, "control which state to export"),
-# ./tools/getState/options.cpp:    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
 # ./tools/getState/options.cpp:    COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),

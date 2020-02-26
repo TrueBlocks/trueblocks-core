@@ -148,7 +148,6 @@ COptions::COptions(void) {
     // clang-format off
     notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     // clang-format on
     // END_CODE_NOTES

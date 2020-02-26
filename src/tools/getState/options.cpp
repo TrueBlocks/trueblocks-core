@@ -25,7 +25,6 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("no_history", "s", "", OPT_HIDDEN | OPT_SWITCH, "for testing only, hide the server's historical state"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,7 +39,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray parts;
-    bool no_history = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -61,9 +59,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
-
-        } else if (arg == "-s" || arg == "--no_history") {
-            no_history = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -153,22 +148,16 @@ bool COptions::parseArguments(string_q& command) {
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;
 
-    if ((isTestMode() && no_history) || !nodeHasBalances(false)) {
-        // The user requested history, so try to get a different server. Fail silently. The user will be warned in the
-        // response
+    if (!nodeHasBalances(false)) {
+        // User requested history, but we have none. Try something else if available
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
-        if ((isTestMode() && no_history) || (rpcProvider == balanceProvider || balanceProvider.empty()))
-            return usage(
-                "Request asks for historical state, but the RPC server does not have historical state. Quitting...");
+        if (rpcProvider == balanceProvider || balanceProvider.empty())
+            return usage("The RPC server does not have historical state. Quitting...");
 
-        getCurlContext()->baseURL = balanceProvider;
-        getCurlContext()->releaseCurl();  // We release the curl context so we can set it to the new context.
-        getCurlContext()->getCurl();
+        setRpcProvider(balanceProvider);
         if (!nodeHasBalances(false))
-            return usage(
-                "Request asks for historical state and has 'balanceServer' set, but that server does not have history "
-                "state. Quitting...");
+            return usage("balanceServer set but it does not have historical state. Quitting...");
     }
 
     return true;
@@ -203,7 +192,6 @@ COptions::COptions(void) : CHistoryOptions() {
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
     notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");

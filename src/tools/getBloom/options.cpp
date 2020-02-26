@@ -174,7 +174,6 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("This tool retrieves information from the local node or rpcProvider if configured (see documentation).");  // NOLINT
     notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
     // clang-format on
     // END_CODE_NOTES
