@@ -1042,7 +1042,7 @@ void COptionsBase::closeRedirect(void) {
         coutSaved = NULL;
         if (zipOnClose) {
             ostringstream os;
-            os << "gzip " << outputFilename;
+            os << "gzip -fv " << outputFilename;
             if (system(os.str().c_str())) {
             }  // Don't remove cruft. Silences compiler warnings
             zipOnClose = false;
@@ -1063,6 +1063,7 @@ string_q cleanFmt(const string_q& str) {
     return ret;
 }
 
+//-----------------------------------------------------------------------
 const char* STR_DEFAULT_WHENBLOCKS =
     "[ "
     "{ name: \"first\", value: 0 },"

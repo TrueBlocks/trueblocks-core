@@ -384,6 +384,7 @@ void COptions::Init(void) {
 
     nExported = 0;
     scanRange.second = getLatestBlock_cache_ripe();
+    items.clear();
 
     minArgs = 0;
 }
