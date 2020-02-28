@@ -7,6 +7,7 @@ ethNames --named --custom --fmt csv
 "81-Custom","0x0000000000000000000000000000000000000004","Account_4","AC_4"
 "30-Contracts","0x0000000000001b84b1cb32787b0d64758d019317","Homework",""
 "50-Tokens","0x0000000000085d4780b73119b644ae5ecd22b376","TrueUSD","TUSD"
+"34-ENS","0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e","ENS: Base Registrar (New)",""
 "30-Contracts","0x00000000dd05dd05dd05dd05dd05dd05dd05dd05","Falsified Address Because of Ddos",""
 "90-DevCon2:Individual","0x000001f568875f378bf6d170b790967fe429c81a","BokkyPooBah",""
 "60-Airdrops","0x000ee67d5bec37ad37292da18516cc96d81e0242","VIU Airdrop Sender",""
@@ -201,4 +202,3 @@ ethNames --named --custom --fmt csv
 "50-Tokens","0x1961b3331969ed52770751fc718ef530838b6dee","BitDegree","BDG"
 "50-Tokens","0x1966d718a565566e8e202792658d7b5ff4ece469","nDEX","NDX"
 "50-Tokens","0x1985365e9f78359a9b6ad760e32412f4a445e862","Reputation","REP"
-"80-Malicious","0x1992764a6fd30ad0ad6ec665b3483838acb02fba","Possibly Malicious 0x199",""

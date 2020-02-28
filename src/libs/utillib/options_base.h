@@ -97,8 +97,9 @@ class COptionsBase {
     bool loadPrefunds(void);
 
     // supporting named accounts
-    CAccountNameArray namedAccounts2;
-    bool getNamedAccount2(CAccountName& acct, const string_q& addr);
+    CAccountNameArray namedAccounts;
+    bool getNamedAccount(CAccountName& acct, const string_q& addr);
+    string_q findNameByAddress(const string_q& addr);
 
     // enabling options
     bool isEnabled(uint32_t q) const;

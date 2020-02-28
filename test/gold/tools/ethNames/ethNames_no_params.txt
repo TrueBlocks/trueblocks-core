@@ -3,6 +3,7 @@ ethNames
 group	address	name	symbol
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	Homework
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD
+34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Base Registrar (New)
 30-Contracts	0x00000000dd05dd05dd05dd05dd05dd05dd05dd05	Falsified Address Because of Ddos
 90-DevCon2:Individual	0x000001f568875f378bf6d170b790967fe429c81a	BokkyPooBah
 60-Airdrops	0x000ee67d5bec37ad37292da18516cc96d81e0242	VIU Airdrop Sender
@@ -201,4 +202,3 @@ group	address	name	symbol
 60-Airdrops	0x19a2f57f30206f7343ee5928c32bae3f2bfacbcd	CGCX Airdrop Sender
 50-Tokens	0x19b67f79f8c5d49e950a8754f95aaea93309dcae	HGK Token
 50-Tokens	0x1a0f2ab46ec630f9fd638029027b552afa64b94c	Aston X	ATX
-80-Malicious	0x1a2a44a10624bea74988d877e770d56a14a258b4	Possibly Malicious 0x1a2

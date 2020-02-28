@@ -56,6 +56,15 @@ ethNames --named --custom --owned --fmt api
     "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
   },
   {
+    "group": "34-ENS",
+    "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
+    "name": "ENS: Base Registrar (New)",
+    "symbol": "",
+    "source": "TrueBlocks.io",
+    "logo": "",
+    "description": ""
+  },
+  {
     "group": "30-Contracts",
     "address": "0x00000000dd05dd05dd05dd05dd05dd05dd05dd05",
     "name": "Falsified Address Because of Ddos",
@@ -1800,15 +1809,6 @@ ethNames --named --custom --owned --fmt api
     "source": "Etherscan.io",
     "logo": "augur.png",
     "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
-  },
-  {
-    "group": "80-Malicious",
-    "address": "0x1992764a6fd30ad0ad6ec665b3483838acb02fba",
-    "name": "Possibly Malicious 0x199",
-    "symbol": "",
-    "source": "TrueBlocks.io",
-    "logo": "",
-    "description": ""
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

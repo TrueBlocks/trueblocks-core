@@ -66,27 +66,9 @@ bool COptionsBase::loadPrefunds(void) {
     return true;
 }
 
-extern bool loadNames(COptionsBase& options);
-//-----------------------------------------------------------------------
-bool COptionsBase::getNamedAccount2(CAccountName& acct, const string_q& addr) {
-    if (!loadNames(*this))
-        return false;
-
-    using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
-    CAccountName search;
-    search.address = addr;
-    ResultPair range = equal_range(namedAccounts2.begin(), namedAccounts2.end(), search);
-    if (range.first == namedAccounts2.end() || range.first->address != addr)
-        return false;
-    acct = *range.first;
-    return true;
-}
-
-// group(30)    address (42)    name (80)    symbol (10)    source (80)    logo (80)    description (300)
-
 //-----------------------------------------------------------------------
 bool loadNames(COptionsBase& options) {
-    if (options.namedAccounts2.size() > 0)
+    if (options.namedAccounts.size() > 0)
         return true;
 
     string_q txtFile = configPath("names/names.txt");
@@ -106,7 +88,7 @@ bool loadNames(COptionsBase& options) {
         LOG4("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> options.namedAccounts2;
+            nameCache >> options.namedAccounts;
             nameCache.Release();
             return true;
         }
@@ -122,7 +104,7 @@ bool loadNames(COptionsBase& options) {
         if (!startsWith(line, '#') && contains(line, "0x")) {
             CAccountName account;
             account.parseText(txtFields, line);
-            options.namedAccounts2.push_back(account);
+            options.namedAccounts.push_back(account);
         }
     }
 
@@ -134,7 +116,7 @@ bool loadNames(COptionsBase& options) {
             CAccountName account;
             account.parseText(txtFields, line);
             account.is_custom = true;
-            options.namedAccounts2.push_back(account);
+            options.namedAccounts.push_back(account);
         }
     }
 
@@ -153,19 +135,46 @@ bool loadNames(COptionsBase& options) {
             account.group = "80-Prefund";
             account.name = "Prefund_" + padNum4(cnt++);
             account.source = "Genesis";
-            options.namedAccounts2.push_back(account);
+            options.namedAccounts.push_back(account);
         }
     }
 
-    sort(options.namedAccounts2.begin(), options.namedAccounts2.end());
+    sort(options.namedAccounts.begin(), options.namedAccounts.end());
 
     LOG4("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << options.namedAccounts2;
+        nameCache << options.namedAccounts;
         nameCache.Release();
     }
 
     return true;
 }
+
+//-----------------------------------------------------------------------
+using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
+
+//-----------------------------------------------------------------------
+string_q COptionsBase::findNameByAddress(const string_q& addr) {
+    CAccountName search;
+    search.address = addr;
+    return (getNamedAccount(search, addr) ? search.name : addr);
+}
+
+//-----------------------------------------------------------------------
+bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
+    if (!loadNames(*this))
+        return false;
+
+    CAccountName search;
+    search.address = addr;
+    ResultPair range = equal_range(namedAccounts.begin(), namedAccounts.end(), search);
+    if (range.first == namedAccounts.end() || range.first->address != addr)
+        return false;
+    acct = *range.first;
+    return true;
+}
+
+// group(30)    address (42)    name (80)    symbol (10)    source (80)    logo (80)    description (300)
+
 }  // namespace qblocks

@@ -929,7 +929,8 @@
 34-ENS	0xd3ddccdd3b25a8a7423b5bee360a42146eb4baf3	ENS: New Public Resolver		TrueBlocks.io		
 34-ENS	0xda5c1cb1f005a69df23f21ee546cd937f4605f10	ENS: Related		TrueBlocks.io		
 34-ENS	0xf0ad5cad05e10572efceb849f6ff0c68f9700455	ENS: ETH Registrar Controller 		TrueBlocks.io		
-34-ENS	0xfac7bea255a6990f749363002136af6556b31e04	ENS: Base Registrar Implementation		TrueBlocks.io		
+34-ENS	0xfac7bea255a6990f749363002136af6556b31e04	ENS: Base Registrar (Outdated)		TrueBlocks.io		
+34-ENS	0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e	ENS: Base Registrar (New)		TrueBlocks.io		
 34-Humanity DAO	0x0022f267eb8a8463c241e3bd23184e0c7dc783f3	_Sinan_W_		https://www.humanitydao.org/humans		
 34-Humanity DAO	0x00322ff8e13aa9048e0e0104415cca7455a61e90	April31804088		https://www.humanitydao.org/humans		
 34-Humanity DAO	0x007ab8fe04ad2863cb6881caa6744d522c532b71	LiGnosis		https://www.humanitydao.org/humans		

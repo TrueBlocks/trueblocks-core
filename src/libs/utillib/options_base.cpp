@@ -1007,7 +1007,7 @@ COptionsBase::COptionsBase(void) {
     hiDown = (isTestMode() ? "" : cOff);
     arguments.clear();
     commandLines.clear();
-    namedAccounts2.clear();
+    namedAccounts.clear();
     pParams = NULL;
     cntParams = 0;
     coutSaved = NULL;

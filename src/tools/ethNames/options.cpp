@@ -232,7 +232,7 @@ COptions::COptions(void) {
     // If you need the names file, you have to add it in the constructor
     establishFolder(configPath("names/"));
     CAccountName acct;
-    getNamedAccount2(acct, "0x0");  // loads names database
+    getNamedAccount(acct, "0x0");  // loads names database
     Init();
     // BEG_CODE_NOTES
     // clang-format off
@@ -355,7 +355,7 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto item : namedAccounts2) {
+            for (auto item : namedAccounts) {
                 if (item.is_custom)
                     addIfUnique(item);
             }
@@ -364,7 +364,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & NAMED) {
-        for (auto item : namedAccounts2) {
+        for (auto item : namedAccounts) {
             if (!item.is_custom && !item.is_prefund && !startsWith(item.group, "81-Other"))
                 addIfUnique(item);
         }
@@ -372,7 +372,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & PREFUND) {
-        for (auto item : namedAccounts2) {
+        for (auto item : namedAccounts) {
             if (item.is_prefund)
                 addIfUnique(item);
         }
@@ -380,7 +380,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (!isTestMode() && (types & OTHER)) {
-        for (auto item : namedAccounts2) {
+        for (auto item : namedAccounts) {
             if (startsWith(item.group, "81-Other"))
                 addIfUnique(item);
         }
