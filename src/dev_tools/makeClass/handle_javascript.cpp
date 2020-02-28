@@ -38,9 +38,8 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
     page.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
     page.no_error = toml.getConfigBool("settings", "no_error", false);
     page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
-    page.no_table = page.no_data || toml.getConfigBool("settings", "no_table", false);
+    page.dat_table = toml.getConfigBool("settings", "dat_table", false);
     page.obj_table = toml.getConfigBool("settings", "obj_table", false);
-    page.obj_nav = toml.getConfigBool("settings", "obj_nav", false);
     page.no_dash = classDef.base_lower % "dashboard";
     page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
@@ -251,9 +250,9 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
             include = false;
         if (page.no_data && contains(line, "[{NO_DATA}]"))
             include = false;
-        if ((page.no_table || page.obj_table) && contains(line, "[{NO_DT}]"))
+        if (!page.dat_table && contains(line, "[{NO_DT}]"))
             include = false;
-        if ((page.no_table || !page.obj_table) && contains(line, "[{NO_OBJ}]"))
+        if (!page.obj_table && contains(line, "[{NO_OBJ}]"))
             include = false;
         if (!page.has_text && contains(line, "[{NO_TEXT}]"))
             include = false;
@@ -268,8 +267,6 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     replaceAll(code, "[{NO_DT}]", "");
     replaceAll(code, "[{NO_OBJ}]", "");
     replaceAll(code, "[{NO_TEXT}]", "");
-    if (page.obj_nav)
-        replaceAll(code, "showNav={false}", "showNav={true}");
 
     replaceAll(code, "[{CONNECT}]", page.polling ? STR_EXPORT_2 : STR_EXPORT_1);
     replaceAll(code, "[{LOWER}]", page.longName);
