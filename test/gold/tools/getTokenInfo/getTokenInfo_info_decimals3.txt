@@ -3,10 +3,8 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 [
 {
     "decimals": "18"
-}
-,
+},
 {
     "decimals": "18"
 }
-
 ]

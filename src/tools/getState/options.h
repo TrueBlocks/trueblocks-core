@@ -34,6 +34,7 @@ class COptions : public CHistoryOptions {
     biguint_t prevBal;
     wei_t deminimus;
     bool first;
+    blknum_t latestBlock;
 
     COptions(void);
     ~COptions(void);

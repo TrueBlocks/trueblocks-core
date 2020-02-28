@@ -343,5 +343,62 @@ const char* STR_DISPLAY_TOKENSTATE_ERC20 = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+string getTokenBalanceOf(const CTokenState_erc20& token, const address_t& holder, blknum_t blockNum) {
+    string_q encoding = "0x70a08231";
+
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"" << encoding << padLeft(extract(holder, 2), 64, '0') << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+
+    CFunction ret;
+    token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
+    return ret.outputs.size() ? ret.outputs[0].value : "";
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenState(const string_q& what, const CTokenState_erc20& token, blknum_t blockNum) {
+    map<string_q, string_q> sigMap;
+    sigMap["totalSupply"] = "0x18160ddd";
+    sigMap["decimals"] = "0x313ce567";
+    sigMap["version"] = "0x54fd4d50";
+    sigMap["symbol"] = "0x95d89b41";
+    sigMap["name"] = "0x06fdde03";
+
+    string_q encoding;
+    ostringstream os;
+    if (what % "all") {
+        const CStringArray options = {"name", "totalSupply", "decimals", "version", "symbol"};
+        for (auto opt : options) {
+            encoding = sigMap[opt];
+
+            ostringstream cmd;
+            cmd << "[{";
+            cmd << "\"to\": \"" << token.address << "\", ";
+            cmd << "\"data\": \"" << encoding << "\"";
+            cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+
+            CFunction ret;
+            token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
+            os << "\"" << opt << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\",\n";
+        }
+        return "{\n\t" + trim(substitute(trim(trim(os.str(), '\n'), ',') + "\n", "\n", "\n\t"), '\t') + "}";
+    }
+
+    encoding = sigMap[what];
+
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"" << encoding << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+
+    string_q result = callRPC("eth_call", cmd.str(), false);
+    CFunction ret;
+    token.abi_spec.articulateOutputs(encoding, result, ret);
+    os << "{\n    \"" << what << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}";
+    return os.str();
+}
 // EXISTING_CODE
 }  // namespace qblocks

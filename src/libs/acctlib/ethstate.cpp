@@ -490,9 +490,10 @@ static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, b
 
 //-------------------------------------------------------------------------------------
 blknum_t getDeployBlock(const address_t& addr) {
-    if (!isContractAt(addr))
+    blknum_t latest = getLatestBlock_client();
+    if (!isContractAt(addr, latest))
         return NOPOS;
-    blknum_t num = findCodeAt_binarySearch(addr, 0, getLatestBlock_client());
+    blknum_t num = findCodeAt_binarySearch(addr, 0, latest);
     return (num ? num + 1 : NOPOS);
 }
 // EXISTING_CODE

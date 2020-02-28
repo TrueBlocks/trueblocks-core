@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Input argument appears to be invalid. No such skip marker: a:b"
+    "chifra - Input (a b c) does not include a valid Ethereum address. Quitting..."
   ]
 }

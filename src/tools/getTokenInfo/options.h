@@ -30,7 +30,7 @@ class COptions : public CHistoryOptions {
     bool no_zero;
     // END_CODE_DECLARE
 
-    CTokenState_erc20Array watches;
+    CTokenState_erc20Array tokens;
     CAddressArray holders;
 
     COptions(void);
@@ -38,7 +38,8 @@ class COptions : public CHistoryOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-};
 
-extern bool isValidInfo(const string_q which, string_q& result);
-extern const CStringArray infoOptions;
+    void reportByParts(void);
+    void reportByToken(void);
+    void reportByAccount(void);
+};

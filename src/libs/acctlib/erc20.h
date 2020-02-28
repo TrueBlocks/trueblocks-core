@@ -160,5 +160,7 @@ extern const char* STR_DISPLAY_TOKENSTATE_ERC20;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern string_q getTokenBalanceOf(const CTokenState_erc20& token, const address_t& holder, blknum_t block);
+extern string_q getTokenState(const string_q& what, const CTokenState_erc20& token, blknum_t block);
 // EXISTING_CODE
 }  // namespace qblocks

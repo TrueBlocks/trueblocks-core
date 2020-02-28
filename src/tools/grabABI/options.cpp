@@ -49,6 +49,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
+    blknum_t latest = getLatestBlock_client();
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
@@ -89,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please supply at least one Ethereum address.\n");
 
     for (auto a : addrs) {
-        if (!isContractAt(a) &&
+        if (!isContractAt(a, latest) &&
             a != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to
                                                                   // ignore during testing
             cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;

@@ -31,7 +31,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool isTokenContract(const address_t& addr);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -94,15 +93,15 @@ bool COptions::parseArguments(string_q& command) {
             CTokenState_erc20 watch;
             watch.address = addr;
             watch.abi_spec.loadAbiByAddress(addr);
-            watches.push_back(watch);
+            tokens.push_back(watch);
             lastItem = addr;
         } else {
             // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
-            if (watches.empty()) {
+            if (tokens.empty()) {
                 CTokenState_erc20 watch;
                 watch.address = addr;
                 watch.abi_spec.loadAbiByAddress(addr);
-                watches.push_back(watch);
+                tokens.push_back(watch);
             } else {
                 holders.push_back(addr);
             }
@@ -112,13 +111,13 @@ bool COptions::parseArguments(string_q& command) {
     // if parts is not empty, all addresses are tokens
     if (by_acct && (parts.empty() || parts == "balanceOf")) {
         // remove the last one and push it on the holders array
-        watches.pop_back();
+        tokens.pop_back();
         holders.push_back(lastItem);
     }
 
-    for (auto watch : watches) {
-        if (!isTokenContract(watch.address))
-            return usage("Address '" + watch.address + "' does not appear to be a token smart contract. Quitting...");
+    for (auto token : tokens) {
+        if (!isContractAt(token.address, latest))
+            return usage("Address '" + token.address + "' does not appear to be a token smart contract. Quitting...");
     }
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
@@ -149,7 +148,7 @@ void COptions::Init(void) {
     no_zero = false;
     // END_CODE_INIT
 
-    watches.clear();
+    tokens.clear();
     holders.clear();
 
     optionOff(OPT_DOLLARS | OPT_ETHER);
@@ -178,11 +177,4 @@ COptions::COptions(void) : CHistoryOptions() {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool isTokenContract(const address_t& addr) {
-    if (!isContractAt(addr))
-        return false;
-    return true;
 }

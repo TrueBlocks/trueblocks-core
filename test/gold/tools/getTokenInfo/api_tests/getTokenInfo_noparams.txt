@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Not enough arguments presented."
+    "chifra - Input does not include a valid Ethereum address. Quitting..."
   ]
 }

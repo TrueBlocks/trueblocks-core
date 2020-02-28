@@ -42,7 +42,8 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    latestBlock = getLatestBlock_client();
+    blknum_t latest = latestBlock;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {

@@ -51,7 +51,6 @@ class CAccountWatch : public CAccountName {
     bloom_t bloom;
     bool inBlock;
     CArchive* tx_cache;
-    string_q extra_data;
     void writeLastBlock(blknum_t bn);
     void writeLastExport(blknum_t bn);
     void writeAnArray(const CAppearanceArray_base& array);
@@ -144,7 +143,6 @@ inline void CAccountWatch::initialize(void) {
     bloom = 0;
     inBlock = false;
     tx_cache = NULL;
-    extra_data = "";
     // EXISTING_CODE
 }
 
@@ -165,7 +163,6 @@ inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
     bloom = ac.bloom;
     inBlock = ac.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
-    extra_data = ac.extra_data;
     // EXISTING_CODE
 }
 

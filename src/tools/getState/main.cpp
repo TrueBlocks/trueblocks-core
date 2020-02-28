@@ -73,17 +73,17 @@ bool visitBlock(uint64_t blockNum, void* data) {
     if (opt->modeBits & ST_NONCE)
         state.nonce = getNonceAt(state.address, blockNum);
     if (opt->modeBits & ST_CODE) {
-        string_q code = getCodeAt(state.address);
+        string_q code = getCodeAt(state.address, opt->latestBlock);
         state.code = code;
         if (code.length() > 250 && !verbose)
             state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
     }
     if (opt->modeBits & ST_STORAGE)
-        state.storage = getStorageAt(state.address, 0);
+        state.storage = getStorageAt(state.address, 0, opt->latestBlock);
     if (opt->modeBits & ST_DEPLOYED)
         state.deployed = getDeployBlock(state.address);
     if (opt->modeBits & ST_ACCTTYPE)
-        state.accttype = (isContractAt(state.address) ? "Contract" : "EOA");
+        state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
 
     if (true) {
         if (isText) {
