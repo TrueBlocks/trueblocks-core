@@ -121,6 +121,9 @@ extern bool isDate(const string_q& date);
 extern bool isHash(const hash_t& hashIn);
 extern bool isUnsigned(const string_q& in);
 
+//--------------------------------------------------------------------
+extern bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2);
+
 typedef enum { NODIR, PREV, NEXT } direction_t;
 
 }  // namespace qblocks

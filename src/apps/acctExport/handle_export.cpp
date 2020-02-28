@@ -151,14 +151,16 @@ bool COptions::exportData(void) {
                     } else if (logs) {
                         // acctExport --logs
                         for (auto log : trans.receipt.logs) {
-                            if (isJson && shouldDisplay && !first)
-                                cout << ", ";
-                            if (articulate)
-                                abis.articulateLog(&log);
-                            nExported++;
-                            if (shouldDisplay)
-                                cout << log.Format() << endl;
-                            first = false;
+                            if (!emitter || log.address == monitors[0].address) {
+                                if (isJson && shouldDisplay && !first)
+                                    cout << ", ";
+                                if (articulate)
+                                    abis.articulateLog(&log);
+                                nExported++;
+                                if (shouldDisplay)
+                                    cout << log.Format() << endl;
+                                first = false;
+                            }
                         }
 
                     } else {
@@ -189,7 +191,7 @@ bool COptions::exportData(void) {
     if (grab_abis) {
         // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
         for (pair<address_t, bool> item : abiMap) {
-            if (isContractAt(item.first)) {
+            if (isContractAt(item.first, latestBlock)) {
                 CAbi unused;
                 loadAbiAndCache(unused, item.first, false, errors);
                 cerr << "ABI for " << item.first << " ";

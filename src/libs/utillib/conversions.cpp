@@ -760,4 +760,9 @@ string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
     return ret;
 }
 
+//----------------------------------------------------------------------------
+bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2) {
+    return !(r1.second < r2.first || r1.first > r2.second);
+}
+
 }  // namespace qblocks

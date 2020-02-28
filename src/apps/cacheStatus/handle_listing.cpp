@@ -41,7 +41,7 @@ bool COptions::handle_listing(ostream& os) {
             replace(file, getMonitorPath(""), "");
             CAccountName item;
             item.address = nextTokenClear(file, '.');
-            getNamedAccount2(item, item.address);
+            getNamedAccount(item, item.address);
             item.name = substitute(substitute(item.name, "(", ""), ")", "");
             item.path = substitute(getMonitorPath(item.address), getCachePath(""), "./");
             item.sizeInBytes = fileSize(getMonitorPath(item.address));

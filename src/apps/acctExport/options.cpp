@@ -57,7 +57,8 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLatestBlock_client();
+    latestBlock = getLatestBlock_client();
+    blknum_t latest = latestBlock;
     string_q origCmd = command;
 
     Init();
@@ -185,7 +186,6 @@ bool COptions::parseArguments(string_q& command) {
         watch.setValueByName("address", toLower(addr));
         // above - don't change, sets bloom value also
         watch.setValueByName("name", toLower(addr));
-        watch.extra_data = getVersionStr() + "/" + watch.address;
         watch.finishParse();
         monitors.push_back(watch);
     }
@@ -201,6 +201,12 @@ bool COptions::parseArguments(string_q& command) {
 
     if ((appearances + receipts + logs + traces + balances + hashes_only) > 1)
         EXIT_USAGE("Please export only one of list, receipts, logs, traces, balances or hashes_only. Quitting...");
+
+    if (emitter && !logs)
+        EXIT_USAGE("The emitter option is only available when exporting logs. Quitting...");
+
+    if (emitter && monitors.size() > 1)
+        EXIT_USAGE("The emitter option is only available when exporting logs from a single address. Quitting...");
 
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
@@ -241,7 +247,6 @@ bool COptions::parseArguments(string_q& command) {
             CAccountWatch item;
             while (item.parseJson3(str)) {
                 item.address = str_2_Addr(toLower(item.address));
-                item.extra_data = getVersionStr() + "/" + item.address;
                 item.finishParse();
                 named.push_back(item);
                 abis.loadAbiByAddress(item.address);
@@ -334,7 +339,7 @@ bool COptions::parseArguments(string_q& command) {
         if (monitors.size() > 1)
             EXIT_USAGE("The 'occurrence' option is only available for a single address. Quitting...");
         // weird hack because 'latest' in the sense of an occurrence is different than latest in the sense of a block
-        if ((contains(command, "occurrence:latest") || contains(command, "o:latest")) && occurrence == latest) {
+        if ((contains(command, "occurrence:latest") || contains(command, "o:latest")) && occurrence == latestBlock) {
             occurrence = (NOPOS - 1);
         }
     }

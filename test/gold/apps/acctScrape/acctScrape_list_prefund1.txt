@@ -1,8 +1,9 @@
-acctScrape argc: 1 
-acctScrape 
+acctScrape argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:0] [4:--end] [5:0] 
+acctScrape 0x001d14804b399c6ef80e64576f657660804fec0b --start 0 --end 0 
+TIME ~ CLOCK - <INFO>  : Scraping 1 addresses.
 TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments): 
 
-  You must provide at least one Ethereum address. Quitting...
+  'start' option must be strictly less than 'end' option. Quitting...
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Index transactions for a given Ethereum address (or series of addresses).

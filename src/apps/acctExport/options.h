@@ -60,6 +60,7 @@ class COptions : public COptionsBase {
     map<address_t, bool> abiMap;
     uint32_t* ts_array;
     size_t ts_cnt;
+    blknum_t latestBlock;
 
     COptions(void);
     ~COptions(void);

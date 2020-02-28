@@ -20,20 +20,15 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         if (!contains(path, "-") || !endsWith(path, ".bin"))
             return !shouldQuit();
 
-        timestamp_t ts;
-        blknum_t firstBlock = bnFromPath(path, options->lastBlockInFile, ts);
-        ASSERT(unused != NOPOS);
-        ASSERT(options->lastBlockInFile != NOPOS);
+        timestamp_t unused;
+        options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
+        ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // If the user told us to start late, start late
-        if (options->lastBlockInFile < options->scanRange.first)
+        if (!rangesIntersect(options->scanRange, options->fileRange))
             return !shouldQuit();
 
-        // If the user told us to end early, end early
-        if (options->scanRange.second != NOPOS && firstBlock > options->scanRange.second)
-            return !shouldQuit();
-
-        if (isTestMode() && options->lastBlockInFile > 5000000)
+        if (isTestMode() && options->fileRange.second > 5000000)
             return !shouldQuit();
 
         return options->visitBinaryFile(path, data) && !shouldQuit();
@@ -93,7 +88,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 string_q filename = getMonitorPath(acct->address);
                 bool exists = fileExists(filename);
                 acct->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
-                acct->writeLastBlock(lastBlockInFile + 1);
+                acct->writeLastBlock(fileRange.second + 1);
             }
             return true;
         }
@@ -172,11 +167,11 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             if (items.size()) {
                 lockSection(true);
                 acct->writeAnArray(items);
-                acct->writeLastBlock(lastBlockInFile + 1);
+                acct->writeLastBlock(fileRange.second + 1);
                 lockSection(false);
             }
         } else {
-            acct->writeLastBlock(lastBlockInFile + 1);
+            acct->writeLastBlock(fileRange.second + 1);
         }
     }
 

@@ -15,7 +15,6 @@ acctScrape -th
 | -f | --finalized | toggle search of finalized folder ('on' by default) |
 | -s | --staging | toggle search of staging (not yet finalized) folder ('off' by default) |
 | -u | --unripe | toggle search of unripe (neither staged nor finalized) folder ('off' by default) |
-| -d | --daemon | we are being called in daemon mode which causes us to print results differently |
 | -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 | -i | --silent | lighten the reporting on progress (for use with --daemon switch to `chifra scrape`) |
@@ -29,4 +28,3 @@ acctScrape -th
 
 - `addresses` must start with '0x' and be forty two characters long.
 
-                                                                                                                        

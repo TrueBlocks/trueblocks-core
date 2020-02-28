@@ -85,7 +85,7 @@ bool COptions::parseArguments(string_q& command) {
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             if (isTestMode())
-                descr += "where|tokens|blooms|";
+                descr += "where|blooms|";
 
             bool isStatus =
                 (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));
@@ -134,10 +134,6 @@ bool COptions::parseArguments(string_q& command) {
                     if (arg == "--staging") {
                         freshen_flags += (arg + " ");
 
-                    } else if (startsWith(arg, "--start:") || startsWith(arg, "--end:")) {
-                        freshen_flags += (arg + " ");
-                        tool_flags += (arg + " ");
-
                     } else {
                         tool_flags += (arg + " ");
                     }
@@ -149,7 +145,8 @@ bool COptions::parseArguments(string_q& command) {
     scrapeSleep = (useconds_t)sleep;
 
     if (mode == "blocks" || mode == "transactions" || mode == "receipts" || mode == "names" || mode == "logs" ||
-        mode == "traces" || mode == "state" || mode == "message" || mode == "abi" || mode == "when") {
+        mode == "traces" || mode == "state" || mode == "tokens" || mode == "message" || mode == "abi" ||
+        mode == "when") {
         tool_flags += (" --" + mode);
         mode = "data";
     }
@@ -183,11 +180,11 @@ bool COptions::parseArguments(string_q& command) {
         tool_flags += " -v:" + uint_2_Str(verbose);
         freshen_flags += (" -v:" + uint_2_Str(verbose));
     }
-    if (start != 0) {
+    if (contains(command, "--start") && start != NOPOS) {
         tool_flags += " --start " + uint_2_Str(start);
         freshen_flags += " --start " + uint_2_Str(start);
     }
-    if (end != NOPOS) {
+    if (contains(command, "--end") && end != NOPOS) {
         tool_flags += " --end " + uint_2_Str(end);
         freshen_flags += " --end " + uint_2_Str(end);
     }

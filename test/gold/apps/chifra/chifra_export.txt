@@ -1,8 +1,8 @@
 chifra argc: 5 [1:export] [2:0xfdecc82ddfc56192e26f563c3d68cb544a96bfed] [3:--end] [4:10] 
 chifra export 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed --end 10 
-acctScrape argc: 5 [1:--end] [2:10] [3:--silent] [4:0xfdecc82ddfc56192e26f563c3d68cb544a96bfed] 
-acctScrape --end 10 --silent 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed 
-                                                                                                                        acctExport argc: 4 [1:0xfdecc82ddfc56192e26f563c3d68cb544a96bfed] [2:--end] [3:10] 
+acctScrape argc: 5 [1:--silent] [2:--end] [3:10] [4:0xfdecc82ddfc56192e26f563c3d68cb544a96bfed] 
+acctScrape --silent --end 10 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed 
+acctExport argc: 4 [1:0xfdecc82ddfc56192e26f563c3d68cb544a96bfed] [2:--end] [3:10] 
 acctExport 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed --end 10 
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 

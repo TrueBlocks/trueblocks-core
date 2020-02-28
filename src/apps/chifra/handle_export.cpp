@@ -26,7 +26,7 @@ bool COptions::handle_export(void) {
     CFreshenArray fa;
     for (auto a : addrs)
         fa.push_back(CFreshen(a));
-    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
+    if (!freshen_internal(FM_PRODUCTION, fa, "--silent", freshen_flags))
         EXIT_FAIL("'chifra export' freshen_internal returned false");
 
     size_t cnt = 0;

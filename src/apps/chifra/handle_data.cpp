@@ -31,11 +31,14 @@ bool COptions::handle_data(void) {
         if (addrs.size() == 0 && !contains(tool_flags, "help"))
             return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
                          " does not include a valid Ethereum address. Quitting...");
-
-        replaceAll(tool_flags, "--balance", "--mode balance");
-        replaceAll(tool_flags, "--code", "--mode code");
-        replaceAll(tool_flags, "--nonce", "--mode nonce");
         os << "getState " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
+
+    } else if (contains(tool_flags, "--tokens")) {
+        replaceAll(tool_flags, "--tokens", "");
+        if (addrs.size() == 0 && !contains(tool_flags, "help"))
+            return usage("Input" + (tool_flags.empty() ? "" : (" (" + trim(tool_flags) + ")")) +
+                         " does not include a valid Ethereum address. Quitting...");
+        os << "getTokenInfo " << (isApiMode() ? substitute(tool_flags, ",", " ") + " " : tool_flags) << addrList;
 
     } else if (contains(tool_flags, "--when")) {
         replaceAll(tool_flags, "--when", "");

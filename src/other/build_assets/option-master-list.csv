@@ -4,7 +4,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10040,apps,list,acctScrape,finalized,f,true,false,false,false,false,local,toggle,<boolean>,toggle search of finalized folder ([{DEF}] by default)
 10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,toggle,<boolean>,toggle search of staging (not yet finalized) folder ([{DEF}] by default)
 10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,toggle,<boolean>,toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
-10100,apps,list,acctScrape,daemon,d,,false,false,false,false,header,switch,<boolean>,we are being called in daemon mode which causes us to print results differently
 10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10140,apps,list,acctScrape,silent,i,,false,false,false,false,local,switch,<boolean>,lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)

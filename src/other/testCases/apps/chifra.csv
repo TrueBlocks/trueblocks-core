@@ -46,6 +46,13 @@ on, both, fast, blocks,   apps/chifra, blocks_badparams,     y, modes = blocks &
 on, both, fast, blocks,   apps/chifra, blocks,               y, modes = blocks & blocks = 12
 on, both, fast, blocks,   apps/chifra, blocks2,              n, modes = blocks & blocks = 12 & fmt = csv & no_header
 
+on, both, fast, abi,      apps/chifra, abi,                  y, modes = abi & addrs = 0x1234567812345678123456781234567812345678
+on, both, fast, when,     apps/chifra, when,                 y, modes = when & list
+
+# NOT TESTED
+#state|tokens|
+#transactions|receipts|logs|traces
+
 on, both, fast, status,   apps/chifra, status,               y, modes = status all
 on, both, fast, status,   apps/chifra, status_details,       y, modes = status all & details & start = 1400000 & end = 2000000
 

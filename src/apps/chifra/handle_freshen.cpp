@@ -11,7 +11,7 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
     nodeNotRequired();
 
     ostringstream base;
-    base << "acctScrape " << tool_flags << " " << freshen_flags << " --silent [ADDRS] ;";
+    base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
     // Build groups of five addresses at a time
     size_t cnt = 0;

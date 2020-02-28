@@ -155,7 +155,7 @@ bool COptions::handle_scrape(void) {
                     CFreshenArray fa;
                     for (auto a : monitors)
                         fa.push_back(CFreshen(a));
-                    freshen_internal(FM_PRODUCTION, fa, "--daemon", freshen_flags);
+                    freshen_internal(FM_PRODUCTION, fa, "--silent", freshen_flags);
                     for (auto f : fa) {
                         if (f.cntBefore != f.cntAfter) {
                             ostringstream os1;

@@ -304,7 +304,7 @@ bool noteMonitor(const string_q& path, void* data) {
             substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
                        ".json", "");
 
-        counter->options->getNamedAccount2(mdi, mdi.address);
+        counter->options->getNamedAccount(mdi, mdi.address);
 
         if (!isTestMode() && endsWith(path, ".acct.bin")) {
             CArchive archive(READING_ARCHIVE);
@@ -429,7 +429,7 @@ bool noteABI(const string_q& path, void* data) {
         if (isTestMode())
             abii.address = "---address---";
         CAccountName n;
-        counter->options->getNamedAccount2(n, abii.address);
+        counter->options->getNamedAccount(n, abii.address);
         abii.name = n.name;
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
