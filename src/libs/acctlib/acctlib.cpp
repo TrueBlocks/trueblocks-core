@@ -21,14 +21,15 @@ void acctlib_init(QUITHANDLER qh) {
     CApiSpec::registerClass();
     CEthState::registerClass();
     CIncomeStatement::registerClass();
+    CBalanceRecord::registerClass();
+    CBalanceDelta::registerClass();
+    CTokenState_erc20::registerClass();
 
     CTreeRoot::registerClass();
     CTreeNode::registerClass();
     CInfix::registerClass();
     CBranch::registerClass();
     CLeaf::registerClass();
-    CBalanceRecord::registerClass();
-    CBalanceDelta::registerClass();
 }
 
 //-------------------------------------------------------------------------

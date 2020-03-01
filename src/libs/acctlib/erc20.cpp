@@ -80,26 +80,6 @@ string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(decimals);
             }
             break;
-        case 'h':
-            if (fieldName % "holders" || fieldName % "holdersCnt") {
-                size_t cnt = holders.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += ("\"" + holders[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 's':
-            if (fieldName % "symbol") {
-                return symbol;
-            }
-            break;
         case 't':
             if (fieldName % "totalSupply") {
                 return wei_2_Str(totalSupply);
@@ -145,21 +125,6 @@ bool CTokenState_erc20::setValueByName(const string_q& fieldNameIn, const string
                 return true;
             }
             break;
-        case 'h':
-            if (fieldName % "holders") {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    holders.push_back(str_2_Addr(nextTokenClear(str, ',')));
-                }
-                return true;
-            }
-            break;
-        case 's':
-            if (fieldName % "symbol") {
-                symbol = fieldValue;
-                return true;
-            }
-            break;
         case 't':
             if (fieldName % "totalSupply") {
                 totalSupply = str_2_Wei(fieldValue);
@@ -198,11 +163,9 @@ bool CTokenState_erc20::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
-    archive >> totalSupply;
     archive >> decimals;
+    archive >> totalSupply;
     archive >> version;
-    archive >> symbol;
-    // archive >> holders;
     finishParse();
     return true;
 }
@@ -215,11 +178,9 @@ bool CTokenState_erc20::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
-    archive << totalSupply;
     archive << decimals;
+    archive << totalSupply;
     archive << version;
-    archive << symbol;
-    // archive << holders;
 
     return true;
 }
@@ -259,12 +220,9 @@ void CTokenState_erc20::registerClass(void) {
     ADD_FIELD(CTokenState_erc20, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "decimals", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "symbol", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "holders", T_ADDRESS | TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CTokenState_erc20, "holders");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTokenState_erc20, "schema");
@@ -332,73 +290,18 @@ ostream& operator<<(ostream& os, const CTokenState_erc20& item) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CTokenState_erc20::getStringAt(const string_q& fieldName, size_t i) const {
-    if (fieldName % "holders" && i < holders.size())
-        return (holders[i]);
-    return "";
-}
-
-//---------------------------------------------------------------------------
-const char* STR_DISPLAY_TOKENSTATE_ERC20 = "";
+const char* STR_DISPLAY_TOKENSTATE_ERC20 =
+    "[{BLOCKNUM}]\t"
+    "[{ADDRESS}]\t"
+    "[{HOLDER}]\t"
+    "[{NAME}]\t"
+    "[{SYMBOL}]\t"
+    "[{DECIMALS}]\t"
+    "[{TOTALSUPPLY}]\t"
+    "[{VERSION}]\t"
+    "[{CURBALANCE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-string getTokenBalanceOf(const CTokenState_erc20& token, const address_t& holder, blknum_t blockNum) {
-    string_q encoding = "0x70a08231";
-
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << token.address << "\", ";
-    cmd << "\"data\": \"" << encoding << padLeft(extract(holder, 2), 64, '0') << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-    CFunction ret;
-    token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
-    return ret.outputs.size() ? ret.outputs[0].value : "";
-}
-
-//-------------------------------------------------------------------------
-string_q getTokenState(const string_q& what, const CTokenState_erc20& token, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["totalSupply"] = "0x18160ddd";
-    sigMap["decimals"] = "0x313ce567";
-    sigMap["version"] = "0x54fd4d50";
-    sigMap["symbol"] = "0x95d89b41";
-    sigMap["name"] = "0x06fdde03";
-
-    string_q encoding;
-    ostringstream os;
-    if (what % "all") {
-        const CStringArray options = {"name", "totalSupply", "decimals", "version", "symbol"};
-        for (auto opt : options) {
-            encoding = sigMap[opt];
-
-            ostringstream cmd;
-            cmd << "[{";
-            cmd << "\"to\": \"" << token.address << "\", ";
-            cmd << "\"data\": \"" << encoding << "\"";
-            cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-            CFunction ret;
-            token.abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
-            os << "\"" << opt << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\",\n";
-        }
-        return "{\n\t" + trim(substitute(trim(trim(os.str(), '\n'), ',') + "\n", "\n", "\n\t"), '\t') + "}";
-    }
-
-    encoding = sigMap[what];
-
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << token.address << "\", ";
-    cmd << "\"data\": \"" << encoding << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-    string_q result = callRPC("eth_call", cmd.str(), false);
-    CFunction ret;
-    token.abi_spec.articulateOutputs(encoding, result, ret);
-    os << "{\n    \"" << what << "\": \"" << (ret.outputs.size() ? ret.outputs[0].value : "") << "\"\n}";
-    return os.str();
-}
 // EXISTING_CODE
 }  // namespace qblocks

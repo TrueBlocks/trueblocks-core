@@ -20,17 +20,25 @@
 namespace qblocks {
 
 // EXISTING_CODE
+typedef enum {
+    TK_NONE = 0,
+    TK_NAME = (1 << 1),
+    TK_DECIMALS = (1 << 2),
+    TK_TOTALSUPPLY = (1 << 3),
+    TK_VERSION = (1 << 4),
+    TK_SYMBOL = (1 << 5),
+    TK_SOME = (TK_NAME | TK_SYMBOL | TK_DECIMALS),
+    TK_ALL = (TK_NAME | TK_SYMBOL | TK_DECIMALS | TK_TOTALSUPPLY | TK_VERSION)
+} tokstate_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
 class CTokenState_erc20 : public CAccountWatch {
   public:
     address_t address;
-    wei_t totalSupply;
     uint64_t decimals;
+    wei_t totalSupply;
     string_q version;
-    string_q symbol;
-    CAddressArray holders;
 
   public:
     CTokenState_erc20(void);
@@ -39,8 +47,6 @@ class CTokenState_erc20 : public CAccountWatch {
     CTokenState_erc20& operator=(const CTokenState_erc20& to);
 
     DECLARE_NODE(CTokenState_erc20);
-
-    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -96,11 +102,9 @@ inline void CTokenState_erc20::initialize(void) {
     CAccountWatch::initialize();
 
     address = "";
-    totalSupply = 0;
     decimals = 0;
+    totalSupply = 0;
     version = "";
-    symbol = "";
-    holders.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -112,11 +116,9 @@ inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to) {
     CAccountWatch::duplicate(to);
 
     address = to.address;
-    totalSupply = to.totalSupply;
     decimals = to.decimals;
+    totalSupply = to.totalSupply;
     version = to.version;
-    symbol = to.symbol;
-    holders = to.holders;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,16 +136,16 @@ inline CTokenState_erc20& CTokenState_erc20::operator=(const CTokenState_erc20& 
 inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return address == item.address;
 }
 
 //-------------------------------------------------------------------------
 inline bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.address < v2.address;
 }
 
 //---------------------------------------------------------------------------

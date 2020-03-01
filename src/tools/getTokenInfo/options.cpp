@@ -143,6 +143,7 @@ void COptions::Init(void) {
     optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
+    addrs.clear();
     parts = "";
     by_acct = false;
     no_zero = false;

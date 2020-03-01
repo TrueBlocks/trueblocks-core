@@ -20,25 +20,59 @@ void COptions::reportByParts(void) {
         CStringArray unused2;
         loadAbiAndCache(unused, token.address, false, unused2);
     }
+    HIDE_FIELD(CAccountWatch, "abi_spec");
+    HIDE_FIELD(CAccountWatch, "statement");
+    SHOW_FIELD(CTokenState_erc20, "symbol");
 
-    if (tokens.size() > 1)
-        cout << "[";
-
+//    cout << "[";
     bool first = true;
     for (auto token : tokens) {
         token.abi_spec.loadAbiByAddress(token.address);
         string_q blocks = getBlockNumList();
         while (!blocks.empty()) {
             blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-            if (!first)
-                cout << ",";
-            cout << endl;
-            cout << getTokenState(parts, token, blockNum);
+            CStringArray fields = {"name", "symbol", "totalSupply", "decimals", "version"};
+            for (auto field : fields) {
+                token.setValueByName(field, getTokenState(field, token, blockNum));
+            }
+//            if (!first)
+//                cout << ",";
+            cout << token.Format("[{ADDRESS}]\t[{NAME}]\t[{SYMBOL}]\t[{DECIMALS}]") << endl;
             first = false;
         }
     }
-
-    cout << endl;
-    if (tokens.size() > 1)
-        cout << "]" << endl;
+//    cout << "]" << endl;
 }
+
+namespace qblocks {
+//-------------------------------------------------------------------------
+string_q doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
+                   const CAbi& abi) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << to << "\", ";
+    cmd << "\"data\": \"" << encoding << bytes << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+
+    CFunction ret;
+    abi.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
+    return ret.outputs.size() ? ret.outputs[0].value : "";
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenBalanceOf(const CTokenState_erc20& token, const address_t& holder, blknum_t blockNum) {
+    return doEthCall(token.address, "0x70a08231", padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec);
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenState(const string_q& what, const CTokenState_erc20& token, blknum_t blockNum) {
+    map<string_q, string_q> sigMap;
+    sigMap["totalSupply"] = "0x18160ddd";
+    sigMap["decimals"] = "0x313ce567";
+    sigMap["version"] = "0x54fd4d50";
+    sigMap["symbol"] = "0x95d89b41";
+    sigMap["name"] = "0x06fdde03";
+
+    return doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec);
+}
+}  // namespace qblocks
