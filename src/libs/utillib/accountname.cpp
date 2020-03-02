@@ -67,6 +67,8 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
         return ret;
 
     // EXISTING_CODE
+    if (fieldName % "decimals" && decimals == 0)
+        return "";
     // EXISTING_CODE
 
     // Return field values
@@ -77,6 +79,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'd':
+            if (fieldName % "decimals") {
+                return uint_2_Str(decimals);
+            }
             if (fieldName % "description") {
                 return description;
             }
@@ -100,9 +105,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'l':
-            if (fieldName % "logo") {
-                return logo;
-            }
             if (fieldName % "lastExport") {
                 return uint_2_Str(lastExport);
             }
@@ -163,6 +165,10 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'd':
+            if (fieldName % "decimals") {
+                decimals = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "description") {
                 description = fieldValue;
                 return true;
@@ -191,10 +197,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'l':
-            if (fieldName % "logo") {
-                logo = fieldValue;
-                return true;
-            }
             if (fieldName % "lastExport") {
                 lastExport = str_2_Uint(fieldValue);
                 return true;
@@ -264,7 +266,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> name;
     archive >> symbol;
     archive >> source;
-    archive >> logo;
+    archive >> decimals;
     archive >> description;
     archive >> is_custom;
     archive >> is_prefund;
@@ -290,7 +292,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << name;
     archive << symbol;
     archive << source;
-    archive << logo;
+    archive << decimals;
     archive << description;
     archive << is_custom;
     archive << is_prefund;
@@ -341,7 +343,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "logo", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "is_custom", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_prefund", T_BOOL, ++fieldNum);
@@ -406,7 +408,7 @@ bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 6, 5)) {
-        string_q subgroup;
+        string_q subgroup, unused5;
         bool unused2, unused3, unused4;
         archive >> group;
         archive >> subgroup;  // subgroup has been removed and added to group with ':' separator
@@ -415,7 +417,7 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         archive >> symbol;
         archive >> description;
         archive >> source;
-        archive >> logo;
+        archive >> unused5;  // used to be logo
         // archive >> path;
         // archive >> color;
         archive >> unused2;  // used to be is_contract;
@@ -452,7 +454,7 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
     "[{SOURCE}]\t"
-    "[{LOGO}]\t"
+    "[{DECIMALS}]\t"
     "[{DESCRIPTION}]";
 
 //---------------------------------------------------------------------------

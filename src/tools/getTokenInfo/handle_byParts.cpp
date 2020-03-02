@@ -24,24 +24,68 @@ void COptions::reportByParts(void) {
     HIDE_FIELD(CAccountWatch, "statement");
     SHOW_FIELD(CTokenState_erc20, "symbol");
 
-//    cout << "[";
+    //    cout << "[";
     bool first = true;
+    CTokenState_erc20 prev = tokens[0];
+    getNamedAccount(prev, prev.address);
+    // cout << prev.Format("[{GROUP}]\t[{ADDRESS}]\t[{NAME}]\t[{SYMBOL}]\t[{SOURCE}]\t[{DECIMALS}]\t[{DESCRIPTION}]") <<
+    // endl;
     for (auto token : tokens) {
-        token.abi_spec.loadAbiByAddress(token.address);
-        string_q blocks = getBlockNumList();
-        while (!blocks.empty()) {
-            blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
-            CStringArray fields = {"name", "symbol", "totalSupply", "decimals", "version"};
-            for (auto field : fields) {
-                token.setValueByName(field, getTokenState(field, token, blockNum));
-            }
-//            if (!first)
-//                cout << ",";
-            cout << token.Format("[{ADDRESS}]\t[{NAME}]\t[{SYMBOL}]\t[{DECIMALS}]") << endl;
+        if (first) {
             first = false;
+            continue;
         }
+        token.abi_spec.loadAbiByAddress(token.address);
+        getNamedAccount(token, token.address);
+        if (token.address == prev.address) {
+            prev.group = "99-Duplicates," + prev.group;
+        }
+        //        string_q n = token.name;
+        //        string_q s = token.symbol;
+        //        string_q blocks = getBlockNumList();
+        //        while (!blocks.empty()) {
+        //            blknum_t blockNum = str_2_Uint(nextTokenClear(blocks, '|'));
+        //            if (token.group == "50-Tokens:ERC20") {
+        //                CStringArray fields = {"name", "symbol", "totalSupply", "decimals", "version"};
+        //                for (auto field : fields) {
+        //                    token.setValueByName(field, getTokenState(field, token, blockNum));
+        ////                cout << getTokenState(field, token, blockNum) << endl;
+        ////                printf("");
+        //                }
+        //            }
+        //            if (token.name == n && token.symbol == s) {
+        //                token.source = "On Chain";
+        //                token.group = "50-Tokens:ERC20";
+        //            } else {
+        //                token.name = n;
+        //                token.symbol = s;
+        //            }
+        cout << prev.Format("[{GROUP}]\t[{ADDRESS}]\t[{NAME}]\t[{SYMBOL}]\t[{SOURCE}]\t[{DECIMALS}]\t[{DESCRIPTION}]")
+             << endl;
+        prev = token;
+        //            CAccountName ac;
+        //            getNamedAccount(ac, token.address);
+        //            if (ac.symbol != getTokenState("symbol", token, blockNum)) {
+        //                cout << ac.address << "\t" << ac.symbol << "\t" << token.symbol << endl;
+        //            } else {
+        //                cout << ac.address << "\r";
+        //                cout.flush();
+        //            }
+        //            token.Format("[{ADDRESS}]\t[{SYMBOL}]\t[{DECIMALS}]\t[{NAME}]") << endl;
+        //            token.setValueByName("name", substitute("["+ac.name+"]-[" + getTokenState("name", token, blockNum)
+        //            + "]", ac.name, "")); token.setValueByName("symbol", substitute("[" + ac.symbol + "]-[" +
+        //            getTokenState("symbol", token, blockNum) + "]", ac.symbol, "")); string_q n =
+        //            token.getValueByName("name"); replace(n, "[]", "[" + ac.name + "]"); token.setValueByName("name",
+        //            n); string_q s = token.getValueByName("symbol"); replace(s, "[]", "[" + ac.symbol + "]");
+        //            token.setValueByName("symbol", s);
+        //
+        ////            if (!first)
+        ////                cout << ",";
+        //            cout << token.Format("[{NAME}]\t[{SYMBOL}]\t[{DECIMALS}]\t[{ADDRESS}]") << endl;
+        //            first = false;
+        //        }
     }
-//    cout << "]" << endl;
+    //    cout << "]" << endl;
 }
 
 namespace qblocks {

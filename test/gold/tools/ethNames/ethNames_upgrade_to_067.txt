@@ -7,7 +7,7 @@ ethNames --fmt json
     "name": "TrueUSD",
     "symbol": "TUSD",
     "source": "Etherscan.io",
-    "logo": "trueusdtoken_28.png",
+    "decimals": 0,
     "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
   },
   {
@@ -16,7 +16,7 @@ ethNames --fmt json
     "name": "IPSX",
     "symbol": "IPSX",
     "source": "Etherscan.io",
-    "logo": "ipexchange_28.png",
+    "decimals": 0,
     "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
   },
   {
@@ -25,7 +25,7 @@ ethNames --fmt json
     "name": "Stox",
     "symbol": "STX",
     "source": "Etherscan.io",
-    "logo": "stox_28.png",
+    "decimals": 0,
     "description": "Blockchain Prediction Markets Platform."
   },
   {
@@ -34,7 +34,7 @@ ethNames --fmt json
     "name": "Knoxstertoken",
     "symbol": "FKX",
     "source": "Etherscan.io",
-    "logo": "fortknoxster28.png",
+    "decimals": 0,
     "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
   },
   {
@@ -43,7 +43,7 @@ ethNames --fmt json
     "name": "Eximchain Token",
     "symbol": "EXC",
     "source": "Etherscan.io",
-    "logo": "eximchaintoken_28.png",
+    "decimals": 0,
     "description": "Eximchain’s public blockchain network enables privacy, scalability and security for the supply chain."
   },
   {
@@ -52,7 +52,7 @@ ethNames --fmt json
     "name": "dAppNode Donations (Giveth)",
     "symbol": "",
     "source": "Giveth website",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -61,7 +61,7 @@ ethNames --fmt json
     "name": "Paycentos",
     "symbol": "PYN",
     "source": "Etherscan.io",
-    "logo": "paycent_28.png",
+    "decimals": 0,
     "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
   },
   {
@@ -70,7 +70,7 @@ ethNames --fmt json
     "name": "PlayChip",
     "symbol": "PLA",
     "source": "Etherscan.io",
-    "logo": "playchip_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -79,7 +79,7 @@ ethNames --fmt json
     "name": "CZR",
     "symbol": "CZR",
     "source": "Etherscan.io",
-    "logo": "canonchain_28.png",
+    "decimals": 0,
     "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
   },
   {
@@ -88,7 +88,7 @@ ethNames --fmt json
     "name": "BitAir",
     "symbol": "BTCA",
     "source": "Etherscan.io",
-    "logo": "bitair_28.png",
+    "decimals": 0,
     "description": "Payments solutions for the travel industry."
   },
   {
@@ -97,7 +97,7 @@ ethNames --fmt json
     "name": "PKG Token",
     "symbol": "PKG",
     "source": "Etherscan.io",
-    "logo": "pkg_28.png",
+    "decimals": 0,
     "description": "Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games."
   },
   {
@@ -106,7 +106,7 @@ ethNames --fmt json
     "name": "LikeCoin",
     "symbol": "LIKE",
     "source": "Etherscan.io",
-    "logo": "like_28.png",
+    "decimals": 0,
     "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
   },
   {
@@ -115,7 +115,7 @@ ethNames --fmt json
     "name": "BDT Token",
     "symbol": "BDT",
     "source": "Etherscan.io",
-    "logo": "bitdepositary_28.png",
+    "decimals": 0,
     "description": "The ICO market is becoming more regulated, but this isn’t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
   },
   {
@@ -124,7 +124,7 @@ ethNames --fmt json
     "name": "Student Coin",
     "symbol": "STU",
     "source": "Etherscan.io",
-    "logo": "bitjob_28.jpg",
+    "decimals": 0,
     "description": "Student jobs marketplace."
   },
   {
@@ -133,7 +133,7 @@ ethNames --fmt json
     "name": "BTRN",
     "symbol": "BTRN",
     "source": "Etherscan.io",
-    "logo": "biotron_28.png",
+    "decimals": 0,
     "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
   },
   {
@@ -142,7 +142,7 @@ ethNames --fmt json
     "name": "Fire Lotto",
     "symbol": "FLOT",
     "source": "Etherscan.io",
-    "logo": "firelotto_28.png",
+    "decimals": 0,
     "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention."
   },
   {
@@ -151,7 +151,7 @@ ethNames --fmt json
     "name": "Cappasity",
     "symbol": "CAPP",
     "source": "Etherscan.io",
-    "logo": "cappasity28.png",
+    "decimals": 0,
     "description": "Cappasity brings an in-store browsing experience to online retail through interactive 3D images."
   },
   {
@@ -160,7 +160,7 @@ ethNames --fmt json
     "name": "ETERNAL TOKEN",
     "symbol": "XET",
     "source": "Etherscan.io",
-    "logo": "eternaltoken_28.png",
+    "decimals": 0,
     "description": "The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals."
   },
   {
@@ -169,7 +169,7 @@ ethNames --fmt json
     "name": "Gemini dollar",
     "symbol": "GUSD",
     "source": "Etherscan.io",
-    "logo": "gemini_28.png",
+    "decimals": 0,
     "description": "Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators."
   },
   {
@@ -178,7 +178,7 @@ ethNames --fmt json
     "name": "Eden Coin",
     "symbol": "EDN",
     "source": "Etherscan.io",
-    "logo": "edenchain.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -187,7 +187,7 @@ ethNames --fmt json
     "name": "SP8DE Token",
     "symbol": "SPX",
     "source": "Etherscan.io",
-    "logo": "sp8de_28.png",
+    "decimals": 0,
     "description": "The Game of Chance.Changed"
   },
   {
@@ -196,7 +196,7 @@ ethNames --fmt json
     "name": "LendConnect",
     "symbol": "LCT",
     "source": "Etherscan.io",
-    "logo": "lendconnect_28.png",
+    "decimals": 0,
     "description": "Aims to be a passive-income-generating Platform."
   },
   {
@@ -205,7 +205,7 @@ ethNames --fmt json
     "name": "MFTU",
     "symbol": "MFTU",
     "source": "Etherscan.io",
-    "logo": "mftu_28.png",
+    "decimals": 0,
     "description": "Coin for custom CyberFM 'Mainstream For The Underground' royalty payments."
   },
   {
@@ -214,7 +214,7 @@ ethNames --fmt json
     "name": "Zilliqa",
     "symbol": "ZIL",
     "source": "Etherscan.io",
-    "logo": "zilliqa_28_2.png",
+    "decimals": 0,
     "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
   },
   {
@@ -223,7 +223,7 @@ ethNames --fmt json
     "name": "CryptoKitties",
     "symbol": "CK",
     "source": "Etherscan.io",
-    "logo": "",
+    "decimals": 0,
     "description": "The famous first ERC721 token"
   },
   {
@@ -232,7 +232,7 @@ ethNames --fmt json
     "name": "ACE",
     "symbol": "ACE",
     "source": "Etherscan.io",
-    "logo": "tokenstars_28.png",
+    "decimals": 0,
     "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers."
   },
   {
@@ -241,7 +241,7 @@ ethNames --fmt json
     "name": "FNKOSToken",
     "symbol": "FNKOS",
     "source": "Etherscan.io",
-    "logo": "foglink_28.png",
+    "decimals": 0,
     "description": "FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources."
   },
   {
@@ -250,7 +250,7 @@ ethNames --fmt json
     "name": "Coimatic 3.0",
     "symbol": "CTIC3",
     "source": "Etherscan.io",
-    "logo": "coimatic.png",
+    "decimals": 0,
     "description": "A global decentralized blockchain deal and discount marketplace."
   },
   {
@@ -259,7 +259,7 @@ ethNames --fmt json
     "name": "Qurito",
     "symbol": "QURO",
     "source": "Etherscan.io",
-    "logo": "qurito_28.png",
+    "decimals": 0,
     "description": "The online community where you earn for sharing knowledge & ideas."
   },
   {
@@ -268,7 +268,7 @@ ethNames --fmt json
     "name": "CommerceBlock",
     "symbol": "CBT",
     "source": "Etherscan.io",
-    "logo": "commerceblock.png",
+    "decimals": 0,
     "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
   },
   {
@@ -277,7 +277,7 @@ ethNames --fmt json
     "name": "IBTC",
     "symbol": "IBTC",
     "source": "Etherscan.io",
-    "logo": "ibtc_28.png",
+    "decimals": 0,
     "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
   },
   {
@@ -286,7 +286,7 @@ ethNames --fmt json
     "name": "DALECOIN",
     "symbol": "DALC",
     "source": "Etherscan.io",
-    "logo": "dalecoin2.png",
+    "decimals": 0,
     "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
   },
   {
@@ -295,7 +295,7 @@ ethNames --fmt json
     "name": "Delta",
     "symbol": "DLT",
     "source": "Etherscan.io",
-    "logo": "agrello_delta_28.png",
+    "decimals": 0,
     "description": "Legally Binding Smart Contracts, Powered by AI."
   },
   {
@@ -304,7 +304,7 @@ ethNames --fmt json
     "name": "Edgeless",
     "symbol": "EDG",
     "source": "Etherscan.io",
-    "logo": "edgeless.png",
+    "decimals": 0,
     "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
   },
   {
@@ -313,7 +313,7 @@ ethNames --fmt json
     "name": "Dentacoin",
     "symbol": "Dentacoin",
     "source": "Etherscan.io",
-    "logo": "Dentacoin.png",
+    "decimals": 0,
     "description": "Aims to be the blockchain solution for the global dental industry."
   },
   {
@@ -322,7 +322,7 @@ ethNames --fmt json
     "name": "Tierion Network Token",
     "symbol": "TNT",
     "source": "Etherscan.io",
-    "logo": "tierion_28.png",
+    "decimals": 0,
     "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
   },
   {
@@ -331,7 +331,7 @@ ethNames --fmt json
     "name": "Lendingblock",
     "symbol": "LND",
     "source": "Etherscan.io",
-    "logo": "lendingblock_28_2.png",
+    "decimals": 0,
     "description": "Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way."
   },
   {
@@ -340,7 +340,7 @@ ethNames --fmt json
     "name": "DevCon 2 - Token 1",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -349,7 +349,7 @@ ethNames --fmt json
     "name": "district0x",
     "symbol": "DNT",
     "source": "Etherscan.io",
-    "logo": "district0x.png",
+    "decimals": 0,
     "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
   },
   {
@@ -358,7 +358,7 @@ ethNames --fmt json
     "name": "Intelligent Trading Technologies",
     "symbol": "ITT",
     "source": "Etherscan.io",
-    "logo": "itt_token_28.jpg",
+    "decimals": 0,
     "description": "Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets."
   },
   {
@@ -367,7 +367,7 @@ ethNames --fmt json
     "name": "Matryx",
     "symbol": "MTX",
     "source": "Etherscan.io",
-    "logo": "matryx_28.png",
+    "decimals": 0,
     "description": "Matryx is the Collaborative Research & Development Engine of Nanome’s VR toolset."
   },
   {
@@ -376,7 +376,7 @@ ethNames --fmt json
     "name": "Polybius",
     "symbol": "PLBT",
     "source": "Etherscan.io",
-    "logo": "polybius.png",
+    "decimals": 0,
     "description": "Private banking platform"
   },
   {
@@ -385,7 +385,7 @@ ethNames --fmt json
     "name": "Etheriya",
     "symbol": "RIYA",
     "source": "Etherscan.io",
-    "logo": "etheriya.png",
+    "decimals": 0,
     "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace."
   },
   {
@@ -394,7 +394,7 @@ ethNames --fmt json
     "name": "DAEX Token",
     "symbol": "DAX",
     "source": "Etherscan.io",
-    "logo": "daextoken_28.png",
+    "decimals": 0,
     "description": "DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges."
   },
   {
@@ -403,7 +403,7 @@ ethNames --fmt json
     "name": "Internet Node Token",
     "symbol": "INT",
     "source": "Etherscan.io",
-    "logo": "int_28_2.png",
+    "decimals": 0,
     "description": "IOT applications"
   },
   {
@@ -412,7 +412,7 @@ ethNames --fmt json
     "name": "SwftCoin",
     "symbol": "SWFTC",
     "source": "Etherscan.io",
-    "logo": "swiftcoin_28_2.png",
+    "decimals": 0,
     "description": "SWFT is a cross-blockchain platform."
   },
   {
@@ -421,7 +421,7 @@ ethNames --fmt json
     "name": "CEN",
     "symbol": "CEN",
     "source": "Etherscan.io",
-    "logo": "coinsuper_28.png",
+    "decimals": 0,
     "description": "Connecting the Financial World Coinsuper Ecosystem Network"
   },
   {
@@ -430,7 +430,7 @@ ethNames --fmt json
     "name": "AEN",
     "symbol": "AEN",
     "source": "Etherscan.io",
-    "logo": "aenco_28.png",
+    "decimals": 0,
     "description": "HealthTech, Smart Capital, and Prime Brokerage Solutions"
   },
   {
@@ -439,7 +439,7 @@ ethNames --fmt json
     "name": "PlatonCoin",
     "symbol": "PLTC",
     "source": "Etherscan.io",
-    "logo": "platonfinance_28.png",
+    "decimals": 0,
     "description": "Platon Finance with its PlatonCoin token is an ecosystem that connects the digital crypto-world with the real one. Through the Platon Club, the project aims to drive adoption of cryptocurrencies."
   },
   {
@@ -448,7 +448,7 @@ ethNames --fmt json
     "name": "DATAcoin",
     "symbol": "DATA",
     "source": "Etherscan.io",
-    "logo": "streamr2_28.png",
+    "decimals": 0,
     "description": "Streamr is building the world’s leading Marketplace and decentralised Network for real-time data."
   },
   {
@@ -457,7 +457,7 @@ ethNames --fmt json
     "name": "J8T",
     "symbol": "J8T",
     "source": "Etherscan.io",
-    "logo": "jet8_28.png",
+    "decimals": 0,
     "description": "Democratizing influence."
   },
   {
@@ -466,7 +466,7 @@ ethNames --fmt json
     "name": "BAT",
     "symbol": "BAT",
     "source": "Etherscan.io",
-    "logo": "bat.png",
+    "decimals": 0,
     "description": "The Basic Attention Token is the new token for the digital advertising industry."
   },
   {
@@ -475,7 +475,7 @@ ethNames --fmt json
     "name": "AVT",
     "symbol": "AVT",
     "source": "Etherscan.io",
-    "logo": "aventus_28.png",
+    "decimals": 0,
     "description": "An open-source protocol that delivers the global standard for ticketing."
   },
   {
@@ -484,7 +484,7 @@ ethNames --fmt json
     "name": "iQeon",
     "symbol": "IQN",
     "source": "Etherscan.io",
-    "logo": "iqeon.png",
+    "decimals": 0,
     "description": "decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements."
   },
   {
@@ -493,7 +493,7 @@ ethNames --fmt json
     "name": "uDOO",
     "symbol": "UDOO",
     "source": "Etherscan.io",
-    "logo": "howdoo_28.png",
+    "decimals": 0,
     "description": "Howdoo is a decentralized social platform for users, content creators, & advertisers."
   },
   {
@@ -502,7 +502,7 @@ ethNames --fmt json
     "name": "Po.et",
     "symbol": "POE",
     "source": "Etherscan.io",
-    "logo": "poet_28_2.png",
+    "decimals": 0,
     "description": "Po.et aims to reclaim value for content creators, publishers and consumers."
   },
   {
@@ -511,7 +511,7 @@ ethNames --fmt json
     "name": "ABYSS",
     "symbol": "ABYSS",
     "source": "Etherscan.io",
-    "logo": "abyss2_28.png",
+    "decimals": 0,
     "description": "The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community."
   },
   {
@@ -520,7 +520,7 @@ ethNames --fmt json
     "name": "WaleTokeN",
     "symbol": "WTN",
     "source": "Etherscan.io",
-    "logo": "waletoken_28.png",
+    "decimals": 0,
     "description": "Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging."
   },
   {
@@ -529,7 +529,7 @@ ethNames --fmt json
     "name": "CPAY",
     "symbol": "CPAY",
     "source": "Etherscan.io",
-    "logo": "cryptopay28.png",
+    "decimals": 0,
     "description": "Cryptopay aims to provide the ability to spend, save, and transact digital currencies."
   },
   {
@@ -538,7 +538,7 @@ ethNames --fmt json
     "name": "Peculium",
     "symbol": "PCL",
     "source": "Etherscan.io",
-    "logo": "peculiumtoken_28.png",
+    "decimals": 0,
     "description": "Saving management on blockchain technology"
   },
   {
@@ -547,7 +547,7 @@ ethNames --fmt json
     "name": "Leverj",
     "symbol": "LEV",
     "source": "Etherscan.io",
-    "logo": "leverj_28.png",
+    "decimals": 0,
     "description": "Decentralized leveraged exchange."
   },
   {
@@ -556,7 +556,7 @@ ethNames --fmt json
     "name": "Decentraland",
     "symbol": "MANA",
     "source": "Etherscan.io",
-    "logo": "decentraland_28.png?v=1",
+    "decimals": 0,
     "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications"
   },
   {
@@ -565,7 +565,7 @@ ethNames --fmt json
     "name": "XMAX",
     "symbol": "XMX",
     "source": "Etherscan.io",
-    "logo": "xmax_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -574,7 +574,7 @@ ethNames --fmt json
     "name": "BitCapitalVendorToken",
     "symbol": "BCV",
     "source": "Etherscan.io",
-    "logo": "bitcapital_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -583,7 +583,7 @@ ethNames --fmt json
     "name": "Genesis Vision",
     "symbol": "GVT",
     "source": "Etherscan.io",
-    "logo": "genesisvision_28.png",
+    "decimals": 0,
     "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
   },
   {
@@ -592,7 +592,7 @@ ethNames --fmt json
     "name": "Aigang",
     "symbol": "AIX",
     "source": "Etherscan.io",
-    "logo": "aigang_28.png",
+    "decimals": 0,
     "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
   },
   {
@@ -601,7 +601,7 @@ ethNames --fmt json
     "name": "Bloom",
     "symbol": "BLT",
     "source": "Etherscan.io",
-    "logo": "hellobloom_28.png",
+    "decimals": 0,
     "description": "Decentralized credit scoring powered by Ethereum and IPFS."
   },
   {
@@ -610,7 +610,7 @@ ethNames --fmt json
     "name": "Centrality Token",
     "symbol": "CENNZ",
     "source": "Etherscan.io",
-    "logo": "centrality_28.png",
+    "decimals": 0,
     "description": "Centrality is a graph theory term – a point in a decentralised system that unites to other points."
   },
   {
@@ -619,7 +619,7 @@ ethNames --fmt json
     "name": "QVT",
     "symbol": "QVT",
     "source": "Etherscan.io",
-    "logo": "qvolta_28.png",
+    "decimals": 0,
     "description": "Sell and buy crypto assets around the world for local payment methods."
   },
   {
@@ -628,7 +628,7 @@ ethNames --fmt json
     "name": "LGO",
     "symbol": "LGO",
     "source": "Etherscan.io",
-    "logo": "legolas_28.png",
+    "decimals": 0,
     "description": "Exchange with decentralized ledgers"
   },
   {
@@ -637,7 +637,7 @@ ethNames --fmt json
     "name": "ArbitrageCT",
     "symbol": "ARCT",
     "source": "Etherscan.io",
-    "logo": "arbitragect_28.png",
+    "decimals": 0,
     "description": "Trading crypto-currency terminal for two exchanges simultaneously."
   },
   {
@@ -646,7 +646,7 @@ ethNames --fmt json
     "name": "TrakInvest Token",
     "symbol": "TRAK",
     "source": "Etherscan.io",
-    "logo": "trakinvest_28.png",
+    "decimals": 0,
     "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
   },
   {
@@ -655,7 +655,7 @@ ethNames --fmt json
     "name": "Zero Ex Exchange Wrapper",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -664,7 +664,7 @@ ethNames --fmt json
     "name": "GRID",
     "symbol": "GRID",
     "source": "Etherscan.io",
-    "logo": "grid_28.png",
+    "decimals": 0,
     "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
   },
   {
@@ -673,7 +673,7 @@ ethNames --fmt json
     "name": "Spectre.ai D-Token",
     "symbol": "SXDT",
     "source": "Etherscan.io",
-    "logo": "spectre-ai_28.png",
+    "decimals": 0,
     "description": "Broker-less financial trading platform."
   },
   {
@@ -682,7 +682,7 @@ ethNames --fmt json
     "name": "Cofoundit",
     "symbol": "CFI",
     "source": "Etherscan.io",
-    "logo": "cofoundit.png",
+    "decimals": 0,
     "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
   },
   {
@@ -691,7 +691,7 @@ ethNames --fmt json
     "name": "MoneyToken",
     "symbol": "IMT",
     "source": "Etherscan.io",
-    "logo": "moneytoken_28.png",
+    "decimals": 0,
     "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
   },
   {
@@ -700,7 +700,7 @@ ethNames --fmt json
     "name": "Musiconomi",
     "symbol": "MCI",
     "source": "Etherscan.io",
-    "logo": "musiconomi28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -709,7 +709,7 @@ ethNames --fmt json
     "name": "BoutsPro",
     "symbol": "BOUTS",
     "source": "Etherscan.io",
-    "logo": "boutspro_28.png",
+    "decimals": 0,
     "description": "Professional Karate Sports Organization"
   },
   {
@@ -718,7 +718,7 @@ ethNames --fmt json
     "name": "PHI Token",
     "symbol": "PHI",
     "source": "Etherscan.io",
-    "logo": "phitoken_28.png",
+    "decimals": 0,
     "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
   },
   {
@@ -727,7 +727,7 @@ ethNames --fmt json
     "name": "Divi Exchange Token",
     "symbol": "DIVX",
     "source": "Etherscan.io",
-    "logo": "diviproject_28.png",
+    "decimals": 0,
     "description": "Digital Currency"
   },
   {
@@ -736,7 +736,7 @@ ethNames --fmt json
     "name": "Accelerator",
     "symbol": "ACC",
     "source": "Etherscan.io",
-    "logo": "accelerator_28.png",
+    "decimals": 0,
     "description": "A proof-of-stake smart contract backed by a physical mining facility."
   },
   {
@@ -745,7 +745,7 @@ ethNames --fmt json
     "name": "realchain",
     "symbol": "RCT",
     "source": "Etherscan.io",
-    "logo": "realchain_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -754,7 +754,7 @@ ethNames --fmt json
     "name": "KAN",
     "symbol": "KAN",
     "source": "Etherscan.io",
-    "logo": "kanland28.png",
+    "decimals": 0,
     "description": "A decentralized cryptocurrency-concentrated & content payment community."
   },
   {
@@ -763,7 +763,7 @@ ethNames --fmt json
     "name": "Own",
     "symbol": "CHX",
     "source": "Etherscan.io",
-    "logo": "owntoken_28_3.png",
+    "decimals": 0,
     "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
   },
   {
@@ -772,7 +772,7 @@ ethNames --fmt json
     "name": "Mobile Integrated Blockchain",
     "symbol": "MIB",
     "source": "Etherscan.io",
-    "logo": "mibtoken_28.png",
+    "decimals": 0,
     "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
   },
   {
@@ -781,7 +781,7 @@ ethNames --fmt json
     "name": "Bethereum",
     "symbol": "BETHER",
     "source": "Etherscan.io",
-    "logo": "bethereum_28.png",
+    "decimals": 0,
     "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
   },
   {
@@ -790,7 +790,7 @@ ethNames --fmt json
     "name": "Set Token Factory",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -799,7 +799,7 @@ ethNames --fmt json
     "name": "DEBITUM",
     "symbol": "DEB",
     "source": "Etherscan.io",
-    "logo": "debitum_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -808,7 +808,7 @@ ethNames --fmt json
     "name": "XOVBank",
     "symbol": "XOV",
     "source": "Etherscan.io",
-    "logo": "xovtoken_28.png",
+    "decimals": 0,
     "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
   },
   {
@@ -817,7 +817,7 @@ ethNames --fmt json
     "name": "Alpha Coin",
     "symbol": "APC",
     "source": "Etherscan.io",
-    "logo": "alphacoin_28.png",
+    "decimals": 0,
     "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
   },
   {
@@ -826,7 +826,7 @@ ethNames --fmt json
     "name": "Qubitica",
     "symbol": "QBIT",
     "source": "Etherscan.io",
-    "logo": "qubitica_28_3.png",
+    "decimals": 0,
     "description": "A distributed blockchain enterprise."
   },
   {
@@ -835,7 +835,7 @@ ethNames --fmt json
     "name": "RHOC",
     "symbol": "RHOC",
     "source": "Etherscan.io",
-    "logo": "rchain.png",
+    "decimals": 0,
     "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
   },
   {
@@ -844,7 +844,7 @@ ethNames --fmt json
     "name": "United Traders Token",
     "symbol": "UTT",
     "source": "Etherscan.io",
-    "logo": "UTT_2.png",
+    "decimals": 0,
     "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
   },
   {
@@ -853,7 +853,7 @@ ethNames --fmt json
     "name": "OwnData",
     "symbol": "OWN",
     "source": "Etherscan.io",
-    "logo": "owndata_28.png",
+    "decimals": 0,
     "description": "Owndata is a crypto marketplace for data sellers and buyers."
   },
   {
@@ -862,7 +862,7 @@ ethNames --fmt json
     "name": "Omnitude",
     "symbol": "ECOM",
     "source": "Etherscan.io",
-    "logo": "omnitude_28.png",
+    "decimals": 0,
     "description": "Omnitude is a middleware layer allowing eCommerce businesses to adopt blockchain quickly and efficiently, without needing to replace current systems."
   },
   {
@@ -871,7 +871,7 @@ ethNames --fmt json
     "name": "Numeraire",
     "symbol": "NMR",
     "source": "Etherscan.io",
-    "logo": "numeraire_28_2.png",
+    "decimals": 0,
     "description": "The stock market is inefficient with respect to new developments in machine learning — only a fraction of the world's data scientists have access to its data. Numerai is changing this."
   },
   {
@@ -880,7 +880,7 @@ ethNames --fmt json
     "name": "CoinDash",
     "symbol": "CDT",
     "source": "Etherscan.io",
-    "logo": "blox_28_2.png",
+    "decimals": 0,
     "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
   },
   {
@@ -889,7 +889,7 @@ ethNames --fmt json
     "name": "Insight Chain",
     "symbol": "INB",
     "source": "Etherscan.io",
-    "logo": "insightchain28.png",
+    "decimals": 0,
     "description": "Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain."
   },
   {
@@ -898,7 +898,7 @@ ethNames --fmt json
     "name": "Freyr Coin",
     "symbol": "FREC",
     "source": "Etherscan.io",
-    "logo": "freyrchain_28.png",
+    "decimals": 0,
     "description": "Blockchain-based collectibles data authentication platform"
   },
   {
@@ -907,7 +907,7 @@ ethNames --fmt json
     "name": "FLiK",
     "symbol": "FLIK",
     "source": "Etherscan.io",
-    "logo": "flikcoin28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -916,7 +916,7 @@ ethNames --fmt json
     "name": "1820 Registry",
     "symbol": "REG",
     "source": "QuickBlocks",
-    "logo": "",
+    "decimals": 0,
     "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
   },
   {
@@ -925,7 +925,7 @@ ethNames --fmt json
     "name": "FuzeX",
     "symbol": "FXT",
     "source": "Etherscan.io",
-    "logo": "fuzex_28.png",
+    "decimals": 0,
     "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
   },
   {
@@ -934,7 +934,7 @@ ethNames --fmt json
     "name": "Oyster Pearl",
     "symbol": "PRL",
     "source": "Etherscan.io",
-    "logo": "oyster28_2.png",
+    "decimals": 0,
     "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
   },
   {
@@ -943,7 +943,7 @@ ethNames --fmt json
     "name": "Payable Exchange Issue",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -952,7 +952,7 @@ ethNames --fmt json
     "name": "BitDegree",
     "symbol": "BDG",
     "source": "Etherscan.io",
-    "logo": "bitdegree28.png",
+    "decimals": 0,
     "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
   },
   {
@@ -961,7 +961,7 @@ ethNames --fmt json
     "name": "nDEX",
     "symbol": "NDX",
     "source": "Etherscan.io",
-    "logo": "ndx_28.png",
+    "decimals": 0,
     "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
   },
   {
@@ -970,7 +970,7 @@ ethNames --fmt json
     "name": "Reputation",
     "symbol": "REP",
     "source": "Etherscan.io",
-    "logo": "augur.png",
+    "decimals": 0,
     "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
   },
   {
@@ -979,7 +979,7 @@ ethNames --fmt json
     "name": "Aston X",
     "symbol": "ATX",
     "source": "Etherscan.io",
-    "logo": "atx_28.png",
+    "decimals": 0,
     "description": "Document Distribution Platform"
   },
   {
@@ -988,7 +988,7 @@ ethNames --fmt json
     "name": "PRASM",
     "symbol": "PSM",
     "source": "Etherscan.io",
-    "logo": "prasm_28.png",
+    "decimals": 0,
     "description": "AI-Based Decentralized Bioinformatic Network"
   },
   {
@@ -997,7 +997,7 @@ ethNames --fmt json
     "name": "AppCoins",
     "symbol": "APPC",
     "source": "Etherscan.io",
-    "logo": "appcoins_28.png",
+    "decimals": 0,
     "description": "AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem."
   },
   {
@@ -1006,7 +1006,7 @@ ethNames --fmt json
     "name": "minereum",
     "symbol": "MNE",
     "source": "Etherscan.io",
-    "logo": "minereum.png",
+    "decimals": 0,
     "description": "Self-mining smart contract."
   },
   {
@@ -1015,7 +1015,7 @@ ethNames --fmt json
     "name": "MyWish",
     "symbol": "WISH",
     "source": "Etherscan.io",
-    "logo": "mywish_28.png",
+    "decimals": 0,
     "description": "Aims to provide a service for funds management in case of different life events, in safe and convenient way."
   },
   {
@@ -1024,7 +1024,7 @@ ethNames --fmt json
     "name": "ViteToken",
     "symbol": "VITE",
     "source": "Etherscan.io",
-    "logo": "vite_28.png",
+    "decimals": 0,
     "description": "High-performance Decentralized Application Platform"
   },
   {
@@ -1033,7 +1033,7 @@ ethNames --fmt json
     "name": "EthBits ETBS Token",
     "symbol": "ETBS",
     "source": "Etherscan.io",
-    "logo": "ethbits2_28.png",
+    "decimals": 0,
     "description": "ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance."
   },
   {
@@ -1042,7 +1042,7 @@ ethNames --fmt json
     "name": "ROC",
     "symbol": "ROC",
     "source": "Etherscan.io",
-    "logo": "rasputin_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -1051,7 +1051,7 @@ ethNames --fmt json
     "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
     "symbol": "BCPT",
     "source": "Etherscan.io",
-    "logo": "blockmason_28_2.png",
+    "decimals": 0,
     "description": "Democratizing the creation of credit through permanently recorded debts and obligations."
   },
   {
@@ -1060,7 +1060,7 @@ ethNames --fmt json
     "name": "Soniq Token",
     "symbol": "SONIQ",
     "source": "Etherscan.io",
-    "logo": "soniq_28.png",
+    "decimals": 0,
     "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
   },
   {
@@ -1069,7 +1069,7 @@ ethNames --fmt json
     "name": "TEAM",
     "symbol": "TEAM",
     "source": "Etherscan.io",
-    "logo": "tokenstars_28.png",
+    "decimals": 0,
     "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level."
   },
   {
@@ -1078,7 +1078,7 @@ ethNames --fmt json
     "name": "DigitexFutures",
     "symbol": "DGTX",
     "source": "Etherscan.io",
-    "logo": "digitextoken_28.png",
+    "decimals": 0,
     "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
   },
   {
@@ -1087,7 +1087,7 @@ ethNames --fmt json
     "name": "ThoreCoin",
     "symbol": "THR",
     "source": "Etherscan.io",
-    "logo": "thorecoin_28.png",
+    "decimals": 0,
     "description": "THR represents a basket of top-traded high-demand coins Simply put, it’s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
   },
   {
@@ -1096,7 +1096,7 @@ ethNames --fmt json
     "name": "Faceter",
     "symbol": "FACE",
     "source": "Etherscan.io",
-    "logo": "faceter_28.png",
+    "decimals": 0,
     "description": "Сomputer vision surveillance technology powered by fog network of miners."
   },
   {
@@ -1105,7 +1105,7 @@ ethNames --fmt json
     "name": "CanYaCoin",
     "symbol": "CAN",
     "source": "Etherscan.io",
-    "logo": "canya2_28.png",
+    "decimals": 0,
     "description": "Blockchain-Powered Marketplace of Services"
   },
   {
@@ -1114,7 +1114,7 @@ ethNames --fmt json
     "name": "Talao",
     "symbol": "TALAO",
     "source": "Etherscan.io",
-    "logo": "talao_28.png",
+    "decimals": 0,
     "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain"
   },
   {
@@ -1123,7 +1123,7 @@ ethNames --fmt json
     "name": "Rebalance Auction Module",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1132,7 +1132,7 @@ ethNames --fmt json
     "name": "SPINDLE",
     "symbol": "SPD",
     "source": "Etherscan.io",
-    "logo": "spindle_28.png",
+    "decimals": 0,
     "description": "Unique Investment/Asset Management Platform"
   },
   {
@@ -1141,7 +1141,7 @@ ethNames --fmt json
     "name": "ClearCoin",
     "symbol": "XCLR",
     "source": "Etherscan.io",
-    "logo": "clearcoin_28.png",
+    "decimals": 0,
     "description": "ClearCoin makes buying and selling of media on the blockchain simple and seamless. Its platform powers a system allowing for complete data transparency everyone can trust."
   },
   {
@@ -1150,7 +1150,7 @@ ethNames --fmt json
     "name": "ModulTrade Token",
     "symbol": "MTRc",
     "source": "Etherscan.io",
-    "logo": "modultrade_28.png",
+    "decimals": 0,
     "description": "A smart-contract open ecosystem providing small businesses access to global trade by using a crypto token for payment or borrowing."
   },
   {
@@ -1159,7 +1159,7 @@ ethNames --fmt json
     "name": "Sola Token",
     "symbol": "SOL",
     "source": "Etherscan.io",
-    "logo": "sola_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -1168,7 +1168,7 @@ ethNames --fmt json
     "name": "Bancor",
     "symbol": "BNT",
     "source": "Etherscan.io",
-    "logo": "bancor.png",
+    "decimals": 0,
     "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
   },
   {
@@ -1177,7 +1177,7 @@ ethNames --fmt json
     "name": "Rebalancing Token Issuance Module",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1186,7 +1186,7 @@ ethNames --fmt json
     "name": "Moloch DAO",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1195,7 +1195,7 @@ ethNames --fmt json
     "name": "RNTB Token",
     "symbol": "RNTB",
     "source": "Etherscan.io",
-    "logo": "rntb_28.png",
+    "decimals": 0,
     "description": "BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property"
   },
   {
@@ -1204,7 +1204,7 @@ ethNames --fmt json
     "name": "Zebi Coin",
     "symbol": "ZCO",
     "source": "Etherscan.io",
-    "logo": "zebi_28.png",
+    "decimals": 0,
     "description": "Blockchaining India’s Big Data"
   },
   {
@@ -1213,7 +1213,7 @@ ethNames --fmt json
     "name": "DEW",
     "symbol": "DEW",
     "source": "Etherscan.io",
-    "logo": "dewone_28.png",
+    "decimals": 0,
     "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc."
   },
   {
@@ -1222,7 +1222,7 @@ ethNames --fmt json
     "name": "Sapien Network",
     "symbol": "SPN",
     "source": "Etherscan.io",
-    "logo": "sapien_28_2.png",
+    "decimals": 0,
     "description": "Sapien is a decentralized social news platform."
   },
   {
@@ -1231,7 +1231,7 @@ ethNames --fmt json
     "name": "Moloch Guild Bank",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1240,7 +1240,7 @@ ethNames --fmt json
     "name": "Uniswap Exchange Template",
     "symbol": "",
     "source": "Uniswap website",
-    "logo": "",
+    "decimals": 0,
     "description": "Uniswap exchange template"
   },
   {
@@ -1249,7 +1249,7 @@ ethNames --fmt json
     "name": "LionCoin",
     "symbol": "LION",
     "source": "Etherscan.io",
-    "logo": "coinlion_28.png",
+    "decimals": 0,
     "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal."
   },
   {
@@ -1258,7 +1258,7 @@ ethNames --fmt json
     "name": "YoloCash",
     "symbol": "YLC",
     "source": "Etherscan.io",
-    "logo": "yoloworld_28.png",
+    "decimals": 0,
     "description": "A decentralized e-commerce platform builds on blockchain for loyalty rewards."
   },
   {
@@ -1267,7 +1267,7 @@ ethNames --fmt json
     "name": "Network",
     "symbol": "NTWK",
     "source": "Etherscan.io",
-    "logo": "networktoken_28.png",
+    "decimals": 0,
     "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics."
   },
   {
@@ -1276,7 +1276,7 @@ ethNames --fmt json
     "name": "Propy",
     "symbol": "PRO",
     "source": "Etherscan.io",
-    "logo": "propy_28.png",
+    "decimals": 0,
     "description": "Property Transactions Secured Through Blockchain."
   },
   {
@@ -1285,7 +1285,7 @@ ethNames --fmt json
     "name": "Global Social Chain",
     "symbol": "GSC",
     "source": "Etherscan.io",
-    "logo": "gsc_28.png",
+    "decimals": 0,
     "description": "Social Chain based on hundreds of millions of users."
   },
   {
@@ -1294,7 +1294,7 @@ ethNames --fmt json
     "name": "Friendz Coin",
     "symbol": "FDZ",
     "source": "Etherscan.io",
-    "logo": "friendz_28.png",
+    "decimals": 0,
     "description": "A digital marketing revolutionon the blockchain"
   },
   {
@@ -1303,7 +1303,7 @@ ethNames --fmt json
     "name": "RoBET - Truly Decentralized Sportsbetting",
     "symbol": "ROBET",
     "source": "Etherscan.io",
-    "logo": "robettoken3_28.png",
+    "decimals": 0,
     "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts."
   },
   {
@@ -1312,7 +1312,7 @@ ethNames --fmt json
     "name": "Vice",
     "symbol": "VIT",
     "source": "Etherscan.io",
-    "logo": "viceindustry_28.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -1321,7 +1321,7 @@ ethNames --fmt json
     "name": "MidasProtocol",
     "symbol": "MAS",
     "source": "Etherscan.io",
-    "logo": "midasprotocol_28.png",
+    "decimals": 0,
     "description": "A smart, secure, user-friendly, multi-coin wallet for all essential crypto needs, from safekeeping, intelligent trading, portfolio management, easy conversion to fiat and spending of cryptocurrencies - MidasProtocol.io"
   },
   {
@@ -1330,7 +1330,7 @@ ethNames --fmt json
     "name": "4NEW",
     "symbol": "KWATT",
     "source": "Etherscan.io",
-    "logo": "4newtoken_28.png",
+    "decimals": 0,
     "description": "CLEAN GREEN ENERGY FOR CRYPTO MINING"
   },
   {
@@ -1339,7 +1339,7 @@ ethNames --fmt json
     "name": "UnikoinGold",
     "symbol": "UKG",
     "source": "Etherscan.io",
-    "logo": "unikoingold_28.png",
+    "decimals": 0,
     "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform."
   },
   {
@@ -1348,7 +1348,7 @@ ethNames --fmt json
     "name": "Transfer Proxy",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1357,7 +1357,7 @@ ethNames --fmt json
     "name": "Standard Settle Rebalance Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1366,7 +1366,7 @@ ethNames --fmt json
     "name": "DarkDAO",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1375,7 +1375,7 @@ ethNames --fmt json
     "name": "Kyber Network Wrapper",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1384,7 +1384,7 @@ ethNames --fmt json
     "name": "Camp Decentral Donations (Giveth)",
     "symbol": "",
     "source": "Giveth website",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1393,7 +1393,7 @@ ethNames --fmt json
     "name": "Initial Collateral Set",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1402,7 +1402,7 @@ ethNames --fmt json
     "name": "Exchange Issue Module",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1411,7 +1411,7 @@ ethNames --fmt json
     "name": "ERC 20 Wrapper",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1420,7 +1420,7 @@ ethNames --fmt json
     "name": "Rebalancing Set Token Factory",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1429,7 +1429,7 @@ ethNames --fmt json
     "name": "Bit Eth Rebalance Manager",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1438,7 +1438,7 @@ ethNames --fmt json
     "name": "Signature Validator",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1447,7 +1447,7 @@ ethNames --fmt json
     "name": "Tennagraph (Giveth) No Vote on ProgPow",
     "symbol": "",
     "source": "Giveth website",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1456,7 +1456,7 @@ ethNames --fmt json
     "name": "EIP 712 Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1465,7 +1465,7 @@ ethNames --fmt json
     "name": "Giveth Donations Vault",
     "symbol": "GHT",
     "source": "Giveth website",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1474,7 +1474,7 @@ ethNames --fmt json
     "name": "Set Protocol Vault",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1483,7 +1483,7 @@ ethNames --fmt json
     "name": "ENS Related",
     "symbol": "ENS",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1492,7 +1492,7 @@ ethNames --fmt json
     "name": "Dai Stablecoin v2.0",
     "symbol": "DAI",
     "source": "Etherscan.io",
-    "logo": "dai_stablecoin.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -1501,7 +1501,7 @@ ethNames --fmt json
     "name": "Eth Early Adoption Reg",
     "symbol": "EEAR",
     "source": "quickBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": "An early, known-dead address useful for testing"
   },
   {
@@ -1510,7 +1510,7 @@ ethNames --fmt json
     "name": "Set Protocol Core",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1519,7 +1519,7 @@ ethNames --fmt json
     "name": "Moloch Paying Proxy",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1528,7 +1528,7 @@ ethNames --fmt json
     "name": "Bit Eth Rebalancing Set Token",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1537,7 +1537,7 @@ ethNames --fmt json
     "name": "The Dao Extra Balance Account",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1546,7 +1546,7 @@ ethNames --fmt json
     "name": "Linear Auction Price Curve",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1555,7 +1555,7 @@ ethNames --fmt json
     "name": "Issuance Order Module",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1564,7 +1564,7 @@ ethNames --fmt json
     "name": "Gnosis Safe for Moloch",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1573,7 +1573,7 @@ ethNames --fmt json
     "name": "Sai Stablecoin v1.0",
     "symbol": "SAI",
     "source": "Etherscan.io",
-    "logo": "sai_stablecoin.png",
+    "decimals": 0,
     "description": "No description"
   },
   {
@@ -1582,7 +1582,7 @@ ethNames --fmt json
     "name": "WhiteList",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1591,7 +1591,7 @@ ethNames --fmt json
     "name": "Giveth Donations",
     "symbol": "",
     "source": "Giveth website",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1600,7 +1600,7 @@ ethNames --fmt json
     "name": "DarkDAOextraBalance",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1609,7 +1609,7 @@ ethNames --fmt json
     "name": "Rebalancing Helper Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1618,7 +1618,7 @@ ethNames --fmt json
     "name": "Taker Wallet Wrapper",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1627,7 +1627,7 @@ ethNames --fmt json
     "name": "Aragon",
     "symbol": "ANT",
     "source": "Etherscan.io",
-    "logo": "aragon_28.png",
+    "decimals": 0,
     "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties."
   },
   {
@@ -1636,7 +1636,7 @@ ethNames --fmt json
     "name": "ShapeShift 2",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1645,7 +1645,7 @@ ethNames --fmt json
     "name": "Maker",
     "symbol": "MKR",
     "source": "Etherscan.io",
-    "logo": "mkr-etherscan-35.png",
+    "decimals": 0,
     "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain"
   },
   {
@@ -1654,7 +1654,7 @@ ethNames --fmt json
     "name": "Proof of Attendance Token",
     "symbol": "POAP",
     "source": "Etherscan.io",
-    "logo": "",
+    "decimals": 0,
     "description": "Proof of Attendance Token"
   },
   {
@@ -1663,7 +1663,7 @@ ethNames --fmt json
     "name": "Standard Propose Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1672,7 +1672,7 @@ ethNames --fmt json
     "name": "ReplaySafeSplit",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1681,7 +1681,7 @@ ethNames --fmt json
     "name": "Standard Fail Auction Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1690,7 +1690,7 @@ ethNames --fmt json
     "name": "Exchange Issue Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1699,7 +1699,7 @@ ethNames --fmt json
     "name": "0chain",
     "symbol": "ZCN",
     "source": "Etherscan.io",
-    "logo": "ochain_28_2.png",
+    "decimals": 0,
     "description": "0chain is an infinitely scalable decentralized Cloud for any application."
   },
   {
@@ -1708,7 +1708,7 @@ ethNames --fmt json
     "name": "The DAO",
     "symbol": "DAO",
     "source": "Etherscan.io",
-    "logo": "",
+    "decimals": 0,
     "description": "The infamous DAO smart contract"
   },
   {
@@ -1717,7 +1717,7 @@ ethNames --fmt json
     "name": "WithdrawDAO",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1726,7 +1726,7 @@ ethNames --fmt json
     "name": "Wrapped Ether",
     "symbol": "WETH",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1735,7 +1735,7 @@ ethNames --fmt json
     "name": "Uniswap Factory Contract",
     "symbol": "UNI",
     "source": "Uniswap website",
-    "logo": "",
+    "decimals": 0,
     "description": "Uniswap factory contract"
   },
   {
@@ -1744,7 +1744,7 @@ ethNames --fmt json
     "name": "Standard Start Rebalance Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1753,7 +1753,7 @@ ethNames --fmt json
     "name": "Order Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1762,7 +1762,7 @@ ethNames --fmt json
     "name": "DaoManagedAcct",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1771,7 +1771,7 @@ ethNames --fmt json
     "name": "DAO Curator",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1780,7 +1780,7 @@ ethNames --fmt json
     "name": "GitCoin Grants",
     "symbol": "",
     "source": "Gitcoin grants contract",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1789,7 +1789,7 @@ ethNames --fmt json
     "name": "Set Protocol Core Caller",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1798,7 +1798,7 @@ ethNames --fmt json
     "name": "Standard Place Bid Library",
     "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "logo": "",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1807,8 +1807,8 @@ ethNames --fmt json
     "name": "Etherum Tip Jar",
     "symbol": "TIP",
     "source": "Ethereum.org",
-    "logo": "",
+    "decimals": 0,
     "description": "The ethereum tip jar"
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "logo", "type": "text" }, { "name": "description", "type": "text" }] }
+{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

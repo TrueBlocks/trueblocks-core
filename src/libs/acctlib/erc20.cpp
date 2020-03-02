@@ -70,16 +70,6 @@ string_q CTokenState_erc20::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                return addr_2_Str(address);
-            }
-            break;
-        case 'd':
-            if (fieldName % "decimals") {
-                return uint_2_Str(decimals);
-            }
-            break;
         case 't':
             if (fieldName % "totalSupply") {
                 return wei_2_Str(totalSupply);
@@ -113,18 +103,6 @@ bool CTokenState_erc20::setValueByName(const string_q& fieldNameIn, const string
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                address = str_2_Addr(fieldValue);
-                return true;
-            }
-            break;
-        case 'd':
-            if (fieldName % "decimals") {
-                decimals = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
         case 't':
             if (fieldName % "totalSupply") {
                 totalSupply = str_2_Wei(fieldValue);
@@ -162,8 +140,6 @@ bool CTokenState_erc20::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> address;
-    archive >> decimals;
     archive >> totalSupply;
     archive >> version;
     finishParse();
@@ -177,8 +153,6 @@ bool CTokenState_erc20::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << address;
-    archive << decimals;
     archive << totalSupply;
     archive << version;
 
@@ -219,8 +193,6 @@ void CTokenState_erc20::registerClass(void) {
     ADD_FIELD(CTokenState_erc20, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTokenState_erc20, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "totalSupply", T_WEI, ++fieldNum);
     ADD_FIELD(CTokenState_erc20, "version", T_TEXT, ++fieldNum);
 

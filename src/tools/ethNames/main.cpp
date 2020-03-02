@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
     bool first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            return 0;
+            continue;
 
         bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
         if (isText && options.items.size() == 0) {

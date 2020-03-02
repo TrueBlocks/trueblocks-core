@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (!options.parts.empty()) {
+        if (options.modeBits != TK_NONE) {
             options.reportByParts();
 
         } else if (options.by_acct) {

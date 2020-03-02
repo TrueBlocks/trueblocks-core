@@ -6,7 +6,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -33,7 +33,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     }
   ],
@@ -62,8 +62,8 @@
           "type": "text"
         },
         {
-          "name": "logo",
-          "type": "text"
+          "name": "decimals",
+          "type": "unumber"
         },
         {
           "name": "description",

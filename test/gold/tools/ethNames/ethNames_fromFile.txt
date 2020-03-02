@@ -1,9 +1,9 @@
 ethNames argc: 2 [1:--file:names.txt] 
 ethNames --file:names.txt 
-group	address	name	symbol
-50-Tokens	0x5e3346444010135322268a4630d2ed5f8d09446c	LockTrip	LOC
-50-Tokens	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH
-50-Tokens	0xa017ac5fac5941f95010b12570b812c974469c2c	Proxeus	XES
-50-Tokens	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL
-50-Tokens	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL
-50-Tokens	0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	Walton	WTC
+No results
+group	address	name	symbol	decimals
+50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH		8
+50-Tokens:ERC20	0xa017ac5fac5941f95010b12570b812c974469c2c	Proxeus	XES		18
+50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL		18
+50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL		18
+50-Tokens:ERC20	0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74	Walton Token	WTC		18

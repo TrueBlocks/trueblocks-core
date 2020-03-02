@@ -17,6 +17,7 @@
 //---------------------------------------------------------------------------
 namespace qblocks {
 
+extern bool toPrintable(const string_q& inHex, string_q& result);
 //-----------------------------------------------------------------------------------------
 string_q params_2_Str(CParameterArray& interfaces) {
     string_q ret;
@@ -228,6 +229,9 @@ string_q parse_u256(const string_q& input, const void* data = NULL) {
     return bnu_2_Str(str_2_BigUint("0x" + input, 256));
 }
 string_q parse_by32(const string_q& input, const void* data = NULL) {
+    string_q ret;
+    if (toPrintable(input, ret))
+        return ret;
     return "0x" + input;
 }
 string_q parse_addr_addr(const string_q& input, const void* data) {

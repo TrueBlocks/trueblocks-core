@@ -1,7 +1,7 @@
 [settings]
 class = CTokenState_erc20
 base_class = CAccountWatch
-fields = address address|uint64 decimals|wei totalSupply|string version
+fields = wei totalSupply|string version
 includes = acctlib.h
 scope = extern
 serializable = true

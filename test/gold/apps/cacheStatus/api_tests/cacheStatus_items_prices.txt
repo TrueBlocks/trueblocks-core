@@ -21,7 +21,7 @@
               "name": "",
               "symbol": "",
               "source": "",
-              "logo": "",
+              "decimals": "0",
               "description": "",
               "is_custom": false,
               "is_prefund": false,
@@ -108,8 +108,8 @@
           "type": "text"
         },
         {
-          "name": "logo",
-          "type": "text"
+          "name": "decimals",
+          "type": "unumber"
         },
         {
           "name": "description",

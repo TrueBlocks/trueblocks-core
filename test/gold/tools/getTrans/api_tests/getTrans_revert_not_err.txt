@@ -259,7 +259,21 @@
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "balance",
+                "value": "100000000"
+              }
+            ]
+          },
           "action": {
             "address": "0x0",
             "balance": 0,
@@ -280,7 +294,21 @@
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "balance",
+                "value": "100000000"
+              }
+            ]
+          },
           "action": {
             "address": "0x0",
             "balance": 0,

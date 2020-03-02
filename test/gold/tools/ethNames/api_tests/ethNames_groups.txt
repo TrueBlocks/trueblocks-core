@@ -58,6 +58,9 @@
       "group": "50-Tokens"
     },
     {
+      "group": "50-Tokens:ERC20"
+    },
+    {
       "group": "60-Airdrops"
     },
     {

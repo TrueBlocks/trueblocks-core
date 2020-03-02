@@ -5,53 +5,53 @@
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 - Antiprosynth Twitter Account Activity",
       "symbol": "",
-      "source": "TrueBlocks.io",
-      "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
+      "source": "GitCoin Website",
+      "decimals": "0",
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x1829aa045e21e0d59580024a951db48096e01782",
-      "name": "FuzeX",
+      "name": "FuzeX Token",
       "symbol": "FXT",
-      "source": "Etherscan.io",
-      "logo": "fuzex_28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
       "name": "ThoreCoin",
       "symbol": "THR",
-      "source": "Etherscan.io",
-      "logo": "thorecoin_28.png",
+      "source": "On Chain",
+      "decimals": 4,
       "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
       "name": "Silent Notary Token",
       "symbol": "SNTR",
-      "source": "Etherscan.io",
-      "logo": "silentnotary.png",
+      "source": "On Chain",
+      "decimals": 4,
       "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification."
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
       "name": "SkinCoin",
       "symbol": "SKIN",
-      "source": "Etherscan.io",
-      "logo": "skincoin_28.png",
+      "source": "On Chain",
+      "decimals": 6,
       "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry."
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x47dd62d4d075dead71d0e00299fc56a2d747bebb",
       "name": "EQUAL",
       "symbol": "EQL",
-      "source": "Etherscan.io",
-      "logo": "equaltoken_28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token."
     },
     {
@@ -60,7 +60,7 @@
       "name": "TrueBlocks Tip Jar Doner",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -69,52 +69,61 @@
       "name": "psdev tip jar",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "group": "90-DevCon2:Individual",
+      "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
+      "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
+      "symbol": "",
+      "source": "Slack & DevCon2 Token Contract",
+      "decimals": "0",
       "description": ""
     },
     {
       "group": "50-Tokens",
       "address": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
-      "name": "Unicorns Tokens",
-      "symbol": "UNI",
+      "name": "Unicorns",
+      "symbol": "🦄",
       "source": "Ethereum.org",
-      "logo": "",
+      "decimals": "0",
       "description": "Ethereum tip jar unicorn tokens"
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e",
       "name": "ABX Token",
       "symbol": "ABX",
-      "source": "Etherscan.io",
-      "logo": "abx_28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges."
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3",
       "name": "PCHAIN",
       "symbol": "PAI",
-      "source": "Etherscan.io",
-      "logo": "pchain_28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains."
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
       "name": "Insights Network",
       "symbol": "INSTAR",
-      "source": "Etherscan.io",
-      "logo": "insightsnetwork28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data."
     },
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0xee74110fb5a1007b06282e0de5d73a61bf41d9cd",
       "name": "BHPCash",
       "symbol": "BHPC",
-      "source": "Etherscan.io",
-      "logo": "bhpcash_28.png",
+      "source": "On Chain",
+      "decimals": 18,
       "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power."
     },
     {
@@ -123,7 +132,7 @@
       "name": "Etherum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
       "description": "The ethereum tip jar"
     }
   ],
@@ -152,8 +161,8 @@
           "type": "text"
         },
         {
-          "name": "logo",
-          "type": "text"
+          "name": "decimals",
+          "type": "unumber"
         },
         {
           "name": "description",

@@ -202,7 +202,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "symbol");
         HIDE_FIELD(CAccountName, "description");
         HIDE_FIELD(CAccountName, "source");
-        HIDE_FIELD(CAccountName, "logo");
+        HIDE_FIELD(CAccountName, "decimal");
     }
 
     return true;
@@ -349,8 +349,10 @@ void COptions::applyFilter() {
                 item.group = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.name = "Account_" + uint_2_Str(i);
-                if (!(i % 2))
+                if (!(i % 2)) {
                     item.symbol = "AC_" + uint_2_Str(i);
+                    item.decimals = i;
+                }
                 item.source = "Testing";
                 addIfUnique(item);
             }
@@ -392,7 +394,7 @@ string_q shortenFormat(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
-    replace(ret, "[{LOGO}]", "");
+    replace(ret, "[{DECIMAL}]", "");
     while (startsWith(ret, "\t"))
         replace(ret, "\t", "");
     while (endsWith(ret, "\t"))
@@ -405,7 +407,7 @@ string_q getSearchFields(const string_q& fmtIn) {
     string_q ret = toUpper(fmtIn);
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
-    replace(ret, "[{LOGO}]", "");
+    replace(ret, "[{DECIMAL}]", "");
     while (startsWith(ret, "\t"))
         replace(ret, "\t", "");
     while (endsWith(ret, "\t"))

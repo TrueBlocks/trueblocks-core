@@ -5,8 +5,8 @@
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 - Antiprosynth Twitter Account Activity",
       "symbol": "",
-      "source": "TrueBlocks.io",
-      "logo": "https://gitcoin.co/grants/160/antiprosynth-twitter-account-activity",
+      "source": "GitCoin Website",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "TrueBlocks Tip Jar Doner",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -24,7 +24,16 @@
       "name": "psdev tip jar",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "group": "90-DevCon2:Individual",
+      "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
+      "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
+      "symbol": "",
+      "source": "Slack & DevCon2 Token Contract",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -33,7 +42,7 @@
       "name": "Etherum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
-      "logo": "",
+      "decimals": "0",
       "description": "The ethereum tip jar"
     }
   ],
@@ -62,8 +71,8 @@
           "type": "text"
         },
         {
-          "name": "logo",
-          "type": "text"
+          "name": "decimals",
+          "type": "unumber"
         },
         {
           "name": "description",

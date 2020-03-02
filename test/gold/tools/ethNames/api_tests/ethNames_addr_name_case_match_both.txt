@@ -1,12 +1,12 @@
 {
   "data": [
     {
-      "group": "50-Tokens",
+      "group": "50-Tokens:ERC20",
       "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
       "name": "Humaniq",
       "symbol": "HMQ",
-      "source": "Etherscan.io",
-      "logo": "humaniq.png",
+      "source": "On Chain",
+      "decimals": 8,
       "description": "Humaniq aims to be a simple and secure 4th generation mobile bank."
     }
   ],
@@ -35,8 +35,8 @@
           "type": "text"
         },
         {
-          "name": "logo",
-          "type": "text"
+          "name": "decimals",
+          "type": "unumber"
         },
         {
           "name": "description",

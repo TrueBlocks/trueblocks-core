@@ -32,7 +32,7 @@ class CAccountName : public CBaseNode {
     string_q name;
     string_q symbol;
     string_q source;
-    string_q logo;
+    uint64_t decimals;
     string_q description;
     bool is_custom;
     bool is_prefund;
@@ -109,7 +109,7 @@ inline void CAccountName::initialize(void) {
     name = "";
     symbol = "";
     source = "";
-    logo = "";
+    decimals = 0;
     description = "";
     is_custom = false;
     is_prefund = false;
@@ -134,7 +134,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     name = ac.name;
     symbol = ac.symbol;
     source = ac.source;
-    logo = ac.logo;
+    decimals = ac.decimals;
     description = ac.description;
     is_custom = ac.is_custom;
     is_prefund = ac.is_prefund;
@@ -168,7 +168,8 @@ inline bool CAccountName::operator==(const CAccountName& item) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
-    return v1.address < v2.address;
+    if (v1.address == v2.address)
+        return v1.group < v2.group;
     // EXISTING_CODE
     // Default sort as defined in class definition
     return v1.address < v2.address;

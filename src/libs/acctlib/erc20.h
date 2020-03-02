@@ -35,8 +35,6 @@ typedef enum {
 //--------------------------------------------------------------------------
 class CTokenState_erc20 : public CAccountWatch {
   public:
-    address_t address;
-    uint64_t decimals;
     wei_t totalSupply;
     string_q version;
 
@@ -101,8 +99,6 @@ inline void CTokenState_erc20::clear(void) {
 inline void CTokenState_erc20::initialize(void) {
     CAccountWatch::initialize();
 
-    address = "";
-    decimals = 0;
     totalSupply = 0;
     version = "";
 
@@ -115,8 +111,6 @@ inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to) {
     clear();
     CAccountWatch::duplicate(to);
 
-    address = to.address;
-    decimals = to.decimals;
     totalSupply = to.totalSupply;
     version = to.version;
 

@@ -25,11 +25,11 @@ class COptions : public CHistoryOptions {
   public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
-    string_q parts;
     bool by_acct;
     bool no_zero;
     // END_CODE_DECLARE
 
+    tokstate_t modeBits;
     CTokenState_erc20Array tokens;
     CAddressArray holders;
 

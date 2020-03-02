@@ -23,7 +23,7 @@ cacheStatus --details abis
           "name": "",
           "symbol": "",
           "source": "",
-          "logo": "",
+          "decimals": 0,
           "description": "",
           "is_custom": false,
           "is_prefund": false,

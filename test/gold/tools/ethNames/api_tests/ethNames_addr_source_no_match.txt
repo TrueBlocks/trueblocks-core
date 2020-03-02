@@ -1,2 +1,1 @@
-group	address	name	symbol	source
-50-Tokens	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network	NTWK	Etherscan.io
+No results

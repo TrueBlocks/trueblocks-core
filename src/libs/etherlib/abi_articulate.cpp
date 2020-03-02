@@ -118,8 +118,7 @@ bool CAbi::articulateLog(CLogEntry* p) const {
                 if (param.indexed && p->topics.size() > which) {
                     string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
                     if (param.type == "string" || param.type == "bytes") {
-                        if (!toPrintable(top, param.value))
-                            param.value = parse_by32(top);
+                        param.value = parse_by32(top);
 
                     } else if (contains(param.type, "[")) {
                         param.value = "0x" + top;
@@ -235,14 +234,20 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 bool toPrintable(const string_q& inHex, string_q& result) {
     bool hasControlChar = false;
     string_q in = substitute(inHex, "0x", "");
+    string_q temp;
     while (!in.empty() && in.size() >= 2) {
         string_q nibble = extract(in, 0, 2);
         in = extract(in, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
+        if (temp.size() > 0 && ch == '\0') {
+            result = temp;
+            return true;
+        }
         if (ch == 0x19)
             hasControlChar = true;
         if (!isprint(ch) && !isspace(ch) && ch != 0x19)
             return false;
+        temp += ch;
     }
     result = hex_2_Str(inHex);
     if (hasControlChar) {

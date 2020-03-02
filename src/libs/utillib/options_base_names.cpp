@@ -94,11 +94,15 @@ bool loadNames(COptionsBase& options) {
         }
     }
 
-    LOG4("Updating names database");
-    string_q fields = "group|address|name|symbol|source|logo|description";
     CStringArray txtFields;
-    explode(txtFields, fields, '|');
+    string_q fields;
     CStringArray lines;
+
+    LOG4("Updating names database");
+    txtFields.clear();
+    lines.clear();
+    fields = "group|address|name|symbol|source|decimals|description";
+    explode(txtFields, fields, '|');
     asciiFileToLines(txtFile, lines);
     for (auto line : lines) {
         if (!startsWith(line, '#') && contains(line, "0x")) {
@@ -175,6 +179,6 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     return true;
 }
 
-// group(30)    address (42)    name (80)    symbol (10)    source (80)    logo (80)    description (300)
+// group(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)
 
 }  // namespace qblocks
