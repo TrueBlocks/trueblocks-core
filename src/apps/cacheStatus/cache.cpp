@@ -364,7 +364,7 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     return true;
 #else
     time_q newestFile;
-    forEveryFileInFolder(getCachePath("monitors")+"*", getNewestFile, &newestFile);
+    forEveryFileInFolder(getCachePath("monitors") + "*", getNewestFile, &newestFile);
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     return (fileLastModifyDate(fn) < newestFile);
 #endif

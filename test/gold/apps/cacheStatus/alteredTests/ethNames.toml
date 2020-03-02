@@ -3,6 +3,6 @@ current = "0.6.7-alpha"
 
 [[custom]]
 list = [
-	{ "group"= "81-Custom", "address"= "0x0000100001000010000100001000010000100001", "name"= "TestWallet1", "is_custom"= false, "is_prefund"= false, "appearanceRange"= 0, "appearanceInterval"= 0 },
-	{ "group"= "81-Custom", "address"= "0x0000200002000020000200002000020000200002", "name"= "TestWallet2", "is_custom"= false, "is_prefund"= false, "appearanceRange"= 0, "appearanceInterval"= 0 }
+	{ "group"= "81-Custom", "address"= "0x0000100001000010000100001000010000100001", "name"= "TestWallet1", "appearanceRange"= 0, "appearanceInterval"= 0 },
+	{ "group"= "81-Custom", "address"= "0x0000200002000020000200002000020000200002", "name"= "TestWallet2", "appearanceRange"= 0, "appearanceInterval"= 0 }
 ]

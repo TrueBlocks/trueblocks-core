@@ -1,7 +1,7 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 on, cmd,  all,  transactions, tools/getTrans, preload,             n, blocks = 3657480 & force, getBlock
 on, cmd,  all,  transactions, tools/getTrans, preload_abi1,        n, addrs = 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 0x2bd2326c993dfaef84f696526064ff22eba5b362, grabABI
-on, cmd,  all,  transactions, tools/getTrans, preload_abi2,        n, addrs = 0x314159265dd8dbb310642f98f50c066173c1259b 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373, grabABI
+on, cmd,  all,  transactions, tools/getTrans, preload_abi2,        n, addrs = 0x314159265dd8dbb310642f98f50c066173c1259b 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, grabABI
 
 on, cmd,  fast, transactions, tools/getTrans, README,              n, @th
 on, cmd,  fast, transactions, tools/getTrans, help,                n, @h
