@@ -1,5 +1,14 @@
 getTokenInfo argc: 6 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--fmt] [4:json] [5:2000000] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt json 2000000 
-
-  For token contract: 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
-    Balance for account 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 at block 2000000 is 0
+{ "data": [
+  {
+    "blockNumber": 2000000,
+    "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+    "balance": 0,
+    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+    "name": "OMGToken",
+    "symbol": "OMG",
+    "decimals": 18
+  }], "types": [
+{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "holder", "type": "address" }, { "name": "balance", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }] }
+] }

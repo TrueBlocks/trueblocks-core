@@ -1,3 +1,30 @@
 {
-  "name": "OMGToken"
+  "data": [
+    {
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "name": "OMGToken"
+    }
+  ],
+  "types": [
+    {
+      "type": "CTokenBalanceRecord",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

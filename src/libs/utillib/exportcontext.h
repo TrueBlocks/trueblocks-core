@@ -36,22 +36,7 @@ class CExportContext {
     format_t exportFmt;
     CNameValueMap fmtMap;
     map<string_q, const CRuntimeClass*> types;
-    CExportContext(void) {
-        noFrst = false;
-        lev = 0;
-        spcs = 2;
-        tab = ' ';
-        nl = '\n';
-        quoteNums = false;
-        hexNums = false;
-        hashesOnly = false;
-        colored = false;
-        asEther = false;
-        asDollars = false;
-        asWei = true;
-        isParity = false;
-        exportFmt = (isApiMode() ? API1 : TXT1);
-    }
+    CExportContext(void);
 };
 extern CExportContext& expContext(void);
 extern void incIndent(void);

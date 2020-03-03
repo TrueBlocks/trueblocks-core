@@ -1,10 +1,15 @@
-getTokenInfo argc: 6 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:name] [5:4001001-4001002] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts name 4001001-4001002 
-[
-{
+getTokenInfo argc: 8 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:name] [5:4001001-4001002] [6:--fmt] [7:json] 
+getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts name 4001001-4001002 --fmt json 
+{ "data": [
+  {
+    "blockNumber": 4001001,
+    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "name": "OMGToken"
-},
-{
+  },
+  {
+    "blockNumber": 4001001,
+    "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "name": "Swarm City Token"
-}
-]
+  }], "types": [
+{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }] }
+] }

@@ -1,6 +1,5 @@
 getTokenInfo argc: 5 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0x5e44c3e467a49c9ca0296a9f130fc433041aaa28] [3:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [4:4000000] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 4000000 
-
-  For token contract: 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
-    Balance for account 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 at block 4000000 is 0
-    Balance for account 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 at block 4000000 is 0
+blocknumber	holder	address	name	symbol	decimals	balance
+4000000	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	0
+4000000	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	0

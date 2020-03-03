@@ -20,6 +20,7 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
+typedef bool (*TOKENVISITFUNC)(CTokenBalanceRecord& token, void* data);
 //-----------------------------------------------------------------------------
 class COptions : public CHistoryOptions {
   public:
@@ -29,17 +30,17 @@ class COptions : public CHistoryOptions {
     bool no_zero;
     // END_CODE_DECLARE
 
-    tokstate_t modeBits;
-    CTokenState_erc20Array tokens;
+    CAddressArray tokens;
     CAddressArray holders;
+
+    CTokenBalanceRecord curToken;
+
+    tokstate_t modeBits;
+    blknum_t latestBlock;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-
-    void reportByParts(void);
-    void reportByToken(void);
-    void reportByAccount(void);
 };

@@ -407,7 +407,8 @@ void loadParseMap(void) {
 }
 
 //---------------------------------------------------------------------------
-bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& inputStr) {
+bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& inputStrIn) {
+    string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
     string_q built;
     // we use fast, simple routines for common patters if we can. This is purely for performance reasons
     NEXTCHUNKFUNC func = parseMap[desc];

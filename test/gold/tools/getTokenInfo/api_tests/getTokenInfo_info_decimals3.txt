@@ -1,8 +1,33 @@
-[
-  {
-    "decimals": "18"
-  },
-  {
-    "decimals": "18"
-  }
-]
+{
+  "data": [
+    {
+      "blockNumber": 4001001,
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "decimals": 18
+    },
+    {
+      "blockNumber": 4001001,
+      "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "decimals": 18
+    }
+  ],
+  "types": [
+    {
+      "type": "CTokenBalanceRecord",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "decimals",
+          "type": "unumber"
+        }
+      ]
+    }
+  ]
+}

@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+bool processPair(uint64_t blockNum, void* data);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
@@ -20,22 +21,69 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
+    bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            return 0;
+            continue;
 
-        if (options.modeBits != TK_NONE) {
-            options.reportByParts();
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTokenBalanceRecord));
 
-        } else if (options.by_acct) {
-            options.reportByAccount();
-
-        } else {
-            options.reportByToken();
+        if (options.tokens.size() > 0) {
+            for (auto holder : options.holders) {
+                for (auto token : options.tokens) {
+                    options.curToken.holder = holder;
+                    options.curToken.address = token;
+                    options.curToken.loadAbiAndCache(options.curToken.address);
+                    options.blocks.forEveryBlockNumber(processPair, &options);
+                }
+            }
         }
+        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+
+        once = false;
     }
 
     if (options.requestsHistory() && !nodeHasBalances(true))
         LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
+
     return 0;
+}
+
+//-----------------------------------------------------------------------
+typedef struct {
+    tokstate_t bits;
+    string_q field;
+} marker_t;
+const vector<marker_t> base = {
+    {TOK_NAME, "name"}, {TOK_SYMBOL, "symbol"}, {TOK_DECIMALS, "decimals"}, {TOK_TOTALSUPPLY, "totalSupply"}};
+const vector<marker_t> bals = {{TOK_BALANCE, "balanceOf"}};
+
+//-----------------------------------------------------------------------
+bool processPair(uint64_t blockNum, void* data) {
+    COptions* opt = (COptions*)data;
+    opt->curToken.blockNumber = blockNum;
+    if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->getNamedAccount(opt->curToken, opt->curToken.address)) {
+        for (auto marker : base)
+            if (opt->modeBits & marker.bits)
+                opt->curToken.setValueByName(marker.field, getTokenState(marker.field, opt->curToken, blockNum));
+    }
+
+    static bool first = true;
+    if (opt->modeBits & TOK_BALANCE)
+        opt->curToken.setValueByName("balance", getTokenBalanceOf(opt->curToken, opt->curToken.holder, blockNum));
+    bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
+    if (isText) {
+        cout << opt->curToken.Format(expContext().fmtMap["format"]) << endl;
+    } else {
+        if (!first)
+            cout << "," << endl;
+        cout << "  ";
+        incIndent();
+        opt->curToken.doExport(cout);
+        decIndent();
+        first = false;
+    }
+
+    return !shouldQuit();
 }

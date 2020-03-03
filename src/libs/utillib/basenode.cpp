@@ -373,6 +373,24 @@ CExportContext& expContext(void) {
 }
 
 //---------------------------------------------------------------------------
+CExportContext::CExportContext(void) {
+    noFrst = false;
+    lev = 0;
+    spcs = 2;
+    tab = ' ';
+    nl = '\n';
+    quoteNums = false;
+    hexNums = false;
+    hashesOnly = false;
+    colored = false;
+    asEther = false;
+    asDollars = false;
+    asWei = true;
+    isParity = false;
+    exportFmt = (isApiMode() ? API1 : TXT1);
+}
+
+//---------------------------------------------------------------------------
 void incIndent(void) {
     expC.lev++;
 }

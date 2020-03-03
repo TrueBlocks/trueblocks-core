@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),  // NOLINT
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
-    COption("parts", "p", "list<enum[name|symbol|decimals|totalSupply|version|none|some*|all]>", OPT_FLAG, "one or more parts of the token information to retreive"),  // NOLINT
+    COption("parts", "p", "list<enum[name|symbol|decimals|totalSupply|version|none|all*]>", OPT_FLAG, "one or more parts of the token information to retreive"),  // NOLINT
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),  // NOLINT
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s)."),  // NOLINT
@@ -42,6 +42,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     blknum_t latest = getLatestBlock_client();
+    latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -78,50 +79,130 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!blocks.hasBlocks())
+    bool userBlocks = true;
+    if (!blocks.hasBlocks()) {
         blocks.numList.push_back(newestBlock);  // use 'latest'
-
-    if (parts.empty() && addrs.size() < 2)
-        return usage("You must provide both a token contract and an account. Quitting...");
-
-    if (!parts.empty()) {
-        // if parts is not empty, all addresses are tokens
-        by_acct = true;
+        userBlocks = false;
     }
 
-    address_t lastItem;
-    for (auto addr : addrs) {
-        if (by_acct) {
-            // all items but the last are tokens, the last item is the account <token> [tokens...] <holder>
-            CTokenState_erc20 watch;
-            watch.address = addr;
-            watch.abi_spec.loadAbiByAddress(addr);
-            tokens.push_back(watch);
-            lastItem = addr;
-        } else {
-            // first item is ERC20 contract, remainder are accounts <token> <holder1> [holder2...]
-            if (tokens.empty()) {
-                CTokenState_erc20 watch;
-                watch.address = addr;
-                watch.abi_spec.loadAbiByAddress(addr);
-                tokens.push_back(watch);
+    if (parts.empty() && addrs.size() < 2)
+        return usage("Use either --parts or provide at least one token and one other account. Quitting...");
+
+    string_q format;
+    if (parts.size() > 0) {
+        format = STR_DISPLAY_TOKENBALANCERECORD;
+        for (auto part : parts) {
+            if (part == "none")
+                modeBits = TOK_NONE;
+            if (part == "name")
+                modeBits = tokstate_t(modeBits | TOK_NAME);
+            if (part == "address")
+                modeBits = tokstate_t(modeBits | TOK_ADDRESS);
+            if (part == "decimals")
+                modeBits = tokstate_t(modeBits | TOK_DECIMALS);
+            if (part == "totalSupply")
+                modeBits = tokstate_t(modeBits | TOK_TOTALSUPPLY);
+            if (part == "symbol")
+                modeBits = tokstate_t(modeBits | TOK_SYMBOL);
+            if (part == "all")
+                modeBits = tokstate_t(modeBits | TOK_PARTS);
+        }
+    } else {
+        format = STR_DISPLAY_TOKENBALANCERECORD2;
+        modeBits = TOK_BALRECORD;
+    }
+
+    // We're going to turn some of these fields back on
+    manageFields("CAccountName:is_custom,is_prefund,group,name,symbol,source,decimals,description", false);
+    manageFields("CAccountWatch:all", false);
+    manageFields("CTokenBalanceRecord:all", false);
+
+    UNHIDE_FIELD(CAccountWatch, "address");
+    if (userBlocks) {
+        UNHIDE_FIELD(CTokenBalanceRecord, "blockNumber");
+    } else {
+        replace(format, "[{BLOCKNUMBER}]", "");
+    }
+
+    if (!(modeBits & TOK_NAME)) {
+        replace(format, "[{NAME}]", "");
+    } else {
+        UNHIDE_FIELD(CAccountName, "name");
+    }
+
+    if (!(modeBits & TOK_DECIMALS)) {
+        replace(format, "[{DECIMALS}]", "");
+    } else {
+        UNHIDE_FIELD(CAccountName, "decimals");
+    }
+
+    if (!(modeBits & TOK_TOTALSUPPLY)) {
+        replace(format, "[{TOTALSUPPLY}]", "");
+    } else {
+        UNHIDE_FIELD(CTokenBalanceRecord, "totalSupply");
+    }
+
+    if (!(modeBits & TOK_SYMBOL)) {
+        replace(format, "[{SYMBOL}]", "");
+    } else {
+        UNHIDE_FIELD(CAccountName, "symbol");
+    }
+
+    if (!(modeBits & TOK_HOLDER)) {
+        replace(format, "[{HOLDER}]", "");
+    } else {
+        UNHIDE_FIELD(CTokenBalanceRecord, "holder");
+    }
+
+    if (!(modeBits & TOK_BALANCE)) {
+        replace(format, "[{BALANCE}]", "");
+    } else {
+        UNHIDE_FIELD(CTokenBalanceRecord, "balance");
+    }
+
+    replaceAll(format, "\t\t", "\t");
+    format = trim(format, '\t');
+
+    // Display formatting
+    configureDisplay("getTokenInfo", "CTokenBalanceRecord", format);
+
+    if (modeBits != TOK_BALRECORD) {
+        holders.push_back("0x0");  // dummy, so the main function loops
+        for (auto addr : addrs)
+            tokens.push_back(addr);
+
+    } else if (by_acct) {
+        // All user-provided addresses are assumed to be tokens, except the last one which is the holder
+        holders.push_back(addrs[addrs.size() - 1]);
+        CAddressArray::iterator it;
+        it = prev(addrs.end());
+        addrs.erase(it);
+        for (auto addr : addrs) {
+            if (!isContractAt(addr, latestBlock))
+                errors.push_back("Address '" + addr + "' is not a token contract.");
+            else
+                tokens.push_back(addr);
+        }
+    } else {
+        // The first user-provided address is the token, the remainder are holders
+        bool first = true;
+        for (auto addr : addrs) {
+            if (first) {
+                if (!isContractAt(addr, latestBlock))
+                    return usage(
+                        "Address '" + addr +
+                        "' is not a token contract. You must provide at least one valid token address. Quitting...");
+                else
+                    tokens.push_back(addr);
             } else {
                 holders.push_back(addr);
             }
+            first = false;
         }
     }
 
-    // if parts is not empty, all addresses are tokens
-    if (by_acct && parts.empty()) {
-        // remove the last one and push it on the holders array
-        tokens.pop_back();
-        holders.push_back(lastItem);
-    }
-
-    for (auto token : tokens) {
-        if (!isContractAt(token.address, latest))
-            return usage("Address '" + token.address + "' does not appear to be a token smart contract. Quitting...");
-    }
+    if (tokens.size() == 0)
+        return usage("You must provide at least one valid token address. Quitting...");
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;
@@ -150,9 +231,10 @@ void COptions::Init(void) {
     no_zero = false;
     // END_CODE_INIT
 
+    curToken = CTokenBalanceRecord();
     tokens.clear();
     holders.clear();
-    modeBits = TK_NONE;
+    modeBits = TOK_NONE;
 
     optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();

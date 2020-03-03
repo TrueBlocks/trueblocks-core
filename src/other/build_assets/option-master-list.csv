@@ -208,7 +208,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 13260,tools,tokens,getTokenInfo,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,tokens,getTokenInfo,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,tokens,getTokenInfo,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|some*|all]>,one or more parts of the token information to retreive
+13300,tools,tokens,getTokenInfo,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
 13320,tools,tokens,getTokenInfo,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,tokens,getTokenInfo,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,tokens,getTokenInfo,,,,false,false,true,true,--,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).

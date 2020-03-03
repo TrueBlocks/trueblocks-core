@@ -21,44 +21,52 @@ namespace qblocks {
 
 // EXISTING_CODE
 typedef enum {
-    TK_NONE = 0,
-    TK_NAME = (1 << 1),
-    TK_DECIMALS = (1 << 2),
-    TK_TOTALSUPPLY = (1 << 3),
-    TK_VERSION = (1 << 4),
-    TK_SYMBOL = (1 << 5),
-    TK_SOME = (TK_NAME | TK_SYMBOL | TK_DECIMALS),
-    TK_ALL = (TK_NAME | TK_SYMBOL | TK_DECIMALS | TK_TOTALSUPPLY | TK_VERSION)
+    TOK_NONE = 0,
+    TOK_NAME = (1 << 1),
+    TOK_ADDRESS = (1 << 2),
+    TOK_DECIMALS = (1 << 3),
+    TOK_TOTALSUPPLY = (1 << 4),
+    TOK_SYMBOL = (1 << 5),
+    TOK_PARTS = (TOK_NAME | TOK_ADDRESS | TOK_SYMBOL | TOK_DECIMALS | TOK_TOTALSUPPLY),
+    TOK_HOLDER = (1 << 6),
+    TOK_BALANCE = (1 << 7),
+    TOK_BALRECORD = (TOK_NAME | TOK_HOLDER | TOK_ADDRESS | TOK_SYMBOL | TOK_DECIMALS | TOK_BALANCE)
 } tokstate_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTokenState_erc20 : public CAccountWatch {
+class CTokenBalanceRecord : public CAccountWatch {
   public:
+    blknum_t blockNumber;
     wei_t totalSupply;
-    string_q version;
+    blknum_t transactionIndex;
+    address_t holder;
+    wei_t priorBalance;
+    wei_t balance;
+    bigint_t diff;
 
   public:
-    CTokenState_erc20(void);
-    CTokenState_erc20(const CTokenState_erc20& to);
-    virtual ~CTokenState_erc20(void);
-    CTokenState_erc20& operator=(const CTokenState_erc20& to);
+    CTokenBalanceRecord(void);
+    CTokenBalanceRecord(const CTokenBalanceRecord& to);
+    virtual ~CTokenBalanceRecord(void);
+    CTokenBalanceRecord& operator=(const CTokenBalanceRecord& to);
 
-    DECLARE_NODE(CTokenState_erc20);
+    DECLARE_NODE(CTokenBalanceRecord);
 
     // EXISTING_CODE
+    void loadAbiAndCache(const address_t& addr);
     // EXISTING_CODE
-    bool operator==(const CTokenState_erc20& item) const;
-    bool operator!=(const CTokenState_erc20& item) const {
+    bool operator==(const CTokenBalanceRecord& item) const;
+    bool operator!=(const CTokenBalanceRecord& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2);
-    friend ostream& operator<<(ostream& os, const CTokenState_erc20& item);
+    friend bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& v2);
+    friend ostream& operator<<(ostream& os, const CTokenBalanceRecord& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CTokenState_erc20& to);
+    void duplicate(const CTokenBalanceRecord& to);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -66,14 +74,14 @@ class CTokenState_erc20 : public CAccountWatch {
 };
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::CTokenState_erc20(void) {
+inline CTokenBalanceRecord::CTokenBalanceRecord(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::CTokenState_erc20(const CTokenState_erc20& to) {
+inline CTokenBalanceRecord::CTokenBalanceRecord(const CTokenBalanceRecord& to) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(to);
@@ -83,43 +91,53 @@ inline CTokenState_erc20::CTokenState_erc20(const CTokenState_erc20& to) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20::~CTokenState_erc20(void) {
+inline CTokenBalanceRecord::~CTokenBalanceRecord(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::clear(void) {
+inline void CTokenBalanceRecord::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::initialize(void) {
+inline void CTokenBalanceRecord::initialize(void) {
     CAccountWatch::initialize();
 
+    blockNumber = 0;
     totalSupply = 0;
-    version = "";
+    transactionIndex = 0;
+    holder = "";
+    priorBalance = 0;
+    balance = 0;
+    diff = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CTokenState_erc20::duplicate(const CTokenState_erc20& to) {
+inline void CTokenBalanceRecord::duplicate(const CTokenBalanceRecord& to) {
     clear();
     CAccountWatch::duplicate(to);
 
+    blockNumber = to.blockNumber;
     totalSupply = to.totalSupply;
-    version = to.version;
+    transactionIndex = to.transactionIndex;
+    holder = to.holder;
+    priorBalance = to.priorBalance;
+    balance = to.balance;
+    diff = to.diff;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CTokenState_erc20& CTokenState_erc20::operator=(const CTokenState_erc20& to) {
+inline CTokenBalanceRecord& CTokenBalanceRecord::operator=(const CTokenBalanceRecord& to) {
     duplicate(to);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -127,7 +145,7 @@ inline CTokenState_erc20& CTokenState_erc20::operator=(const CTokenState_erc20& 
 }
 
 //-------------------------------------------------------------------------
-inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const {
+inline bool CTokenBalanceRecord::operator==(const CTokenBalanceRecord& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
@@ -135,7 +153,7 @@ inline bool CTokenState_erc20::operator==(const CTokenState_erc20& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2) {
+inline bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // Default sort as defined in class definition
@@ -143,20 +161,23 @@ inline bool operator<(const CTokenState_erc20& v1, const CTokenState_erc20& v2) 
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CTokenState_erc20> CTokenState_erc20Array;
-extern CArchive& operator>>(CArchive& archive, CTokenState_erc20Array& array);
-extern CArchive& operator<<(CArchive& archive, const CTokenState_erc20Array& array);
+typedef vector<CTokenBalanceRecord> CTokenBalanceRecordArray;
+extern CArchive& operator>>(CArchive& archive, CTokenBalanceRecordArray& array);
+extern CArchive& operator<<(CArchive& archive, const CTokenBalanceRecordArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CTokenState_erc20& tok);
-extern CArchive& operator>>(CArchive& archive, CTokenState_erc20& tok);
+extern CArchive& operator<<(CArchive& archive, const CTokenBalanceRecord& tok);
+extern CArchive& operator>>(CArchive& archive, CTokenBalanceRecord& tok);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_TOKENSTATE_ERC20;
+extern const char* STR_DISPLAY_TOKENBALANCERECORD;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q getTokenBalanceOf(const CTokenState_erc20& token, const address_t& holder, blknum_t block);
-extern string_q getTokenState(const string_q& what, const CTokenState_erc20& token, blknum_t block);
+extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
+extern string_q doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
+                          const CAbi& abi);
+extern string_q getTokenBalanceOf(const CTokenBalanceRecord& token, const address_t& holder, blknum_t blockNum);
+extern string_q getTokenState(const string_q& what, const CTokenBalanceRecord& token, blknum_t blockNum);
 // EXISTING_CODE
 }  // namespace qblocks

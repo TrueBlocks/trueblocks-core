@@ -1,7 +1,7 @@
-getTokenInfo argc: 1 
-getTokenInfo 
+getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:junk] 
+getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts junk 
 
-  Not enough arguments presented.
+  Invalid option 'junk' for 'parts'. One or more of [name|symbol|decimals|totalSupply|version|none|all] required. Quitting...
 
   Usage:    getTokenInfo [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
