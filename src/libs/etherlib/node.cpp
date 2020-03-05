@@ -1333,16 +1333,16 @@ bool freshenTimestampFile(blknum_t minBlock) {
         cerr << "          \r";
         cerr.flush();
     }
+    file.Release();
+
     cerr << cTeal << "\t  updated timestamps to " << block.blockNumber << " (";
     cerr << block.timestamp << " - ";
     cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")" << cOff << endl;
-
-    file.Release();
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool loadTimestampArray(uint32_t** theArray, size_t& cnt) {
+bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
     // If user does not tell us where to put the data, we can't process it...
     if (theArray == NULL)
         return false;

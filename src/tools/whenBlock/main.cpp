@@ -105,7 +105,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
 
     uint32_t* tsArray = NULL;
     size_t nItems;
-    if (!loadTimestampArray(&tsArray, nItems))
+    if (!loadTimestampFile(&tsArray, nItems))
         return false;
     if (!tsArray)  // it may not have failed, but there may be no timestamps
         return false;

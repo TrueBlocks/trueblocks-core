@@ -228,11 +228,9 @@ bool COptions::parseArguments(string_q& command) {
 
     // Load as many ABI files as we have
     if (!appearances && !balances && !hashes_only) {
-        LOG4("Loading ABIs");
         abis.loadAbiKnown("all");
         if (all_abis)
             abis.loadAbiFromCache("all");
-        LOG4("Finished loading ABIs");
     }
 
     // Try to articulate the watched addresses
@@ -530,7 +528,7 @@ bool COptions::loadAllAppearances(void) {
         EXIT_FAIL("Could not freshen timestamp file.");
     }
 
-    if (!loadTimestampArray(&ts_array, ts_cnt))
+    if (!loadTimestampFile(&ts_array, ts_cnt))
         EXIT_FAIL("Could not open timestamp file.");
 
     // If the user has not told us what to cache via the config file or the command line, we set it to cache
@@ -538,10 +536,6 @@ bool COptions::loadAllAppearances(void) {
     if (!write_opt && items.size() <= 1000)
         write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
 
-    if (!freshen)
-        LOG_INFO("Cache by ",
-                 ((write_opt & CACHE_BYCONFIG) ? "config" : ((write_opt & CACHE_BYUSER) ? "user" : "default")), ": ",
-                 report_cache(write_opt));
     EXIT_NOMSG8(true);
 }
 

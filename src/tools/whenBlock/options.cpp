@@ -34,7 +34,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //-------------------------------------------------------------------------
 size_t nTimestamps(void) {
     size_t nTs;
-    loadTimestampArray(NULL, nTs);
+    loadTimestampFile(NULL, nTs);
     return nTs;
 }
 

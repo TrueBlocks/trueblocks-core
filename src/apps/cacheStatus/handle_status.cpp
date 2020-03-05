@@ -21,7 +21,7 @@ bool COptions::handle_status(ostream& os) {
             index.path = pathName("index", getIndexPath(""));
             forEveryFileInFolder(getIndexPath(""), countFiles, &index);
             CItemCounter counter(this, start, end);
-            loadTimestampArray(&counter.ts_array, counter.ts_cnt);
+            loadTimestampFile(&counter.ts_array, counter.ts_cnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
