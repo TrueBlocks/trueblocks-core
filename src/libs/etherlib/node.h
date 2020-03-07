@@ -182,7 +182,7 @@ string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 
 //-------------------------------------------------------------------------
 extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
-extern bool freshenTimestampFile(blknum_t minBlock);
+extern bool freshenColumn(const CStringArray& columns, blknum_t minBlock);
 extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 
 //-------------------------------------------------------------------------

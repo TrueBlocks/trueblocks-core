@@ -29,7 +29,7 @@ class Test {
     virtual void TearDown(void) = 0;
     static void addFunc(PF func) {
         for (size_t i = 0; i < nFuncs; i++) {
-            if (funcs[i])
+            if (funcs[i] == func)
                 return;
         }
         funcs[nFuncs++] = func;

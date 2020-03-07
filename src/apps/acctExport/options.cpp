@@ -507,34 +507,36 @@ bool COptions::loadAllAppearances(void) {
     // Should be sorted already, so it can't hurt
     sort(tmp.begin(), tmp.end());
 
-    bool hasFuture = false;
-    blknum_t lastAtClient = getLatestBlock_client();
     items.push_back(tmp[0]);
     for (auto item : tmp) {
         CAppearance_base* prev = &items[items.size() - 1];
         // TODO(tjayrush): I think this removes dups. Is it really necessary?
         if (item.blk != prev->blk || item.txid != prev->txid) {
-            if (item.blk > lastAtClient)
-                hasFuture = true;
-            else
+            if (item.blk > latestBlock) {
+                static bool hasFuture = false;
+                if (!hasFuture) {
+                    LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
+                    hasFuture = true;
+                }
+            } else {
                 items.push_back(item);
+            }
         }
     }
-    // LOG1("Items array: " + uint_2_Str(items.size()) + " - " + uint_2_Str(items.size() * sizeof(CAppearance_base)));
-    if (hasFuture)
-        LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
 
-    if (!freshenTimestampFile(items[items.size() - 1].blk)) {
-        EXIT_FAIL("Could not freshen timestamp file.");
+    // Make sure the timestamps column is at least as up to date as this monitor
+    if (items.size()) {
+        if (!freshenColumn({"timestamp"}, items[items.size() - 1].blk))
+            EXIT_FAIL("Could not freshen timestamp file.");
+
+        if (!loadTimestampFile(&ts_array, ts_cnt))
+            EXIT_FAIL("Could not open timestamp file.");
+
+        // If the user has not told us what to cache via the config file or the command line, we
+        // cache transactions and traces if there are less than 1,000 of them...
+        if (!write_opt && items.size() <= 1000)
+            write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
     }
-
-    if (!loadTimestampFile(&ts_array, ts_cnt))
-        EXIT_FAIL("Could not open timestamp file.");
-
-    // If the user has not told us what to cache via the config file or the command line, we set it to cache
-    // transactions and traces if there are less than 1,000 of them...
-    if (!write_opt && items.size() <= 1000)
-        write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
 
     EXIT_NOMSG8(true);
 }

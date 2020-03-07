@@ -1283,7 +1283,7 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
-bool freshenTimestampFile(blknum_t minBlock) {
+bool freshenColumn(const CStringArray& columns, blknum_t minBlock) {
     if (isTestMode())
         return true;
 

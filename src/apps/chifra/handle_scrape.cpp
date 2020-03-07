@@ -137,9 +137,8 @@ bool COptions::handle_scrape(void) {
             if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
 
-            // always catch the timestamp file up to the scraper
-            if (!isTestMode())
-                freshenTimestampFile(getLatestBlock_cache_ripe());
+            // Catch the timestamp file up to the scraper
+            freshenColumn({"timestamp"}, getLatestBlock_cache_ripe());
 
             // sometimes catch the monitors addresses up to the scraper
             if (!isTestMode() && daemonMode) {
