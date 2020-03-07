@@ -1,7 +1,6 @@
 acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--deltas] [4:--end] [5:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --deltas --end 001506480 
 blocknumber	address	balance	diff
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 1: data
 ----------------------------------------------
 0	0x001d14804b399c6ef80e64576f657660804fec0b	4200000000000000000000	4200000000000000000000

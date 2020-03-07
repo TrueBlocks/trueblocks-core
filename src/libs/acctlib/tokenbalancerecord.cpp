@@ -365,7 +365,9 @@ string_q doEthCall(const address_t& to, const string_q& encoding, const string_q
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
 
     CFunction ret;
-    abi.articulateOutputs(encoding, callRPC("eth_call", cmd.str(), false), ret);
+    string_q rpcRet = callRPC("eth_call", cmd.str(), false);
+    if (startsWith(rpcRet, "0x"))
+        abi.articulateOutputs(encoding, rpcRet, ret);
     return ret.outputs.size() ? ret.outputs[0].value : "";
 }
 

@@ -4,12 +4,15 @@ Address 0x2234567812345678123456781234567812345678 is not a smart contract. Skip
 Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run.
 encoding	type	name	signature	input_names	output_names
 0x861731d5	constructor		()		,
-0x9965b3d6	function	claimProxyOwnership	claimProxyOwnership()		,
-0x5c60da1b	function	implementation	implementation()		impl,,
-0x0add8140	function	pendingProxyOwner	pendingProxyOwner()		pendingOwner,,
-0x025313a2	function	proxyOwner	proxyOwner()		owner,,
-0xf1739cae	function	transferProxyOwnership	transferProxyOwnership(address)	newOwner,	,
-0x3659cfe6	function	upgradeTo	upgradeTo(address)	implementation,	,
-0xb3d55174552271a4f1aaf36b72f50381e892171636b3fb5447fe00e995e7a37b	event	NewPendingOwner	NewPendingOwner(address,address)	currentOwner,pendingOwner,	,
-0x5a3e66efaa1e445ebd894728a69d6959842ea1e97bd79b892797106e270efcd9	event	ProxyOwnershipTransferred	ProxyOwnershipTransferred(address,address)	previousOwner,newOwner,	,
-0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b	event	Upgraded	Upgraded(address)	implementation,	"Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run."
+0x2ff2e9dc	function	INITIAL_SUPPLY	INITIAL_SUPPLY()		val_0,,
+0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
+0x095ea7b3	function	approve	approve(address,uint256)	_spender,_value,	,
+0x70a08231	function	balanceOf	balanceOf(address)	_owner,	balance,,
+0x313ce567	function	decimals	decimals()		val_0,,
+0x06fdde03	function	name	name()		val_0,,
+0x95d89b41	function	symbol	symbol()		val_0,,
+0x18160ddd	function	totalSupply	totalSupply()		val_0,,
+0xa9059cbb	function	transfer	transfer(address,uint256)	_to,_value,	,
+0x23b872dd	function	transferFrom	transferFrom(address,address,uint256)	_from,_to,_value,	,
+0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	Approval	Approval(address,address,uint256)	owner,spender,value,	,
+0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	Transfer	Transfer(address,address,uint256)	from,to,value,	"Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run."

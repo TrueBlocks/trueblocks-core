@@ -20,23 +20,28 @@
 #include <string>
 #include "utillib.h"
 
+//----------------------------------------------------------------------
 CMemMapFile::CMemMapFile() : _file(0), _filename(), _filesize(0), _hint(Normal), _mappedBytes(0), _mappedView(NULL) {
 }
 
+//----------------------------------------------------------------------
 CMemMapFile::CMemMapFile(const string_q& filename)
     : _file(0), _filename(filename), _filesize(0), _hint(Normal), _mappedBytes(WholeFile), _mappedView(NULL) {
     open(filename, _mappedBytes, _hint);
 }
 
+//----------------------------------------------------------------------
 CMemMapFile::CMemMapFile(const string_q& filename, size_t mappedBytes, CacheHint hint)
     : _file(0), _filename(filename), _filesize(0), _hint(hint), _mappedBytes(mappedBytes), _mappedView(NULL) {
     open(filename, mappedBytes, hint);
 }
 
+//----------------------------------------------------------------------
 CMemMapFile::~CMemMapFile() {
     close();
 }
 
+//----------------------------------------------------------------------
 bool CMemMapFile::open(const string_q& filename, size_t mappedBytes, CacheHint hint) {
     if (isValid())
         return false;
@@ -64,6 +69,7 @@ bool CMemMapFile::open(const string_q& filename, size_t mappedBytes, CacheHint h
     return true;
 }
 
+//----------------------------------------------------------------------
 void CMemMapFile::close() {
     _filesize = 0;
     if (_mappedView) {
@@ -77,10 +83,12 @@ void CMemMapFile::close() {
     }
 }
 
+//----------------------------------------------------------------------
 unsigned char CMemMapFile::operator[](size_t offset) const {
     return ((unsigned char*)_mappedView)[offset];
 }
 
+//----------------------------------------------------------------------
 unsigned char CMemMapFile::at(size_t offset) const {
     if (!_mappedView)
         throw std::invalid_argument("No view mapped");
@@ -89,22 +97,27 @@ unsigned char CMemMapFile::at(size_t offset) const {
     return operator[](offset);
 }
 
+//----------------------------------------------------------------------
 const unsigned char* CMemMapFile::getData() const {
     return (const unsigned char*)_mappedView;
 }
 
+//----------------------------------------------------------------------
 bool CMemMapFile::isValid() const {
     return _mappedView != NULL;
 }
 
+//----------------------------------------------------------------------
 uint64_t CMemMapFile::size() const {
     return _filesize;
 }
 
+//----------------------------------------------------------------------
 size_t CMemMapFile::mappedSize() const {
     return _mappedBytes;
 }
 
+//----------------------------------------------------------------------
 bool CMemMapFile::remap(uint64_t offset, size_t mappedBytes) {
     if (!_file)
         return false;
@@ -150,6 +163,7 @@ bool CMemMapFile::remap(uint64_t offset, size_t mappedBytes) {
     return true;
 }
 
+//----------------------------------------------------------------------
 int CMemMapFile::getpagesize() {
     return static_cast<int>(sysconf(_SC_PAGESIZE));
 }

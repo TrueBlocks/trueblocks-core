@@ -1343,39 +1343,18 @@ bool freshenTimestampFile(blknum_t minBlock) {
 
 //-----------------------------------------------------------------------
 bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
-    // If user does not tell us where to put the data, we can't process it...
+    static CMemMapFile file;
+    if (file.is_open())
+        file.close();
+
+    string_q fn = configPath("ts.bin");
+    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
         return false;
 
-    // If the array aleady contains data, clear it out...
-    if (*theArray != NULL) {
-        delete[] * theArray;
-        *theArray = NULL;
-        cnt = 0;
-    }
-
-    // We can always get the size if the file exits
-    string_q fn = configPath("ts.bin");
-    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-
-    *theArray = new uint32_t[cnt * 2];  // blknum, timestamp both uint32_t
-
-    // If we didn't get the space to store our data, fail...
-    if (*theArray == NULL) {
-        cnt = 0;
-        return false;
-    }
-
-    CArchive in(READING_ARCHIVE);
-    if (!in.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-        cnt = 0;
-        delete[] * theArray;
-        *theArray = NULL;
-        return false;
-    }
-
-    in.Read(*theArray, sizeof(uint32_t) * 2, cnt);
-    in.Release();
+    file.open(configPath("ts.bin"));
+    if (file.isValid())
+        *theArray = (uint32_t*)file.getData();
 
     return true;
 }

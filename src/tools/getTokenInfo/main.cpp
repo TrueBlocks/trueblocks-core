@@ -29,14 +29,13 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTokenBalanceRecord));
 
-        if (options.tokens.size() > 0) {
-            for (auto holder : options.holders) {
-                for (auto token : options.tokens) {
-                    options.curToken.holder = holder;
-                    options.curToken.address = token;
+        for (auto holder : options.holders) {
+            for (auto token : options.tokens) {
+                options.curToken.holder = holder;
+                options.curToken.address = token;
+                if (options.curToken.address != options.curToken.abi_spec.address)
                     options.curToken.loadAbiAndCache(options.curToken.address);
-                    options.blocks.forEveryBlockNumber(processPair, &options);
-                }
+                options.blocks.forEveryBlockNumber(processPair, &options);
             }
         }
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
@@ -70,8 +69,12 @@ bool processPair(uint64_t blockNum, void* data) {
     }
 
     static bool first = true;
-    if (opt->modeBits & TOK_BALANCE)
-        opt->curToken.setValueByName("balance", getTokenBalanceOf(opt->curToken, opt->curToken.holder, blockNum));
+    if (opt->modeBits & TOK_BALANCE) {
+        string_q val = getTokenBalanceOf(opt->curToken, opt->curToken.holder, blockNum);
+        if (val == "0" && opt->no_zero)
+            return !shouldQuit();
+        opt->curToken.setValueByName("balance", val);
+    }
     bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
     if (isText) {
         cout << opt->curToken.Format(expContext().fmtMap["format"]) << endl;

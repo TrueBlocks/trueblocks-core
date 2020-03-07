@@ -17,7 +17,6 @@ TIME ~ CLOCK - <INFO>  : Fixing cache: ${CACHE}/monitors/0x001d14804b399c6ef80e6
 acctExport argc: 7 [1:--appearances] [2:--start] [3:100000] [4:--end] [5:2000000] [6:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctExport --appearances --start 100000 --end 2000000 0x001d14804b399c6ef80e64576f657660804fec0b 
 address	blocknumber	transactionindex
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 0x001d14804b399c6ef80e64576f657660804fec0b	202249	0
 0x001d14804b399c6ef80e64576f657660804fec0b	1501459	2
 

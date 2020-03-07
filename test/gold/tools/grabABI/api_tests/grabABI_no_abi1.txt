@@ -1,5 +1,8 @@
 {
   "data": [],
+  "errors": [
+    "Could not get the ABI for 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0.json in the current folder and re-run."
+  ],
   "types": [
     {
       "type": "CFunction",

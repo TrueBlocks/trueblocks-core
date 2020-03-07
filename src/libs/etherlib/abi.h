@@ -129,6 +129,7 @@ inline void CAbi::initialize(void) {
     interfaces.clear();
 
     // EXISTING_CODE
+    interfaceMap.clear();
     // EXISTING_CODE
 }
 
@@ -141,6 +142,7 @@ inline void CAbi::duplicate(const CAbi& ab) {
     interfaces = ab.interfaces;
 
     // EXISTING_CODE
+    interfaceMap = ab.interfaceMap;
     // EXISTING_CODE
 }
 

@@ -1,6 +1,5 @@
 acctExport argc: 5 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--hashes_only] [3:--end] [4:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --hashes_only --end 001506480 
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
-TIME ~ CLOCK - <INFO>  : Cache by config: CACHE_TXS CACHE_TRACES CACHE_BYCONFIG 
 TIME ~ CLOCK - <WARNG> : Exit(acctExport,exportIPFSHashes): 
 Not implementedTIME ~ CLOCK - <INFO>  : exported 0 ipfshashs from 3 transactions                                                       

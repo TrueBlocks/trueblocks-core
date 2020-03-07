@@ -231,7 +231,6 @@ void COptions::Init(void) {
     no_zero = false;
     // END_CODE_INIT
 
-    curToken = CTokenBalanceRecord();
     tokens.clear();
     holders.clear();
     modeBits = TOK_NONE;
