@@ -14,7 +14,7 @@ int nn = 0;
 
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
-    ENTER8("exportBalances");
+    ENTER("exportBalances");
 
     bool nodeHasBals = nodeHasBalances(false);
     string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
@@ -152,7 +152,7 @@ bool COptions::exportBalances(void) {
     if (!nodeHasBals)
         setRpcProvider(rpcProvider);
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 // So as to keep the file small, we only write balances where there is a change

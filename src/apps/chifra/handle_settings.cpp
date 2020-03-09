@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_settings(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (contains(tool_flags, "help")) {
@@ -17,7 +17,7 @@ bool COptions::handle_settings(void) {
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        EXIT_NOMSG8(true);
+        EXIT_NOMSG(true);
     }
 
     if (contains(tool_flags, "get") && !contains(tool_flags, "--get"))
@@ -48,7 +48,7 @@ bool COptions::handle_settings(void) {
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 #if 0
@@ -64,7 +64,7 @@ bool COptions::handle_settings(void) {
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_settings(void) {
 
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     tool_flags = trim(substitute(substitute(tool_flags, "--addrs", ""), "--mode", ""));
@@ -100,7 +100,7 @@ bool COptions::handle_settings(void) {
             }
         }
     }
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ const char* STR_WATCH =
 //----------------------------------------------------------------
 bool COptions::createConfigFile(const address_t& addr) {
 
-    ENTER8("createConfigFile:" + addr);
+    ENTER("createConfigFile:" + addr);
 
     string_q fileName = getMonitorCnfg(addr);
     LOG_INFO("Creating configuration file: " + cleanPath(fileName));
@@ -146,7 +146,7 @@ bool COptions::createConfigFile(const address_t& addr) {
         if (verbose > 1)
             cout << config << endl;
     }
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 */
 

@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_slurp(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (contains(tool_flags, "help")) {
@@ -17,7 +17,7 @@ bool COptions::handle_slurp(void) {
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        EXIT_NOMSG8(true);
+        EXIT_NOMSG(true);
     }
 
     if (addrs.empty())
@@ -32,5 +32,5 @@ bool COptions::handle_slurp(void) {
         // clang-format on
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

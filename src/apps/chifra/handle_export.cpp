@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_export(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeRequired();
 
     if (contains(tool_flags, "help")) {
@@ -17,7 +17,7 @@ bool COptions::handle_export(void) {
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        EXIT_NOMSG8(true);
+        EXIT_NOMSG(true);
     }
 
     if (addrs.empty())
@@ -41,12 +41,11 @@ bool COptions::handle_export(void) {
             // clang-format off
             quit = (system(cmds[i].c_str()) != 0);
             // clang-format on
-            if (verbose)
-                cerr << "command: " << trim(cmds[i]) << " returned with '" << quit << "'" << endl;
+            LOG8("command: ", trim(cmds[i]), " returned with '", quit, "'");
         }
 
         if (++cnt < addrs.size())
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

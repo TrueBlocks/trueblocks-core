@@ -28,7 +28,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER8("parseArguments");
+    ENTER("parseArguments");
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
@@ -90,18 +90,6 @@ bool COptions::parseArguments(string_q& command) {
     if (addrs.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
-    // Clean up a bit and accumulate the addresses into the monitors list...
-    for (auto addr : addrs) {
-        CAccountWatch monitor;
-        // do not remove the next line, it also sets the bloom value for this address
-        monitor.setValueByName("address", addr);
-        monitor.setValueByName("name", findNameByAddress(addr));
-        monitor.finishParse();
-        monitors.push_back(monitor);
-    }
-    if (!silent)
-        LOG_INFO("Scraping ", monitors.size(), " addresses.");
-
     // Make sure we have the folders we need (may be redundant, but harmless)...
     establishFolder(getMonitorPath("", FM_PRODUCTION));
     establishFolder(getMonitorPath("", FM_STAGING));
@@ -115,6 +103,17 @@ bool COptions::parseArguments(string_q& command) {
         visitTypes |= VIS_UNRIPE;
     if (staging)
         visitTypes |= VIS_STAGING;
+
+    // Clean up a bit and accumulate the addresses into the monitors list...
+    for (auto addr : addrs) {
+        CAccountWatch monitor;
+        // do not remove the next line, it also sets the bloom value for this address
+        monitor.setValueByName("address", addr);
+        monitor.finishParse();
+        monitors.push_back(monitor);
+    }
+    if (!silent)
+        LOG_INFO("Scraping ", monitors.size(), " addresses.");
 
     //    if (isNoHeader)
     //        expContext().fmtMap["header"] = "";

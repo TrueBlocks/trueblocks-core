@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
-    ENTER8("freshen_internal");
+    ENTER("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
@@ -44,5 +44,5 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
     for (CFreshen& f : fa)
         f.cntAfter = fileSize(getMonitorPath(f.address)) / sizeof(CAppearance_base);
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

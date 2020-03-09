@@ -28,9 +28,9 @@ extern bool visitIndexFiles(const string_q& path, void* data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER8("parseArguments");
+    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG8(false);
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     blknum_t start = 0;
@@ -197,20 +197,10 @@ bool COptions::parseArguments(string_q& command) {
         freshen_flags = trim(freshen_flags, ' ');
     }
 
-    if (isNodeRunning()) {
-        //        LOG_INFO("Connecting to node...");
-        blknum_t unripe, ripe, staging, finalized, client;
-        getLatestBlocks(unripe, ripe, staging, finalized, client);
-        if ((client - finalized) > 2500)
-            scrapeSleep = 1;
-        if (mode == "scrape" && !isTestMode())
-            LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
-    }
+    if (mode == "scrape" && !isTestMode())
+        LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
 
-    LOG3("tool_flags=", tool_flags);
-    LOG3("freshen_flags=", freshen_flags);
-
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

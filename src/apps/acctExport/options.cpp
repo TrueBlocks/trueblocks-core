@@ -44,9 +44,9 @@ extern int xor_options(bool, bool);
 extern string_q report_cache(int);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER8("parseArguments");
+    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG8(false);
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
@@ -357,7 +357,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().fmtMap["header"] = header;
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -418,7 +418,7 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
-    ENTER8("loadOneAddress");
+    ENTER("loadOneAddress");
 
     if (hackAppAddr.empty())
         hackAppAddr = addr;
@@ -477,12 +477,12 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         EXIT_FAIL("Could not allocate memory for address " + addr);
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //-----------------------------------------------------------------------
 bool COptions::loadAllAppearances(void) {
-    ENTER8("loadAllAppearances");
+    ENTER("loadAllAppearances");
 
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
@@ -526,7 +526,7 @@ bool COptions::loadAllAppearances(void) {
 
     // Make sure the timestamps column is at least as up to date as this monitor
     if (items.size()) {
-        if (!freshenColumn({"timestamp"}, items[items.size() - 1].blk))
+        if (!freshenTimestamps(items[items.size() - 1].blk))
             EXIT_FAIL("Could not freshen timestamp file.");
 
         if (!loadTimestampFile(&ts_array, ts_cnt))
@@ -538,7 +538,7 @@ bool COptions::loadAllAppearances(void) {
             write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //------------------------------------------------------------------------

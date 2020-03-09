@@ -10,7 +10,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (contains(tool_flags, "help")) {
@@ -90,5 +90,5 @@ bool COptions::handle_rm(void) {
         cout << exportPostamble(errors, "") << endl;
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

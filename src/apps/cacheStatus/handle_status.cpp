@@ -10,7 +10,7 @@ inline string_q pathName(const string_q& str, const string_q& path = "") {
 }
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
-    ENTER8("handle_status");
+    ENTER("handle_status");
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
@@ -202,7 +202,7 @@ bool COptions::handle_status(ostream& os) {
 
     status.doExport(os);
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------

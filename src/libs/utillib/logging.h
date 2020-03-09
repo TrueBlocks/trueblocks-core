@@ -268,7 +268,7 @@ extern string_q _logExit(const string_q& func);
 }  // namespace qblocks
 
 #define ENTER(a)                                                                                                       \
-    { LOG2(_logEnter(a)); }                                                                                            \
+    { LOG4(_logEnter(a)); }                                                                                            \
     string_q l_funcName = (a);
 
 #define EXIT_USAGE(a)                                                                                                  \
@@ -286,14 +286,14 @@ extern string_q _logExit(const string_q& func);
 
 #define EXIT_MSG(a, b)                                                                                                 \
     {                                                                                                                  \
-        LOG2(_logExit(l_funcName));                                                                                    \
+        LOG4(_logExit(l_funcName));                                                                                    \
         cerr << (a);                                                                                                   \
         return (b);                                                                                                    \
     }
 
 #define EXIT_NOMSG(b)                                                                                                  \
     {                                                                                                                  \
-        LOG2(_logExit(l_funcName));                                                                                    \
+        LOG4(_logExit(l_funcName));                                                                                    \
         return (b);                                                                                                    \
     }
 

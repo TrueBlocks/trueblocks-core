@@ -8,7 +8,7 @@
 extern string_q toPrintable_force(const string_q& inHex);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_data(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     if (!contains(tool_flags, "--edit"))  // weird cleanup of --edit/edit confusion
@@ -98,7 +98,7 @@ bool COptions::handle_data(void) {
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //----------------------------------------------------------------------------

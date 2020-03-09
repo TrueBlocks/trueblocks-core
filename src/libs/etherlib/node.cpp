@@ -175,7 +175,6 @@ bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txid) 
 
 //-----------------------------------------------------------------------
 bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
-    LOG3("Enter: writeNodeToBinary");
     string_q created;
     if (establishFolder(fileName, created)) {
         if (!created.empty() && !isTestMode())
@@ -184,11 +183,9 @@ bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
         if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
             node.SerializeC(nodeCache);
             nodeCache.Close();
-            LOG3("Exit: writeNodeToBinary");
             return true;
         }
     }
-    LOG3("Exit: Could not open " + fileName);
     return false;
 }
 
@@ -1283,7 +1280,7 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
-bool freshenColumn(const CStringArray& columns, blknum_t minBlock) {
+bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
 

@@ -8,7 +8,7 @@
 //--------------------------------------------------------------------------------
 bool COptions::handle_listing(ostream& os) {
     cout << "List mode" << endl;
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     os << cGreen << "Monitor path: " << cWhite << getMonitorPath("") << endl;
@@ -61,7 +61,7 @@ bool COptions::handle_listing(ostream& os) {
             accts.push_back(item);
         } else {
             LOG_WARN("No monitors found.");
-            EXIT_NOMSG8(true);
+            EXIT_NOMSG(true);
         }
     }
     sort(accts.begin(), accts.end());
@@ -85,7 +85,7 @@ bool COptions::handle_listing(ostream& os) {
         if (accts.size() > 1)
             oss << "]";
         cout << substitute(substitute(oss.str(), "\n", ""), "\t", "") << endl;
-        EXIT_NOMSG8(true);
+        EXIT_NOMSG(true);
     }
 
     if (stats) {
@@ -143,5 +143,5 @@ bool COptions::handle_listing(ostream& os) {
     //    else
     //        cout << os.str();
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

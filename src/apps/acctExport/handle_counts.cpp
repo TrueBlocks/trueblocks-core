@@ -7,7 +7,7 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportCounts(void) {
-    ENTER8("exportCounts");
+    ENTER("exportCounts");
 
     bool isJson =
         (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
@@ -38,5 +38,5 @@ bool COptions::exportCounts(void) {
     if (isJson)
         cout << "]";
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

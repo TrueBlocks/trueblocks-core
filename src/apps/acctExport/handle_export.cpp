@@ -7,7 +7,7 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportData(void) {
-    ENTER8("exportData");
+    ENTER("exportData");
 
     bool shouldDisplay = !freshen;
     bool isJson =
@@ -217,5 +217,5 @@ bool COptions::exportData(void) {
         if (items.size() > 0)
             watch.writeLastExport(items[items.size() - 1].blk);
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

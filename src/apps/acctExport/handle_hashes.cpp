@@ -7,6 +7,6 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportIPFSHashes(void) {
-    ENTER8("exportIPFSHashes");
+    ENTER("exportIPFSHashes");
     EXIT_FAIL("Not implemented");
 }

@@ -32,10 +32,10 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER8("parseArguments");
+    ENTER("parseArguments");
 
     if (!standardOptions(command))
-        EXIT_NOMSG8(false);
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
@@ -172,7 +172,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

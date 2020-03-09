@@ -9,9 +9,9 @@
 #define RETURN(a)                                                                                                      \
     bool ret = (a);                                                                                                    \
     if (!getEnvStr("TEST_MODE").empty()) {                                                                             \
-        EXIT_NOMSG8(0);                                                                                                \
+        EXIT_NOMSG(0);                                                                                                \
     } else {                                                                                                           \
-        EXIT_NOMSG8(ret);                                                                                              \
+        EXIT_NOMSG(ret);                                                                                              \
     }
 
 //--------------------------------------------------------------
@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
     nodeNotRequired();  // not every command needs a node
     acctlib_init(quickQuitHandler);
 
-    ENTER8("chifra");
+    ENTER("chifra");
     COptions options;
     if (!options.prepareArguments(argc, argv)) {
         RETURN(1);
@@ -75,5 +75,5 @@ int main(int argc, const char* argv[]) {
     }
 
     acctlib_cleanup();
-    EXIT_NOMSG8(0);
+    EXIT_NOMSG(0);
 }

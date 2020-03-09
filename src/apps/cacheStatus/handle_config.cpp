@@ -17,7 +17,7 @@ bool COptions::handle_config(ostream& os) {
 
 //--------------------------------------------------------------------------------
 bool COptions::handle_config_get(ostream& os) {
-    ENTER8("handle_config_get");
+    ENTER("handle_config_get");
 
     CConfiguration config;
     {
@@ -194,7 +194,7 @@ bool COptions::handle_config_get(ostream& os) {
     }
 
     os << config;
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //--------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ inline string_q getSettingsStr(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::handle_config_set(ostream& os) {
-    ENTER8("handle_config_set");
+    ENTER("handle_config_set");
 
     string_q newSettings = getSettingsStr();
     if (newSettings.empty())
@@ -302,7 +302,7 @@ bool COptions::handle_config_set(ostream& os) {
         file = CConfigFile();
     }
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //--------------------------------------------------------------------------------

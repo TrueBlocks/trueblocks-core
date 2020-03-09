@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_quotes(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
     nodeNotRequired();
 
     ostringstream os;
@@ -16,5 +16,5 @@ bool COptions::handle_quotes(void) {
     // clang-format off
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
-    EXIT_NOMSG8(true);
+    EXIT_NOMSG(true);
 }

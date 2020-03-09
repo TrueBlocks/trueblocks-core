@@ -7,7 +7,7 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
-    ENTER8("handle_" + mode);
+    ENTER("handle_" + mode);
 
     // scrape mode requires a running node
     nodeRequired();
@@ -19,7 +19,7 @@ bool COptions::handle_scrape(void) {
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        return true;
+        EXIT_NOMSG(true);
     }
 
     // syntactic sugar
@@ -38,51 +38,51 @@ bool COptions::handle_scrape(void) {
         // If a seperate instance is not running, we can't restart it
         if (nRunning("chifra scrape") < 2) {
             LOG_WARN("Scraper is not running. Cannot restart...");
-            return true;
+            EXIT_NOMSG(true);
         }
 
         // If it's not paused, let the user know...
         if (!wasPaused) {
             LOG_WARN("Scraper is not paused. Cannot restart...");
-            return true;
+            EXIT_NOMSG(true);
         }
 
         // A seperate instance is running, removing the file will restart the scraper
         ::remove(waitFile.c_str());
         LOG_INFO("Scraper will restart shortly...");
-        return true;
+        EXIT_NOMSG(true);
 
     } else if (contains(tool_flags, "pause")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't pause it
         if (nRunning("chifra scrape") < 2) {
             LOG_WARN("Scraper is not running. Cannot pause...");
-            return true;
+            EXIT_NOMSG(true);
         }
 
         // If it's already paused, let the user know...
         if (wasPaused) {
             LOG_WARN("Scraper is already paused...");
-            return true;
+            EXIT_NOMSG(true);
         }
 
         // It's running, so we can pause it
         stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
         LOG_INFO("Scraper will pause shortly...");
-        return true;
+        EXIT_NOMSG(true);
 
     } else if (contains(tool_flags, "quit")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't kill it
         if (nRunning("chifra scrape") < 2) {
             LOG_WARN("Scraper is not running. Cannot quit...");
-            return true;
+            EXIT_NOMSG(true);
         }
 
         // Kill it whether it's currently paused or not
         stringToAsciiFile(waitFile, "quit");
         LOG_INFO("Scraper will quit shortly...");
-        return true;
+        EXIT_NOMSG(true);
 
     } else {
         //---------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ bool COptions::handle_scrape(void) {
         // TODO(tjayrush): fix this on non-mac machines
         if (nRunning("chifra scrape") > 1) {
             LOG_WARN("Scraper is already running. Cannot start it again...");
-            return false;
+            EXIT_NOMSG(false);
         }
 #endif
 
@@ -106,7 +106,7 @@ bool COptions::handle_scrape(void) {
 
             } else if (!opt.empty() && !startsWith(opt, "-") && !isNumeral(opt)) {
                 cerr << "Invalid command " << cYellow << opt << cOff << " to chifra scrape." << endl;
-                return false;
+                EXIT_NOMSG(false);
             }
             if (!opt.empty())
                 tool_flags += (opt + " ");
@@ -138,7 +138,7 @@ bool COptions::handle_scrape(void) {
             // clang-format on
 
             // Catch the timestamp file up to the scraper
-            freshenColumn({"timestamp"}, getLatestBlock_cache_ripe());
+            freshenTimestamps(getLatestBlock_cache_ripe());
 
             // sometimes catch the monitors addresses up to the scraper
             if (!isTestMode() && daemonMode) {
@@ -182,10 +182,9 @@ bool COptions::handle_scrape(void) {
             if (asciiFileToString(waitFile) == "quit") {
                 ::remove(waitFile.c_str());
                 cerr << cYellow << "\tScraper quitting..." << cOff << endl;
-                return true;
+                EXIT_NOMSG(true);
             }
         }
     }
-
-    return true;
+    EXIT_NOMSG(true);
 }
