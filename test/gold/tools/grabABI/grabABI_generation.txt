@@ -1,6 +1,5 @@
 grabABI argc: 5 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--verbose] [3:10] [4:--generate] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --verbose 10 --generate 
-TIME ~ CLOCK - : 8------Enter(grabABI,parseArguments): 
 TIME ~ CLOCK - <INFO>  : Generating class for derived transaction type: 'CConstructor'
 TIME ~ CLOCK - <INFO>  : 	makeClass argc: 4 [1:-r] [2:generated/constructor] [3:--force] 
 makeClass -r generated/constructor --force 

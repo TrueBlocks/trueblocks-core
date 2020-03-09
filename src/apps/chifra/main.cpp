@@ -9,9 +9,9 @@
 #define RETURN(a)                                                                                                      \
     bool ret = (a);                                                                                                    \
     if (!getEnvStr("TEST_MODE").empty()) {                                                                             \
-        EXIT_NOMSG(0);                                                                                                \
+        EXIT_NOMSG(0);                                                                                                 \
     } else {                                                                                                           \
-        EXIT_NOMSG(ret);                                                                                              \
+        EXIT_NOMSG(ret);                                                                                               \
     }
 
 //--------------------------------------------------------------

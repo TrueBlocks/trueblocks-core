@@ -138,8 +138,6 @@ void COptions::applyFilter() {
             if (request.second == "latest") {
                 if (isTestMode())
                     continue;  // latest changes per test, so skip
-                else
-                    bnStr = "latest";
             }
 
             getBlock_light(block, str_2_Uint(bnStr));
@@ -159,12 +157,10 @@ void COptions::applyFilter() {
             }
             block.name = request.second;
             visitBlock(block, this);
-            //            items[block.blockNumber] = block;
 
         } else if (request.first == "date") {
             if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
                 visitBlock(block, this);
-            //                items[block.blockNumber] = block;
             else
                 LOG_WARN("Could not find a block at date " + request.second);
         }

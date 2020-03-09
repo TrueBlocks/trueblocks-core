@@ -266,7 +266,7 @@ bool COptions::buildDisplayStrings(void) {
         const CFieldData* field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
         if (!field) {
             cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
-            exit(0);
+            quickQuitHandler(EXIT_FAILURE);
         }
         if (field->isHidden() && force)
             ((CFieldData*)field)->setHidden(false);  // NOLINT

@@ -45,8 +45,6 @@ string_q COptionsBase::getProgName(void) const {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
-    ENTER8("prepareArgument");
-
     if (argCountIn > 0)  // always is, but check anyway
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
@@ -93,16 +91,16 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         while (!arg.empty()) {
             string_q opt = expandOption(arg);  // handles case of -rf for example
             if (isReadme && isEnabled(OPT_HELP))
-                EXIT_USAGE("");
+                return usage();
             if (opt == "-") {
-                EXIT_USAGE("Raw '-' not supported.");
+                return usage("Raw '-' not supported.");
             } else if (!opt.empty()) {
                 argumentsIn.push_back(opt);  // args[nArgs++] = opt;
             }
         }
     }
     if (argumentsIn.size() < minArgs)  // the first arg is the program's name, so we use <=
-        EXIT_USAGE("Not enough arguments presented.");
+        return usage("Not enough arguments presented.");
 
     //        string_q stdInCmds;
     //        if (hasStdIn) {
@@ -174,7 +172,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             cmdFileName = substitute(arg, "--file:", "");
             replace(cmdFileName, "~/", getHomeFolder());
             if (!fileExists(cmdFileName)) {
-                EXIT_USAGE("--file: '" + cmdFileName + "' not found. Quitting.");
+                return usage("--file: '" + cmdFileName + "' not found. Quitting.");
             }
 
         } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
@@ -182,7 +180,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
             if (!arg.empty()) {
                 if (!isUnsigned(arg))
-                    EXIT_USAGE("Invalid verbose level '" + arg + "'. Quitting...");
+                    return usage("Invalid verbose level '" + arg + "'. Quitting...");
                 verbose = str_2_Uint(arg);
             }
 
@@ -197,7 +195,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             } else if (arg == "api") {
                 expContext().exportFmt = API1;
             } else {
-                EXIT_USAGE("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
+                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
             }
             argumentsOut[i] = "";
         }
@@ -227,7 +225,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         asciiFileToString(cmdFileName, contents);
         cleanString(contents, false);
         if (contents.empty())
-            EXIT_USAGE("Command file '" + cmdFileName + "' is empty. Quitting...");
+            return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
         if (startsWith(contents, "NOPARSE\n")) {
             commandList = contents;
             nextTokenClear(commandList, '\n');
@@ -252,13 +250,11 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     if (commandLines.empty())
         commandLines.push_back("--noop");
 
-    EXIT_NOMSG8(true);
+    return true;
 }
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::standardOptions(string_q& cmdLine) {
-    ENTER8("standardOptions");
-
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
@@ -270,7 +266,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
 
     if (contains(cmdLine, "--version ")) {
         cerr << getProgName() << " " << getVersionStr() << "\n";
-        EXIT_NOMSG8(false);
+        return false;
     }
 
     if (contains(cmdLine, "--nocolor ")) {
@@ -285,7 +281,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
 
     if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
         usage();
-        EXIT_NOMSG8(false);
+        return false;
     }
 
     if (isEnabled(OPT_ETHER) && contains(cmdLine, "--ether ")) {
@@ -312,20 +308,20 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         nextTokenClear(temp, '|');
         temp = nextTokenClear(temp, ' ');
         if (temp.empty())
-            EXIT_USAGE("Please provide a filename for the --output option. Quitting...");
+            return usage("Please provide a filename for the --output option. Quitting...");
         zipOnClose = endsWith(temp, ".gz");
         replace(temp, ".gz", "");
         CFilename fn(temp);
         establishFolder(fn.getPath());
         if (!folderExists(fn.getPath()))
-            EXIT_USAGE("Output file path not found and could not be created: '" + fn.getPath() + "'. Quitting...");
+            return usage("Output file path not found and could not be created: '" + fn.getPath() + "'. Quitting...");
         outputFilename = fn.getFullPath();
         outputStream.open(outputFilename.c_str());
         if (outputStream.is_open()) {
             coutSaved = cout.rdbuf();          // back up cout's streambuf
             cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
         } else {
-            EXIT_USAGE("Could not open output stream at '" + outputFilename + ". Quitting...");
+            return usage("Could not open output stream at '" + outputFilename + ". Quitting...");
         }
     }
 
@@ -357,10 +353,10 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     // A final set of options that do not have command line options
     if (isEnabled(OPT_PREFUND))
         if (!loadPrefunds())
-            EXIT_USAGE("Could not open prefunds data. Quitting...");
+            return usage("Could not open prefunds data. Quitting...");
 
     cmdLine = trim(cmdLine);
-    EXIT_NOMSG8(true);
+    return true;
 }
 
 //--------------------------------------------------------------------------------

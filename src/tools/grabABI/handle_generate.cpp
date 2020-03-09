@@ -176,7 +176,7 @@ void COptions::handle_generate(void) {
                         if (!fileExists(makeClass)) {
                             LOG_ERR(makeClass,
                                     " was not found. This executable is required to run grabABI. Quitting...");
-                            exit(0);
+                            quickQuitHandler(EXIT_FAILURE);
                         }
                         if (!name.empty()) {
                             string_q cmd =

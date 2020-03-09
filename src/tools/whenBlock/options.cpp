@@ -189,7 +189,11 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool showSpecials(CNameValue& pair, void* data) {
-    reinterpret_cast<CNameValueArray*>(data)->push_back(CNameValue("block", pair.second + "|" + pair.first));
+    CNameValueArray* array = reinterpret_cast<CNameValueArray*>(data);
+    if (pair.first == "latest")
+        pair.second = uint_2_Str(getLatestBlock_client());
+    CNameValue nv("block", pair.second + "|" + pair.first);
+    array->push_back(nv);
     return true;
 }
 
@@ -204,12 +208,12 @@ string_q COptions::listSpecials(format_t fmt) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            bn = uint_2_Str(getLatestBlock_client());
+            // bn = uint_2_Str(getLatestBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(specials[i - 1].second) >= getLatestBlock_client()) {
+            } else if (i > 0 && str_2_Uint(bn) >= getLatestBlock_client()) {
                 extra = " (syncing)";
             }
         }

@@ -133,7 +133,7 @@ CURL* CCurlContext::getCurl(void) {
         curlHandle = curl_easy_init();
         if (!curlHandle) {
             fprintf(stderr, "Curl failed to initialize. Quitting...\n");
-            exit(0);
+            quickQuitHandler(EXIT_FAILURE);
         }
 
         // curl_slist_append makes a copy of the string
