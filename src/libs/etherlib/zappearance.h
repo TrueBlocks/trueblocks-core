@@ -67,7 +67,7 @@ class CIndexArchive : public CArchive {
     CAddressRecord_base* addresses;
     CAppearance_base* appearances;
 
-    CIndexArchive(bool mode);
+    explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
 

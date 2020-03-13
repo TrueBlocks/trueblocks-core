@@ -78,19 +78,19 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
         } else {
             if (!contains(skip_markers, skip_marker))
                 return "Input argument appears to be invalid. No such skip marker: " + argIn;
-            if (contains(skip_marker, "annually"))
+            if (contains(skip_marker, "annually")) {
                 skip_type = ANNUALLY;
-            else if (contains(skip_marker, "quarterly"))
+            } else if (contains(skip_marker, "quarterly")) {
                 skip_type = QUARTERLY;
-            else if (contains(skip_marker, "monthly"))
+            } else if (contains(skip_marker, "monthly")) {
                 skip_type = MONTHLY;
-            else if (contains(skip_marker, "weekly"))
+            } else if (contains(skip_marker, "weekly")) {
                 skip_type = WEEKLY;
-            else if (contains(skip_marker, "daily"))
+            } else if (contains(skip_marker, "daily")) {
                 skip_type = DAILY;
-            else if (contains(skip_marker, "hourly"))
+            } else if (contains(skip_marker, "hourly")) {
                 skip_type = HOURLY;
-            else {
+            } else {
                 ASSERT(0);  // should never happen
                 skip = 1;
             }

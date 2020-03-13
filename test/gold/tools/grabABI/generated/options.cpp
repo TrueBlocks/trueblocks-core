@@ -119,7 +119,7 @@ bool COptions::parseArguments(string_q& command) {
             if (visitor.watches.size() > 2)
                 cout << "]";
 
-            exit(0);
+            e xit(0);
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {

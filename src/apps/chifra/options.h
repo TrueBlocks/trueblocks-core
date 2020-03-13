@@ -52,7 +52,7 @@ class CFreshen {
     address_t address;
     uint64_t cntBefore;
     uint64_t cntAfter;
-    CFreshen(const address_t& addr) {
+    explicit CFreshen(const address_t& addr) {
         address = addr;
         cntBefore = fileSize(getMonitorPath(addr)) / sizeof(CAppearance_base);
         cntAfter = cntBefore;

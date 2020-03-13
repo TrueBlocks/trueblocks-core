@@ -17,36 +17,36 @@
 
 //------------------------------------------------------------------------
 class CThisTest : public testing::Test {
-public:
-  CThisTest(void) : Test() {
-  }
-  virtual void SetUp(void) {
-  }
-  virtual void TearDown(void) {
-  }
+  public:
+    CThisTest(void) : Test() {
+    }
+    virtual void SetUp(void) {
+    }
+    virtual void TearDown(void) {
+    }
 };
 
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestYaml) {
-  cout << TESTID("place for a yaml test when we have some yamly stuff", 20);
-  return true;
+    cout << TESTID("place for a yaml test when we have some yamly stuff", 20);
+    return true;
 }
 }
 
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-  etherlib_init(quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
-  COptions options;
-  if (!options.prepareArguments(argc, argv))
-    return 0;
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
-  for (auto command : options.commandLines) {
-    if (!options.parseArguments(command))
-      return 0;
-    LOAD_TEST(TestYaml);
-  }
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
+        LOAD_TEST(TestYaml);
+    }
 
-  return testing::RUN_ALL_TESTS();
+    return testing::RUN_ALL_TESTS();
 }

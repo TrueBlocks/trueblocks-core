@@ -350,7 +350,7 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 //---------------------------------------------------------------------------
 #if 0
 bool getNewestFile(const string_q& path, void* data) {
-    time_q *t = (time_q*)data;
+    time_q *t = reinterpret_cast<time_q*>(data);
     time_q l = fileLastModifyDate(path);
     if (l > *t)
         *t = l;

@@ -208,7 +208,6 @@ string_q COptions::listSpecials(format_t fmt) const {
         string_q name = specials[i].first;
         string_q bn = specials[i].second;
         if (name == "latest") {
-            // bn = uint_2_Str(getLatestBlock_client());
             if (isTestMode()) {
                 bn = "";
             } else if (COptionsBase::isReadme) {

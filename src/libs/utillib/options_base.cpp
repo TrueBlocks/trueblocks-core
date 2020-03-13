@@ -1044,8 +1044,9 @@ void COptionsBase::closeRedirect(void) {
         if (zipOnClose) {
             ostringstream os;
             os << "gzip -fv " << outputFilename;
-            if (system(os.str().c_str())) {
-            }  // Don't remove cruft. Silences compiler warnings
+            // clang-format off
+            if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
+            // clang-format on
             zipOnClose = false;
             cout << (isTestMode() ? "--output_filename--" : outputFilename + ".gz");
         } else {

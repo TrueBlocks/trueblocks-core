@@ -7,6 +7,7 @@ use std::{
 	thread::{self,JoinHandle},
 	cmp::Ordering,
 };
+use rlimit::{Resource,setrlimit};
 use hex;
 use structopt::StructOpt;
 use byteorder::{LittleEndian,ReadBytesExt};
@@ -323,6 +324,10 @@ fn result_vec_to_str(data: &Vec<AppearranceRec>) -> String {
 }
 
 fn main() {
+
+    let soft_limit: u64 = 10000;
+    let hard_limit = soft_limit;
+    assert!(setrlimit(Resource::NOFILE, soft_limit, hard_limit).is_ok());
 
 	env_logger::init();
 

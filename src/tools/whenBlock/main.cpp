@@ -51,7 +51,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 bool visitBlock(CBlock& block, void* data) {
-    COptions* opt = (COptions*)data;
+    COptions* opt = reinterpret_cast<COptions*>(data);
     if (opt->isText) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 

@@ -1351,7 +1351,7 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
 
     file.open(configPath("ts.bin"));
     if (file.isValid())
-        *theArray = (uint32_t*)file.getData();
+        *theArray = (uint32_t*)file.getData();  // NOLINT
 
     return true;
 }
