@@ -108,8 +108,13 @@ bool COptions::exportBalances(void) {
                 rec.address = monitor.address;
                 rec.balance = record.balance;
                 rec.diff = record.diff;
-                if (record.diff != 0)
+                if (record.diff != 0) {
                     deltasMap[rec.blockNumber] = rec;
+                } else {
+                    static size_t cnt = 0;
+                    if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
+                        LOG_INFO("Balance: ", i, " of ", apps.size(), " (", rec.blockNumber, ")      ", "\r");
+                }
             }
         }
 
