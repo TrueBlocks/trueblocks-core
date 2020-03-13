@@ -1,7 +1,8 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  all,  traces, tools/getTrace, preload,            n, transactions = 3657480 & force, getBlock
-on, cmd,  all,  traces, tools/getTrace, preload_abi1,       n, addrs = 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22, grabABI
-on, cmd,  all,  traces, tools/getTrace, preload_abi2,       n, addrs = 0x2bd2326c993dfaef84f696526064ff22eba5b362 0x314159265dd8dbb310642f98f50c066173c1259b 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0x8055d0504666e2b6942beb8d6014c964658ca591, grabABI
+on, cmd,  all,  blocks, tools/getTrace, preload,            n, transactions = 3657480 & force, getBlock
+on, cmd,  all,  abi,    tools/getTrans, preload_abi1,       n, addrs = 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 0x2bd2326c993dfaef84f696526064ff22eba5b362, grabABI
+on, cmd,  all,  abi,    tools/getTrans, preload_abi2,       n, addrs = 0x314159265dd8dbb310642f98f50c066173c1259b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, grabABI
+on, cmd,  all,  abi,    tools/getTrans, preload_abi3,       n, addrs = 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, grabABI
 
 on, cmd,  fast, traces, tools/getTrace, README,             n, @th
 on, cmd,  fast, traces, tools/getTrace, help,               n, @h
@@ -19,9 +20,9 @@ on, both, fast, traces, tools/getTrace, invalid_param_3,    y, transactions = 12
 
 on, both, fast, traces, tools/getTrace, three_ways,         n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & verbose & fmt = csv
 on, cmd,  medi, traces, tools/getTrace, suicidesend_1,      n, transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = txt, SETTINGS_SKIP_DDOS=false NO_CACHE=true
-on, both, slow, traces, tools/getTrace, articulate,         y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
+on, cmd,  slow, traces, tools/getTrace, articulate,         y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
 on, both, slow, traces, tools/getTrace, articulate_2,       n, transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
-on, both, slow, traces, tools/getTrace, articulate_arrays,  y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = api & verbose
+on, cmd,  slow, traces, tools/getTrace, articulate_arrays,  y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = api & verbose
 on, both, fast, traces, tools/getTrace, verbose_blk_idx1,   y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on, both, fast, traces, tools/getTrace, verbose_blk_idx2,   y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = api
 on, both, fast, traces, tools/getTrace, verbose_blk_idx3,   n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = txt

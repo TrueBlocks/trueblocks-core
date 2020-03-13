@@ -1,7 +1,8 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  all,  transactions, tools/getTrans, preload,             n, blocks = 3657480 & force, getBlock
-on, cmd,  all,  transactions, tools/getTrans, preload_abi1,        n, addrs = 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 0x2bd2326c993dfaef84f696526064ff22eba5b362, grabABI
-on, cmd,  all,  transactions, tools/getTrans, preload_abi2,        n, addrs = 0x314159265dd8dbb310642f98f50c066173c1259b 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, grabABI
+on, cmd,  all,  blocks, tools/getTrans, preload,                   n, blocks = 3657480 & force, getBlock
+on, cmd,  all,  abi,    tools/getTrans, preload_abi1,              n, addrs = 0x1234567812345678123456781234567812345678 0x6090a6e47849629b7245dfa1ca21d94cd15878ef 0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22 0x2bd2326c993dfaef84f696526064ff22eba5b362, grabABI
+on, cmd,  all,  abi,    tools/getTrans, preload_abi2,              n, addrs = 0x314159265dd8dbb310642f98f50c066173c1259b 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, grabABI
+on, cmd,  all,  abi,    tools/getTrans, preload_abi3,              n, addrs = 0x159cf1e9ae58211b588f5e3bf1d7e423952d959b 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, grabABI
 
 on, cmd,  fast, transactions, tools/getTrans, README,              n, @th
 on, cmd,  fast, transactions, tools/getTrans, help,                n, @h
@@ -25,9 +26,9 @@ on, both, fast, transactions, tools/getTrans, should_be_error,     y, transactio
 on, both, fast, transactions, tools/getTrans, verbose_blk_idx1,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on, both, fast, transactions, tools/getTrans, verbose_blk_idx2,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.4 & fmt = api
 on, both, fast, transactions, tools/getTrans, verbose_blk_idx3,    y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & trace
-on, both, slow, transactions, tools/getTrans, articulate,          y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = api & trace
+on, cmd,  slow, transactions, tools/getTrans, articulate,          y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = api & trace
 on, both, medi, transactions, tools/getTrans, articulate_2,        y, transactions = 3648669.24 & articulate & verbose & trace & fmt = json
-on, both, medi, transactions, tools/getTrans, articulate_arrays,   y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & trace & articulate & fmt = api
+on, cmd,  medi, transactions, tools/getTrans, articulate_arrays,   y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & trace & articulate & fmt = api
 on, both, medi, transactions, tools/getTrans, by_blk_hash_bad,     y, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on, both, medi, transactions, tools/getTrans, by_blk_hash_good,    y, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & fmt = json
 

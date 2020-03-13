@@ -1,16 +1,6 @@
-grabABI argc: 3 [1:0x2234567812345678123456781234567812345678] [2:--monitored] 
-grabABI 0x2234567812345678123456781234567812345678 --monitored 
+grabABI argc: 2 [1:0x2234567812345678123456781234567812345678] 
+grabABI 0x2234567812345678123456781234567812345678 
 Address 0x2234567812345678123456781234567812345678 is not a smart contract. Skipping...
 Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run.
 encoding	type	name	signature	input_names	output_names
-0x861731d5	constructor		()		,
-0x5ec2dc8d	function	depositReward	depositReward()		val_0,,
-0xdf18e047	function	owed	owed(address)	val_0,	val_0,,
-0x8da5cb5b	function	owner	owner()		val_0,,
-0x3d103b6d	function	rewardAtTimeOfWithdraw	rewardAtTimeOfWithdraw(address)	val_0,	val_0,,
-0x66d38203	function	setup	setup(address)	singularDTVTokenAddress,	val_0,,
-0x87efeeb6	function	singularDTVToken	singularDTVToken()		val_0,,
-0xb1622818	function	softWithdrawRewardFor	softWithdrawRewardFor(address)	forAddress,	val_0,,
-0x750142e6	function	totalReward	totalReward()		val_0,,
-0x54fd4d50	function	version	version()		val_0,,
-0xc885bc58	function	withdrawReward	withdrawReward()		val_0,"Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run."
+"Could not get the ABI for 0x2234567812345678123456781234567812345678. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0x2234567812345678123456781234567812345678.json in the current folder and re-run."

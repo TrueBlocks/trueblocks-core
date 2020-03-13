@@ -46,7 +46,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
 
     if (!fileExists(cacheFile)) {
         string_q zipFile = configPath("cache/prices/") + theSource + "_" + source.pair + ".bin.gz";
-        if (zipFile != cacheFile + ".gz") {
+        if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
             string_q cmd = "cp -f " + zipFile + " " + cacheFile + ".gz";
             cmd += (" ; cd " + getCachePath("prices/") + " ; gunzip *.gz");
             doCommand(cmd);
