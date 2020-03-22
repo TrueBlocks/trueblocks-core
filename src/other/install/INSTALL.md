@@ -21,7 +21,7 @@ sudo yum groupinstall "Development Tools"
 sudo yum install cmake python python-devel libcurl-devel
 ```
 
-Additionally, please [install Go](https://golang.org/doc/install).
+Additionally, please [install latest version of Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
@@ -35,7 +35,7 @@ sudo dnf install cmake python python-devel libcurl-devel
 yum -y install qt-devel cmake
 ```
 
-Additionally, please [install Go](https://golang.org/doc/install).
+Additionally, please [install latest version of Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
@@ -51,7 +51,7 @@ export CPLUS_INCLUDE_PATH=/usr/local/include/:${CPLUS_INCLUDE_PATH}
 export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
 ```
 
-Additionally, please [install Go](https://golang.org/doc/install).
+Additionally, please [install latest version of Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
@@ -63,7 +63,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
 sudo apt install build-essential git cmake python python-dev libcurl3-dev
 ```
 
-Additionally, please [install Go](https://golang.org/doc/install).
+Additionally, please [install latest version of Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
@@ -75,7 +75,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
    > Install `cmake` [using these instructions](https://cmake.org/download/) or `brew install cmake`  
    > Install `git` [using these instructions](https://git-scm.com/download/mac).
 
-Additionally, please [install Go](https://golang.org/doc/install).
+Additionally, please [install latest version of Go](https://golang.org/doc/install).
 
 [Continue below](#finish) to build and install QBlocks
 
