@@ -187,6 +187,6 @@ extern const char* STR_DISPLAY_ABI;
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
-extern void removeDuplicateAbis(CAbiArray& abis);
+extern void removeDuplicateEncodings(CAbiArray& abis);
 // EXISTING_CODE
 }  // namespace qblocks

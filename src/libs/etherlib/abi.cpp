@@ -520,15 +520,17 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
 }
 
 //-----------------------------------------------------------------------
-void removeDuplicateAbis(CAbiArray& abis) {
+void removeDuplicateEncodings(CAbiArray& abis) {
     if (abis.size() == 0 || abis.size() == 1)
         return;
 
     size_t j = 0;
     size_t n = abis.size();
-    for (size_t i = 0; i < n - 1; i++)
-        if (abis[i] != abis[i + 1])
+    for (size_t i = 0; i < n - 1; i++) {
+        if (abis[i] != abis[i + 1]) {
             abis[j++] = abis[i];
+        }
+    }
     abis[j++] = abis[n - 1];
 }
 

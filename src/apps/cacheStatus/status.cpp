@@ -110,6 +110,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "index_path") {
                 return index_path;
             }
+            if (fieldName % "is_testing") {
+                return bool_2_Str(is_testing);
+            }
             if (fieldName % "is_scraping") {
                 return bool_2_Str(is_scraping);
             }
@@ -190,6 +193,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 index_path = fieldValue;
                 return true;
             }
+            if (fieldName % "is_testing") {
+                is_testing = str_2_Bool(fieldValue);
+                return true;
+            }
             if (fieldName % "is_scraping") {
                 is_scraping = str_2_Bool(fieldValue);
                 return true;
@@ -244,6 +251,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> cache_path;
     archive >> index_path;
     archive >> host;
+    archive >> is_testing;
     archive >> is_scraping;
     uint64_t nCaches = 0;
     archive >> nCaches;
@@ -277,6 +285,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << cache_path;
     archive << index_path;
     archive << host;
+    archive << is_testing;
     archive << is_scraping;
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
@@ -327,6 +336,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "cache_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "index_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
+    ADD_FIELD(CStatus, "is_testing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);

@@ -167,16 +167,6 @@ bool COptions::parseArguments(string_q& command) {
         CAbi abi;
         abi.loadAbiKnown();
         abis.push_back(abi);
-        // string_q knownPath = configPath("known_abis/");
-        // CStringArray files;
-        // listFilesInFolder(files, knownPath + "*.*", false);
-        // for (auto file : files) {
-        //    CAbi abi;
-        //    abi.loadAbiFromFile(file, true);
-        //    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-        //    abi.address = substitute(substitute(file, ".json", ""), configPath("known_abis/"), "");
-        //    abis.push_back(abi);
-        //}
     }
 
     if (monitored) {
@@ -209,7 +199,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields("CParameter:all", false);
     manageFields("CParameter:type,name,is_array,indexed", true);
 
-    removeDuplicateAbis(abis);
+    removeDuplicateEncodings(abis);
 
     return true;
 }
