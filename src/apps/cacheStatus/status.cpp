@@ -253,18 +253,17 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> host;
     archive >> is_testing;
     archive >> is_scraping;
-    uint64_t nCaches = 0;
-    archive >> nCaches;
-    if (nCaches) {
-        for (size_t i = 0; i < nCaches; i++) {
-            string_q cacheType;
-            archive >> cacheType;
-            CCache* cache = reinterpret_cast<CCache*>(createObjectOfType(cacheType));  // NOLINT
-            if (cache) {
-                cache->Serialize(archive);
-                caches.push_back(cache);
-            }
-        }
+    archive >> ts;
+    caches = NULL;
+    bool has_caches = false;
+    archive >> has_caches;
+    if (has_caches) {
+        string_q className;
+        archive >> className;
+        caches = reinterpret_cast<CCachePtrArray*>(createObjectOfType(className));
+        if (!caches)
+            return false;
+        caches->Serialize(archive);
     }
     finishParse();
     return true;
@@ -287,10 +286,11 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << host;
     archive << is_testing;
     archive << is_scraping;
-    archive << (uint64_t)caches.size();
-    for (auto cache : caches) {
-        archive << cache->getRuntimeClass()->getClassNamePtr();
-        cache->SerializeC(archive);
+    archive << ts;
+    archive << (caches != NULL);
+    if (caches) {
+        archive << caches->getRuntimeClass()->getClassNamePtr();
+        caches->SerializeC(archive);
     }
 
     return true;
