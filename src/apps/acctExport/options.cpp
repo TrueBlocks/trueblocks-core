@@ -228,16 +228,16 @@ bool COptions::parseArguments(string_q& command) {
 
     // Load as many ABI files as we have
     if (!appearances && !balances && !hashes_only) {
-        abis.loadAbiKnown("all");
+        abis.loadAbiKnown();
         if (all_abis)
-            abis.loadAbiFromCache("all");
+            abis.loadAbisMonitors();
     }
 
     // Try to articulate the watched addresses
     for (size_t i = 0; i < monitors.size(); i++) {
         CAccountWatch* watch = &monitors[i];
         abis.loadAbiByAddress(watch->address);
-        // abis.loadAbiKnown("all");
+        // abis.loadAbiKnown();
         string_q path = getMonitorCnfg(watch->address);
         if (fileExists(path)) {  // if there's a config file, let's use it user can tell us the names of other addresses
             CToml thisToml(path);

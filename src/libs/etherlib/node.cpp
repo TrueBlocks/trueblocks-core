@@ -1042,16 +1042,14 @@ string_q getCachePath(const string_q& _part) {
         if (!folderExists(folder.getFullPath()))
             establishFolder(folder.getFullPath());
 
-        if (!folder.isValid()) {
-            ostringstream errMsg;
-            errMsg << "{ \"errors\": [\"Invalid cachePath (" + folder.getFullPath()
-                   << ") in config file. Cannot proceed.\"] }";
-            if (isApiMode())
-                cout << errMsg.str();
-            cerr << errMsg.str();
-            quickQuitHandler(EXIT_FAILURE);
-        }
         g_cachePath = folder.getFullPath();
+        if (!folder.isValid()) {
+            cerr << "{ \"errors\": [\"Invalid cachePath (" << folder.getFullPath()
+                 << ") in config file. Quitting.\"] }\n";
+            path = configPath("cache/");
+            CFilename fallback(path);
+            g_cachePath = fallback.getFullPath();
+        }
         if (!endsWith(g_cachePath, "/"))
             g_cachePath += "/";
     }

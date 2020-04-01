@@ -196,7 +196,21 @@
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "ret_0",
+                "value": "0"
+              }
+            ]
+          },
           "action": {
             "address": "0x0",
             "balance": 0,
@@ -217,7 +231,21 @@
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "ret_0",
+                "value": "0"
+              }
+            ]
+          },
           "action": {
             "address": "0x0",
             "balance": 0,
@@ -238,7 +266,21 @@
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "ret_0",
+                "value": "100000000"
+              }
+            ]
+          },
           "action": {
             "address": "0x0",
             "balance": 0,
@@ -269,7 +311,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "ret_0",
                 "value": "100000000"
               }
             ]
@@ -304,7 +346,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "ret_0",
                 "value": "100000000"
               }
             ]

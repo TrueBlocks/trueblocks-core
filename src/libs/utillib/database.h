@@ -196,4 +196,5 @@ class CAsciiFile : public CSharedResource {
         return "CAsciiFile";
     }
 };
+
 }  // namespace qblocks

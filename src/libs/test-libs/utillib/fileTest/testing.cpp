@@ -24,6 +24,7 @@ int main(int argc, const char* argv[]) {
     size_t last = (argc == 2 && contains(string_q(argv[1]), "last"));
     size_t copy = (argc == 2 && contains(string_q(argv[1]), "copy"));
     size_t rm = (argc == 2 && contains(string_q(argv[1]), "rm"));
+    size_t newest = (argc == 2 && contains(string_q(argv[1]), "newest"));
 
     if (last) {
         string_q lastFile = getLastFileInFolder("../", recurse);
@@ -38,11 +39,27 @@ int main(int argc, const char* argv[]) {
         copyFile("old.txt", "new.txt");
         cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
         cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+
     } else if (rm) {
         ::remove("old.txt");
         ::remove("new.txt");
         cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
         cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+
+    } else if (newest) {
+        stringToAsciiFile("./old.txt", "oldText");
+        sleep(1.);
+        stringToAsciiFile("./new.txt", "oldText");
+        fileInfo info = getNewestFileInFolder("./");
+        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
+        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        cout << info.fileName << endl;
+        sleep(1.);
+        stringToAsciiFile("./old.txt", "oldText");
+        info = getNewestFileInFolder("./");
+        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
+        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        cout << info.fileName << endl;
 
     } else {
         string_q tests[] = {"Non-recursive", "Recursive"};

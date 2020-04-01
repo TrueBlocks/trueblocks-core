@@ -20,7 +20,7 @@ on, cmd,  fast, null, utillib/convertTest,  02,             n, val = 2
 on, cmd,  fast, null, utillib/convertTest,  03,             n, val = 3
 on, cmd,  fast, null, utillib/convertTest,  04,             n, val = 4
 
-# on, cmd,  fast, null, utillib/curlTest,     test00,         n,
+# on, cmd,  fast, null, utillib/curlTest,   test00,         n,
 
 on, cmd,  fast, null, utillib/fileTest,     test00,         n,
 on, cmd,  fast, null, utillib/fileTest,     test01,         n, val = recurse
@@ -29,6 +29,7 @@ on, cmd,  fast, null, utillib/fileTest,     test03,         n, val = last
 on, cmd,  fast, null, utillib/fileTest,     test04,         n, val = first-recurse
 on, cmd,  fast, null, utillib/fileTest,     test05,         n, val = last-recurse
 on, cmd,  fast, null, utillib/fileTest,     test06,         n, val = copy
+on, cmd,  fast, null, utillib/fileTest,     test08,         n, val = newest
 on, cmd,  fast, null, utillib/fileTest,     test07,         n, val = rm
 
 on, cmd,  fast, null, utillib/jsonTest,     nothing,        n,

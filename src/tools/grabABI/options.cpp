@@ -136,14 +136,12 @@ bool COptions::parseArguments(string_q& command) {
             string_q fileName = getCachePath("abis/" + a + ".json");
             string_q localFile("./" + a + ".json");
             if (fileExists(localFile)) {
-                cerr << "Local file found\n";
+                LOG_INFO("Using local ABI file");
                 fileName = localFile;
             }
             if (!fileExists(fileName))
                 return usage("ABI for '" + a + "' not found. Quitting...");
-            string_q contents;
-            asciiFileToString(fileName, contents);
-            cout << contents << "\n";
+            cout << asciiFileToString(fileName) << endl;
         }
         return false;
     }
@@ -166,21 +164,24 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (known) {
-        string_q knownPath = configPath("known_abis/");
-        CStringArray files;
-        listFilesInFolder(files, knownPath + "*.*", false);
-        for (auto file : files) {
-            CAbi abi;
-            abi.loadAbiFromFile(file, true);
-            sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-            abi.address = substitute(substitute(file, ".json", ""), configPath("known_abis/"), "");
-            abis.push_back(abi);
-        }
+        CAbi abi;
+        abi.loadAbiKnown();
+        abis.push_back(abi);
+        // string_q knownPath = configPath("known_abis/");
+        // CStringArray files;
+        // listFilesInFolder(files, knownPath + "*.*", false);
+        // for (auto file : files) {
+        //    CAbi abi;
+        //    abi.loadAbiFromFile(file, true);
+        //    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+        //    abi.address = substitute(substitute(file, ".json", ""), configPath("known_abis/"), "");
+        //    abis.push_back(abi);
+        //}
     }
 
     if (monitored) {
         CAbi abi;
-        abi.loadAbiFromCache("all");
+        abi.loadAbisMonitors();
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
         abis.push_back(abi);
     }
@@ -207,6 +208,8 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(funcFields, true);
     manageFields("CParameter:all", false);
     manageFields("CParameter:type,name,is_array,indexed", true);
+
+    removeDuplicateAbis(abis);
 
     return true;
 }

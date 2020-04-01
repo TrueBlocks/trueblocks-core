@@ -348,25 +348,13 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 }
 
 //---------------------------------------------------------------------------
-#if 0
-bool getNewestFile(const string_q& path, void* data) {
-    time_q *t = reinterpret_cast<time_q*>(data);
-    time_q l = fileLastModifyDate(path);
-    if (l > *t)
-        *t = l;
-    return true;
-}
-#endif
-
-//---------------------------------------------------------------------------
 bool CCache::needsRefresh(const string_q& cacheType, bool details) {
 #if 1
     return true;
 #else
-    time_q newestFile;
-    forEveryFileInFolder(getCachePath("monitors") + "*", getNewestFile, &newestFile);
+    auto [fileTime, fileName] = getNewestFileInFolder(getCachePath("monitors"));
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
-    return (fileLastModifyDate(fn) < newestFile);
+    return (fileLastModifyDate(fn) < fileTime);
 #endif
 }
 // EXISTING_CODE

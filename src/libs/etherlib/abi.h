@@ -46,8 +46,9 @@ class CAbi : public CBaseNode {
     // EXISTING_CODE
     CFunctionMap interfaceMap;
     bool addIfUnique(const string_q& addr, CFunction& func, bool decorateNames);
-    bool loadAbiKnown(const string_q& which);
-    bool loadAbiFromCache(const string_q& which);
+    bool loadAndCacheAbiFolder(const string_q& path, const string_q& name);
+    bool loadAbiKnown(void);
+    bool loadAbisMonitors(void);
     bool loadAbiByAddress(const address_t& addr);
     bool loadAbiFromFile(const string_q& fileName, bool builtIn);
     bool loadAbiFromString(const string_q& str, bool builtIn);
@@ -186,5 +187,6 @@ extern const char* STR_DISPLAY_ABI;
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
+extern void removeDuplicateAbis(CAbiArray& abis);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -291,4 +291,12 @@ extern bool expandMonthly(CTimeArray& ta, const time_q& start, const time_q& sto
 extern bool expandQuarterly(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
 extern bool expandAnnually(CTimeArray& ta, const time_q& start, const time_q& stop, bool fallback = true);
 
+//------------------------------------------------------------------------
+typedef struct {
+    time_q fileTime;
+    string_q fileName;
+} fileInfo;
+extern bool getNewestFile(const string_q& path, void* data);
+extern fileInfo getNewestFileInFolder(const string_q& path);
+
 }  // namespace qblocks

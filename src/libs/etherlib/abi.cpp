@@ -318,29 +318,42 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiKnown(const string_q& which) {
-    bool ret = true;
-    if (which == "all") {
-        ret = forEveryFileInFolder(configPath("known_abis/*"), visitBuiltin, this);
-    } else {
-        ret = visitBuiltin(configPath("known_abis/" + toLower(which) + ".json"), this);
+bool CAbi::loadAndCacheAbiFolder(const string_q& path, const string_q& name) {
+    string_q binPath = path + name + ".bin";
+    fileInfo info = getNewestFileInFolder(path);
+    if (info.fileName == binPath && fileExists(binPath)) {
+        // cerr << "Reading " << name << " abis from cache" << endl;
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
+            archive >> *this;
+            archive.Release();
+            return true;
+        }
     }
-    if (ret)
-        sort(interfaces.begin(), interfaces.end());
-    return ret;
+
+    if (!forEveryFileInFolder(path + "*", visitABI, this))
+        return false;
+
+    sort(interfaces.begin(), interfaces.end());
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
+        archive << *this;
+        archive.Release();
+        return true;
+    }
+
+    return true;
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromCache(const string_q& which) {
-    bool ret = true;
-    if (which == "all") {
-        ret = forEveryFileInFolder(getCachePath("abis/*"), visitABI, this);
-    } else {
-        ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
-    }
-    if (ret)
-        sort(interfaces.begin(), interfaces.end());
-    return ret;
+bool CAbi::loadAbiKnown(void) {
+    return loadAndCacheAbiFolder(configPath("known_abis/"), "known");
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadAbisMonitors(void) {
+    return loadAndCacheAbiFolder(getCachePath("abis/"), "monitored");
 }
 
 //---------------------------------------------------------------------------
@@ -383,8 +396,8 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
         //            archive.Release();
         //            return true;
         //        }
+        return true;
     }
-
     return false;
 }
 
@@ -505,5 +518,19 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
     interfaces.push_back(func);
     return true;
 }
+
+//-----------------------------------------------------------------------
+void removeDuplicateAbis(CAbiArray& abis) {
+    if (abis.size() == 0 || abis.size() == 1)
+        return;
+
+    size_t j = 0;
+    size_t n = abis.size();
+    for (size_t i = 0; i < n - 1; i++)
+        if (abis[i] != abis[i + 1])
+            abis[j++] = abis[i];
+    abis[j++] = abis[n - 1];
+}
+
 // EXISTING_CODE
 }  // namespace qblocks
