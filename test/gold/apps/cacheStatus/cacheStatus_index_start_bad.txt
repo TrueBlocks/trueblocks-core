@@ -9,6 +9,7 @@ cacheStatus index --start 1000000 --end 2500000
   "cache_path": "--paths--",
   "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
+  "is_testing": true,
   "is_scraping": false,
   "caches": [
     {
