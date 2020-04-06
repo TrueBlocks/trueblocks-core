@@ -533,6 +533,5 @@ void removeDuplicateEncodings(CAbiArray& abis) {
     }
     abis[j++] = abis[n - 1];
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
