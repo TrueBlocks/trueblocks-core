@@ -149,7 +149,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (t != "all")
                     mode += (t + "|");
             }
-            mode += (hasAll ? "blocks|transactions|traces|slurps|" : "");
+            mode += (hasAll ? "blocks|transactions|traces|slurps|prices|" : "");
         }
     }
 

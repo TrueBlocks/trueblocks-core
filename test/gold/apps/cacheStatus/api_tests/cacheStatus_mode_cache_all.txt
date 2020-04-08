@@ -43,6 +43,14 @@
           "nFolders": 0,
           "sizeInBytes": 0,
           "is_valid": true
+        },
+        {
+          "type": "CPriceCache",
+          "path": "pricesPath",
+          "nFiles": 0,
+          "nFolders": 0,
+          "sizeInBytes": 0,
+          "is_valid": true
         }
       ],
       "date": "--date--"
@@ -51,6 +59,35 @@
   "types": [
     {
       "type": "CChainCache",
+      "fields": [
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "path",
+          "type": "text"
+        },
+        {
+          "name": "nFiles",
+          "type": "unumber"
+        },
+        {
+          "name": "nFolders",
+          "type": "unumber"
+        },
+        {
+          "name": "sizeInBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "is_valid",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "CPriceCache",
       "fields": [
         {
           "name": "type",

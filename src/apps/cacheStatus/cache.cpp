@@ -302,31 +302,34 @@ const char* STR_DISPLAY_CACHE = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
-    if (needsRefresh(cacheType, details))
+bool CCache::readBinaryCache(const string_q& cacheType, bool details, bool ignore) {
+    if (ignore || needsRefresh(cacheType, details))
         return false;
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     if (!fileExists(fn))
         return false;
-    LOG4("\tReading from cache...\r");
+    LOG4("\tReading from cache ", fn);
     CArchive archive(READING_ARCHIVE);
     if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
         CStatus status;
         status.Serialize(archive);
-        CCache* cache = status.caches[0];
-        *this = *cache;  // copy the values from the parent class
-        const CRuntimeClass* pClass = cache->getRuntimeClass();
-        if (pClass) {  // copy the values from this class
-            for (auto field : pClass->fieldList) {
-                string_q ff = field.getName();
-                string_q val = cache->getValueByName(ff);
-                replaceAll(val, "\"", "");
-                replaceAll(val, "\n", "");
-                setValueByName(ff, val);
+        if (status.caches.size() > 0) {
+            CCache* cache = status.caches[0];
+            *this = *cache;  // copy the values from the parent class
+            const CRuntimeClass* pClass = cache->getRuntimeClass();
+            if (pClass) {  // copy the values from this class
+                for (auto field : pClass->fieldList) {
+                    string_q ff = field.getName();
+                    string_q val = cache->getValueByName(ff);
+                    string_q removeCharacters(const string_q& str, size_t n, const char* chars);
+                    char chars[] = {'\t', '\r', '\"', '\n', 0x1f};
+                    val = removeCharacters(val, 5, chars);
+                    setValueByName(ff, val);
+                }
             }
         }
         archive.Release();
-        LOG4("\tData was read from cache...");
+        LOG4("\tData was read from cache ", fn);
         return true;
     }
     LOG4("\tCould not read from cache...");
@@ -335,6 +338,9 @@ bool CCache::readBinaryCache(const string_q& cacheType, bool details) {
 
 //---------------------------------------------------------------------------
 bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
+    if (isTestMode())
+        return true;
+
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
@@ -349,13 +355,39 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 
 //---------------------------------------------------------------------------
 bool CCache::needsRefresh(const string_q& cacheType, bool details) {
-#if 1
+#if 0
     return true;
 #else
-    auto [fileTime, fileName] = getNewestFileInFolder(getCachePath("monitors"));
+    if (isTestMode())
+        return true;
+    string_q lPath = getCachePath(cacheType);
+    if (cacheType == "index")
+        lPath = getCachePath("addr_index/finalized/");
+    if (cacheType == "names")
+        lPath = configPath("names/");
+    fileInfo ret = getNewestFileInFolder(lPath);
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
-    return (fileLastModifyDate(fn) < fileTime);
+    bool res = fileLastModifyDate(fn) < ret.fileTime;
+    LOG4("cache date: ", fileLastModifyDate(fn).Format(FMT_EXPORT), " - ", fn);
+    LOG4("fileInfo:   ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
+    LOG4("result:     ", res);
+    return (res);
 #endif
+}
+//--------------------------------------------------------------------------------
+string_q removeCharacters(const string_q& str, size_t n, const char* chars) {
+    string_q ret;
+    for (auto ch : str) {
+        bool found = false;
+        for (size_t i = 0; i < n && !found; i++) {
+            if (chars[i] == ch) {
+                found = true;
+            }
+        }
+        if (!found)
+            ret += ch;
+    }
+    return ret;
 }
 // EXISTING_CODE
 }  // namespace qblocks

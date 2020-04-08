@@ -260,6 +260,24 @@ TEST_F(CThisTest, TestExtract) {
 }
 }
 
+//--------------------------------------------------------------------------------
+string_q removeCharacters1(const string_q& str, size_t n, const char* chars) {
+    string_q ret;
+    for (auto ch : str) {
+        bool found = false;
+        for (size_t i = 0; i < n && !found; i++) {
+            if (chars[i] == ch) {
+                found = true;
+            }
+        }
+        if (!found) {
+            if (ch > 0x1F)
+                ret += ch;
+        }
+    }
+    return ret;
+}
+
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestClear) {
     string_q code;
@@ -270,6 +288,9 @@ TEST_F(CThisTest, TestClear) {
     //    cleanString(code1, false); cout << TESTID("code1", 15) << code1 << endl;
     cleanString(code2, true);
     cout << TESTID("code2", 15) << code2 << endl;
+    const char* str = "A";
+    string_q str1 = "AaAbAcAdAeAfAgAh";
+    ASSERT_EQ("removeChars", removeCharacters1(str1, 1, str), "abcdefgh");
 
     return true;
 }

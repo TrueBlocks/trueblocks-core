@@ -14,21 +14,27 @@ bool COptions::handle_status(ostream& os) {
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
-        LOG8("index");
+        LOG8("Reporting on index");
         if (!index.readBinaryCache("index", details)) {
+            LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;
             expContext().types[index.type] = index.getRuntimeClass();
             index.path = pathName("index", getIndexPath(""));
             forEveryFileInFolder(getIndexPath(""), countFiles, &index);
+            LOG8("Counted files");
             CItemCounter counter(this, start, end);
             loadTimestampFile(&counter.ts_array, counter.ts_cnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
+            LOG8("Loaded timestamps");
             if (details)
                 forEveryFileInFolder(indexFolder_finalized, noteIndex, &counter);
-            LOG8("\tre-writing index cache");
+            LOG8("Visited folders");
             index.writeBinaryCache("index", details);
+            LOG8("Wrote cache");
+        } else {
+            LOG8("Read from cache");
         }
         status.caches.push_back(&index);
     }
@@ -36,7 +42,7 @@ bool COptions::handle_status(ostream& os) {
     LOG4("Processing monitors");
     CMonitorCache monitors;
     if (contains(mode, "|monitors|")) {
-        LOG4("Reading monitors");
+        LOG8("Reporting on monitors");
         if (!monitors.readBinaryCache("monitors", details)) {
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
             expContext().types[monitors.type] = monitors.getRuntimeClass();
@@ -65,7 +71,7 @@ bool COptions::handle_status(ostream& os) {
 
     CNameCache names;
     if (contains(mode, "|names|")) {
-        LOG8("names");
+        LOG8("Reporting on names");
         if (!names.readBinaryCache("names", details)) {
             names.type = names.getRuntimeClass()->m_ClassName;
             expContext().types[names.type] = names.getRuntimeClass();
@@ -89,7 +95,7 @@ bool COptions::handle_status(ostream& os) {
 
     CAbiCache abis;
     if (contains(mode, "|abis|")) {
-        LOG8("abis");
+        LOG8("Reporting on abis");
         if (!abis.readBinaryCache("abis", details)) {
             abis.type = abis.getRuntimeClass()->m_ClassName;
             expContext().types[abis.type] = abis.getRuntimeClass();
@@ -109,7 +115,7 @@ bool COptions::handle_status(ostream& os) {
 
     CChainCache blocks;
     if (contains(mode, "|blocks|") || contains(mode, "|data|")) {
-        LOG8("blocks");
+        LOG8("Reporting on blocks");
         if (!blocks.readBinaryCache("blocks", details)) {
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
             expContext().types[blocks.type] = blocks.getRuntimeClass();
@@ -125,7 +131,7 @@ bool COptions::handle_status(ostream& os) {
 
     CChainCache txs;
     if (contains(mode, "|transactions|") || contains(mode, "|data|")) {
-        LOG8("txs");
+        LOG8("Reporting on txs");
         if (!txs.readBinaryCache("txs", details)) {
             txs.type = txs.getRuntimeClass()->m_ClassName;
             expContext().types[txs.type] = txs.getRuntimeClass();
@@ -141,7 +147,7 @@ bool COptions::handle_status(ostream& os) {
 
     CChainCache traces;
     if (contains(mode, "|traces|") || contains(mode, "|data|")) {
-        LOG8("traces");
+        LOG8("Reporting on traces");
         if (!traces.readBinaryCache("traces", details)) {
             traces.type = traces.getRuntimeClass()->m_ClassName;
             expContext().types[traces.type] = traces.getRuntimeClass();
@@ -157,7 +163,7 @@ bool COptions::handle_status(ostream& os) {
 
     CSlurpCache slurps;
     if (contains(mode, "|slurps|")) {
-        LOG8("slurps");
+        LOG8("Reporting on slurps");
         if (!slurps.readBinaryCache("slurps", details)) {
             slurps.type = slurps.getRuntimeClass()->m_ClassName;
             expContext().types[slurps.type] = slurps.getRuntimeClass();
@@ -182,7 +188,7 @@ bool COptions::handle_status(ostream& os) {
 
     CPriceCache prices;
     if (contains(mode, "|prices|")) {
-        LOG8("prices");
+        LOG8("Reporting on prices");
         if (!prices.readBinaryCache("prices", details)) {
             prices.type = prices.getRuntimeClass()->m_ClassName;
             expContext().types[prices.type] = prices.getRuntimeClass();

@@ -1006,6 +1006,8 @@ typedef bool (*FILEVISITOR)(const string_q& path, void* data);
 extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data);
 fileInfo getNewestFileInFolder(const string_q& path) {
     fileInfo rec;
+    rec.fileTime = earliestDate;
+    rec.fileName = "";
     forEveryFileInFolder(path + "*", getNewestFile, &rec);
     return rec;
 }
