@@ -360,7 +360,7 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
 #else
     if (isTestMode())
         return true;
-    string_q lPath = getCachePath(cacheType);
+    string_q lPath = getCachePath(cacheType) + "/";
     if (cacheType == "index")
         lPath = getCachePath("addr_index/finalized/");
     if (cacheType == "names")
@@ -368,9 +368,9 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     fileInfo ret = getNewestFileInFolder(lPath);
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     bool res = fileLastModifyDate(fn) < ret.fileTime;
-    LOG4("cache date: ", fileLastModifyDate(fn).Format(FMT_EXPORT), " - ", fn);
-    LOG4("fileInfo:   ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
-    LOG4("result:     ", res);
+    LOG4("cache date:  ", fileLastModifyDate(fn).Format(FMT_EXPORT), " - ", fn);
+    LOG4("fileInfo:    ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
+    LOG4("needsRefresh:", res);
     return (res);
 #endif
 }

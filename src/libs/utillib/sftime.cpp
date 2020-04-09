@@ -16,6 +16,7 @@
 #include "sftime.h"
 #include "sfos.h"
 #include "conversions.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -991,19 +992,24 @@ time_q fileLastModifyDate(const string_q& filename) {
 }
 
 //----------------------------------------------------------------------------------
+typedef bool (*FILEVISITOR)(const string_q& path, void* data);
+extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data);
 bool getNewestFile(const string_q& path, void* data) {
-    fileInfo* r = reinterpret_cast<fileInfo*>(data);
-    time_q t = fileLastModifyDate(path);
-    if (t > r->fileTime) {
-        r->fileTime = t;
-        r->fileName = path;
+    if (endsWith(path, '/')) {
+        return forEveryFileInFolder(path + "*", getNewestFile, data);
+
+    } else {
+        fileInfo* r = reinterpret_cast<fileInfo*>(data);
+        time_q t = fileLastModifyDate(path);
+        if (t > r->fileTime) {
+            r->fileTime = t;
+            r->fileName = path;
+        }
     }
     return true;
 }
 
 //----------------------------------------------------------------------------------
-typedef bool (*FILEVISITOR)(const string_q& path, void* data);
-extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data);
 fileInfo getNewestFileInFolder(const string_q& path) {
     fileInfo rec;
     rec.fileTime = earliestDate;
