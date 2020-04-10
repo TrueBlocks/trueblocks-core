@@ -402,10 +402,10 @@ bool noteIndex(const string_q& path, void* data) {
         if (counter->ts_array) {
             if (aci.firstAppearance < counter->ts_cnt && aci.latestAppearance < counter->ts_cnt) {
                 aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance * 2) + 1];
-                aci.lastestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance * 2) + 1];
+                aci.latestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance * 2) + 1];
             } else {
                 aci.firstTs = (timestamp_t)0;
-                aci.lastestTs = (timestamp_t)0;
+                aci.latestTs = (timestamp_t)0;
             }
         }
         getIndexMetrics(path, aci.nAppearances, aci.nAddresses);

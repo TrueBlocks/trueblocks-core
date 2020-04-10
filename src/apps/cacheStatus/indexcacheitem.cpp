@@ -101,8 +101,8 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             if (fieldName % "latestAppearance") {
                 return uint_2_Str(latestAppearance);
             }
-            if (fieldName % "lastestTs") {
-                return ts_2_Str(lastestTs);
+            if (fieldName % "latestTs") {
+                return ts_2_Str(latestTs);
             }
             break;
         case 'n':
@@ -177,8 +177,8 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
                 latestAppearance = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "lastestTs") {
-                lastestTs = str_2_Ts(fieldValue);
+            if (fieldName % "latestTs") {
+                latestTs = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -229,7 +229,7 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> firstAppearance;
     archive >> latestAppearance;
     archive >> firstTs;
-    archive >> lastestTs;
+    archive >> latestTs;
     archive >> filename;
     archive >> indexSizeBytes;
     archive >> index_hash;
@@ -252,7 +252,7 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << firstAppearance;
     archive << latestAppearance;
     archive << firstTs;
-    archive << lastestTs;
+    archive << latestTs;
     archive << filename;
     archive << indexSizeBytes;
     archive << index_hash;
@@ -300,7 +300,7 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "firstAppearance", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "lastestTs", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "latestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH, ++fieldNum);

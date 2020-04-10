@@ -33,7 +33,7 @@ class CIndexCacheItem : public CBaseNode {
     blknum_t firstAppearance;
     blknum_t latestAppearance;
     timestamp_t firstTs;
-    timestamp_t lastestTs;
+    timestamp_t latestTs;
     string_q filename;
     uint32_t indexSizeBytes;
     ipfshash_t index_hash;
@@ -107,7 +107,7 @@ inline void CIndexCacheItem::initialize(void) {
     firstAppearance = 0;
     latestAppearance = 0;
     firstTs = 0;
-    lastestTs = 0;
+    latestTs = 0;
     filename = "";
     indexSizeBytes = 0;
     index_hash = "";
@@ -129,7 +129,7 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     firstAppearance = in.firstAppearance;
     latestAppearance = in.latestAppearance;
     firstTs = in.firstTs;
-    lastestTs = in.lastestTs;
+    latestTs = in.latestTs;
     filename = in.filename;
     indexSizeBytes = in.indexSizeBytes;
     index_hash = in.index_hash;
