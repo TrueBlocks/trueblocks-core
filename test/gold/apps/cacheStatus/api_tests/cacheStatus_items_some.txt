@@ -21,7 +21,7 @@
               "firstAppearance": 2998252,
               "latestAppearance": 3025310,
               "firstTs": 1484450745,
-              "lastestTs": 1484835514,
+              "latestTs": 1484835514,
               "filename": "/--index-path--/002998252-003025310.bin",
               "indexSizeBytes": 5163708,
               "index_hash": "QmUT...a15T",
@@ -35,7 +35,7 @@
               "firstAppearance": 3025311,
               "latestAppearance": 3051651,
               "firstTs": 1484835515,
-              "lastestTs": 1485212476,
+              "latestTs": 1485212476,
               "filename": "/--index-path--/003025311-003051651.bin",
               "indexSizeBytes": 5123720,
               "index_hash": "QmQP...8MbE",
@@ -49,7 +49,7 @@
               "firstAppearance": 3051652,
               "latestAppearance": 3076199,
               "firstTs": 1485212520,
-              "lastestTs": 1485563875,
+              "latestTs": 1485563875,
               "filename": "/--index-path--/003051652-003076199.bin",
               "indexSizeBytes": 5101672,
               "index_hash": "QmWH...kXwJ",
@@ -63,7 +63,7 @@
               "firstAppearance": 3076200,
               "latestAppearance": 3103319,
               "firstTs": 1485563890,
-              "lastestTs": 1485953000,
+              "latestTs": 1485953000,
               "filename": "/--index-path--/003076200-003103319.bin",
               "indexSizeBytes": 5106904,
               "index_hash": "QmPK...KuSU",
@@ -241,7 +241,7 @@
           "type": "timestamp"
         },
         {
-          "name": "lastestTs",
+          "name": "latestTs",
           "type": "timestamp"
         },
         {

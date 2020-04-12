@@ -13,35 +13,35 @@
 #include "utillib.h"
 #include "options.h"
 
-extern const char* STR_EXPORT_1;
-extern const char* STR_EXPORT_2;
-extern const char* STR_POLLING;
-extern const char* STR_EXTRACT_CASE;
-extern const char* STR_TEXT_ACTIONS;
-extern const char* STR_TEXT_IMPORTS;
-extern const char* STR_TEXT_CODE;
-extern const char* STR_NAVLINK;
-extern const char* STR_EMPTY_INNER;
-extern const char* STR_EMPTY_INNER_COLLAPSE;
-extern const char* STR_SKIN_EXPORT;
+// extern const char* STR_EXPORT_1;
+// extern const char* STR_EXPORT_2;
+// extern const char* STR_POLLING;
+// extern const char* STR_EXTRACT_CASE;
+// extern const char* STR_TEXT_ACTIONS;
+// extern const char* STR_TEXT_IMPORTS;
+// extern const char* STR_TEXT_CODE;
+// extern const char* STR_NAVLINK;
+// extern const char* STR_EMPTY_INNER;
+// extern const char* STR_EMPTY_INNER_COLLAPSE;
+// extern const char* STR_SKIN_EXPORT;
 extern bool visitField(const CFieldData& field, void* data);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& classDef) {
+bool COptions::handle_generate_javascript(CToml& toml, const CClassDefinition& classDef) {
     CPage page;
     page.longName = classDef.base_lower;
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-    page.polling = toml.getConfigBool("settings", "polling", false);
-    page.files = toml.getConfigStr("settings", "files", "index|actions|dispatchers|inner|reducers");
-    page.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
-    page.no_error = toml.getConfigBool("settings", "no_error", false);
-    page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
-    page.dat_table = toml.getConfigBool("settings", "dat_table", false);
-    page.obj_table = toml.getConfigBool("settings", "obj_table", false);
-    page.no_dash = classDef.base_lower % "dashboard";
-    page.has_text = false;
+    //    page.polling = toml.getConfigBool("settings", "polling", false);
+    page.files = toml.getConfigStr("settings", "files", "class");
+    //    page.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
+    //    page.no_error = toml.getConfigBool("settings", "no_error", false);
+    //    page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
+    //    page.dat_table = toml.getConfigBool("settings", "dat_table", false);
+    //    page.obj_table = toml.getConfigBool("settings", "obj_table", false);
+    //    page.no_dash = classDef.base_lower % "dashboard";
+    //    page.has_text = false;
     page.color = toml.getConfigStr("settings", "color", "''");
 
     CStringArray reserved = {"in"};
@@ -60,15 +60,19 @@ bool COptions::handle_generate_frontend(CToml& toml, const CClassDefinition& cla
         item = CSubpage();
     }
 
+    cout << page << endl;
+
     string_q destFolder = "../" + page.longName + "/";
     establishFolder(destFolder);
     CStringArray files;
     explode(files, page.files, '|');
-    for (auto file : files)
-        handle_one_frontend_file(page, destFolder, (file == "index" ? file : "blank-" + file) + ".js");
-    string_q ccsFile = destFolder + page.longName + ".css";
-    if (!fileExists(ccsFile))
-        copyFile("./blank.css", ccsFile);
+
+    //    for (auto file : files)
+    //        handle_one_frontend_file(page, destFolder, (file == "index" ? file : "blank-" + file) + ".js");
+    //    string_q ccsFile = destFolder + page.longName + ".css";
+    //    if (!fileExists(ccsFile))
+    //        copyFile("./blank.css", ccsFile);
+
     return false;
 }
 
@@ -87,11 +91,12 @@ bool COptions::handle_json_export(void) {
             }
         }
     }
-    handle_generate_frontend_app();
-    handle_generate_skins();
+    //    handle_generate_javascript_app();
+    //    handle_generate_skins();
     return false;  // we're done processing
 }
 
+/*
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_skins(void) {
     string_q dataFile = "../../skins/skins.csv";
@@ -294,6 +299,7 @@ bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folde
     }
     return false;
 }
+*/
 
 //---------------------------------------------------------------------------------------------------
 bool visitField(const CFieldData& field, void* data) {
@@ -308,6 +314,7 @@ bool visitField(const CFieldData& field, void* data) {
     return true;
 }
 
+/*
 const char* STR_ROUTES =
     "  {\n"
     "    name: '[{LOWER}]',\n"
@@ -317,7 +324,7 @@ const char* STR_ROUTES =
     "  }";
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_frontend_app(void) {
+bool COptions::handle_generate_javascript_app(void) {
     string_q app_import1 = "import { [{LOWER}]_menu } from './pages/[{LOWER}]';\n";
     string_q app_import2 = "import [{PROPER}] from './pages/[{LOWER}]';\n";
     string_q route = STR_ROUTES;
@@ -441,3 +448,4 @@ const char* STR_EMPTY_INNER =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_EMPTY_INNER_COLLAPSE = "    return <Fragment>{this.getInnerMost()}</Fragment>;\n";
+*/

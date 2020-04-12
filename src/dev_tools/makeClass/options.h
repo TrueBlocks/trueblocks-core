@@ -76,8 +76,8 @@ class COptions : public COptionsBase {
     bool handle_format(void);
     bool handle_json_export(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_generate_frontend(CToml& toml, const CClassDefinition& classDef);
-    bool handle_generate_frontend_app(void);
+    bool handle_generate_javascript(CToml& toml, const CClassDefinition& classDef);
+    bool handle_generate_javascript_app(void);
     bool handle_generate_skins(void);
     bool handle_one_frontend_file(const CPage& def, const string_q& folder, const string_q& source);
 

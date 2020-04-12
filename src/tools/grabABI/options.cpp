@@ -181,7 +181,9 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     string_q format = STR_DISPLAY_ABI;
-    string_q funcFields = "CFunction:address,name,type,signature,encoding,input_names,output_names";
+    string_q funcFields = "CFunction:address,name,type,signature,encoding,inputs,outputs";
+    if (isTestMode())
+        funcFields = "CFunction:address,name,type,signature,encoding,input_names,output_names";
 
     if (!addr) {
         replace(format, "[{ADDRESS}]\t", "");
