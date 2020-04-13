@@ -13,36 +13,16 @@
 #include "utillib.h"
 #include "options.h"
 
-// extern const char* STR_EXPORT_1;
-// extern const char* STR_EXPORT_2;
-// extern const char* STR_POLLING;
-// extern const char* STR_EXTRACT_CASE;
-// extern const char* STR_TEXT_ACTIONS;
-// extern const char* STR_TEXT_IMPORTS;
-// extern const char* STR_TEXT_CODE;
-// extern const char* STR_NAVLINK;
-// extern const char* STR_EMPTY_INNER;
-// extern const char* STR_EMPTY_INNER_COLLAPSE;
-// extern const char* STR_SKIN_EXPORT;
 extern bool visitField(const CFieldData& field, void* data);
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_javascript(CToml& toml, const CClassDefinition& classDef) {
+bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef) {
     CPage page;
     page.longName = classDef.base_lower;
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-    //    page.polling = toml.getConfigBool("settings", "polling", false);
-    page.files = toml.getConfigStr("settings", "files", "class");
-    //    page.menuType = toml.getConfigStr("settings", "menuType", "LocalMenu");
-    //    page.no_error = toml.getConfigBool("settings", "no_error", false);
-    //    page.no_data = page.no_error || toml.getConfigBool("settings", "no_data", false);
-    //    page.dat_table = toml.getConfigBool("settings", "dat_table", false);
-    //    page.obj_table = toml.getConfigBool("settings", "obj_table", false);
-    //    page.no_dash = classDef.base_lower % "dashboard";
-    //    page.has_text = false;
-    page.color = toml.getConfigStr("settings", "color", "''");
+    page.dest_path = toml.getConfigStr("settings", "dest_path", "./src/pages/") + page.properName + "/";
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
@@ -54,25 +34,17 @@ bool COptions::handle_generate_javascript(CToml& toml, const CClassDefinition& c
     while (item.parseJson3(subpages)) {
         replaceAll(item.options, "_EQ_", "=");
         replaceAll(item.extract, "_0", "[0]");
-        if (item.route.empty() && !item.isSeparator)
-            page.has_text = true;
         page.subpages.push_back(item);
         item = CSubpage();
     }
 
-    cout << page << endl;
+    establishFolder(page.dest_path);
+    string_q cssFile = page.dest_path + page.properName + ".css";
 
-    string_q destFolder = "../" + page.longName + "/";
-    establishFolder(destFolder);
-    CStringArray files;
-    explode(files, page.files, '|');
+    if (!fileExists(cssFile))
+        stringToAsciiFile(cssFile, "/* add custom css code for the " + page.properName + " compnent here. */\n");
 
-    //    for (auto file : files)
-    //        handle_one_frontend_file(page, destFolder, (file == "index" ? file : "blank-" + file) + ".js");
-    //    string_q ccsFile = destFolder + page.longName + ".css";
-    //    if (!fileExists(ccsFile))
-    //        copyFile("./blank.css", ccsFile);
-
+    pageMap[page.longName] = page;
     return false;
 }
 
@@ -91,14 +63,16 @@ bool COptions::handle_json_export(void) {
             }
         }
     }
-    //    handle_generate_javascript_app();
-    //    handle_generate_skins();
+
+    handle_generate_js_menus();
+    //    handle_generate_js_skins();
+
     return false;  // we're done processing
 }
 
 /*
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_skins(void) {
+bool COptions::handle_generate_js_skins(void) {
     string_q dataFile = "../../skins/skins.csv";
     CStringArray lines;
     asciiFileToLines(dataFile, lines);
@@ -148,7 +122,7 @@ const char* STR_SKIN_EXPORT =
     "export default [{NAME}];\n";
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_one_frontend_file(const CPage& page, const string_q& folder, const string_q& source) {
+bool COptions::handle_generate_js_file(const CPage& page, const string_q& folder, const string_q& source) {
     string_q destFile = folder + substitute(source, "blank-", "");
     string_q sourceFile = "./" + source;
     string_q code = asciiFileToString(sourceFile);
@@ -314,138 +288,290 @@ bool visitField(const CFieldData& field, void* data) {
     return true;
 }
 
-/*
-const char* STR_ROUTES =
-    "  {\n"
-    "    name: '[{LOWER}]',\n"
-    "    component: (routeProps) => <[{PROPER}] {...routeProps} />,\n"
-    "    exact: true,\n"
-    "    path: '[{PATH}]'\n"
-    "  }";
+//---------------------------------------------------------------------------------------------------
+void doReplace(string_q& str, const string_q& type, const string_q& rep) {
+    string_q autotag = "  // auto-generate: " + type;
+    string_q ontag = "<" + type + ">";
+    string_q offtag = "</" + type + ">";
+
+    ostringstream os;
+    os << autotag << endl;
+    os << rep;
+    os << autotag; // new line not needed
+
+    replace(str, autotag, ontag);
+    replace(str, autotag, "  " + offtag);
+
+    replace(str, offtag, offtag + os.str());
+    snagFieldClear(str, type);
+}
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_javascript_app(void) {
-    string_q app_import1 = "import { [{LOWER}]_menu } from './pages/[{LOWER}]';\n";
-    string_q app_import2 = "import [{PROPER}] from './pages/[{LOWER}]';\n";
-    string_q route = STR_ROUTES;
-    string_q red_import = "import reducer_[{PROPER}] from './pages/[{LOWER}]/reducers';\n";
-    string_q reducer = "  reducer_[{PROPER}],\n";
-
+bool COptions::handle_generate_js_menus(void) {
     CToml toml("./classDefinitions/app.txt");
-    string_q str = toml.getConfigStr("settings", "pages", "");
-    CStringArray pages;
-    explode(pages, str, '|');
-    ostringstream app_imports1, app_imports2, red_imports, routes, reducers, navlinks;
-    for (auto exact : pages) {
-        string_q lower = nextTokenClear(exact, ',');
-        string_q proper = toProper(lower);
-        string_q path = nextTokenClear(exact, ',');
-        string_q path2 = path;
-        string_q navpath = path.empty() ? "" : "path=\"" + path + "\" ";
-        bool isSeparator = (lower == "separator");
-        if (path.empty()) {
-            path = "/[{LOWER}]/:subpage?/:query?";
-            path2 = "/[{LOWER}]";
+    string_q pageList = toml.getConfigStr("settings", "pages", "");
+    CStringArray pagesStrs;
+    explode(pagesStrs, pageList, '|');
+
+    string_q indexFile = "./src/pages/index.jsx";
+    string_q contents = asciiFileToString(indexFile);
+
+    ostringstream importStream;
+    ostringstream pageStream;
+    for (auto pageStr : pagesStrs) {
+        CPage page = pageMap[pageStr];
+
+        importStream
+            << "import { "
+            << page.properName
+            << " from ./"
+            << page.properName
+            << "/"
+            << page.properName
+            << "';"
+            << endl;
+
+        for (auto sub : page.subpages) {
+            ostringstream os;
+            pageStream
+                << "  '"
+                << page.longName
+                << "/"
+                << sub.subpage
+                << "': { component: <"
+                << page.properName
+                << " /> },"
+                << endl;
         }
-        if (!exact.empty())
-            exact += "={true} ";
-        if (!isSeparator) {
-            app_imports1 << substitute(substitute(app_import1, "[{PROPER}]", proper), "[{LOWER}]", lower);
-            app_imports2 << substitute(substitute(app_import2, "[{PROPER}]", proper), "[{LOWER}]", lower);
-            if (!routes.str().empty())
-                routes << ",\n";
-            routes << substitute(
-                substitute(substitute(substitute(route, "[{EXACT}]", exact), "[{PATH}]", path), "[{PROPER}]", proper),
-                "[{LOWER}]", lower);
-            red_imports << substitute(substitute(red_import, "[{PROPER}]", proper), "[{LOWER}]", lower);
-            reducers << substitute(reducer, "[{PROPER}]", proper);
-        }
-        if (!navlinks.str().empty())
-            navlinks << "," << endl;
-        navlinks << (isSeparator ? "  Separator"
-                                 : substitute(substitute(STR_NAVLINK, "[{PROPER}]", proper), "[{LOWER}]", lower));
-        replace(exact, "={true}", "");
+        pageStream << "  //" << endl;
     }
 
-    CStringArray files = {"App", "Content", "root-reducers", "routes"};
-    for (auto file : files) {
-        string dest = "../../" + file + ".js";
-        string_q source = "./blank-" + toLower(file) + ".js";
-        string_q orig = asciiFileToString(dest);
-        string_q contents = asciiFileToString(source);
-        replaceAll(contents, "[{ ", "[{");  // remove weird editor spacing
-        replaceAll(contents, " }]", "}]");  // remove weird editor spacing
-        replaceAll(contents, "[{IMPORTS1}]", app_imports1.str());
-        replaceAll(contents, "[{IMPORTS2}]", app_imports2.str());
-        replaceAll(contents, "[{NAVLINKS}]", navlinks.str());
-        replaceAll(contents, "[{ROUTES}]", routes.str());
-        replaceAll(contents, "[{REDIMPORTS}]", red_imports.str());
-        replaceAll(contents, "[{REDUCERS}]", trim(trim(reducers.str(), '\n'), ','));
-        if (orig != contents) {
-            stringToAsciiFile(dest, contents);
-            LOG_INFO("Writing: ", cTeal, substitute(dest, "../../", "./"), cOff);
-        }
-    }
+    doReplace(contents, "imports", importStream.str());
+    doReplace(contents, "pages", pageStream.str());
+
+    stringToAsciiFile(indexFile, contents);
 
     return true;
 }
 
-//---------------------------------------------------------------------------------------------------
-const char* STR_EXPORT_1 =
-    "export default connect(\n"
-    "\tmapStateToProps,\n"
-    "\tmapDispatchToProps\n"
-    ")([{PROPER}]Inner);\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_EXPORT_2 =
-    "export default polling(dispatcher_[{PROPER}], poll_timeout)(\n"
-    "\tconnect(\n"
-    "\t\tmapStateToProps,\n"
-    "\t\tmapDispatchToProps\n"
-    "\t)([{PROPER}]Inner)\n"
-    ");\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_POLLING =
-    "\n"
-    "\n"
-    "import { polling } from '../../components/polling';\n"
-    "import { poll_timeout } from '../../config.js';\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_EXTRACT_CASE =
-    "      return {\n"
-    "        ...state,\n"
-    "        data: action.payload.data_EXTRACT_,\n"
-    "        fieldList: action.payload.types[0].fields,\n"
-    "        meta: action.payload.meta,\n"
-    "        isLoading: false,\n"
-    "        error: null\n"
-    "      };\n\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_TEXT_ACTIONS = "import * as [{TWO}] from './actions';";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_TEXT_IMPORTS = "import { [{SUBPAGE}]Text } from './text/[{SUBPAGE}]';";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_TEXT_CODE =
-    "    } else if (this.state.cur_submenu.query === [{TWO}].[{SP_UPPER}]) {\n"
-    "      return [{SUBPAGE}]Text();";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_NAVLINK = "  [{LOWER}]_menu";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_EMPTY_INNER =
-    "    return (\n"
-    "      <Fragment>\n"
-    "        {this.getInnerMost()}\n"
-    "      </Fragment>\n"
-    "    );\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_EMPTY_INNER_COLLAPSE = "    return <Fragment>{this.getInnerMost()}</Fragment>;\n";
-*/
+//  // auto-generate: pages
+//  'dashboard/': { component: <Dashboard /> },
+//  //
+//  'projects/': { component: <Projects /> },
+//  'projects/view': { component: <Projects /> },
+//  'projects/edit': { component: <Projects /> },
+//  'projects/save': { component: <Projects /> },
+//  'projects/export': { component: <Projects /> },
+//  //
+//  'monitors/': { component: <Monitors /> },
+//  'monitors/yours': { component: <Monitors /> },
+//  'monitors/shared': { component: <Monitors /> },
+//  //
+//  'explorer/': { component: <Explorer /> },
+//  'explorer/accounts': { component: <Explorer /> },
+//  'explorer/blocks': { component: <Explorer /> },
+//  'explorer/transactions': { component: <Explorer /> },
+//  'explorer/receipts': { component: <Explorer /> },
+//  'explorer/logs': { component: <Explorer /> },
+//  'explorer/traces': { component: <Explorer /> },
+//  // auto-generate: pages-pages
+//  'names/': { component: <Names /> },
+//  'names/yours': { component: <Names /> },
+//  'names/wallets': { component: <Names /> },
+//  'names/tokens': { component: <Names /> },
+//  'names/prefunds': { component: <Names /> },
+//  'names/other': { component: <Names /> },
+//  'names/groups': { component: <Names /> },
+//  //
+//  'signatures/': { component: <Signatures /> },
+//  'signatures/known': { component: <Signatures /> },
+//  'signatures/monitored': { component: <Signatures /> },
+//  'signatures/names': { component: <Generic page="Other" /> },
+//  'signatures/params': { component: <Generic page="Other" /> },
+//  'signatures/cross': { component: <Generic page="Other" /> },
+//  //
+//  'digests/': { component: <Digests /> },
+//  'digests/finalized': { component: <Digests /> },
+//  'digests/staged': { component: <Digests /> },
+//  'digests/unripe': { component: <Digests /> },
+//  'digests/columns': { component: <Digests /> },
+//  //
+//  'caches/': { component: <Caches /> },
+//  'caches/blocks': { component: <Caches /> },
+//  'caches/transactions': { component: <Caches /> },
+//  'caches/traces': { component: <Caches /> },
+//  'caches/slurps': { component: <Caches /> },
+//  'caches/prices': { component: <Caches /> },
+//  'caches/abis': { component: <Caches /> },
+//  //
+//  'other/': { component: <Generic page="Other" /> },
+//  'other/downloaded': { component: <Generic page="Other" /> },
+//  'other/common': { component: <Generic page="Other" /> },
+//  'other/your%20blocks': { component: <Generic page="Other" /> },
+//  'other/known%20blocks': { component: <Generic page="Other" /> },
+//  'other/dated%20blocks': { component: <Generic page="Other" /> },
+//  //
+//  'settings/': { component: <Settings /> },
+//  'settings/api': { component: <Settings /> },
+//  'settings/node': { component: <Settings /> },
+//  'settings/scraper': { component: <Settings /> },
+//  'settings/sharing': { component: <Settings /> },
+//  'settings/skins': { component: <Settings /> },
+//  'settings/schemas': { component: <Settings /> },
+//  //
+//  'support/': { component: <Support /> },
+//  'support/keys': { component: <Support /> },
+//  'support/contact': { component: <Support /> },
+//  'support/documentation': { component: <Support /> },
+//  'support/licensing': { component: <Support /> },
+//  'support/about': { component: <Support /> },
+//};
+//
+////----------------------------------------------------------------------
+//export const theMenu = {
+//  items: [
+//    // auto-generate: pages-menus
+//    { label: 'Dashboard', exact: true, path: '/' },
+//    { label: 'Separator' },
+//    {
+//      label: 'Projects',
+//      exact: true,
+//      items: [
+//        {
+//          label: 'View...',
+//          enableFunc: (page) => {
+//            return page === 'view';
+//          },
+//        },
+//        { label: 'Edit...' },
+//        { label: 'Save' },
+//        { label: 'Export' },
+//      ],
+//    },
+//    {
+//      label: 'Monitors',
+//      exact: true,
+//      items: [
+//        { label: 'Your Monitors', path: 'yours' },
+//        { label: 'Shared Monitors', path: 'shared' },
+//      ],
+//    },
+//    {
+//      label: 'Explorer',
+//      exact: true,
+//      items: [
+//        { label: 'Accounts' },
+//        { label: 'Blocks' },
+//        { label: 'Transactions' },
+//        { label: 'Receipts' },
+//        { label: 'Logs' },
+//        { label: 'Traces' },
+//      ],
+//    },
+//    { label: 'Separator' },
+//    // auto-generate: pages-menus
+//    {
+//      label: 'Names',
+//      exact: true,
+//      items: [
+//        { label: 'Your Names', path: 'yours' },
+//        { label: 'Wallets' },
+//        { label: 'Tokens' },
+//        { label: 'Prefunds' },
+//        { label: 'Other Names', path: 'other' },
+//        { label: 'Groups' },
+//      ],
+//    },
+//    {
+//      label: 'Signatures',
+//      exact: true,
+//      items: [
+//        { label: 'Known' },
+//        { label: 'Monitored' },
+//        { label: 'Separator' },
+//        { label: 'Names' },
+//        { label: 'Params' },
+//        { label: 'Cross' },
+//      ],
+//    },
+//    {
+//      label: 'Digests',
+//      exact: true,
+//      items: [
+//        { label: 'Finalized' },
+//        { label: 'Staged' },
+//        { label: 'Unripe' },
+//        { label: 'Separator' },
+//        { label: 'Columns' },
+//      ],
+//    },
+//    {
+//      label: 'Caches',
+//      exact: true,
+//      items: [
+//        { label: 'Blocks' },
+//        { label: 'Transactions' },
+//        { label: 'Traces' },
+//        { label: 'Separator' },
+//        { label: 'Abis' },
+//        { label: 'Slurps' },
+//        { label: 'Prices' },
+//      ],
+//    },
+//    {
+//      label: 'Other',
+//      exact: true,
+//      items: [{ label: 'Your Blocks' }, { label: 'Known Blocks' }, { label: 'Dated Blocks' }],
+//    },
+//    { label: 'Separator' },
+//    {
+//      label: 'Settings',
+//      exact: true,
+//      items: [
+//        { label: 'API Config', path: 'api' },
+//        { label: 'Node Config', path: 'node' },
+//        { label: 'Scraper Config', path: 'scraper' },
+//        { label: 'Sharing Config', path: 'sharing' },
+//        { label: 'Separator' },
+//        { label: 'Skins' },
+//        { label: 'Schemas' },
+//      ],
+//    },
+//    {
+//      label: 'Support',
+//      exact: true,
+//      items: [
+//        { label: 'Contact Us', path: 'contact' },
+//        { label: 'Separator' },
+//        { label: 'Hot Keys', path: 'keys' },
+//        { label: 'Documentation' },
+//        { label: 'Separator' },
+//        { label: 'Licensing' },
+//        { label: 'About Us', path: 'about' },
+//      ],
+//    },
+//  ],
+//};
+//
+////----------------------------------------------------------------------
+//export const menusReducer = (state, action) => {
+//  // users cannot change the menus
+//  return state;
+//};
+//
+////----------------------------------------------------------------------
+//export const useMenus = () => {
+//  return useContext(GlobalContext).menus;
+//};
+//
+////----------------------------------------------------------------------
+//export const InnerPage = () => {
+//  Mousetrap.unbind(['left']);
+//  Mousetrap.unbind(['up']);
+//  Mousetrap.unbind(['right']);
+//  Mousetrap.unbind(['down']);
+//  const { page, subpage } = currentPage();
+//  const ret = thePages[page + '/' + subpage];
+//  console.log('p: ', page, ' s:', subpage, ' ret: ', ret);
+//  return ret ? ret.component : <div className="warning">Missing Inner Page</div>;
+//};

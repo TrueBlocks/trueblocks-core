@@ -70,24 +70,9 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "color") {
-                return color;
-            }
-            break;
         case 'd':
-            if (fieldName % "dat_table") {
-                return bool_2_Str(dat_table);
-            }
-            break;
-        case 'f':
-            if (fieldName % "files") {
-                return files;
-            }
-            break;
-        case 'h':
-            if (fieldName % "has_text") {
-                return bool_2_Str(has_text);
+            if (fieldName % "dest_path") {
+                return dest_path;
             }
             break;
         case 'l':
@@ -95,33 +80,9 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
                 return longName;
             }
             break;
-        case 'm':
-            if (fieldName % "menuType") {
-                return menuType;
-            }
-            break;
-        case 'n':
-            if (fieldName % "no_error") {
-                return bool_2_Str(no_error);
-            }
-            if (fieldName % "no_data") {
-                return bool_2_Str(no_data);
-            }
-            if (fieldName % "no_dash") {
-                return bool_2_Str(no_dash);
-            }
-            break;
-        case 'o':
-            if (fieldName % "obj_table") {
-                return bool_2_Str(obj_table);
-            }
-            break;
         case 'p':
             if (fieldName % "properName") {
                 return properName;
-            }
-            if (fieldName % "polling") {
-                return bool_2_Str(polling);
             }
             break;
         case 's':
@@ -167,27 +128,9 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "color") {
-                color = fieldValue;
-                return true;
-            }
-            break;
         case 'd':
-            if (fieldName % "dat_table") {
-                dat_table = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-        case 'f':
-            if (fieldName % "files") {
-                files = fieldValue;
-                return true;
-            }
-            break;
-        case 'h':
-            if (fieldName % "has_text") {
-                has_text = str_2_Bool(fieldValue);
+            if (fieldName % "dest_path") {
+                dest_path = fieldValue;
                 return true;
             }
             break;
@@ -197,39 +140,9 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             break;
-        case 'm':
-            if (fieldName % "menuType") {
-                menuType = fieldValue;
-                return true;
-            }
-            break;
-        case 'n':
-            if (fieldName % "no_error") {
-                no_error = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "no_data") {
-                no_data = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "no_dash") {
-                no_dash = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-        case 'o':
-            if (fieldName % "obj_table") {
-                obj_table = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'p':
             if (fieldName % "properName") {
                 properName = fieldValue;
-                return true;
-            }
-            if (fieldName % "polling") {
-                polling = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -283,17 +196,8 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> properName;
     archive >> twoName;
     archive >> sevenName;
+    archive >> dest_path;
     archive >> subpages;
-    archive >> polling;
-    archive >> menuType;
-    archive >> files;
-    archive >> no_error;
-    archive >> no_data;
-    archive >> obj_table;
-    archive >> dat_table;
-    archive >> no_dash;
-    archive >> has_text;
-    archive >> color;
     finishParse();
     return true;
 }
@@ -309,17 +213,8 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << properName;
     archive << twoName;
     archive << sevenName;
+    archive << dest_path;
     archive << subpages;
-    archive << polling;
-    archive << menuType;
-    archive << files;
-    archive << no_error;
-    archive << no_data;
-    archive << obj_table;
-    archive << dat_table;
-    archive << no_dash;
-    archive << has_text;
-    archive << color;
 
     return true;
 }
@@ -360,17 +255,8 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "properName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CPage, "polling", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "menuType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPage, "files", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPage, "no_error", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "no_data", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "obj_table", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "dat_table", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "no_dash", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "has_text", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPage, "color", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPage, "schema");

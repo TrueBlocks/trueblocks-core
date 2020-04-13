@@ -272,11 +272,14 @@ bool listClasses(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", listClasses, data);
 
     } else {
-        if (contains(path, "classDefinitions/") && contains(path, ".txt")) {
+        bool isDef = contains(path, "classDefinitions/");
+        bool isTxt = contains(path, ".txt");
+        bool isToml = contains(path, ".toml");
+        if (isDef && (isTxt || isToml)) {
             COptions* opts = reinterpret_cast<COptions*>(data);
 
             string_q class_name = path;
-            class_name = substitute(nextTokenClearReverse(class_name, '/'), ".txt", "");
+            class_name = substitute(substitute(nextTokenClearReverse(class_name, '/'), ".txt", ""), ".toml", "");
 
             bool include = true;
             if (!opts->filter.empty()) {

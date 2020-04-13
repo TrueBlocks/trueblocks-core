@@ -30,17 +30,8 @@ class CPage : public CBaseNode {
     string_q properName;
     string_q twoName;
     string_q sevenName;
+    string_q dest_path;
     CSubpageArray subpages;
-    bool polling;
-    string_q menuType;
-    string_q files;
-    bool no_error;
-    bool no_data;
-    bool obj_table;
-    bool dat_table;
-    bool no_dash;
-    bool has_text;
-    string_q color;
 
   public:
     CPage(void);
@@ -109,17 +100,8 @@ inline void CPage::initialize(void) {
     properName = "";
     twoName = "";
     sevenName = "";
+    dest_path = "";
     subpages.clear();
-    polling = false;
-    menuType = "";
-    files = "";
-    no_error = false;
-    no_data = false;
-    obj_table = false;
-    dat_table = false;
-    no_dash = false;
-    has_text = false;
-    color = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,17 +116,8 @@ inline void CPage::duplicate(const CPage& pa) {
     properName = pa.properName;
     twoName = pa.twoName;
     sevenName = pa.sevenName;
+    dest_path = pa.dest_path;
     subpages = pa.subpages;
-    polling = pa.polling;
-    menuType = pa.menuType;
-    files = pa.files;
-    no_error = pa.no_error;
-    no_data = pa.no_data;
-    obj_table = pa.obj_table;
-    dat_table = pa.dat_table;
-    no_dash = pa.no_dash;
-    has_text = pa.has_text;
-    color = pa.color;
 
     // EXISTING_CODE
     // EXISTING_CODE

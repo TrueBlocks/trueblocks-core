@@ -46,6 +46,7 @@ typedef enum {
     RUN = (1 << 1),
     EDIT = (1 << 2),
 } runmode_t;
+
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -57,6 +58,7 @@ class COptions : public COptionsBase {
     bool force;
     // END_CODE_DECLARE
 
+    map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
     CToml classFile;
@@ -76,10 +78,11 @@ class COptions : public COptionsBase {
     bool handle_format(void);
     bool handle_json_export(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_generate_javascript(CToml& toml, const CClassDefinition& classDef);
-    bool handle_generate_javascript_app(void);
-    bool handle_generate_skins(void);
-    bool handle_one_frontend_file(const CPage& def, const string_q& folder, const string_q& source);
+
+    bool handle_generate_js(CToml& toml, const CClassDefinition& classDef);
+    bool handle_generate_js_file(const CPage& def, const string_q& folder, const string_q& source);
+    bool handle_generate_js_menus(void);
+    bool handle_generate_js_skins(void);
 
     bool check_option(const CCommandOption& option);
     bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
