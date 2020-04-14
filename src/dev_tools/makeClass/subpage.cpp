@@ -117,7 +117,7 @@ bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName == "subpage" && fieldValue == "separator")
+    if (fieldName == "subpage" && fieldValue % "separator")
         isSeparator = true;
     // EXISTING_CODE
 

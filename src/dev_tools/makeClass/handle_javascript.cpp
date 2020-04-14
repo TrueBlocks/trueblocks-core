@@ -38,13 +38,15 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
         item = CSubpage();
     }
 
-    establishFolder(page.dest_path);
-    string_q cssFile = page.dest_path + page.properName + ".css";
-
-    if (!fileExists(cssFile))
-        stringToAsciiFile(cssFile, "/* add custom css code for the " + page.properName + " compnent here. */\n");
+    if (page.longName != "separator") {
+        establishFolder(page.dest_path);
+        string_q cssFile = page.dest_path + page.properName + ".css";
+        if (!fileExists(cssFile))
+            stringToAsciiFile(cssFile, "/* add custom css code for the " + page.properName + " compnent here. */\n");
+    }
 
     pageMap[page.longName] = page;
+
     return false;
 }
 
@@ -318,118 +320,73 @@ bool COptions::handle_generate_js_menus(void) {
 
     ostringstream importStream;
     ostringstream pageStream;
+    ostringstream menuStream;
+    menuStream << "  items: [" << endl;
+
     for (auto pageStr : pagesStrs) {
         CPage page = pageMap[pageStr];
-
-        importStream
-            << "import { "
-            << page.properName
-            << " from ./"
-            << page.properName
-            << "/"
-            << page.properName
-            << "';"
-            << endl;
-
-        for (auto sub : page.subpages) {
-            ostringstream os;
-            pageStream
-                << "  '"
-                << page.longName
-                << "/"
-                << sub.subpage
-                << "': { component: <"
+        cerr << page.longName << endl;
+        bool isSeparator = page.longName == "separator";
+        if (isSeparator) {
+            menuStream << "    { label: '" << page.properName << "' }," << endl;
+        } else {
+            importStream
+                << "import { "
                 << page.properName
-                << " /> },"
+                << " from ./"
+                << page.properName
+                << "/"
+                << page.properName
+                << "';"
                 << endl;
+
+            menuStream << "    {" << endl;
+            menuStream << "      label: '" << page.properName << "'," << endl;
+            menuStream << "      exact: true," << endl;
+            if (page.subpages.size() == 1 && page.subpages[0].route == "/")
+                menuStream << "      path: '/'," << endl;
+            if (page.subpages.size() > 1)
+                menuStream << "      items: [" << endl;
+
+            for (auto sub : page.subpages) {
+                if (!sub.isSeparator) {
+                    pageStream
+                        << "  '"
+                        << page.longName
+                        << "/"
+                        << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ?  "" : sub.route)
+                        << "': { component: <"
+                        << page.properName
+                        << " /> },"
+                        << endl;
+                }
+
+                if (sub.isSeparator)
+                    menuStream << "        { label: 'Separator' }," << endl;
+                else if (sub.subpage != "") {
+                    menuStream << "        { label: '" << sub.subpage << "'";
+                    if (!sub.route.empty())
+                        menuStream << ", path: '" << sub.route << "'";
+                    menuStream << " }," << endl;
+                }
+            }
+            pageStream << "  //" << endl;
+            if (page.subpages.size() > 1)
+                menuStream << "      ]" << endl;
+            menuStream << "    }," << endl;
         }
-        pageStream << "  //" << endl;
     }
+    menuStream << "  ]" << endl;
 
     doReplace(contents, "imports", importStream.str());
     doReplace(contents, "pages", pageStream.str());
+    doReplace(contents, "menus", menuStream.str());
 
     stringToAsciiFile(indexFile, contents);
 
     return true;
 }
 
-//  // auto-generate: pages
-//  'dashboard/': { component: <Dashboard /> },
-//  //
-//  'projects/': { component: <Projects /> },
-//  'projects/view': { component: <Projects /> },
-//  'projects/edit': { component: <Projects /> },
-//  'projects/save': { component: <Projects /> },
-//  'projects/export': { component: <Projects /> },
-//  //
-//  'monitors/': { component: <Monitors /> },
-//  'monitors/yours': { component: <Monitors /> },
-//  'monitors/shared': { component: <Monitors /> },
-//  //
-//  'explorer/': { component: <Explorer /> },
-//  'explorer/accounts': { component: <Explorer /> },
-//  'explorer/blocks': { component: <Explorer /> },
-//  'explorer/transactions': { component: <Explorer /> },
-//  'explorer/receipts': { component: <Explorer /> },
-//  'explorer/logs': { component: <Explorer /> },
-//  'explorer/traces': { component: <Explorer /> },
-//  // auto-generate: pages-pages
-//  'names/': { component: <Names /> },
-//  'names/yours': { component: <Names /> },
-//  'names/wallets': { component: <Names /> },
-//  'names/tokens': { component: <Names /> },
-//  'names/prefunds': { component: <Names /> },
-//  'names/other': { component: <Names /> },
-//  'names/groups': { component: <Names /> },
-//  //
-//  'signatures/': { component: <Signatures /> },
-//  'signatures/known': { component: <Signatures /> },
-//  'signatures/monitored': { component: <Signatures /> },
-//  'signatures/names': { component: <Generic page="Other" /> },
-//  'signatures/params': { component: <Generic page="Other" /> },
-//  'signatures/cross': { component: <Generic page="Other" /> },
-//  //
-//  'digests/': { component: <Digests /> },
-//  'digests/finalized': { component: <Digests /> },
-//  'digests/staged': { component: <Digests /> },
-//  'digests/unripe': { component: <Digests /> },
-//  'digests/columns': { component: <Digests /> },
-//  //
-//  'caches/': { component: <Caches /> },
-//  'caches/blocks': { component: <Caches /> },
-//  'caches/transactions': { component: <Caches /> },
-//  'caches/traces': { component: <Caches /> },
-//  'caches/slurps': { component: <Caches /> },
-//  'caches/prices': { component: <Caches /> },
-//  'caches/abis': { component: <Caches /> },
-//  //
-//  'other/': { component: <Generic page="Other" /> },
-//  'other/downloaded': { component: <Generic page="Other" /> },
-//  'other/common': { component: <Generic page="Other" /> },
-//  'other/your%20blocks': { component: <Generic page="Other" /> },
-//  'other/known%20blocks': { component: <Generic page="Other" /> },
-//  'other/dated%20blocks': { component: <Generic page="Other" /> },
-//  //
-//  'settings/': { component: <Settings /> },
-//  'settings/api': { component: <Settings /> },
-//  'settings/node': { component: <Settings /> },
-//  'settings/scraper': { component: <Settings /> },
-//  'settings/sharing': { component: <Settings /> },
-//  'settings/skins': { component: <Settings /> },
-//  'settings/schemas': { component: <Settings /> },
-//  //
-//  'support/': { component: <Support /> },
-//  'support/keys': { component: <Support /> },
-//  'support/contact': { component: <Support /> },
-//  'support/documentation': { component: <Support /> },
-//  'support/licensing': { component: <Support /> },
-//  'support/about': { component: <Support /> },
-//};
-//
-////----------------------------------------------------------------------
-//export const theMenu = {
-//  items: [
 //    // auto-generate: pages-menus
 //    { label: 'Dashboard', exact: true, path: '/' },
 //    { label: 'Separator' },
@@ -550,28 +507,3 @@ bool COptions::handle_generate_js_menus(void) {
 //        { label: 'About Us', path: 'about' },
 //      ],
 //    },
-//  ],
-//};
-//
-////----------------------------------------------------------------------
-//export const menusReducer = (state, action) => {
-//  // users cannot change the menus
-//  return state;
-//};
-//
-////----------------------------------------------------------------------
-//export const useMenus = () => {
-//  return useContext(GlobalContext).menus;
-//};
-//
-////----------------------------------------------------------------------
-//export const InnerPage = () => {
-//  Mousetrap.unbind(['left']);
-//  Mousetrap.unbind(['up']);
-//  Mousetrap.unbind(['right']);
-//  Mousetrap.unbind(['down']);
-//  const { page, subpage } = currentPage();
-//  const ret = thePages[page + '/' + subpage];
-//  console.log('p: ', page, ' s:', subpage, ' ret: ', ret);
-//  return ret ? ret.component : <div className="warning">Missing Inner Page</div>;
-//};
