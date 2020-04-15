@@ -45,7 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     bool set_config = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = NOPOS; //getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');
