@@ -139,7 +139,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Handle the weird javaScript code export first just to get it out of the way
     if (js)
-        return handle_json_export();
+        return handle_export_js();
     if (contains(command, "-j"))
         return usage(errStrs[ERR_EMPTYJSFILE]);
 

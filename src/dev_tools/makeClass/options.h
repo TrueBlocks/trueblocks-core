@@ -76,12 +76,13 @@ class COptions : public COptionsBase {
     bool handle_options(void);
     bool handle_lint(void);
     bool handle_format(void);
-    bool handle_json_export(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
+    bool handle_export_js(void);
 
     bool handle_generate_js(CToml& toml, const CClassDefinition& classDef);
     bool handle_generate_js_file(const CPage& def, const string_q& folder, const string_q& source);
     bool handle_generate_js_menus(void);
+    bool handle_generate_js_help(void);
     bool handle_generate_js_skins(void);
 
     bool check_option(const CCommandOption& option);

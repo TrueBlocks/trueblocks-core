@@ -51,7 +51,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_json_export(void) {
+bool COptions::handle_export_js(void) {
     for (auto classDef : classDefs) {
         if (classDef.short_fn != "app") {
             CBaseNode* item = createObjectOfType(classDef.short_fn);
@@ -67,6 +67,7 @@ bool COptions::handle_json_export(void) {
     }
 
     handle_generate_js_menus();
+    handle_generate_js_help();
     //    handle_generate_js_skins();
 
     return false;  // we're done processing
@@ -309,7 +310,60 @@ void doReplace(string_q& str, const string_q& type, const string_q& rep) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool visitHelpFile(const string& path, void *data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", visitHelpFile, data);
+    } else {
+        CStringArray *array = (CStringArray *)data;
+        array->push_back(path);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_help(void) {
+    cout << endl << cYellow << "Checking help files..." << cOff << endl;
+
+    string_q helpFolder = "./api/help";
+    CStringArray files;
+    forEveryFileInFolder(helpFolder, visitHelpFile, &files);
+    string_q str = "|";
+    CStringArray tomls;
+    for (auto file : files) {
+        str += (file + "|");
+        string_q f = substitute(substitute(file, helpFolder, ""), ".md", "");
+        replace(f, "/", "");
+        if (countOf(f, '/') == 0)
+            tomls.push_back(f);
+    }
+    str = substitute(substitute(str, helpFolder + "/", ""), ".md", "");
+    //cout << "files: " << str << endl;
+
+    string_q out;
+    for (auto t : tomls) {
+        CPage page = pageMap[t];
+        for (auto sub : page.subpages) {
+            string_q route = page.longName + "/" + (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ?  "" : sub.route);
+            if (endsWith(route, "/"))
+                replaceReverse(route, "/", "");
+            if (!contains(str, "|"+route+"|") && !contains(route, "separator"))
+                out += (route + "|");
+            replace(str,"|"+route+"|", "|");
+        }
+    }
+    str = trim(str,'|');
+
+    cerr << "\tExtraneous files: " << (str.empty() ? "none" : (cRed + substitute(str, "|", ", ") + cOff)) << endl;
+    cerr << "\tMissing files: " << (out.empty() ? "none" : (cRed + substitute(out, "|", ", ") + cOff)) << endl;
+    cerr << endl;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_js_menus(void) {
+    cerr << cYellow << "Generating Menus..." << cOff << endl;
+
     CToml toml("./classDefinitions/app.txt");
     string_q pageList = toml.getConfigStr("settings", "pages", "");
     CStringArray pagesStrs;
@@ -325,7 +379,7 @@ bool COptions::handle_generate_js_menus(void) {
 
     for (auto pageStr : pagesStrs) {
         CPage page = pageMap[pageStr];
-        cerr << page.longName << endl;
+        cerr << "\tProcessing " << page.longName << "..." << endl;
         bool isSeparator = page.longName == "separator";
         if (isSeparator) {
             menuStream << "    { label: '" << page.properName << "' }," << endl;
@@ -372,11 +426,11 @@ bool COptions::handle_generate_js_menus(void) {
             }
             pageStream << "  //" << endl;
             if (page.subpages.size() > 1)
-                menuStream << "      ]" << endl;
+                menuStream << "      ]," << endl;
             menuStream << "    }," << endl;
         }
     }
-    menuStream << "  ]" << endl;
+    menuStream << "  ]," << endl;
 
     doReplace(contents, "imports", importStream.str());
     doReplace(contents, "pages", pageStream.str());
