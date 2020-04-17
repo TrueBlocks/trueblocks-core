@@ -39,7 +39,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool tool_help = false;
     bool copy_to_tool = false;
-    blknum_t latest = NOPOS; //getLatestBlock_client();
+    blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
     explode(arguments, command, ' ');

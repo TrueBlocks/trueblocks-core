@@ -16,7 +16,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "subpage.h"
 
 namespace qblocks {
 
@@ -24,39 +23,49 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPage : public CBaseNode {
+class CSchema : public CBaseNode {
   public:
-    string_q longName;
-    string_q properName;
-    string_q twoName;
-    string_q sevenName;
-    string_q dest_path;
-    string_q schema;
-    CSubpageArray subpages;
+    string_q name;
+    string_q selector;
+    string_q type;
+    bool hidden;
+    uint64_t width;
+    string_q function;
+    bool editable;
+    uint64_t id;
+    uint64_t decimals;
+    bool pill;
+    bool hideZero;
+    string_q align;
+    string_q cn;
+    bool domain;
+    bool range;
+    string_q onAccept;
+    string_q onValidate;
 
   public:
-    CPage(void);
-    CPage(const CPage& pa);
-    virtual ~CPage(void);
-    CPage& operator=(const CPage& pa);
+    CSchema(void);
+    CSchema(const CSchema& sc);
+    virtual ~CSchema(void);
+    CSchema& operator=(const CSchema& sc);
 
-    DECLARE_NODE(CPage);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    DECLARE_NODE(CSchema);
 
     // EXISTING_CODE
+    CSchema(string_q& line);
+    bool showEmptyField(const string_q& fn) const override;
     // EXISTING_CODE
-    bool operator==(const CPage& item) const;
-    bool operator!=(const CPage& item) const {
+    bool operator==(const CSchema& item) const;
+    bool operator!=(const CSchema& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CPage& v1, const CPage& v2);
-    friend ostream& operator<<(ostream& os, const CPage& item);
+    friend bool operator<(const CSchema& v1, const CSchema& v2);
+    friend ostream& operator<<(ostream& os, const CSchema& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPage& pa);
+    void duplicate(const CSchema& sc);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,78 +73,98 @@ class CPage : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPage::CPage(void) {
+inline CSchema::CSchema(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPage::CPage(const CPage& pa) {
+inline CSchema::CSchema(const CSchema& sc) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pa);
+    duplicate(sc);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPage::~CPage(void) {
+inline CSchema::~CSchema(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPage::clear(void) {
+inline void CSchema::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPage::initialize(void) {
+inline void CSchema::initialize(void) {
     CBaseNode::initialize();
 
-    longName = "";
-    properName = "";
-    twoName = "";
-    sevenName = "";
-    dest_path = "";
-    schema = "";
-    subpages.clear();
+    name = "";
+    selector = "";
+    type = "";
+    hidden = false;
+    width = 0;
+    function = "";
+    editable = false;
+    id = 0;
+    decimals = 0;
+    pill = false;
+    hideZero = false;
+    align = "";
+    cn = "";
+    domain = false;
+    range = false;
+    onAccept = "";
+    onValidate = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPage::duplicate(const CPage& pa) {
+inline void CSchema::duplicate(const CSchema& sc) {
     clear();
-    CBaseNode::duplicate(pa);
+    CBaseNode::duplicate(sc);
 
-    longName = pa.longName;
-    properName = pa.properName;
-    twoName = pa.twoName;
-    sevenName = pa.sevenName;
-    dest_path = pa.dest_path;
-    schema = pa.schema;
-    subpages = pa.subpages;
+    name = sc.name;
+    selector = sc.selector;
+    type = sc.type;
+    hidden = sc.hidden;
+    width = sc.width;
+    function = sc.function;
+    editable = sc.editable;
+    id = sc.id;
+    decimals = sc.decimals;
+    pill = sc.pill;
+    hideZero = sc.hideZero;
+    align = sc.align;
+    cn = sc.cn;
+    domain = sc.domain;
+    range = sc.range;
+    onAccept = sc.onAccept;
+    onValidate = sc.onValidate;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPage& CPage::operator=(const CPage& pa) {
-    duplicate(pa);
+inline CSchema& CSchema::operator=(const CSchema& sc) {
+    duplicate(sc);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPage::operator==(const CPage& item) const {
+inline bool CSchema::operator==(const CSchema& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -143,7 +172,7 @@ inline bool CPage::operator==(const CPage& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPage& v1, const CPage& v2) {
+inline bool operator<(const CSchema& v1, const CSchema& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -151,12 +180,12 @@ inline bool operator<(const CPage& v1, const CPage& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPage> CPageArray;
-extern CArchive& operator>>(CArchive& archive, CPageArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPageArray& array);
+typedef vector<CSchema> CSchemaArray;
+extern CArchive& operator>>(CArchive& archive, CSchemaArray& array);
+extern CArchive& operator<<(CArchive& archive, const CSchemaArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PAGE;
+extern const char* STR_DISPLAY_SCHEMA;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

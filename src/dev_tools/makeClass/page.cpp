@@ -89,6 +89,9 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
             if (fieldName % "sevenName") {
                 return sevenName;
             }
+            if (fieldName % "schema") {
+                return schema;
+            }
             if (fieldName % "subpages" || fieldName % "subpagesCnt") {
                 size_t cnt = subpages.size();
                 if (endsWith(toLower(fieldName), "cnt"))
@@ -151,6 +154,10 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 sevenName = fieldValue;
                 return true;
             }
+            if (fieldName % "schema") {
+                schema = fieldValue;
+                return true;
+            }
             if (fieldName % "subpages") {
                 CSubpage item;
                 string_q str = fieldValue;
@@ -197,6 +204,7 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> twoName;
     archive >> sevenName;
     archive >> dest_path;
+    archive >> schema;
     archive >> subpages;
     finishParse();
     return true;
@@ -214,6 +222,7 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << twoName;
     archive << sevenName;
     archive << dest_path;
+    archive << schema;
     archive << subpages;
 
     return true;
@@ -256,6 +265,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "schema", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

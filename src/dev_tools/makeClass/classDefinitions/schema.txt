@@ -1,0 +1,7 @@
+[settings]
+class = CSchema
+fields = string name|string selector|string type|bool hidden|uint64 width|\
+            string function|bool editable|uint64 id|uint64 decimals|\
+            bool pill|bool hideZero|string align|string cn|bool domain|\
+            bool range|string onAccept|string onValidate
+includes = etherlib.h

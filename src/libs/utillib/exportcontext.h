@@ -26,6 +26,7 @@ class CExportContext {
     bool noFrst;
     char tab, nl;
     bool quoteNums;
+    bool quoteKeys;
     bool hexNums;
     bool hashesOnly;
     bool colored;

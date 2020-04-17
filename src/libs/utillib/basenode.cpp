@@ -380,6 +380,7 @@ CExportContext::CExportContext(void) {
     tab = ' ';
     nl = '\n';
     quoteNums = false;
+    quoteKeys = true;
     hexNums = false;
     hashesOnly = false;
     colored = false;
@@ -484,7 +485,10 @@ string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
             }
             first = false;
             ret += indent();
-            ret += "\"" + field.m_fieldName + "\"";
+            if (expContext().quoteKeys)
+                ret += "\"" + field.m_fieldName + "\"";
+            else
+                ret += field.m_fieldName;
             ret += ": ";
             if (expContext().colored)
                 ret += "%";
@@ -564,7 +568,10 @@ void CBaseNode::doExport(ostream& os) const {
                         if (field.getName() != firstShowing)
                             os << ",";
                         os << "\n";
-                        os << indent() << "\"" << name << "\": ";
+                        if (expContext().quoteKeys)
+                            os << indent() << "\"" << name << "\": ";
+                        else
+                            os << indent() << name << ": ";
                         os << "[";
                         if (cnt) {
                             incIndent();
@@ -588,36 +595,47 @@ void CBaseNode::doExport(ostream& os) const {
                     }
 
                 } else if (field.isObject()) {
-                    if (field.getName() != firstShowing)
-                        os << ",";
-                    os << "\n";
-                    os << indent() << "\"" << name << "\": ";
-                    const CBaseNode* node = getObjectAt(name, 0);
-                    if (node) {
-                        node->doExport(os);
-                    } else {
-                        os << getValueByName(name);
+                    if (showEmptyField(field.getName())) {
+                        if (field.getName() != firstShowing)
+                            os << ",";
+                        os << "\n";
+                        if (expContext().quoteKeys)
+                            os << indent() << "\"" << name << "\": ";
+                        else
+                            os << indent() << name << ": ";
+                        const CBaseNode* node = getObjectAt(name, 0);
+                        if (node) {
+                            node->doExport(os);
+                        } else {
+                            os << getValueByName(name);
+                        }
                     }
 
                 } else {
-                    string_q val = getValueByName(name);
-                    bool isNum = (field.m_fieldType & TS_NUMERAL);
-                    if (field.getName() != firstShowing)
-                        os << ",";
-                    os << "\n";
-                    os << indent() << "\"" << name << "\": ";
-                    if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty())
-                        val = str_2_Hex(val);
-                    bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                    if (isApiMode() && val.empty())
-                        quote = true;
-                    if (isNum && val.empty())
-                        val = uint_2_Str(0);
-                    if (quote)
-                        os << "\"";
-                    os << val;
-                    if (quote)
-                        os << "\"";
+                    if (showEmptyField(field.getName())) {
+                        string_q val = getValueByName(name);
+                        bool isNum = (field.m_fieldType & TS_NUMERAL);
+                        if (field.getName() != firstShowing)
+                            os << ",";
+                        os << "\n";
+                        if (expContext().quoteKeys)
+                            os << indent() << "\"" << name << "\": ";
+                        else
+                            os << indent() << name << ": ";
+                        if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") &&
+                            !val.empty())
+                            val = str_2_Hex(val);
+                        bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                        if (isApiMode() && val.empty())
+                            quote = true;
+                        if (isNum && val.empty())
+                            val = uint_2_Str(0);
+                        if (quote)
+                            os << "\"";
+                        os << val;
+                        if (quote)
+                            os << "\"";
+                    }
                 }
             }
         }

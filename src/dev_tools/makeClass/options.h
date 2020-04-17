@@ -20,6 +20,7 @@
 #include "classdefinition.h"
 #include "page.h"
 #include "skin.h"
+#include "schema.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -82,6 +83,7 @@ class COptions : public COptionsBase {
     bool handle_generate_js(CToml& toml, const CClassDefinition& classDef);
     bool handle_generate_js_file(const CPage& def, const string_q& folder, const string_q& source);
     bool handle_generate_js_menus(void);
+    bool handle_generate_js_schemas(void);
     bool handle_generate_js_help(void);
     bool handle_generate_js_skins(void);
 
