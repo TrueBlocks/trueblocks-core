@@ -110,6 +110,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "id") {
                 return uint_2_Str(id);
             }
+            if (fieldName % "isPill") {
+                return bool_2_Str(isPill);
+            }
             break;
         case 'n':
             if (fieldName % "name") {
@@ -125,11 +128,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "onValidate") {
                 return onValidate;
-            }
-            break;
-        case 'p':
-            if (fieldName % "pill") {
-                return bool_2_Str(pill);
             }
             break;
         case 'r':
@@ -221,6 +219,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 id = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "isPill") {
+                isPill = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "name") {
@@ -239,12 +241,6 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "onValidate") {
                 onValidate = fieldValue;
-                return true;
-            }
-            break;
-        case 'p':
-            if (fieldName % "pill") {
-                pill = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -306,7 +302,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> editable;
     archive >> id;
     archive >> decimals;
-    archive >> pill;
+    archive >> isPill;
     archive >> hideZero;
     archive >> align;
     archive >> cn;
@@ -335,7 +331,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << editable;
     archive << id;
     archive << decimals;
-    archive << pill;
+    archive << isPill;
     archive << hideZero;
     archive << align;
     archive << cn;
@@ -389,7 +385,7 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "editable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "id", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "decimals", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CSchema, "pill", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "isPill", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "hideZero", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "align", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
@@ -457,9 +453,6 @@ const char* STR_DISPLAY_SCHEMA = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-CSchema::CSchema(string_q& line) {
-    name = line;
-}
 bool CSchema::showEmptyField(const string_q& fn) const {
     if (fn == "name")
         return true;

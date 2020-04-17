@@ -34,7 +34,7 @@ class CSchema : public CBaseNode {
     bool editable;
     uint64_t id;
     uint64_t decimals;
-    bool pill;
+    bool isPill;
     bool hideZero;
     string_q align;
     string_q cn;
@@ -53,7 +53,6 @@ class CSchema : public CBaseNode {
     DECLARE_NODE(CSchema);
 
     // EXISTING_CODE
-    CSchema(string_q& line);
     bool showEmptyField(const string_q& fn) const override;
     // EXISTING_CODE
     bool operator==(const CSchema& item) const;
@@ -116,7 +115,7 @@ inline void CSchema::initialize(void) {
     editable = false;
     id = 0;
     decimals = 0;
-    pill = false;
+    isPill = false;
     hideZero = false;
     align = "";
     cn = "";
@@ -144,7 +143,7 @@ inline void CSchema::duplicate(const CSchema& sc) {
     editable = sc.editable;
     id = sc.id;
     decimals = sc.decimals;
-    pill = sc.pill;
+    isPill = sc.isPill;
     hideZero = sc.hideZero;
     align = sc.align;
     cn = sc.cn;
