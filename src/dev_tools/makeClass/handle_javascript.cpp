@@ -496,7 +496,7 @@ bool COptions::handle_generate_js_schemas(void) {
                     schemaStream << str;
                     first = false;
                 }
-                schemaStream << endl << "];" << endl;
+                schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
                 doReplace(contents, "schema", schemaStream.str(), true);
                 stringToAsciiFile(codeFile, contents);
             }

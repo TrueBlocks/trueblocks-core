@@ -440,7 +440,7 @@ void CBaseNode::toJson(ostream& os) const {
 
     os << "{";
     toJsonFromFields(os, fields);
-    os << "\n" << indent() << "}";
+    os << (expContext().endingCommas ? "," : "") << endl << indent() << "}";
 }
 
 //--------------------------------------------------------------------------------
@@ -462,10 +462,16 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
             // the value...
             if (field.isArray()) {
                 incIndent();
-                val = substitute(getValueByName(field.m_fieldName), "\n{", "\n" + indent() + "{");
-                os << (val.empty() ? "[]" : "[\n" + indent() + val);
-                decIndent();
-                os << (val.empty() ? "" : indent() + "]");
+                val = getValueByName(field.m_fieldName);
+                if (val.empty()) {
+                    os << "[]";
+                    decIndent();
+                } else {
+                    val = substitute(val, "\n{", "\n" + indent() + "{");
+                    os << "[\n" << indent() << val << (expContext().endingCommas ? "," : "");
+                    decIndent();
+                    os << indent() << "]";
+                }
 
             } else if (field.isObject()) {
                 os << val;
@@ -548,7 +554,7 @@ void CBaseNode::doExport(ostream& os) const {
                                 } else {
                                     os << "\"" << getStringAt(name, i) << "\"";
                                 }
-                                if (i < cnt - 1)
+                                if (expContext().endingCommas || i < cnt - 1)
                                     os << ",";
                                 os << endl;
                             }
@@ -598,7 +604,7 @@ void CBaseNode::doExport(ostream& os) const {
             }
         }
         decIndent();
-        os << endl << indent();
+        os << (expContext().endingCommas ? "," : "") << endl << indent();
     }
     os << "}";
 }
