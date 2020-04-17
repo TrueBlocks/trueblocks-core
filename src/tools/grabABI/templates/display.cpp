@@ -97,7 +97,7 @@ void COptions::displayTrans(ostream& os, const CTransaction* theTrans) const {
             // Display it.
             string_q eventType = extract(string_q(promotedLog->getRuntimeClass()->m_ClassName), 1);
             string_q evtStr =
-                substitute(substitute(promotedLog->toJson1(), "{", "{ \"type\": \"" + eventType + "\" "), "}", " }");
+                substitute(substitute(promotedLog->t oJson1(), "{", "{ \"type\": \"" + eventType + "\" "), "}", " }");
             if (!isJson) {
                 evtStr = substitute(reformat(evtStr, 140), "...", cYellow + "..." + cOff);
                 os << "\t" << cYellow << "log " << i << cOff << ":\t\t" << annotate(evtStr) << "\r\n";

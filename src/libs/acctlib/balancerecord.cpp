@@ -36,7 +36,7 @@ void CBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["balancerecord_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

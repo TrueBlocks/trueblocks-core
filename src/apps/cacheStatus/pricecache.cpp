@@ -36,7 +36,7 @@ void CPriceCache::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pricecache_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

@@ -41,10 +41,8 @@ class CBaseNode {
     virtual bool parseJson4(string_q& str);
     virtual bool parseCSV(const CStringArray& fields, string_q& str);
     virtual bool parseText(const CStringArray& fields, string_q& str);
-    virtual string_q toJson1(void) const;
-    virtual string_q toJson(void) const;
-    virtual string_q toJson(const string_q& fields) const;
-    virtual string_q jsonFromArray(const CFieldDataArray& array) const;
+    virtual void toJson(ostream& os) const;
+    virtual void toJsonFromFields(ostream& os, const CFieldDataArray& array) const;
 
   public:
     // TODO(tjayrush): global data

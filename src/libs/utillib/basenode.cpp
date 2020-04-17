@@ -18,6 +18,7 @@
 #include "conversions.h"
 #include "version.h"
 #include "testing.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -200,9 +201,9 @@ char* CBaseNode::parseJson1(char* s, size_t& nFields) {
     string_q ss = s;
     string_q tt(25, '-');
     tt += "\n";
-    cout << tt << s << "\n" << tt;
-    cout << tt << extract(ss, ss.find("{"), 300) << "\n" << tt;
-    cout << tt << extract(ss, ss.length() - 300, 300) << "\n" << tt;
+    cout << tt << s << endl << tt;
+    cout << tt << extract(ss, ss.find("{"), 300) << endl << tt;
+    cout << tt << extract(ss, ss.length() - 300, 300) << endl << tt;
     cout.flush();
     tbs += "\t";
 #endif
@@ -374,16 +375,15 @@ CExportContext& expContext(void) {
 
 //---------------------------------------------------------------------------
 CExportContext::CExportContext(void) {
-    noFrst = false;
     lev = 0;
     spcs = 2;
     tab = ' ';
     nl = '\n';
     quoteNums = false;
     quoteKeys = true;
+    endingCommas = false;
     hexNums = false;
     hashesOnly = false;
-    colored = false;
     asEther = false;
     asDollars = false;
     asWei = true;
@@ -407,15 +407,17 @@ string_q indent(void) {
 }
 
 //--------------------------------------------------------------------------------
-string_q CBaseNode::toJson1(void) const {
-    return substitute(substitute(substitute(toJson(), "\t", " "), "\n", ""), "  ", " ");
+inline string_q doKey(const string_q& key) {
+    if (expContext().quoteKeys)
+        return "\"" + key + "\"" + ": ";
+    return key + ": ";
 }
 
 //--------------------------------------------------------------------------------
-string_q CBaseNode::toJson(void) const {
+void CBaseNode::toJson(ostream& os) const {
     CRuntimeClass* pClass = getRuntimeClass();
     if (!pClass)
-        return "";
+        return;
 
     CFieldDataArray fields;
 
@@ -432,105 +434,70 @@ string_q CBaseNode::toJson(void) const {
     }
 
     if (fields.size() == 0) {
-        cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?\n";
-        return "";
+        cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?" << endl;
+        return;
     }
 
-    return "{" + trim(jsonFromArray(fields)) + "\n" + indent() + "}";
+    os << "{";
+    toJsonFromFields(os, fields);
+    os << "\n" << indent() << "}";
 }
 
 //--------------------------------------------------------------------------------
-string_q CBaseNode::toJson(const string_q& fieldStrIn) const {
-    CRuntimeClass* pClass = getRuntimeClass();
-    if (!pClass)
-        return "";
-
-    CFieldDataArray fields;
-    string_q fieldStr = fieldStrIn;
-    while (!fieldStr.empty()) {
-        string_q field = nextTokenClear(fieldStr, '|');
-        CFieldData* fld = pClass->findField(field);
-        if (!fld)
-            cerr << "Could not find field " << field << " in class " << pClass->m_ClassName << ".\n";
-        else
-            fields.push_back(*fld);
-    }
-
-    if (fields.size() == 0) {
-        cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?\n";
-        return "";
-    }
-
-    return "{" + trim(jsonFromArray(fields)) + "\n" + indent() + "}";
-}
-
-//--------------------------------------------------------------------------------
-string_q CBaseNode::jsonFromArray(const CFieldDataArray& fields) const {
-    string_q ret;
+void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) const {
     bool first = true;
-    if (!expContext().noFrst)
-        ret += indent();
-    expContext().noFrst = false;
-
     for (auto field : fields) {
         incIndent();
         string_q val = getValueByName(field.m_fieldName);
+
         if (!field.isHidden() && (isApiMode() || !val.empty() || field.isArray())) {
-            if (!first) {
-                if (expContext().colored)
-                    ret += "#";
-                ret += ",\n";
-            } else {
-                ret += "\n";
-            }
+            if (!first)
+                os << ",";
+            os << endl;
             first = false;
-            ret += indent();
-            if (expContext().quoteKeys)
-                ret += "\"" + field.m_fieldName + "\"";
-            else
-                ret += field.m_fieldName;
-            ret += ": ";
-            if (expContext().colored)
-                ret += "%";
+
+            // the key...
+            os << indent() << doKey(field.m_fieldName);
+
+            // the value...
             if (field.isArray()) {
                 incIndent();
                 val = substitute(getValueByName(field.m_fieldName), "\n{", "\n" + indent() + "{");
-                ret += (val.empty() ? "[]" : "[\n" + indent() + val);
+                os << (val.empty() ? "[]" : "[\n" + indent() + val);
                 decIndent();
-                ret += (val.empty() ? "" : indent() + "]");
+                os << (val.empty() ? "" : indent() + "]");
 
             } else if (field.isObject()) {
-                ret += val;
+                os << val;
 
             } else if (field.m_fieldType == T_BLOOM) {
-                ret += "\"" + val + "\"";
+                os << "\"" << val << "\"";
 
             } else if (field.m_fieldType & TS_NUMERAL) {
                 bool quote = expContext().quoteNums;
                 if (isApiMode() && val.empty())
                     quote = true;
                 if (quote)
-                    ret += "\"";
-                ret +=
-                    (expContext().hexNums && ((isNumeral(val) || isHexStr(val)) && !contains(val, ".")) ? str_2_Hex(val)
-                                                                                                        : val);
+                    os << "\"";
+                os << (expContext().hexNums && ((isNumeral(val) || isHexStr(val)) && !contains(val, "."))
+                           ? str_2_Hex(val)
+                           : val);
                 if (quote)
-                    ret += "\"";
+                    os << "\"";
 
             } else if (val == "null") {
-                ret += val;
+                os << val;
 
             } else {
                 if (val == "null")
-                    ret += val;
+                    os << val;
                 else
-                    ret += "\"" + val + "\"";
+                    os << "\"" << val << "\"";
             }
         }
         decIndent();
     }
-
-    return ret;
+    return;
 }
 
 //--------------------------------------------------------------------------------
@@ -567,15 +534,12 @@ void CBaseNode::doExport(ostream& os) const {
                     if (cnt || isApiMode() || showEmptyField(name)) {
                         if (field.getName() != firstShowing)
                             os << ",";
-                        os << "\n";
-                        if (expContext().quoteKeys)
-                            os << indent() << "\"" << name << "\": ";
-                        else
-                            os << indent() << name << ": ";
+                        os << endl;
+                        os << indent() << doKey(name);
                         os << "[";
                         if (cnt) {
                             incIndent();
-                            os << "\n";
+                            os << endl;
                             for (size_t i = 0; i < cnt; i++) {
                                 os << indent();
                                 const CBaseNode* node = getObjectAt(name, i);
@@ -586,7 +550,7 @@ void CBaseNode::doExport(ostream& os) const {
                                 }
                                 if (i < cnt - 1)
                                     os << ",";
-                                os << "\n";
+                                os << endl;
                             }
                             decIndent();
                             os << indent();
@@ -598,11 +562,8 @@ void CBaseNode::doExport(ostream& os) const {
                     if (showEmptyField(field.getName())) {
                         if (field.getName() != firstShowing)
                             os << ",";
-                        os << "\n";
-                        if (expContext().quoteKeys)
-                            os << indent() << "\"" << name << "\": ";
-                        else
-                            os << indent() << name << ": ";
+                        os << endl;
+                        os << indent() << doKey(name);
                         const CBaseNode* node = getObjectAt(name, 0);
                         if (node) {
                             node->doExport(os);
@@ -617,11 +578,8 @@ void CBaseNode::doExport(ostream& os) const {
                         bool isNum = (field.m_fieldType & TS_NUMERAL);
                         if (field.getName() != firstShowing)
                             os << ",";
-                        os << "\n";
-                        if (expContext().quoteKeys)
-                            os << indent() << "\"" << name << "\": ";
-                        else
-                            os << indent() << name << ": ";
+                        os << endl;
+                        os << indent() << doKey(name);
                         if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") &&
                             !val.empty())
                             val = str_2_Hex(val);
@@ -640,7 +598,7 @@ void CBaseNode::doExport(ostream& os) const {
             }
         }
         decIndent();
-        os << "\n" << indent();
+        os << endl << indent();
     }
     os << "}";
 }
@@ -663,10 +621,12 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
                     CRuntimeClass* pClass = node->getRuntimeClass();
                     if (!pClass || pClass->fieldList.size() == 0) {
                         cerr << "No fieldList in " << node->getRuntimeClass()->m_ClassName
-                             << ". Did you register the class?\n";
+                             << ". Did you register the class?" << endl;
                         return "";
                     }
-                    return "{" + substitute(node->jsonFromArray(pClass->fieldList), "\n", "") + "}";
+                    ostringstream os;
+                    node->toJsonFromFields(os, pClass->fieldList);
+                    return "{" + substitute(os.str(), "\n", "") + "}";
                 }
                 break;
             case 's':

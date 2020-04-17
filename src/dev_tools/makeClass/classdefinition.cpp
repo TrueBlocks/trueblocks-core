@@ -36,7 +36,7 @@ void CClassDefinition::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["classdefinition_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

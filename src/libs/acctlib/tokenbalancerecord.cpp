@@ -36,7 +36,7 @@ void CTokenBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void* data
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenbalancerecord_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

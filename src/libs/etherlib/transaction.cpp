@@ -37,7 +37,7 @@ void CTransaction::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["transaction_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -75,7 +75,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "articulatedTx") {
                 if (articulatedTx == CFunction())
                     return "{}";
-                expContext().noFrst = true;
                 return articulatedTx.Format();
             }
             break;
@@ -133,7 +132,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "receipt") {
                 if (receipt == CReceipt())
                     return "{}";
-                expContext().noFrst = true;
                 return receipt.Format();
             }
             break;

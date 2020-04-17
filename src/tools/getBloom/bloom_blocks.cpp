@@ -54,7 +54,7 @@ string_q CBloomReceipt::getValueByName(const string_q& fieldName) const {
     return "";
 }
 void CBloomReceipt::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
-    ctx << toJson();
+    toJson(ctx);
     return;
 }
 
@@ -90,7 +90,7 @@ string_q CBloomTrans::getValueByName(const string_q& fieldName) const {
     return "";
 }
 void CBloomTrans::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
-    ctx << toJson();
+    toJson(ctx);
     return;
 }
 const CBaseNode* CBloomTrans::getObjectAt(const string_q& name, size_t i) const {
@@ -170,7 +170,7 @@ string_q CBloomBlock::getValueByName(const string_q& fieldName) const {
     return "";
 }
 void CBloomBlock::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
-    ctx << toJson();
+    toJson(ctx);
     return;
 }
 const CBaseNode* CBloomBlock::getObjectAt(const string_q& name, size_t i) const {

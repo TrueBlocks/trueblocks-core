@@ -36,7 +36,7 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) c
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountwatch_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -74,7 +74,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if (fieldName % "abi_spec") {
                 if (abi_spec == CAbi())
                     return "{}";
-                expContext().noFrst = true;
                 return abi_spec.Format();
             }
             break;
@@ -97,7 +96,6 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
             if (fieldName % "statement") {
                 if (statement == CIncomeStatement())
                     return "{}";
-                expContext().noFrst = true;
                 return statement.Format();
             }
             if (fieldName % "stateHistory" || fieldName % "stateHistoryCnt") {

@@ -37,7 +37,7 @@ void CLogEntry::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logentry_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -78,7 +78,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             if (fieldName % "articulatedLog") {
                 if (articulatedLog == CFunction())
                     return "{}";
-                expContext().noFrst = true;
                 return articulatedLog.Format();
             }
             break;

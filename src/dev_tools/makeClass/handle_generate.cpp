@@ -267,7 +267,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
     if (classDef.use_export)
-        replace(srcSource, "ctx << toJson();", "doExport(ctx);");
+        replace(srcSource, "toJson(ctx);", "doExport(ctx);");
     if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&
         !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
@@ -440,7 +440,6 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     const char* STR_OBJECT_CASE =
                         "if ([{NAME}] == [{TYPE}]())\n"
                         "`return \"{}\";\n"
-                        "expContext().noFrst = true;\n"
                         "return [{PTR}][{NAME}].Format();";
                     string_q objCase = substitute(STR_OBJECT_CASE, "\n", "\n````");
                     replaceAll(objCase, "[{NAME}]", p.name);

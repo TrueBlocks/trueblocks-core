@@ -37,7 +37,7 @@ void CTraceAction::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["traceaction_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

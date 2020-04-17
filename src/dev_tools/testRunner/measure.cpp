@@ -36,7 +36,7 @@ void CMeasure::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const 
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["measure_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

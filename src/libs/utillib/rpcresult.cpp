@@ -36,7 +36,7 @@ void CRPCResult::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["rpcresult_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

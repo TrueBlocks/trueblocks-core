@@ -36,7 +36,7 @@ void [{CLASS_NAME}]::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["[{LONG}]_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

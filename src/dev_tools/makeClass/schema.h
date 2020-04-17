@@ -40,6 +40,7 @@ class CSchema : public CBaseNode {
     string_q cn;
     bool domain;
     bool range;
+    string_q onDisplay;
     string_q onAccept;
     string_q onValidate;
 
@@ -121,6 +122,7 @@ inline void CSchema::initialize(void) {
     cn = "";
     domain = false;
     range = false;
+    onDisplay = "";
     onAccept = "";
     onValidate = "";
 
@@ -148,6 +150,7 @@ inline void CSchema::duplicate(const CSchema& sc) {
     cn = sc.cn;
     domain = sc.domain;
     range = sc.range;
+    onDisplay = sc.onDisplay;
     onAccept = sc.onAccept;
     onValidate = sc.onValidate;
 

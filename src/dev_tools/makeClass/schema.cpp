@@ -36,7 +36,7 @@ void CSchema::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["schema_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -117,6 +117,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'o':
+            if (fieldName % "onDisplay") {
+                return onDisplay;
+            }
             if (fieldName % "onAccept") {
                 return onAccept;
             }
@@ -226,6 +229,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             break;
         case 'o':
+            if (fieldName % "onDisplay") {
+                onDisplay = fieldValue;
+                return true;
+            }
             if (fieldName % "onAccept") {
                 onAccept = fieldValue;
                 return true;
@@ -305,6 +312,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> cn;
     archive >> domain;
     archive >> range;
+    archive >> onDisplay;
     archive >> onAccept;
     archive >> onValidate;
     finishParse();
@@ -333,6 +341,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << cn;
     archive << domain;
     archive << range;
+    archive << onDisplay;
     archive << onAccept;
     archive << onValidate;
 
@@ -386,6 +395,7 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "domain", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onAccept", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onValidate", T_TEXT, ++fieldNum);
 

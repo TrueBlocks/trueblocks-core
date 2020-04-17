@@ -36,7 +36,7 @@ void QFromTransferFrom::Format(ostream& ctx, const string_q& fmtIn, void* dataPt
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["fromtransferfrom_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

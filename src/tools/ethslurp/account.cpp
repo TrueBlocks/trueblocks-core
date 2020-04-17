@@ -36,7 +36,7 @@ void CAccount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const 
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["account_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -84,7 +84,6 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
             if (fieldName % "latestTx") {
                 if (latestTx == CTransaction())
                     return "{}";
-                expContext().noFrst = true;
                 return latestTx.Format();
             }
             break;

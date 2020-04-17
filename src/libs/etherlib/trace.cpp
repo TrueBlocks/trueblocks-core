@@ -37,7 +37,7 @@ void CTrace::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["trace_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 
@@ -75,13 +75,11 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if (fieldName % "articulatedTrace") {
                 if (articulatedTrace == CFunction())
                     return "{}";
-                expContext().noFrst = true;
                 return articulatedTrace.Format();
             }
             if (fieldName % "action") {
                 if (action == CTraceAction())
                     return "{}";
-                expContext().noFrst = true;
                 return action.Format();
             }
             break;
@@ -107,7 +105,6 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
             if (fieldName % "result") {
                 if (result == CTraceResult())
                     return "{}";
-                expContext().noFrst = true;
                 return result.Format();
             }
             break;

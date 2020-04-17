@@ -23,13 +23,12 @@ enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), A
 class CExportContext {
   public:
     size_t lev, spcs;
-    bool noFrst;
     char tab, nl;
     bool quoteNums;
     bool quoteKeys;
+    bool endingCommas;
     bool hexNums;
     bool hashesOnly;
-    bool colored;
     bool asEther;
     bool asDollars;
     bool asWei;

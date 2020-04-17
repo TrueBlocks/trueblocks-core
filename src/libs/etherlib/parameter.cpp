@@ -36,7 +36,7 @@ void CParameter::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["parameter_fmt"] : fmtIn);
     if (fmt.empty()) {
-        ctx << toJson();
+        toJson(ctx);
         return;
     }
 

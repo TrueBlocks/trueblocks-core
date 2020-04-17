@@ -474,12 +474,14 @@ bool COptions::handle_generate_js_schemas(void) {
                         schemaStream << ",";
                     schemaStream << endl << "  ";
                     expContext().quoteKeys = false;
+                    expContext().endingCommas = true;
                     ostringstream os;
                     expContext().lev++;
                     schema.doExport(os);
                     expContext().lev--;
                     string_q str = os.str();
                     replaceAll(str, "\"", "'");
+                    replaceAll(str, "'getFieldValue'", "getFieldValue");
                     if (contains(str, "onValidate:")) {
                         replaceAll(str, "'validateUserInput'", "validateUserInput");
                         replaceAll(str, "_C_", ",");
