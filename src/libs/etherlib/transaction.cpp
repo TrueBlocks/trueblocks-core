@@ -634,11 +634,11 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
             case 'f':
                 if (fieldIn % "function") {
                     string_q ret = tra->Format("[{ARTICULATEDTX}]");
-                    //if (ret.empty())
+                    if (ret.empty())
                         return "";
-                    //CFunction func;
-                    //func.parseJson3(ret);
-                    //return func.name;
+                    CFunction func;
+                    func.parseJson3(ret);
+                    return func.name;
                 }
                 break;
             case 'g':

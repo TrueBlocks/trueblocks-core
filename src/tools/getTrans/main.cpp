@@ -16,15 +16,14 @@
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
-    ENTER("main")
     COptions options;
     if (!options.prepareArguments(argc, argv))
-        EXIT_NOMSG(0);
+        return 0;
 
     bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            EXIT_NOMSG(0);
+            return 0;
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
         forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
@@ -33,7 +32,7 @@ int main(int argc, const char* argv[]) {
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
     etherlib_cleanup();
-    EXIT_NOMSG(0);
+    return 0;
 }
 
 //----------------------------------------------------------------

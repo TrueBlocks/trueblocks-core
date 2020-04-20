@@ -33,10 +33,8 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
-
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
 
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
@@ -62,22 +60,20 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                EXIT_USAGE("Invalid option: " + arg);
+                return usage("Invalid option: " + arg);
             }
 
         } else {
             if (!parseTransList2(this, transList, arg))
-                EXIT_NOMSG(false);
+                return false;
 
             // END_CODE_AUTO
         }
     }
 
-    LOG4("Done parsing");
-
     // Data wrangling
     if (!transList.hasTrans())
-        EXIT_USAGE("Please specify at least one transaction identifier.");
+        return usage("Please specify at least one transaction identifier.");
 
     if (trace)
         SHOW_FIELD(CTransaction, "traces");
@@ -85,7 +81,6 @@ bool COptions::parseArguments(string_q& command) {
     if (isRaw)
         expContext().exportFmt = JSON1;
 
-    LOG4("pre articulate");
     if (articulate) {
         // show certain fields and hide others
         manageFields(defHide, false);
@@ -97,7 +92,6 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CLogEntry:data,topics", true);    // show
         abi_spec.loadAbiKnown();
     }
-    LOG4("post articulate");
 
     // Display formatting
     if (uniq) {
@@ -107,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getTrans", "CTransaction", fmt);
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------

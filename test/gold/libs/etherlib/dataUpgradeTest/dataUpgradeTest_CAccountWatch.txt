@@ -33,12 +33,7 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
   "enabled": true,
   "address": "0x0",
   "is_custom": false,
-  "is_prefund": false,
-  "nAppearances": 0,
-  "lastExport": 0,
-  "firstAppearance": 0,
-  "latestAppearance": 4294967295,
-  "sizeInBytes": 0
+  "is_prefund": false
 }
 
 --------------------------------------------------------------------------------
@@ -59,12 +54,7 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "address": "0x0",
   "is_custom": false,
-  "is_prefund": false,
-  "nAppearances": 0,
-  "lastExport": 0,
-  "firstAppearance": 0,
-  "latestAppearance": 4294967295,
-  "sizeInBytes": 0
+  "is_prefund": false
 }
 
 --------------------------------------------------------------------------------
@@ -107,11 +97,6 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
   "curDollars": not-implemented,
   "address": "0x0",
   "is_custom": false,
-  "is_prefund": false,
-  "nAppearances": 0,
-  "lastExport": 0,
-  "firstAppearance": 0,
-  "latestAppearance": 4294967295,
-  "sizeInBytes": 0
+  "is_prefund": false
 }
 

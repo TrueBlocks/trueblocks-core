@@ -1,6 +1,21 @@
 [settings]
 class = CAccountName
-fields = string group|address address|string name|string symbol|string source|uint64 decimals|string description|bool is_custom|bool is_prefund|blknum nAppearances|blknum lastExport|blknum firstAppearance|blknum latestAppearance|string path|uint64 sizeInBytes
+fields = \
+  string group|\
+  address address|\
+  string name|\
+  string symbol|\
+  string source|\
+  uint64 decimals|\
+  string description|\
+  bool is_custom|\
+  bool is_prefund|\
+  blknum nAppearances (nowrite)|\
+  blknum lastExport (nowrite)|\
+  blknum firstAppearance (nowrite)|\
+  blknum latestAppearance (nowrite)|\
+  string path (nowrite)|\
+  uint64 sizeInBytes (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = group, address, name, symbol, source, decimals, description
