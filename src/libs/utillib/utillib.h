@@ -33,5 +33,6 @@
 #include "rpcresult.h"
 #include "logging.h"
 #include "webapi.h"
+#include "keccak.h"
 
 using namespace qblocks;  // NOLINT

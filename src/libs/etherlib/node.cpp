@@ -1355,6 +1355,11 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
 }
 
 //-----------------------------------------------------------------------
+string_q myKeccak256(const string& str) {
+    return getSha3(chr_2_HexStr(str));
+}
+
+//-----------------------------------------------------------------------
 const string_q defHide =
     "CTransaction: price, nonce, input"
     "|CLogEntry: data, topics"
@@ -1373,5 +1378,4 @@ const string_q defShow =
     "|CTraceResult: "
     "|CFunction: "
     "|CParameter: ";
-
 }  // namespace qblocks

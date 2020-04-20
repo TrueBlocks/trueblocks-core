@@ -189,6 +189,8 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
+extern string_q myKeccak256(const string& str);
+
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------
