@@ -4,6 +4,7 @@ getBlock 4001001-4001003 --hashes_only
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "blockNumber": 4001001,
+  "parentHash": "0x7721d6149047de2b5ab2cfcf0204a7a3dcdc563635003926f8f76cd652b173cb",
   "timestamp": 1499651592,
   "transactions": [
     {
@@ -290,6 +291,7 @@ getBlock 4001001-4001003 --hashes_only
 {
   "hash": "0x96f1a23f2170bf2684a876b7d88229f3904c3a43773775554ebd37f86cdfa852",
   "blockNumber": 4001002,
+  "parentHash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
   "timestamp": 1499651625,
   "transactions": [
     {
@@ -1194,5 +1196,5 @@ getBlock 4001001-4001003 --hashes_only
     }
   ]
 }], "types": [
-{ "type": "CBlock", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+{ "type": "CBlock", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
 ] }

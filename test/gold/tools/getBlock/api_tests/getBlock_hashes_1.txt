@@ -3,6 +3,7 @@
     {
       "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",
       "blockNumber": 4001001,
+      "parentHash": "0x7721d6149047de2b5ab2cfcf0204a7a3dcdc563635003926f8f76cd652b173cb",
       "timestamp": 1499651592,
       "transactions": [
         {
@@ -298,6 +299,10 @@
         {
           "name": "blockNumber",
           "type": "blocknum"
+        },
+        {
+          "name": "parentHash",
+          "type": "hash"
         },
         {
           "name": "timestamp",

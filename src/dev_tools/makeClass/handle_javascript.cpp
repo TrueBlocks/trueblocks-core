@@ -334,7 +334,8 @@ bool COptions::handle_generate_js_menus(void) {
         if (isSeparator) {
             menuStream << "    { label: '" << page.properName << "' }," << endl;
         } else {
-            importStream << "import { " << page.properName << " from ./" << page.properName << "/" << page.properName << "';" << endl;
+            importStream << "import { " << page.properName << " from ./" << page.properName << "/" << page.properName
+                         << "';" << endl;
 
             menuStream << "    {" << endl;
             menuStream << "      label: '" << page.properName << "'," << endl;
@@ -365,13 +366,14 @@ bool COptions::handle_generate_js_menus(void) {
                 menuStream << "      ]," << endl;
             menuStream << "    }," << endl;
 
-            appImportsStream << "import { " << page.longName << "Default, " << page.longName << "Reducer } from 'pages/" << page.properName << "/" << page.properName << "';" << endl;
+            appImportsStream << "import { " << page.longName << "Default, " << page.longName << "Reducer } from 'pages/"
+                             << page.properName << "/" << page.properName << "';" << endl;
 
-            appReducersStream << "  const [" << page.longName << "State, " << page.longName << "Dispatch] = useReducer(" << page.longName << "Reducer, defaultData['" << page.longName << "']);" << endl;
+            appReducersStream << "  const [" << page.longName << "State, " << page.longName << "Dispatch] = useReducer("
+                              << page.longName << "Reducer, defaultData['" << page.longName << "']);" << endl;
 
-            appStateStream << "    " << page.longName << ": { " << page.longName << ": " << page.longName << "State, dispatch: " << page.longName << "Dispatch }," << endl;
-
-
+            appStateStream << "    " << page.longName << ": { " << page.longName << ": " << page.longName
+                           << "State, dispatch: " << page.longName << "Dispatch }," << endl;
         }
     }
     menuStream << "  ]," << endl;
