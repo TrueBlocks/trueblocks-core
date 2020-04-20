@@ -32,13 +32,12 @@ inline size_t bitsTwiddled(bloom_t n) {
     return count;
 }
 
-extern string_q getSha3(const string_q& hexIn);
 //-------------------------------------------------------------------------
 inline bloom_t makeBloom(const string_q& hexIn) {
     if (hexIn.empty() || !startsWith(hexIn, "0x"))
         return 0;
 
-    string_q sha = getSha3(hexIn);
+    string_q sha = keccak256(hexIn);
     bloom_t bloom;
     for (size_t i = 0; i < 3; i++)
         bloom |= (bloom_t(1) << (strtoul(("0x" + extract(sha, 2 + (i * 4), 4)).c_str(), NULL, 16)) % 2048);

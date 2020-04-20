@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
             cout << "in: " << in << "\n";
             string_q hex = chr_2_HexStr(in);
             cout << "hex: " << hex << "\n";
-            string_q out = getSha3(hex);
+            string_q out = keccak256(hex);
             cout << "out: " << out << "\n";
         }
     }
@@ -77,9 +77,7 @@ void doTests(void) {
             cout << test << endl;
             cout << chr_2_HexStr(test) << endl;
             TEST(keccak256(test), t.expected);
-            cout << test << endl;
-            cout << chr_2_HexStr(test) << endl;
-            TEST(myKeccak256(test), t.expected);
+            TEST(keccak256(chr_2_HexStr(test)), t.expected);
         }
     }
 }

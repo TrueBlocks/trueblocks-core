@@ -577,8 +577,7 @@ string_q CFunction::encodeItem(void) const {
         return "0x861731d5";
     if (!encoding.empty())  // optimization
         return encoding;
-    extern string_q getSha3(const string_q& hexIn);
-    string_q ret = getSha3(chr_2_HexStr(signature));
+    string_q ret = keccak256(signature);
     return (type == "event" ? ret : extract(ret, 0, 10));
 }
 

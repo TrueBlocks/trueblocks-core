@@ -594,11 +594,6 @@ size_t getTraceCount(const hash_t& hashIn) {
     return 0;
 }
 
-//-------------------------------------------------------------------------
-string_q getSha3(const string_q& hexIn) {
-    return callRPC("web3_sha3", "[\"" + hexIn + "\"]", false);
-}
-
 //-----------------------------------------------------------------------
 void writeToJson(const CBaseNode& node, const string_q& fileName) {
     if (establishFolder(fileName)) {
@@ -1352,11 +1347,6 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
         *theArray = (uint32_t*)file.getData();  // NOLINT
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-string_q myKeccak256(const string& str) {
-    return getSha3(chr_2_HexStr(str));
 }
 
 //-----------------------------------------------------------------------

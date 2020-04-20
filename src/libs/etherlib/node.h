@@ -104,7 +104,6 @@ extern bool getChainHead(void);
 
 //-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);
-string_q getSha3(const string_q& hexIn);
 
 //-------------------------------------------------------------------------
 extern string_q getBinaryCacheFilename(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
@@ -188,8 +187,6 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 //-------------------------------------------------------------------------
 extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
-
-extern string_q myKeccak256(const string& str);
 
 }  // namespace qblocks
 
