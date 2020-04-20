@@ -35,11 +35,11 @@ class CSchema : public CBaseNode {
     uint64_t id;
     uint64_t decimals;
     bool isPill;
-    bool hideZero;
     string_q align;
     string_q cn;
     bool domain;
     bool range;
+    bool sortable;
     string_q onDisplay;
     string_q onAccept;
     string_q onValidate;
@@ -116,11 +116,11 @@ inline void CSchema::initialize(void) {
     id = 0;
     decimals = 0;
     isPill = false;
-    hideZero = false;
     align = "";
     cn = "";
     domain = false;
     range = false;
+    sortable = false;
     onDisplay = "";
     onAccept = "";
     onValidate = "";
@@ -144,11 +144,11 @@ inline void CSchema::duplicate(const CSchema& sc) {
     id = sc.id;
     decimals = sc.decimals;
     isPill = sc.isPill;
-    hideZero = sc.hideZero;
     align = sc.align;
     cn = sc.cn;
     domain = sc.domain;
     range = sc.range;
+    sortable = sc.sortable;
     onDisplay = sc.onDisplay;
     onAccept = sc.onAccept;
     onValidate = sc.onValidate;

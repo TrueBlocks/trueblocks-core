@@ -97,29 +97,34 @@ string_q CBaseNode::getValueByName(const string_q& fieldName) const {
 }
 
 //--------------------------------------------------------------------------------
-bool CBaseNode::parseCSV(const CStringArray& fields, string_q& str) {
-    // Assumes no internal quotes or commas
-    str = substitute(substitute(str, "\"", ""), ",", "\t");
-    return parseText(fields, str);
+bool CBaseNode::parseCSV(const CStringArray& fields, string_q& line) {
+    // Assumes internal-to-field commas are escaped
+    line = substitute(line, "\\,", "[[1]]");
+    line = substitute(line, "\\\"", "[[2]]");
+    line = substitute(line, "\"", "");
+    line = substitute(line, ",", "\t");
+    line = substitute(line, "[[1]]", ",");
+    line = substitute(line, "[[2]]", "\"");
+    return parseText(fields, line);
 }
 
 //--------------------------------------------------------------------------------
-bool CBaseNode::parseText(const CStringArray& fields, string_q& str) {
-    str = substitute(str, "\r", "");
-    string_q line = nextTokenClear(str, '\n');
+bool CBaseNode::parseText(const CStringArray& fields, string_q& line) {
+    replaceAll(line, "\r", "");
+    line = nextTokenClear(line, '\n');  // pop off the first line
     CStringArray values;
     explode(values, line, '\t');
     size_t cnt = 0;
     for (auto value : values) {
         if (cnt < fields.size()) {
-            this->setValueByName(fields[cnt++], value);
+            this->setValueByName(trim(fields[cnt++]), trim(value));
         } else {
             finishParse();
             return false;
         }
     }
     finishParse();
-    return !str.empty();
+    return !line.empty();  // are there more lines?
 }
 
 //--------------------------------------------------------------------------------

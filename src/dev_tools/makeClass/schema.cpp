@@ -102,9 +102,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "hidden") {
                 return bool_2_Str(hidden);
             }
-            if (fieldName % "hideZero") {
-                return bool_2_Str(hideZero);
-            }
             break;
         case 'i':
             if (fieldName % "id") {
@@ -138,6 +135,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
         case 's':
             if (fieldName % "selector") {
                 return selector;
+            }
+            if (fieldName % "sortable") {
+                return bool_2_Str(sortable);
             }
             break;
         case 't':
@@ -209,10 +209,6 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 hidden = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "hideZero") {
-                hideZero = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 'i':
             if (fieldName % "id") {
@@ -253,6 +249,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 's':
             if (fieldName % "selector") {
                 selector = fieldValue;
+                return true;
+            }
+            if (fieldName % "sortable") {
+                sortable = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -303,11 +303,11 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> id;
     archive >> decimals;
     archive >> isPill;
-    archive >> hideZero;
     archive >> align;
     archive >> cn;
     archive >> domain;
     archive >> range;
+    archive >> sortable;
     archive >> onDisplay;
     archive >> onAccept;
     archive >> onValidate;
@@ -332,11 +332,11 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << id;
     archive << decimals;
     archive << isPill;
-    archive << hideZero;
     archive << align;
     archive << cn;
     archive << domain;
     archive << range;
+    archive << sortable;
     archive << onDisplay;
     archive << onAccept;
     archive << onValidate;
@@ -386,11 +386,11 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "id", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "isPill", T_BOOL, ++fieldNum);
-    ADD_FIELD(CSchema, "hideZero", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "align", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "domain", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onAccept", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onValidate", T_TEXT, ++fieldNum);

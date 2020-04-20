@@ -275,8 +275,8 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CFunction::finishParse() {
     // EXISTING_CODE
-    signature = getSignature(SIG_CANONICAL);
-    encoding = encodeItem();
+//    signature = getSignature(SIG_CANONICAL);
+//    encoding = encodeItem();
     // The input parameters need to have a name. If not, we provide one
     int cnt = 0;
     for (size_t i = 0; i < inputs.size(); i++) {

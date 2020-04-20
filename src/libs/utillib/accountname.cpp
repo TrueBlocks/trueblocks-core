@@ -270,12 +270,12 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> is_custom;
     archive >> is_prefund;
-    // archive >> nAppearances;
-    // archive >> lastExport;
-    // archive >> firstAppearance;
-    // archive >> latestAppearance;
-    // archive >> path;
-    // archive >> sizeInBytes;
+    archive >> nAppearances;
+    archive >> lastExport;
+    archive >> firstAppearance;
+    archive >> latestAppearance;
+    archive >> path;
+    archive >> sizeInBytes;
     finishParse();
     return true;
 }
@@ -296,12 +296,12 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << is_custom;
     archive << is_prefund;
-    // archive << nAppearances;
-    // archive << lastExport;
-    // archive << firstAppearance;
-    // archive << latestAppearance;
-    // archive << path;
-    // archive << sizeInBytes;
+    archive << nAppearances;
+    archive << lastExport;
+    archive << firstAppearance;
+    archive << latestAppearance;
+    archive << path;
+    archive << sizeInBytes;
 
     return true;
 }
@@ -348,17 +348,11 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "is_custom", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "is_prefund", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "nAppearances");
     ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "lastExport");
     ADD_FIELD(CAccountName, "firstAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "firstAppearance");
     ADD_FIELD(CAccountName, "latestAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "latestAppearance");
     ADD_FIELD(CAccountName, "path", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CAccountName, "path");
     ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    HIDE_FIELD(CAccountName, "sizeInBytes");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");

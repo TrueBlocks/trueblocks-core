@@ -39,8 +39,10 @@ extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
+    ENTER("parseArguments");
+
     if (!standardOptions(command))
-        return false;
+        EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
     bool addrs = false;
@@ -79,12 +81,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                EXIT_USAGE("Invalid option: " + arg);
             }
 
         } else {
             if (!parseBlockList2(this, blocks, arg, latest))
-                return false;
+                EXIT_NOMSG(false);
 
             // END_CODE_AUTO
         }
@@ -122,7 +124,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CReceipt, "status");
         HIDE_FIELD(CBlock, "gasLimit");
         HIDE_FIELD(CBlock, "gasUsed");
-        HIDE_FIELD(CBlock, "parentHash");
+        // HIDE_FIELD(CBlock, "parentHash");
         HIDE_FIELD(CBlock, "miner");
         HIDE_FIELD(CBlock, "difficulty");
         HIDE_FIELD(CBlock, "price");
@@ -131,13 +133,13 @@ bool COptions::parseArguments(string_q& command) {
 
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
     if (filterType.empty() && count_only)
-        return usage("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
+        EXIT_USAGE("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
 
     if (!filterType.empty() && force)
-        return usage("The --force option is not available when using one of the address options. Quitting...");
+        EXIT_USAGE("The --force option is not available when using one of the address options. Quitting...");
 
     if (!blocks.hasBlocks())
-        return usage("You must specify at least one block. Quitting...");
+        EXIT_USAGE("You must specify at least one block. Quitting...");
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
@@ -162,7 +164,7 @@ bool COptions::parseArguments(string_q& command) {
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //---------------------------------------------------------------------------------------------------

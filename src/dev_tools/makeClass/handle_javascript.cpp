@@ -294,8 +294,8 @@ bool visitField(const CFieldData& field, void* data) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void doReplace(string_q& str, const string_q& type, const string_q& rep, bool skipSpaces = false) {
-    string_q autotag = (skipSpaces ? "// auto-generate: " : "  // auto-generate: ") + type;
+void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces) {
+    string_q autotag = spaces + "// auto-generate: " + type;
     string_q ontag = "<" + type + ">";
     string_q offtag = "</" + type + ">";
 
@@ -306,9 +306,92 @@ void doReplace(string_q& str, const string_q& type, const string_q& rep, bool sk
 
     replace(str, autotag, ontag);
     replace(str, autotag, "  " + offtag);
-
     replace(str, offtag, offtag + os.str());
     snagFieldClear(str, type);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_menus(void) {
+    cerr << cYellow << "Generating Menus..." << cOff << endl;
+
+    CToml toml("./classDefinitions/app.txt");
+    string_q pageList = toml.getConfigStr("settings", "pages", "");
+    CStringArray pagesStrs;
+    explode(pagesStrs, pageList, '|');
+
+    ostringstream importStream;
+    ostringstream pageStream;
+    ostringstream menuStream;
+    ostringstream appImportsStream;
+    ostringstream appReducersStream;
+    ostringstream appStateStream;
+
+    menuStream << "  items: [" << endl;
+    for (auto pageStr : pagesStrs) {
+        CPage page = pageMap[pageStr];
+        cerr << "\tProcessing " << page.longName << "..." << endl;
+        bool isSeparator = page.longName == "separator";
+        if (isSeparator) {
+            menuStream << "    { label: '" << page.properName << "' }," << endl;
+        } else {
+            importStream << "import { " << page.properName << " from ./" << page.properName << "/" << page.properName << "';" << endl;
+
+            menuStream << "    {" << endl;
+            menuStream << "      label: '" << page.properName << "'," << endl;
+            menuStream << "      exact: true," << endl;
+            if (page.subpages.size() == 1 && page.subpages[0].route == "/")
+                menuStream << "      route: '/'," << endl;
+            if (page.subpages.size() > 1)
+                menuStream << "      items: [" << endl;
+
+            for (auto sub : page.subpages) {
+                if (!sub.isSeparator) {
+                    pageStream << "  '" << page.longName << "/"
+                               << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route)
+                               << "': { component: <" << page.properName << " /> }," << endl;
+                }
+
+                if (sub.isSeparator)
+                    menuStream << "        { label: 'Separator' }," << endl;
+                else if (sub.subpage != "") {
+                    menuStream << "        { label: '" << sub.subpage << "'";
+                    if (!sub.route.empty())
+                        menuStream << ", route: '" << sub.route << "'";
+                    menuStream << " }," << endl;
+                }
+            }
+            pageStream << "  //" << endl;
+            if (page.subpages.size() > 1)
+                menuStream << "      ]," << endl;
+            menuStream << "    }," << endl;
+
+            appImportsStream << "import { " << page.longName << "Default, " << page.longName << "Reducer } from 'pages/" << page.properName << "/" << page.properName << "';" << endl;
+
+            appReducersStream << "  const [" << page.longName << "State, " << page.longName << "Dispatch] = useReducer(" << page.longName << "Reducer, defaultData['" << page.longName << "']);" << endl;
+
+            appStateStream << "    " << page.longName << ": { " << page.longName << ": " << page.longName << "State, dispatch: " << page.longName << "Dispatch }," << endl;
+
+
+        }
+    }
+    menuStream << "  ]," << endl;
+
+    string_q indexFile = "./src/pages/index.jsx";
+    string_q contents = asciiFileToString(indexFile);
+    doReplace(contents, "imports", importStream.str(), "  ");
+    doReplace(contents, "pages", pageStream.str(), "  ");
+    doReplace(contents, "menus", menuStream.str(), "  ");
+    stringToAsciiFile(indexFile, contents);
+
+    string_q appFile = "./src/App.jsx";
+    contents.clear();
+    contents = asciiFileToString(appFile);
+    doReplace(contents, "imports", appImportsStream.str(), "");
+    doReplace(contents, "reducers", appReducersStream.str(), "  ");
+    doReplace(contents, "state", appStateStream.str(), "    ");
+    stringToAsciiFile(appFile, contents);
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -364,72 +447,6 @@ bool COptions::handle_generate_js_help(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_js_menus(void) {
-    cerr << cYellow << "Generating Menus..." << cOff << endl;
-
-    CToml toml("./classDefinitions/app.txt");
-    string_q pageList = toml.getConfigStr("settings", "pages", "");
-    CStringArray pagesStrs;
-    explode(pagesStrs, pageList, '|');
-
-    string_q indexFile = "./src/pages/index.jsx";
-    string_q contents = asciiFileToString(indexFile);
-
-    ostringstream importStream;
-    ostringstream pageStream;
-    ostringstream menuStream;
-
-    menuStream << "  items: [" << endl;
-    for (auto pageStr : pagesStrs) {
-        CPage page = pageMap[pageStr];
-        cerr << "\tProcessing " << page.longName << "..." << endl;
-        bool isSeparator = page.longName == "separator";
-        if (isSeparator) {
-            menuStream << "    { label: '" << page.properName << "' }," << endl;
-        } else {
-            importStream << "import { " << page.properName << " from ./" << page.properName << "/" << page.properName
-                         << "';" << endl;
-
-            menuStream << "    {" << endl;
-            menuStream << "      label: '" << page.properName << "'," << endl;
-            menuStream << "      exact: true," << endl;
-            if (page.subpages.size() == 1 && page.subpages[0].route == "/")
-                menuStream << "      route: '/'," << endl;
-            if (page.subpages.size() > 1)
-                menuStream << "      items: [" << endl;
-
-            for (auto sub : page.subpages) {
-                if (!sub.isSeparator) {
-                    pageStream << "  '" << page.longName << "/"
-                               << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route)
-                               << "': { component: <" << page.properName << " /> }," << endl;
-                }
-
-                if (sub.isSeparator)
-                    menuStream << "        { label: 'Separator' }," << endl;
-                else if (sub.subpage != "") {
-                    menuStream << "        { label: '" << sub.subpage << "'";
-                    if (!sub.route.empty())
-                        menuStream << ", route: '" << sub.route << "'";
-                    menuStream << " }," << endl;
-                }
-            }
-            pageStream << "  //" << endl;
-            if (page.subpages.size() > 1)
-                menuStream << "      ]," << endl;
-            menuStream << "    }," << endl;
-        }
-    }
-    menuStream << "  ]," << endl;
-    doReplace(contents, "imports", importStream.str());
-    doReplace(contents, "pages", pageStream.str());
-    doReplace(contents, "menus", menuStream.str());
-    stringToAsciiFile(indexFile, contents);
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_js_schemas(void) {
     CSchema::registerClass();
     cerr << cYellow << "\nGenerating Schemas..." << cOff << endl;
@@ -443,9 +460,17 @@ bool COptions::handle_generate_js_schemas(void) {
         CStringArray parts;
         explode(parts, pageStr, '-');
         CPage page = pageMap[parts[0]];
+        if (parts[0] == "menu") {
+            CPage pp;
+            pp.properName = "Menu";
+            pp.longName = "menu";
+            page = pp;
+        }
         if (page.longName != "separator") {
             string_q codeFile = "./src/pages/" + page.properName + "/" + page.properName +
                                 (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
+            if (page.longName == "menu")
+                codeFile = "./src/pages/index.jsx";
             string_q contents = asciiFileToString(codeFile);
             if (contains(contents, "auto-generate")) {
                 ostringstream schemaStream;
@@ -497,7 +522,7 @@ bool COptions::handle_generate_js_schemas(void) {
                     first = false;
                 }
                 schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
-                doReplace(contents, "schema", schemaStream.str(), true);
+                doReplace(contents, "schema", schemaStream.str(), "");
                 stringToAsciiFile(codeFile, contents);
             }
         }

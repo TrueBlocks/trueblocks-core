@@ -83,9 +83,9 @@ class COptions : public COptionsBase {
     bool handle_generate_js(CToml& toml, const CClassDefinition& classDef);
     bool handle_generate_js_file(const CPage& def, const string_q& folder, const string_q& source);
     bool handle_generate_js_menus(void);
-    bool handle_generate_js_schemas(void);
     bool handle_generate_js_help(void);
     bool handle_generate_js_skins(void);
+    bool handle_generate_js_schemas(void);
 
     bool check_option(const CCommandOption& option);
     bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
