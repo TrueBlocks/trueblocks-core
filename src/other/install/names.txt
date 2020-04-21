@@ -3256,6 +3256,8 @@
 60-Airdrops	0x1db7332d24ebbdc5f49c34aa6830cb7f46a3647c	ZRX Airdrop Sender		TrueBlocks.io		
 70-Vendors	0x62dab6e2acb0a9fd2bd3632ebe6a85f81e828f1f	Avado wallet		TrueBlocks.io		
 70-Vendors	0x2eb0056c62dddd0d5bd29fd51fe795b3cb0b9be1	QuickNodesnode		TrueBlocks.io		
+80-Malicious	0x985641983d506259f4a5fbdf5a9c3c807cf12559	Lendf.Me Hacker: Bridge Address		Etherscan
+80-Malicious	0xa9bf70a420d364e923c74448d9d817d3f2a77822	Lendf.Me Hacker 1		Etherscan
 80-Malicious	0x0c35a2e957e8f88027bc7b2779b9f95f0848992d	Malicious 0x0c3		TrueBlocks.io		
 80-Malicious	0x7fc03bd9e44c37bc2d111dc2154da781dbba7c24	Malicious 0x7fc		TrueBlocks.io		
 80-Malicious	0x8428ce12a1b6aaecfcf2ac5b22d21f3831949da3	Malicious 0x842		TrueBlocks.io		

@@ -243,9 +243,8 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // clang-format on
     // END_CODE_NOTES
-    string_q namesFile = configPath("names/names.txt");
-    notes.push_back("Name file: `" + substitute(namesFile, getHomeFolder(), "~/") + "` (" +
-                    uint_2_Str(fileSize(namesFile)) + ")");
+    notes.push_back("Name file: `" + configPathRelative("names/names.txt") + "` (" +
+                    uint_2_Str(fileSize(configPath("names/names.txt"))) + ")");
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG

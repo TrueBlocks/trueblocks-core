@@ -35,7 +35,7 @@ static string_q templateFolder = configPath("grabABI/");
 //-----------------------------------------------------------------------
 void COptions::handle_generate(void) {
     verbose = false;
-    classDir = substitute((classDir), "~/", getHomeFolder()) + "generated/";
+    classDir = substitute(classDir, "~/", getHomeFolder()) + "generated/";
     string_q classDefs = classDir + "classDefinitions/";
 
     establishFolder(classDir);

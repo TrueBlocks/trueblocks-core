@@ -109,11 +109,13 @@ group	address	name	symbol	source	decimals	description
 50-Tokens	0x954b890704693af242613edef1b603825afcd708	Cardstack Token	CARD	Etherscan.io		The experience layer of the decentralized internet.
 50-Tokens:ERC20	0x970e035e2a013cf4becd67e300d65bc32a56d826	Bodhi Ethereum	BOE	On Chain	8	Bodhi aims to build a credible, autonomous, and global decentralized prediction market platform.
 50-Tokens	0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63	SONM Token	SNM	Etherscan.io		SONM's aims to be a secure and cost-effective fog supercomputer for general-purpose computing, from mobile app hosting to video rendering to DNA analysis.
+80-Malicious	0x985641983d506259f4a5fbdf5a9c3c807cf12559	Lendf.Me Hacker: Bridge Address		Etherscan
 30-Contracts	0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	Maker	MKR	Etherscan.io		Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain
 31-Gitcoin Grants	0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f	Grant 233 - Ethereumetl		GitCoin Website
 50-Tokens	0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48	USD Coin	USDC	Etherscan.io		USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers.
 50-Tokens	0xa31108e5bab5494560db34c95492658af239357c	DACSEE	DACS	Etherscan.io		Global Decentralized Ride-Sharing Platform
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On Chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.
+80-Malicious	0xa9bf70a420d364e923c74448d9d817d3f2a77822	Lendf.Me Hacker 1		Etherscan
 50-Tokens	0xaa0bb10cec1fa372eb3abc17c933fc6ba863dd9e	Hms Token	HMC	Etherscan.io		HMS(Hi Mutual Society) is a blockchain project developed and operated by Qfund, the largest online crowdfunding platform in Asia. HMS intends to build up a decentralized Mutual Society using blockchain technology.
 50-Tokens:ERC20	0xaef38fbfbf932d1aef3b808bc8fbd8cd8e1f8bc5	CreditBIT	CRB	On Chain	8	The main goal of this project is to develop and maintain crypto currency ecosystem, based on token, that is built on top of Ethereum Blockchain.
 50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL	On Chain	18	Real Estate Investment through Ecoreal Ethereum Token. Capital markets are becoming Global, Real Estates are no exception. This establishes the need for a new decentralized solution to capitalize this potential.

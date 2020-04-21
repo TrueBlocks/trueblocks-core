@@ -677,7 +677,7 @@ string_q COptionsBase::get_notes(void) const {
 
     string_q nn;
     for (auto n : notes)
-        nn += (n + "\n");
+        nn += (substitute(n, "[{CONFIG}]", configPathRelative("")) + "\n");
 
     string_q lead = (isReadme ? "" : "\t");
     string_q trail = (isReadme ? "\n" : "\n");
@@ -831,6 +831,11 @@ uint64_t verbose = false;
 //---------------------------------------------------------------------------------------------------
 string_q configPath(const string_q& part) {
     return getHomeFolder() + ".quickBlocks/" + part;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q configPathRelative(const string_q& part) {
+    return substitute(configPath(part), getHomeFolder(), "~/");
 }
 
 //------------------------------------------------------------------

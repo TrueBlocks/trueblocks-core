@@ -255,12 +255,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13980,tools,when,whenBlock,,,,false,false,true,false,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
+13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.
 13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
 
 14020,tools,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 14040,tools,where,whereBlock,,,,false,false,true,false,--,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
-14050,tools,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
+14050,tools,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.
 
 14400,all,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display

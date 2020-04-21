@@ -27,6 +27,7 @@ bool COptions::handle_config_get(ostream& os) {
         CConfigGroup g1_1("Providers", "settings");
         CConfigGroup g1_2("Paths", "settings");
 
+        string_q defFolder = configPathRelative("");
         CStringArray values;
         values.push_back(isTestMode() ? "--rpc Provider--"
                                       : cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545"));
@@ -34,12 +35,11 @@ bool COptions::handle_config_get(ostream& os) {
                                       : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
         values.push_back(isTestMode() ? "--api Provider--"
                                       : cc->getConfigStr(g1_1.name, "apiProvider", "http://localhost:8080"));
-        values.push_back(isTestMode() ? "--config Path--"
-                                      : cc->getConfigStr(g1_2.name, "configPath", "~/.quickBlocks/"));
+        values.push_back(isTestMode() ? "--config Path--" : cc->getConfigStr(g1_2.name, "configPath", defFolder));
         values.push_back(isTestMode() ? "--cache Path--"
-                                      : cc->getConfigStr(g1_2.name, "cachePath", "~/.quickBlocks/cache/"));
+                                      : cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/"));
         values.push_back(isTestMode() ? "--index Path--"
-                                      : cc->getConfigStr(g1_2.name, "indexPath", "~/.quickBlocks/cache/addr_index/"));
+                                      : cc->getConfigStr(g1_2.name, "indexPath", defFolder + "cache/addr_index/"));
 
         size_t cnt = 0;
         CConfigItemArray items;
@@ -264,7 +264,7 @@ bool COptions::handle_config_set(ostream& os) {
                     val += "/";
 
                 bool isDefaultConfigPath = (contains(path, "quickBlocks.toml") && group.name == "settings" &&
-                                            key.name == "configPath" && val == "~/.quickBlocks/");
+                                            key.name == "configPath" && val == configPathRelative(""));
 
                 if (isDefaultConfigPath) {
                     toml.deleteKey("settings", "configPath");

@@ -177,6 +177,7 @@ extern uint64_t verbose;
 //--------------------------------------------------------------------------------
 extern void editFile(const string_q& fileName);
 extern string_q configPath(const string_q& part);
+extern string_q configPathRelative(const string_q& part);
 
 //--------------------------------------------------------------------------------
 class CToml;

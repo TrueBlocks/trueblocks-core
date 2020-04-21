@@ -973,6 +973,15 @@
       "description": "SONM's aims to be a secure and cost-effective fog supercomputer for general-purpose computing, from mobile app hosting to video rendering to DNA analysis."
     },
     {
+      "group": "80-Malicious",
+      "address": "0x985641983d506259f4a5fbdf5a9c3c807cf12559",
+      "name": "Lendf.Me Hacker: Bridge Address",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "group": "30-Contracts",
       "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
       "name": "Maker",
@@ -1016,6 +1025,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain."
+    },
+    {
+      "group": "80-Malicious",
+      "address": "0xa9bf70a420d364e923c74448d9d817d3f2a77822",
+      "name": "Lendf.Me Hacker 1",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
     },
     {
       "group": "50-Tokens",
