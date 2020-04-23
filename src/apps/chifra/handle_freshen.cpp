@@ -13,31 +13,31 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
     ostringstream base;
     base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
-    // Build groups of five addresses at a time
+    // Build collections of five addresses at a time
     size_t cnt = 0;
-    string_q groupsOfFive;
+    string_q fiveAddresses;
     for (auto f : fa) {
-        groupsOfFive += (f.address + " ");
+        fiveAddresses += (f.address + " ");
         if (!(++cnt % 5)) {  // we don't want to do too many addrs at a time
-            groupsOfFive += "|";
+            fiveAddresses += "|";
             cnt = 0;
         }
     }
 
     // Process them until we're done
     uint64_t cur = 0;
-    while (!groupsOfFive.empty()) {
-        string_q thisGroup = nextTokenClear(groupsOfFive, '|');
-        string_q cmd = substitute(base.str(), "[ADDRS]", thisGroup);
+    while (!fiveAddresses.empty()) {
+        string_q thisFive = nextTokenClear(fiveAddresses, '|');
+        string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
         LOG_CALL(cmd);
         // clang-format off
-        uint64_t n = countOf(thisGroup, ' ');
+        uint64_t n = countOf(thisFive, ' ');
         if (fa.size() > 1)
             LOG_INFO("Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '));
         cur += n;
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        if (!groupsOfFive.empty())
+        if (!fiveAddresses.empty())
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 

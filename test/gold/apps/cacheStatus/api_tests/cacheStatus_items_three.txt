@@ -18,7 +18,7 @@
             {
               "type": "CMonitorCacheItem",
               "deleted": false,
-              "group": "",
+              "tags": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -47,7 +47,7 @@
               "nFunctions": 36963,
               "nEvents": 36963,
               "nOther": 36963,
-              "group": "",
+              "tags": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -137,7 +137,7 @@
           "type": "unumber"
         },
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {
@@ -239,7 +239,7 @@
           "type": "bool"
         },
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

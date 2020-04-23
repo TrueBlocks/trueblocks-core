@@ -1,7 +1,7 @@
 [settings]
 class = CAccountName
 fields = \
-  string group|\
+  string tags|\
   address address|\
   string name|\
   string symbol|\
@@ -18,6 +18,6 @@ fields = \
   uint64 sizeInBytes (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
-display_str = group, address, name, symbol, source, decimals, description
+display_str = tags, address, name, symbol, source, decimals, description
 sort = v1.address < v2.address
 equals = address % item.address

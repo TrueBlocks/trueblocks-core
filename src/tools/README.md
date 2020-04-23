@@ -10,7 +10,7 @@ While primarily illustrative, these tools are also useful. For example, you may 
 
 + [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLogs](getLogs): These programs allow you to retrieve primary data structures of the Ethereum blockchain. By default, each tool retrieves its data from the running node, but you may instruct the tool to cache the blockchain data leading to significantly faster access on subsequent requests. We use these tools in various testing and scripting scenarios.
 
-+ [getTrace](getTrace) / [getBloom](getBloom): These programs are similar to the previous group but give you access to much a lower level of Ethereum's data structures.
++ [getTrace](getTrace) / [getBloom](getBloom): These programs are similar to the previous but give you access to much a lower level of Ethereum's data structures.
 
 + [getState](getState) / [getTokenInfo](getTokenInfo): Unlike the above commands, `getState` and `getTokenInfo` operate directly against the node. These programs retrieve balances `ether` or `token` balances from one or more smart contracts given block number. We use these program in testing QBlocks [monitors](../monitors) and to ensure that our cacheing mechanisms work properly. This app also returns `true` or `false` depending if the address is a smart contract. It may also be used to pull the actual byte code of the contract, if present. Furthermore, it can be used to compare two Ethereum addresses to see if they hold the same byte code.
 

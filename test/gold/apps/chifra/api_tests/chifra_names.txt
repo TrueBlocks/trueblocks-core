@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
       "name": "TrueUSD",
       "symbol": "",
@@ -10,7 +10,7 @@
       "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x001f0aa5da15585e5b2305dbab2bac425ea71007",
       "name": "IPSX",
       "symbol": "IPSX",
@@ -19,7 +19,7 @@
       "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45",
       "name": "Stox",
       "symbol": "STX",
@@ -28,7 +28,7 @@
       "description": "Blockchain Prediction Markets Platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
       "name": "Knoxstertoken",
       "symbol": "FKX",
@@ -37,7 +37,7 @@
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x00c4b398500645eb5da00a1a379a88b11683ba01",
       "name": "Eximchain Token",
       "symbol": "EXC",
@@ -46,7 +46,7 @@
       "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0142c3b2fc51819b5af5dfc4aa52df9722790851",
       "name": "Paycentos Token",
       "symbol": "PYN",
@@ -55,7 +55,7 @@
       "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x014b50466590340d41307cc54dcee990c8d58aa8",
       "name": "ICOS",
       "symbol": "",
@@ -64,7 +64,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x016396044709eb3edc69c44f4d5fa6996917e4e8",
       "name": "KingXChain",
       "symbol": "KXC",
@@ -73,7 +73,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0168703872fa06741ecaa9dff7803168e83f7ae0",
       "name": "MIRO Token",
       "symbol": "MIRO",
@@ -82,7 +82,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
       "name": "PlayChip",
       "symbol": "PLA",
@@ -91,7 +91,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f",
       "name": "BF Token",
       "symbol": "BFT",
@@ -100,7 +100,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
       "name": "CZR",
       "symbol": "CZR",
@@ -109,7 +109,7 @@
       "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02585e4a14da274d02df09b222d4606b10a4e940",
       "name": "Hero Origen Token",
       "symbol": "HERO",
@@ -118,7 +118,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
       "name": "BitAir",
       "symbol": "BTCA",
@@ -127,7 +127,7 @@
       "description": "Payments solutions for the travel industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
       "name": "InvestDigital Token",
       "symbol": "IDT",
@@ -136,7 +136,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
       "name": "EplusCoin",
       "symbol": "EPLUS",
@@ -145,7 +145,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577",
       "name": "PKG Token",
       "symbol": "PKG",
@@ -154,7 +154,7 @@
       "description": "Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02f61fd266da6e8b102d4121f5ce7b992640cf98",
       "name": "LikeCoin",
       "symbol": "LIKE",
@@ -163,7 +163,7 @@
       "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x033030feebd93e3178487c35a9c8ca80874353c9",
       "name": "BDT Token",
       "symbol": "BDT",
@@ -172,7 +172,7 @@
       "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -181,7 +181,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0371a82e4a9d0a4312f3ee2ac9c6958512891372",
       "name": "Student Coin",
       "symbol": "STU",
@@ -190,7 +190,7 @@
       "description": "Student jobs marketplace."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x039b5649a59967e3e936d7471f9c3700100ee1ab",
       "name": "Kucoin Shares",
       "symbol": "KCS",
@@ -199,7 +199,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x03c780cd554598592b97b7256ddaad759945b125",
       "name": "BTRN",
       "symbol": "BTRN",
@@ -208,7 +208,7 @@
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x049399a6b048d52971f7d122ae21a1532722285f",
       "name": "Fire Lotto",
       "symbol": "FLOT",
@@ -217,7 +217,7 @@
       "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x04a020325024f130988782bd5276e53595e8d16e",
       "name": "Herbalist Token",
       "symbol": "HERB",
@@ -226,7 +226,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x04f2e7221fdb1b52a68169b25793e51478ff0329",
       "name": "Cappasity",
       "symbol": "CAPP",
@@ -235,7 +235,7 @@
       "description": "Cappasity brings an in-store browsing experience to online retail through interactive 3D images."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x054c64741dbafdc19784505494029823d89c3b13",
       "name": "ETERNAL TOKEN",
       "symbol": "XET",
@@ -244,7 +244,7 @@
       "description": "The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
       "name": "Gemini dollar",
       "symbol": "GUSD",
@@ -253,7 +253,7 @@
       "description": "Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05860d453c7974cbf46508c06cba14e211c629ce",
       "name": "Eden Coin",
       "symbol": "EDN",
@@ -262,7 +262,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05984006707585f66465e8a6505341f46b64fa7a",
       "name": "Nam Coin",
       "symbol": "NAM",
@@ -271,7 +271,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05aaaa829afa407d83315cded1d45eb16025910c",
       "name": "SP8DE Token",
       "symbol": "SPX",
@@ -280,7 +280,7 @@
       "description": "The Game of Chance.Changed"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05c7065d644096a4e4c3fe24af86e36de021074b",
       "name": "LendConnect Token",
       "symbol": "LCT",
@@ -289,7 +289,7 @@
       "description": "Aims to be a passive-income-generating Platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05d412ce18f24040bb3fa45cf2c69e506586d8e8",
       "name": "MFTU",
       "symbol": "MFTU",
@@ -298,7 +298,7 @@
       "description": "Coin for custom CyberFM 'Mainstream For The Underground' royalty payments."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
       "name": "Zilliqa",
       "symbol": "ZIL",
@@ -307,7 +307,7 @@
       "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x06147110022b768ba8f99a8f385df11a151a9cc8",
       "name": "ACE Token",
       "symbol": "ACE",
@@ -316,7 +316,7 @@
       "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0707681f344deb24184037fc0228856f2137b02e",
       "name": "FNKOSToken",
       "symbol": "FNKOS",
@@ -325,7 +325,7 @@
       "description": "FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0743392132d1a03a902c477e5a176f256ba3220c",
       "name": "Coimatic 3.0",
       "symbol": "CTIC3",
@@ -334,7 +334,7 @@
       "description": "A global decentralized blockchain deal and discount marketplace."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
       "name": "SoPay",
       "symbol": "SOP",
@@ -343,7 +343,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
       "name": "EXN",
       "symbol": "EXN",
@@ -352,7 +352,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
       "name": "Qurito",
       "symbol": "QURO",
@@ -361,7 +361,7 @@
       "description": "The online community where you earn for sharing knowledge & ideas."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
       "name": "CommerceBlock Token",
       "symbol": "CBT",
@@ -370,7 +370,7 @@
       "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
       "name": "Bulleon",
       "symbol": "BUL",
@@ -379,7 +379,7 @@
       "description": "Revolutionizing the way of Financial Transactions"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
       "name": "IBTC",
       "symbol": "IBTC",
@@ -388,7 +388,7 @@
       "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91",
       "name": "Guaranteed Ethurance Token Extra",
       "symbol": "GETX",
@@ -397,7 +397,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
       "name": "DALECOIN",
       "symbol": "DALC",
@@ -406,7 +406,7 @@
       "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07e3c70653548b04f0a75970c1f81b4cbbfb606f",
       "name": "Delta",
       "symbol": "DLT",
@@ -415,7 +415,7 @@
       "description": "Legally Binding Smart Contracts, Powered by AI."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07ef9e82721ac16809d24dafbe1792ce01654db4",
       "name": "Chimpion",
       "symbol": "BNANA",
@@ -424,7 +424,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c",
       "name": "Edgeless",
       "symbol": "EDG",
@@ -433,7 +433,7 @@
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f",
       "name": "LiteCoinGold",
       "symbol": "LTG",
@@ -442,7 +442,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x089a6d83282fb8988a656189f1e7a73fa6c1cac2",
       "name": "Prospectors Gold",
       "symbol": "PGL",
@@ -451,7 +451,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
       "name": "Dentacoin",
       "symbol": "DENT",
@@ -460,7 +460,7 @@
       "description": "Aims to be the blockchain solution for the global dental industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
       "name": "Tierion Network Token",
       "symbol": "TNT",
@@ -469,7 +469,7 @@
       "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0947b0e6d821378805c9598291385ce7c791a6b2",
       "name": "Lendingblock",
       "symbol": "LND",
@@ -478,7 +478,7 @@
       "description": "Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x09fe5f0236f0ea5d930197dce254d77b04128075",
       "name": "Wrapped CryptoKitties",
       "symbol": "WCK",
@@ -487,7 +487,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
       "name": "Ethereum Lite",
       "symbol": "ELITE",
@@ -496,7 +496,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0abdace70d3790235af448c88547603b945604ea",
       "name": "district0x Network Token",
       "symbol": "DNT",
@@ -505,7 +505,7 @@
       "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0aef06dcccc531e581f0440059e6ffcc206039ee",
       "name": "Intelligent Trading Technologies",
       "symbol": "ITT",
@@ -514,7 +514,7 @@
       "description": "Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0af44e2784637218dd1d32a322d44e603a8f0c6a",
       "name": "MatryxToken",
       "symbol": "MTX",
@@ -523,7 +523,7 @@
       "description": "Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0affa06e7fbe5bc9a764c979aa66e8256a631f02",
       "name": "Polybius Token",
       "symbol": "PLBT",
@@ -532,7 +532,7 @@
       "description": "Private banking platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3",
       "name": "Etheriya",
       "symbol": "RIYA",
@@ -541,7 +541,7 @@
       "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b4bdc478791897274652dc15ef5c135cae61e60",
       "name": "DAEX Token",
       "symbol": "DAX",
@@ -550,7 +550,7 @@
       "description": "DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b76544f6c413a555f309bf76260d1e02377c02a",
       "name": "Internet Node Token",
       "symbol": "INT",
@@ -559,7 +559,7 @@
       "description": "IOT applications"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e",
       "name": "SwftCoin",
       "symbol": "SWFTC",
@@ -568,7 +568,7 @@
       "description": "SWFT is a cross-blockchain platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bc61dded5f6710c637cf8288eb6058766ce1921",
       "name": "CEN",
       "symbol": "CEN",
@@ -577,7 +577,7 @@
       "description": "Connecting the Financial World Coinsuper Ecosystem Network"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bef619cf38cf0c22967289b8419720fbd1db9f7",
       "name": "AEN.",
       "symbol": "AEN",
@@ -586,7 +586,7 @@
       "description": "HealthTech, Smart Capital, and Prime Brokerage Solutions"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4",
       "name": "PlatonCoin",
       "symbol": "PLTC",
@@ -595,7 +595,7 @@
       "description": "Platon Finance with its PlatonCoin token is an ecosystem that connects the digital crypto-world with the real one. Through the Platon Club, the project aims to drive adoption of cryptocurrencies."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0cf0ee63788a0849fe5297f3407f701e122cc023",
       "name": "Streamr DATAcoin",
       "symbol": "DATA",
@@ -604,7 +604,7 @@
       "description": "Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0d262e5dc4a06a0f1c90ce79c7a60c09dfc884e4",
       "name": "J8T Token",
       "symbol": "J8T",
@@ -613,7 +613,7 @@
       "description": "Democratizing influence."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
       "name": "Basic Attention Token",
       "symbol": "BAT",
@@ -622,7 +622,7 @@
       "description": "The Basic Attention Token is the new token for the digital advertising industry."
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
       "name": "AVT",
       "symbol": "AVT",
@@ -631,7 +631,7 @@
       "description": "An open-source protocol that delivers the global standard for ticketing."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0db8d8b76bc361bacbb72e2c491e06085a97ab31",
       "name": "iQeon",
       "symbol": "IQN",
@@ -640,7 +640,7 @@
       "description": "decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e",
       "name": "uDOO",
       "symbol": "uDOO",
@@ -649,7 +649,7 @@
       "description": "Howdoo is a decentralized social platform for users, content creators, & advertisers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
       "name": "Po.et",
       "symbol": "POE",
@@ -658,7 +658,7 @@
       "description": "Po.et aims to reclaim value for content creators, publishers and consumers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47",
       "name": "CarLive Chain",
       "symbol": "IOV",
@@ -667,7 +667,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6",
       "name": "ABYSS",
       "symbol": "ABYSS",
@@ -676,7 +676,7 @@
       "description": "The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0ea984e789302b7b612147e4e4144e64f21425eb",
       "name": "WaleTokeN",
       "symbol": "WTN",
@@ -685,7 +685,7 @@
       "description": "Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0ebb614204e47c09b6c3feb9aaecad8ee060e23e",
       "name": "CPAY Token",
       "symbol": "CPAY",
@@ -694,7 +694,7 @@
       "description": "Cryptopay aims to provide the ability to spend, save, and transact digital currencies."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f02e27745e3b6e9e1310d19469e2b5d7b5ec99a",
       "name": "Peculium",
       "symbol": "PCL",
@@ -703,7 +703,7 @@
       "description": "Saving management on blockchain technology"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f1ed66c251bcb52ecf7e67ac64bb72482048adb",
       "name": "SEER-ERC20-Token",
       "symbol": "SEER",
@@ -712,7 +712,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f4ca92660efad97a9a70cb0fe969c755439772c",
       "name": "Leverj",
       "symbol": "LEV",
@@ -721,7 +721,7 @@
       "description": "Decentralized leveraged exchange."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
       "name": "Decentraland MANA",
       "symbol": "MANA",
@@ -730,7 +730,7 @@
       "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f612a09ead55bb81b6534e80ed5a21bf0a27b16",
       "name": "EUNOMIA",
       "symbol": "ENTS",
@@ -739,7 +739,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f8c45b896784a1e408526b9300519ef8660209c",
       "name": "XMAX",
       "symbol": "XMX",
@@ -748,7 +748,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x10086399dd8c1e3de736724af52587a2044c9fa2",
       "name": "The Midas Touch Gold",
       "symbol": "TMTG",
@@ -757,7 +757,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
       "name": "BitCapitalVendorToken",
       "symbol": "BCV",
@@ -766,7 +766,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
       "name": "Genesis Vision Token",
       "symbol": "GVT",
@@ -775,7 +775,7 @@
       "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
       "name": "Aigang",
       "symbol": "AIX",
@@ -784,7 +784,7 @@
       "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c",
       "name": "Rock Token",
       "symbol": "RKT",
@@ -793,7 +793,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
       "name": "Bloom Token",
       "symbol": "BLT",
@@ -802,7 +802,7 @@
       "description": "Decentralized credit scoring powered by Ethereum and IPFS."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
       "name": "Centrality Token",
       "symbol": "CENNZ",
@@ -811,7 +811,7 @@
       "description": "Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
       "name": "QVT",
       "symbol": "QVT",
@@ -820,7 +820,7 @@
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
       "name": "ITL (Italian Lira)",
       "symbol": "ITL",
@@ -829,7 +829,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
       "name": "BitClave",
       "symbol": "CAT",
@@ -838,7 +838,7 @@
       "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
       "name": "LGO Token",
       "symbol": "LGO",
@@ -847,7 +847,7 @@
       "description": "Exchange with decentralized ledgers"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
       "name": "ArbitrageCT",
       "symbol": "ARCT",
@@ -856,7 +856,7 @@
       "description": "Trading crypto-currency terminal for two exchanges simultaneously."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
       "name": "Substratum",
       "symbol": "SUB",
@@ -865,7 +865,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
       "name": "TrakInvest Token",
       "symbol": "TRAK",
@@ -874,7 +874,7 @@
       "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
       "name": "Grid+ Token",
       "symbol": "GRID",
@@ -883,7 +883,7 @@
       "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
       "name": "Spectre.ai D-Token",
       "symbol": "SXDT",
@@ -892,7 +892,7 @@
       "description": "Broker-less financial trading platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
       "name": "Cofoundit",
       "symbol": "CFI",
@@ -901,7 +901,7 @@
       "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
       "name": "MoneyToken",
       "symbol": "IMT",
@@ -910,7 +910,7 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
       "name": "Musiconomi",
       "symbol": "MCI",
@@ -919,7 +919,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
       "name": "BoutsPro",
       "symbol": "BOUTS",
@@ -928,7 +928,7 @@
       "description": "Professional Karate Sports Organization"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
       "name": "PHI Token",
       "symbol": "PHI",
@@ -937,7 +937,7 @@
       "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13e9ec660d872f55405d70e5c52d872136f0970c",
       "name": "TKT",
       "symbol": "TKT",
@@ -946,7 +946,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
       "name": "Divi Exchange Token",
       "symbol": "DIVX",
@@ -955,7 +955,7 @@
       "description": "Digital Currency"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2",
       "name": "Accelerator",
       "symbol": "ACC",
@@ -964,7 +964,7 @@
       "description": "A proof-of-stake smart contract backed by a physical mining facility."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f25cd52b21650caa8225c9942337d914c9b030",
       "name": "realchain token",
       "symbol": "RCT",
@@ -973,7 +973,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
       "name": "KAN",
       "symbol": "KAN",
@@ -982,7 +982,7 @@
       "description": "A decentralized cryptocurrency-concentrated & content payment community."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
       "name": "Chainium",
       "symbol": "CHX",
@@ -991,7 +991,7 @@
       "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x146d8d942048ad517479c9bab1788712af180fde",
       "name": "Mobile Integrated Blockchain",
       "symbol": "MIB",
@@ -1000,7 +1000,7 @@
       "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
       "name": "Bethereum",
       "symbol": "BETHER",
@@ -1009,7 +1009,7 @@
       "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x14f37b574242d366558db61f3335289a5035c506",
       "name": "HackerGold",
       "symbol": "HKG",
@@ -1018,7 +1018,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x151202c9c18e495656f372281f493eb7698961d5",
       "name": "DEBITUM",
       "symbol": "DEB",
@@ -1027,7 +1027,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
       "name": "XOVBank",
       "symbol": "XOV",
@@ -1036,7 +1036,7 @@
       "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
       "name": "VisionX",
       "symbol": "VNX",
@@ -1045,7 +1045,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
       "name": "Alpha Coin",
       "symbol": "APC",
@@ -1054,7 +1054,7 @@
       "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
       "name": "eREAL",
       "symbol": "eREAL",
@@ -1063,7 +1063,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
       "name": "Qubitica",
       "symbol": "QBIT",
@@ -1072,7 +1072,7 @@
       "description": "A distributed blockchain enterprise."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
       "name": "RHOC",
       "symbol": "RHOC",
@@ -1081,7 +1081,7 @@
       "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x16c1e5baf21b9fa4bc9f2c374e4dc19fab5ac5dc",
       "name": "APOT",
       "symbol": "APOT",
@@ -1090,7 +1090,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
       "name": "United Traders Token",
       "symbol": "UTT",
@@ -1099,7 +1099,7 @@
       "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
       "name": "OwnData",
       "symbol": "OWN",
@@ -1108,7 +1108,7 @@
       "description": "Owndata is a crypto marketplace for data sellers and buyers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x171d750d42d661b62c277a6b486adb82348c3eca",
       "name": "Omnitude Token",
       "symbol": "ECOM",
@@ -1117,7 +1117,7 @@
       "description": "Omnitude is a middleware layer allowing eCommerce businesses to adopt blockchain quickly and efficiently, without needing to replace current systems."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
       "name": "Numeraire",
       "symbol": "NMR",
@@ -1126,7 +1126,7 @@
       "description": "The stock market is inefficient with respect to new developments in machine learning ‚Äö√Ñ√Æ only a fraction of the world's data scientists have access to its data. Numerai is changing this."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
       "name": "CoinDash Token",
       "symbol": "CDT",
@@ -1135,7 +1135,7 @@
       "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482",
       "name": "Insight Chain",
       "symbol": "INB",
@@ -1144,7 +1144,7 @@
       "description": "Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64",
       "name": "Freyr Coin",
       "symbol": "FREC",
@@ -1153,7 +1153,7 @@
       "description": "Blockchain-based collectibles data authentication platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x17f8afb63dfcdcc90ebe6e84f060cc306a98257d",
       "name": "Nebula AI Token",
       "symbol": "NBAI",
@@ -1162,7 +1162,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
       "name": "FLiK",
       "symbol": "FLIK",
@@ -1171,7 +1171,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1829aa045e21e0d59580024a951db48096e01782",
       "name": "FuzeX Token",
       "symbol": "FXT",
@@ -1180,7 +1180,7 @@
       "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
       "name": "Oyster Pearl",
       "symbol": "PRL",
@@ -1189,7 +1189,7 @@
       "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x187c4b0e3819017a5cf07af81a4e2b16166aabc6",
       "name": "ICOCalendar.Today",
       "symbol": "ICT",
@@ -1198,7 +1198,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
       "name": "BitDegree Token",
       "symbol": "BDG",
@@ -1207,7 +1207,7 @@
       "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
       "name": "nDEX",
       "symbol": "NDX",
@@ -1216,7 +1216,7 @@
       "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
       "name": "Augur Token",
       "symbol": "REP",
@@ -1225,7 +1225,7 @@
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
       "name": "Hacker Gold",
       "symbol": "HKG",
@@ -1234,7 +1234,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c",
       "name": "Carats Token",
       "symbol": "CARAT",
@@ -1243,7 +1243,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1a0f2ab46ec630f9fd638029027b552afa64b94c",
       "name": "Aston X",
       "symbol": "ATX",
@@ -1252,7 +1252,7 @@
       "description": "Document Distribution Platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7",
       "name": "ECHAT TOKEN",
       "symbol": "ECHT",
@@ -1261,7 +1261,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7",
       "name": "PRASM",
       "symbol": "PSM",
@@ -1270,7 +1270,7 @@
       "description": "AI-Based Decentralized Bioinformatic Network"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
       "name": "AppCoins",
       "symbol": "APPC",
@@ -1279,7 +1279,7 @@
       "description": "AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
       "name": "minereum",
       "symbol": "MNE",
@@ -1288,7 +1288,7 @@
       "description": "Self-mining smart contract."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1b22c32cd936cb97c28c5690a0695a82abf688e6",
       "name": "MyWish Token",
       "symbol": "WISH",
@@ -1297,7 +1297,7 @@
       "description": "Aims to provide a service for funds management in case of different life events, in safe and convenient way."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
       "name": "TopChainCoin",
       "symbol": "TOPC",
@@ -1306,7 +1306,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
       "name": "ViteToken",
       "symbol": "VITE",
@@ -1315,7 +1315,7 @@
       "description": "High-performance Decentralized Application Platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1b957dc4aefeed3b4a2351a6a6d5cbfbba0cecfa",
       "name": "HOQU Token",
       "symbol": "HQX",
@@ -1324,7 +1324,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1b9743f556d65e757c4c650b4555baf354cb8bd3",
       "name": "EthBits ETBS Token",
       "symbol": "ETBS",
@@ -1333,7 +1333,7 @@
       "description": "ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1bcbc54166f6ba149934870b60506199b6c9db6d",
       "name": "ROC",
       "symbol": "ROC",
@@ -1342,7 +1342,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1c4481750daa5ff521a2a7490d9981ed46465dbd",
       "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
       "symbol": "BCPT",
@@ -1351,7 +1351,7 @@
       "description": "Democratizing the creation of credit through permanently recorded debts and obligations."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1c4b7d0e1885bd7667af3378e0c538f74e712006",
       "name": "IOGToken",
       "symbol": "IOG",
@@ -1360,7 +1360,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff",
       "name": "Soniq Token",
       "symbol": "SONIQ",
@@ -1369,7 +1369,7 @@
       "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7",
       "name": "TEAM",
       "symbol": "TEAM",
@@ -1378,7 +1378,7 @@
       "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1c83501478f1320977047008496dacbd60bb15ef",
       "name": "DigitexFutures",
       "symbol": "DGTX",
@@ -1387,7 +1387,7 @@
       "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
       "name": "ThoreCoin",
       "symbol": "THR",
@@ -1396,7 +1396,7 @@
       "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672",
       "name": "Faceter Token",
       "symbol": "FACE",
@@ -1405,7 +1405,7 @@
       "description": "A computer vision surveillance technology powered by fog network of miners."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd",
       "name": "Fetch",
       "symbol": "FET",
@@ -1414,7 +1414,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0",
       "name": "CanYaCoin",
       "symbol": "CAN",
@@ -1423,7 +1423,7 @@
       "description": "Blockchain-Powered Marketplace of Services"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1d4ccc31dab6ea20f461d329a0562c1c58412515",
       "name": "Talao",
       "symbol": "TALAO",
@@ -1432,7 +1432,7 @@
       "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1da015ea4ad2d3e5586e54b9fb0682ca3ca8a17a",
       "name": "DragonToken",
       "symbol": "DT",
@@ -1441,7 +1441,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1dea979ae76f26071870f824088da78979eb91c8",
       "name": "SPINDLE",
       "symbol": "SPD",
@@ -1450,7 +1450,7 @@
       "description": "Unique Investment/Asset Management Platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1e26b3d07e57f453cae30f7ddd2f945f5bf3ef33",
       "name": "ClearCoin",
       "symbol": "XCLR",
@@ -1459,7 +1459,7 @@
       "description": "ClearCoin makes buying and selling of media on the blockchain simple and seamless. Its platform powers a system allowing for complete data transparency everyone can trust."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1e49ff77c355a3e38d6651ce8404af0e48c5395f",
       "name": "ModulTrade Token",
       "symbol": "MTRc",
@@ -1468,7 +1468,7 @@
       "description": "A smart-contract open ecosystem providing small businesses access to global trade by using a crypto token for payment or borrowing."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1e797ce986c3cff4472f7d38d5c4aba55dfefe40",
       "name": "BCDN",
       "symbol": "BCDN",
@@ -1477,7 +1477,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1ed7ae1f0e2fa4276dd7ddc786334a3df81d50c0",
       "name": "Forty Seven Bank Token",
       "symbol": "FSBT",
@@ -1486,7 +1486,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1f54638b7737193ffd86c19ec51907a7c41755d8",
       "name": "Sola Token",
       "symbol": "SOL",
@@ -1495,7 +1495,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
       "name": "Bancor Network Token",
       "symbol": "BNT",
@@ -1504,7 +1504,7 @@
       "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1fc52f1abade452dd4674477d4711951700b3d27",
       "name": "NOKU",
       "symbol": "NOKU",
@@ -1513,7 +1513,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1fe70be734e473e5721ea57c8b5b01e6caa52686",
       "name": "RNTB Token",
       "symbol": "RNTB",
@@ -1522,7 +1522,7 @@
       "description": "BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2008e3057bd734e10ad13c9eae45ff132abc1722",
       "name": "Zebi Coin",
       "symbol": "ZCO",
@@ -1531,7 +1531,7 @@
       "description": "Blockchaining India‚Äö√Ñ√¥s Big Data"
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x20e94867794dba030ee287f1406e100d03c84cd3",
       "name": "DEW Token",
       "symbol": "DEW",
@@ -1540,7 +1540,7 @@
       "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
       "name": "Sapien Network",
       "symbol": "SPN",
@@ -1549,7 +1549,7 @@
       "description": "Sapien is a decentralized social news platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2167fb82309cf76513e83b25123f8b0559d6b48f",
       "name": "LION",
       "symbol": "LION",
@@ -1558,7 +1558,7 @@
       "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal."
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x2177ccfa776387f6cc4e3dd5cd83509b06e90c58",
       "name": "BTCETH",
       "symbol": "BTCETH",
@@ -1567,7 +1567,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x219218f117dc9348b358b8471c55a073e5e0da0b",
       "name": "Gold Reward Token",
       "symbol": "GRX",
@@ -1576,7 +1576,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x21d5678a62dfe63a47062469ebb2fac2817d8832",
       "name": "YoloCash",
       "symbol": "YLC",
@@ -1585,7 +1585,7 @@
       "description": "A decentralized e-commerce platform builds on blockchain for loyalty rewards."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2233799ee2683d75dfefacbcd2a26c78d34b470d",
       "name": "Network Token",
       "symbol": "NTWK",
@@ -1594,7 +1594,7 @@
       "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x226bb599a12c826476e3a771454697ea52e9e220",
       "name": "Propy",
       "symbol": "PRO",
@@ -1603,7 +1603,7 @@
       "description": "Property Transactions Secured Through Blockchain."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x228ba514309ffdf03a81a205a6d040e429d6e80c",
       "name": "Global Social Chain",
       "symbol": "GSC",
@@ -1612,7 +1612,7 @@
       "description": "Social Chain based on hundreds of millions of users."
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x22c1f6050e56d2876009903609a2cc3fef83b415",
       "name": "The Proof of Attendance",
       "symbol": "POAP",
@@ -1621,7 +1621,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x23352036e911a22cfc692b5e2e196692658aded9",
       "name": "Friendz Coin",
       "symbol": "FDZ",
@@ -1630,7 +1630,7 @@
       "description": "A digital marketing revolutionon the blockchain"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2344871f523cbb28a4f60045531184cf1f03ad24",
       "name": "RoBET - Truly Decentralized Sportsbetting",
       "symbol": "ROBET",
@@ -1639,7 +1639,7 @@
       "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c",
       "name": "Vice",
       "symbol": "VIT",
@@ -1648,7 +1648,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x23ccc43365d9dd3882eab88f43d515208f832430",
       "name": "MidasProtocol",
       "symbol": "MAS",
@@ -1657,7 +1657,7 @@
       "description": "A smart, secure, user-friendly, multi-coin wallet for all essential crypto needs, from safekeeping, intelligent trading, portfolio management, easy conversion to fiat and spending of cryptocurrencies - MidasProtocol.io"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x241ba672574a78a3a604cdd0a94429a73a84a324",
       "name": "4NEW",
       "symbol": "KWATT",
@@ -1666,7 +1666,7 @@
       "description": "CLEAN GREEN ENERGY FOR CRYPTO MINING"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x245ef47d4d0505ecf3ac463f4d81f41ade8f1fd1",
       "name": "Nuggets",
       "symbol": "NUG",
@@ -1675,7 +1675,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b",
       "name": "UnikoinGold",
       "symbol": "UKG",
@@ -1684,7 +1684,7 @@
       "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x24a77c1f17c547105e14813e517be06b0040aa76",
       "name": "Live Stars Token",
       "symbol": "LIVE",
@@ -1693,7 +1693,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x24dcc881e7dd730546834452f21872d5cb4b5293",
       "name": "Data Transaction Token",
       "symbol": "XD",
@@ -1702,7 +1702,7 @@
       "description": "Scroll is a data storage, management and logistics platform that uses blockchain technology to add better cryptography and more transparency to the Internet of Information."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x24ddff6d8b8a42d835af3b440de91f3386554aa4",
       "name": "IUNGO token",
       "symbol": "ING",
@@ -1711,7 +1711,7 @@
       "description": "Decentralised global wireless internet provider"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
       "name": "Raiden Token",
       "symbol": "RDN",
@@ -1720,7 +1720,7 @@
       "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2567c677473d110d75a8360c35309e63b1d52429",
       "name": "ShareX",
       "symbol": "SEXC",
@@ -1729,7 +1729,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3",
       "name": "LML",
       "symbol": "LML",
@@ -1738,7 +1738,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x2604fa406be957e542beb89e6754fcde6815e83f",
       "name": "Playkey Token",
       "symbol": "PKT",
@@ -1747,7 +1747,7 @@
       "description": "Decentralized Cloud Gaming Platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x263c618480dbe35c300d8d5ecda19bbb986acaed",
       "name": "MOT",
       "symbol": "MOT",
@@ -1756,7 +1756,7 @@
       "description": "To build a decentralized, privacy-preserving ecosystem of financial products, services, and applications with unrestricted access for all."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x264dc2dedcdcbb897561a57cba5085ca416fb7b4",
       "name": "QunQunCommunities",
       "symbol": "QUN",
@@ -1765,7 +1765,7 @@
       "description": "Incentive community platform based on blockchain technology."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x26cb3641aaa43911f1d4cb2ce544eb652aac7c47",
       "name": "CrystalToken",
       "symbol": "CYL",
@@ -1774,7 +1774,7 @@
       "description": "Crystal Token is a cryptocurrency token innovating the field of smart trading with the novel Crystal AI Trading which rewards token holders constantly."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x26db5439f651caf491a87d48799da81f191bdb6b",
       "name": "CashBetCoin",
       "symbol": "CBC",
@@ -1783,7 +1783,7 @@
       "description": "Blockchain-Powered iGaming Platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x26e75307fc0c021472feb8f727839531f112f317",
       "name": "Crypto20",
       "symbol": "C20",
@@ -1792,7 +1792,7 @@
       "description": "Tokenized Crypto Index Fund."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
       "name": "AirSwap Token",
       "symbol": "AST",
@@ -1801,7 +1801,7 @@
       "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x27695e09149adc738a978e9a678f99e4c39e9eb9",
       "name": "KickCoin",
       "symbol": "KICK",
@@ -1815,7 +1815,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

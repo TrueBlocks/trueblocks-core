@@ -1,6 +1,6 @@
 ### Further Information on DevCon 5 Speaking Proposals for TrueBlocks:
 
-This video show us giving a demonstration of the MVP of our decentralized blockchain explorer along with a brief explanation of the acticture of TrueBlocks. It was presented to the "Decentralize the Data Now" group led by Griff Green:
+This video show us giving a demonstration of the MVP of our decentralized blockchain explorer along with a brief explanation of the acticture of TrueBlocks. It was presented to the "Decentralize the Data Now" team led by Griff Green:
 
 [Decentralize the Data Now #22](https://youtu.be/_ahaW5Pe2Yc?t=171)
 

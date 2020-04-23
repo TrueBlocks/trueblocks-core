@@ -84,7 +84,7 @@
             {
               "type": "CMonitorCacheItem",
               "deleted": false,
-              "group": "",
+              "tags": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -129,7 +129,7 @@
             {
               "type": "CPriceCacheItem",
               "pair": "---pair---",
-              "group": "",
+              "tags": "",
               "address": "0x0",
               "name": "",
               "symbol": "",
@@ -315,7 +315,7 @@
           "type": "bool"
         },
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {
@@ -442,7 +442,7 @@
           "type": "text"
         },
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

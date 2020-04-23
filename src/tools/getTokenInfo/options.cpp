@@ -113,7 +113,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We're going to turn some of these fields back on
-    manageFields("CAccountName:is_custom,is_prefund,group,name,symbol,source,decimals,description", false);
+    manageFields("CAccountName:is_custom,is_prefund,tags,name,symbol,source,decimals,description", false);
     manageFields("CAccountWatch:all", false);
     manageFields("CTokenBalanceRecord:all", false);
 

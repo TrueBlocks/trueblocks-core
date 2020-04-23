@@ -1,7 +1,7 @@
 ethNames argc: 2 [1:--file:names.txt] 
 ethNames --file:names.txt 
 No results
-group	address	name	symbol	decimals
+tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH		8
 50-Tokens:ERC20	0xa017ac5fac5941f95010b12570b812c974469c2c	Proxeus	XES		18
 50-Tokens:ERC20	0xb052f8a33d8bb068414eade06af6955199f9f010	EcoRealEstate	ECOREAL		18

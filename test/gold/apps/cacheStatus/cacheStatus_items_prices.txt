@@ -17,7 +17,7 @@ cacheStatus --details caches --types prices
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "group": "",
+          "tags": "",
           "address": "0x0",
           "name": "",
           "symbol": "",

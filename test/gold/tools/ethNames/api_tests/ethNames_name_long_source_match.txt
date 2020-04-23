@@ -1,4 +1,4 @@
-group	address	name	symbol	source	decimals	description
+tags	address	name	symbol	source	decimals	description
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars
 50-Tokens	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN	Etherscan.io		Biotron is a fully transparent personal data analytics platform on blockchain.
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On Chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.

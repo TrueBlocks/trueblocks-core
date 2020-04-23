@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 - Antiprosynth Twitter Account Activity",
       "symbol": "",
@@ -10,7 +10,7 @@
       "description": ""
     },
     {
-      "group": "91-Friends",
+      "tags": "91-Friends",
       "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
       "name": "TrueBlocks Tip Jar Doner",
       "symbol": "",
@@ -19,7 +19,7 @@
       "description": ""
     },
     {
-      "group": "91-Friends",
+      "tags": "91-Friends",
       "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
       "name": "psdev tip jar",
       "symbol": "",
@@ -28,7 +28,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
       "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
       "symbol": "",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "name": "Etherum Tip Jar",
       "symbol": "TIP",
@@ -51,7 +51,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

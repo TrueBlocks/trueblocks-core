@@ -1,4 +1,4 @@
-# group	address	name	symbol	source	decimals	description
+# tags	address	name	symbol	source	decimals	description
 30-Contracts	0xb9ef770b6a5e12e45983c5d80545258aa38f3b78	0chain	ZCN	Etherscan.io		0chain is an infinitely scalable decentralized Cloud for any application.
 30-Contracts	0x1820a4b7618bde71dce8cdc73aab6c95905fad24	1820 Registry	REG	TrueBlocks.io		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820
 30-Contracts	0x81f7564e413586f1f99fde55740ac52b43ca99c9	ACL CS		TrueBlocks.io		

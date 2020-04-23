@@ -101,7 +101,7 @@ bool loadNames(COptionsBase& options) {
     LOG4("Updating names database");
     txtFields.clear();
     lines.clear();
-    fields = "group|address|name|symbol|source|decimals|description";
+    fields = "tags|address|name|symbol|source|decimals|description";
     explode(txtFields, fields, '|');
     asciiFileToLines(txtFile, lines);
     for (auto line : lines) {
@@ -136,7 +136,7 @@ bool loadNames(COptionsBase& options) {
             CAccountName account;
             account.parseText(txtFields, line);
             account.is_prefund = true;
-            account.group = "80-Prefund";
+            account.tags = "80-Prefund";
             account.name = "Prefund_" + padNum4(cnt++);
             account.source = "Genesis";
             options.namedAccounts.push_back(account);
@@ -179,6 +179,6 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     return true;
 }
 
-// group(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)
+// tags(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)
 
 }  // namespace qblocks

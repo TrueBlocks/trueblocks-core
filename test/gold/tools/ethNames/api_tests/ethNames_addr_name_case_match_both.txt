@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
       "name": "Humaniq",
       "symbol": "HMQ",
@@ -15,7 +15,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

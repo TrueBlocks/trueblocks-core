@@ -1,6 +1,6 @@
 ethNames argc: 2 [1:--tags] 
 ethNames --tags 
-group
+tags
 
 30-Contracts
 30-Contracts:Giveeth

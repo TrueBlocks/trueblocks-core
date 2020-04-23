@@ -27,7 +27,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccountName : public CBaseNode {
   public:
-    string_q group;
+    string_q tags;
     address_t address;
     string_q name;
     string_q symbol;
@@ -104,7 +104,7 @@ inline void CAccountName::clear(void) {
 inline void CAccountName::initialize(void) {
     CBaseNode::initialize();
 
-    group = "";
+    tags = "";
     address = "";
     name = "";
     symbol = "";
@@ -129,7 +129,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     clear();
     CBaseNode::duplicate(ac);
 
-    group = ac.group;
+    tags = ac.tags;
     address = ac.address;
     name = ac.name;
     symbol = ac.symbol;
@@ -169,7 +169,7 @@ inline bool CAccountName::operator==(const CAccountName& item) const {
 inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
     // EXISTING_CODE
     if (v1.address == v2.address)
-        return v1.group < v2.group;
+        return v1.tags < v2.tags;
     // EXISTING_CODE
     // Default sort as defined in class definition
     return v1.address < v2.address;

@@ -19,7 +19,7 @@ cacheStatus --details abis
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",

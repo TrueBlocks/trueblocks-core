@@ -1,6 +1,6 @@
 ethNames argc: 5 [1:0xcb] [2:--match_case] [3:--fmt] [4:txt] 
 ethNames 0xcb --match_case --fmt txt 
-group	address	name	symbol	decimals
+tags	address	name	symbol	decimals
 90-DevCon2:Individual	0xcb4baa0344065655da9e7d2dde781e5efa25995e	Jordi Baylina
 50-Tokens:ERC20	0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR		8
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6

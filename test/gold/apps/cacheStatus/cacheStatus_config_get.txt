@@ -249,17 +249,17 @@ cacheStatus --get_config
               "named": [
                 {
                   "address": "0x0000100001000010000100001000010000100001",
-                  "group": "81-Custom",
                   "is_custom": false,
                   "is_prefund": false,
-                  "name": "TestWallet1"
+                  "name": "TestWallet1",
+                  "tags": "81-Custom"
                 },
                 {
                   "address": "0x0000200002000020000200002000020000200002",
-                  "group": "81-Custom",
                   "is_custom": false,
                   "is_prefund": false,
-                  "name": "TestWallet2"
+                  "name": "TestWallet2",
+                  "tags": "81-Custom"
                 }
               ]
             }

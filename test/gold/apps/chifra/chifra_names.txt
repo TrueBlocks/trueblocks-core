@@ -2,7 +2,7 @@ chifra argc: 5 [1:names] [2:--names] [3:50-Tokens] [4:--expand]
 chifra names --names 50-Tokens --expand 
 ethNames argc: 3 [1:50-Tokens] [2:--expand] 
 ethNames 50-Tokens --expand 
-group	address	name	symbol	source	decimals	description
+tags	address	name	symbol	source	decimals	description
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	On Chain	18	Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX	On Chain	18	Blockchain Prediction Markets Platform.

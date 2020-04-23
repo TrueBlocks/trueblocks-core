@@ -1,4 +1,4 @@
-group	address	name	symbol	decimals
+tags	address	name	symbol	decimals
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX		18
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18

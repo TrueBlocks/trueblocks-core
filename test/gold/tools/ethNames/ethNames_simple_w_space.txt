@@ -1,6 +1,6 @@
 ethNames argc: 4 [1:etwork] [2:--fmt] [3:txt] 
 ethNames etwork --fmt txt 
-group	address	name	symbol	decimals
+tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT		18
 31-Gitcoin Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 - Poa Network Community Management Grant For Adj

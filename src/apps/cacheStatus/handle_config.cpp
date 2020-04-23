@@ -168,12 +168,12 @@ bool COptions::handle_config_get(ostream& os) {
                        "user specific list of names for addresses -- private data -- not shared", false, false);
         if (isTestMode()) {
             CAccountName test1;
-            test1.group = "81-Custom";
+            test1.tags = "81-Custom";
             test1.address = "0x0000100001000010000100001000010000100001";
             test1.name = "TestWallet1";
             i1.named.push_back(test1);
             CAccountName test2;
-            test2.group = "81-Custom";
+            test2.tags = "81-Custom";
             test2.address = "0x0000200002000020000200002000020000200002";
             test2.name = "TestWallet2";
             i1.named.push_back(test2);
@@ -240,8 +240,8 @@ bool COptions::handle_config_set(ostream& os) {
             cerr << cYellow << string_q(120, '-') << cOff << endl;
         }
 
-        for (auto group : file.sections) {
-            for (auto key : group.keys) {
+        for (auto section : file.sections) {
+            for (auto key : section.keys) {
                 string_q val = key.getValueByName("value");
                 if (contains(key.name, "list")) {
                     ostringstream oss;
@@ -263,7 +263,7 @@ bool COptions::handle_config_set(ostream& os) {
                 if (isPath && !endsWith(val, '/'))
                     val += "/";
 
-                bool isDefaultConfigPath = (contains(path, "quickBlocks.toml") && group.name == "settings" &&
+                bool isDefaultConfigPath = (contains(path, "quickBlocks.toml") && section.name == "settings" &&
                                             key.name == "configPath" && val == configPathRelative(""));
 
                 if (isDefaultConfigPath) {
@@ -273,15 +273,15 @@ bool COptions::handle_config_set(ostream& os) {
                     cerr << "  "
                          << "toml.";
                     cerr << (isBool ? "setConfigBool(" : "setConfigStr(");
-                    cerr << "\"" << group.name << "\", ";
+                    cerr << "\"" << section.name << "\", ";
                     cerr << "\"" << key.name << "\", ";
                     cerr << (isBool ? bool_2_Str(str_2_Bool(val)) : ("\"" + val + "\""));
                     cerr << ");" << endl;
 
                     if (key.type == "bool") {
-                        toml.setConfigBool(group.name, key.name, str_2_Bool(val));
+                        toml.setConfigBool(section.name, key.name, str_2_Bool(val));
                     } else {
-                        toml.setConfigStr(group.name, key.name, val);
+                        toml.setConfigStr(section.name, key.name, val);
                     }
                 }
             }
@@ -480,12 +480,12 @@ const char* STR_TEST_DATA =
     "                \"named\": [\n"
     "                  {\n"
     "                    \"address\": \"0x0000100001000010000100001000010000100001\",\n"
-    "                    \"group\": \"81-Custom\",\n"
+    "                    \"tags\": \"81-Custom\",\n"
     "                    \"name\": \"TestWallet1\"\n"
     "                  },\n"
     "                  {\n"
     "                    \"address\": \"0x0000200002000020000200002000020000200002\",\n"
-    "                    \"group\": \"81-Custom\",\n"
+    "                    \"tags\": \"81-Custom\",\n"
     "                    \"name\": \"TestWallet2\"\n"
     "                  }\n"
     "                ]\n"

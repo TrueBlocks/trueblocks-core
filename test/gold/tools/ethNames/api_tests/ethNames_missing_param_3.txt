@@ -1,4 +1,4 @@
-group	address	name	symbol	decimals	source
+tags	address	name	symbol	decimals	source
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	Homework				TrueBlocks.io
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD				Etherscan.io
 30-Contracts	0x00000000dd05dd05dd05dd05dd05dd05dd05dd05	Falsified Address Because of Ddos				TrueBlocks.io

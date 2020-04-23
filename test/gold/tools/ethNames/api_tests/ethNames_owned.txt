@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "group": "",
+      "tags": "",
       "address": "0x0000000000000000000000000000000000000001",
       "name": "",
       "symbol": "",
@@ -10,7 +10,7 @@
       "description": ""
     },
     {
-      "group": "",
+      "tags": "",
       "address": "0x0000000000000000000000000000000000000002",
       "name": "",
       "symbol": "",
@@ -19,7 +19,7 @@
       "description": ""
     },
     {
-      "group": "",
+      "tags": "",
       "address": "0x0000000000000000000000000000000000000003",
       "name": "",
       "symbol": "",
@@ -28,7 +28,7 @@
       "description": ""
     },
     {
-      "group": "",
+      "tags": "",
       "address": "0x0000000000000000000000000000000000000004",
       "name": "",
       "symbol": "",
@@ -42,7 +42,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

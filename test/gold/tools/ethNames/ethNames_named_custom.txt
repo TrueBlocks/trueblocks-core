@@ -1,6 +1,6 @@
 ethNames argc: 5 [1:--named] [2:--custom] [3:--fmt] [4:csv] 
 ethNames --named --custom --fmt csv 
-"group","address","name","symbol","decimals"
+"tags","address","name","symbol","decimals"
 "81-Custom","0x0000000000000000000000000000000000000001","Account_1","","",""
 "81-Custom","0x0000000000000000000000000000000000000002","Account_2","AC_2","","2"
 "81-Custom","0x0000000000000000000000000000000000000003","Account_3","","",""

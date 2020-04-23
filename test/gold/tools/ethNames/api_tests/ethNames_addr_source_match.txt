@@ -1,2 +1,2 @@
-group	address	name	symbol	decimals	source
+tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM		18	On Chain

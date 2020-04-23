@@ -178,8 +178,8 @@ bool COptions::parseArguments(string_q& command) {
 
     if (tags) {
         manageFields("CAccountName:all", false);
-        manageFields("CAccountName:group", true);
-        format = "[{GROUP}]";
+        manageFields("CAccountName:tags", true);
+        format = "[{TAGS}]";
         addr_only = false;
         types |= NAMED;
         types |= PREFUND;
@@ -204,7 +204,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Data wrangling
     if (addr_only) {
-        HIDE_FIELD(CAccountName, "group");
+        HIDE_FIELD(CAccountName, "tags");
         HIDE_FIELD(CAccountName, "name");
         HIDE_FIELD(CAccountName, "symbol");
         HIDE_FIELD(CAccountName, "description");
@@ -270,12 +270,12 @@ bool COptions::addIfUnique(const CAccountName& item) {
         return true;
 
     if (isTestMode() &&
-        (contains(item.group, "Kickback") || contains(item.group, "Humanity")))  // don't expose people during testing
+        (contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
         return true;
 
     if (tags) {
-        string_q key = item.group;
-        if (items[key].group == key)  // already exists
+        string_q key = item.tags;
+        if (items[key].tags == key)  // already exists
             return false;
         items[key] = item;
         return true;
@@ -339,7 +339,7 @@ void COptions::applyFilter() {
             uint32_t cnt = 0;
             for (auto addr : addrs) {
                 CAccountName item;
-                item.group = "00-Active";
+                item.tags = "00-Active";
                 item.address = addr;
                 item.name = "Owned_" + padNum4(cnt++);
                 addIfUnique(item);
@@ -352,7 +352,7 @@ void COptions::applyFilter() {
         if (isTestMode()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
-                item.group = "81-Custom";
+                item.tags = "81-Custom";
                 item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
                 item.name = "Account_" + uint_2_Str(i);
                 if (!(i % 2)) {
@@ -373,7 +373,7 @@ void COptions::applyFilter() {
     //------------------------
     if (types & NAMED) {
         for (auto item : namedAccounts) {
-            if (!item.is_custom && !item.is_prefund && !startsWith(item.group, "81-Other"))
+            if (!item.is_custom && !item.is_prefund && !startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
     }
@@ -389,7 +389,7 @@ void COptions::applyFilter() {
     //------------------------
     if (!isTestMode() && (types & OTHER)) {
         for (auto item : namedAccounts) {
-            if (startsWith(item.group, "81-Other"))
+            if (startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
     }

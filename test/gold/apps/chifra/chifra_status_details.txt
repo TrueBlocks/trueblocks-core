@@ -338,7 +338,7 @@ cacheStatus all --details --start 1400000 --end 2000000
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",
@@ -375,7 +375,7 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",
@@ -448,7 +448,7 @@ cacheStatus all --details --start 1400000 --end 2000000
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "group": "",
+          "tags": "",
           "address": "0x0",
           "name": "",
           "symbol": "",

@@ -19,7 +19,7 @@
               "nFunctions": 36963,
               "nEvents": 36963,
               "nOther": 36963,
-              "group": "",
+              "tags": "",
               "address": "---address---",
               "name": "",
               "symbol": "",
@@ -99,7 +99,7 @@
           "type": "unumber"
         },
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

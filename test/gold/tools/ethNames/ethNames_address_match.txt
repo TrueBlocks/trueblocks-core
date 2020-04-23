@@ -2,7 +2,7 @@ ethNames argc: 4 [1:0x1] [2:--fmt] [3:api]
 ethNames 0x1 --fmt api 
 {"data": [
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x10086399dd8c1e3de736724af52587a2044c9fa2",
     "name": "The Midas Touch Gold",
     "symbol": "TMTG",
@@ -11,7 +11,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
     "name": "BitCapitalVendorToken",
     "symbol": "BCV",
@@ -20,7 +20,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
     "name": "Genesis Vision Token",
     "symbol": "GVT",
@@ -29,7 +29,7 @@ ethNames 0x1 --fmt api
     "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
     "name": "Aigang",
     "symbol": "AIX",
@@ -38,7 +38,7 @@ ethNames 0x1 --fmt api
     "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c",
     "name": "Rock Token",
     "symbol": "RKT",
@@ -47,7 +47,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
     "name": "Grant 083 - Poa Network Community Management Grant For Adj",
     "symbol": "",
@@ -56,7 +56,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
     "name": "Bloom Token",
     "symbol": "BLT",
@@ -65,7 +65,7 @@ ethNames 0x1 --fmt api
     "description": "Decentralized credit scoring powered by Ethereum and IPFS."
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x10fa9f37f646bb353945fe90d41a44e1c60745fb",
     "name": "Possibly Malicious 0x10f",
     "symbol": "",
@@ -74,7 +74,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
     "name": "Centrality Token",
     "symbol": "CENNZ",
@@ -83,7 +83,7 @@ ethNames 0x1 --fmt api
     "description": "Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points."
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x11378851299a15a849ad0057a834c23ef1b3d381",
     "name": "tandava",
     "symbol": "",
@@ -92,7 +92,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
     "name": "QVT",
     "symbol": "QVT",
@@ -101,7 +101,7 @@ ethNames 0x1 --fmt api
     "description": "Sell and buy crypto assets around the world for local payment methods."
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1191be4dbfac983c9ce87e3411542d69d382f7d6",
     "name": "durandal",
     "symbol": "",
@@ -110,7 +110,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
     "name": "Grant 048 - Uniswap",
     "symbol": "",
@@ -119,7 +119,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
     "name": "ITL (Italian Lira)",
     "symbol": "ITL",
@@ -128,7 +128,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
     "name": "BitClave",
     "symbol": "CAT",
@@ -137,7 +137,7 @@ ethNames 0x1 --fmt api
     "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
     "name": "LGO Token",
     "symbol": "LGO",
@@ -146,7 +146,7 @@ ethNames 0x1 --fmt api
     "description": "Exchange with decentralized ledgers"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
     "name": "ArbitrageCT",
     "symbol": "ARCT",
@@ -155,7 +155,7 @@ ethNames 0x1 --fmt api
     "description": "Trading crypto-currency terminal for two exchanges simultaneously."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
     "name": "Substratum",
     "symbol": "SUB",
@@ -164,7 +164,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x1248d79bdebd516156930a5c8ee232d4ed80ead4",
     "name": "Possibly Malicious 0x124",
     "symbol": "",
@@ -173,7 +173,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1267895780369b48a02781eb08d353e426e5f256",
     "name": "nagydani",
     "symbol": "",
@@ -182,7 +182,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
     "name": "TrakInvest Token",
     "symbol": "TRAK",
@@ -191,7 +191,7 @@ ethNames 0x1 --fmt api
     "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
   },
   {
-    "group": "33-Set Protocol:Wrapers",
+    "tags": "33-Set Protocol:Wrapers",
     "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
     "name": "Zero Ex Exchange Wrapper",
     "symbol": "",
@@ -200,7 +200,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x12add8f3b37fe5fbecdb1208233c0e56dfecf200",
     "name": "Stefan George",
     "symbol": "",
@@ -209,7 +209,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x12aef9585197d02106045de55f01c9c30301d70a",
     "name": "Jirat",
     "symbol": "",
@@ -218,7 +218,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens",
+    "tags": "50-Tokens",
     "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
     "name": "Grid+ Token",
     "symbol": "GRID",
@@ -227,7 +227,7 @@ ethNames 0x1 --fmt api
     "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
     "name": "Spectre.ai D-Token",
     "symbol": "SXDT",
@@ -236,7 +236,7 @@ ethNames 0x1 --fmt api
     "description": "Broker-less financial trading platform."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
     "name": "Cofoundit",
     "symbol": "CFI",
@@ -245,7 +245,7 @@ ethNames 0x1 --fmt api
     "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
     "name": "MoneyToken",
     "symbol": "IMT",
@@ -254,7 +254,7 @@ ethNames 0x1 --fmt api
     "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 - Antiprosynth Twitter Account Activity",
     "symbol": "",
@@ -263,7 +263,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
     "name": "Grant 120 - Nori",
     "symbol": "",
@@ -272,7 +272,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
     "name": "Musiconomi",
     "symbol": "MCI",
@@ -281,7 +281,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
     "name": "BoutsPro",
     "symbol": "BOUTS",
@@ -290,7 +290,7 @@ ethNames 0x1 --fmt api
     "description": "Professional Karate Sports Organization"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
     "name": "PHI Token",
     "symbol": "PHI",
@@ -299,7 +299,7 @@ ethNames 0x1 --fmt api
     "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13e9ec660d872f55405d70e5c52d872136f0970c",
     "name": "TKT",
     "symbol": "TKT",
@@ -308,7 +308,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
     "name": "Divi Exchange Token",
     "symbol": "DIVX",
@@ -317,7 +317,7 @@ ethNames 0x1 --fmt api
     "description": "Digital Currency"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2",
     "name": "Accelerator",
     "symbol": "ACC",
@@ -326,7 +326,7 @@ ethNames 0x1 --fmt api
     "description": "A proof-of-stake smart contract backed by a physical mining facility."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x13f25cd52b21650caa8225c9942337d914c9b030",
     "name": "realchain token",
     "symbol": "RCT",
@@ -335,7 +335,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
     "name": "Grant 212 - Thx Open Protocol For Online Rewards",
     "symbol": "",
@@ -344,7 +344,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
     "name": "KAN",
     "symbol": "KAN",
@@ -353,7 +353,7 @@ ethNames 0x1 --fmt api
     "description": "A decentralized cryptocurrency-concentrated & content payment community."
   },
   {
-    "group": "91-Friends",
+    "tags": "91-Friends",
     "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
     "name": "Pool Together God",
     "symbol": "",
@@ -362,7 +362,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
     "name": "Chainium",
     "symbol": "CHX",
@@ -371,7 +371,7 @@ ethNames 0x1 --fmt api
     "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x146d8d942048ad517479c9bab1788712af180fde",
     "name": "Mobile Integrated Blockchain",
     "symbol": "MIB",
@@ -380,7 +380,7 @@ ethNames 0x1 --fmt api
     "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x147454510acc3856bc5d1727715c2efff526de5d",
     "name": "scofield",
     "symbol": "",
@@ -389,7 +389,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "91-Friends",
+    "tags": "91-Friends",
     "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
     "name": "Jin's Wallet",
     "symbol": "",
@@ -398,7 +398,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
     "name": "Bethereum",
     "symbol": "BETHER",
@@ -407,7 +407,7 @@ ethNames 0x1 --fmt api
     "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x14e25eea7034c4dfc909bacac866e930a0576c75",
     "name": "TRX Airdrop",
     "symbol": "",
@@ -416,7 +416,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "33-Set Protocol:Factories",
+    "tags": "33-Set Protocol:Factories",
     "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
     "name": "Set Token Factory",
     "symbol": "",
@@ -425,7 +425,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x14f37b574242d366558db61f3335289a5035c506",
     "name": "HackerGold",
     "symbol": "HKG",
@@ -434,7 +434,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
     "name": "Stephen King",
     "symbol": "",
@@ -443,7 +443,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x151202c9c18e495656f372281f493eb7698961d5",
     "name": "DEBITUM",
     "symbol": "DEB",
@@ -452,7 +452,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
     "name": "d2friend",
     "symbol": "",
@@ -461,7 +461,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
     "name": "XOVBank",
     "symbol": "XOV",
@@ -470,7 +470,7 @@ ethNames 0x1 --fmt api
     "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
     "name": "VisionX",
     "symbol": "VNX",
@@ -479,7 +479,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
     "name": "Possibly Malicious 0x157",
     "symbol": "",
@@ -488,7 +488,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x1591b9056822c273252fcea32963223650db18e1",
     "name": "Grant 220 - Cryptorado",
     "symbol": "",
@@ -497,7 +497,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
     "name": "Alpha Coin",
     "symbol": "APC",
@@ -506,7 +506,7 @@ ethNames 0x1 --fmt api
     "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
     "name": "anTok Airdrop",
     "symbol": "",
@@ -515,7 +515,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
     "name": "Grant 211 - Trust Graphic Novel",
     "symbol": "",
@@ -524,7 +524,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
     "name": "eREAL",
     "symbol": "eREAL",
@@ -533,7 +533,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
     "name": "Qubitica",
     "symbol": "QBIT",
@@ -542,7 +542,7 @@ ethNames 0x1 --fmt api
     "description": "A distributed blockchain enterprise."
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
     "name": "Possibly Malicious 0x160",
     "symbol": "",
@@ -551,7 +551,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
     "name": "Jury.Online Airdrop Sender",
     "symbol": "",
@@ -560,7 +560,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
     "name": "RHOC",
     "symbol": "RHOC",
@@ -569,7 +569,7 @@ ethNames 0x1 --fmt api
     "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x16893e10b99a59afd2c60331e0b49241d4d4d7cc",
     "name": "Simon de la Rouviere",
     "symbol": "",
@@ -578,7 +578,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x16c1e5baf21b9fa4bc9f2c374e4dc19fab5ac5dc",
     "name": "APOT",
     "symbol": "APOT",
@@ -587,7 +587,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
     "name": "United Traders Token",
     "symbol": "UTT",
@@ -596,7 +596,7 @@ ethNames 0x1 --fmt api
     "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
     "name": "OwnData",
     "symbol": "OWN",
@@ -605,7 +605,7 @@ ethNames 0x1 --fmt api
     "description": "Owndata is a crypto marketplace for data sellers and buyers."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x171d750d42d661b62c277a6b486adb82348c3eca",
     "name": "Omnitude Token",
     "symbol": "ECOM",
@@ -614,7 +614,7 @@ ethNames 0x1 --fmt api
     "description": "Omnitude is a middleware layer allowing eCommerce businesses to adopt blockchain quickly and efficiently, without needing to replace current systems."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
     "name": "Numeraire",
     "symbol": "NMR",
@@ -623,7 +623,7 @@ ethNames 0x1 --fmt api
     "description": "The stock market is inefficient with respect to new developments in machine learning ‚Äö√Ñ√Æ only a fraction of the world's data scientists have access to its data. Numerai is changing this."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
     "name": "CoinDash Token",
     "symbol": "CDT",
@@ -632,7 +632,7 @@ ethNames 0x1 --fmt api
     "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x17a7ad6a2850f58f7344ae27e53eb44f81f9655c",
     "name": "RZM Airdrop Sender",
     "symbol": "",
@@ -641,7 +641,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482",
     "name": "Insight Chain",
     "symbol": "INB",
@@ -650,7 +650,7 @@ ethNames 0x1 --fmt api
     "description": "Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64",
     "name": "Freyr Coin",
     "symbol": "FREC",
@@ -659,7 +659,7 @@ ethNames 0x1 --fmt api
     "description": "Blockchain-based collectibles data authentication platform"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x17f8afb63dfcdcc90ebe6e84f060cc306a98257d",
     "name": "Nebula AI Token",
     "symbol": "NBAI",
@@ -668,7 +668,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
     "name": "FLiK",
     "symbol": "FLIK",
@@ -677,7 +677,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "30-Contracts",
+    "tags": "30-Contracts",
     "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
     "name": "1820 Registry",
     "symbol": "REG",
@@ -686,7 +686,7 @@ ethNames 0x1 --fmt api
     "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1829aa045e21e0d59580024a951db48096e01782",
     "name": "FuzeX Token",
     "symbol": "FXT",
@@ -695,7 +695,7 @@ ethNames 0x1 --fmt api
     "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x182ebf4c80b28efc45ad992ecbb9f730e31e8c7f",
     "name": "LPT Airdrop",
     "symbol": "LPT",
@@ -704,7 +704,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
     "name": "Oyster Pearl",
     "symbol": "PRL",
@@ -713,7 +713,7 @@ ethNames 0x1 --fmt api
     "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
     "name": "Grant 133 - Abridged",
     "symbol": "",
@@ -722,7 +722,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x187c4b0e3819017a5cf07af81a4e2b16166aabc6",
     "name": "ICOCalendar.Today",
     "symbol": "ICT",
@@ -731,7 +731,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
     "name": "SNGX Airdrop Sender",
     "symbol": "",
@@ -740,7 +740,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "33-Set Protocol:Other",
+    "tags": "33-Set Protocol:Other",
     "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
     "name": "Payable Exchange Issue",
     "symbol": "",
@@ -749,7 +749,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "30-Contracts",
+    "tags": "30-Contracts",
     "address": "0x19076bd01e86fa3d76334e27d4b8e6789688a42d",
     "name": "Gnosis Auction",
     "symbol": "",
@@ -758,7 +758,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
     "name": "BitDegree Token",
     "symbol": "BDG",
@@ -767,7 +767,7 @@ ethNames 0x1 --fmt api
     "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
     "name": "nDEX",
     "symbol": "NDX",
@@ -776,7 +776,7 @@ ethNames 0x1 --fmt api
     "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
   },
   {
-    "group": "50-Tokens",
+    "tags": "50-Tokens",
     "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
     "name": "Augur Token",
     "symbol": "REP",
@@ -785,7 +785,7 @@ ethNames 0x1 --fmt api
     "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x1992764a6fd30ad0ad6ec665b3483838acb02fba",
     "name": "Possibly Malicious 0x199",
     "symbol": "",
@@ -794,7 +794,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x19a2f57f30206f7343ee5928c32bae3f2bfacbcd",
     "name": "CGCX Airdrop Sender",
     "symbol": "",
@@ -803,7 +803,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens",
+    "tags": "50-Tokens",
     "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
     "name": "Hacker Gold",
     "symbol": "HKG",
@@ -812,7 +812,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c",
     "name": "Carats Token",
     "symbol": "CARAT",
@@ -821,7 +821,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1a0f2ab46ec630f9fd638029027b552afa64b94c",
     "name": "Aston X",
     "symbol": "ATX",
@@ -830,7 +830,7 @@ ethNames 0x1 --fmt api
     "description": "Document Distribution Platform"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7",
     "name": "ECHAT TOKEN",
     "symbol": "ECHT",
@@ -839,7 +839,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x1a2a44a10624bea74988d877e770d56a14a258b4",
     "name": "Possibly Malicious 0x1a2",
     "symbol": "",
@@ -848,7 +848,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7",
     "name": "PRASM",
     "symbol": "PSM",
@@ -857,7 +857,7 @@ ethNames 0x1 --fmt api
     "description": "AI-Based Decentralized Bioinformatic Network"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
     "name": "AppCoins",
     "symbol": "APPC",
@@ -866,7 +866,7 @@ ethNames 0x1 --fmt api
     "description": "AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem."
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x1a808e137ca97712b97b0c50a046e53b7e58bedc",
     "name": "LPT Airdrop Sender",
     "symbol": "",
@@ -875,7 +875,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
     "name": "minereum",
     "symbol": "MNE",
@@ -884,7 +884,7 @@ ethNames 0x1 --fmt api
     "description": "Self-mining smart contract."
   },
   {
-    "group": "31-Gitcoin Grants",
+    "tags": "31-Gitcoin Grants",
     "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
     "name": "Grant 150 - Ethereum Egift Cards",
     "symbol": "",
@@ -893,7 +893,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "30-Contracts:dAppNode",
+    "tags": "30-Contracts:dAppNode",
     "address": "0x1abf8d63ac29be2a8c3411901b3bee6fadca2dc4",
     "name": "dAddNode Package 005",
     "symbol": "",
@@ -902,7 +902,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1b22c32cd936cb97c28c5690a0695a82abf688e6",
     "name": "MyWish Token",
     "symbol": "WISH",
@@ -911,7 +911,7 @@ ethNames 0x1 --fmt api
     "description": "Aims to provide a service for funds management in case of different life events, in safe and convenient way."
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1b5c6e1e7981a186fc54bfa343bab295027ac351",
     "name": "Simon Janin",
     "symbol": "",
@@ -920,7 +920,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1b63142628311395ceafeea5667e7c9026c862ca",
     "name": "Taylor Gerring",
     "symbol": "",
@@ -929,7 +929,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
     "name": "TopChainCoin",
     "symbol": "TOPC",
@@ -938,7 +938,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
     "name": "ViteToken",
     "symbol": "VITE",
@@ -947,7 +947,7 @@ ethNames 0x1 --fmt api
     "description": "High-performance Decentralized Application Platform"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1b957dc4aefeed3b4a2351a6a6d5cbfbba0cecfa",
     "name": "HOQU Token",
     "symbol": "HQX",
@@ -956,7 +956,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1b9743f556d65e757c4c650b4555baf354cb8bd3",
     "name": "EthBits ETBS Token",
     "symbol": "ETBS",
@@ -965,7 +965,7 @@ ethNames 0x1 --fmt api
     "description": "ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1bcbc54166f6ba149934870b60506199b6c9db6d",
     "name": "ROC",
     "symbol": "ROC",
@@ -974,7 +974,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x1c19839c88c0cdb4d0b10208833101d75454d7c1",
     "name": "EMO Airdrop Sender",
     "symbol": "",
@@ -983,7 +983,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1c4481750daa5ff521a2a7490d9981ed46465dbd",
     "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
     "symbol": "BCPT",
@@ -992,7 +992,7 @@ ethNames 0x1 --fmt api
     "description": "Democratizing the creation of credit through permanently recorded debts and obligations."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1c4b7d0e1885bd7667af3378e0c538f74e712006",
     "name": "IOGToken",
     "symbol": "IOG",
@@ -1001,7 +1001,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff",
     "name": "Soniq Token",
     "symbol": "SONIQ",
@@ -1010,7 +1010,7 @@ ethNames 0x1 --fmt api
     "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7",
     "name": "TEAM",
     "symbol": "TEAM",
@@ -1019,7 +1019,7 @@ ethNames 0x1 --fmt api
     "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1c83501478f1320977047008496dacbd60bb15ef",
     "name": "DigitexFutures",
     "symbol": "DGTX",
@@ -1028,7 +1028,7 @@ ethNames 0x1 --fmt api
     "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
     "name": "ThoreCoin",
     "symbol": "THR",
@@ -1037,7 +1037,7 @@ ethNames 0x1 --fmt api
     "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672",
     "name": "Faceter Token",
     "symbol": "FACE",
@@ -1046,7 +1046,7 @@ ethNames 0x1 --fmt api
     "description": "A computer vision surveillance technology powered by fog network of miners."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd",
     "name": "Fetch",
     "symbol": "FET",
@@ -1055,7 +1055,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "30-Contracts:dAppNode",
+    "tags": "30-Contracts:dAppNode",
     "address": "0x1d31bd9b2d6cc17873573dbb619d8b79f7cd390d",
     "name": "dAddNode Package 006",
     "symbol": "",
@@ -1064,7 +1064,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0",
     "name": "CanYaCoin",
     "symbol": "CAN",
@@ -1073,7 +1073,7 @@ ethNames 0x1 --fmt api
     "description": "Blockchain-Powered Marketplace of Services"
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1d4ccc31dab6ea20f461d329a0562c1c58412515",
     "name": "Talao",
     "symbol": "TALAO",
@@ -1082,7 +1082,7 @@ ethNames 0x1 --fmt api
     "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain"
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1d4d0ab897b0f6cc53399641660c797de9f61358",
     "name": "bix",
     "symbol": "",
@@ -1091,7 +1091,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1da015ea4ad2d3e5586e54b9fb0682ca3ca8a17a",
     "name": "DragonToken",
     "symbol": "DT",
@@ -1100,7 +1100,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "34-ENS",
+    "tags": "34-ENS",
     "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
     "name": "ENS: Old Resolver",
     "symbol": "",
@@ -1109,7 +1109,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x1dacf33da596a743be75933ce066f9c6e142a460",
     "name": "Possibly Malicious 0x1da",
     "symbol": "",
@@ -1118,7 +1118,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x1db7332d24ebbdc5f49c34aa6830cb7f46a3647c",
     "name": "ZRX Airdrop Sender",
     "symbol": "",
@@ -1127,7 +1127,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "33-Set Protocol:Modules",
+    "tags": "33-Set Protocol:Modules",
     "address": "0x1db929398958082d2080aa1b501e460503f60467",
     "name": "Rebalance Auction Module",
     "symbol": "",
@@ -1136,7 +1136,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "60-Airdrops",
+    "tags": "60-Airdrops",
     "address": "0x1dba1131000664b884a1ba238464159892252d3a",
     "name": "WHG: Jordi Baylina (Giveth Wallet Owner 4)",
     "symbol": "",
@@ -1145,7 +1145,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1dc107262e81c58e617aa4820666d14e5e87ed89",
     "name": "connorkeenan",
     "symbol": "",
@@ -1154,7 +1154,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1dea979ae76f26071870f824088da78979eb91c8",
     "name": "SPINDLE",
     "symbol": "SPD",
@@ -1163,7 +1163,7 @@ ethNames 0x1 --fmt api
     "description": "Unique Investment/Asset Management Platform"
   },
   {
-    "group": "90-DevCon2:Individual",
+    "tags": "90-DevCon2:Individual",
     "address": "0x1e11be122d06ed8cc2caba092426d12e1a193b82",
     "name": "John",
     "symbol": "",
@@ -1172,7 +1172,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1e26b3d07e57f453cae30f7ddd2f945f5bf3ef33",
     "name": "ClearCoin",
     "symbol": "XCLR",
@@ -1181,7 +1181,7 @@ ethNames 0x1 --fmt api
     "description": "ClearCoin makes buying and selling of media on the blockchain simple and seamless. Its platform powers a system allowing for complete data transparency everyone can trust."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1e49ff77c355a3e38d6651ce8404af0e48c5395f",
     "name": "ModulTrade Token",
     "symbol": "MTRc",
@@ -1190,7 +1190,7 @@ ethNames 0x1 --fmt api
     "description": "A smart-contract open ecosystem providing small businesses access to global trade by using a crypto token for payment or borrowing."
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1e797ce986c3cff4472f7d38d5c4aba55dfefe40",
     "name": "BCDN",
     "symbol": "BCDN",
@@ -1199,7 +1199,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1ed7ae1f0e2fa4276dd7ddc786334a3df81d50c0",
     "name": "Forty Seven Bank Token",
     "symbol": "FSBT",
@@ -1208,7 +1208,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1f54638b7737193ffd86c19ec51907a7c41755d8",
     "name": "Sola Token",
     "symbol": "SOL",
@@ -1217,7 +1217,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
     "name": "Bancor Network Token",
     "symbol": "BNT",
@@ -1226,7 +1226,7 @@ ethNames 0x1 --fmt api
     "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
   },
   {
-    "group": "33-Set Protocol:Modules",
+    "tags": "33-Set Protocol:Modules",
     "address": "0x1f6ee9ce38e6beeb968bb91f755998548d3165e0",
     "name": "Rebalancing Token Issuance Module",
     "symbol": "",
@@ -1235,7 +1235,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "80-Malicious",
+    "tags": "80-Malicious",
     "address": "0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e",
     "name": "Possibly Malicious 0x1fa",
     "symbol": "",
@@ -1244,7 +1244,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1fc52f1abade452dd4674477d4711951700b3d27",
     "name": "NOKU",
     "symbol": "NOKU",
@@ -1253,7 +1253,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "30-Contracts:Moloch",
+    "tags": "30-Contracts:Moloch",
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "name": "Moloch DAO",
     "symbol": "",
@@ -1262,7 +1262,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "group": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1fe70be734e473e5721ea57c8b5b01e6caa52686",
     "name": "RNTB Token",
     "symbol": "RNTB",
@@ -1271,7 +1271,7 @@ ethNames 0x1 --fmt api
     "description": "BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property"
   },
   {
-    "group": "91-Friends",
+    "tags": "91-Friends",
     "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
     "name": "Poliniex Exchange, DAO Whale 4 & Vlad Zamphir 0x127 Sender 1 & Sept_DDOS_ACCOUNT_1",
     "symbol": "",
@@ -1279,5 +1279,5 @@ ethNames 0x1 --fmt api
     "decimals": 0,
     "description": ""
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "group", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
+{ "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

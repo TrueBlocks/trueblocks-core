@@ -18,7 +18,7 @@ cacheStatus --details abis caches monitors --types slurps
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",
@@ -47,7 +47,7 @@ cacheStatus --details abis caches monitors --types slurps
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",

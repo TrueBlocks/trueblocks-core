@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "Homework",
       "symbol": "",
@@ -10,7 +10,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
       "name": "TrueUSD",
       "symbol": "",
@@ -19,7 +19,7 @@
       "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x00000000dd05dd05dd05dd05dd05dd05dd05dd05",
       "name": "Falsified Address Because of Ddos",
       "symbol": "",
@@ -28,7 +28,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x000001f568875f378bf6d170b790967fe429c81a",
       "name": "BokkyPooBah",
       "symbol": "",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
       "name": "Hacker Gold Sender",
       "symbol": "",
@@ -46,7 +46,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x001f0aa5da15585e5b2305dbab2bac425ea71007",
       "name": "IPSX",
       "symbol": "IPSX",
@@ -55,7 +55,7 @@
       "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45",
       "name": "Stox",
       "symbol": "STX",
@@ -64,7 +64,7 @@
       "description": "Blockchain Prediction Markets Platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
       "name": "Knoxstertoken",
       "symbol": "FKX",
@@ -73,7 +73,7 @@
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x00c4734f88e8da8e24bf9085d60bb34690957ee1",
       "name": "will",
       "symbol": "",
@@ -82,7 +82,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x00c4b398500645eb5da00a1a379a88b11683ba01",
       "name": "Eximchain Token",
       "symbol": "EXC",
@@ -91,7 +91,7 @@
       "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain."
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
       "name": "Grant 143 - Dappnode",
       "symbol": "",
@@ -100,7 +100,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
       "name": "Amber Airdrop Token",
       "symbol": "",
@@ -109,7 +109,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
       "name": "Grant 012 - Gitcoin Open Source Support Fund & Grant 086 - Gitcoin Sustainability Fund",
       "symbol": "",
@@ -118,7 +118,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
       "name": "VOS.AI Airdrop Sender",
       "symbol": "",
@@ -127,7 +127,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
       "name": "XNN Airdrop Sender",
       "symbol": "",
@@ -136,7 +136,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0142c3b2fc51819b5af5dfc4aa52df9722790851",
       "name": "Paycentos Token",
       "symbol": "PYN",
@@ -145,7 +145,7 @@
       "description": "Paycent is a hybrid mobile app that lets users convert digital assets to fiat and vice versa in real time."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x014b50466590340d41307cc54dcee990c8d58aa8",
       "name": "ICOS",
       "symbol": "",
@@ -154,7 +154,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x016396044709eb3edc69c44f4d5fa6996917e4e8",
       "name": "KingXChain",
       "symbol": "KXC",
@@ -163,7 +163,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0168703872fa06741ecaa9dff7803168e83f7ae0",
       "name": "MIRO Token",
       "symbol": "MIRO",
@@ -172,7 +172,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
       "name": "Grant 190 - Groundhog",
       "symbol": "",
@@ -181,7 +181,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
       "name": "PlayChip",
       "symbol": "PLA",
@@ -190,7 +190,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f",
       "name": "BF Token",
       "symbol": "BFT",
@@ -199,7 +199,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
       "name": "CZR",
       "symbol": "CZR",
@@ -208,7 +208,7 @@
       "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02585e4a14da274d02df09b222d4606b10a4e940",
       "name": "Hero Origen Token",
       "symbol": "HERO",
@@ -217,7 +217,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
       "name": "BitAir",
       "symbol": "BTCA",
@@ -226,7 +226,7 @@
       "description": "Payments solutions for the travel industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
       "name": "InvestDigital Token",
       "symbol": "IDT",
@@ -235,7 +235,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
       "name": "EplusCoin",
       "symbol": "EPLUS",
@@ -244,7 +244,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
       "name": "Grant 031 - Grantops",
       "symbol": "",
@@ -253,7 +253,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577",
       "name": "PKG Token",
       "symbol": "PKG",
@@ -262,7 +262,7 @@
       "description": "Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x02f61fd266da6e8b102d4121f5ce7b992640cf98",
       "name": "LikeCoin",
       "symbol": "LIKE",
@@ -271,7 +271,7 @@
       "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x033030feebd93e3178487c35a9c8ca80874353c9",
       "name": "BDT Token",
       "symbol": "BDT",
@@ -280,7 +280,7 @@
       "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -289,7 +289,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0371a82e4a9d0a4312f3ee2ac9c6958512891372",
       "name": "Student Coin",
       "symbol": "STU",
@@ -298,7 +298,7 @@
       "description": "Student jobs marketplace."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x039b5649a59967e3e936d7471f9c3700100ee1ab",
       "name": "Kucoin Shares",
       "symbol": "KCS",
@@ -307,7 +307,7 @@
       "description": ""
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x03b904c8b912194464ae97eaa0381e5518446d25",
       "name": "Possibly Malicious 0x03b",
       "symbol": "",
@@ -316,7 +316,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x03c780cd554598592b97b7256ddaad759945b125",
       "name": "BTRN",
       "symbol": "BTRN",
@@ -325,7 +325,7 @@
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x0475929d867e95b3828ab4ef2d08a7f80766bf90",
       "name": "OCN Airdrop Sender",
       "symbol": "",
@@ -334,7 +334,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
       "name": "Kung Chen-Yalie",
       "symbol": "",
@@ -343,7 +343,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x049399a6b048d52971f7d122ae21a1532722285f",
       "name": "Fire Lotto",
       "symbol": "FLOT",
@@ -352,7 +352,7 @@
       "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x04a020325024f130988782bd5276e53595e8d16e",
       "name": "Herbalist Token",
       "symbol": "HERB",
@@ -361,7 +361,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x04bb33c3a8c2d018836a1f938054ebb59e0036b2",
       "name": "Grant 104 - Walletsreview",
       "symbol": "",
@@ -370,7 +370,7 @@
       "description": ""
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
       "name": "MiniMeToken CS",
       "symbol": "",
@@ -379,7 +379,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x04f2e7221fdb1b52a68169b25793e51478ff0329",
       "name": "Cappasity",
       "symbol": "CAPP",
@@ -388,7 +388,7 @@
       "description": "Cappasity brings an in-store browsing experience to online retail through interactive 3D images."
     },
     {
-      "group": "30-Contracts:dAppNode",
+      "tags": "30-Contracts:dAppNode",
       "address": "0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4",
       "name": "dAddNode Package 001",
       "symbol": "",
@@ -397,7 +397,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x054c64741dbafdc19784505494029823d89c3b13",
       "name": "ETERNAL TOKEN",
       "symbol": "XET",
@@ -406,7 +406,7 @@
       "description": "The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
       "name": "Gemini dollar",
       "symbol": "GUSD",
@@ -415,7 +415,7 @@
       "description": "Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x0571325cd46718cd9445f082332a4fd9a21b8498",
       "name": "FIFAMini Airdrop Sender",
       "symbol": "",
@@ -424,7 +424,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x058601725fcf134e2cdeef2d9e53cb91dc7e6c15",
       "name": "kelvin",
       "symbol": "",
@@ -433,7 +433,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05860d453c7974cbf46508c06cba14e211c629ce",
       "name": "Eden Coin",
       "symbol": "EDN",
@@ -442,7 +442,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x058dd5cb38725c5cd521de7fc5412bd64c81ab98",
       "name": "Sascha Jafari",
       "symbol": "",
@@ -451,7 +451,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05984006707585f66465e8a6505341f46b64fa7a",
       "name": "Nam Coin",
       "symbol": "NAM",
@@ -460,7 +460,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05aaaa829afa407d83315cded1d45eb16025910c",
       "name": "SP8DE Token",
       "symbol": "SPX",
@@ -469,7 +469,7 @@
       "description": "The Game of Chance.Changed"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05c7065d644096a4e4c3fe24af86e36de021074b",
       "name": "LendConnect Token",
       "symbol": "LCT",
@@ -478,7 +478,7 @@
       "description": "Aims to be a passive-income-generating Platform."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x05cca80c318762feacb111e95ed29ebb8fc7aac8",
       "name": "pete",
       "symbol": "",
@@ -487,7 +487,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x05d03474df1b73c17891b41858633a5958c07713",
       "name": "LPT Airdrop Sender",
       "symbol": "",
@@ -496,7 +496,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05d412ce18f24040bb3fa45cf2c69e506586d8e8",
       "name": "MFTU",
       "symbol": "MFTU",
@@ -505,7 +505,7 @@
       "description": "Coin for custom CyberFM 'Mainstream For The Underground' royalty payments."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
       "name": "Zilliqa",
       "symbol": "ZIL",
@@ -514,7 +514,7 @@
       "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
       "name": "CryptoKitties",
       "symbol": "CK",
@@ -523,7 +523,7 @@
       "description": "The famous first ERC721 token"
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x06105042f9e891ad291a39f49be2eaa94f796945",
       "name": "bernard lin",
       "symbol": "",
@@ -532,7 +532,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x06147110022b768ba8f99a8f385df11a151a9cc8",
       "name": "ACE Token",
       "symbol": "ACE",
@@ -541,7 +541,7 @@
       "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers."
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x0639092a9c3d9467dd6f89a13213541c8a1e58b2",
       "name": "Grant 194 - Reach Platform",
       "symbol": "",
@@ -550,7 +550,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
       "name": "Grant 075 - Ethereum Dev Fund Working Group",
       "symbol": "",
@@ -559,7 +559,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x06b2387c7f56ecb61009bb31375b84e4be7f80b3",
       "name": "HEALP Airdrop",
       "symbol": "HEALP",
@@ -568,7 +568,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0707681f344deb24184037fc0228856f2137b02e",
       "name": "FNKOSToken",
       "symbol": "FNKOS",
@@ -577,7 +577,7 @@
       "description": "FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78",
       "name": "RZM Airdrop Sender",
       "symbol": "",
@@ -586,7 +586,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
       "name": "Grant 268 - Simpleaswater",
       "symbol": "",
@@ -595,7 +595,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0743392132d1a03a902c477e5a176f256ba3220c",
       "name": "Coimatic 3.0",
       "symbol": "CTIC3",
@@ -604,7 +604,7 @@
       "description": "A global decentralized blockchain deal and discount marketplace."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
       "name": "SoPay",
       "symbol": "SOP",
@@ -613,7 +613,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
       "name": "EXN",
       "symbol": "EXN",
@@ -622,7 +622,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
       "name": "Qurito",
       "symbol": "QURO",
@@ -631,7 +631,7 @@
       "description": "The online community where you earn for sharing knowledge & ideas."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
       "name": "CommerceBlock Token",
       "symbol": "CBT",
@@ -640,7 +640,7 @@
       "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
       "name": "Bulleon",
       "symbol": "BUL",
@@ -649,7 +649,7 @@
       "description": "Revolutionizing the way of Financial Transactions"
     },
     {
-      "group": "30-Contracts:dAppNode",
+      "tags": "30-Contracts:dAppNode",
       "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
       "name": "dAddNode Package 003",
       "symbol": "",
@@ -658,7 +658,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
       "name": "IBTC",
       "symbol": "IBTC",
@@ -667,7 +667,7 @@
       "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
     },
     {
-      "group": "30-Contracts",
+      "tags": "30-Contracts",
       "address": "0x07995e463f8957b70d683addd00a695ba83bb324",
       "name": "Gavin Wood VouchFor",
       "symbol": "",
@@ -676,7 +676,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91",
       "name": "Guaranteed Ethurance Token Extra",
       "symbol": "GETX",
@@ -685,7 +685,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
       "name": "DALECOIN",
       "symbol": "DALC",
@@ -694,7 +694,7 @@
       "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07e3c70653548b04f0a75970c1f81b4cbbfb606f",
       "name": "Delta",
       "symbol": "DLT",
@@ -703,7 +703,7 @@
       "description": "Legally Binding Smart Contracts, Powered by AI."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x07ef9e82721ac16809d24dafbe1792ce01654db4",
       "name": "Chimpion",
       "symbol": "BNANA",
@@ -712,7 +712,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x080a14c02ceb515e3854818071b3480b49311839",
       "name": "Darius",
       "symbol": "",
@@ -721,7 +721,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
       "name": "Grant 122 - Austin Griffith Ethereum Rampd",
       "symbol": "",
@@ -730,7 +730,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c",
       "name": "Edgeless",
       "symbol": "EDG",
@@ -739,7 +739,7 @@
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f",
       "name": "LiteCoinGold",
       "symbol": "LTG",
@@ -748,7 +748,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x089a6d83282fb8988a656189f1e7a73fa6c1cac2",
       "name": "Prospectors Gold",
       "symbol": "PGL",
@@ -757,7 +757,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
       "name": "Dentacoin",
       "symbol": "DENT",
@@ -766,7 +766,7 @@
       "description": "Aims to be the blockchain solution for the global dental industry."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
       "name": "Tierion Network Token",
       "symbol": "TNT",
@@ -775,7 +775,7 @@
       "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0947b0e6d821378805c9598291385ce7c791a6b2",
       "name": "Lendingblock",
       "symbol": "LND",
@@ -784,7 +784,7 @@
       "description": "Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way."
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x0978b496a1635e4a0b4ff867569cf43ee030e967",
       "name": "Possibly Malicious 0x097",
       "symbol": "",
@@ -793,7 +793,7 @@
       "description": ""
     },
     {
-      "group": "40-Exchanges",
+      "tags": "40-Exchanges",
       "address": "0x09cabec1ead1c0ba254b09efb3ee13841712be14",
       "name": "Uniswap: DAI",
       "symbol": "",
@@ -802,7 +802,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x09fe5f0236f0ea5d930197dce254d77b04128075",
       "name": "Wrapped CryptoKitties",
       "symbol": "WCK",
@@ -811,7 +811,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0a43edfe106d295e7c1e591a4b04b5598af9474c",
       "name": "PiperDevCon2Token",
       "symbol": "",
@@ -820,7 +820,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
       "name": "Ethereum Lite",
       "symbol": "ELITE",
@@ -829,7 +829,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0abdace70d3790235af448c88547603b945604ea",
       "name": "district0x Network Token",
       "symbol": "DNT",
@@ -838,7 +838,7 @@
       "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0aef06dcccc531e581f0440059e6ffcc206039ee",
       "name": "Intelligent Trading Technologies",
       "symbol": "ITT",
@@ -847,7 +847,7 @@
       "description": "Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0af44e2784637218dd1d32a322d44e603a8f0c6a",
       "name": "MatryxToken",
       "symbol": "MTX",
@@ -856,7 +856,7 @@
       "description": "Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x0aff31f693aa4bc0d54a8e89e5763836d0c17ad6",
       "name": "HEALP Airdrop Sender",
       "symbol": "",
@@ -865,7 +865,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0affa06e7fbe5bc9a764c979aa66e8256a631f02",
       "name": "Polybius Token",
       "symbol": "PLBT",
@@ -874,7 +874,7 @@
       "description": "Private banking platform"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3",
       "name": "Etheriya",
       "symbol": "RIYA",
@@ -883,7 +883,7 @@
       "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0b1fb677b07375b781b4551b2e265d05590fd62f",
       "name": "Cheyne",
       "symbol": "",
@@ -892,7 +892,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b4bdc478791897274652dc15ef5c135cae61e60",
       "name": "DAEX Token",
       "symbol": "DAX",
@@ -901,7 +901,7 @@
       "description": "DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0b76544f6c413a555f309bf76260d1e02377c02a",
       "name": "Internet Node Token",
       "symbol": "INT",
@@ -910,7 +910,7 @@
       "description": "IOT applications"
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0b7fc9ddf70576f6330669eaaa71b6a831e99528",
       "name": "RicMoo",
       "symbol": "",
@@ -919,7 +919,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0b892db974847d91ba4eeee99e3249539fbddd79",
       "name": "Jacob Horne",
       "symbol": "",
@@ -928,7 +928,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e",
       "name": "SwftCoin",
       "symbol": "SWFTC",
@@ -937,7 +937,7 @@
       "description": "SWFT is a cross-blockchain platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bc61dded5f6710c637cf8288eb6058766ce1921",
       "name": "CEN",
       "symbol": "CEN",
@@ -946,7 +946,7 @@
       "description": "Connecting the Financial World Coinsuper Ecosystem Network"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0bef619cf38cf0c22967289b8419720fbd1db9f7",
       "name": "AEN.",
       "symbol": "AEN",
@@ -955,7 +955,7 @@
       "description": "HealthTech, Smart Capital, and Prime Brokerage Solutions"
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x0c35a2e957e8f88027bc7b2779b9f95f0848992d",
       "name": "Malicious 0x0c3",
       "symbol": "",
@@ -964,7 +964,7 @@
       "description": ""
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27",
       "name": "Possibly Malicious 0x0c4",
       "symbol": "",
@@ -973,7 +973,7 @@
       "description": ""
     },
     {
-      "group": "30-Contracts:dAppNode",
+      "tags": "30-Contracts:dAppNode",
       "address": "0x0c564ca7b948008fb324268d8baedaeb1bd47bce",
       "name": "dAppNode AppProxyUpgradeable",
       "symbol": "",
@@ -982,7 +982,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4",
       "name": "PlatonCoin",
       "symbol": "PLTC",
@@ -991,7 +991,7 @@
       "description": "Platon Finance with its PlatonCoin token is an ecosystem that connects the digital crypto-world with the real one. Through the Platon Club, the project aims to drive adoption of cryptocurrencies."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x0cd4f3a59e89d7c9aef32c66d8896750a246e2da",
       "name": "TRX Airdrop",
       "symbol": "",
@@ -1000,7 +1000,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0cf0ee63788a0849fe5297f3407f701e122cc023",
       "name": "Streamr DATAcoin",
       "symbol": "DATA",
@@ -1009,7 +1009,7 @@
       "description": "Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0d262e5dc4a06a0f1c90ce79c7a60c09dfc884e4",
       "name": "J8T Token",
       "symbol": "J8T",
@@ -1018,7 +1018,7 @@
       "description": "Democratizing influence."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
       "name": "Basic Attention Token",
       "symbol": "BAT",
@@ -1027,7 +1027,7 @@
       "description": "The Basic Attention Token is the new token for the digital advertising industry."
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
       "name": "AVT",
       "symbol": "AVT",
@@ -1036,7 +1036,7 @@
       "description": "An open-source protocol that delivers the global standard for ticketing."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0db8d8b76bc361bacbb72e2c491e06085a97ab31",
       "name": "iQeon",
       "symbol": "IQN",
@@ -1045,7 +1045,7 @@
       "description": "decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements."
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5",
       "name": "Grant 276 - Winiwallet",
       "symbol": "",
@@ -1054,7 +1054,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e",
       "name": "uDOO",
       "symbol": "uDOO",
@@ -1063,7 +1063,7 @@
       "description": "Howdoo is a decentralized social platform for users, content creators, & advertisers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
       "name": "Po.et",
       "symbol": "POE",
@@ -1072,7 +1072,7 @@
       "description": "Po.et aims to reclaim value for content creators, publishers and consumers."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47",
       "name": "CarLive Chain",
       "symbol": "IOV",
@@ -1081,7 +1081,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6",
       "name": "ABYSS",
       "symbol": "ABYSS",
@@ -1090,7 +1090,7 @@
       "description": "The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0ea984e789302b7b612147e4e4144e64f21425eb",
       "name": "WaleTokeN",
       "symbol": "WTN",
@@ -1099,7 +1099,7 @@
       "description": "Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0ebb614204e47c09b6c3feb9aaecad8ee060e23e",
       "name": "CPAY Token",
       "symbol": "CPAY",
@@ -1108,7 +1108,7 @@
       "description": "Cryptopay aims to provide the ability to spend, save, and transact digital currencies."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x0ed1374a831744af48174a890bba5ac333e76717",
       "name": "mtbitcoin",
       "symbol": "",
@@ -1117,7 +1117,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x0efe994201e2b0136dd40d5033b5f437e4c5f958",
       "name": "Grant 274 - Abridged 2",
       "symbol": "",
@@ -1126,7 +1126,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f02e27745e3b6e9e1310d19469e2b5d7b5ec99a",
       "name": "Peculium",
       "symbol": "PCL",
@@ -1135,7 +1135,7 @@
       "description": "Saving management on blockchain technology"
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x0f1025f754b3eb32ab3105127b563084bfa03a6f",
       "name": "Grant 155 - Tensortrade Trade Efficiently With Reinforcement L",
       "symbol": "",
@@ -1144,7 +1144,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f1ed66c251bcb52ecf7e67ac64bb72482048adb",
       "name": "SEER-ERC20-Token",
       "symbol": "SEER",
@@ -1153,7 +1153,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x0f22d8d872bb7c3f377f21a64ff2fe16053ed34d",
       "name": "XCEL Airdrop",
       "symbol": "XCEL",
@@ -1162,7 +1162,7 @@
       "description": ""
     },
     {
-      "group": "30-Contracts:dAppNode",
+      "tags": "30-Contracts:dAppNode",
       "address": "0x0f3b8ec182deee2381a9041e30f65f10098a3b91",
       "name": "dAddNode Package 004",
       "symbol": "",
@@ -1171,7 +1171,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f4ca92660efad97a9a70cb0fe969c755439772c",
       "name": "Leverj",
       "symbol": "LEV",
@@ -1180,7 +1180,7 @@
       "description": "Decentralized leveraged exchange."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
       "name": "Decentraland MANA",
       "symbol": "MANA",
@@ -1189,7 +1189,7 @@
       "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications"
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf",
       "name": "Possibly Malicious 0x0f6",
       "symbol": "",
@@ -1198,7 +1198,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f612a09ead55bb81b6534e80ed5a21bf0a27b16",
       "name": "EUNOMIA",
       "symbol": "ENTS",
@@ -1207,7 +1207,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0f8c45b896784a1e408526b9300519ef8660209c",
       "name": "XMAX",
       "symbol": "XMX",
@@ -1216,7 +1216,7 @@
       "description": ""
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0",
       "name": "Possibly Malicious 0x0fc",
       "symbol": "",
@@ -1225,7 +1225,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x10086399dd8c1e3de736724af52587a2044c9fa2",
       "name": "The Midas Touch Gold",
       "symbol": "TMTG",
@@ -1234,7 +1234,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
       "name": "BitCapitalVendorToken",
       "symbol": "BCV",
@@ -1243,7 +1243,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
       "name": "Genesis Vision Token",
       "symbol": "GVT",
@@ -1252,7 +1252,7 @@
       "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
       "name": "Aigang",
       "symbol": "AIX",
@@ -1261,7 +1261,7 @@
       "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c",
       "name": "Rock Token",
       "symbol": "RKT",
@@ -1270,7 +1270,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
       "name": "Grant 083 - Poa Network Community Management Grant For Adj",
       "symbol": "",
@@ -1279,7 +1279,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
       "name": "Bloom Token",
       "symbol": "BLT",
@@ -1288,7 +1288,7 @@
       "description": "Decentralized credit scoring powered by Ethereum and IPFS."
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x10fa9f37f646bb353945fe90d41a44e1c60745fb",
       "name": "Possibly Malicious 0x10f",
       "symbol": "",
@@ -1297,7 +1297,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
       "name": "Centrality Token",
       "symbol": "CENNZ",
@@ -1306,7 +1306,7 @@
       "description": "Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x11378851299a15a849ad0057a834c23ef1b3d381",
       "name": "tandava",
       "symbol": "",
@@ -1315,7 +1315,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
       "name": "QVT",
       "symbol": "QVT",
@@ -1324,7 +1324,7 @@
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x1191be4dbfac983c9ce87e3411542d69d382f7d6",
       "name": "durandal",
       "symbol": "",
@@ -1333,7 +1333,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
       "name": "Grant 048 - Uniswap",
       "symbol": "",
@@ -1342,7 +1342,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
       "name": "ITL (Italian Lira)",
       "symbol": "ITL",
@@ -1351,7 +1351,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
       "name": "BitClave",
       "symbol": "CAT",
@@ -1360,7 +1360,7 @@
       "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
       "name": "LGO Token",
       "symbol": "LGO",
@@ -1369,7 +1369,7 @@
       "description": "Exchange with decentralized ledgers"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
       "name": "ArbitrageCT",
       "symbol": "ARCT",
@@ -1378,7 +1378,7 @@
       "description": "Trading crypto-currency terminal for two exchanges simultaneously."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
       "name": "Substratum",
       "symbol": "SUB",
@@ -1387,7 +1387,7 @@
       "description": ""
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x1248d79bdebd516156930a5c8ee232d4ed80ead4",
       "name": "Possibly Malicious 0x124",
       "symbol": "",
@@ -1396,7 +1396,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x1267895780369b48a02781eb08d353e426e5f256",
       "name": "nagydani",
       "symbol": "",
@@ -1405,7 +1405,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
       "name": "TrakInvest Token",
       "symbol": "TRAK",
@@ -1414,7 +1414,7 @@
       "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
     },
     {
-      "group": "33-Set Protocol:Wrapers",
+      "tags": "33-Set Protocol:Wrapers",
       "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
       "name": "Zero Ex Exchange Wrapper",
       "symbol": "",
@@ -1423,7 +1423,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x12add8f3b37fe5fbecdb1208233c0e56dfecf200",
       "name": "Stefan George",
       "symbol": "",
@@ -1432,7 +1432,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x12aef9585197d02106045de55f01c9c30301d70a",
       "name": "Jirat",
       "symbol": "",
@@ -1441,7 +1441,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens",
+      "tags": "50-Tokens",
       "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
       "name": "Grid+ Token",
       "symbol": "GRID",
@@ -1450,7 +1450,7 @@
       "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
       "name": "Spectre.ai D-Token",
       "symbol": "SXDT",
@@ -1459,7 +1459,7 @@
       "description": "Broker-less financial trading platform."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
       "name": "Cofoundit",
       "symbol": "CFI",
@@ -1468,7 +1468,7 @@
       "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
       "name": "MoneyToken",
       "symbol": "IMT",
@@ -1477,7 +1477,7 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 - Antiprosynth Twitter Account Activity",
       "symbol": "",
@@ -1486,7 +1486,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
       "name": "Grant 120 - Nori",
       "symbol": "",
@@ -1495,7 +1495,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
       "name": "Musiconomi",
       "symbol": "MCI",
@@ -1504,7 +1504,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
       "name": "BoutsPro",
       "symbol": "BOUTS",
@@ -1513,7 +1513,7 @@
       "description": "Professional Karate Sports Organization"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
       "name": "PHI Token",
       "symbol": "PHI",
@@ -1522,7 +1522,7 @@
       "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13e9ec660d872f55405d70e5c52d872136f0970c",
       "name": "TKT",
       "symbol": "TKT",
@@ -1531,7 +1531,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
       "name": "Divi Exchange Token",
       "symbol": "DIVX",
@@ -1540,7 +1540,7 @@
       "description": "Digital Currency"
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2",
       "name": "Accelerator",
       "symbol": "ACC",
@@ -1549,7 +1549,7 @@
       "description": "A proof-of-stake smart contract backed by a physical mining facility."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x13f25cd52b21650caa8225c9942337d914c9b030",
       "name": "realchain token",
       "symbol": "RCT",
@@ -1558,7 +1558,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
       "name": "Grant 212 - Thx Open Protocol For Online Rewards",
       "symbol": "",
@@ -1567,7 +1567,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
       "name": "KAN",
       "symbol": "KAN",
@@ -1576,7 +1576,7 @@
       "description": "A decentralized cryptocurrency-concentrated & content payment community."
     },
     {
-      "group": "91-Friends",
+      "tags": "91-Friends",
       "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
       "name": "Pool Together God",
       "symbol": "",
@@ -1585,7 +1585,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
       "name": "Chainium",
       "symbol": "CHX",
@@ -1594,7 +1594,7 @@
       "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x146d8d942048ad517479c9bab1788712af180fde",
       "name": "Mobile Integrated Blockchain",
       "symbol": "MIB",
@@ -1603,7 +1603,7 @@
       "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x147454510acc3856bc5d1727715c2efff526de5d",
       "name": "scofield",
       "symbol": "",
@@ -1612,7 +1612,7 @@
       "description": ""
     },
     {
-      "group": "91-Friends",
+      "tags": "91-Friends",
       "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
       "name": "Jin's Wallet",
       "symbol": "",
@@ -1621,7 +1621,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
       "name": "Bethereum",
       "symbol": "BETHER",
@@ -1630,7 +1630,7 @@
       "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x14e25eea7034c4dfc909bacac866e930a0576c75",
       "name": "TRX Airdrop",
       "symbol": "",
@@ -1639,7 +1639,7 @@
       "description": ""
     },
     {
-      "group": "33-Set Protocol:Factories",
+      "tags": "33-Set Protocol:Factories",
       "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
       "name": "Set Token Factory",
       "symbol": "",
@@ -1648,7 +1648,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x14f37b574242d366558db61f3335289a5035c506",
       "name": "HackerGold",
       "symbol": "HKG",
@@ -1657,7 +1657,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
       "name": "Stephen King",
       "symbol": "",
@@ -1666,7 +1666,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x151202c9c18e495656f372281f493eb7698961d5",
       "name": "DEBITUM",
       "symbol": "DEB",
@@ -1675,7 +1675,7 @@
       "description": ""
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
       "name": "d2friend",
       "symbol": "",
@@ -1684,7 +1684,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
       "name": "XOVBank",
       "symbol": "XOV",
@@ -1693,7 +1693,7 @@
       "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
       "name": "VisionX",
       "symbol": "VNX",
@@ -1702,7 +1702,7 @@
       "description": ""
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
       "name": "Possibly Malicious 0x157",
       "symbol": "",
@@ -1711,7 +1711,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x1591b9056822c273252fcea32963223650db18e1",
       "name": "Grant 220 - Cryptorado",
       "symbol": "",
@@ -1720,7 +1720,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
       "name": "Alpha Coin",
       "symbol": "APC",
@@ -1729,7 +1729,7 @@
       "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
       "name": "anTok Airdrop",
       "symbol": "",
@@ -1738,7 +1738,7 @@
       "description": ""
     },
     {
-      "group": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants",
       "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
       "name": "Grant 211 - Trust Graphic Novel",
       "symbol": "",
@@ -1747,7 +1747,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
       "name": "eREAL",
       "symbol": "eREAL",
@@ -1756,7 +1756,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
       "name": "Qubitica",
       "symbol": "QBIT",
@@ -1765,7 +1765,7 @@
       "description": "A distributed blockchain enterprise."
     },
     {
-      "group": "80-Malicious",
+      "tags": "80-Malicious",
       "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
       "name": "Possibly Malicious 0x160",
       "symbol": "",
@@ -1774,7 +1774,7 @@
       "description": ""
     },
     {
-      "group": "60-Airdrops",
+      "tags": "60-Airdrops",
       "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
       "name": "Jury.Online Airdrop Sender",
       "symbol": "",
@@ -1783,7 +1783,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
       "name": "RHOC",
       "symbol": "RHOC",
@@ -1792,7 +1792,7 @@
       "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
     },
     {
-      "group": "90-DevCon2:Individual",
+      "tags": "90-DevCon2:Individual",
       "address": "0x16893e10b99a59afd2c60331e0b49241d4d4d7cc",
       "name": "Simon de la Rouviere",
       "symbol": "",
@@ -1801,7 +1801,7 @@
       "description": ""
     },
     {
-      "group": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC20",
       "address": "0x16c1e5baf21b9fa4bc9f2c374e4dc19fab5ac5dc",
       "name": "APOT",
       "symbol": "APOT",
@@ -1815,7 +1815,7 @@
       "type": "CAccountName",
       "fields": [
         {
-          "name": "group",
+          "name": "tags",
           "type": "text"
         },
         {

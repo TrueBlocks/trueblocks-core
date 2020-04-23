@@ -1,6 +1,6 @@
 ethNames argc: 4 [1:--custom] [2:--fmt] [3:txt] 
 ethNames --custom --fmt txt 
-group	address	name	symbol	decimals
+tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1
 81-Custom	0x0000000000000000000000000000000000000002	Account_2	AC_2		2
 81-Custom	0x0000000000000000000000000000000000000003	Account_3

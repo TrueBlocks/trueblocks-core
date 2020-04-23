@@ -91,11 +91,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(firstAppearance);
             }
             break;
-        case 'g':
-            if (fieldName % "group") {
-                return group;
-            }
-            break;
         case 'i':
             if (fieldName % "is_custom") {
                 return bool_2_Str(is_custom);
@@ -134,6 +129,11 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "sizeInBytes") {
                 return uint_2_Str(sizeInBytes);
+            }
+            break;
+        case 't':
+            if (fieldName % "tags") {
+                return tags;
             }
             break;
         default:
@@ -177,12 +177,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'f':
             if (fieldName % "firstAppearance") {
                 firstAppearance = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'g':
-            if (fieldName % "group") {
-                group = fieldValue;
                 return true;
             }
             break;
@@ -236,6 +230,12 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 't':
+            if (fieldName % "tags") {
+                tags = fieldValue;
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -261,7 +261,7 @@ bool CAccountName::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> group;
+    archive >> tags;
     archive >> address;
     archive >> name;
     archive >> symbol;
@@ -287,7 +287,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << group;
+    archive << tags;
     archive << address;
     archive << name;
     archive << symbol;
@@ -338,7 +338,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountName, "group", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccountName, "tags", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "address", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT, ++fieldNum);
@@ -408,10 +408,10 @@ bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 6, 5)) {
-        string_q subgroup, unused5;
+        string_q subtags, unused5;
         bool unused2, unused3, unused4;
-        archive >> group;
-        archive >> subgroup;  // subgroup has been removed and added to group with ':' separator
+        archive >> tags;
+        archive >> subtags;  // subtags has been removed and added to tags with ':' separator
         archive >> name;
         archive >> address;
         archive >> symbol;
@@ -428,8 +428,8 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         // archive >> lastExport;
         // archive >> nRecords;
         // archive >> sizeInBytes;
-        if (!subgroup.empty())
-            group += (":" + subgroup);
+        if (!subtags.empty())
+            tags += (":" + subtags);
         finishParse();
         done = true;
     }
@@ -449,7 +449,7 @@ ostream& operator<<(ostream& os, const CAccountName& item) {
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_ACCOUNTNAME =
-    "[{GROUP}]\t"
+    "[{TAGS}]\t"
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
     "[{SYMBOL}]\t"

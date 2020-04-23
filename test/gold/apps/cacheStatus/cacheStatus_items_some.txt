@@ -84,7 +84,7 @@ cacheStatus --details some --start 3000000 --end 3100000
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",
@@ -129,7 +129,7 @@ cacheStatus --details some --start 3000000 --end 3100000
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "group": "",
+          "tags": "",
           "address": "0x0",
           "name": "",
           "symbol": "",

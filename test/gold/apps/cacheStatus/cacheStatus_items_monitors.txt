@@ -18,7 +18,7 @@ cacheStatus --details monitors
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
-          "group": "",
+          "tags": "",
           "address": "---address---",
           "name": "",
           "symbol": "",
