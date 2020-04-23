@@ -1,5 +1,5 @@
-ethNames argc: 2 [1:--groups] 
-ethNames --groups 
+ethNames argc: 2 [1:--tags] 
+ethNames --tags 
 group
 
 30-Contracts

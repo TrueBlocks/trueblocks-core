@@ -22,7 +22,7 @@ ethNames -th
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |
 | -d | --add <str> | add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc) |
-| -g | --groups | export the list of groups and subgroups only |
+| -g | --tags | export the list of tags and subtags only |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

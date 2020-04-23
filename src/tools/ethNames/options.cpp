@@ -31,7 +31,7 @@ static const COption params[] = {
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),  // NOLINT
-    COption("groups", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of groups and subgroups only"),
+    COption("tags", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -98,8 +98,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
             add = substitute(substitute(arg, "-d:", ""), "--add:", "");
 
-        } else if (arg == "-g" || arg == "--groups") {
-            groups = true;
+        } else if (arg == "-g" || arg == "--tags") {
+            tags = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -176,7 +176,7 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose)
         searchFields += "\t[{SOURCE}]";
 
-    if (groups) {
+    if (tags) {
         manageFields("CAccountName:all", false);
         manageFields("CAccountName:group", true);
         format = "[{GROUP}]";
@@ -196,7 +196,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
-    if (!groups && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
+    if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
 
     // Collect results for later display
@@ -222,7 +222,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
-    groups = false;
+    tags = false;
     // END_CODE_INIT
 
     items.clear();
@@ -273,7 +273,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
         (contains(item.group, "Kickback") || contains(item.group, "Humanity")))  // don't expose people during testing
         return true;
 
-    if (groups) {
+    if (tags) {
         string_q key = item.group;
         if (items[key].group == key)  // already exists
             return false;

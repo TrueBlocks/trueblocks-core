@@ -126,7 +126,7 @@ on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file
 
 on, cmd,  fast, names, tools/ethNames, prefund_output,                   n, output = test_file & prefund
 
-on, both, fast, names, tools/ethNames, groups,                           y, groups
+on, both, fast, names, tools/ethNames, groups,                           y, tags
 
 on, cmd,  fast, names, tools/ethNames, fmt_add,                          y, add = G+S+A+N+S+Y+D
 
