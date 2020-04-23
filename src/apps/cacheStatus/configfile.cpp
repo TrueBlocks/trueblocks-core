@@ -70,24 +70,24 @@ string_q CConfigFile::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'g':
-            if (fieldName % "groups" || fieldName % "groupsCnt") {
-                size_t cnt = groups.size();
+        case 'n':
+            if (fieldName % "name") {
+                return name;
+            }
+            break;
+        case 's':
+            if (fieldName % "sections" || fieldName % "sectionsCnt") {
+                size_t cnt = sections.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
-                    retS += groups[i].Format();
+                    retS += sections[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
-            }
-            break;
-        case 'n':
-            if (fieldName % "name") {
-                return name;
             }
             break;
         default:
@@ -110,20 +110,20 @@ bool CConfigFile::setValueByName(const string_q& fieldNameIn, const string_q& fi
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'g':
-            if (fieldName % "groups") {
-                CConfigGroup item;
-                string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    groups.push_back(item);
-                    item = CConfigGroup();  // reset
-                }
-                return true;
-            }
-            break;
         case 'n':
             if (fieldName % "name") {
                 name = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "sections") {
+                CConfigSection item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    sections.push_back(item);
+                    item = CConfigSection();  // reset
+                }
                 return true;
             }
             break;
@@ -153,7 +153,7 @@ bool CConfigFile::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> name;
-    archive >> groups;
+    archive >> sections;
     finishParse();
     return true;
 }
@@ -166,7 +166,7 @@ bool CConfigFile::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << name;
-    archive << groups;
+    archive << sections;
 
     return true;
 }
@@ -204,7 +204,7 @@ void CConfigFile::registerClass(void) {
     ADD_FIELD(CConfigFile, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigFile, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigFile, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigFile, "groups", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfigFile, "sections", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CConfigFile, "schema");
@@ -261,8 +261,8 @@ ostream& operator<<(ostream& os, const CConfigFile& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfigFile::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "groups" && index < groups.size())
-        return &groups[index];
+    if (fieldName % "sections" && index < sections.size())
+        return &sections[index];
     return NULL;
 }
 

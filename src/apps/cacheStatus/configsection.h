@@ -24,37 +24,37 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CConfigGroup : public CBaseNode {
+class CConfigSection : public CBaseNode {
   public:
     string_q section;
     string_q name;
     CConfigItemArray keys;
 
   public:
-    CConfigGroup(void);
-    CConfigGroup(const CConfigGroup& co);
-    virtual ~CConfigGroup(void);
-    CConfigGroup& operator=(const CConfigGroup& co);
+    CConfigSection(void);
+    CConfigSection(const CConfigSection& co);
+    virtual ~CConfigSection(void);
+    CConfigSection& operator=(const CConfigSection& co);
 
-    DECLARE_NODE(CConfigGroup);
+    DECLARE_NODE(CConfigSection);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CConfigGroup(const string_q& s, const string_q& n) : section(s), name(n) {
+    explicit CConfigSection(const string_q& s, const string_q& n) : section(s), name(n) {
     }
     // EXISTING_CODE
-    bool operator==(const CConfigGroup& item) const;
-    bool operator!=(const CConfigGroup& item) const {
+    bool operator==(const CConfigSection& item) const;
+    bool operator!=(const CConfigSection& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CConfigGroup& v1, const CConfigGroup& v2);
-    friend ostream& operator<<(ostream& os, const CConfigGroup& item);
+    friend bool operator<(const CConfigSection& v1, const CConfigSection& v2);
+    friend ostream& operator<<(ostream& os, const CConfigSection& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CConfigGroup& co);
+    void duplicate(const CConfigSection& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -62,14 +62,14 @@ class CConfigGroup : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CConfigGroup::CConfigGroup(void) {
+inline CConfigSection::CConfigSection(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CConfigGroup::CConfigGroup(const CConfigGroup& co) {
+inline CConfigSection::CConfigSection(const CConfigSection& co) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(co);
@@ -79,20 +79,20 @@ inline CConfigGroup::CConfigGroup(const CConfigGroup& co) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CConfigGroup::~CConfigGroup(void) {
+inline CConfigSection::~CConfigSection(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CConfigGroup::clear(void) {
+inline void CConfigSection::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CConfigGroup::initialize(void) {
+inline void CConfigSection::initialize(void) {
     CBaseNode::initialize();
 
     section = "";
@@ -104,7 +104,7 @@ inline void CConfigGroup::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CConfigGroup::duplicate(const CConfigGroup& co) {
+inline void CConfigSection::duplicate(const CConfigSection& co) {
     clear();
     CBaseNode::duplicate(co);
 
@@ -117,7 +117,7 @@ inline void CConfigGroup::duplicate(const CConfigGroup& co) {
 }
 
 //--------------------------------------------------------------------------
-inline CConfigGroup& CConfigGroup::operator=(const CConfigGroup& co) {
+inline CConfigSection& CConfigSection::operator=(const CConfigSection& co) {
     duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -125,7 +125,7 @@ inline CConfigGroup& CConfigGroup::operator=(const CConfigGroup& co) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CConfigGroup::operator==(const CConfigGroup& item) const {
+inline bool CConfigSection::operator==(const CConfigSection& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -133,7 +133,7 @@ inline bool CConfigGroup::operator==(const CConfigGroup& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CConfigGroup& v1, const CConfigGroup& v2) {
+inline bool operator<(const CConfigSection& v1, const CConfigSection& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -141,12 +141,12 @@ inline bool operator<(const CConfigGroup& v1, const CConfigGroup& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CConfigGroup> CConfigGroupArray;
-extern CArchive& operator>>(CArchive& archive, CConfigGroupArray& array);
-extern CArchive& operator<<(CArchive& archive, const CConfigGroupArray& array);
+typedef vector<CConfigSection> CConfigSectionArray;
+extern CArchive& operator>>(CArchive& archive, CConfigSectionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CConfigSectionArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_CONFIGGROUP;
+extern const char* STR_DISPLAY_CONFIGSECTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

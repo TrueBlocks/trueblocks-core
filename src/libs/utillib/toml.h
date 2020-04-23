@@ -47,40 +47,40 @@ class CToml : public CSharedResource {
 
     //-------------------------------------------------------------------------
     // support class for toml file
-    class CTomlGroup {
+    class CTomlSection {
       public:
-        string_q groupName;
+        string_q sectionName;
         bool isArray;
         bool isComment;
         vector<CTomlKey> keys;
 
-        CTomlGroup(void);
-        CTomlGroup(const string_q& n, bool a, bool c) : groupName(n), isArray(a), isComment(c) {
+        CTomlSection(void);
+        CTomlSection(const string_q& n, bool a, bool c) : sectionName(n), isArray(a), isComment(c) {
         }
-        CTomlGroup(const CTomlGroup& group);
+        CTomlSection(const CTomlSection& section);
 
-        ~CTomlGroup(void);
+        ~CTomlSection(void);
 
-        CTomlGroup& operator=(const CTomlGroup& group);
+        CTomlSection& operator=(const CTomlSection& section);
         void addKey(const string_q& keyName, const string_q& val, bool commented);
 
       private:
         void clear(void);
-        void copy(const CTomlGroup& group);
+        void copy(const CTomlSection& section);
     };
 
   protected:
-    void addGroup(const string_q& group, bool commented, bool array);
-    void addKey(const string_q& group, const string_q& key, const string_q& val, bool commented);
+    void addSection(const string_q& section, bool commented, bool array);
+    void addKey(const string_q& section, const string_q& key, const string_q& val, bool commented);
 
-    CTomlGroup* findGroup(const string_q& group) const;
-    CTomlKey* findKey(const string_q& group, const string_q& key) const;
-
-  public:
-    void deleteKey(const string_q& group, const string_q& key);
+    CTomlSection* findSection(const string_q& section) const;
+    CTomlKey* findKey(const string_q& section, const string_q& key) const;
 
   public:
-    vector<CTomlGroup> groups;
+    void deleteKey(const string_q& section, const string_q& key);
+
+  public:
+    vector<CTomlSection> sections;
 
     explicit CToml(const string_q& fileName);
     ~CToml(void);
@@ -91,17 +91,17 @@ class CToml : public CSharedResource {
         return "CToml";
     }
 
-    string_q getConfigStr(const string_q& group, const string_q& key, const string_q& def) const;
-    string_q getConfigJson(const string_q& group, const string_q& key, const string_q& def) const;
-    uint64_t getConfigInt(const string_q& group, const string_q& key, uint64_t def) const;
-    biguint_t getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const;
-    bool getConfigBool(const string_q& group, const string_q& key, bool def) const;
+    string_q getConfigStr(const string_q& section, const string_q& key, const string_q& def) const;
+    string_q getConfigJson(const string_q& section, const string_q& key, const string_q& def) const;
+    uint64_t getConfigInt(const string_q& section, const string_q& key, uint64_t def) const;
+    biguint_t getConfigBigInt(const string_q& section, const string_q& key, biguint_t def) const;
+    bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
     uint64_t getVersion(void) const;
 
-    void setConfigArray(const string_q& group, const string_q& key, const string_q& value);
-    void setConfigStr(const string_q& group, const string_q& key, const string_q& value);
-    void setConfigInt(const string_q& group, const string_q& key, uint64_t value);
-    void setConfigBool(const string_q& group, const string_q& key, bool value);
+    void setConfigArray(const string_q& section, const string_q& key, const string_q& value);
+    void setConfigStr(const string_q& section, const string_q& key, const string_q& value);
+    void setConfigInt(const string_q& section, const string_q& key, uint64_t value);
+    void setConfigBool(const string_q& section, const string_q& key, bool value);
 
     bool writeFile(void);
     bool readFile(const string_q& filename);

@@ -16,7 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "configgroup.h"
+#include "configsection.h"
 
 namespace qblocks {
 
@@ -27,7 +27,7 @@ namespace qblocks {
 class CConfigFile : public CBaseNode {
   public:
     string_q name;
-    CConfigGroupArray groups;
+    CConfigSectionArray sections;
 
   public:
     CConfigFile(void);
@@ -95,7 +95,7 @@ inline void CConfigFile::initialize(void) {
     CBaseNode::initialize();
 
     name = "";
-    groups.clear();
+    sections.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -107,7 +107,7 @@ inline void CConfigFile::duplicate(const CConfigFile& co) {
     CBaseNode::duplicate(co);
 
     name = co.name;
-    groups = co.groups;
+    sections = co.sections;
 
     // EXISTING_CODE
     // EXISTING_CODE

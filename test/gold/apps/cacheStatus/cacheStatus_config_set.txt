@@ -3,7 +3,7 @@ cacheStatus --set_config
 
   {
     "name": "quickBlocks.toml",
-    "groups": [
+    "sections": [
       {
         "section": "Providers",
         "name": "settings",
@@ -113,7 +113,7 @@ cacheStatus --set_config
       },
       {
         "name": "blockScrape.toml",
-        "groups": [
+        "sections": [
           {
             "section": "Scraper",
             "name": "settings",
@@ -139,7 +139,7 @@ cacheStatus --set_config
       },
       {
         "name": "acctExport.toml",
-        "groups": [
+        "sections": [
           {
             "section": "Exporter",
             "name": "settings",
@@ -152,7 +152,7 @@ cacheStatus --set_config
       },
       {
         "name": "ethNames.toml",
-        "groups": [
+        "sections": [
           {
             "section": "Names",
             "name": "custom",

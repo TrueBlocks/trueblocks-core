@@ -3,7 +3,7 @@
   "files": [
     {
       "name": "quickBlocks.toml",
-      "groups": [
+      "sections": [
         {
           "section": "Providers",
           "name": "settings",
@@ -184,7 +184,7 @@
     },
     {
       "name": "blockScrape.toml",
-      "groups": [
+      "sections": [
         {
           "section": "Scraper",
           "name": "settings",
@@ -219,7 +219,7 @@
     },
     {
       "name": "acctExport.toml",
-      "groups": [
+      "sections": [
         {
           "section": "Exporter",
           "name": "settings",
@@ -246,7 +246,7 @@
     },
     {
       "name": "ethNames.toml",
-      "groups": [
+      "sections": [
         {
           "section": "Names",
           "name": "custom",

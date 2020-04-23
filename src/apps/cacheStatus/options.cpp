@@ -242,7 +242,7 @@ COptions::COptions(void) {
     CAbiCacheItem::registerClass();
     CConfiguration::registerClass();
     CConfigFile::registerClass();
-    CConfigGroup::registerClass();
+    CConfigSection::registerClass();
     CConfigItem::registerClass();
 
     UNHIDE_FIELD(CAccountName, "nAppearances");

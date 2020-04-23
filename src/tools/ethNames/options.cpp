@@ -23,6 +23,7 @@ static const COption params[] = {
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
+    COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
     COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
@@ -47,6 +48,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CStringArray terms;
     bool expand = false;
+    bool all = false;
     bool owned = false;
     bool custom = false;
     bool prefund = false;
@@ -71,6 +73,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-m" || arg == "--match_case") {
             match_case = true;
+
+        } else if (arg == "-l" || arg == "--all") {
+            all = true;
 
         } else if (arg == "-o" || arg == "--owned") {
             owned = true;
@@ -158,6 +163,8 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= OTHER;
     }
+    if (all)
+        types = ALL;
 
     if (addr) {
         addr_only = true;

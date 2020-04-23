@@ -33,38 +33,38 @@ CToml::~CToml(void) {
 
 //-------------------------------------------------------------------------
 void CToml::clear(void) {
-    groups.clear();
+    sections.clear();
 }
 
 //-------------------------------------------------------------------------
-void CToml::addGroup(const string_q& group, bool commented, bool array) {
-    if (findGroup(group))
+void CToml::addSection(const string_q& section, bool commented, bool array) {
+    if (findSection(section))
         return;
-    CTomlGroup newGroup(group, array, commented);
-    groups.push_back(newGroup);
+    CTomlSection newSection(section, array, commented);
+    sections.push_back(newSection);
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlGroup* CToml::findGroup(const string_q& group) const {
-    for (size_t i = 0; i < groups.size(); i++) {
-        if (groups[i].groupName == group) {
-            return (CToml::CTomlGroup*)&groups[i];
+CToml::CTomlSection* CToml::findSection(const string_q& section) const {
+    for (size_t i = 0; i < sections.size(); i++) {
+        if (sections[i].sectionName == section) {
+            return (CToml::CTomlSection*)&sections[i];
         }
     }
     return NULL;
 }
 
 //-------------------------------------------------------------------------
-void CToml::addKey(const string_q& group, const string_q& key, const string_q& val, bool commented) {
-    CTomlGroup* grp = findGroup(group);
+void CToml::addKey(const string_q& section, const string_q& key, const string_q& val, bool commented) {
+    CTomlSection* grp = findSection(section);
     if (grp)
         grp->addKey(key, val, commented);
     return;
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlKey* CToml::findKey(const string_q& group, const string_q& keyIn) const {
-    CTomlGroup* grp = findGroup(group);
+CToml::CTomlKey* CToml::findKey(const string_q& section, const string_q& keyIn) const {
+    CTomlSection* grp = findSection(section);
     if (grp) {
         for (size_t i = 0; i < grp->keys.size(); i++)
             if (grp->keys[i].keyName == keyIn)
@@ -74,14 +74,14 @@ CToml::CTomlKey* CToml::findKey(const string_q& group, const string_q& keyIn) co
 }
 
 //-------------------------------------------------------------------------
-uint64_t CToml::getConfigInt(const string_q& group, const string_q& key, uint64_t def) const {
-    string_q ret = getConfigStr(group, key, uint_2_Str(def));
+uint64_t CToml::getConfigInt(const string_q& section, const string_q& key, uint64_t def) const {
+    string_q ret = getConfigStr(section, key, uint_2_Str(def));
     return str_2_Uint(ret);
 }
 
 //-------------------------------------------------------------------------
-bool CToml::getConfigBool(const string_q& group, const string_q& key, bool def) const {
-    string_q ret = getConfigStr(group, key, int_2_Str(def ? 1 : 0));
+bool CToml::getConfigBool(const string_q& section, const string_q& key, bool def) const {
+    string_q ret = getConfigStr(section, key, int_2_Str(def ? 1 : 0));
     replaceAny(ret, ";\t\n\r ", "");
     return ((ret == "true" || ret == "1") ? true : false);
 }
@@ -90,13 +90,13 @@ bool CToml::getConfigBool(const string_q& group, const string_q& key, bool def) 
 extern string_q stripFullLineComments(const string_q& inStr);
 extern string_q collapseArrays(const string_q& inStr);
 bool CToml::readFile(const string_q& filename) {
-    string_q curGroup;
+    string_q curSection;
     clear();
 
     string_q contents;
     asciiFileToString(filename, contents);
     if (!contains(contents, "[version]")) {
-        addGroup("version", false, false);
+        addSection("version", false, false);
         addKey("version", "current", getVersionStr(false, false), false);
     }
     replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
@@ -110,19 +110,19 @@ bool CToml::readFile(const string_q& filename) {
             value = trim(extract(value, 1));
         if (!value.empty()) {
             bool isArray = contains(value, "[[");
-            if (startsWith(value, '[')) {  // it's a group
+            if (startsWith(value, '[')) {  // it's a section
                 value = trim(trimWhitespace(substitute(substitute(value, "[", ""), "]", "")), '\"');
-                addGroup(value, comment, isArray);
-                curGroup = value;
+                addSection(value, comment, isArray);
+                curSection = value;
 
             } else {
-                if (curGroup.empty()) {
-                    string_q group = "root-level";
-                    addGroup(group, false, false);
-                    curGroup = group;
+                if (curSection.empty()) {
+                    string_q section = "root-level";
+                    addSection(section, false, false);
+                    curSection = section;
                 }
                 string_q key = nextTokenClear(value, '=');  // value may be empty, but not whitespace
-                addKey(curGroup, trimWhitespace(key), trimWhitespace(value), comment);
+                addKey(curSection, trimWhitespace(key), trimWhitespace(value), comment);
             }
         }
     }
@@ -177,13 +177,13 @@ bool CToml::isBackLevel(void) const {
 
 //---------------------------------------------------------------------------------------
 void CToml::mergeFile(CToml* tomlIn) {
-    for (auto group : tomlIn->groups) {
-        for (auto key : group.keys) {
-            setConfigStr(group.groupName, key.keyName, "\"" + key.value + "\"");
+    for (auto section : tomlIn->sections) {
+        for (auto key : section.keys) {
+            setConfigStr(section.sectionName, key.keyName, "\"" + key.value + "\"");
             if (key.deleted)
-                deleteKey(group.groupName, key.keyName);
+                deleteKey(section.sectionName, key.keyName);
             if (key.comment) {
-                CTomlKey* k = findKey(group.groupName, key.keyName);
+                CTomlKey* k = findKey(section.sectionName, key.keyName);
                 if (k)
                     k->comment = true;
             }
@@ -192,31 +192,31 @@ void CToml::mergeFile(CToml* tomlIn) {
 }
 
 //---------------------------------------------------------------------------------------
-biguint_t CToml::getConfigBigInt(const string_q& group, const string_q& key, biguint_t def) const {
-    string_q ret = getConfigStr(group, key, bnu_2_Str(def));
+biguint_t CToml::getConfigBigInt(const string_q& section, const string_q& key, biguint_t def) const {
+    string_q ret = getConfigStr(section, key, bnu_2_Str(def));
     string_q check = ret;
     replaceAny(check, "0123456789abcdefABCDEF", "");
     if (!check.empty()) {
-        cerr << "Big int config item " << group << "::" << key << " is not an integer...returning zero.";
+        cerr << "Big int config item " << section << "::" << key << " is not an integer...returning zero.";
         return 0;
     }
     return str_2_BigUint(ret);
 }
 
 //---------------------------------------------------------------------------------------
-string_q CToml::getConfigStr(const string_q& group, const string_q& key, const string_q& def) const {
-    string_q env = getEnvStr(toUpper(group + "_" + key));
+string_q CToml::getConfigStr(const string_q& section, const string_q& key, const string_q& def) const {
+    string_q env = getEnvStr(toUpper(section + "_" + key));
     if (!env.empty())
         return env;
-    CTomlKey* found = findKey(group, key);
+    CTomlKey* found = findKey(section, key);
     if (found && !found->comment)
         return found->value;
     return def;
 }
 
 //---------------------------------------------------------------------------------------
-string_q CToml::getConfigJson(const string_q& group, const string_q& key, const string_q& def) const {
-    return getConfigStr(group, key, def);
+string_q CToml::getConfigJson(const string_q& section, const string_q& key, const string_q& def) const {
+    return getConfigStr(section, key, def);
 }
 
 //-------------------------------------------------------------------------
@@ -230,40 +230,40 @@ uint64_t CToml::getVersion(void) const {
 }
 
 //-------------------------------------------------------------------------
-void CToml::setConfigInt(const string_q& group, const string_q& key, uint64_t value) {
-    setConfigStr(group, key, int_2_Str((int64_t)value));
+void CToml::setConfigInt(const string_q& section, const string_q& key, uint64_t value) {
+    setConfigStr(section, key, int_2_Str((int64_t)value));
 }
 
 //-------------------------------------------------------------------------
-void CToml::setConfigBool(const string_q& group, const string_q& key, bool value) {
-    setConfigStr(group, key, bool_2_Str(value));
+void CToml::setConfigBool(const string_q& section, const string_q& key, bool value) {
+    setConfigStr(section, key, bool_2_Str(value));
 }
 
 //-------------------------------------------------------------------------
-void CToml::setConfigArray(const string_q& group, const string_q& key, const string& value) {
-    setConfigStr(group, key, value);
-    CToml::CTomlGroup* grp = findGroup(group);
+void CToml::setConfigArray(const string_q& section, const string_q& key, const string& value) {
+    setConfigStr(section, key, value);
+    CToml::CTomlSection* grp = findSection(section);
     if (grp)
         grp->isArray = true;
 }
 
 //-------------------------------------------------------------------------
-void CToml::setConfigStr(const string_q& group, const string_q& keyIn, const string_q& value) {
+void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const string_q& value) {
     bool comment = startsWith(keyIn, '#');
     string_q key = (comment ? extract(keyIn, 1) : keyIn);
 
-    CTomlGroup* grp = findGroup(group);
+    CTomlSection* grp = findSection(section);
     if (!grp) {
-        addGroup(group, false, false);
-        addKey(group, key, value, comment);
+        addSection(section, false, false);
+        addKey(section, key, value, comment);
 
     } else {
-        CTomlKey* found = findKey(group, key);
+        CTomlKey* found = findKey(section, key);
         if (found) {
             found->comment = comment;
             found->value = value;
         } else {
-            addKey(group, key, value, comment);
+            addKey(section, key, value, comment);
         }
     }
 }
@@ -271,16 +271,16 @@ void CToml::setConfigStr(const string_q& group, const string_q& keyIn, const str
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CToml& tomlIn) {
     bool first = true;
-    for (auto group : tomlIn.groups) {
+    for (auto section : tomlIn.sections) {
         if (!first)
             os << endl;
-        os << (group.isComment ? "# " : "");
-        os << (group.isArray ? "[[" : "[");
-        os << group.groupName;
-        os << (group.isArray ? "]]" : "]");
+        os << (section.isComment ? "# " : "");
+        os << (section.isArray ? "[[" : "[");
+        os << section.sectionName;
+        os << (section.isArray ? "]]" : "]");
         os << endl;
-        for (auto key : group.keys) {
-            os << (key.comment || group.isComment || key.deleted ? "# " : "");
+        for (auto key : section.keys) {
+            os << (key.comment || section.isComment || key.deleted ? "# " : "");
             if ((!key.value.empty() && isNumeral(key.value)) || (key.value == "true" || key.value == "false")) {
                 os << key.keyName << " = " << key.value;
             } else {
@@ -330,48 +330,48 @@ CToml::CTomlKey& CToml::CTomlKey::operator=(const CTomlKey& key) {
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlGroup::CTomlGroup(void) {
+CToml::CTomlSection::CTomlSection(void) {
     clear();
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlGroup::CTomlGroup(const CTomlGroup& group) {
-    copy(group);
+CToml::CTomlSection::CTomlSection(const CTomlSection& section) {
+    copy(section);
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlGroup::~CTomlGroup(void) {
+CToml::CTomlSection::~CTomlSection(void) {
     clear();
 }
 
 //-------------------------------------------------------------------------
-CToml::CTomlGroup& CToml::CTomlGroup::operator=(const CTomlGroup& group) {
-    copy(group);
+CToml::CTomlSection& CToml::CTomlSection::operator=(const CTomlSection& section) {
+    copy(section);
     return *this;
 }
 
 //-------------------------------------------------------------------------
-void CToml::CTomlGroup::clear(void) {
-    groupName = "";
+void CToml::CTomlSection::clear(void) {
+    sectionName = "";
     isComment = false;
     isArray = false;
     keys.clear();
 }
 
 //-------------------------------------------------------------------------
-void CToml::CTomlGroup::copy(const CTomlGroup& group) {
+void CToml::CTomlSection::copy(const CTomlSection& section) {
     clear();
 
-    groupName = group.groupName;
-    isComment = group.isComment;
-    isArray = group.isArray;
+    sectionName = section.sectionName;
+    isComment = section.isComment;
+    isArray = section.isArray;
     keys.clear();
-    for (auto key : group.keys)
+    for (auto key : section.keys)
         keys.push_back(key);
 }
 
 //---------------------------------------------------------------------------------------
-void CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, bool commented) {
+void CToml::CTomlSection::addKey(const string_q& keyName, const string_q& val, bool commented) {
     string_q str = substitute(val, "\"\"\"", "");
     if (endsWith(str, '\"'))
         replaceReverse(str, "\"", "");
@@ -386,8 +386,8 @@ void CToml::CTomlGroup::addKey(const string_q& keyName, const string_q& val, boo
 }
 
 //---------------------------------------------------------------------------------------
-void CToml::deleteKey(const string_q& group, const string_q& key) {
-    CToml::CTomlKey* kPtr = findKey(group, key);
+void CToml::deleteKey(const string_q& section, const string_q& key) {
+    CToml::CTomlKey* kPtr = findKey(section, key);
     if (kPtr)
         kPtr->deleted = true;
 }

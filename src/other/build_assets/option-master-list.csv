@@ -138,6 +138,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12260,tools,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
 12280,tools,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
 12300,tools,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
+12315,tools,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
 12320,tools,names,ethNames,owned,o,,false,false,true,true,local,switch,<boolean>,include personal accounts in the search
 12340,tools,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
 12360,tools,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts

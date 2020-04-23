@@ -1,6 +1,6 @@
 [settings]
 class = CConfigFile
 base_class = CBaseNode
-fields = string name|CConfigGroupArray groups
-includes = etherlib.h|configgroup.h
+fields = string name|CConfigSectionArray sections
+includes = etherlib.h|configsection.h
 serialize = true

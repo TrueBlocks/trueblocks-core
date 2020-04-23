@@ -23,6 +23,7 @@ on, both, medi, names, tools/ethNames, invalid_param_8,                  n, term
 on, both, fast, names, tools/ethNames, invalid_param_9,                  n, terms = 0xb6 torj & other & VERBOSE & fmt = txt
 on, both, medi, names, tools/ethNames, invalid_search,                   n, terms = 0x1 torj & fmt = txt
 
+on, both, fast, names, tools/ethNames, alltags,                          y, all
 on, both, fast, names, tools/ethNames, owned,                            y, owned
 on, both, medi, names, tools/ethNames, prefund,                          y, prefund
 on, both, fast, names, tools/ethNames, run,                              y, owned & no_header

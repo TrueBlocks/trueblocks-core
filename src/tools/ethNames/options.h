@@ -21,7 +21,14 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t { OWNED = (1 << 1), CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), OTHER = (1 << 5) };
+enum account_t {
+    OWNED = (1 << 1),
+    CUSTOM = (1 << 2),
+    NAMED = (1 << 3),
+    PREFUND = (1 << 4),
+    OTHER = (1 << 5),
+    ALL = (OWNED | CUSTOM | NAMED | PREFUND | OTHER)
+};
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {

@@ -24,8 +24,8 @@ bool COptions::handle_config_get(ostream& os) {
         const CToml* cc = getGlobalConfig();
         CConfigFile f("quickBlocks.toml");
 
-        CConfigGroup g1_1("Providers", "settings");
-        CConfigGroup g1_2("Paths", "settings");
+        CConfigSection g1_1("Providers", "settings");
+        CConfigSection g1_2("Paths", "settings");
 
         string_q defFolder = configPathRelative("");
         CStringArray values;
@@ -52,7 +52,7 @@ bool COptions::handle_config_get(ostream& os) {
                                     "TrueBlocks' API endpoint", true, false));
         for (auto item : items)
             g1_1.keys.push_back(item);
-        f.groups.push_back(g1_1);
+        f.sections.push_back(g1_1);
         items.clear();
 
         items.push_back(CConfigItem("configPath", substitute(values[cnt++], "\t", "\\t"), "path",
@@ -63,14 +63,14 @@ bool COptions::handle_config_get(ostream& os) {
                                     "location of index (on internal SSD for speed)", false, false));
         for (auto item : items)
             g1_2.keys.push_back(item);
-        f.groups.push_back(g1_2);
+        f.sections.push_back(g1_2);
 
         extern const char* STR_DISPLAY_WHEN;
         extern const char* STR_DISPLAY_WHERE;
 
         CStringArray values2;
         CConfigItemArray items2;
-        CConfigGroup g2("Display Strings", "display_strs");
+        CConfigSection g2("Display Strings", "display_strs");
         cnt = 0;
         values2.push_back(isTestMode() ? "--account Name--"
                                        : cc->getConfigStr(g2.section, "", STR_DISPLAY_ACCOUNTNAME));
@@ -111,14 +111,14 @@ bool COptions::handle_config_get(ostream& os) {
         for (auto item : items2)
             g2.keys.push_back(item);
         if (verbose || isTestMode())
-            f.groups.push_back(g2);
+            f.sections.push_back(g2);
 
-        CConfigGroup g3("APIs", "settings");
+        CConfigSection g3("APIs", "settings");
         string_q v3 = (isTestMode() ? "--api_key--" : cc->getConfigStr(g3.name, "etherscan_key", "<not-set>"));
         CConfigItem i3("etherscan_key", v3, "string", "api key for the EtherScan apis -- private data -- not shared",
                        false, false);
         g3.keys.push_back(i3);
-        f.groups.push_back(g3);
+        f.sections.push_back(g3);
 
         config.files.push_back(f);
     }
@@ -126,7 +126,7 @@ bool COptions::handle_config_get(ostream& os) {
     {
         const CToml* cc = getGlobalConfig("blockScrape");
         CConfigFile f("blockScrape.toml");
-        CConfigGroup g1("Scraper", "settings");
+        CConfigSection g1("Scraper", "settings");
         string_q v1 = (isTestMode() ? "--n Blocks--" : cc->getConfigStr(g1.name, "n_blocks", "2000"));
         string_q v2 = (isTestMode() ? "--n Addr Procs--" : cc->getConfigStr(g1.name, "n_addr_procs", "20"));
         string_q v3 = (isTestMode() ? "--n Block Procs--" : cc->getConfigStr(g1.name, "n_block_procs", "10"));
@@ -139,21 +139,21 @@ bool COptions::handle_config_get(ostream& os) {
         CConfigItem i3("n_block_procs", v3, "uint", "number of parallel go processes to use to process blocks (> 0)",
                        true, false);
         g1.keys.push_back(i3);
-        f.groups.push_back(g1);
+        f.sections.push_back(g1);
         config.files.push_back(f);
     }
 
     {
         const CToml* cc = getGlobalConfig("acctExport");
         CConfigFile f("acctExport.toml");
-        CConfigGroup g1("Exporter", "settings");
+        CConfigSection g1("Exporter", "settings");
         string_q v2 = (isTestMode() ? "--write Txs--" : cc->getConfigStr(g1.name, "write_txs", "true"));
         string_q v3 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "write_traces", "true"));
         CConfigItem i2("write_txs", v2, "bool", "write transactions to the TrueBlocks binary cache", false, false);
         g1.keys.push_back(i2);
         CConfigItem i3("write_traces", v3, "bool", "write traces to the TrueBlocks binary cache", false, false);
         g1.keys.push_back(i3);
-        f.groups.push_back(g1);
+        f.sections.push_back(g1);
         config.files.push_back(f);
     }
 
@@ -162,7 +162,7 @@ bool COptions::handle_config_get(ostream& os) {
 
         const CToml* cc = getGlobalConfig("ethNames");
         CConfigFile f("ethNames.toml");
-        CConfigGroup g1("Names", "custom");
+        CConfigSection g1("Names", "custom");
 
         CConfigItem i1("list", "", "json array",
                        "user specific list of names for addresses -- private data -- not shared", false, false);
@@ -188,7 +188,7 @@ bool COptions::handle_config_get(ostream& os) {
         }
 
         g1.keys.push_back(i1);
-        f.groups.push_back(g1);
+        f.sections.push_back(g1);
         if (verbose || isTestMode())
             config.files.push_back(f);
     }
@@ -240,7 +240,7 @@ bool COptions::handle_config_set(ostream& os) {
             cerr << cYellow << string_q(120, '-') << cOff << endl;
         }
 
-        for (auto group : file.groups) {
+        for (auto group : file.sections) {
             for (auto key : group.keys) {
                 string_q val = key.getValueByName("value");
                 if (contains(key.name, "list")) {
@@ -320,7 +320,7 @@ const char* STR_TEST_DATA =
     "[\n"
     "  {\n"
     "    \"name\": \"quickBlocks.toml\",\n"
-    "    \"groups\": [\n"
+    "    \"sections\": [\n"
     "      {\n"
     "        \"section\": \"Providers\",\n"
     "        \"name\": \"settings\",\n"
@@ -430,7 +430,7 @@ const char* STR_TEST_DATA =
     "      },\n"
     "      {\n"
     "        \"name\": \"blockScrape.toml\",\n"
-    "        \"groups\": [\n"
+    "        \"sections\": [\n"
     "          {\n"
     "            \"section\": \"Scraper\",\n"
     "            \"name\": \"settings\",\n"
@@ -456,7 +456,7 @@ const char* STR_TEST_DATA =
     "      },\n"
     "      {\n"
     "        \"name\": \"acctExport.toml\",\n"
-    "        \"groups\": [\n"
+    "        \"sections\": [\n"
     "          {\n"
     "            \"section\": \"Exporter\",\n"
     "            \"name\": \"settings\",\n"
@@ -469,7 +469,7 @@ const char* STR_TEST_DATA =
     "      },\n"
     "      {\n"
     "        \"name\": \"ethNames.toml\",\n"
-    "        \"groups\": [\n"
+    "        \"sections\": [\n"
     "          {\n"
     "            \"section\": \"Names\",\n"
     "            \"name\": \"custom\",\n"
