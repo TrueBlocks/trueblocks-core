@@ -39,6 +39,8 @@ class CIndexCache : public CCache {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool readBinaryCache(const string_q& cacheType, bool details, bool ignore = false) override;
+    bool writeBinaryCache(const string_q& cacheType, bool details) override;
     // EXISTING_CODE
     bool operator==(const CIndexCache& item) const;
     bool operator!=(const CIndexCache& item) const {

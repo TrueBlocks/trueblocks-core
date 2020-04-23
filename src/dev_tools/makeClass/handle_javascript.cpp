@@ -22,7 +22,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-    page.dest_path = toml.getConfigStr("settings", "dest_path", "./src/pages/") + page.properName + "/";
+    page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
 
     CStringArray reserved = {"in"};
@@ -378,14 +378,14 @@ bool COptions::handle_generate_js_menus(void) {
     }
     menuStream << "  ]," << endl;
 
-    string_q indexFile = "./src/pages/index.jsx";
+    string_q indexFile = "./pages/index.jsx";
     string_q contents = asciiFileToString(indexFile);
     doReplace(contents, "imports", importStream.str(), "  ");
     doReplace(contents, "pages", pageStream.str(), "  ");
     doReplace(contents, "menus", menuStream.str(), "  ");
     stringToAsciiFile(indexFile, contents);
 
-    string_q appFile = "./src/App.jsx";
+    string_q appFile = "./App.jsx";
     contents.clear();
     contents = asciiFileToString(appFile);
     doReplace(contents, "imports", appImportsStream.str(), "");
@@ -469,10 +469,10 @@ bool COptions::handle_generate_js_schemas(void) {
             page = pp;
         }
         if (page.longName != "separator") {
-            string_q codeFile = "./src/pages/" + page.properName + "/" + page.properName +
+            string_q codeFile = "./pages/" + page.properName + "/" + page.properName +
                                 (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
             if (page.longName == "menu")
-                codeFile = "./src/pages/index.jsx";
+                codeFile = "./pages/index.jsx";
             string_q contents = asciiFileToString(codeFile);
             if (contains(contents, "auto-generate")) {
                 ostringstream schemaStream;
