@@ -21,7 +21,6 @@ makeClass --js CBlock
 <Row name="age" type="string" value={item.age} display={item.age} route="" />
 Generating Menus...
 Could not open file: --filename--
-Could not open file: --filename--
 
 Generating Schemas...
 

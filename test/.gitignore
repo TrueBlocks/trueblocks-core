@@ -6,3 +6,4 @@ bin
 proj.xcodeproj
 *.bin
 compare
+*.jsx
