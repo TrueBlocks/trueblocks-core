@@ -31,6 +31,7 @@ class CPage : public CBaseNode {
     string_q twoName;
     string_q sevenName;
     string_q dest_path;
+    string_q recordIcons;
     string_q schema;
     CSubpageArray subpages;
 
@@ -102,6 +103,7 @@ inline void CPage::initialize(void) {
     twoName = "";
     sevenName = "";
     dest_path = "";
+    recordIcons = "";
     schema = "";
     subpages.clear();
 
@@ -119,6 +121,7 @@ inline void CPage::duplicate(const CPage& pa) {
     twoName = pa.twoName;
     sevenName = pa.sevenName;
     dest_path = pa.dest_path;
+    recordIcons = pa.recordIcons;
     schema = pa.schema;
     subpages = pa.subpages;
 

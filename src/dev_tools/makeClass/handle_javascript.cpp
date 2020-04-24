@@ -24,6 +24,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
+    page.recordIcons = toml.getConfigStr("settings", "recordIcons", "");
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
@@ -316,6 +317,7 @@ bool COptions::handle_generate_js_menus(void) {
 
     CToml toml("./classDefinitions/app.txt");
     string_q pageList = toml.getConfigStr("settings", "pages", "");
+
     CStringArray pagesStrs;
     explode(pagesStrs, pageList, '|');
 
@@ -455,6 +457,7 @@ bool COptions::handle_generate_js_schemas(void) {
 
     CToml toml("./classDefinitions/app.txt");
     string_q pageList = toml.getConfigStr("settings", "schemas", "");
+
     CStringArray pagesStrs;
     explode(pagesStrs, pageList, '|');
 
@@ -494,6 +497,12 @@ bool COptions::handle_generate_js_schemas(void) {
                         schemas.push_back(schema);
                     }
                 }
+                if (!page.recordIcons.empty()) {
+                    CSchema schema;
+                    string_q line = "Icons,icons,icons";
+                    schema.parseCSV(fields, line);
+                    schemas.push_back(schema);
+                }
                 schemaStream << "export const " << (parts.size() > 1 ? parts[1] : page.longName) << "Schema = [";
                 bool first = true;
                 for (auto schema : schemas) {
@@ -525,6 +534,12 @@ bool COptions::handle_generate_js_schemas(void) {
                 }
                 schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
                 doReplace(contents, "schema", schemaStream.str(), "");
+                CStringArray icons;
+                explode(icons, page.recordIcons, ',');
+                ostringstream iconStream;
+                for (auto icon : icons)
+                    iconStream << "  '" << icon << "'," << endl;
+                doReplace(contents, "record-icons", iconStream.str(), "");
                 stringToAsciiFile(codeFile, contents);
             }
         }

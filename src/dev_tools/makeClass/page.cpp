@@ -85,6 +85,11 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
                 return properName;
             }
             break;
+        case 'r':
+            if (fieldName % "recordIcons") {
+                return recordIcons;
+            }
+            break;
         case 's':
             if (fieldName % "sevenName") {
                 return sevenName;
@@ -149,6 +154,12 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             break;
+        case 'r':
+            if (fieldName % "recordIcons") {
+                recordIcons = fieldValue;
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "sevenName") {
                 sevenName = fieldValue;
@@ -204,6 +215,7 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> twoName;
     archive >> sevenName;
     archive >> dest_path;
+    archive >> recordIcons;
     archive >> schema;
     archive >> subpages;
     finishParse();
@@ -222,6 +234,7 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << twoName;
     archive << sevenName;
     archive << dest_path;
+    archive << recordIcons;
     archive << schema;
     archive << subpages;
 
@@ -265,6 +278,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "recordIcons", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "schema", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
 
