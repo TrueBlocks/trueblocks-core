@@ -27,7 +27,7 @@ enum account_t {
     NAMED = (1 << 3),
     PREFUND = (1 << 4),
     OTHER = (1 << 5),
-    ALL = (OWNED | CUSTOM | NAMED | PREFUND | OTHER)
+    ALL = (OWNED | CUSTOM | NAMED | OTHER)
 };
 
 //-----------------------------------------------------------------------------
