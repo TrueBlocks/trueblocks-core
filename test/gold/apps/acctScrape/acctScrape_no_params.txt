@@ -5,7 +5,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments):
   You must provide at least one Ethereum address. Quitting...
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
-  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+  Purpose:  Index transactions for a given Ethereum address (or collection of addresses).
 
   Where:  
 	addrs                 one or more Ethereum addresses (required)

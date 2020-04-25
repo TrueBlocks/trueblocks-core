@@ -3,7 +3,7 @@ acctScrape -th
 #### Usage
 
 `Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Index transactions for a given Ethereum address (or series of addresses).
+`Purpose:`  Index transactions for a given Ethereum address (or collection of addresses).
 
 `Where:`  
 

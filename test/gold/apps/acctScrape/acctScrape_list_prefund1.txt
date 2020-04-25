@@ -6,7 +6,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments):
   'start' option must be strictly less than 'end' option. Quitting...
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
-  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+  Purpose:  Index transactions for a given Ethereum address (or collection of addresses).
 
   Where:  
 	addrs                 one or more Ethereum addresses (required)

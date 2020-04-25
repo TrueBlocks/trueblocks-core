@@ -27,7 +27,8 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "display list of monitored accounts"),
     COpt ion("kBlock", "k", "<blknum>", OPT_FLAG, "start processing at block :k"),
     COption("offset", "o", "<blknum>", OPT_FLAG, "offset to kBlock"),
-    COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption("", "", "", OPT_DESCRIPTION,
+            "Index transactions for a given Ethereum address (or collection of addresses)."),
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

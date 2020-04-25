@@ -20,7 +20,7 @@ static const COption params[] = {
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or series of addresses)."),
+    COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or collection of addresses)."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };

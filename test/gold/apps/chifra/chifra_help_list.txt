@@ -4,7 +4,7 @@ chifra list argc: 2 [1:--help]
 chifra list --help 
 
   Usage:    chifra list [-v|-h] <address> [address...]  
-  Purpose:  Index transactions for a given Ethereum address (or series of addresses).
+  Purpose:  Index transactions for a given Ethereum address (or collection of addresses).
 
   Where:  
 	addrs                 one or more Ethereum addresses (required)

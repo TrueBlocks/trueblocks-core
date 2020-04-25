@@ -153,7 +153,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty()) {
         optionOn(OPT_HELP);
-        EXIT_USAGE("Please specify " + params[0].description + ".");
+        COption* option = (COption*)&params[0];
+        option->description = "which command to run. See below...";
+        EXIT_USAGE("Please specify " + params[0].description);
     }
 
     if (mode != "scrape") {
@@ -228,6 +230,32 @@ COptions::COptions(void) {
     // clang-format off
     // clang-format on
     // END_CODE_NOTES
+
+    // clang-format off
+    notes.push_back(
+        "Valid commands for chifa are noted here. Get additional help with `'chifra <cmd> --help'`.||"
+                    "  list          list all appearances of an address anywhere on the chain.|"
+                    "  export        export every appearance (as a transaciton, receipt, log, balance, etc.)|"
+                    "  slurp         query EtherScan for a list of transactions (note: will be smaller than --list)|"
+                    "  names         list all names known by TrueBlocks.|"
+                    "  abi           list all abi signatures known by TrueBlocks.|"
+                    "  state         query the state of an Ethereum address.|"
+                    "  tokens        query the state of an ERC20 Ethereum address.|"
+                    "  when          list known (named) blocks.|"
+                    "  quotes        query for price data|"
+                    "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
+                    "  status        query for various status reports about the system.|"
+                    "  settings      get and set various system settings (API only).|"
+                    "  rm            remove or pause a monitored address.|"
+                    "  blocks        query the blockchain for block data|"
+                    "  transactions  query the blockchain for transaction data|"
+                    "  receipts      query the blockchain for receipt data|"
+                    "  logs          query the blockchain for log data|"
+                    "  traces        query the blockchain for trace data|"
+                    "  leech         tbd|"
+                    "  seed          tbd|"
+    );
+    // clang-format on
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG

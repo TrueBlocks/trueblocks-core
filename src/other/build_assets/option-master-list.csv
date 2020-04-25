@@ -7,7 +7,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10140,apps,list,acctScrape,silent,i,,false,false,false,false,local,switch,<boolean>,lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)
-10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or series of addresses).
+10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or collection of addresses).
 10162,apps,list,acctScrape,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 
 10200,apps,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
