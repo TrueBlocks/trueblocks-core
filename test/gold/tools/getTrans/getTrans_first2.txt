@@ -1,0 +1,4 @@
+getTrans argc: 4 [1:first] [2:--fmt] [3:txt] 
+getTrans first --fmt txt 
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+46147	0	2015-08-07 03:30:33 UTC	1438918233	0xa1e4380a3b1f749673e270229993ee55f35663b4	0x5df9b87991262f6ba471f09758cde1c0fc1de734	0.000000000000031337	0.000050000000000000	21000	0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060	0	0x

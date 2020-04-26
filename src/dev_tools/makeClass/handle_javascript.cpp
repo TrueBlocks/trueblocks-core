@@ -328,7 +328,6 @@ bool COptions::handle_generate_js_menus(void) {
     explode(sourceStrs, sourceList, '|');
 
     for (auto sourceStr : sourceStrs) {
-
         CStringArray parts;
         explode(parts, sourceStr, '-');
 

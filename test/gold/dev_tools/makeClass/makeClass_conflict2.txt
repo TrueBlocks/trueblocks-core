@@ -4,7 +4,7 @@ makeClass -d --run
 ./classDefinitions/block.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.6.7-alpha"
+current = "0.7.0-alpha"
 
 [settings]
 class = "CBlock"
@@ -43,7 +43,7 @@ serialize = true
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.6.7-alpha"
+current = "0.7.0-alpha"
 
 [settings]
 class = "CFunction"
@@ -54,7 +54,7 @@ includes = "utillib.h|parameter.h"
 ./classDefinitions/status.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.6.7-alpha"
+current = "0.7.0-alpha"
 
 [settings]
 class = "CStatus"

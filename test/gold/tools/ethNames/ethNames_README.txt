@@ -2,7 +2,7 @@ ethNames argc: 2 [1:-th]
 ethNames -th 
 #### Usage
 
-`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
 
 `Where:`  
@@ -18,6 +18,7 @@ ethNames -th
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
+| -s | --collections | display collections data |
 
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |

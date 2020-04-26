@@ -98,8 +98,9 @@ bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     }
 
     // txnum_t txid;
-    if (parts.size() == 0 ||                            // there are not enough
-        (parts.size() == 1 && (parts[0] != "latest" && parts[0] != "first")) ||  // there's only one and it's not 'latest'
+    if (parts.size() == 0 ||  // there are not enough
+        (parts.size() == 1 &&
+         (parts[0] != "latest" && parts[0] != "first")) ||  // there's only one and it's not 'latest'
         ((parts.size() == 2 || parts.size() == 3) &&
          (!isNumeral(parts[0]) || !isNumeral(parts[1]))) ||  // two or three, first two are not numbers
         parts.size() > 3) {                                  // too many

@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:test12.toml]
 tomlTest test12.toml 
 test12.toml
 [version]
-current = "0.6.7-alpha"
+current = "0.7.0-alpha"
 
 [settings]
 name = "accts"
@@ -93,7 +93,7 @@ named = [
 
 File contents after write
 [version]
-current = "0.6.7-alpha"
+current = "0.7.0-alpha"
 
 [settings]
 name = "accts"

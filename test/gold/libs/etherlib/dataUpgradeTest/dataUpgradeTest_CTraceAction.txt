@@ -68,7 +68,7 @@ to                  	1013	0	131127	T_ADDRESS TS_STRING
 value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 6007,
+  "schema": 7000,
   "deleted": 0,
   "showing": 1,
   "cname": "TraceAction",

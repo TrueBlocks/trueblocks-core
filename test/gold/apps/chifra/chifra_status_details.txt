@@ -4,7 +4,7 @@ cacheStatus argc: 7 [1:all] [2:--details] [3:--start] [4:1400000] [5:--end] [6:2
 cacheStatus all --details --start 1400000 --end 2000000 
 {
   "client_version": "Parity version",
-  "trueblocks_version": "GHC-TrueBlocks//0.6.7-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.7.0-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "api_provider": "--providers--",
   "balance_provider": "--providers--",
