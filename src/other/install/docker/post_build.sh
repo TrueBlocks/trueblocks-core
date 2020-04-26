@@ -23,4 +23,6 @@ mkdir /root/.quickBlocks/known_abis
 mkdir /root/.quickBlocks/makeClass
 mkdir /root/.quickBlocks/names
 
-cat "/root/.quickBlocks/quickBlocks.toml"
+#cat "/root/.quickBlocks/quickBlocks.toml"
+
+ls -lR "/root/.quickBlocks/"
