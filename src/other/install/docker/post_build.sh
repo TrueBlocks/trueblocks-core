@@ -1,16 +1,26 @@
 touch /root/.quickBlocks/names/names_prefunds.txt
 echo "apiProvider=\"http://localhost:80\"" >>/root/.quickBlocks/quickBlocks.toml
-mkdir -pv /root/.quickBlocks/cache/addr_index/finalized
-mkdir -pv /root/.quickBlocks/cache/addr_index/blooms
-mkdir -pv /root/.quickBlocks/cache/addr_index/staging
-mkdir -pv /root/.quickBlocks/cache/addr_index/ripe
-mkdir -pv /root/.quickBlocks/cache/addr_index/unripe
-mkdir -pv /root/.quickBlocks/cache/addr_index/finalized
-mkdir -pv /root/.quickBlocks/cache/monitors
-mkdir -pv /root/.quickBlocks/cache/prices
-mkdir -pv /root/.quickBlocks/cache/tmp
-mkdir -pv /root/.quickBlocks/cache/blocks
-mkdir -pv /root/.quickBlocks/cache/txs
-mkdir -pv /root/.quickBlocks/cache/traces
-mkdir -pv /root/.quickBlocks/cache/slurps
+
+mkdir /root/.quickBlocks/cache/
+mkdir /root/.quickBlocks/cache/abis
+mkdir /root/.quickBlocks/cache/addr_index
+mkdir /root/.quickBlocks/cache/addr_index/blooms
+mkdir /root/.quickBlocks/cache/addr_index/finalized
+mkdir /root/.quickBlocks/cache/addr_index/ripe
+mkdir /root/.quickBlocks/cache/addr_index/staging
+mkdir /root/.quickBlocks/cache/addr_index/unripe
+mkdir /root/.quickBlocks/cache/monitors
+mkdir /root/.quickBlocks/cache/monitors/staging
+mkdir /root/.quickBlocks/cache/prices
+mkdir /root/.quickBlocks/cache/tmp
+mkdir /root/.quickBlocks/chifra
+mkdir /root/.quickBlocks/grabABI
+mkdir /root/.quickBlocks/grabABI/docs
+mkdir /root/.quickBlocks/grabABI/parselib
+mkdir /root/.quickBlocks/ipfs-hashes
+mkdir /root/.quickBlocks/ipfs-hashes/data
+mkdir /root/.quickBlocks/known_abis
+mkdir /root/.quickBlocks/makeClass
+mkdir /root/.quickBlocks/names
+
 cat "/root/.quickBlocks/quickBlocks.toml"
