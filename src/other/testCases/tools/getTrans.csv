@@ -46,6 +46,7 @@ on, both, fast, transactions, tools/getTrans, uniqAddrs_fail,      y, transactio
 on, both, fast, transactions, tools/getTrans, uniqAddrs,           y, transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt json
 
 on, both, fast, transactions, tools/getTrans, first,               n, transactions = 40500.0.next & fmt = txt
+on, both, fast, transactions, tools/getTrans, first2,              n, transactions = first & fmt = txt
 on, both, fast, transactions, tools/getTrans, nav_prev1,           n, transactions = 1001001.1.prev & fmt = txt
 on, both, fast, transactions, tools/getTrans, nav_prev2,           n, transactions = 1001001.0.prev & fmt = txt & no_header
 on, both, fast, transactions, tools/getTrans, nav_next1,           n, transactions = 1001001.2.next & fmt = txt

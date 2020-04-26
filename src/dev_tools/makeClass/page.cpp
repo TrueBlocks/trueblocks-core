@@ -74,6 +74,12 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
             if (fieldName % "dest_path") {
                 return dest_path;
             }
+            if (fieldName % "defaultSearch") {
+                return defaultSearch;
+            }
+            if (fieldName % "defaultSort") {
+                return defaultSort;
+            }
             break;
         case 'l':
             if (fieldName % "longName") {
@@ -83,6 +89,11 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
         case 'p':
             if (fieldName % "properName") {
                 return properName;
+            }
+            break;
+        case 'q':
+            if (fieldName % "query") {
+                return query;
             }
             break;
         case 'r':
@@ -116,6 +127,11 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
                 return twoName;
             }
             break;
+        case 'u':
+            if (fieldName % "url") {
+                return url;
+            }
+            break;
         default:
             break;
     }
@@ -141,6 +157,14 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 dest_path = fieldValue;
                 return true;
             }
+            if (fieldName % "defaultSearch") {
+                defaultSearch = fieldValue;
+                return true;
+            }
+            if (fieldName % "defaultSort") {
+                defaultSort = fieldValue;
+                return true;
+            }
             break;
         case 'l':
             if (fieldName % "longName") {
@@ -151,6 +175,12 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
         case 'p':
             if (fieldName % "properName") {
                 properName = fieldValue;
+                return true;
+            }
+            break;
+        case 'q':
+            if (fieldName % "query") {
+                query = fieldValue;
                 return true;
             }
             break;
@@ -185,6 +215,12 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             break;
+        case 'u':
+            if (fieldName % "url") {
+                url = fieldValue;
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -216,6 +252,10 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> sevenName;
     archive >> dest_path;
     archive >> recordIcons;
+    archive >> defaultSearch;
+    archive >> defaultSort;
+    archive >> url;
+    archive >> query;
     archive >> schema;
     archive >> subpages;
     finishParse();
@@ -235,6 +275,10 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << sevenName;
     archive << dest_path;
     archive << recordIcons;
+    archive << defaultSearch;
+    archive << defaultSort;
+    archive << url;
+    archive << query;
     archive << schema;
     archive << subpages;
 
@@ -279,6 +323,10 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "recordIcons", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "defaultSearch", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "defaultSort", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "url", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "query", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "schema", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
 

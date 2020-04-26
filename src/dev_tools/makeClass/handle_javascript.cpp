@@ -22,9 +22,14 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
+    page.url = toml.getConfigStr("settings", "url", "");
+    page.query = toml.getConfigStr("settings", "query", "");
+
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
     page.recordIcons = toml.getConfigStr("settings", "recordIcons", "");
+    page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
+    page.defaultSearch = toml.getConfigStr("settings", "defaultSort", "");
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)
@@ -254,7 +259,7 @@ bool COptions::handle_export_js(void) {
  replaceAll(code, "[{NO_TEXT}]", "");
 
  replaceAll(code, "[{CONNECT}]", page.polling ? STR_EXPORT_2 : STR_EXPORT_1);
- replaceAll(code, "[{LOWER}]", page.longName);
+ replaceAll(code, "[{LONG}]", page.longName);
  replaceAll(code, "[{SEVEN}]", page.sevenName);
  replaceAll(code, "[{TWO}]", page.twoName);
  replaceAll(code, "[{PROPER}]", page.properName);
@@ -315,8 +320,55 @@ void doReplace(string_q& str, const string_q& type, const string_q& rep, const s
 bool COptions::handle_generate_js_menus(void) {
     cerr << cYellow << "Generating Menus..." << cOff << endl;
 
-    CToml toml("./classDefinitions/app.txt");
+    CToml toml("./classDefinitions/app.toml");
     string_q pageList = toml.getConfigStr("settings", "pages", "");
+    string_q sourceList = toml.getConfigStr("settings", "from_source", "");
+
+    CStringArray sourceStrs;
+    explode(sourceStrs, sourceList, '|');
+
+    for (auto sourceStr : sourceStrs) {
+
+        CStringArray parts;
+        explode(parts, sourceStr, '-');
+
+        CPage page = pageMap[parts[0]];
+        if (page.longName != "separator") {
+            string_q codeFile = "./pages/" + page.properName + "/" + page.properName +
+                                (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
+
+            cerr << "\tProcessing " << page.longName << "..." << endl;
+            string_q templateFile = "./classDefinitions/templates/page-template.jsx";
+            if (parts[0] == "explorer") {
+                templateFile = "./classDefinitions/templates/page-explorer-template.jsx";
+                page.longName = parts[1];
+                page.properName = toProper(parts[1]);
+                page.twoName = toLower(page.longName.substr(0, 2));
+                page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
+                CToml t("./classDefinitions/" + parts[0] + ".toml");
+                page.query = t.getConfigStr("settings", "query_" + parts[1], "");
+            }
+            string_q contents = asciiFileToString(templateFile);
+            replaceAll(contents, "[{URL}]", page.url);
+            replaceAll(contents, "[{QUERY}]", page.query);
+            replaceAll(contents, "[{LONG}]", page.longName);
+            replaceAll(contents, "[{PROPER}]", page.properName);
+            string_q singular = page.properName;
+            replaceReverse(singular, "s", "");
+            replaceAll(contents, "[{SINGULAR}]", singular);
+
+            // returns true or false depending on if it WOULD HAVE written the file. If 'test'
+            // is true, it doesn't actually write the file
+            bool wouldHaveWritten = writeTheCode(codewrite_t(codeFile, contents, nspace, 2, test, false, force));
+            if (wouldHaveWritten) {
+                if (test) {
+                    cerr << "File '" << codeFile << "' changed but was not written because of testing." << endl;
+                } else {
+                    counter.nProcessed++;
+                }
+            }
+        }
+    }
 
     CStringArray pagesStrs;
     explode(pagesStrs, pageList, '|');
@@ -455,7 +507,7 @@ bool COptions::handle_generate_js_schemas(void) {
     CSchema::registerClass();
     cerr << cYellow << "\nGenerating Schemas..." << cOff << endl;
 
-    CToml toml("./classDefinitions/app.txt");
+    CToml toml("./classDefinitions/app.toml");
     string_q pageList = toml.getConfigStr("settings", "schemas", "");
 
     CStringArray pagesStrs;
@@ -534,15 +586,51 @@ bool COptions::handle_generate_js_schemas(void) {
                 }
                 schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
                 doReplace(contents, "schema", schemaStream.str(), "");
-                CStringArray icons;
-                explode(icons, page.recordIcons, ',');
-                ostringstream iconStream;
-                for (auto icon : icons)
-                    iconStream << "  '" << icon << "'," << endl;
-                doReplace(contents, "record-icons", iconStream.str(), "");
+
+                ostringstream dataStream;
+
+                if (!page.recordIcons.empty()) {
+                    CStringArray icons;
+                    explode(icons, page.recordIcons, ',');
+                    dataStream << "const recordIconList = [" << endl;
+                    for (auto icon : icons)
+                        dataStream << "  '" << icon << "'," << endl;
+                    dataStream << "  //\n];" << endl;
+                }
+
+                if (!page.defaultSort.empty()) {
+                    CStringArray sorts;
+                    explode(sorts, page.defaultSort, ',');
+                    dataStream << "const defaultSort = [";
+                    first = true;
+                    for (auto sort : sorts) {
+                        if (!first)
+                            dataStream << ", ";
+                        dataStream << "'" << sort << "'";
+                        first = false;
+                    }
+                    dataStream << "];" << endl;
+                }
+
+                if (!page.defaultSearch.empty()) {
+                    CStringArray searches;
+                    explode(searches, page.defaultSearch, ',');
+                    dataStream << "const defaultSearch = [";
+                    first = true;
+                    for (auto search : searches) {
+                        if (!first)
+                            dataStream << ", ";
+                        dataStream << "'" << search << "'";
+                        first = false;
+                    }
+                    dataStream << "];" << endl;
+                }
+
+                doReplace(contents, "page-settings", dataStream.str(), "");
                 stringToAsciiFile(codeFile, contents);
             }
         }
     }
+
     return true;
 }

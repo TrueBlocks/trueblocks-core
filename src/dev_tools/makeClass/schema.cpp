@@ -136,6 +136,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "selector") {
                 return selector;
             }
+            if (fieldName % "searchable") {
+                return bool_2_Str(searchable);
+            }
             if (fieldName % "sortable") {
                 return bool_2_Str(sortable);
             }
@@ -251,6 +254,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 selector = fieldValue;
                 return true;
             }
+            if (fieldName % "searchable") {
+                searchable = str_2_Bool(fieldValue);
+                return true;
+            }
             if (fieldName % "sortable") {
                 sortable = str_2_Bool(fieldValue);
                 return true;
@@ -307,6 +314,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> cn;
     archive >> domain;
     archive >> range;
+    archive >> searchable;
     archive >> sortable;
     archive >> onDisplay;
     archive >> onAccept;
@@ -336,6 +344,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << cn;
     archive << domain;
     archive << range;
+    archive << searchable;
     archive << sortable;
     archive << onDisplay;
     archive << onAccept;
@@ -390,6 +399,7 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "domain", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onAccept", T_TEXT, ++fieldNum);

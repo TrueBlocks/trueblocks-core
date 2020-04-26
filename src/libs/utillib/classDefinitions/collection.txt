@@ -1,0 +1,18 @@
+[settings]
+class = CCollection
+fields = \
+  string id|\
+  string tags|\
+  string name|\
+  string client|\
+  bool monitored|\
+  bool deleted|\
+  uint64 sizeInBytes|\
+  CAddressArray addresses|\
+  string addressList (nowrite)
+includes = basetypes.h|basenode.h|conversions.h
+cpp_includes = options_base.h
+display_str = id, tags, name, client, monitored, deleted, sizeInBytes, addresses
+sort = v1.name < v2.name
+equals = addressList % item.addressList
+

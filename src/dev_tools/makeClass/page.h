@@ -32,6 +32,10 @@ class CPage : public CBaseNode {
     string_q sevenName;
     string_q dest_path;
     string_q recordIcons;
+    string_q defaultSearch;
+    string_q defaultSort;
+    string_q url;
+    string_q query;
     string_q schema;
     CSubpageArray subpages;
 
@@ -104,6 +108,10 @@ inline void CPage::initialize(void) {
     sevenName = "";
     dest_path = "";
     recordIcons = "";
+    defaultSearch = "";
+    defaultSort = "";
+    url = "";
+    query = "";
     schema = "";
     subpages.clear();
 
@@ -122,6 +130,10 @@ inline void CPage::duplicate(const CPage& pa) {
     sevenName = pa.sevenName;
     dest_path = pa.dest_path;
     recordIcons = pa.recordIcons;
+    defaultSearch = pa.defaultSearch;
+    defaultSort = pa.defaultSort;
+    url = pa.url;
+    query = pa.query;
     schema = pa.schema;
     subpages = pa.subpages;
 

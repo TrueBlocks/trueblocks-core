@@ -145,6 +145,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12380,tools,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
 12400,tools,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
 12420,tools,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
+12430,tools,names,ethNames,collections,s,,false,false,true,true,local,switch,<boolean>,display collections data
 12440,tools,names,ethNames,add,d,,false,false,false,false,local,flag,<string>,add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
 12445,tools,names,ethNames,tags,g,,false,false,false,false,header,switch,<boolean>,export the list of tags and subtags only
 12460,tools,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.

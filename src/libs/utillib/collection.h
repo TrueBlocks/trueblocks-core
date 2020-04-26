@@ -15,7 +15,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "conversions.h"
 
 namespace qblocks {
 
@@ -23,50 +25,41 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CSchema : public CBaseNode {
+class CCollection : public CBaseNode {
   public:
+    string_q id;
+    string_q tags;
     string_q name;
-    string_q selector;
-    string_q type;
-    bool hidden;
-    uint64_t width;
-    string_q function;
-    bool editable;
-    uint64_t id;
-    uint64_t decimals;
-    bool isPill;
-    string_q align;
-    string_q cn;
-    bool domain;
-    bool range;
-    bool searchable;
-    bool sortable;
-    string_q onDisplay;
-    string_q onAccept;
-    string_q onValidate;
+    string_q client;
+    bool monitored;
+    bool deleted;
+    uint64_t sizeInBytes;
+    CAddressArray addresses;
+    string_q addressList;
 
   public:
-    CSchema(void);
-    CSchema(const CSchema& sc);
-    virtual ~CSchema(void);
-    CSchema& operator=(const CSchema& sc);
+    CCollection(void);
+    CCollection(const CCollection& co);
+    virtual ~CCollection(void);
+    CCollection& operator=(const CCollection& co);
 
-    DECLARE_NODE(CSchema);
+    DECLARE_NODE(CCollection);
+
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
-    bool showEmptyField(const string_q& fn) const override;
     // EXISTING_CODE
-    bool operator==(const CSchema& item) const;
-    bool operator!=(const CSchema& item) const {
+    bool operator==(const CCollection& item) const;
+    bool operator!=(const CCollection& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CSchema& v1, const CSchema& v2);
-    friend ostream& operator<<(ostream& os, const CSchema& item);
+    friend bool operator<(const CCollection& v1, const CCollection& v2);
+    friend ostream& operator<<(ostream& os, const CCollection& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CSchema& sc);
+    void duplicate(const CCollection& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,123 +67,103 @@ class CSchema : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CSchema::CSchema(void) {
+inline CCollection::CCollection(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CSchema::CSchema(const CSchema& sc) {
+inline CCollection::CCollection(const CCollection& co) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(sc);
+    duplicate(co);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CSchema::~CSchema(void) {
+inline CCollection::~CCollection(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::clear(void) {
+inline void CCollection::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::initialize(void) {
+inline void CCollection::initialize(void) {
     CBaseNode::initialize();
 
+    id = "";
+    tags = "";
     name = "";
-    selector = "";
-    type = "";
-    hidden = false;
-    width = 0;
-    function = "";
-    editable = false;
-    id = 0;
-    decimals = 0;
-    isPill = false;
-    align = "";
-    cn = "";
-    domain = false;
-    range = false;
-    searchable = false;
-    sortable = false;
-    onDisplay = "";
-    onAccept = "";
-    onValidate = "";
+    client = "";
+    monitored = false;
+    deleted = false;
+    sizeInBytes = 0;
+    addresses.clear();
+    addressList = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::duplicate(const CSchema& sc) {
+inline void CCollection::duplicate(const CCollection& co) {
     clear();
-    CBaseNode::duplicate(sc);
+    CBaseNode::duplicate(co);
 
-    name = sc.name;
-    selector = sc.selector;
-    type = sc.type;
-    hidden = sc.hidden;
-    width = sc.width;
-    function = sc.function;
-    editable = sc.editable;
-    id = sc.id;
-    decimals = sc.decimals;
-    isPill = sc.isPill;
-    align = sc.align;
-    cn = sc.cn;
-    domain = sc.domain;
-    range = sc.range;
-    searchable = sc.searchable;
-    sortable = sc.sortable;
-    onDisplay = sc.onDisplay;
-    onAccept = sc.onAccept;
-    onValidate = sc.onValidate;
+    id = co.id;
+    tags = co.tags;
+    name = co.name;
+    client = co.client;
+    monitored = co.monitored;
+    deleted = co.deleted;
+    sizeInBytes = co.sizeInBytes;
+    addresses = co.addresses;
+    addressList = co.addressList;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CSchema& CSchema::operator=(const CSchema& sc) {
-    duplicate(sc);
+inline CCollection& CCollection::operator=(const CCollection& co) {
+    duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CSchema::operator==(const CSchema& item) const {
+inline bool CCollection::operator==(const CCollection& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return addressList % item.addressList;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CSchema& v1, const CSchema& v2) {
+inline bool operator<(const CCollection& v1, const CCollection& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default sort defined in class definition, assume already sorted, preserve ordering
-    return true;
+    // Default sort as defined in class definition
+    return v1.name < v2.name;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CSchema> CSchemaArray;
-extern CArchive& operator>>(CArchive& archive, CSchemaArray& array);
-extern CArchive& operator<<(CArchive& archive, const CSchemaArray& array);
+typedef vector<CCollection> CCollectionArray;
+extern CArchive& operator>>(CArchive& archive, CCollectionArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCollectionArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_SCHEMA;
+extern const char* STR_DISPLAY_COLLECTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

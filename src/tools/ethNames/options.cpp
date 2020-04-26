@@ -30,6 +30,7 @@ static const COption params[] = {
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
+    COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),  // NOLINT
     COption("tags", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
@@ -55,6 +56,7 @@ bool COptions::parseArguments(string_q& command) {
     bool named = false;
     bool other = false;
     bool addr = false;
+    bool collections = false;
     string_q add = "";
     // END_CODE_LOCAL_INIT
 
@@ -95,6 +97,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
 
+        } else if (arg == "-s" || arg == "--collections") {
+            collections = true;
+
         } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
             add = substitute(substitute(arg, "-d:", ""), "--add:", "");
 
@@ -113,6 +118,11 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
+    }
+
+    if (collections) {
+        exportCollections();
+        return false;
     }
 
     for (auto term : terms)

@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -15,42 +14,33 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "options.h"
 
-// BEG_ERROR_DEFINES
-// END_ERROR_DEFINES
+void COptions::exportCollections(void) const {
+    string_q contents = asciiFileToString(configPath("names/collections.csv"));
+    CStringArray lines;
+    explode(lines, contents, '\n');
 
-//-----------------------------------------------------------------------------
-enum account_t {
-    OWNED = (1 << 1),
-    CUSTOM = (1 << 2),
-    NAMED = (1 << 3),
-    PREFUND = (1 << 4),
-    OTHER = (1 << 5),
-    ALL = (OWNED | CUSTOM | NAMED | OTHER)
-};
+    CCollectionArray collections;
+    CStringArray fields;
+    for (auto line : lines) {
+        if (fields.empty()) {
+            explode(fields, line, ',');
+        } else {
+            CCollection collection;
+            collection.parseCSV(fields, line);
+            explode(collection.addresses, collection.addressList, '|');
+            collections.push_back(collection);
+        }
+    }
 
-//-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
-  public:
-    // BEG_CODE_DECLARE
-    bool match_case;
-    bool tags;
-    // END_CODE_DECLARE
-
-    CAccountNameMap items;
-    CStringArray searches;
-    string_q searchFields;
-    uint64_t types;
-
-    COptions(void);
-    ~COptions(void);
-
-    bool parseArguments(string_q& command) override;
-    void Init(void) override;
-
-    void applyFilter(void);
-    bool addIfUnique(const CAccountName& item);
-
-    void exportCollections(void) const;
-};
+    bool first = true;
+    cout << "{\n  \"data\": [" << endl;
+    for (auto collection : collections) {
+        if (!first)
+            cout << ",";
+        cout << collection << endl;
+        first = false;
+    }
+    cout << "] }" << endl;
+}
