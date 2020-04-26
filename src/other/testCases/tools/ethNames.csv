@@ -19,7 +19,7 @@ on, both, medi, names, tools/ethNames, invalid_param_4,                  n, term
 on, both, medi, names, tools/ethNames, invalid_param_5,                  n, terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & addr & fmt = txt
 on, both, fast, names, tools/ethNames, invalid_param_6,                  n, other & fmt = txt
 on, both, medi, names, tools/ethNames, invalid_param_7,                  n, terms = 0xb6 torj & other & fmt = txt
-on, both, medi, names, tools/ethNames, invalid_param_8,                  n, terms = 0xb6 torj & verboses & other & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_param_8,                  n, terms = 0xb6 torj & verbosez & other & fmt = txt
 on, both, fast, names, tools/ethNames, invalid_param_9,                  n, terms = 0xb6 torj & other & VERBOSE & fmt = txt
 on, both, medi, names, tools/ethNames, invalid_search,                   n, terms = 0x1 torj & fmt = txt
 

@@ -1,1 +1,1 @@
-{ "errors": [ "chifra - Value to --sleep parameter (other) must be a valid unsigned integer. Quitting..." ] }
+{ "errors": [ "ethNames - Invalid option: -z" ] }

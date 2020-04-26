@@ -1,127 +1,39 @@
-ethNames argc: 7 [1:0xb6] [2:torj] [3:--verboses] [4:--other] [5:--fmt] [6:txt] 
-ethNames 0xb6 torj --verboses --other --fmt txt 
-{
-  "data": [
-{
-  "id": "0x12..01",
-  "tags": "Group 1",
-  "name": "Collection 1",
-  "client": "Andy Anderson",
-  "monitored": false,
-  "deleted": true,
-  "sizeInBytes": 1201001,
-  "addresses": [
-    "0x5555533333555553333355555333335555533333",
-    "0x654e7f49b474e2f5ac29cc5f2f0d41c8a93d6d0a",
-    "0x807640a13483f8ac783c557fcdf27be11ea4ac7a",
-    "0x9876543210987654321098765432109876543210",
-    "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
-    "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed"
-  ]
-}
+ethNames argc: 7 [1:0xb6] [2:torj] [3:--verbosez] [4:--other] [5:--fmt] [6:txt] 
+ethNames 0xb6 torj --verbosez --other --fmt txt 
 
-,{
-  "id": "0x12..02",
-  "tags": "Group 1",
-  "name": "Collection 2",
-  "client": "John's Bookstore",
-  "monitored": false,
-  "deleted": false,
-  "sizeInBytes": 899100,
-  "addresses": [
-    "0x001d14804b399c6ef80e64576f657660804fec0b"
-  ]
-}
+  Invalid option: -z
 
-,{
-  "id": "0x12..03",
-  "tags": "Jimminy",
-  "name": "Carson Flowers",
-  "client": "Joseph Carson",
-  "monitored": true,
-  "deleted": true,
-  "sizeInBytes": 12010010,
-  "addresses": [
-    "0x001d14804b399c6ef80e64576f657660804fec0b",
-    "0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb",
-    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed"
-  ]
-}
+  Usage:    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-v|-h] <term> [term...]  
+  Purpose:  Query addresses and/or names of well known accounts.
 
-,{
-  "id": "0x12..04",
-  "tags": "Group 1",
-  "name": "May Construction",
-  "client": "May John",
-  "monitored": true,
-  "deleted": false,
-  "sizeInBytes": 110,
-  "addresses": [
-    "0x001d14804b399c6ef80e64576f657660804fec0b",
-    "0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb",
-    "0x1111111111111111111111111111111111111111",
-    "0x1111122222111112222211111222221111122222",
-    "0x1234567812345678123456781234567812345678"
-  ]
-}
+  Where:  
+	terms                 a space separated list of one or more search terms (required)
+	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
+	-m  (--match_case)    do case-sensitive search
+	-l  (--all)           include all accounts in the search
+	-o  (--owned)         include personal accounts in the search
+	-c  (--custom)        include your custom named accounts
+	-p  (--prefund)       include prefund accounts
+	-n  (--named)         include well know token and airdrop addresses in the search
+	-a  (--addr)          display only addresses in the results (useful for scripting)
+	-s  (--collections)   display collections data
 
-,{
-  "id": "0x12..05",
-  "tags": "Group 2",
-  "name": "The Poetry Shop",
-  "client": "Tudhope",
-  "monitored": false,
-  "deleted": false,
-  "sizeInBytes": 0,
-  "addresses": [
-    "100009102910291",
-    "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed"
-  ]
-}
+#### Hidden options (shown during testing only)
+	-t  (--other)         export other addresses if found
+	-d  (--add <str>)     add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)
+	-g  (--tags)          export the list of tags and subtags only
+#### Hidden options (shown during testing only)
 
-,{
-  "id": "0x12..06",
-  "tags": "Group 2",
-  "name": "Maker DAO",
-  "client": "Maker",
-  "monitored": true,
-  "deleted": false,
-  "sizeInBytes": 1,
-  "addresses": [
-    "0x001d14804b399c6ef80e64576f657660804fec0b",
-    "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed"
-  ]
-}
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
 
-,{
-  "id": "0x12..07",
-  "tags": "Group 2",
-  "name": "Whale Jim",
-  "client": "Buter",
-  "monitored": true,
-  "deleted": true,
-  "sizeInBytes": 0,
-  "addresses": [
-    "0x001d14804b399c6ef80e64576f657660804fec0b",
-    "0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb"
-  ]
-}
+  Notes:
+	- With a single search term, the tool searches both name and address.
+	- With two search terms, the first term must match the address field, and the second term must match the name field.
+	- When there are two search terms, both must match.
+	- The --match_case option requires case sensitive matching. It works with all other options.
+	- To customize the list of names add a custom section to the config file (see documentation).
+	- Name file: ~/.quickBlocks/names/names.txt (524935)
 
-,{
-  "id": "0x12..08",
-  "tags": "Group 3",
-  "name": "Whale No. 2",
-  "client": "Lub",
-  "monitored": false,
-  "deleted": false,
-  "sizeInBytes": 12121010210,
-  "addresses": [
-    "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed"
-  ]
-}
-
-] }
+  Powered by QBlocks
