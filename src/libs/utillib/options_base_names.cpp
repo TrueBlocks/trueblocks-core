@@ -21,11 +21,59 @@
 
 namespace qblocks {
 
+//-------------------------------------------------------------------------
+string_q getCachePath(const string_q& _part) {
+    // TODO(tjayrush): global data
+    static string_q g_cachePath;
+    if (!g_cachePath.empty())  // leave early if we can
+        return substitute((g_cachePath + _part), "//", "/");
+
+    {  // give ourselves a frame - always enters - forces creation in the frame
+       // Wait until any other thread is finished filling the value.
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
+        // Another thread may have filled the data while we were waiting
+        if (!g_cachePath.empty())
+            return substitute((g_cachePath + _part), "//", "/");
+
+        // Otherwise, fill the value
+        CToml toml(configPath("quickBlocks.toml"));
+        string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
+        if (path == "<NOT_SET>") {
+            // May have been an old installation, so try to upgrade
+            path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
+            if (path == "<NOT_SET>")
+                path = configPath("cache/");
+            toml.setConfigStr("settings", "cachePath", path);
+            toml.deleteKey("settings", "blockCachePath");
+            toml.writeFile();
+        }
+
+        CFilename folder(path);
+        if (!folderExists(folder.getFullPath()))
+            establishFolder(folder.getFullPath());
+
+        g_cachePath = folder.getFullPath();
+        if (!folder.isValid()) {
+            cerr << "{ \"errors\": [\"Invalid cachePath (" << folder.getFullPath()
+                 << ") in config file. Quitting.\"] }\n";
+            path = configPath("cache/");
+            CFilename fallback(path);
+            g_cachePath = fallback.getFullPath();
+        }
+        if (!endsWith(g_cachePath, "/"))
+            g_cachePath += "/";
+    }
+
+    return substitute((g_cachePath + _part), "//", "/");
+}
+
 //-----------------------------------------------------------------------
-bool COptionsBase::loadPrefunds(void) {
+bool loadPrefunds(COptionsBase& options) {
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
-    string_q binFile = configPath("names/names_prefunds.bin");
+    string_q binFile = getCachePath("names/names_prefunds.bin");
     string_q txtFile = configPath("names/names_prefunds.txt");
     if (!fileExists(binFile)) {
         if (!fileExists(txtFile))
@@ -36,15 +84,15 @@ bool COptionsBase::loadPrefunds(void) {
             if (!startsWith(line, '#')) {
                 CStringArray parts;
                 explode(parts, line, '\t');
-                prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+                options.prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
             }
         }
         CArchive archive(WRITING_ARCHIVE);
         if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
             return false;
-        addr_wei_mp::iterator it = prefundWeiMap.begin();
-        archive << uint64_t(prefundWeiMap.size());
-        while (it != prefundWeiMap.end()) {
+        addr_wei_mp::iterator it = options.prefundWeiMap.begin();
+        archive << uint64_t(options.prefundWeiMap.size());
+        while (it != options.prefundWeiMap.end()) {
             archive << it->first << it->second;
             it++;
         }
@@ -60,7 +108,7 @@ bool COptionsBase::loadPrefunds(void) {
         string_q key;
         wei_t wei;
         archive >> key >> wei;
-        prefundWeiMap[key] = wei;
+        options.prefundWeiMap[key] = wei;
     }
     archive.Release();
     return true;
@@ -71,19 +119,22 @@ bool loadNames(COptionsBase& options) {
     if (options.namedAccounts.size() > 0)
         return true;
 
+    establishFolder(getCachePath("names/"));
+
+    // A final set of options that do not have command line options
+    if (options.isEnabled(OPT_PREFUND))
+        if (!loadPrefunds(options))
+            return options.usage("Could not open prefunds data. Quitting...");
+
+    string_q binFile = getCachePath("names/names.bin");
+
     string_q txtFile = configPath("names/names.txt");
-    time_q txtDate = fileLastModifyDate(txtFile);
-
     string_q customFile = configPath("names/names_custom.txt");
-    if (fileLastModifyDate(customFile) > txtDate)
-        txtDate = fileLastModifyDate(customFile);
-
     string_q prefundFile = configPath("names/names_prefunds.txt");
-    if (fileLastModifyDate(prefundFile) > txtDate)
-        txtDate = fileLastModifyDate(prefundFile);
 
-    string_q binFile = substitute(txtFile, ".txt", ".bin");
     time_q binDate = fileLastModifyDate(binFile);
+    time_q txtDate =
+        laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)), fileLastModifyDate(prefundFile));
     if (binDate > txtDate) {
         LOG4("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
@@ -159,13 +210,6 @@ bool loadNames(COptionsBase& options) {
 using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
 
 //-----------------------------------------------------------------------
-string_q COptionsBase::findNameByAddress(const string_q& addr) {
-    CAccountName search;
-    search.address = addr;
-    return (getNamedAccount(search, addr) ? search.name : addr);
-}
-
-//-----------------------------------------------------------------------
 bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames(*this))
         return false;
@@ -177,6 +221,13 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
         return false;
     acct = *range.first;
     return true;
+}
+
+//-----------------------------------------------------------------------
+string_q COptionsBase::findNameByAddress(const string_q& addr) {
+    CAccountName search;
+    search.address = addr;
+    return (getNamedAccount(search, addr) ? search.name : addr);
 }
 
 // tags(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)

@@ -20,7 +20,6 @@ makeClass --js CBlock
 <Row name="date" type="string" value={item.date} display={item.date} route="" />
 <Row name="age" type="string" value={item.age} display={item.age} route="" />
 Generating Menus...
-Could not open file: --filename--
 
 Generating Schemas...
 

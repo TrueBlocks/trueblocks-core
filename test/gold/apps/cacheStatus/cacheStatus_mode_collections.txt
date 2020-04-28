@@ -1,0 +1,16 @@
+cacheStatus argc: 2 [1:collections] 
+cacheStatus collections 
+{
+  "client_version": "Parity version",
+  "trueblocks_version": "GHC-TrueBlocks//0.7.0-alpha--git-hash---git-ts-",
+  "rpc_provider": "--providers--",
+  "api_provider": "--providers--",
+  "balance_provider": "--providers--",
+  "cache_path": "--paths--",
+  "index_path": "--paths--",
+  "host": "--hostname-- (--username--)",
+  "is_testing": true,
+  "is_scraping": false,
+  "caches": [],
+  "date": "--date--"
+}

@@ -40,12 +40,10 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
 10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
-10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|names|abis|caches|some*|all]>,the type of status info to retrieve
+10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10730,apps,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
 10735,apps,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
-10730,apps,status,cacheStatus,heatmap,a,,false,false,false,false,header,flag,enum[blocks|transactions|traces],for cache mode only&#44; return a heatmap of the given (single) cache
-10740,apps,status,cacheStatus,list,l,,false,false,true,true,header,switch,<boolean>,display results in Linux ls -l format (assumes --detail)
 10760,apps,status,cacheStatus,report,r,,false,false,true,true,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
 10780,apps,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10800,apps,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
@@ -66,7 +64,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 11160,apps,seed,,,,,false,false,true,true,--,flag,<string>,seed the address index to IPFS
 
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed]>,which command to run
+11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed]>,which command to run
 11220,apps,,chifra,sleep,s,14,false,false,true,false,header,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
 11240,apps,,chifra,set,e,,false,false,false,false,--weird,switch,<boolean>,for 'settings' only&#44; indicates that this is a --set
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)

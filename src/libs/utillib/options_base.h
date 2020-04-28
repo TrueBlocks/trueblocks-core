@@ -93,9 +93,6 @@ class COptionsBase {
     static bool findSpecial(CNameValue& pair, const string_q& arg);
     static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
-    // prefunds
-    bool loadPrefunds(void);
-
     // supporting named accounts
     CAccountNameArray namedAccounts;
     bool getNamedAccount(CAccountName& acct, const string_q& addr);

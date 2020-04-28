@@ -11,6 +11,7 @@
 #include "acctlib.h"
 #include "status.h"
 #include "chaincache.h"
+#include "collectioncache.h"
 #include "pricecache.h"
 #include "monitorcache.h"
 #include "indexcache.h"
@@ -18,7 +19,6 @@
 #include "slurpcache.h"
 #include "namecache.h"
 #include "configuration.h"
-#include "heatmap.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -29,8 +29,6 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     bool details;
     uint64_t depth;
-    string_q heatmap;
-    bool list;
     blknum_t start;
     blknum_t end;
     // END_CODE_DECLARE
@@ -50,7 +48,6 @@ class COptions : public COptionsBase {
     bool handle_status(ostream& os);
     bool handle_listing(ostream& os);
     bool handle_config(ostream& os);
-    bool handle_heatmap(ostream& os);
     bool handle_config_get(ostream& os);
     bool handle_config_set(ostream& os);
 };
@@ -75,6 +72,7 @@ class CItemCounter : public CCache {
     CMonitorCacheItemArray* monitorArray;
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
+    CCollectionCacheItemArray* collectionArray;
     uint32_t* ts_array;
     size_t ts_cnt;
     blkrange_t scanRange;

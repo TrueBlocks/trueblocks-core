@@ -15,9 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "basetypes.h"
-#include "basenode.h"
-#include "sfarchive.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -25,45 +23,31 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountName : public CBaseNode {
+class CCollectionCacheItem : public CAccountName {
   public:
-    string_q tags;
-    address_t address;
-    string_q name;
-    string_q symbol;
-    string_q source;
-    uint64_t decimals;
-    string_q description;
-    bool is_custom;
-    bool is_prefund;
-    blknum_t nAppearances;
-    blknum_t lastExport;
-    blknum_t firstAppearance;
-    blknum_t latestAppearance;
-    string_q path;
-    uint64_t sizeInBytes;
+    string_q type;
 
   public:
-    CAccountName(void);
-    CAccountName(const CAccountName& ac);
-    virtual ~CAccountName(void);
-    CAccountName& operator=(const CAccountName& ac);
+    CCollectionCacheItem(void);
+    CCollectionCacheItem(const CCollectionCacheItem& co);
+    virtual ~CCollectionCacheItem(void);
+    CCollectionCacheItem& operator=(const CCollectionCacheItem& co);
 
-    DECLARE_NODE(CAccountName);
+    DECLARE_NODE(CCollectionCacheItem);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAccountName& item) const;
-    bool operator!=(const CAccountName& item) const {
+    bool operator==(const CCollectionCacheItem& item) const;
+    bool operator!=(const CCollectionCacheItem& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CAccountName& v1, const CAccountName& v2);
-    friend ostream& operator<<(ostream& os, const CAccountName& item);
+    friend bool operator<(const CCollectionCacheItem& v1, const CCollectionCacheItem& v2);
+    friend ostream& operator<<(ostream& os, const CCollectionCacheItem& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAccountName& ac);
+    void duplicate(const CCollectionCacheItem& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -71,121 +55,89 @@ class CAccountName : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(void) {
+inline CCollectionCacheItem::CCollectionCacheItem(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName::CAccountName(const CAccountName& ac) {
+inline CCollectionCacheItem::CCollectionCacheItem(const CCollectionCacheItem& co) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(co);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountName::~CAccountName(void) {
+inline CCollectionCacheItem::~CCollectionCacheItem(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::clear(void) {
+inline void CCollectionCacheItem::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::initialize(void) {
-    CBaseNode::initialize();
+inline void CCollectionCacheItem::initialize(void) {
+    CAccountName::initialize();
 
-    tags = "";
-    address = "";
-    name = "";
-    symbol = "";
-    source = "";
-    decimals = 0;
-    description = "";
-    is_custom = false;
-    is_prefund = false;
-    nAppearances = 0;
-    lastExport = 0;
-    firstAppearance = 0;
-    latestAppearance = 0;
-    path = "";
-    sizeInBytes = 0;
+    type = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountName::duplicate(const CAccountName& ac) {
+inline void CCollectionCacheItem::duplicate(const CCollectionCacheItem& co) {
     clear();
-    CBaseNode::duplicate(ac);
+    CAccountName::duplicate(co);
 
-    tags = ac.tags;
-    address = ac.address;
-    name = ac.name;
-    symbol = ac.symbol;
-    source = ac.source;
-    decimals = ac.decimals;
-    description = ac.description;
-    is_custom = ac.is_custom;
-    is_prefund = ac.is_prefund;
-    nAppearances = ac.nAppearances;
-    lastExport = ac.lastExport;
-    firstAppearance = ac.firstAppearance;
-    latestAppearance = ac.latestAppearance;
-    path = ac.path;
-    sizeInBytes = ac.sizeInBytes;
+    type = co.type;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
-    duplicate(ac);
+inline CCollectionCacheItem& CCollectionCacheItem::operator=(const CCollectionCacheItem& co) {
+    duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccountName::operator==(const CAccountName& item) const {
+inline bool CCollectionCacheItem::operator==(const CCollectionCacheItem& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Equality operator as defined in class definition
-    return address % item.address;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAccountName& v1, const CAccountName& v2) {
+inline bool operator<(const CCollectionCacheItem& v1, const CCollectionCacheItem& v2) {
     // EXISTING_CODE
-    if (v1.address == v2.address)
-        return v1.tags < v2.tags;
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.address < v2.address;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccountName> CAccountNameArray;
-extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
+typedef vector<CCollectionCacheItem> CCollectionCacheItemArray;
+extern CArchive& operator>>(CArchive& archive, CCollectionCacheItemArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCollectionCacheItemArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCOUNTNAME;
+extern const char* STR_DISPLAY_COLLECTIONCACHEITEM;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CAccountName> CAccountNameMap;
-extern string_q getCachePath(const string_q& _part);
 // EXISTING_CODE
 }  // namespace qblocks

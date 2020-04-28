@@ -336,7 +336,8 @@ bool COptions::handle_generate_js_menus(void) {
             string_q codeFile = "./pages/" + page.properName + "/" + page.properName +
                                 (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
 
-            cerr << "\tProcessing " << page.longName << "..." << endl;
+            cerr << "\tProcessing " << page.longName << "..."
+                 << "\r";
             string_q templateFile = "./classDefinitions/templates/page-template.jsx";
             if (parts[0] == "explorer") {
                 templateFile = "./classDefinitions/templates/page-explorer-template.jsx";
@@ -382,7 +383,8 @@ bool COptions::handle_generate_js_menus(void) {
     menuStream << "  items: [" << endl;
     for (auto pageStr : pagesStrs) {
         CPage page = pageMap[pageStr];
-        cerr << "\tProcessing " << page.longName << "..." << endl;
+        cerr << "\tProcessing " << page.longName << "..."
+             << "\r";
         bool isSeparator = page.longName == "separator";
         if (isSeparator) {
             menuStream << "    { label: '" << page.properName << "' }," << endl;
@@ -433,18 +435,26 @@ bool COptions::handle_generate_js_menus(void) {
 
     string_q indexFile = "./pages/index.jsx";
     string_q contents = asciiFileToString(indexFile);
+    string_q orig = contents;
     doReplace(contents, "imports", importStream.str(), "  ");
     doReplace(contents, "pages", pageStream.str(), "  ");
     doReplace(contents, "menus", menuStream.str(), "  ");
-    stringToAsciiFile(indexFile, contents);
+    if (orig != contents) {
+        LOG_INFO("Writing: ", cTeal, indexFile, cOff);
+        stringToAsciiFile(indexFile, contents);
+    }
 
     string_q appFile = "./App.jsx";
     contents.clear();
     contents = asciiFileToString(appFile);
+    orig = contents;
     doReplace(contents, "imports", appImportsStream.str(), "");
     doReplace(contents, "reducers", appReducersStream.str(), "  ");
     doReplace(contents, "state", appStateStream.str(), "    ");
-    stringToAsciiFile(appFile, contents);
+    if (orig != contents) {
+        LOG_INFO("Writing: ", cTeal, appFile, cOff);
+        stringToAsciiFile(appFile, contents);
+    }
 
     return true;
 }
@@ -528,9 +538,11 @@ bool COptions::handle_generate_js_schemas(void) {
             if (page.longName == "menu")
                 codeFile = "./pages/index.jsx";
             string_q contents = asciiFileToString(codeFile);
+            string_q orig = contents;
             if (contains(contents, "auto-generate")) {
                 ostringstream schemaStream;
-                cerr << "\tProcessing " << page.longName << (parts.size() > 1 ? "-" + parts[1] : "") << "..." << endl;
+                cerr << "\tProcessing " << page.longName << (parts.size() > 1 ? "-" + parts[1] : "") << "..."
+                     << "\r";
                 string_q schemaFile =
                     "./classDefinitions/schemas/" + page.longName + (parts.size() > 1 ? "-" + parts[1] : "") + ".csv";
                 string_q data = asciiFileToString(schemaFile);
@@ -626,7 +638,10 @@ bool COptions::handle_generate_js_schemas(void) {
                 }
 
                 doReplace(contents, "page-settings", dataStream.str(), "");
-                stringToAsciiFile(codeFile, contents);
+                if (orig != contents) {
+                    LOG_INFO("Writing: ", cTeal, codeFile, cOff);
+                    stringToAsciiFile(codeFile, contents);
+                }
             }
         }
     }

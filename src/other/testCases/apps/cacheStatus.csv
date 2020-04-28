@@ -9,10 +9,12 @@ on, both, fast, status, apps/cacheStatus, no_params,       y,
 on, both, fast, status, apps/cacheStatus, invalid_param_1, y, junk
 on, both, fast, status, apps/cacheStatus, invalid_param_2, y, @l & junk
 
+on, both, fast, status, apps/cacheStatus, mode_none,       y,
 on, both, fast, status, apps/cacheStatus, mode_scraper,    y, modes = index
 on, both, fast, status, apps/cacheStatus, index_start,     y, modes = index & start = 100
 on, both, fast, status, apps/cacheStatus, index_start_bad, y, modes = index & start = 1000000 & end = 2500000
 on, both, slow, status, apps/cacheStatus, mode_monitors,   y, modes = monitors
+on, both, slow, status, apps/cacheStatus, mode_collections,y, modes = collections
 on, both, slow, status, apps/cacheStatus, mode_names,      y, modes = names
 on, both, slow, status, apps/cacheStatus, mode_abis,       y, modes = abis
 

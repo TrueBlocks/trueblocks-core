@@ -290,6 +290,32 @@ bool noteMonitor_light(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
+bool noteCollection(const string_q& path, void* data) {
+    if (endsWith(path, '/')) {
+        return forEveryFileInFolder(path + "*", noteCollection, data);
+
+    } else if (endsWith(path, ".bin")) {
+        CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
+        ASSERT(counter->options);
+
+        CCollectionCacheItem coi;
+        coi.type = coi.getRuntimeClass()->m_ClassName;
+        expContext().types[coi.type] = coi.getRuntimeClass();
+        if (isTestMode()) {
+            coi.name = "---name---";
+            coi.sizeInBytes = 1010202;
+            coi.nAppearances = 2020101;
+        } else {
+            coi.name = path;
+            coi.sizeInBytes = fileSize(path);
+            coi.nAppearances = fileSize(path) / sizeof(CPriceQuote);
+        }
+        counter->collectionArray->push_back(coi);
+    }
+    return !shouldQuit();
+}
+
+//---------------------------------------------------------------------------
 bool noteMonitor(const string_q& path, void* data) {
     if (contains(path, "/staging"))
         return !shouldQuit();

@@ -19,20 +19,10 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        if (options.list) {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CStatus));
-            options.handle_listing(cout);
-
-        } else if (options.isConfig) {
+        if (options.isConfig) {
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CConfiguration));
             options.handle_config(cout);
-
-        } else if (!options.heatmap.empty()) {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CHeatmap));
-            options.handle_heatmap(cout);
 
         } else {
             if (once)
