@@ -48,6 +48,8 @@ class COptions : public CBlockOptions {
 inline string_q toEtherscan(const string_q& type) {
     if (type == "token")
         return "tokentx";
+    else if (type == "nfts")
+        return "tokennfttx";
     else if (type == "miner")
         return "getminedblocks&blocktype=blocks";
     else if (type == "int")

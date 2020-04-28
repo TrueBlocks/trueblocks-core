@@ -11,7 +11,7 @@ ethslurp -th
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses to slurp from Etherscan (required) |
 |  | blocks | an optional range of blocks to slurp |
-| -t | --types <val> | one or more types of transactions to request, one or more of [ext*&#124;int&#124;token&#124;miner&#124;all] |
+| -t | --types <val> | one or more types of transactions to request, one or more of [ext*&#124;int&#124;token&#124;nfts&#124;miner&#124;all] |
 | -p | --appearances | show only the blocknumer.tx_id appearances of the exported transactions |
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

@@ -130,7 +130,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 12120,tools,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|miner|all]>,one or more types of transactions to request
+12160,tools,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|all]>,one or more types of transactions to request
 12180,tools,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
 12220,tools,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetches data from EtherScan for an arbitrary address.
 12222,tools,slurp,ethslurp,,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.

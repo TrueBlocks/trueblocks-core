@@ -302,10 +302,10 @@
 31-Gitcoin Grants	0x27c350caacf45fd935814bdd2a07b2b9bffe9203	Grant 280 - Fairdrop Secure Private Unstoppable File Transfer		GitCoin Website		
 31-Gitcoin Grants	0xddb1cb4edbcd83066abf26e7102dc0e88009deab	Grant 281 - Upala Price Of Presonhood Digital Identity		GitCoin Website		
 31-Gitcoin Grants	0xf78cd306b23031de9e739a5bcde61764e82ad5ef	wighawag & Grant 282 - Rocketh A Smart Contract Rool Focusing On Test And		GitCoin Website & https://kickback.events		
-31-Gitcoin Grants & 32-Kickback:Friends	0xa1b02d8c67b0fdcf4e379855868deb470e169cfb	Grant 169 - Alice & 34		GitCoin Website & https://kickback.events/		
-31-Gitcoin Grants & 32-Kickback:Friends	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 188 - Ethdevtools & musnit		GitCoin Website & https://kickback.events/		
-31-Gitcoin Grants & 34-Humanity DAO	0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88	Grant 203 - Metacartel & Grant 204 - Wizards Of Dapps Podcast & pet3rpan_		GitCoin Website		
-31-Gitcoin Grants & 34-Humanity DAO	0xe126b3e5d052f1f575828f61feba4f4f2603652a	Grant 259 - Rosco Kalis & RoscoKalis		GitCoin Website &https://www.humanitydao.org/humans		
+31-Gitcoin Grants	0xa1b02d8c67b0fdcf4e379855868deb470e169cfb	Grant 169 - Alice & 34		GitCoin Website & https://kickback.events/		
+31-Gitcoin Grants	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 188 - Ethdevtools & musnit		GitCoin Website & https://kickback.events/		
+31-Gitcoin Grants	0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88	Grant 203 - Metacartel & Grant 204 - Wizards Of Dapps Podcast & pet3rpan_		GitCoin Website		
+31-Gitcoin Grants	0xe126b3e5d052f1f575828f61feba4f4f2603652a	Grant 259 - Rosco Kalis & RoscoKalis		GitCoin Website &https://www.humanitydao.org/humans		
 32-Kickback:Contracts	0xecbc1cf6e45aada03cf557cfd20f85be9b29327d	Aragon Dream DAO Party		https://kickback.events/event/0xecbc1cf6e45aada03cf557cfd20f85be9b29327d		
 32-Kickback:Contracts	0xbf72a0860b44fdb91029dc31fed0f3ba4c3c0a56	Blockchain for Good Workshop		https://kickback.events/event/0xbf72a0860b44fdb91029dc31fed0f3ba4c3c0a56		Sn∆í√µmovn‚àö‚â† 7, 118 00 Praha - Mal‚àö¬∞ Strana, Prague
 32-Kickback:Contracts	0x07b534ba8023b6318cc82751c40f75eef8c5bc7f	Codeup #30		https://kickback.events/event/0x07b534ba8023b6318cc82751c40f75eef8c5bc7f		WeWork Bank 1 Poultry, London EC2R 8EJ
