@@ -160,6 +160,9 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND);
     optionOff(OPT_FMT);
+    // Since we need preunds, let's load the names library here
+    CAccountName unused;
+    getNamedAccount(unused, "0x0");
 
     // BEG_CODE_INIT
     n_blocks = NOPOS;

@@ -37,7 +37,7 @@ bool COptions::exportData(void) {
                 trans.pBlock = &block;
 
                 string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
-                if (fileExists(txFilename)) {
+                if (item->blk != 0 && fileExists(txFilename)) {
                     readTransFromBinary(trans, txFilename);
                     trans.finishParse();
                     trans.pBlock = &block;
