@@ -151,7 +151,6 @@ extern blknum_t getLatestBlock_cache_ripe(void);
 extern bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& final, blknum_t& client);
 
 //-------------------------------------------------------------------------
-extern string_q getCachePath(const string_q& _part);
 extern string_q getIndexPath(const string_q& _part);
 extern string_q scraperStatus(bool terse);
 

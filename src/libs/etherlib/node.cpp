@@ -1005,54 +1005,6 @@ string_q getIndexPath(const string_q& _part) {
     return indexPath + _part;
 }
 
-//-------------------------------------------------------------------------
-string_q getCachePath(const string_q& _part) {
-    // TODO(tjayrush): global data
-    static string_q g_cachePath;
-    if (!g_cachePath.empty())  // leave early if we can
-        return substitute((g_cachePath + _part), "//", "/");
-
-    {  // give ourselves a frame - always enters - forces creation in the frame
-       // Wait until any other thread is finished filling the value.
-        mutex aMutex;
-        lock_guard<mutex> lock(aMutex);
-
-        // Another thread may have filled the data while we were waiting
-        if (!g_cachePath.empty())
-            return substitute((g_cachePath + _part), "//", "/");
-
-        // Otherwise, fill the value
-        CToml toml(configPath("quickBlocks.toml"));
-        string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
-        if (path == "<NOT_SET>") {
-            // May have been an old installation, so try to upgrade
-            path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            if (path == "<NOT_SET>")
-                path = configPath("cache/");
-            toml.setConfigStr("settings", "cachePath", path);
-            toml.deleteKey("settings", "blockCachePath");
-            toml.writeFile();
-        }
-
-        CFilename folder(path);
-        if (!folderExists(folder.getFullPath()))
-            establishFolder(folder.getFullPath());
-
-        g_cachePath = folder.getFullPath();
-        if (!folder.isValid()) {
-            cerr << "{ \"errors\": [\"Invalid cachePath (" << folder.getFullPath()
-                 << ") in config file. Quitting.\"] }\n";
-            path = configPath("cache/");
-            CFilename fallback(path);
-            g_cachePath = fallback.getFullPath();
-        }
-        if (!endsWith(g_cachePath, "/"))
-            g_cachePath += "/";
-    }
-
-    return substitute((g_cachePath + _part), "//", "/");
-}
-
 //--------------------------------------------------------------------------
 biguint_t weiPerEther(void) {
     return (modexp(10, 9, uint64_t(10000000000)) * modexp(10, 9, uint64_t(10000000000)));

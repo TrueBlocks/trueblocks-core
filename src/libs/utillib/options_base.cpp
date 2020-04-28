@@ -350,11 +350,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
                 sorts[i]->sortFieldList();
     }
 
-    // A final set of options that do not have command line options
-    if (isEnabled(OPT_PREFUND))
-        if (!loadPrefunds())
-            return usage("Could not open prefunds data. Quitting...");
-
     cmdLine = trim(cmdLine);
     return true;
 }

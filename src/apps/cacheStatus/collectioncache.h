@@ -15,40 +15,42 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "cache.h"
+#include "collectioncacheitem.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-typedef map<blknum_t, uint64_t> CHeatmapMap;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CHeatmap : public CBaseNode {
+class CCollectionCache : public CCache {
   public:
-    CHeatmapMap heatmap;
+    CCollectionCacheItemArray items;
 
   public:
-    CHeatmap(void);
-    CHeatmap(const CHeatmap& he);
-    virtual ~CHeatmap(void);
-    CHeatmap& operator=(const CHeatmap& he);
+    CCollectionCache(void);
+    CCollectionCache(const CCollectionCache& co);
+    virtual ~CCollectionCache(void);
+    CCollectionCache& operator=(const CCollectionCache& co);
 
-    DECLARE_NODE(CHeatmap);
+    DECLARE_NODE(CCollectionCache);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CHeatmap& item) const;
-    bool operator!=(const CHeatmap& item) const {
+    bool operator==(const CCollectionCache& item) const;
+    bool operator!=(const CCollectionCache& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CHeatmap& v1, const CHeatmap& v2);
-    friend ostream& operator<<(ostream& os, const CHeatmap& item);
+    friend bool operator<(const CCollectionCache& v1, const CCollectionCache& v2);
+    friend ostream& operator<<(ostream& os, const CCollectionCache& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CHeatmap& he);
+    void duplicate(const CCollectionCache& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,67 +58,66 @@ class CHeatmap : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CHeatmap::CHeatmap(void) {
+inline CCollectionCache::CCollectionCache(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CHeatmap::CHeatmap(const CHeatmap& he) {
+inline CCollectionCache::CCollectionCache(const CCollectionCache& co) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(he);
+    duplicate(co);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CHeatmap::~CHeatmap(void) {
+inline CCollectionCache::~CCollectionCache(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CHeatmap::clear(void) {
+inline void CCollectionCache::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CHeatmap::initialize(void) {
-    CBaseNode::initialize();
+inline void CCollectionCache::initialize(void) {
+    CCache::initialize();
 
-    heatmap.clear();
+    items.clear();
 
     // EXISTING_CODE
-    heatmap.clear();
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CHeatmap::duplicate(const CHeatmap& he) {
+inline void CCollectionCache::duplicate(const CCollectionCache& co) {
     clear();
-    CBaseNode::duplicate(he);
+    CCache::duplicate(co);
 
-    heatmap = he.heatmap;
+    items = co.items;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CHeatmap& CHeatmap::operator=(const CHeatmap& he) {
-    duplicate(he);
+inline CCollectionCache& CCollectionCache::operator=(const CCollectionCache& co) {
+    duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CHeatmap::operator==(const CHeatmap& item) const {
+inline bool CCollectionCache::operator==(const CCollectionCache& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -124,7 +125,7 @@ inline bool CHeatmap::operator==(const CHeatmap& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CHeatmap& v1, const CHeatmap& v2) {
+inline bool operator<(const CCollectionCache& v1, const CCollectionCache& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -132,12 +133,12 @@ inline bool operator<(const CHeatmap& v1, const CHeatmap& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CHeatmap> CHeatmapArray;
-extern CArchive& operator>>(CArchive& archive, CHeatmapArray& array);
-extern CArchive& operator<<(CArchive& archive, const CHeatmapArray& array);
+typedef vector<CCollectionCache> CCollectionCacheArray;
+extern CArchive& operator>>(CArchive& archive, CCollectionCacheArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCollectionCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_HEATMAP;
+extern const char* STR_DISPLAY_COLLECTIONCACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

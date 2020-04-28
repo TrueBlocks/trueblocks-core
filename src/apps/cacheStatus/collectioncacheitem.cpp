@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "heatmap.h"
+#include "collectioncacheitem.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CHeatmap, CBaseNode);
+IMPLEMENT_NODE(CCollectionCacheItem, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextHeatmapChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextHeatmapChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCollectioncacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCollectioncacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CHeatmap::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CCollectionCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["heatmap_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["collectioncacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CHeatmap::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextHeatmapChunk, this);
+        ctx << getNextChunk(fmt, nextCollectioncacheitemChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextHeatmapChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextCollectioncacheitemChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CHeatmap*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCollectionCacheItem*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextHeatmapChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CHeatmap::getValueByName(const string_q& fieldName) const {
+string_q CCollectionCacheItem::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextHeatmapChunk_custom(fieldName, this);
+    string_q ret = nextCollectioncacheitemChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,6 +70,11 @@ string_q CHeatmap::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 't':
+            if (fieldName % "type") {
+                return type;
+            }
+            break;
         default:
             break;
     }
@@ -78,18 +83,27 @@ string_q CHeatmap::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CBaseNode::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CHeatmap::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CCollectionCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
+    if (CAccountName::setValueByName(fieldName, fieldValue))
+        return true;
+
     switch (tolower(fieldName[0])) {
+        case 't':
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -97,41 +111,43 @@ bool CHeatmap::setValueByName(const string_q& fieldNameIn, const string_q& field
 }
 
 //---------------------------------------------------------------------------------------------------
-void CHeatmap::finishParse() {
+void CCollectionCacheItem::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CHeatmap::Serialize(CArchive& archive) {
+bool CCollectionCacheItem::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CBaseNode::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> type;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CHeatmap::SerializeC(CArchive& archive) const {
+bool CCollectionCacheItem::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CBaseNode::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << type;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CHeatmapArray& array) {
+CArchive& operator>>(CArchive& archive, CCollectionCacheItemArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -143,7 +159,7 @@ CArchive& operator>>(CArchive& archive, CHeatmapArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CHeatmapArray& array) {
+CArchive& operator<<(CArchive& archive, const CCollectionCacheItemArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -152,41 +168,43 @@ CArchive& operator<<(CArchive& archive, const CHeatmapArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CHeatmap::registerClass(void) {
+void CCollectionCacheItem::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CHeatmap, "schema"))
+    if (HAS_FIELD(CCollectionCacheItem, "schema"))
         return;
 
+    CAccountName::registerClass();
+
     size_t fieldNum = 1000;
-    ADD_FIELD(CHeatmap, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CHeatmap, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CHeatmap, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CHeatmap, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CHeatmap, "array", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "type", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CHeatmap, "schema");
-    HIDE_FIELD(CHeatmap, "deleted");
-    HIDE_FIELD(CHeatmap, "showing");
-    HIDE_FIELD(CHeatmap, "cname");
+    HIDE_FIELD(CCollectionCacheItem, "schema");
+    HIDE_FIELD(CCollectionCacheItem, "deleted");
+    HIDE_FIELD(CCollectionCacheItem, "showing");
+    HIDE_FIELD(CCollectionCacheItem, "cname");
 
-    builtIns.push_back(_biCHeatmap);
+    builtIns.push_back(_biCCollectionCacheItem);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextHeatmapChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CHeatmap* hea = reinterpret_cast<const CHeatmap*>(dataPtr);
-    if (hea) {
+string_q nextCollectioncacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCollectionCacheItem* col = reinterpret_cast<const CCollectionCacheItem*>(dataPtr);
+    if (col) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, hea);
+                    return nextBasenodeChunk(fieldIn, col);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -200,7 +218,7 @@ string_q nextHeatmapChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CHeatmap::readBackLevel(CArchive& archive) {
+bool CCollectionCacheItem::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -208,7 +226,7 @@ bool CHeatmap::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CHeatmap& item) {
+ostream& operator<<(ostream& os, const CCollectionCacheItem& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -218,7 +236,7 @@ ostream& operator<<(ostream& os, const CHeatmap& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_HEATMAP = "";
+const char* STR_DISPLAY_COLLECTIONCACHEITEM = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

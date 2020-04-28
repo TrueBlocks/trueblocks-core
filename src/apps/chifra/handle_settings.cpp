@@ -125,7 +125,7 @@ bool COptions::createConfigFile(const address_t& addr) {
     string_q config;
     asciiFileToString(configPath("chifra/config.template"), config);
 
-    string_q name = getNamedAccount(addr);
+    string_q name = ge tNamedAccount(addr);
     replace(config, "[{NAME}]", (name.empty() ? addr : name));
 
     LOG_INFO("\tAdding monitor for address: " + addr);
