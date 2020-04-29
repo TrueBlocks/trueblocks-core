@@ -56,15 +56,6 @@ ethNames --named --custom --owned --fmt json
     "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
   },
   {
-    "tags": "30-Contracts",
-    "address": "0x00000000dd05dd05dd05dd05dd05dd05dd05dd05",
-    "name": "Falsified Address Because of Ddos",
-    "symbol": "",
-    "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
-  },
-  {
     "tags": "90-DevCon2:Individual",
     "address": "0x000001f568875f378bf6d170b790967fe429c81a",
     "name": "BokkyPooBah",
@@ -148,7 +139,7 @@ ethNames --named --custom --owned --fmt json
   {
     "tags": "31-Gitcoin Grants",
     "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-    "name": "Grant 012 - Gitcoin Open Source Support Fund & Grant 086 - Gitcoin Sustainability Fund",
+    "name": "Grant 012 - Grant 086 - Gitcoin Sustainability Fund",
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
@@ -1805,6 +1796,15 @@ ethNames --named --custom --owned --fmt json
     "tags": "80-Malicious",
     "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
     "name": "Possibly Malicious 0x160",
+    "symbol": "",
+    "source": "TrueBlocks.io",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "60-Airdrops",
+    "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
+    "name": "Jury.Online Airdrop Sender",
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,

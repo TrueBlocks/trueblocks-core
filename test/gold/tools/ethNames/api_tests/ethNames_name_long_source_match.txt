@@ -77,7 +77,6 @@ tags	address	name	symbol	source	decimals	description
 31-Gitcoin Grants	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 - Week In Ethereum News		GitCoin Website
 50-Tokens:ERC20	0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd	Verify Token	CRED	On Chain	18	A distributed reputation protocol built on the Ethereum blockchain.
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On Chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.
-31-Gitcoin Grants	0x68085e7f88e90fa9247489c83fab30b177ebccb3	Grant 030 - Ethereum All Core Devs Community Project Managem & Grant 082 - Official Progpow Technical Audit Funding		GitCoin Website
 50-Tokens:ERC20	0x68909e586eeac8f47315e84b4c9788dd54ef65bb	EvenCoin	EVN	On Chain	18	EvenCoin is a new self-mining smart contract where no hardware is required to mine EvenCoin but it gets mining in parallel to even numbers of Ethereum blocks with ERC20 compliant with a total supply of 100 Million coins.
 50-Tokens	0x6aedbf8dff31437220df351950ba2a3362168d1b	Dragonglass	DGS	Etherscan.io		Dragonglass provides a seamless solution for cryptocurrency mining
 60-Airdrops	0x708b63545467a9bcfb67af92299102c650e34a0e	Vital Ether Airdrop (VETH)		TrueBlocks.io

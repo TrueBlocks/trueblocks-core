@@ -121,18 +121,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!editCmd.empty()) {
-        ostringstream os;
-        os << "cmd: " << editCmd;
-        for (auto term : terms) {
-            os << term;
-        }
-        os << endl;
-        LOG4(os.str());
-        return false;
-    } else {
-        for (auto term : terms)
-            searches.push_back(term);
+        if (!processEditCommand(terms))
+            return false;
     }
+    for (auto term : terms)
+        searches.push_back(term);
 
 #if 0
     if (!edit.empty()) {
@@ -273,7 +266,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_CMD);
+    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_EDITCMD);
 
     // BEG_CODE_INIT
     match_case = false;
@@ -474,4 +467,141 @@ string_q getSearchFields(const string_q& fmtIn) {
     while (endsWith(ret, "\t"))
         replaceReverse(ret, "\t", "");
     return ret;
+}
+
+#if 0
+string_q editFile = getCachePath("names/edit.csv");
+string_q delFile = getCachePath("names/delete.csv");
+string_q removeFile = getCachePath("names/remove.csv");
+txtDate = laterOf(txtDate, fileLastModifyDate(editFile));
+txtDate = laterOf(txtDate, fileLastModifyDate(delFile));
+txtDate = laterOf(txtDate, fileLastModifyDate(removeFile));
+LOG4("Reloading");
+bool needsEdit = fileExists(editFile);
+bool needsDel = fileExists(delFile);
+bool needsRemove = fileExists(removeFile);
+if (needsEdit || needsDel || needsRemove) {
+    LOG4("Editing or deleting");
+    string_q edit;
+    address_t addr;
+    if (needsRemove) {
+        addr = trim(asciiFileToString(removeFile), '\n');
+        LOG4("Removing: ", addr);
+    } else if (needsDel) {
+        addr = trim(asciiFileToString(delFile), '\n');
+        LOG4("Deleting: ", addr);
+    } else if (needsEdit) {
+        edit = trim(asciiFileToString(editFile), '\n');
+        string_q s = edit;
+        nextTokenClear(s, '\t');
+        addr = nextTokenClear(s, '\t');
+        LOG4("Editing: ", addr, " with: ", edit);
+        //            cerr << "EDIT: " << edit << " ADDR: " << addr << " s: " << s << endl;
+        //            getchar();
+    }
+
+    bool edited = false;
+    string_q contents = asciiFileToString(txtFile);
+    CStringArray linesIn, linesOut;
+    explode(linesIn, contents, '\n');
+    for (auto line : linesIn) {
+        if (!contains(line, "\t" + addr + "\t")) {
+            linesOut.push_back(line);
+        } else if (needsDel) {
+            cerr << "Deleting line: " << line << endl;
+            if (endsWith(line, "\ttrue"))
+            replaceReverse(line, "\ttrue", "\tfalse");
+            else if (endsWith(line, "\tfalse"))
+            replaceReverse(line, "\tfalse", "\ttrue");
+            else
+            line += "\ttrue";
+            linesOut.push_back(line);
+            edited = true;
+            } else if (needsRemove) {
+            cerr << "Removing line: " << line << endl;
+            // do nothing (remove it)
+            edited = true;
+            } else {
+            cerr << "Editing line: " << line << endl;
+            ASSERT(needsEdit);
+            // add or edit this line with the new line
+            linesOut.push_back(edit);
+            cerr << "Adding edit: " << edit << endl;
+            edited = true;
+            }
+            }
+            cerr << "hasEdited: " << edited << " edit: " << edit.empty() << " " << needsDel << " " << needsRemove << " "
+            << needsEdit << endl;
+            if (!edited && !edit.empty()) {
+            linesOut.push_back(edit);  // add
+            }
+            ostringstream os;
+            for (auto line : linesOut)
+            os << line << endl;
+            stringToAsciiFile(txtFile, os.str());
+            // cerr << "Writing: " << os.str() << endl;
+            // cerr << asciiFileToString(txtFile) << endl;
+            ::remove(editFile.c_str());
+            ::remove(delFile.c_str());
+            ::remove(removeFile.c_str());
+            }
+#endif
+
+//-----------------------------------------------------------------------
+bool COptions::processEditCommand(const CStringArray& terms) {
+    if (!contains("add|update|delete|undelete|remove", editCmd))
+        return usage("Invalid edit command '" + editCmd + "'. Quitting...");
+
+    bool isEdit = editCmd == "add" || editCmd == "update";
+    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdeleted" : "address";
+    CStringArray fields;
+    explode(fields, fmt, '\t');
+
+    ostringstream dataStream;
+    for (auto term : terms)
+        dataStream << term;
+    string_q data = substitute(dataStream.str(), "!", "\t");
+
+    CAccountName target;
+    target.parseText(fields, data);
+
+    CAccountNameArray outArray;
+    outArray.reserve(namedAccounts.size() + 2);
+
+    bool edited = false;
+    for (auto name : namedAccounts) {
+        if (name.address == target.address) {
+            if (editCmd == "remove") {
+                // do nothing
+            } else if (editCmd == "delete") {
+                name.m_deleted = true;
+            } else if (editCmd == "undelete") {
+                name.m_deleted = false;
+            } else {
+                name = target;
+            }
+            edited = true;
+        } else {
+            outArray.push_back(name);
+        }
+    }
+    //    if (editCmd == "add" && !edited)
+    //        outArray.push_back(target);
+
+    sort(outArray.begin(), outArray.end());
+
+    fmt = STR_DISPLAY_ACCOUNTNAME;
+    //    fmt += "\t[{DELETED}]";
+    ostringstream dataStream2;
+    //    LOG4("Output size: ", outArray.size());
+    for (auto name : outArray) {
+        if (!name.is_custom && !name.is_prefund)
+            dataStream2 << name.Format(fmt) << endl;
+    }
+    //  LOG4("Before: ", "\n", asciiFileToString(configPath("names/names.txt")));
+    stringToAsciiFile(configPath("names/names.txt"), dataStream2.str());
+    LOG4(string_q(120, '-'));
+    LOG4("After: ", "\n", asciiFileToString(configPath("names/names.txt")));
+
+    return false;
 }

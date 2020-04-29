@@ -128,15 +128,16 @@ enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 
 #on, both, fast, names, tools/ethNames, tags,                             y, tags
 
-on, cmd, fast, names, tools/ethNames, edit_add,                          n, cmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false
+on, cmd, fast, names, tools/ethNames, edit_invalid,                      n, editcmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & verbose = 10
+#on, cmd, fast, names, tools/ethNames, edit_add,                          n, editcmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & verbose = 10
 #on, cmd, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt
-on, cmd, fast, names, tools/ethNames, edit_edit,                         n, cmd = edit & terms = TAGS!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL!SOURCE!DESCRIPTION!false
+#on, cmd, fast, names, tools/ethNames, edit_edit,                         n, editcmd = update & terms = TAGS!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL!SOURCE!DESCRIPTION!false & verbose = 10
 #on, cmd, fast, names, tools/ethNames, show_edit,                        n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt
-on, cmd, fast, names, tools/ethNames, edit_delete,                       n, cmd = delete & terms = 0x0000000000000000000000000000000010101010
+#on, cmd, fast, names, tools/ethNames, edit_delete,                       n, editcmd = delete & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
 #on, cmd, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt
-on, cmd, fast, names, tools/ethNames, edit_undelete,                     n, cmd = undelete & terms = 0x0000000000000000000000000000000010101010
+#on, cmd, fast, names, tools/ethNames, edit_undelete,                     n, editcmd = undelete & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
 #on, cmd, fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt
-on, cmd, fast, names, tools/ethNames, edit_remove,                       n, cmd = remove & terms = 0x0000000000000000000000000000000010101010
+#on, cmd, fast, names, tools/ethNames, edit_remove,                       n, editcmd = remove & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
 #on, cmd, fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt
 
 # ./tools/ethNames/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),

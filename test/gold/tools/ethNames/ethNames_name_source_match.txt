@@ -704,15 +704,6 @@ ethNames Ether --expand --verbose --fmt json
     "description": "POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts."
   },
   {
-    "tags": "31-Gitcoin Grants",
-    "address": "0x68085e7f88e90fa9247489c83fab30b177ebccb3",
-    "name": "Grant 030 - Ethereum All Core Devs Community Project Managem & Grant 082 - Official Progpow Technical Audit Funding",
-    "symbol": "",
-    "source": "GitCoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
     "tags": "50-Tokens:ERC20",
     "address": "0x68909e586eeac8f47315e84b4c9788dd54ef65bb",
     "name": "EvenCoin",

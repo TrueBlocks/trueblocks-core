@@ -132,20 +132,10 @@ bool loadNames(COptionsBase& options) {
     string_q txtFile = configPath("names/names.txt");
     string_q customFile = configPath("names/names_custom.txt");
     string_q prefundFile = configPath("names/names_prefunds.txt");
-#if 0
-    string_q editFile = getCachePath("names/edit.csv");
-    string_q delFile = getCachePath("names/delete.csv");
-    string_q removeFile = getCachePath("names/remove.csv");
-#endif
 
     time_q txtDate = fileLastModifyDate(txtFile);
     txtDate = laterOf(txtDate, fileLastModifyDate(customFile));
     txtDate = laterOf(txtDate, fileLastModifyDate(prefundFile));
-#if 0
-    txtDate = laterOf(txtDate, fileLastModifyDate(editFile));
-    txtDate = laterOf(txtDate, fileLastModifyDate(delFile));
-    txtDate = laterOf(txtDate, fileLastModifyDate(removeFile));
-#endif
 
     if (binDate > txtDate) {
         LOG4("Reading names from binary cache");
@@ -156,78 +146,6 @@ bool loadNames(COptionsBase& options) {
             return true;
         }
     }
-
-#if 0
-    LOG4("Reloading");
-    bool needsEdit = fileExists(editFile);
-    bool needsDel = fileExists(delFile);
-    bool needsRemove = fileExists(removeFile);
-    if (needsEdit || needsDel || needsRemove) {
-        LOG4("Editing or deleting");
-        string_q edit;
-        address_t addr;
-        if (needsRemove) {
-            addr = trim(asciiFileToString(removeFile), '\n');
-            LOG4("Removing: ", addr);
-        } else if (needsDel) {
-            addr = trim(asciiFileToString(delFile), '\n');
-            LOG4("Deleting: ", addr);
-        } else if (needsEdit) {
-            edit = trim(asciiFileToString(editFile), '\n');
-            string_q s = edit;
-            nextTokenClear(s, '\t');
-            addr = nextTokenClear(s, '\t');
-            LOG4("Editing: ", addr, " with: ", edit);
-            //            cerr << "EDIT: " << edit << " ADDR: " << addr << " s: " << s << endl;
-            //            getchar();
-        }
-
-        bool edited = false;
-        string_q contents = asciiFileToString(txtFile);
-        CStringArray linesIn, linesOut;
-        explode(linesIn, contents, '\n');
-        for (auto line : linesIn) {
-            if (!contains(line, "\t" + addr + "\t")) {
-                linesOut.push_back(line);
-            } else if (needsDel) {
-                cerr << "Deleting line: " << line << endl;
-                if (endsWith(line, "\ttrue"))
-                    replaceReverse(line, "\ttrue", "\tfalse");
-                else if (endsWith(line, "\tfalse"))
-                    replaceReverse(line, "\tfalse", "\ttrue");
-                else
-                    line += "\ttrue";
-                linesOut.push_back(line);
-                edited = true;
-            } else if (needsRemove) {
-                cerr << "Removing line: " << line << endl;
-                // do nothing (remove it)
-                edited = true;
-            } else {
-                cerr << "Editing line: " << line << endl;
-                ASSERT(needsEdit);
-                // add or edit this line with the new line
-                linesOut.push_back(edit);
-                cerr << "Adding edit: " << edit << endl;
-                edited = true;
-            }
-        }
-        cerr << "hasEdited: " << edited << " edit: " << edit.empty() << " " << needsDel << " " << needsRemove << " "
-             << needsEdit << endl;
-        if (!edited && !edit.empty()) {
-            linesOut.push_back(edit);  // add
-        }
-        ostringstream os;
-        for (auto line : linesOut)
-            os << line << endl;
-        stringToAsciiFile(txtFile, os.str());
-        // cerr << "Writing: " << os.str() << endl;
-        // cerr << asciiFileToString(txtFile) << endl;
-        ::remove(editFile.c_str());
-        ::remove(delFile.c_str());
-        ::remove(removeFile.c_str());
-    }
-#endif
 
     CStringArray txtFields;
     string_q fields;

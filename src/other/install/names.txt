@@ -27,7 +27,7 @@
 30-Contracts	0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae	EthDev Multisig Wallet		Ethereum.org		
 30-Contracts	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP	TrueBlocks.io		The ethereum tip jar
 30-Contracts	0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb	EVMScriptRegistry CS		TrueBlocks.io		
-30-Contracts	0xdd05dd05dd05dd05dd05dd05dd05dd05	Falsified Address Because of Ddos		TrueBlocks.io		
+30-Contracts	0xdd05dd05dd05dd05dd05dd05dd05dd05dd05dd05	Falsified Address Because of Ddos		TrueBlocks.io		
 30-Contracts	0x4804b8bc5112fd4216824c2673ee792f180a1c1e	FixedyLib		TrueBlocks.io		
 30-Contracts	0x5baf422ed4eb0c678642aee99af8292047c76827	Freelance website announcement?		TrueBlocks.io		
 30-Contracts	0x07995e463f8957b70d683addd00a695ba83bb324	Gavin Wood VouchFor		TrueBlocks.io		
@@ -119,7 +119,7 @@
 30-Contracts:Moloch	0x211a94468ba1e379236b45ca42dc63ee93139c7e	Moloch Guild Bank		Moloch Website		
 30-Contracts:Moloch	0x7b3e509c78faee4c589d3d07ea0c8929aa2835e3	Moloch Paying Proxy		Moloch Website		
 31-Gitcoin Grants	0x620a3981f796346df02be83fd929758a88078e3c	Grant 000 - GitCoin Bot		GitCoin Website		
-31-Gitcoin Grants	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 - Gitcoin Open Source Support Fund & Grant 086 - Gitcoin Sustainability Fund		GitCoin Website		
+31-Gitcoin Grants	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 - Grant 086 - Gitcoin Sustainability Fund		GitCoin Website		
 31-Gitcoin Grants	0x8ba1f109551bd432803012645ac136ddd64dba72	Grant 013 - Ethersjs Complete Simple And Tiny		GitCoin Website		
 31-Gitcoin Grants	0x2ae09febfd8a811207a378b142d74ffd23073610	Grant 015 - Whiteblock Testing		GitCoin Website		
 31-Gitcoin Grants	0x3efcf2ddd54d841f253a95d8f30d97123568cd7b	Grant 016 - Cryptoeconomicsstudy Free Open Source Blockchain (kho)		GitCoin Website		
@@ -131,7 +131,7 @@
 31-Gitcoin Grants	0xc9a872868afa68ba937f65a1c5b4b252dab15d85	Grant 025 - Lighthouse Ethereum 20 Client & paulhauner		GitCoin Website		
 31-Gitcoin Grants	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 026 - Peepeth Social Network For A Better World		GitCoin Website		
 31-Gitcoin Grants	0x72b77d99b460176adc900c05f6bbb69c332eb4c2	Grant 029 - Zokrates		GitCoin Website		
-31-Gitcoin Grants	0x68085e7f88e90fa9247489c83fab30b177ebccb3	Grant 030 - Ethereum All Core Devs Community Project Managem & Grant 082 - Official Progpow Technical Audit Funding		GitCoin Website		
+31-Gitcoin Grants	0x68085e7f88e90fa9247489c83fab30b177ebccb3	Grant 030 - Grant 082 - Official Progpow Technical Audit Funding		GitCoin Website		
 31-Gitcoin Grants	0x02eb002d88051c03ef312f63bbf3e38aada0b902	Grant 031 - Grantops		GitCoin Website		
 31-Gitcoin Grants	0x961aa96febee5465149a0787b03bfa14d8e9033f	Grant 032 - Vipnode		GitCoin Website		
 31-Gitcoin Grants	0xcea6435bd3463764f835da8fa8a26f6d4d72c3a9	Grant 035 - Blockscout Blockchain Explorer For Inspecting And		GitCoin Website		
@@ -193,7 +193,7 @@
 31-Gitcoin Grants	0x35ca7ae854338dcbc154066f0ea00b636d38e431	Grant 126 - Humans of Ethereum		GitCoin Website		
 31-Gitcoin Grants	0x527621278422fff45a66f7086baeac770cf12b69	Grant 127 - Planet A		GitCoin Website		
 31-Gitcoin Grants	0xff6417ced7095444ad6a6a756446ba51ad334a30	Grant 128 - Vyper Smart Contract Language Dev Fund		GitCoin Website		
-31-Gitcoin Grants	0x7e897000e80787653c6a7a2d20174a4225d89753	Grant 129 - Deora Decentralized Voting System & Grant 283 - Deora Enabling The Next Step In Human Coordination		GitCoin Website		
+31-Gitcoin Grants	0x7e897000e80787653c6a7a2d20174a4225d89753	Grant 129 - Grant 283 - Deora Enabling The Next Step In Human Coordination		GitCoin Website		
 31-Gitcoin Grants	0xed2cc1105ebf222eda3c1a32f9b1ca20523a947b	Grant 130 - Black Girls Code X Blockchain Ecosystem		GitCoin Website		
 31-Gitcoin Grants	0xf39d549463d8d31f319225ef5c26d88f30945a38	Grant 131 - You Decentralized Password Management		GitCoin Website		
 31-Gitcoin Grants	0x7f1a44a4b572d2f700d0b8ce659fd5ef95aaad04	Grant 132 - The Dat Protocol		GitCoin Website		
@@ -3413,7 +3413,7 @@
 81-Other	0x5a5eff38da95b0d58b6c616f2699168b480953c9	Charlylifelog		Etherscan.io		
 81-Other	0xd4da851e1ee6409689d16ba3e923e5a014732f7c	CheckRepresentment_id170_cnt6_4mo		Ether Camp		
 81-Other	0x939e88414a54c8368c4530e48afcf7c20eecb7ce	Childrens Charity Fund		Weifund Website		
-81-Other	0x3364ed250ea774146a0fbbc1da0ffa6a81514ca7	Childrens Charity Fund Creator & Fund My Hat Obsession Creator & Drink Run Creator & Nicks Coffee Run Creator		Weifund Website		
+81-Other	0x3364ed250ea774146a0fbbc1da0ffa6a81514ca7	Probably Nick Johnson		Weifund Website		
 81-Other	0x3aaaf1c542b365e47f13ab62497f020eee45f747	ChineseCookies		Etherscan.io		
 81-Other	0x882fb4240f9a11e197923d0507de9a983ed69239	ClassicCheck_id313_cnt8_1mo		Ether Camp		
 81-Other	0xfa3affc8d50e293cdd768bddcd16559e7c617348	Coin_id80_cnt3_5mo		Ether Camp		
