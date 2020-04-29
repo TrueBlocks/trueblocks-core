@@ -364,7 +364,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND | OPT_OUTPUT);
-    // Since we need preunds, let's load the names library here
+    // Since we need prefunds, let's load the names library here
     CAccountName unused;
     getNamedAccount(unused, "0x0");
 

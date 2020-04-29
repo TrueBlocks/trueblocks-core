@@ -31,6 +31,7 @@
 #define OPT_RAW (1 << 11)
 #define OPT_PREFUND (1 << 12)
 #define OPT_OUTPUT (1 << 13)
+#define OPT_CMD (1 << 20)
 
 #define OPT_REQUIRED (1 << 14)
 #define OPT_POSITIONAL (1 << 15)
@@ -56,6 +57,7 @@ class COptionsBase {
     bool isReadme;
     bool isRaw;
     bool isVeryRaw;
+    string_q editCmd;
     bool isNoHeader;
     blkrange_t scanRange;
     CStringArray notes;

@@ -66,12 +66,14 @@ bool COptions::handle_options(void) {
 
                 if (option.tool == "chifra")
                     allAuto = false;
+
                 bool isEnumList = contains(option.data_type, "list<enum");
                 bool isEnum = contains(option.data_type, "enum") && !isEnumList;
                 bool isBool = contains(option.data_type, "boolean");
                 bool isBlockNum = contains(option.data_type, "blknum");
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
+
                 bool isNote = option.option_kind == "note";
                 bool isError = option.option_kind == "error";
                 if (isNote) {
@@ -327,6 +329,10 @@ bool COptions::handle_options(void) {
     return true;
 }
 
+namespace qblocks {
+extern string_q getReservedCommands(void);
+}
+
 //---------------------------------------------------------------------------------------------------
 bool COptions::check_option(const CCommandOption& option) {
     // Check valid data types
@@ -365,6 +371,10 @@ bool COptions::check_option(const CCommandOption& option) {
     if ((option.option_kind != "description" && option.option_kind != "note" && option.option_kind != "error") &&
         endsWith(option.description, "."))
         warnings << "Option '" << cRed << option.description << cOff << "' should not end with a period.|";
+
+    string_q reserved = "|" + getReservedCommands() + "|";
+    if (contains(reserved, "|" + option.command + "|"))
+        warnings << "Option '" << cRed << option.command << cOff << "' is a reserved word.|";
 
     return true;
 }

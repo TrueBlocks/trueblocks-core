@@ -31,7 +31,6 @@ static const COption params[] = {
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
-    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),  // NOLINT
     COption("tags", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
@@ -57,7 +56,6 @@ bool COptions::parseArguments(string_q& command) {
     bool other = false;
     bool addr = false;
     bool collections = false;
-    string_q add = "";
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -100,9 +98,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--collections") {
             collections = true;
 
-        } else if (startsWith(arg, "-d:") || startsWith(arg, "--add:")) {
-            add = substitute(substitute(arg, "-d:", ""), "--add:", "");
-
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
 
@@ -125,13 +120,63 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    for (auto term : terms)
-        searches.push_back(term);
-
-    if (!add.empty()) {
-        cout << add << endl;
+    if (!editCmd.empty()) {
+        ostringstream os;
+        os << "cmd: " << editCmd;
+        for (auto term : terms) {
+            os << term;
+        }
+        os << endl;
+        LOG4(os.str());
         return false;
+    } else {
+        for (auto term : terms)
+            searches.push_back(term);
     }
+
+#if 0
+    if (!edit.empty()) {
+        ostringstream os;
+        os << substitute(edit, "+", "\t") << endl;
+        string_q path = getCachePath("names/edit.csv");
+        stringToAsciiFile(path, os.str());
+        //        cout << "file\n" << asciiFileToString(path);
+        // ::remove(path.c_str());
+        CStringArray parts;
+        explode(parts, edit, '+');
+        searches.push_back(parts[1]);
+        namedAccounts.clear();
+        //        cerr << "Editing " << edit << endl;
+    }
+
+    if (!del.empty()) {
+        ostringstream os;
+        os << substitute(del, "+", "\t") << endl;
+        string_q path = getCachePath("names/delete.csv");
+        stringToAsciiFile(path, os.str());
+        //      cout << "file\n" << asciiFileToString(path);
+        // ::remove(path.c_str());
+        searches.push_back(del);
+        namedAccounts.clear();
+        cerr << "Deleting " << del << endl;
+    }
+
+    if (!remove.empty()) {
+        ostringstream os;
+        os << substitute(remove, "+", "\t") << endl;
+        string_q path = getCachePath("names/remove.csv");
+        stringToAsciiFile(path, os.str());
+        //    cout << "file\n" << asciiFileToString(path);
+        // ::remove(path.c_str());
+        searches.push_back(remove);
+        namedAccounts.clear();
+        cerr << "Removing " << remove << endl;
+    }
+    //    for (auto s : searches)
+    //        cout << s << endl;
+#endif
+    CAccountName unused;
+    getNamedAccount(unused, "0x0");
 
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
@@ -228,10 +273,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT);
-    // Since we need preunds, let's load the names library here
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
+    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_CMD);
 
     // BEG_CODE_INIT
     match_case = false;

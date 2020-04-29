@@ -254,10 +254,16 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 }
 
 //--------------------------------------------------------------------------------
+string_q getReservedCommands(void) {
+    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd";
+}
+
+//--------------------------------------------------------------------------------
 bool COptionsBase::standardOptions(string_q& cmdLine) {
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
+    replace(cmdLine, "--cmd ", "--cmd:");
 
     if (contains(cmdLine, "--noop ")) {
         // do nothing
@@ -300,6 +306,13 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
         isRaw = true;
+    }
+
+    if (isEnabled(OPT_CMD) && contains(cmdLine, "--cmd:")) {
+        replaceAll(cmdLine, "--cmd:", "|");
+        string_q pre = nextTokenClear(cmdLine, '|');
+        editCmd = nextTokenClear(cmdLine, ' ');
+        cmdLine = pre + " " + cmdLine;
     }
 
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
