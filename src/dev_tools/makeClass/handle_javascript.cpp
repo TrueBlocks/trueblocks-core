@@ -27,9 +27,15 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
 
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
-    page.recordIcons = toml.getConfigStr("settings", "recordIcons", "");
     page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
     page.defaultSearch = toml.getConfigStr("settings", "defaultSort", "");
+    string_q rec = substitute("," + toml.getConfigStr("settings", "recordIcons", "") + ",", ",,", "");
+    replace(rec, "editing,", "header-Add,Delete/Undelete,Edit/Remove,");
+    replace(rec, "viewing,", "ExternalLink,");
+    replace(rec, "exploring,", "Explorer/None,");
+    replace(rec, "exporting,", "footer-CSV,footer-TXT,");
+    replace(rec, "importing,", "footer-Import,");
+    page.recordIcons = trim(rec, ',');
 
     CStringArray reserved = {"in"};
     for (auto r : reserved)

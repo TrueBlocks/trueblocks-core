@@ -14,6 +14,7 @@
 #include "basenode.h"
 #include "fielddata.h"
 #include "conversions.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -151,6 +152,17 @@ void manageFields(const string_q& listIn, bool show) {
 
 //-----------------------------------------------------------------------
 void manageFields(const string_q& formatIn) {
+    // TODO(tjayrush): This can be removed when shipped
+    string_q check = formatIn;
+    replaceAll(check, " {", "{");
+    replaceAll(check, "\t{", "{");
+    check = substitute(check, "[{", "`");
+    size_t cntOn = countOf(check, '`');
+    check = substitute(substitute(check, "`", ""), "}]", "`");
+    if (countOf(check, '`') != cntOn) {
+        LOG_ERR("Mismatched brackets in format string: ", formatIn);
+        return;
+    }
     string_q fields;
     string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
     string_q cl = nextTokenClear(format, ':');
