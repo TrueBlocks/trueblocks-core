@@ -127,47 +127,6 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-#if 0
-    if (!edit.empty()) {
-        ostringstream os;
-        os << substitute(edit, "+", "\t") << endl;
-        string_q path = getCachePath("names/edit.csv");
-        stringToAsciiFile(path, os.str());
-        //        cout << "file\n" << asciiFileToString(path);
-        // ::remove(path.c_str());
-        CStringArray parts;
-        explode(parts, edit, '+');
-        searches.push_back(parts[1]);
-        namedAccounts.clear();
-        //        cerr << "Editing " << edit << endl;
-    }
-
-    if (!del.empty()) {
-        ostringstream os;
-        os << substitute(del, "+", "\t") << endl;
-        string_q path = getCachePath("names/delete.csv");
-        stringToAsciiFile(path, os.str());
-        //      cout << "file\n" << asciiFileToString(path);
-        // ::remove(path.c_str());
-        searches.push_back(del);
-        namedAccounts.clear();
-        cerr << "Deleting " << del << endl;
-    }
-
-    if (!remove.empty()) {
-        ostringstream os;
-        os << substitute(remove, "+", "\t") << endl;
-        string_q path = getCachePath("names/remove.csv");
-        stringToAsciiFile(path, os.str());
-        //    cout << "file\n" << asciiFileToString(path);
-        // ::remove(path.c_str());
-        searches.push_back(remove);
-        namedAccounts.clear();
-        cerr << "Removing " << remove << endl;
-    }
-    //    for (auto s : searches)
-    //        cout << s << endl;
-#endif
     CAccountName unused;
     getNamedAccount(unused, "0x0");
 
@@ -240,12 +199,19 @@ bool COptions::parseArguments(string_q& command) {
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
+    if (!contains(format, "{DELETED}") && (verbose || isApiMode())) {
+        str += "\t[{DELETED}]";
+    }
     string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
     if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
+
+    if (!contains(format, "{DELETED}") && (verbose || isApiMode())) {
+        UNHIDE_FIELD(CAccountName, "deleted");
+    }
 
     // Collect results for later display
     applyFilter();
@@ -284,8 +250,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
 
-    // If you need the names file, you have to add it in the constructor
-    establishFolder(configPath("names/"));
+    establishFolder(getCachePath("names/"));
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // loads names database
     Init();
@@ -469,86 +434,8 @@ string_q getSearchFields(const string_q& fmtIn) {
     return ret;
 }
 
-#if 0
-string_q editFile = getCachePath("names/edit.csv");
-string_q delFile = getCachePath("names/delete.csv");
-string_q removeFile = getCachePath("names/remove.csv");
-txtDate = laterOf(txtDate, fileLastModifyDate(editFile));
-txtDate = laterOf(txtDate, fileLastModifyDate(delFile));
-txtDate = laterOf(txtDate, fileLastModifyDate(removeFile));
-LOG4("Reloading");
-bool needsEdit = fileExists(editFile);
-bool needsDel = fileExists(delFile);
-bool needsRemove = fileExists(removeFile);
-if (needsEdit || needsDel || needsRemove) {
-    LOG4("Editing or deleting");
-    string_q edit;
-    address_t addr;
-    if (needsRemove) {
-        addr = trim(asciiFileToString(removeFile), '\n');
-        LOG4("Removing: ", addr);
-    } else if (needsDel) {
-        addr = trim(asciiFileToString(delFile), '\n');
-        LOG4("Deleting: ", addr);
-    } else if (needsEdit) {
-        edit = trim(asciiFileToString(editFile), '\n');
-        string_q s = edit;
-        nextTokenClear(s, '\t');
-        addr = nextTokenClear(s, '\t');
-        LOG4("Editing: ", addr, " with: ", edit);
-        //            cerr << "EDIT: " << edit << " ADDR: " << addr << " s: " << s << endl;
-        //            getchar();
-    }
-
-    bool edited = false;
-    string_q contents = asciiFileToString(txtFile);
-    CStringArray linesIn, linesOut;
-    explode(linesIn, contents, '\n');
-    for (auto line : linesIn) {
-        if (!contains(line, "\t" + addr + "\t")) {
-            linesOut.push_back(line);
-        } else if (needsDel) {
-            cerr << "Deleting line: " << line << endl;
-            if (endsWith(line, "\ttrue"))
-            replaceReverse(line, "\ttrue", "\tfalse");
-            else if (endsWith(line, "\tfalse"))
-            replaceReverse(line, "\tfalse", "\ttrue");
-            else
-            line += "\ttrue";
-            linesOut.push_back(line);
-            edited = true;
-            } else if (needsRemove) {
-            cerr << "Removing line: " << line << endl;
-            // do nothing (remove it)
-            edited = true;
-            } else {
-            cerr << "Editing line: " << line << endl;
-            ASSERT(needsEdit);
-            // add or edit this line with the new line
-            linesOut.push_back(edit);
-            cerr << "Adding edit: " << edit << endl;
-            edited = true;
-            }
-            }
-            cerr << "hasEdited: " << edited << " edit: " << edit.empty() << " " << needsDel << " " << needsRemove << " "
-            << needsEdit << endl;
-            if (!edited && !edit.empty()) {
-            linesOut.push_back(edit);  // add
-            }
-            ostringstream os;
-            for (auto line : linesOut)
-            os << line << endl;
-            stringToAsciiFile(txtFile, os.str());
-            // cerr << "Writing: " << os.str() << endl;
-            // cerr << asciiFileToString(txtFile) << endl;
-            ::remove(editFile.c_str());
-            ::remove(delFile.c_str());
-            ::remove(removeFile.c_str());
-            }
-#endif
-
 //-----------------------------------------------------------------------
-bool COptions::processEditCommand(const CStringArray& terms) {
+bool COptions::processEditCommand(CStringArray& terms) {
     if (!contains("add|update|delete|undelete|remove", editCmd))
         return usage("Invalid edit command '" + editCmd + "'. Quitting...");
 
@@ -575,33 +462,41 @@ bool COptions::processEditCommand(const CStringArray& terms) {
                 // do nothing
             } else if (editCmd == "delete") {
                 name.m_deleted = true;
+                outArray.push_back(name);
             } else if (editCmd == "undelete") {
                 name.m_deleted = false;
+                outArray.push_back(name);
             } else {
                 name = target;
+                outArray.push_back(name);
+                terms.clear();
+                terms.push_back(target.address);
             }
             edited = true;
         } else {
             outArray.push_back(name);
+            terms.clear();
+            terms.push_back(target.address);
         }
     }
-    //    if (editCmd == "add" && !edited)
-    //        outArray.push_back(target);
+
+    if (editCmd == "add" && !edited) {
+        outArray.push_back(target);
+    }
 
     sort(outArray.begin(), outArray.end());
 
     fmt = STR_DISPLAY_ACCOUNTNAME;
-    //    fmt += "\t[{DELETED}]";
+    fmt += "\t[{DELETED}]";
     ostringstream dataStream2;
     //    LOG4("Output size: ", outArray.size());
     for (auto name : outArray) {
         if (!name.is_custom && !name.is_prefund)
             dataStream2 << name.Format(fmt) << endl;
     }
-    //  LOG4("Before: ", "\n", asciiFileToString(configPath("names/names.txt")));
-    stringToAsciiFile(configPath("names/names.txt"), dataStream2.str());
-    LOG4(string_q(120, '-'));
-    LOG4("After: ", "\n", asciiFileToString(configPath("names/names.txt")));
 
-    return false;
+    stringToAsciiFile(configPath("names/names.txt"), dataStream2.str());
+    namedAccounts.clear();
+    ::remove(getCachePath("names/names.bin").c_str());
+    return true;
 }
