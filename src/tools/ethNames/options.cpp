@@ -504,6 +504,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     }
 
     sort(outArray.begin(), outArray.end());
+    LOG4("Finished sorting...");
 
     fmt = STR_DISPLAY_ACCOUNTNAME;
     ostringstream dataStream2;
@@ -518,6 +519,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     stringToAsciiFile(dest, dataStream2.str());
     namedAccounts.clear();
     ::remove(getCachePath("names/names.bin").c_str());
+    LOG4("Finished writing...");
 
     return true;
 }

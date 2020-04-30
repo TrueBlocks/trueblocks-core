@@ -73,7 +73,7 @@ string_q getCachePath(const string_q& _part) {
 bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
-    string_q binFile = getCachePath("names/names_prefunds.bin");
+    string_q binFile = getCachePath("names/names_prefunds_bals.bin");
     if (!fileExists(binFile)) {
         if (!fileExists(prefundFile))
             return false;
@@ -117,7 +117,51 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
 
 typedef map<address_t, CAccountName> name_map_t;
 //-----------------------------------------------------------------------
+void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+    if (contains(tabFilename, "_custom")) {
+        // From the custom file - store the values found in the file
+        account.is_custom = true;
+        theMap[account.address] = account;
+
+    } else if (contains(tabFilename, "_prefunds")) {
+        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
+        address_t addr = account.address;
+        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
+        account.address = addr;
+        account.is_prefund = true;
+        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+        account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name;
+        account.source = account.source.empty() ? "Genesis" : account.source;
+        theMap[account.address] = account;
+        cnt++;
+
+    } else {
+        // From the regular file - store the values found in the file
+        theMap[account.address] = account;
+    }
+}
+
+//-----------------------------------------------------------------------
 bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
+    string_q binFile = getCachePath("names/names_prefunds.bin");
+
+    uint64_t cnt = 0;
+    if (contains(tabFilename, "prefunds")) {
+        // This never changes so we should be able to only read this once in forever. If the binary file exists, use it
+        if (fileExists(binFile)) {
+            LOG4("Reading prefund names from binary cache");
+            CArchive nameCache(READING_ARCHIVE);
+            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+                CAccountNameArray prefunds;
+                nameCache >> prefunds;
+                nameCache.Release();
+                for (auto prefund : prefunds)
+                    addToMap(theMap, prefund, tabFilename, cnt++);
+                return true;
+            }
+        }
+    }
+
     CStringArray lines;
     asciiFileToLines(tabFilename, lines);
     if (lines.size() == 0)
@@ -131,37 +175,27 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
     if (fields.size() == 0)
         return false;
 
-    uint64_t cnt = 0;
     const CAccountName emptyName;
+    CAccountNameArray arrayOut;
+    arrayOut.reserve(10000);
     for (auto it = next(lines.begin()); it != lines.end(); ++it) {
         string_q line = *it;
         if (!startsWith(line, '#') && contains(line, "0x")) {
             CAccountName account;
             account.parseText(fields, line);
-            if (contains(tabFilename, "_custom")) {
-                // From the custom file - store the values found in the file
-                account.is_custom = true;
-                theMap[account.address] = account;
-            } else if (contains(tabFilename, "_prefunds")) {
-                // From the prefund file - force prefund marker, apply default values only if existing fields are empty
-                address_t addr = account.address;
-                account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
-                account.address = addr;
-                account.is_prefund = true;
-                account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-                account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name;
-                account.source = account.source.empty() ? "Genesis" : account.source;
-                theMap[account.address] = account;
-                if (!contains(account.name, "Prefund")) {
-                    printf("");
-                }
-                cnt++;
-            } else {
-                // From the regular file - store the values found in the file
-                theMap[account.address] = account;
-            }
+            addToMap(theMap, account, tabFilename, cnt++);
+            arrayOut.push_back(account);
         }
     }
+
+    if (contains(tabFilename, "prefund")) {
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << arrayOut;
+            nameCache.Release();
+        }
+    }
+
     return true;
 }
 
@@ -170,6 +204,7 @@ bool loadNames(COptionsBase& options) {
     if (options.namedAccounts.size() > 0)
         return true;
 
+    LOG4("Entering loadNames...");
     establishFolder(getCachePath("names/"));
 
     string_q txtFile = configPath("names/names.tab");
@@ -188,6 +223,7 @@ bool loadNames(COptionsBase& options) {
     txtDate = laterOf(txtDate, fileLastModifyDate(customFile));
     txtDate = laterOf(txtDate, fileLastModifyDate(prefundFile));
 
+    // If none of the source files is out of date, load the entire names database as quickly as possible
     if (binDate > txtDate) {
         LOG4("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
@@ -199,28 +235,28 @@ bool loadNames(COptionsBase& options) {
     }
 
     name_map_t theMap;
-    LOG4("Adding names from regular database...");
     if (!importTabFile(theMap, txtFile))
         return options.usage("Could not open names database...");
+    LOG4("Finished adding names from regular database...");
 
-    LOG4("Adding names from custom database...");
     if (!importTabFile(theMap, customFile))
         return options.usage("Could not open custom names database...");
+    LOG4("Finished adding names from custom database...");
 
-    LOG4("Adding names from prefunds database...");
     if (!importTabFile(theMap, prefundFile))
         return options.usage("Could not open prefunds database...");
+    LOG4("Finished adding names from prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap)
         options.namedAccounts.push_back(item.second);
 
-    LOG4("Writing binary cache...");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << options.namedAccounts;
         nameCache.Release();
     }
+    LOG4("Finished writing binary cache...");
 
     return true;
 }

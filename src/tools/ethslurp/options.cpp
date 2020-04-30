@@ -80,6 +80,7 @@ bool COptions::parseArguments(string_q& command) {
             typesList.push_back("ext");
             typesList.push_back("int");
             typesList.push_back("token");
+            typesList.push_back("nfts");
             // typesList.push_back("miner");
         } else {
             typesList.push_back(type);
