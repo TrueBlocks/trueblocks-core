@@ -124,6 +124,8 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
         return false;
 
     string_q header = lines[0];
+    if (!contains(header, "address\t"))
+        return false;
     CStringArray fields;
     explode(fields, lines[0], '\t');
     if (fields.size() == 0)
@@ -144,11 +146,11 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
                 // From the prefund file - force prefund marker, apply default values only if existing fields are empty
                 address_t addr = account.address;
                 account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
-                account.is_prefund = true;
                 account.address = addr;
+                account.is_prefund = true;
                 account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-                account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name + " (Prefund)";
-                account.source = account.source.empty() ? "Genesis" : account.source + ", Genesis";
+                account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name;
+                account.source = account.source.empty() ? "Genesis" : account.source;
                 theMap[account.address] = account;
                 if (!contains(account.name, "Prefund")) {
                     printf("");
@@ -198,13 +200,16 @@ bool loadNames(COptionsBase& options) {
 
     name_map_t theMap;
     LOG4("Adding names from regular database...");
-    importTabFile(theMap, txtFile);
+    if (!importTabFile(theMap, txtFile))
+        return options.usage("Could not open names database...");
 
     LOG4("Adding names from custom database...");
-    importTabFile(theMap, customFile);
+    if (!importTabFile(theMap, customFile))
+        return options.usage("Could not open custom names database...");
 
     LOG4("Adding names from prefunds database...");
-    importTabFile(theMap, prefundFile);
+    if (!importTabFile(theMap, prefundFile))
+        return options.usage("Could not open prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap)

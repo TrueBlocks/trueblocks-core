@@ -510,7 +510,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     string_q fieldStr = toLower(substitute(substitute(fmt, "[{", ""), "}]", ""));
     dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
-        if (!name.is_prefund || name.is_custom)  // if the user has customized a prefund, save it as a custom as well
+        if (!contains(name.name, "Prefund_"))  // if the user has customized a prefund, save it as a custom as well
             dataStream2 << name.Format(fmt) << endl;
     }
 
