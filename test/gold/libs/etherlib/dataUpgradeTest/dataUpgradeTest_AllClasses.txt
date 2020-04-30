@@ -37,8 +37,8 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Abi",
   "address": "0x0",
   "interfaces": []
@@ -117,8 +117,8 @@ output_names        	1017	0	131122	T_TEXT TS_STRING
 declaration         	1018	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Function",
   "inputs": [],
   "outputs": [],
@@ -194,8 +194,8 @@ is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
 is_enabled          	1017	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Parameter",
   "is_flags": 64,
   "is_enabled": true
@@ -220,8 +220,8 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "abi_spec": {
     "schema": 7000,
-    "deleted": 0,
-    "showing": 1,
+    "deleted": false,
+    "showing": true,
     "cname": "Abi",
     "address": "0x0",
     "interfaces": []
@@ -280,13 +280,13 @@ curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "AccountWatch",
   "abi_spec": {
     "schema": 7000,
-    "deleted": 0,
-    "showing": 1,
+    "deleted": false,
+    "showing": true,
     "cname": "Abi",
     "address": "0x0",
     "interfaces": []
@@ -395,8 +395,8 @@ date                	1018	0	262149	T_DATE TS_DATE
 age                 	1019	0	262149	T_DATE TS_DATE
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Block",
   "gasLimit": 0,
   "gasUsed": 0,
@@ -466,8 +466,8 @@ endBal              	1009	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
 blockNum            	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "IncomeStatement",
   "begBal": 0,
   "inflow": 0,
@@ -560,8 +560,8 @@ topic2              	1020	0	131132	T_HASH TS_STRING
 topic3              	1021	0	131132	T_HASH TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "LogEntry",
   "address": "0x0",
   "logIndex": 0,
@@ -611,8 +611,8 @@ close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "PriceQuote",
   "timestamp": 0,
   "close": 0.00000,
@@ -691,8 +691,8 @@ transactionHash     	1016	0	131132	T_HASH TS_STRING
 transactionIndex    	1017	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Receipt",
   "contractAddress": "0x0",
   "cumulativeGasUsed": 0,
@@ -739,8 +739,8 @@ result              	1006	0	131122	T_TEXT TS_STRING
 id                  	1007	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "RPCResult"
 }
 
@@ -820,8 +820,8 @@ result              	1016	0	1048651	T_OBJECT TS_OBJECT
 date                	1017	0	262149	T_DATE TS_DATE
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Trace",
   "blockHash": "0x0",
   "blockNumber": 0,
@@ -903,8 +903,8 @@ value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "TraceAction",
   "address": "0x0",
   "balance": 0,
@@ -959,8 +959,8 @@ gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1008	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "TraceResult",
   "address": "0x0",
   "gasUsed": 0
@@ -1020,8 +1020,8 @@ encoding            	1036	1	131122	T_TEXT TS_STRING
   "isError": 0,
   "receipt": {
     "schema": 7000,
-    "deleted": 0,
-    "showing": 1,
+    "deleted": false,
+    "showing": true,
     "cname": "Receipt",
     "contractAddress": "0x0",
     "cumulativeGasUsed": 0,
@@ -1115,8 +1115,8 @@ ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1036	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Transaction",
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1133,8 +1133,8 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
   "isInternal": 0,
   "receipt": {
     "schema": 7000,
-    "deleted": 0,
-    "showing": 1,
+    "deleted": false,
+    "showing": true,
     "cname": "Receipt",
     "contractAddress": "0x0",
     "cumulativeGasUsed": 0,
@@ -1227,8 +1227,8 @@ timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "NewBlock",
   "gasLimit": 0,
   "gasUsed": 0,
@@ -1290,8 +1290,8 @@ logsBloom           	1008	0	131137	T_BLOOM TS_STRING
 isError             	1009	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "NewReceipt",
   "contractAddress": "0x0",
   "gasUsed": 0,

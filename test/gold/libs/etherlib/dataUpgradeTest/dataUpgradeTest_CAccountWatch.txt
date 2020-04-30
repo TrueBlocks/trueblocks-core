@@ -74,8 +74,8 @@ curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "AccountWatch",
   "abi_spec": {
     "address": "0x0",

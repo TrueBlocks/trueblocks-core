@@ -1,8 +1,9 @@
 ethNames argc: 7 [1:--editcmd] [2:update] [3:TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!false] [4:--expand] [5:--verbose] [6:10] 
 ethNames --editcmd update TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!false --expand --verbose 10 
-TIME ~ CLOCK - : 4-----Updating names database
-TIME ~ CLOCK - : 4-----Updating custom names database
-TIME ~ CLOCK - : 4-----Updating prefunds database
-TIME ~ CLOCK - : 4-----Writing binary cache
-tags	address	name	symbol	source	decimals	description	deleted
-TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED		DESCRIPTION_CHANGED	false
+TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
+TIME ~ CLOCK - : 4-----Adding names from regular database...
+TIME ~ CLOCK - : 4-----Adding names from custom database...
+TIME ~ CLOCK - : 4-----Adding names from prefunds database...
+TIME ~ CLOCK - : 4-----Writing binary cache...
+tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
+TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED		DESCRIPTION_CHANGED	false	false	false

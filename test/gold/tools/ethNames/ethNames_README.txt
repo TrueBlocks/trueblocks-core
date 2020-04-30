@@ -22,6 +22,7 @@ ethNames -th
 
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |
+| -u | --to_custom | for editcmd only, is the edited name a custom name or not |
 | -g | --tags | export the list of tags and subtags only |
 #### Hidden options (shown during testing only)
 
@@ -36,5 +37,5 @@ ethNames -th
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.txt` (573661)
+- Name file: `~/.quickBlocks/names/names.tab` (595573)
 

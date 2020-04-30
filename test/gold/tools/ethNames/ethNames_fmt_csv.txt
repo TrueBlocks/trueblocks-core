@@ -105,7 +105,6 @@ ethNames --named --custom --owned --fmt csv
 "90-DevCon2:Individual","0x0b1fb677b07375b781b4551b2e265d05590fd62f","Cheyne","","",""
 "50-Tokens:ERC20","0x0b4bdc478791897274652dc15ef5c135cae61e60","DAEX Token","DAX","","18"
 "50-Tokens:ERC20","0x0b76544f6c413a555f309bf76260d1e02377c02a","Internet Node Token","INT","","6"
-"90-DevCon2:Individual","0x0b7fc9ddf70576f6330669eaaa71b6a831e99528","RicMoo","","",""
 "90-DevCon2:Individual","0x0b892db974847d91ba4eeee99e3249539fbddd79","Jacob Horne","","",""
 "50-Tokens:ERC20","0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e","SwftCoin","SWFTC","","8"
 "50-Tokens:ERC20","0x0bc61dded5f6710c637cf8288eb6058766ce1921","CEN","CEN","","18"
@@ -202,3 +201,4 @@ ethNames --named --custom --owned --fmt csv
 "50-Tokens:ERC20","0x1602af2c782cc03f9241992e243290fccf73bb13","Qubitica","QBIT","","18"
 "80-Malicious","0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3","Possibly Malicious 0x160","","",""
 "60-Airdrops","0x160e529055d084add9634fe1c2059109c8ce044e","Jury.Online Airdrop Sender","","",""
+"50-Tokens:ERC20","0x168296bb09e24a88805cb9c33356536b980d3fc5","RHOC","RHOC","","8"

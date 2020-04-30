@@ -902,15 +902,6 @@
     },
     {
       "tags": "90-DevCon2:Individual",
-      "address": "0x0b7fc9ddf70576f6330669eaaa71b6a831e99528",
-      "name": "RicMoo",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
       "address": "0x0b892db974847d91ba4eeee99e3249539fbddd79",
       "name": "Jacob Horne",
       "symbol": "",
@@ -1808,6 +1799,15 @@
       "source": "On Chain",
       "decimals": 8,
       "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
+      "name": "OwnData",
+      "symbol": "OWN",
+      "source": "On Chain",
+      "decimals": 8,
+      "description": "Owndata is a crypto marketplace for data sellers and buyers."
     }
   ],
   "types": [

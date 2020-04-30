@@ -38,8 +38,8 @@ uri                 	1006	0	131122	T_TEXT TS_STRING
 headers             	1007	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "ApiSpec"
 }
 

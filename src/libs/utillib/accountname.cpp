@@ -458,7 +458,9 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{SOURCE}]\t"
     "[{DECIMALS}]\t"
     "[{DESCRIPTION}]\t"
-    "[{DELETED}]";
+    "[{DELETED}]\t"
+    "[{IS_CUSTOM}]\t"
+    "[{IS_PREFUND}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

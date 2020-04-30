@@ -144,8 +144,8 @@ ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 encoding            	1036	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Transaction",
   "hash": "0x0",
   "blockHash": "0x0",

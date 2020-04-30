@@ -43,8 +43,8 @@ gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1008	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "TraceResult",
   "address": "0x0",
   "gasUsed": 0

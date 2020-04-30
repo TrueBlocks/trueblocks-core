@@ -72,8 +72,8 @@ timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "NewBlock",
   "gasLimit": 0,
   "gasUsed": 0,

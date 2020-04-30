@@ -48,8 +48,8 @@ logsBloom           	1008	0	131137	T_BLOOM TS_STRING
 isError             	1009	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "NewReceipt",
   "contractAddress": "0x0",
   "gasUsed": 0,

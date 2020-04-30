@@ -73,8 +73,8 @@ output_names        	1017	0	131122	T_TEXT TS_STRING
 declaration         	1018	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Function",
   "inputs": [],
   "outputs": [],

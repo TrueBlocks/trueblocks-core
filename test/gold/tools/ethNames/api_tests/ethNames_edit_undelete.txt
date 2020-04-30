@@ -8,7 +8,9 @@
       "symbol": "SYMBOL_CHANGED",
       "source": "SOURCE_CHANGED",
       "decimals": "0",
-      "description": "DESCRIPTION_CHANGED"
+      "description": "DESCRIPTION_CHANGED",
+      "is_custom": false,
+      "is_prefund": false
     }
   ],
   "types": [
@@ -46,6 +48,14 @@
         {
           "name": "description",
           "type": "text"
+        },
+        {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
         }
       ]
     }

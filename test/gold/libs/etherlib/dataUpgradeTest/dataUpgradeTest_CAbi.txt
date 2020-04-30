@@ -37,8 +37,8 @@ address             	1005	0	131127	T_ADDRESS TS_STRING
 interfaces          	1006	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Abi",
   "address": "0x0",
   "interfaces": []

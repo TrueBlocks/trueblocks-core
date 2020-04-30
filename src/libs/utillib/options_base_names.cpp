@@ -70,22 +70,23 @@ string_q getCachePath(const string_q& _part) {
 }
 
 //-----------------------------------------------------------------------
-bool loadPrefunds(COptionsBase& options) {
+bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
     string_q binFile = getCachePath("names/names_prefunds.bin");
-    string_q txtFile = configPath("names/names_prefunds.txt");
     if (!fileExists(binFile)) {
-        if (!fileExists(txtFile))
+        if (!fileExists(prefundFile))
             return false;
         CStringArray lines;
-        asciiFileToLines(txtFile, lines);
+        asciiFileToLines(prefundFile, lines);
+        bool first = true;
         for (auto line : lines) {
-            if (!startsWith(line, '#')) {
+            if (!first && !startsWith(line, '#')) {
                 CStringArray parts;
                 explode(parts, line, '\t');
                 options.prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
             }
+            first = false;
         }
         CArchive archive(WRITING_ARCHIVE);
         if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
@@ -114,6 +115,54 @@ bool loadPrefunds(COptionsBase& options) {
     return true;
 }
 
+typedef map<address_t, CAccountName> name_map_t;
+//-----------------------------------------------------------------------
+bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
+    CStringArray lines;
+    asciiFileToLines(tabFilename, lines);
+    if (lines.size() == 0)
+        return false;
+
+    string_q header = lines[0];
+    CStringArray fields;
+    explode(fields, lines[0], '\t');
+    if (fields.size() == 0)
+        return false;
+
+    uint64_t cnt = 0;
+    const CAccountName emptyName;
+    for (auto it = next(lines.begin()); it != lines.end(); ++it) {
+        string_q line = *it;
+        if (!startsWith(line, '#') && contains(line, "0x")) {
+            CAccountName account;
+            account.parseText(fields, line);
+            if (contains(tabFilename, "_custom")) {
+                // From the custom file - store the values found in the file
+                account.is_custom = true;
+                theMap[account.address] = account;
+            } else if (contains(tabFilename, "_prefunds")) {
+                // From the prefund file - force prefund marker, apply default values only if existing fields are empty
+                address_t addr = account.address;
+                account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
+                account.is_prefund = true;
+                account.address = addr;
+                account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+                account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name + " (Prefund)";
+                account.source = account.source.empty() ? "Genesis" : account.source + ", Genesis";
+                theMap[account.address] = account;
+                if (!contains(account.name, "Prefund")) {
+                    printf("");
+                }
+                cnt++;
+            } else {
+                // From the regular file - store the values found in the file
+                theMap[account.address] = account;
+            }
+        }
+    }
+    return true;
+}
+
 //-----------------------------------------------------------------------
 bool loadNames(COptionsBase& options) {
     if (options.namedAccounts.size() > 0)
@@ -121,17 +170,17 @@ bool loadNames(COptionsBase& options) {
 
     establishFolder(getCachePath("names/"));
 
+    string_q txtFile = configPath("names/names.tab");
+    string_q customFile = configPath("names/names_custom.tab");
+    string_q prefundFile = configPath("names/names_prefunds.tab");
+
     // A final set of options that do not have command line options
     if (options.isEnabled(OPT_PREFUND))
-        if (!loadPrefunds(options))
+        if (!loadPrefunds(prefundFile, options))
             return options.usage("Could not open prefunds data. Quitting...");
 
     string_q binFile = getCachePath("names/names.bin");
     time_q binDate = fileLastModifyDate(binFile);
-
-    string_q txtFile = configPath("names/names.txt");
-    string_q customFile = configPath("names/names_custom.txt");
-    string_q prefundFile = configPath("names/names_prefunds.txt");
 
     time_q txtDate = fileLastModifyDate(txtFile);
     txtDate = laterOf(txtDate, fileLastModifyDate(customFile));
@@ -147,58 +196,21 @@ bool loadNames(COptionsBase& options) {
         }
     }
 
-    CStringArray txtFields;
-    string_q fields;
-    CStringArray lines;
+    name_map_t theMap;
+    LOG4("Adding names from regular database...");
+    importTabFile(theMap, txtFile);
 
-    LOG4("Updating names database");
-    txtFields.clear();
-    lines.clear();
-    fields = "tags|address|name|symbol|source|decimals|description|deleted";
-    explode(txtFields, fields, '|');
-    asciiFileToLines(txtFile, lines);
-    for (auto line : lines) {
-        if (!startsWith(line, '#') && contains(line, "0x")) {
-            CAccountName account;
-            account.parseText(txtFields, line);
-            options.namedAccounts.push_back(account);
-        }
-    }
+    LOG4("Adding names from custom database...");
+    importTabFile(theMap, customFile);
 
-    LOG4("Updating custom names database");
-    lines.clear();
-    asciiFileToLines(customFile, lines);
-    for (auto line : lines) {
-        if (!startsWith(line, '#') && contains(line, "0x")) {
-            CAccountName account;
-            account.parseText(txtFields, line);
-            account.is_custom = true;
-            options.namedAccounts.push_back(account);
-        }
-    }
+    LOG4("Adding names from prefunds database...");
+    importTabFile(theMap, prefundFile);
 
-    LOG4("Updating prefunds database");
-    uint32_t cnt = 0;
-    txtFields.clear();
-    lines.clear();
-    fields = "address|balance";
-    explode(txtFields, fields, '|');
-    asciiFileToLines(prefundFile, lines);
-    for (auto line : lines) {
-        if (!startsWith(line, '#')) {
-            CAccountName account;
-            account.parseText(txtFields, line);
-            account.is_prefund = true;
-            account.tags = "80-Prefund";
-            account.name = "Prefund_" + padNum4(cnt++);
-            account.source = "Genesis";
-            options.namedAccounts.push_back(account);
-        }
-    }
+    // theMap is already sorted by address, so simply copy it into the array
+    for (auto item : theMap)
+        options.namedAccounts.push_back(item.second);
 
-    sort(options.namedAccounts.begin(), options.namedAccounts.end());
-
-    LOG4("Writing binary cache");
+    LOG4("Writing binary cache...");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << options.namedAccounts;

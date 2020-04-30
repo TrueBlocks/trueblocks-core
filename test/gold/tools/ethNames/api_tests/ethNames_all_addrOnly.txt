@@ -417,10 +417,6 @@
       "decimals": 6
     },
     {
-      "address": "0x0b7fc9ddf70576f6330669eaaa71b6a831e99528",
-      "decimals": "0"
-    },
-    {
       "address": "0x0b892db974847d91ba4eeee99e3249539fbddd79",
       "decimals": "0"
     },
@@ -803,6 +799,10 @@
     {
       "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
       "decimals": "0"
+    },
+    {
+      "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
+      "decimals": 8
     }
   ],
   "types": [

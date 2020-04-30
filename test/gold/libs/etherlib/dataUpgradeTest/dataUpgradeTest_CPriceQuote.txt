@@ -41,8 +41,8 @@ close               	1006	0	65566	T_DOUBLE TS_NUMERAL
 date                	1007	0	262149	T_DATE TS_DATE
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "PriceQuote",
   "timestamp": 0,
   "close": 0.00000,

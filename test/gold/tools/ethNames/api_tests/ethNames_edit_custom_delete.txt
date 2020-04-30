@@ -1,15 +1,15 @@
 {
   "data": [
     {
-      "deleted": false,
-      "tags": "TAGS",
-      "address": "0x0000000000000000000000000000000010101010",
-      "name": "NAME",
-      "symbol": "SYMBOL",
-      "source": "SOURCE",
+      "deleted": true,
+      "tags": "91-Friends",
+      "address": "0xde58d6a070c7490f10a9aac1b7bc6e3583383958",
+      "name": "Vlad",
+      "symbol": "",
+      "source": "https://kickback.events/",
       "decimals": "0",
-      "description": "DESCRIPTION",
-      "is_custom": false,
+      "description": "",
+      "is_custom": true,
       "is_prefund": false
     }
   ],

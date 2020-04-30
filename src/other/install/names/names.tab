@@ -1,4 +1,4 @@
-# tags	address	name	symbol	source	decimals	description	deleted
+tags	address	name	symbol	source	decimals	description	deleted
 30-Contracts	0xb9ef770b6a5e12e45983c5d80545258aa38f3b78	0chain	ZCN	Etherscan.io		0chain is an infinitely scalable decentralized Cloud for any application.
 30-Contracts	0x1820a4b7618bde71dce8cdc73aab6c95905fad24	1820 Registry	REG	TrueBlocks.io		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820
 30-Contracts	0x81f7564e413586f1f99fde55740ac52b43ca99c9	ACL CS		TrueBlocks.io		
@@ -811,7 +811,6 @@
 32-Kickback:Friends	0x3ed842b8e2e6985c85a5b5f0193f152441e244fa	vika		https://kickback.events/		
 32-Kickback:Friends	0xe419053e4cbcddc6c17d5806d58907289e446bd5	Vitaliy_Gataulin		https://kickback.events/		
 32-Kickback:Friends	0x2abdb157b2603e17d531d4fc51a4fc6174c3daea	vitorpy		https://kickback.events/		
-32-Kickback:Friends	0xde58d6a070c7490f10a9aac1b7bc6e3583383958	vlad		https://kickback.events/		
 32-Kickback:Friends	0x8e99fc1c0f5d7d8cdaa68fff3260a70fd01c5293	vlad_lime		https://kickback.events/		
 32-Kickback:Friends	0xae7ae37d9d97abc1099995036f17701fd55cefe5	vongohren		https://kickback.events/		
 32-Kickback:Friends	0x986204cc94428354885e237d87dc0ff9836dfc89	wally		https://kickback.events/		
@@ -4194,7 +4193,6 @@
 81-Other:Giveth	0xf6346cd9d0b90ca55ca8b128788a06d2c0e70dd3	Space Decentral Donations (Giveth)		Giveth Website		
 81-Other:Individual	0x8e8a24cba9f2702243ad65bada9b0e8cbc62fd96	Alexey Akunhov		http://medium.com		
 81-Other:Individual	0x6377216fd31061edb18b91d33c3d252abf91c2d4	Beltran Berrocal		http://medium.com		
-81-Other:Individual	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	BigVitalik		WhaleWatch.io		
 81-Other:Individual	0xd292f43d687702bc5f793e56765e1a3b5e541ee3	Christoph Jentzsch		http://medium.com		
 81-Other:Individual	0x8f53781799515e5dc8f5d00c528940cae99ac969	Corey Perry's TipJar		http://medium.com		
 81-Other:Individual	0x8a40bfaa73256b60764c1bf40675a99083efb075	Gavin Wood's Account		http://wanderer.github.io/ethereum/nodejs		
@@ -4434,7 +4432,6 @@
 91-Friends	0x37b347ee521649b60275ba6fb63670fe7f77a0fa	Adien H		TrueBlocks.io		
 91-Friends	0x6d343663e55f734781e278b2b41a36c99e0bac40	Alex'sWallet		TrueBlocks.io		
 91-Friends	0x3e575510b9304ff417c2e4d420d1314dc3f13687	Arron's Wallet		TrueBlocks.io		
-91-Friends	0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12	Consensys Grant Sender		TrueBlocks.io		
 91-Friends	0x793ea9692ada1900fbd0b80fffec6e431fe8b391	DAO Deployer		TrueBlocks.io		
 91-Friends	0xeba576ee0a26eba945c43cf951118c420f6aa54b	DAO Whale 2 - 2		TrueBlocks.io		
 91-Friends	0x976fd26bc177542c3ade3aa28b374f866e7dde4b	DAO Whale 2 - 3		TrueBlocks.io		

@@ -9,7 +9,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
+    "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -19,7 +21,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BTRN",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
+    "description": "Biotron is a fully transparent personal data analytics platform on blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -29,7 +33,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "FLOT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention."
+    "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -39,7 +45,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CK",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "The famous first ERC721 token"
+    "description": "The famous first ERC721 token",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -49,7 +57,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -59,7 +69,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "IBTC",
     "source": "On Chain",
     "decimals": 18,
-    "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
+    "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -69,7 +81,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DALC",
     "source": "On Chain",
     "decimals": 8,
-    "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
+    "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -79,7 +93,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -89,7 +105,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EDG",
     "source": "On Chain",
     "decimals": 0,
-    "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
+    "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -99,7 +117,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DENT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Aims to be the blockchain solution for the global dental industry."
+    "description": "Aims to be the blockchain solution for the global dental industry.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -109,7 +129,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ELITE",
     "source": "On Chain",
     "decimals": 18,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -119,7 +141,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DNT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
+    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -129,7 +153,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "RIYA",
     "source": "On Chain",
     "decimals": 8,
-    "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace."
+    "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -139,7 +165,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "AVT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "An open-source protocol that delivers the global standard for ticketing."
+    "description": "An open-source protocol that delivers the global standard for ticketing.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -149,7 +177,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MANA",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications"
+    "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -159,7 +189,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BLT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Decentralized credit scoring powered by Ethereum and IPFS."
+    "description": "Decentralized credit scoring powered by Ethereum and IPFS.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -169,7 +201,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CAT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
+    "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -179,7 +213,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "GRID",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
+    "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -189,7 +225,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -199,7 +237,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BETHER",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
+    "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -209,7 +249,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REG",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
+    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -219,7 +261,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "PRL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
+    "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -229,7 +273,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NDX",
     "source": "On Chain",
     "decimals": 18,
-    "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
+    "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -239,7 +285,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REP",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
+    "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -249,7 +297,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -259,7 +309,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DGTX",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
+    "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -269,7 +321,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "TALAO",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain"
+    "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -279,7 +333,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -289,7 +345,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DEW",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc."
+    "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -299,7 +357,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LION",
     "source": "On Chain",
     "decimals": 18,
-    "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal."
+    "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -309,7 +369,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ROBET",
     "source": "On Chain",
     "decimals": 18,
-    "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts."
+    "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -319,7 +381,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "UKG",
     "source": "On Chain",
     "decimals": 18,
-    "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform."
+    "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -329,7 +393,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "RDN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token."
+    "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -339,7 +405,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "AST",
     "source": "On Chain",
     "decimals": 4,
-    "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens"
+    "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -349,7 +417,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -359,7 +429,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "AIR",
     "source": "On Chain",
     "decimals": 8,
-    "description": "AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees."
+    "description": "AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -369,7 +441,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "UET",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The world's first 100% honest Ethereum ICO."
+    "description": "The world's first 100% honest Ethereum ICO.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -379,7 +453,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NPX",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -389,7 +465,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ETG",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential."
+    "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -399,7 +477,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BAS",
     "source": "On Chain",
     "decimals": 8,
-    "description": "BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region."
+    "description": "BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -409,7 +489,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ROL",
     "source": "On Chain",
     "decimals": 16,
-    "description": "Provably fair online Ether gaming on the Ethereum Blockchain"
+    "description": "Provably fair online Ether gaming on the Ethereum Blockchain",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -419,7 +501,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EBC",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The universal cryptocurrency based on Ethereum for travelers in the world"
+    "description": "The universal cryptocurrency based on Ethereum for travelers in the world",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -429,7 +513,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "TMT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "A decentralized global trade finance ecosystem."
+    "description": "A decentralized global trade finance ecosystem.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -439,7 +525,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io & CarbonVote & WhaleWatch.io & SEPT_DDOS & http://www.reddit.com/r/ethereum/",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -449,7 +537,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -459,7 +549,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SGP",
     "source": "On Chain",
     "decimals": 18,
-    "description": "SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together."
+    "description": "SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -469,7 +561,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -479,7 +573,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -489,7 +585,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "HPB",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "HPB (High-Performance Blockchain) is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications"
+    "description": "HPB (High-Performance Blockchain) is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -499,7 +597,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NRP",
     "source": "On Chain",
     "decimals": 8,
-    "description": "NEURAL PROTOCOL (NRP) is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace."
+    "description": "NEURAL PROTOCOL (NRP) is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -509,7 +609,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MIC",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Mindexcoin (MIC) is a token that enables data operations in the Ethereum Decentralized Network."
+    "description": "Mindexcoin (MIC) is a token that enables data operations in the Ethereum Decentralized Network.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -519,7 +621,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs."
+    "description": "A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -529,7 +633,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "ALT is a utility token for Alt.Estate ‚Äö√Ñ√Æ the IT company offering a new solution for real estate tokenization"
+    "description": "ALT is a utility token for Alt.Estate ‚Äö√Ñ√Æ the IT company offering a new solution for real estate tokenization",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -539,7 +645,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "FUN",
     "source": "On Chain",
     "decimals": 8,
-    "description": "FunFair is a decentralised gaming platform powered by Ethereum smart contracts"
+    "description": "FunFair is a decentralised gaming platform powered by Ethereum smart contracts",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -549,7 +657,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SPANK",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network."
+    "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -559,7 +669,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "OPT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Decentralised music platform built on Ethereum and IPFS."
+    "description": "Decentralised music platform built on Ethereum and IPFS.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -569,7 +681,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "RTE",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum."
+    "description": "Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -579,7 +693,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BZ",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Digital asset trading exchanges, providing professional digital asset trading and OTC (Over The Counter) services."
+    "description": "Digital asset trading exchanges, providing professional digital asset trading and OTC (Over The Counter) services.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -589,7 +705,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ELTCOIN",
     "source": "On Chain",
     "decimals": 8,
-    "description": "Ethereum Limited Total Coin"
+    "description": "Ethereum Limited Total Coin",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -599,7 +717,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "XMCT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Connecting global medical data and find your ideal cross-border medical solution"
+    "description": "Connecting global medical data and find your ideal cross-border medical solution",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -609,7 +729,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NxC",
     "source": "On Chain",
     "decimals": 3,
-    "description": "The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium."
+    "description": "The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -619,7 +741,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ATN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology."
+    "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -629,7 +753,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SNR",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Overcome the barriers to integration of blockchain-technologies into e-commerce market."
+    "description": "Overcome the barriers to integration of blockchain-technologies into e-commerce market.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -639,7 +765,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "IMP",
     "source": "On Chain",
     "decimals": 7,
-    "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges."
+    "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -649,7 +777,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BTR",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Project based on online and offline shopping market all across the globe."
+    "description": "Project based on online and offline shopping market all across the globe.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -659,7 +789,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NEXT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "A hybrid exchange registered as an N. V. (Public company) in the Netherlands and provides fiat pairs to all altcoins on its platform"
+    "description": "A hybrid exchange registered as an N. V. (Public company) in the Netherlands and provides fiat pairs to all altcoins on its platform",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -669,7 +801,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -679,7 +813,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MORE",
     "source": "On Chain",
     "decimals": 2,
-    "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables."
+    "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -689,7 +825,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BLUE",
     "source": "On Chain",
     "decimals": 8,
-    "description": "BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security."
+    "description": "BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -699,7 +837,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ETHM",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Ethereum Meta addresses the lack of privacy in Ethereum."
+    "description": "Ethereum Meta addresses the lack of privacy in Ethereum.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -709,7 +849,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "sUSD",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "sUSD is part of the Synethix network."
+    "description": "sUSD is part of the Synethix network.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -719,7 +861,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DTH",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops."
+    "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -729,7 +873,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "VSL",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "An Ethereum Gaming Platform Token"
+    "description": "An Ethereum Gaming Platform Token",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -739,7 +885,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REBL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Rebellious is a company based in the Netherlands. Using their unique approach, they aim to build a strong currency powered by an even stronger community that‚Äö√Ñ√¥s motivated by growth rather than greed."
+    "description": "Rebellious is a company based in the Netherlands. Using their unique approach, they aim to build a strong currency powered by an even stronger community that‚Äö√Ñ√¥s motivated by growth rather than greed.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -749,7 +897,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CTX",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A blockchain platform based on Ethereum for automated service for car towing."
+    "description": "A blockchain platform based on Ethereum for automated service for car towing.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -759,7 +909,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -769,7 +921,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CRED",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A distributed reputation protocol built on the Ethereum blockchain."
+    "description": "A distributed reputation protocol built on the Ethereum blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -779,7 +933,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "POA20",
     "source": "On Chain",
     "decimals": 18,
-    "description": "POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts."
+    "description": "POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -789,7 +945,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EVN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "EvenCoin is a new self-mining smart contract where no hardware is required to mine EvenCoin but it gets mining in parallel to even numbers of Ethereum blocks with ERC20 compliant with a total supply of 100 Million coins."
+    "description": "EvenCoin is a new self-mining smart contract where no hardware is required to mine EvenCoin but it gets mining in parallel to even numbers of Ethereum blocks with ERC20 compliant with a total supply of 100 Million coins.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -799,7 +957,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DGS",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Dragonglass provides a seamless solution for cryptocurrency mining"
+    "description": "Dragonglass provides a seamless solution for cryptocurrency mining",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -809,7 +969,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -819,7 +981,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -829,7 +993,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SNT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network."
+    "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -839,7 +1005,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SIM",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Creating a platform that rewards participants for saving and generating electrical energy.And"
+    "description": "Creating a platform that rewards participants for saving and generating electrical energy.And",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -849,7 +1017,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -859,7 +1029,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -869,7 +1041,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SETH",
     "source": "On Chain",
     "decimals": 18,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -879,7 +1053,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ACTP",
     "source": "On Chain",
     "decimals": 8,
-    "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput."
+    "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -889,7 +1065,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Slack & DevCon2 Token Contract",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -899,7 +1077,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EBET",
     "source": "On Chain",
     "decimals": 2,
-    "description": "The decentralized, peer-to-peer, and provably-fair Ethereum-based dicing game without a house edge."
+    "description": "The decentralized, peer-to-peer, and provably-fair Ethereum-based dicing game without a house edge.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -909,7 +1089,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -919,7 +1101,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "KIN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market."
+    "description": "The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -929,7 +1113,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "WTT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Full-service mining solution provider."
+    "description": "Full-service mining solution provider.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -939,7 +1125,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "iETH",
     "source": "On Chain",
     "decimals": 8,
-    "description": "iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services."
+    "description": "iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -949,7 +1137,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website & TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -959,7 +1149,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EOS",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Infrastructure for Decentralized Applications"
+    "description": "Infrastructure for Decentralized Applications",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -969,7 +1161,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "🦄",
     "source": "Ethereum.org",
     "decimals": 0,
-    "description": "Ethereum tip jar unicorn tokens"
+    "description": "Ethereum tip jar unicorn tokens",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -979,7 +1173,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DAI",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -989,7 +1185,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EDOGE",
     "source": "On Chain",
     "decimals": 18,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -999,7 +1197,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1009,7 +1209,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "PAX",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Paxos Standard is regulated crypto asset. It is fully collateralized 1:1 by the U.S. dollar, approved and regulated by the NYDFS, and enables instantaneous transactions."
+    "description": "Paxos Standard is regulated crypto asset. It is fully collateralized 1:1 by the U.S. dollar, approved and regulated by the NYDFS, and enables instantaneous transactions.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1019,7 +1221,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1029,7 +1233,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REQ",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A decentralized network built on top of Ethereum, which allows anyone, anywhere to request a payment."
+    "description": "A decentralized network built on top of Ethereum, which allows anyone, anywhere to request a payment.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1039,7 +1245,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "X8X",
     "source": "On Chain",
     "decimals": 18,
-    "description": "X8C is a secure store of value Ethereum token."
+    "description": "X8C is a secure store of value Ethereum token.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1049,7 +1257,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CARD",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "The experience layer of the decentralized internet."
+    "description": "The experience layer of the decentralized internet.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1059,7 +1269,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BOE",
     "source": "On Chain",
     "decimals": 8,
-    "description": "Bodhi aims to build a credible, autonomous, and global decentralized prediction market platform."
+    "description": "Bodhi aims to build a credible, autonomous, and global decentralized prediction market platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1069,7 +1281,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SNM",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "SONM's aims to be a secure and cost-effective fog supercomputer for general-purpose computing, from mobile app hosting to video rendering to DNA analysis."
+    "description": "SONM's aims to be a secure and cost-effective fog supercomputer for general-purpose computing, from mobile app hosting to video rendering to DNA analysis.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1079,7 +1293,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1089,7 +1305,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MKR",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain"
+    "description": "Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1099,7 +1317,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1109,7 +1329,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "USDC",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers."
+    "description": "USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1119,7 +1341,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DACS",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Global Decentralized Ride-Sharing Platform"
+    "description": "Global Decentralized Ride-Sharing Platform",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1129,7 +1353,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "JNT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain."
+    "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1139,7 +1365,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1149,7 +1377,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "HMC",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "HMS(Hi Mutual Society) is a blockchain project developed and operated by Qfund, the largest online crowdfunding platform in Asia. HMS intends to build up a decentralized Mutual Society using blockchain technology."
+    "description": "HMS(Hi Mutual Society) is a blockchain project developed and operated by Qfund, the largest online crowdfunding platform in Asia. HMS intends to build up a decentralized Mutual Society using blockchain technology.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1159,7 +1389,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CRB",
     "source": "On Chain",
     "decimals": 8,
-    "description": "The main goal of this project is to develop and maintain crypto currency ecosystem, based on token, that is built on top of Ethereum Blockchain."
+    "description": "The main goal of this project is to develop and maintain crypto currency ecosystem, based on token, that is built on top of Ethereum Blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1169,7 +1401,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ECOREAL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Real Estate Investment through Ecoreal Ethereum Token. Capital markets are becoming Global, Real Estates are no exception. This establishes the need for a new decentralized solution to capitalize this potential."
+    "description": "Real Estate Investment through Ecoreal Ethereum Token. Capital markets are becoming Global, Real Estates are no exception. This establishes the need for a new decentralized solution to capitalize this potential.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1179,7 +1413,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CEEK",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Universal Currency for VR & Entertainment Industry. Working Product Partnered with NBA Teams, Universal Music and Apple"
+    "description": "Universal Currency for VR & Entertainment Industry. Working Product Partnered with NBA Teams, Universal Music and Apple",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1189,7 +1425,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1199,7 +1437,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "GMT",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Communication Platforms Built on the Ethereum Blockchain."
+    "description": "Communication Platforms Built on the Ethereum Blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1209,7 +1449,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ICX",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "The ICON Network is comprised of various institutions ranging from: financial institutions, insurance companies, hospitals, universities and more."
+    "description": "The ICON Network is comprised of various institutions ranging from: financial institutions, insurance companies, hospitals, universities and more.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1219,7 +1461,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1229,7 +1473,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "0xBTC",
     "source": "On Chain",
     "decimals": 8,
-    "description": "Pure mined digital currency for Ethereum"
+    "description": "Pure mined digital currency for Ethereum",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1239,7 +1485,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EMV",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Ethereum Movie Venture is a blockchain based movie platform."
+    "description": "Ethereum Movie Venture is a blockchain based movie platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1249,7 +1497,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "PAI",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains."
+    "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1259,7 +1509,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ZCN",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "0chain is an infinitely scalable decentralized Cloud for any application."
+    "description": "0chain is an infinitely scalable decentralized Cloud for any application.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1269,7 +1521,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "STR",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Staker is a service which provides a provably fair and transparent, web based Ethereum dice gambling Dapp."
+    "description": "Staker is a service which provides a provably fair and transparent, web based Ethereum dice gambling Dapp.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1279,7 +1533,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CST",
     "source": "On Chain",
     "decimals": 18,
-    "description": "New ICO, Cryptocurrency and Solar Energy. Own mining farm based on photovoltaic plant. Blockchain of Ethereum as a management tool."
+    "description": "New ICO, Cryptocurrency and Solar Energy. Own mining farm based on photovoltaic plant. Blockchain of Ethereum as a management tool.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1289,7 +1545,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1299,7 +1557,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1309,7 +1569,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "IONC",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Through IONChain Protocol, IONChain will serve as the link between IoT devices, supporting decentralized peer-to-peer application interaction between devices."
+    "description": "Through IONChain Protocol, IONChain will serve as the link between IoT devices, supporting decentralized peer-to-peer application interaction between devices.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1319,7 +1581,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SVD",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses."
+    "description": "Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1329,7 +1593,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MLN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform"
+    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1339,7 +1605,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SNX",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets."
+    "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1349,7 +1617,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "WETH",
     "source": "On Chain",
     "decimals": 18,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1359,7 +1629,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BTB",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Bitibu is the simple and secure exchange platform to trade Bitcoin, Ethereum, Litecoin and other altcoins easily."
+    "description": "Bitibu is the simple and secure exchange platform to trade Bitcoin, Ethereum, Litecoin and other altcoins easily.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1369,7 +1641,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1379,7 +1653,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "RLT",
     "source": "On Chain",
     "decimals": 10,
-    "description": "Developed and launched the prototype of ¬¨¬¥European Roulette¬¨¬™ game based on Ethereum smart contract."
+    "description": "Developed and launched the prototype of ¬¨¬¥European Roulette¬¨¬™ game based on Ethereum smart contract.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1389,7 +1665,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1399,7 +1677,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "AURA",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Aurora is a collection of Ethereum applications and protocols that together form a decentralized banking and finance platform."
+    "description": "Aurora is a collection of Ethereum applications and protocols that together form a decentralized banking and finance platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1409,7 +1689,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "E4ROW",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "The E4ROW project's mission is to aggressively expand the universe of Ether users by bringing Ether-based apps to the global online/mobile gaming markets."
+    "description": "The E4ROW project's mission is to aggressively expand the universe of Ether users by bringing Ether-based apps to the global online/mobile gaming markets.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1419,7 +1701,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ADT",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "adChain is a browser agnostic Ethereum based solution for digital advertising that seamlessly integrates with pre-existing RTB and programmatic industry standards."
+    "description": "adChain is a browser agnostic Ethereum based solution for digital advertising that seamlessly integrates with pre-existing RTB and programmatic industry standards.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1429,7 +1713,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1439,7 +1725,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "OMG",
     "source": "On Chain",
     "decimals": 18,
-    "description": "OmiseGO (OMG) is a public Ethereum-based financial technology for use in mainstream digital wallets"
+    "description": "OmiseGO (OMG) is a public Ethereum-based financial technology for use in mainstream digital wallets",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1449,7 +1737,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ORI",
     "source": "On Chain",
     "decimals": 18,
-    "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain"
+    "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1459,7 +1749,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "FTX",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The Global P2P Lending Ecosystem Powered By Ethereum And No-Code Development."
+    "description": "The Global P2P Lending Ecosystem Powered By Ethereum And No-Code Development.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1469,7 +1761,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "Soar",
     "source": "On Chain",
     "decimals": 6,
-    "description": "Soarcoin is a revolutionary digital money system. Use Soarcoin to make instant payments online or in-store using our secure Ethereum based open-source platform."
+    "description": "Soarcoin is a revolutionary digital money system. Use Soarcoin to make instant payments online or in-store using our secure Ethereum based open-source platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1479,7 +1773,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "USDT",
     "source": "On Chain",
     "decimals": 6,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1489,7 +1785,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ETHD",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Aims to allow anyone to send transactions through P2P network"
+    "description": "Aims to allow anyone to send transactions through P2P network",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1499,7 +1797,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1509,7 +1809,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "Ethereum.org",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1519,7 +1821,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DELTA",
     "source": "On Chain",
     "decimals": 8,
-    "description": "DeltaChain inherits and develops the Ethereum technology platform, with open source P2P accelerates all transactions quickly, minimises risk, enhances high security, and does not involve any third parties."
+    "description": "DeltaChain inherits and develops the Ethereum technology platform, with open source P2P accelerates all transactions quickly, minimises risk, enhances high security, and does not involve any third parties.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1529,7 +1833,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "GitCoin Website",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1539,7 +1845,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "DGD",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform."
+    "description": "DigixDAO is a decentralized voting / utility token that allows users to submit and manage proposals that relate to the growth of the Digix ecosystem and platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1549,7 +1857,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ZRX",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Description: 0x is an open, permissionless protocol allowing for tokens to be traded on the Ethereum blockchain."
+    "description": "Description: 0x is an open, permissionless protocol allowing for tokens to be traded on the Ethereum blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1559,7 +1869,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "CL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Coinlancer is a decentralized job market built on Ethereum platform."
+    "description": "Coinlancer is a decentralized job market built on Ethereum platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1569,7 +1881,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ESZ",
     "source": "On Chain",
     "decimals": 18,
-    "description": "EtherSportz is being developed as an online based eSports tournament platform for popular games."
+    "description": "EtherSportz is being developed as an online based eSports tournament platform for popular games.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1579,7 +1893,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "UFR",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Incentivied and deentralized P2P file sharing on the Ethereum Blockchain powered by the UFR token."
+    "description": "Incentivied and deentralized P2P file sharing on the Ethereum Blockchain powered by the UFR token.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1589,7 +1905,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "FUEL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Etherparty‚Äö√ë¬¢ is a contract wizard that removes the complexity of creating, managing and executing smart contracts on any compatible blockchain."
+    "description": "Etherparty‚Äö√ë¬¢ is a contract wizard that removes the complexity of creating, managing and executing smart contracts on any compatible blockchain.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1599,7 +1917,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "EBTC",
     "source": "On Chain",
     "decimals": 8,
-    "description": "The eBitcoin Ecosystem aims to bring together many Blockchain companies all under one umbrella-type group."
+    "description": "The eBitcoin Ecosystem aims to bring together many Blockchain companies all under one umbrella-type group.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1609,7 +1929,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LIF",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "WInding Tree is a platform for decentralized travel distribution."
+    "description": "WInding Tree is a platform for decentralized travel distribution.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1619,7 +1941,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "MLN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform"
+    "description": "The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1629,7 +1953,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BNC",
     "source": "On Chain",
     "decimals": 8,
-    "description": "Bionic is an ethereum token created to facilitate the transaction between electronic companies"
+    "description": "Bionic is an ethereum token created to facilitate the transaction between electronic companies",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1639,7 +1965,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LRC",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Loopring is not only a protocol but also a decentralized automated execution system that trades across the crypto-token exchanges."
+    "description": "Loopring is not only a protocol but also a decentralized automated execution system that trades across the crypto-token exchanges.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1649,7 +1977,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "SRCOIN",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Patent: Advanced A.I. System Processing & Data Collection"
+    "description": "Patent: Advanced A.I. System Processing & Data Collection",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1659,7 +1989,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BITPARK",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "P2P Insurance Platform."
+    "description": "P2P Insurance Platform.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1669,7 +2001,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NOBS",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1679,7 +2013,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1689,7 +2025,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "XCEL",
     "source": "On Chain",
     "decimals": 18,
-    "description": "XcelToken is digital general purpose utility token based on the ERC20 Ethereum protocol . It helps hotels, restaurants and marketing partners earn while participating, while travelers enjoy the benefits of a leaner eco-system."
+    "description": "XcelToken is digital general purpose utility token based on the ERC20 Ethereum protocol . It helps hotels, restaurants and marketing partners earn while participating, while travelers enjoy the benefits of a leaner eco-system.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1699,7 +2037,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": ""
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1709,7 +2049,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LUN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Lunyr is an Ethereum-based decentralized world knowledge base which rewards users with app tokens for peer-reviewing and contributing information"
+    "description": "Lunyr is an Ethereum-based decentralized world knowledge base which rewards users with app tokens for peer-reviewing and contributing information",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1719,7 +2061,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "TIP",
     "source": "TrueBlocks.io",
     "decimals": 0,
-    "description": "The ethereum tip jar"
+    "description": "The ethereum tip jar",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1729,7 +2073,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LALA",
     "source": "On Chain",
     "decimals": 18,
-    "description": "LaLa is a new age one-stop Wallet based on ethereum and hyperledger blockchains allowing investors to capitalise on the rise of blockchain as well as the underbanked into the financial ecosystem."
+    "description": "LaLa is a new age one-stop Wallet based on ethereum and hyperledger blockchains allowing investors to capitalise on the rise of blockchain as well as the underbanked into the financial ecosystem.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1739,7 +2085,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "LBA",
     "source": "On Chain",
     "decimals": 18,
-    "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum."
+    "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+    "is_custom": false,
+    "is_prefund": false
   },
   {
     "deleted": false,
@@ -1749,7 +2097,9 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BCAP",
     "source": "Etherscan.io",
     "decimals": 0,
-    "description": "Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology"
+    "description": "Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology",
+    "is_custom": false,
+    "is_prefund": false
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
+{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }] }
 ] }

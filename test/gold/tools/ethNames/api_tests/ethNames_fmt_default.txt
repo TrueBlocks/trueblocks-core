@@ -8,7 +8,9 @@
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
-      "description": ""
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -18,7 +20,9 @@
       "symbol": "FXT",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
+      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -28,7 +32,9 @@
       "symbol": "THR",
       "source": "On Chain",
       "decimals": 4,
-      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
+      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -38,7 +44,9 @@
       "symbol": "SNTR",
       "source": "On Chain",
       "decimals": 4,
-      "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification."
+      "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -48,7 +56,9 @@
       "symbol": "SKIN",
       "source": "On Chain",
       "decimals": 6,
-      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry."
+      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -58,7 +68,9 @@
       "symbol": "EQL",
       "source": "On Chain",
       "decimals": 18,
-      "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token."
+      "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -68,7 +80,9 @@
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": "0",
-      "description": ""
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -78,7 +92,9 @@
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": "0",
-      "description": ""
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -88,7 +104,9 @@
       "symbol": "",
       "source": "Slack & DevCon2 Token Contract",
       "decimals": "0",
-      "description": ""
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -98,7 +116,9 @@
       "symbol": "🦄",
       "source": "Ethereum.org",
       "decimals": "0",
-      "description": "Ethereum tip jar unicorn tokens"
+      "description": "Ethereum tip jar unicorn tokens",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -108,7 +128,9 @@
       "symbol": "ABX",
       "source": "On Chain",
       "decimals": 18,
-      "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges."
+      "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -118,7 +140,9 @@
       "symbol": "PAI",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains."
+      "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -128,7 +152,9 @@
       "symbol": "INSTAR",
       "source": "On Chain",
       "decimals": 18,
-      "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data."
+      "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -138,7 +164,9 @@
       "symbol": "BHPC",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power."
+      "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.",
+      "is_custom": false,
+      "is_prefund": false
     },
     {
       "deleted": false,
@@ -148,7 +176,9 @@
       "symbol": "TIP",
       "source": "TrueBlocks.io",
       "decimals": "0",
-      "description": "The ethereum tip jar"
+      "description": "The ethereum tip jar",
+      "is_custom": false,
+      "is_prefund": false
     }
   ],
   "types": [
@@ -186,6 +216,14 @@
         {
           "name": "description",
           "type": "text"
+        },
+        {
+          "name": "is_custom",
+          "type": "bool"
+        },
+        {
+          "name": "is_prefund",
+          "type": "bool"
         }
       ]
     }

@@ -31,6 +31,7 @@ static const COption params[] = {
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
+    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editcmd only, is the edited name a custom name or not"),
     COption("tags", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
@@ -56,6 +57,7 @@ bool COptions::parseArguments(string_q& command) {
     bool other = false;
     bool addr = false;
     bool collections = false;
+    bool to_custom = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -98,6 +100,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--collections") {
             collections = true;
 
+        } else if (arg == "-u" || arg == "--to_custom") {
+            to_custom = true;
+
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
 
@@ -121,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!editCmd.empty()) {
-        if (!processEditCommand(terms))
+        if (!processEditCommand(terms, to_custom))
             return false;
     }
     for (auto term : terms)
@@ -135,6 +140,8 @@ bool COptions::parseArguments(string_q& command) {
         format = searchFields;
     }
 
+    if (all)
+        types = ALL;
     if (named) {
         if (deflt) {
             types = 0;
@@ -170,8 +177,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= OTHER;
     }
-    if (all)
-        types = ALL;
 
     if (addr) {
         addr_only = true;
@@ -205,8 +210,11 @@ bool COptions::parseArguments(string_q& command) {
     configureDisplay("ethNames", "CAccountName", str, meta);
     if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
-    if (!expand)
+    if (!expand) {
         HIDE_FIELD(CAccountName, "deleted");
+        HIDE_FIELD(CAccountName, "is_custom");
+        HIDE_FIELD(CAccountName, "is_prefund");
+    }
 
     // Collect results for later display
     applyFilter();
@@ -220,6 +228,8 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "description");
         HIDE_FIELD(CAccountName, "source");
         HIDE_FIELD(CAccountName, "decimal");
+        HIDE_FIELD(CAccountName, "is_custom");
+        HIDE_FIELD(CAccountName, "is_prefund");
     }
 
     return true;
@@ -259,8 +269,8 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // clang-format on
     // END_CODE_NOTES
-    notes.push_back("Name file: `" + configPathRelative("names/names.txt") + "` (" +
-                    uint_2_Str(fileSize(configPath("names/names.txt"))) + ")");
+    notes.push_back("Name file: `" + configPathRelative("names/names.tab") + "` (" +
+                    uint_2_Str(fileSize(configPath("names/names.tab"))) + ")");
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
@@ -275,12 +285,12 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (isZeroAddr(item.address))
         return false;
 
-    if (isTestMode() && items.size() > 200)
-        return true;
-
-    if (isTestMode() &&
-        (contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
-        return true;
+    if (isTestMode() && editCmd.empty()) {
+        if (items.size() > 200)
+            return true;
+        if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
+            return true;
+    }
 
     if (tags) {
         string_q key = item.tags;
@@ -358,7 +368,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & CUSTOM) {
-        if (isTestMode()) {
+        if (isTestMode() && editCmd.empty()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
                 item.tags = "81-Custom";
@@ -411,6 +421,8 @@ string_q shortenFormat(const string_q& fmtIn) {
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
+    replace(ret, "[{IS_CUSTOM}]", "");
+    replace(ret, "[{IS_PREFUND}]", "");
     return trim(ret, '\t');
 }
 
@@ -420,20 +432,29 @@ string_q getSearchFields(const string_q& fmtIn) {
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
-    while (startsWith(ret, "\t"))
-        replace(ret, "\t", "");
-    while (endsWith(ret, "\t"))
-        replaceReverse(ret, "\t", "");
-    return ret;
+    replace(ret, "[{DELETED}]", "");
+    replace(ret, "[{IS_CUSTOM}]", "");
+    replace(ret, "[{IS_PREFUND}]", "");
+    return trim(ret, '\t');
 }
 
 //-----------------------------------------------------------------------
-bool COptions::processEditCommand(CStringArray& terms) {
+void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom) {
+    if (to_custom && !name.is_custom)
+        return;
+    if (!to_custom && name.is_custom)
+        return;
+    out.push_back(name);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     if (!contains("add|update|delete|undelete|remove", editCmd))
         return usage("Invalid edit command '" + editCmd + "'. Quitting...");
 
     bool isEdit = editCmd == "add" || editCmd == "update";
-    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdeleted" : "address";
+    string_q fmt =
+        isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdeleted\tis_custom\tis_prefund" : "address";
     CStringArray fields;
     explode(fields, fmt, '\t');
 
@@ -453,40 +474,48 @@ bool COptions::processEditCommand(CStringArray& terms) {
         if (name.address == target.address) {
             if (editCmd == "remove") {
                 // do nothing
+                LOG4("Removing ", name.address);
             } else if (editCmd == "delete") {
                 name.m_deleted = true;
-                outArray.push_back(name);
+                pushToOutput(outArray, name, to_custom);
+                LOG4("Deleting ", name.address);
             } else if (editCmd == "undelete") {
                 name.m_deleted = false;
-                outArray.push_back(name);
+                pushToOutput(outArray, name, to_custom);
+                LOG4("Undeleting ", name.address);
             } else {
                 name = target;
-                outArray.push_back(name);
+                pushToOutput(outArray, name, to_custom);
+                LOG4("Editing ", name.address);
                 terms.clear();
-                terms.push_back(target.address);
+                terms.push_back(target.address);  // we only need the address for the search
             }
             edited = true;
         } else {
-            outArray.push_back(name);
-            terms.clear();
-            terms.push_back(target.address);
+            pushToOutput(outArray, name, to_custom);
         }
     }
 
     if (editCmd == "add" && !edited) {
-        outArray.push_back(target);
+        pushToOutput(outArray, target, to_custom);
+        LOG4("Adding ", target.address);
+        terms.clear();
+        terms.push_back(target.address);  // we only need the address for the search
     }
 
     sort(outArray.begin(), outArray.end());
 
     fmt = STR_DISPLAY_ACCOUNTNAME;
     ostringstream dataStream2;
+    string_q fieldStr = toLower(substitute(substitute(fmt, "[{", ""), "}]", ""));
+    dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
-        if (!name.is_custom && !name.is_prefund)
+        if (!name.is_prefund || name.is_custom)  // if the user has customized a prefund, save it as a custom as well
             dataStream2 << name.Format(fmt) << endl;
     }
 
-    stringToAsciiFile(configPath("names/names.txt"), dataStream2.str());
+    string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
+    stringToAsciiFile(dest, dataStream2.str());
     namedAccounts.clear();
     ::remove(getCachePath("names/names.bin").c_str());
 

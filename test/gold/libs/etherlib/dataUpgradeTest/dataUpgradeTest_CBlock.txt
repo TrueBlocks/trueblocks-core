@@ -85,8 +85,8 @@ date                	1018	0	262149	T_DATE TS_DATE
 age                 	1019	0	262149	T_DATE TS_DATE
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Block",
   "gasLimit": 0,
   "gasUsed": 0,

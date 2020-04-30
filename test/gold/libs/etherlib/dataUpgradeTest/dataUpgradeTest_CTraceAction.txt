@@ -69,8 +69,8 @@ value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "TraceAction",
   "address": "0x0",
   "balance": 0,

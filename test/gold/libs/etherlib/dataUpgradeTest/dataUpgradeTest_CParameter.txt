@@ -68,8 +68,8 @@ is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
 is_enabled          	1017	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
-  "deleted": 0,
-  "showing": 1,
+  "deleted": false,
+  "showing": true,
   "cname": "Parameter",
   "is_flags": 64,
   "is_enabled": true
