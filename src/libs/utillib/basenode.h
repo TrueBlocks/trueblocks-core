@@ -50,9 +50,7 @@ class CBaseNode {
     static CBaseNode* createObject(void);
     virtual CRuntimeClass* getRuntimeClass(void) const;
     virtual string_q getValueByName(const string_q& fieldName) const;
-    virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue) {
-        return false;
-    }
+    virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
     virtual bool Serialize(CArchive& archive);
     virtual bool SerializeC(CArchive& archive) const;
     virtual bool readBackLevel(CArchive& archive);

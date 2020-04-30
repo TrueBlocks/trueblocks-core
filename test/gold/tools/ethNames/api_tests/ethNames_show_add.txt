@@ -1,0 +1,2 @@
+tags	address	name	symbol	source	decimals	description	deleted
+TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE		DESCRIPTION	false

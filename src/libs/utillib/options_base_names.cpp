@@ -154,7 +154,7 @@ bool loadNames(COptionsBase& options) {
     LOG4("Updating names database");
     txtFields.clear();
     lines.clear();
-    fields = "tags|address|name|symbol|source|decimals|description";
+    fields = "tags|address|name|symbol|source|decimals|description|deleted";
     explode(txtFields, fields, '|');
     asciiFileToLines(txtFile, lines);
     for (auto line : lines) {

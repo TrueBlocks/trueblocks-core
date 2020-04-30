@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "deleted": false,
       "tags": "31-Gitcoin Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 - Antiprosynth Twitter Account Activity",
@@ -10,6 +11,7 @@
       "description": ""
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x1829aa045e21e0d59580024a951db48096e01782",
       "name": "FuzeX Token",
@@ -19,6 +21,7 @@
       "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
       "name": "ThoreCoin",
@@ -28,6 +31,7 @@
       "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
       "name": "Silent Notary Token",
@@ -37,6 +41,7 @@
       "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification."
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
       "name": "SkinCoin",
@@ -46,6 +51,7 @@
       "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry."
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x47dd62d4d075dead71d0e00299fc56a2d747bebb",
       "name": "EQUAL",
@@ -55,6 +61,7 @@
       "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token."
     },
     {
+      "deleted": false,
       "tags": "91-Friends",
       "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
       "name": "TrueBlocks Tip Jar Doner",
@@ -64,6 +71,7 @@
       "description": ""
     },
     {
+      "deleted": false,
       "tags": "91-Friends",
       "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
       "name": "psdev tip jar",
@@ -73,6 +81,7 @@
       "description": ""
     },
     {
+      "deleted": false,
       "tags": "90-DevCon2:Individual",
       "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
       "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
@@ -82,6 +91,7 @@
       "description": ""
     },
     {
+      "deleted": false,
       "tags": "50-Tokens",
       "address": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
       "name": "Unicorns",
@@ -91,6 +101,7 @@
       "description": "Ethereum tip jar unicorn tokens"
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e",
       "name": "ABX Token",
@@ -100,6 +111,7 @@
       "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges."
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3",
       "name": "PCHAIN",
@@ -109,6 +121,7 @@
       "description": "Native multichain system in the world that supports Ethereum Virtual Machine (EVM), which consists of one main chain and multiple derived chains."
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
       "name": "Insights Network",
@@ -118,6 +131,7 @@
       "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data."
     },
     {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0xee74110fb5a1007b06282e0de5d73a61bf41d9cd",
       "name": "BHPCash",
@@ -127,6 +141,7 @@
       "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power."
     },
     {
+      "deleted": false,
       "tags": "30-Contracts",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "name": "Etherum Tip Jar",
@@ -140,6 +155,10 @@
     {
       "type": "CAccountName",
       "fields": [
+        {
+          "name": "deleted",
+          "type": "bool"
+        },
         {
           "name": "tags",
           "type": "text"

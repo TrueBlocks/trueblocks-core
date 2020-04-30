@@ -1,144 +1,144 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-#on, cmd,  slow, names, tools/ethNames, README,                           n, @th
-#on, cmd,  fast, names, tools/ethNames, help,                             n, @h
-#on, cmd,  fast, names, tools/ethNames, help_long,                        n, help
-#on, both, medi, names, tools/ethNames, no_params,                        y,
+on, cmd,  slow, names, tools/ethNames, README,                           n, @th
+on, cmd,  fast, names, tools/ethNames, help,                             n, @h
+on, cmd,  fast, names, tools/ethNames, help_long,                        n, help
+on, both, medi, names, tools/ethNames, no_params,                        y,
 
-#on, both, fast, names, tools/ethNames, invalid_option,                   y, pink
-#on, both, fast, names, tools/ethNames, invalid_param_1,                  y, punk
-#on, both, fast, names, tools/ethNames, bad_option,                       y, addr
-#on, both, fast, names, tools/ethNames, missing_param_1,                  n, match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, missing_param_2,                  y, addr
-#on, both, medi, names, tools/ethNames, missing_param_3,                  n, verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, missing_param_4,                  n, verbose & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_option,                   y, pink
+on, both, fast, names, tools/ethNames, invalid_param_1,                  y, punk
+on, both, fast, names, tools/ethNames, bad_option,                       y, addr
+on, both, fast, names, tools/ethNames, missing_param_1,                  n, match_case & fmt = txt
+on, both, medi, names, tools/ethNames, missing_param_2,                  y, addr
+on, both, medi, names, tools/ethNames, missing_param_3,                  n, verbose & fmt = txt
+on, both, medi, names, tools/ethNames, missing_param_4,                  n, verbose & fmt = txt
 
-#on, both, fast, names, tools/ethNames, invalid_param_10,                 n, terms = 0xb6 torj & other & Verbose & fmt = txt
-#on, both, fast, names, tools/ethNames, invalid_param_2,                  n, terms = torj & pink & fmt = txt
-#on, both, fast, names, tools/ethNames, invalid_param_3,                  n, terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
-#on, both, medi, names, tools/ethNames, invalid_param_4,                  n, terms = torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
-#on, both, medi, names, tools/ethNames, invalid_param_5,                  n, terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & addr & fmt = txt
-#on, both, fast, names, tools/ethNames, invalid_param_6,                  n, other & fmt = txt
-#on, both, medi, names, tools/ethNames, invalid_param_7,                  n, terms = 0xb6 torj & other & fmt = txt
-#on, both, medi, names, tools/ethNames, invalid_param_8,                  n, terms = 0xb6 torj & verbosez & other & fmt = txt
-#on, both, fast, names, tools/ethNames, invalid_param_9,                  n, terms = 0xb6 torj & other & VERBOSE & fmt = txt
-#on, both, medi, names, tools/ethNames, invalid_search,                   n, terms = 0x1 torj & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_param_10,                 n, terms = 0xb6 torj & other & Verbose & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_param_2,                  n, terms = torj & pink & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_param_3,                  n, terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_param_4,                  n, terms = torj 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_param_5,                  n, terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & addr & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_param_6,                  n, other & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_param_7,                  n, terms = 0xb6 torj & other & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_param_8,                  n, terms = 0xb6 torj & verbosez & other & fmt = txt
+on, both, fast, names, tools/ethNames, invalid_param_9,                  n, terms = 0xb6 torj & other & VERBOSE & fmt = txt
+on, both, medi, names, tools/ethNames, invalid_search,                   n, terms = 0x1 torj & fmt = txt
 
-#on, both, fast, names, tools/ethNames, alltags,                          y, all
-#on, both, fast, names, tools/ethNames, owned,                            y, owned
-#on, both, medi, names, tools/ethNames, prefund,                          y, prefund
-#on, both, fast, names, tools/ethNames, run,                              y, owned & no_header
-#on, both, medi, names, tools/ethNames, upgrade_fail,                     y, fmt = json
-#on, cmd,  fast, null,  tools/ethNames, nosave_backup,                    n, MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
-#on, cmd,  fast, null,  tools/ethNames, nosave_copy,                      n, COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
-#on, cmd,  fast, null,  tools/ethNames, nosave_touch,                     n, TOUCHFILE $CONFIG/names/names.bin
-#on, both, medi, names, tools/ethNames, upgrade_to_067,                   y, fmt = json
-#on, cmd,  fast, null,  tools/ethNames, nosave_remove,                    n, RMFILE -f $CONFIG/names/names.bin
-#on, cmd,  fast, null,  tools/ethNames, nosave_restore,                   n, MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
-#on, both, fast, names, tools/ethNames, verbose,                          n, verbose & owned & fmt = txt
-#on, both, fast, names, tools/ethNames, list,                             y, fmt = json
-#on, both, medi, names, tools/ethNames, long_list,                        n, fmt = txt
-#on, both, medi, names, tools/ethNames, all,                              y, named & custom & owned & prefund
-#on, both, fast, names, tools/ethNames, all_addrOnly,                     y, named & custom & owned & prefund & addr
-#on, both, fast, names, tools/ethNames, named_custom,                     n, named & custom & fmt = csv
-#on, both, medi, names, tools/ethNames, named_custom_owned,               n, named & custom & owned & fmt = csv & no_header
-#on, both, medi, names, tools/ethNames, named,                            n, named & fmt = txt & no_header
-#on, both, fast, names, tools/ethNames, custom,                           n, custom & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_case_match_both,        y, terms = 0xcb Humaniq & match_case
-#on, both, medi, names, tools/ethNames, addr_name_source_match,           n, terms = cbCC Humaniq Ether & fmt = csv & expand
-#on, both, medi, names, tools/ethNames, addr_name_verbose_match,          n, terms = 0xb6 torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_no_hex_number,               n, terms = b64 torj & fmt = txt
-#on, both, medi, names, tools/ethNames, address_match,                    y, terms = 0x1 & fmt = api
-#on, both, medi, names, tools/ethNames, api_mode,                         y, terms = tip & fmt = api
-#on, both, medi, names, tools/ethNames, duplicated_option_1,              n, terms = 0xb6 torj & addr & addr & addr & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, name_case_match,                  n, terms = \* torj & fmt = json & match_case
-#on, both, medi, names, tools/ethNames, name_long_case_match,             n, terms = \* torj & fmt = json & match_case
-#on, both, medi, names, tools/ethNames, name_long_show_addr_match,        n, terms = \* torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_source_match,           n, terms = Ether & expand & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_verbose_match,          y, terms = torj & verbose
-#on, both, medi, names, tools/ethNames, name_match,                       n, terms = torj & noop & fmt = txt
-#on, both, medi, names, tools/ethNames, name_source_match,                y, terms = Ether & expand & verbose & fmt = json
-#on, both, medi, names, tools/ethNames, name_verbose_match,               y, terms = torj & verbose
-#on, both, medi, names, tools/ethNames, simple_search,                    y, terms = 88897
-#on, both, medi, names, tools/ethNames, tip1,                             y, terms = tip
-#on, both, medi, names, tools/ethNames, tip2,                             n, terms = tip & addr
-#on, both, medi, names, tools/ethNames, addr_case_match,                  n, terms = 0xcb & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_case_no_match,               n, terms = 0xCB & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_case_match,             n, terms = 0xcb & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_case_no_match,          n, terms = 0xCB & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_long_show_addr_match,   n, terms = 0xb6 & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_case_match_addr,   n, terms = 0xcb torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_case_match_both,   n, terms = 0xcb Humaniq & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_case_match_name,   n, terms = 0xCB torj & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_case_no_match,     n, terms = 0xCB torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_show_addr_match,   n, terms = 0xb6 torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_show_addr_no_match,n, terms = 0x01 torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_source_match,      n, terms = Humaniq 1e17 Ether & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_source_no_match,   n, terms = Humaniq 1e17 Ether & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_verbose_match,     n, terms = 0xb6 torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_name_verbose_no_match,  n, terms = 0x01 torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_show_addr_no_match,     n, terms = 0xCB1 & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_source_match,           n, terms = ETHER 1e16 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_source_no_match,        n, terms = Ether 1e17 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_verbose_match,          n, terms = 0xb6 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_long_verbose_no_match,       n, terms = 0xCB1 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_case_match_addr,        n, terms = 0xcb torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_case_match_name,        n, terms = 0xCB torj & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_case_no_match,          n, terms = 0xCB torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_show_addr_match,        n, terms = 0xb6 torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_show_addr_no_match,     n, terms = 0x01 torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_source_no_match,        n, terms = cbCD Humaniq EtherScan & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_name_verbose_no_match,       n, terms = 0x01 torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_show_addr_no_match,          n, terms = 0xCB1 & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_source_match,                n, terms = cbCC Ether & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_source_no_match,             n, terms = cbCD an.io & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_verbose_match,               n, terms = 0xb6 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_verbose_no_match,            n, terms = 0xCB1 & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, address_no_match,                 n, terms = 0xCB1 & fmt = txt
-#on, both, medi, names, tools/ethNames, full_addr,                        y, terms = 0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC
-#on, both, medi, names, tools/ethNames, mixed_options_with_list_1,        n, terms = 0xb6 torj & addr & fmt = json
-#on, both, medi, names, tools/ethNames, name_and_addr_match,              n, terms = 0xb6 torj & fmt = txt
-#on, both, medi, names, tools/ethNames, name_and_addr_no_match,           n, terms = 0x01 torj & fmt = txt
-#on, both, medi, names, tools/ethNames, name_case_no_match,               n, terms = torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_case_no_match,          n, terms = torJ & match_case & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_show_addr_no_match,     n, terms = no_torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_source_no_match,        n, terms = no_ETHER & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, name_long_verbose_no_match,       n, terms = no_torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, name_no_match,                    n, terms = torj_no_found & fmt = txt
-#on, both, medi, names, tools/ethNames, name_show_addr_match,             n, terms = \* torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, name_show_addr_no_match,          n, terms = no_torj & addr & fmt = txt
-#on, both, medi, names, tools/ethNames, name_source_no_match,             n, terms = no_Ether & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, name_verbose_no_match,            n, terms = no_torj & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, simple_w_space,                   n, terms = etwork & fmt = txt
-#on, both, medi, names, tools/ethNames, three_params,                     n, terms = 88897 torj scan & fmt = txt
-#on, both, medi, names, tools/ethNames, too_many_terms,                   n, terms = 88897 torj scan etwork & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, w_source,                         n, terms = etwork & verbose & fmt = txt
-#on, both, medi, names, tools/ethNames, addr_show_addr_match,             y, terms = 0xb6 & addr
-#on, cmd,  fast, names, tools/ethNames, show_version,                     n, version
+on, both, fast, names, tools/ethNames, alltags,                          y, all
+on, both, fast, names, tools/ethNames, owned,                            y, owned
+on, both, medi, names, tools/ethNames, prefund,                          y, prefund
+on, both, fast, names, tools/ethNames, run,                              y, owned & no_header
+on, both, medi, names, tools/ethNames, upgrade_fail,                     y, fmt = json
+on, cmd,  fast, null,  tools/ethNames, nosave_backup,                    n, MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
+on, cmd,  fast, null,  tools/ethNames, nosave_copy,                      n, COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
+on, cmd,  fast, null,  tools/ethNames, nosave_touch,                     n, TOUCHFILE $CONFIG/names/names.bin
+on, both, medi, names, tools/ethNames, upgrade_to_067,                   y, fmt = json
+on, cmd,  fast, null,  tools/ethNames, nosave_remove,                    n, RMFILE -f $CONFIG/names/names.bin
+on, cmd,  fast, null,  tools/ethNames, nosave_restore,                   n, MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
+on, both, fast, names, tools/ethNames, verbose,                          n, verbose & owned & fmt = txt
+on, both, fast, names, tools/ethNames, list,                             y, fmt = json
+on, both, medi, names, tools/ethNames, long_list,                        n, fmt = txt
+on, both, medi, names, tools/ethNames, all,                              y, named & custom & owned & prefund
+on, both, fast, names, tools/ethNames, all_addrOnly,                     y, named & custom & owned & prefund & addr
+on, both, fast, names, tools/ethNames, named_custom,                     n, named & custom & fmt = csv
+on, both, medi, names, tools/ethNames, named_custom_owned,               n, named & custom & owned & fmt = csv & no_header
+on, both, medi, names, tools/ethNames, named,                            n, named & fmt = txt & no_header
+on, both, fast, names, tools/ethNames, custom,                           n, custom & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_case_match_both,        y, terms = 0xcb Humaniq & match_case
+on, both, medi, names, tools/ethNames, addr_name_source_match,           n, terms = cbCC Humaniq Ether & fmt = csv & expand
+on, both, medi, names, tools/ethNames, addr_name_verbose_match,          n, terms = 0xb6 torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_no_hex_number,               n, terms = b64 torj & fmt = txt
+on, both, medi, names, tools/ethNames, address_match,                    y, terms = 0x1 & fmt = api
+on, both, medi, names, tools/ethNames, api_mode,                         y, terms = tip & fmt = api
+on, both, medi, names, tools/ethNames, duplicated_option_1,              n, terms = 0xb6 torj & addr & addr & addr & addr & fmt = txt
+on, both, medi, names, tools/ethNames, name_case_match,                  n, terms = \* torj & fmt = json & match_case
+on, both, medi, names, tools/ethNames, name_long_case_match,             n, terms = \* torj & fmt = json & match_case
+on, both, medi, names, tools/ethNames, name_long_show_addr_match,        n, terms = \* torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_source_match,           n, terms = Ether & expand & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_verbose_match,          y, terms = torj & verbose
+on, both, medi, names, tools/ethNames, name_match,                       n, terms = torj & noop & fmt = txt
+on, both, medi, names, tools/ethNames, name_source_match,                y, terms = Ether & expand & verbose & fmt = json
+on, both, medi, names, tools/ethNames, name_verbose_match,               y, terms = torj & verbose
+on, both, medi, names, tools/ethNames, simple_search,                    y, terms = 88897
+on, both, medi, names, tools/ethNames, tip1,                             y, terms = tip
+on, both, medi, names, tools/ethNames, tip2,                             n, terms = tip & addr
+on, both, medi, names, tools/ethNames, addr_case_match,                  n, terms = 0xcb & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_case_no_match,               n, terms = 0xCB & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_case_match,             n, terms = 0xcb & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_case_no_match,          n, terms = 0xCB & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_long_show_addr_match,   n, terms = 0xb6 & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_case_match_addr,   n, terms = 0xcb torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_case_match_both,   n, terms = 0xcb Humaniq & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_case_match_name,   n, terms = 0xCB torj & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_case_no_match,     n, terms = 0xCB torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_show_addr_match,   n, terms = 0xb6 torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_show_addr_no_match,n, terms = 0x01 torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_source_match,      n, terms = Humaniq 1e17 Ether & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_source_no_match,   n, terms = Humaniq 1e17 Ether & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_verbose_match,     n, terms = 0xb6 torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_name_verbose_no_match,  n, terms = 0x01 torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_show_addr_no_match,     n, terms = 0xCB1 & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_source_match,           n, terms = ETHER 1e16 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_source_no_match,        n, terms = Ether 1e17 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_verbose_match,          n, terms = 0xb6 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_long_verbose_no_match,       n, terms = 0xCB1 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_case_match_addr,        n, terms = 0xcb torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_case_match_name,        n, terms = 0xCB torj & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_case_no_match,          n, terms = 0xCB torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_show_addr_match,        n, terms = 0xb6 torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_show_addr_no_match,     n, terms = 0x01 torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_source_no_match,        n, terms = cbCD Humaniq EtherScan & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_name_verbose_no_match,       n, terms = 0x01 torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_show_addr_no_match,          n, terms = 0xCB1 & addr & fmt = txt
+on, both, medi, names, tools/ethNames, addr_source_match,                n, terms = cbCC Ether & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_source_no_match,             n, terms = cbCD an.io & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_verbose_match,               n, terms = 0xb6 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_verbose_no_match,            n, terms = 0xCB1 & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, address_no_match,                 n, terms = 0xCB1 & fmt = txt
+on, both, medi, names, tools/ethNames, full_addr,                        y, terms = 0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC
+on, both, medi, names, tools/ethNames, mixed_options_with_list_1,        n, terms = 0xb6 torj & addr & fmt = json
+on, both, medi, names, tools/ethNames, name_and_addr_match,              n, terms = 0xb6 torj & fmt = txt
+on, both, medi, names, tools/ethNames, name_and_addr_no_match,           n, terms = 0x01 torj & fmt = txt
+on, both, medi, names, tools/ethNames, name_case_no_match,               n, terms = torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_case_no_match,          n, terms = torJ & match_case & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_show_addr_no_match,     n, terms = no_torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_source_no_match,        n, terms = no_ETHER & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, name_long_verbose_no_match,       n, terms = no_torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, name_no_match,                    n, terms = torj_no_found & fmt = txt
+on, both, medi, names, tools/ethNames, name_show_addr_match,             n, terms = \* torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, name_show_addr_no_match,          n, terms = no_torj & addr & fmt = txt
+on, both, medi, names, tools/ethNames, name_source_no_match,             n, terms = no_Ether & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, name_verbose_no_match,            n, terms = no_torj & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, simple_w_space,                   n, terms = etwork & fmt = txt
+on, both, medi, names, tools/ethNames, three_params,                     n, terms = 88897 torj scan & fmt = txt
+on, both, medi, names, tools/ethNames, too_many_terms,                   n, terms = 88897 torj scan etwork & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, w_source,                         n, terms = etwork & verbose & fmt = txt
+on, both, medi, names, tools/ethNames, addr_show_addr_match,             y, terms = 0xb6 & addr
+on, cmd,  fast, names, tools/ethNames, show_version,                     n, version
 
-#on, both, medi, names, tools/ethNames, fmt_default,                      y, terms = tip & expand
-#on, both, medi, names, tools/ethNames, fmt_txt,                          n, named & custom & owned & fmt = txt
-#on, both, medi, names, tools/ethNames, fmt_csv,                          n, named & custom & owned & fmt = csv
-#on, both, medi, names, tools/ethNames, fmt_api,                          y, named & custom & owned & fmt = api
-#on, both, medi, names, tools/ethNames, fmt_json,                         y, named & custom & owned & fmt = json
-#on, both, fast, names, tools/ethNames, fmt_junk,                         y, terms = tip & expand & fmt = junk
+on, both, medi, names, tools/ethNames, fmt_default,                      y, terms = tip & expand
+on, both, medi, names, tools/ethNames, fmt_txt,                          n, named & custom & owned & fmt = txt
+on, both, medi, names, tools/ethNames, fmt_csv,                          n, named & custom & owned & fmt = csv
+on, both, medi, names, tools/ethNames, fmt_api,                          y, named & custom & owned & fmt = api
+on, both, medi, names, tools/ethNames, fmt_json,                         y, named & custom & owned & fmt = json
+on, both, fast, names, tools/ethNames, fmt_junk,                         y, terms = tip & expand & fmt = junk
 
-#on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file:names.txt
+on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file:names.txt
 
-#on, cmd,  fast, names, tools/ethNames, prefund_output,                   n, output = test_file & prefund
+on, cmd,  fast, names, tools/ethNames, prefund_output,                   n, output = test_file & prefund
 
-#on, both, fast, names, tools/ethNames, tags,                             y, tags
+on, both, fast, names, tools/ethNames, tags,                             y, tags
 
-on, cmd, fast, names, tools/ethNames, edit_invalid,                       n, editcmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & verbose = 10
-on, cmd, fast, names, tools/ethNames, edit_add,                           n, editcmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & verbose = 10
-on, cmd, fast, names, tools/ethNames, show_add,                           n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & verbose
-on, cmd, fast, names, tools/ethNames, edit_edit,                          n, editcmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!false & verbose = 10
-on, cmd, fast, names, tools/ethNames, show_edit,                          n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & verbose
-on, cmd, fast, names, tools/ethNames, edit_delete,                        n, editcmd = delete & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
-on, cmd, fast, names, tools/ethNames, show_delete,                        n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & verbose
-on, cmd, fast, names, tools/ethNames, edit_undelete,                      n, editcmd = undelete & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
-on, cmd, fast, names, tools/ethNames, show_undelete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & verbose
-on, cmd, fast, names, tools/ethNames, edit_remove,                        n, editcmd = remove & terms = 0x0000000000000000000000000000000010101010 & verbose = 10
-on, cmd, fast, names, tools/ethNames, show_remove,                        n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & verbose
+on, both, fast, names, tools/ethNames, edit_invalid,                     y, editcmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & expand & verbose = 10
+on, both, fast, names, tools/ethNames, edit_add,                         y, editcmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, both, fast, names, tools/ethNames, edit_edit,                        y, editcmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!false & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_edit,                        n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, both, fast, names, tools/ethNames, edit_delete,                      y, editcmd = delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, both, fast, names, tools/ethNames, edit_undelete,                    y, editcmd = undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, both, fast, names, tools/ethNames, edit_remove,                      y, editcmd = remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
 
 # ./tools/ethNames/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 # ./tools/ethNames/options.cpp:    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),

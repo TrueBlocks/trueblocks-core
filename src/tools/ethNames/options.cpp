@@ -199,25 +199,21 @@ bool COptions::parseArguments(string_q& command) {
     string_q str = (format.empty() ? shortenFormat(STR_DISPLAY_ACCOUNTNAME) : format);
     if (verbose && !contains(format, "{SOURCE}"))
         str += "\t[{SOURCE}]";
-    if (!contains(format, "{DELETED}") && (verbose || isApiMode())) {
-        str += "\t[{DELETED}]";
-    }
     string_q meta = ", \"namePath\": \"" + (isTestMode() ? "--" : getCachePath("names/")) + "\"";
 
     // Display formatting
     configureDisplay("ethNames", "CAccountName", str, meta);
     if (!tags && (expContext().exportFmt == API1 || expContext().exportFmt == JSON1))
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
-
-    if (!contains(format, "{DELETED}") && (verbose || isApiMode())) {
-        UNHIDE_FIELD(CAccountName, "deleted");
-    }
+    if (!expand)
+        HIDE_FIELD(CAccountName, "deleted");
 
     // Collect results for later display
     applyFilter();
 
     // Data wrangling
     if (addr_only) {
+        HIDE_FIELD(CAccountName, "deleted");
         HIDE_FIELD(CAccountName, "tags");
         HIDE_FIELD(CAccountName, "name");
         HIDE_FIELD(CAccountName, "symbol");
@@ -414,11 +410,8 @@ string_q shortenFormat(const string_q& fmtIn) {
     replace(ret, "[{SOURCE}]", "");
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
-    while (startsWith(ret, "\t"))
-        replace(ret, "\t", "");
-    while (endsWith(ret, "\t"))
-        replaceReverse(ret, "\t", "");
-    return ret;
+    replace(ret, "[{DELETED}]", "");
+    return trim(ret, '\t');
 }
 
 //-----------------------------------------------------------------------
@@ -487,9 +480,7 @@ bool COptions::processEditCommand(CStringArray& terms) {
     sort(outArray.begin(), outArray.end());
 
     fmt = STR_DISPLAY_ACCOUNTNAME;
-    fmt += "\t[{DELETED}]";
     ostringstream dataStream2;
-    //    LOG4("Output size: ", outArray.size());
     for (auto name : outArray) {
         if (!name.is_custom && !name.is_prefund)
             dataStream2 << name.Format(fmt) << endl;
@@ -498,5 +489,6 @@ bool COptions::processEditCommand(CStringArray& terms) {
     stringToAsciiFile(configPath("names/names.txt"), dataStream2.str());
     namedAccounts.clear();
     ::remove(getCachePath("names/names.bin").c_str());
+
     return true;
 }
