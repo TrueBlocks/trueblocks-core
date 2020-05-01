@@ -284,9 +284,25 @@ string_q asciiFileToString(const string_q& filename) {
 }
 
 //----------------------------------------------------------------------
+size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
+    CAsciiFile lock;
+    if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
+        lock.WriteLine(contents.c_str());
+        lock.Release();
+    } else {
+        string_q dName = fileName;
+        if (isTestMode())
+            dName = "--filename--";
+        cerr << "Could not open file: " << dName << endl;
+        return false;
+    }
+    return true;
+}
+
+//----------------------------------------------------------------------
 uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents) {
     CArchive asciiCache(WRITING_ARCHIVE);
-    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
+    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {
         asciiCache.WriteLine(addContents.c_str());
         asciiCache.Release();
     }
@@ -296,7 +312,7 @@ uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents
 //----------------------------------------------------------------------
 size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, bool addNewlines) {
     CArchive asciiCache(WRITING_ARCHIVE);
-    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_NOWAIT)) {
+    if (asciiCache.Lock(fileName, modeWriteAppend, LOCK_WAIT)) {
         for (auto line : lines)
             asciiCache.WriteLine((line + (addNewlines ? "\n" : "")).c_str());
         asciiCache.Release();

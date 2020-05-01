@@ -127,13 +127,20 @@ on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file
 on, cmd,  fast, names, tools/ethNames, prefund_output,                   n, output = test_file & prefund
 
 on, both, fast, names, tools/ethNames, tags,                             y, tags
+on, both, fast, names, tools/ethNames, tags_txt,                         n, tags & fmt = txt
+on, both, fast, names, tools/ethNames, tags_csv,                         n, tags & fmt = csv
+
+on, both, fast, names, tools/ethNames, collections,                      y, collections
+on, both, fast, names, tools/ethNames, collections_txt,                  n, collections & fmt = txt
+on, both, fast, names, tools/ethNames, collections_csv,                  n, collections & fmt = csv
+on, both, fast, names, tools/ethNames, collections_json,                 y, collections & fmt = json
+on, both, fast, names, tools/ethNames, collections_terms,                y, collections & terms = May
 
 on, both, fast, names, tools/ethNames, edit_invalid,                     y, editcmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & expand & verbose = 10
-
 on, both, fast, names, tools/ethNames, edit_add,                         y, editcmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false & expand & verbose = 10
 on, both, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
 on, both, fast, names, tools/ethNames, edit_edit,                        y, editcmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!false & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_edit,                        n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, both, fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
 on, both, fast, names, tools/ethNames, edit_delete,                      y, editcmd = delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
 on, both, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
 on, both, fast, names, tools/ethNames, edit_undelete,                    y, editcmd = undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10

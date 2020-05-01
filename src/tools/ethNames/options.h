@@ -52,6 +52,6 @@ class COptions : public COptionsBase {
     void applyFilter(void);
     bool addIfUnique(const CAccountName& item);
 
-    void exportCollections(void) const;
+    void exportCollections(const CStringArray& terms);
     bool processEditCommand(CStringArray& terms, bool to_custom);
 };

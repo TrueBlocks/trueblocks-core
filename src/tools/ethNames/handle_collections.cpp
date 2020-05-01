@@ -16,7 +16,7 @@
  */
 #include "options.h"
 
-void COptions::exportCollections(void) const {
+void COptions::exportCollections(const CStringArray& terms) {
     string_q contents = asciiFileToString(configPath("names/collections.csv"));
     CStringArray lines;
     explode(lines, contents, '\n');
@@ -34,13 +34,44 @@ void COptions::exportCollections(void) const {
         }
     }
 
+    string_q str = STR_DISPLAY_COLLECTION;
+    configureDisplay("ethNames", "CCollection", str, "");
+    if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1)
+        manageFields("CCollection:" + cleanFmt(STR_DISPLAY_COLLECTION));
+
     bool first = true;
-    cout << "{\n  \"data\": [" << endl;
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
     for (auto collection : collections) {
-        if (!first)
-            cout << ",";
-        cout << collection << endl;
-        first = false;
+        bool include = terms.size() == 0;
+
+        if (terms.size() > 0) {
+            for (auto term : terms) {
+                ostringstream os;
+                os << collection;
+                include = include || contains(os.str(), term);
+            }
+        }
+
+        if (include) {
+            if (first)
+                cout << exportPreamble(expContext().fmtMap["header"], collection.getRuntimeClass());
+            if (isText) {
+                cout << substitute(substitute(substitute(trim(collection.Format(expContext().fmtMap["format"]), '\t'),
+                                                         "\n", "|"),
+                                              "\"", ""),
+                                   ",|", "|")
+                     << endl;
+            } else {
+                if (!first)
+                    cout << "," << endl;
+                cout << "  ";
+                incIndent();
+                collection.doExport(cout);
+                decIndent();
+            }
+            first = false;
+        }
     }
-    cout << "] }" << endl;
+
+    cout << exportPostamble(errors, expContext().fmtMap["meta"]);
 }

@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (collections) {
-        exportCollections();
+        exportCollections(terms);
         return false;
     }
 

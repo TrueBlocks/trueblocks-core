@@ -343,22 +343,6 @@ size_t stringToPDF(const string_q& fileName, const string_q& contents) {
     return true;
 }
 
-//----------------------------------------------------------------------
-size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
-    CAsciiFile lock;
-    if (lock.Lock(fileName, modeWriteCreate, LOCK_WAIT)) {
-        lock.WriteLine(contents.c_str());
-        lock.Release();
-    } else {
-        string_q dName = fileName;
-        if (isTestMode())
-            dName = "--filename--";
-        cerr << "Could not open file: " << dName << endl;
-        return false;
-    }
-    return true;
-}
-
 //------------------------------------------------------------------------------------------------------------
 bool writeTheCode(const codewrite_t& cw) {
     string_q codeOut = cw.codeOutIn;

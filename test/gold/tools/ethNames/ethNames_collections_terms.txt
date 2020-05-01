@@ -1,0 +1,4 @@
+ethNames argc: 3 [1:--collections] [2:May] 
+ethNames --collections May 
+id	tags	name	client	monitored	deleted	sizeinbytes	addresses
+0x12..04	Clients	May Construction	John May	true	false	110	0x001d14804b399c6ef80e64576f657660804fec0b|0x005a9c03f69d17d66cbb8ad721008a9ebbb836fb|0x1111111111111111111111111111111111111111|0x1111122222111112222211111222221111122222|0x1234567812345678123456781234567812345678|

@@ -143,15 +143,15 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
 
 //-----------------------------------------------------------------------
 bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
-    string_q binFile = getCachePath("names/names_prefunds.bin");
+    string_q prefundBin = getCachePath("names/names_prefunds.bin");
 
     uint64_t cnt = 0;
     if (contains(tabFilename, "prefunds")) {
         // This never changes so we should be able to only read this once in forever. If the binary file exists, use it
-        if (fileExists(binFile)) {
+        if (fileExists(prefundBin)) {
             LOG4("Reading prefund names from binary cache");
             CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
                 CAccountNameArray prefunds;
                 nameCache >> prefunds;
                 nameCache.Release();
@@ -176,22 +176,23 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
         return false;
 
     const CAccountName emptyName;
-    CAccountNameArray arrayOut;
-    arrayOut.reserve(10000);
+    CAccountNameArray prefundArrayOut;
+    prefundArrayOut.reserve(10000);
     for (auto it = next(lines.begin()); it != lines.end(); ++it) {
         string_q line = *it;
         if (!startsWith(line, '#') && contains(line, "0x")) {
             CAccountName account;
             account.parseText(fields, line);
             addToMap(theMap, account, tabFilename, cnt++);
-            arrayOut.push_back(account);
+            prefundArrayOut.push_back(account);
         }
     }
 
     if (contains(tabFilename, "prefund")) {
+        // We can cache the prefunds binary since it will never change
         CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << arrayOut;
+        if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << prefundArrayOut;
             nameCache.Release();
         }
     }
@@ -251,6 +252,7 @@ bool loadNames(COptionsBase& options) {
     for (auto item : theMap)
         options.namedAccounts.push_back(item.second);
 
+    LOG4("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << options.namedAccounts;
