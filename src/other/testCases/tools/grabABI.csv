@@ -47,8 +47,8 @@ on, cmd,  fast, abi, tools/grabABI, generation,            n, addrs = 0xbb9bc244
 
 # 13660,tools,abi,grabABI,addrs,,,TRUE,FALSE,TRUE,TRUE,,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 # 13680,tools,abi,grabABI,canonical,c,,FALSE,FALSE,TRUE,TRUE,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
-# 13700,tools,abi,grabABI,generate,g,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
-# 13740,tools,abi,grabABI,noconst,n,,FALSE,FALSE,TRUE,TRUE,yes,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
+# 13700,tools,abi,grabABI,generate,g,,FALSE,FALSE,TRUE,TRUE,y es,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
+# 13740,tools,abi,grabABI,noconst,n,,FALSE,FALSE,TRUE,TRUE,y es,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
 # 13840,tools,abi,grabABI,known,k,,FALSE,FALSE,FALSE,FALSE,local,switch,<boolean>,load common 'known' ABIs from cache
 # 13880,tools,abi,grabABI,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 

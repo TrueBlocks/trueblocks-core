@@ -154,7 +154,8 @@ bool COptions::parseArguments(string_q& command) {
     if (mode.empty()) {
         optionOn(OPT_HELP);
         COption* option = (COption*)&params[0];
-        option->description = "which command to run. See below...";
+        option->description =
+            string_q("which command to run.") + (!verbose ? " 'chifra -v' for more information..." : "");
         EXIT_USAGE("Please specify " + params[0].description);
     }
 
@@ -177,6 +178,9 @@ bool COptions::parseArguments(string_q& command) {
     }
     if (expContext().isParity) {
         tool_flags += " --parity";
+    }
+    if (!editCmd.empty()) {
+        tool_flags += " --editCmd " + editCmd;
     }
     if (verbose) {
         tool_flags += " -v:" + uint_2_Str(verbose);
@@ -209,6 +213,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_HELP);
+    optionOn(OPT_EDITCMD);
 
     // BEG_CODE_INIT
     sleep = 14;
@@ -233,27 +238,29 @@ COptions::COptions(void) {
 
     // clang-format off
     notes.push_back(
-        "Valid commands for chifa are noted here. Get additional help with `'chifra <cmd> --help'`.||"
-                    "  list          list all appearances of an address anywhere on the chain.|"
-                    "  export        export every appearance (as a transaciton, receipt, log, balance, etc.)|"
-                    "  slurp         query EtherScan for a list of transactions (note: will be smaller than --list)|"
-                    "  names         list all names known by TrueBlocks.|"
-                    "  abi           list all abi signatures known by TrueBlocks.|"
-                    "  state         query the state of an Ethereum address.|"
-                    "  tokens        query the state of an ERC20 Ethereum address.|"
-                    "  when          list known (named) blocks.|"
-                    "  quotes        query for price data|"
-                    "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
-                    "  status        query for various status reports about the system.|"
-                    "  settings      get and set various system settings (API only).|"
-                    "  rm            remove or pause a monitored address.|"
-                    "  blocks        query the blockchain for block data|"
-                    "  transactions  query the blockchain for transaction data|"
-                    "  receipts      query the blockchain for receipt data|"
-                    "  logs          query the blockchain for log data|"
-                    "  traces        query the blockchain for trace data|"
-                    "  leech         tbd|"
-                    "  seed          tbd|"
+        "Valid commands for chifa are noted here. Get additional help with `'chifra <cmd> --help'`.|"
+                "MONITORS|"
+                "  list          list all appearances of an address anywhere on the chain.|"
+                "  export        export every appearance (as a transaciton, receipt, log, balance, etc.)|"
+                "  rm            remove or pause a monitored address.|"
+                "  slurp         query EtherScan for a list of transactions (note: will be smaller than --list)|"
+                "SHARED DATA|"
+                "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
+                "  names         list all names known by TrueBlocks.|"
+                "  abi           list all abi signatures known by TrueBlocks.|"
+                "BLOCKCHAIN DATA|"
+                "  blocks        query the blockchain for block data|"
+                "  transactions  query the blockchain for transaction data|"
+                "  logs          query the blockchain for log data|"
+                "  receipts      query the blockchain for receipt data|"
+                "  traces        query the blockchain for trace data|"
+                "  state         query the blockchain for the state of an address.|"
+                "  tokens        query the blockchain for the state of an ERC20 address.|"
+                "OTHER|"
+                "  status        query for various status reports about the system.|"
+                "  settings      get and set various system settings (API only).|"
+                "  leech         tbd - future reference|"
+                "  seed          tbd - future reference|"
     );
     // clang-format on
 

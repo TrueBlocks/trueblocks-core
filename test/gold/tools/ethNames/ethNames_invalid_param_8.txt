@@ -20,7 +20,7 @@ ethNames 0xb6 torj --verbosez --other --fmt txt
 
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
-	-u  (--to_custom)     for editcmd only, is the edited name a custom name or not
+	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
 	-g  (--tags)          export the list of tags and subtags only
 #### Hidden options (shown during testing only)
 

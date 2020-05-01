@@ -1,5 +1,5 @@
-ethNames argc: 7 [1:--editcmd] [2:undelete] [3:0x0000000000000000000000000000000010101010] [4:--expand] [5:--verbose] [6:10] 
-ethNames --editcmd undelete 0x0000000000000000000000000000000010101010 --expand --verbose 10 
+ethNames argc: 7 [1:--editCmd] [2:undelete] [3:0x0000000000000000000000000000000010101010] [4:--expand] [5:--verbose] [6:10] 
+ethNames --editCmd undelete 0x0000000000000000000000000000000010101010 --expand --verbose 10 
 TIME ~ CLOCK - : 4-----Undeleting 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...

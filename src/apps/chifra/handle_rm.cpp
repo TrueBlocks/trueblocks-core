@@ -22,7 +22,7 @@ bool COptions::handle_rm(void) {
         EXIT_USAGE("This function requires an address.");
 
     CStringArray removed;
-    bool hasYes = contains(tool_flags, "--yes");
+    bool hasYes = editCmd == "remove";  // contains(tool_flags, "--yes");
     for (auto addr : addrs) {
         bool itExists = false;
         itExists |= fileExists(getMonitorPath(addr));

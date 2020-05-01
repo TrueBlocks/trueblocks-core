@@ -2,13 +2,13 @@ chifra argc: 1
 chifra 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
-  Please specify which command to run. See below...
+  Please specify which command to run. 'chifra -v' for more information...
 
   Usage:    chifra [-s|-v|-h] commands  
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run. See below... (required)
+	commands              which command to run. 'chifra -v' for more information... (required)
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)

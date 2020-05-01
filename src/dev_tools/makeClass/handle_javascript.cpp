@@ -22,8 +22,11 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-    page.url = toml.getConfigStr("settings", "url", "");
-    page.query = toml.getConfigStr("settings", "query", "");
+    page.dataUrl = toml.getConfigStr("settings", "dataUrl", "");
+    page.dataQuery = toml.getConfigStr("settings", "dataQuery", "");
+    page.cmdUrl = toml.getConfigStr("settings", "cmdUrl", "");
+    if (page.cmdUrl.empty())
+        page.cmdUrl = page.dataUrl;
 
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
@@ -352,11 +355,12 @@ bool COptions::handle_generate_js_menus(void) {
                 page.twoName = toLower(page.longName.substr(0, 2));
                 page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
                 CToml t("./classDefinitions/" + parts[0] + ".toml");
-                page.query = t.getConfigStr("settings", "query_" + parts[1], "");
+                page.dataQuery = t.getConfigStr("settings", "query_" + parts[1], "");
             }
             string_q contents = asciiFileToString(templateFile);
-            replaceAll(contents, "[{URL}]", page.url);
-            replaceAll(contents, "[{QUERY}]", page.query);
+            replaceAll(contents, "[{DATAURL}]", page.dataUrl);
+            replaceAll(contents, "[{DATAQUERY}]", page.dataQuery);
+            replaceAll(contents, "[{CMDURL}]", page.cmdUrl);
             replaceAll(contents, "[{LONG}]", page.longName);
             replaceAll(contents, "[{PROPER}]", page.properName);
             string_q singular = page.properName;

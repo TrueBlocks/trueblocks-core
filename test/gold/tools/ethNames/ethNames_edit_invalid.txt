@@ -1,5 +1,5 @@
-ethNames argc: 7 [1:--editcmd] [2:invalid] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false] [4:--expand] [5:--verbose] [6:10] 
-ethNames --editcmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false --expand --verbose 10 
+ethNames argc: 7 [1:--editCmd] [2:invalid] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false] [4:--expand] [5:--verbose] [6:10] 
+ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false --expand --verbose 10 
 
   Invalid edit command 'invalid'. Quitting...
 
@@ -20,7 +20,7 @@ ethNames --editcmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!
 
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
-	-u  (--to_custom)     for editcmd only, is the edited name a custom name or not
+	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
 	-g  (--tags)          export the list of tags and subtags only
 #### Hidden options (shown during testing only)
 

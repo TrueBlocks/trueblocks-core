@@ -144,7 +144,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12400,tools,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
 12420,tools,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12430,tools,names,ethNames,collections,s,,false,false,true,true,local,switch,<boolean>,display collections data
-12435,tools,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editcmd only&#44; is the edited name a custom name or not
+12435,tools,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12445,tools,names,ethNames,tags,g,,false,false,false,false,header,switch,<boolean>,export the list of tags and subtags only
 12460,tools,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
 12462,tools,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
@@ -264,7 +264,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 14400,all,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
-14430,all,all,all,editcmd,C,,false,false,true,false,--,flag,enum[add|edit|delete|undelete|remove],editing command (uses 'terms' for editing data)
+14430,all,all,all,editCmd,C,,false,false,true,false,--,flag,enum[add|edit|delete|undelete|remove],editing command (uses 'terms' for editing data)
 14440,all,all,all,wei,,,false,false,true,false,--,switch,<boolean>,specify value in wei (the default)
 14460,all,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
 14480,all,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars

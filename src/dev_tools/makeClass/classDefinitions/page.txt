@@ -2,5 +2,5 @@
 class = CPage
 fields = string longName|string properName|string twoName|string sevenName|\
     string dest_path|string recordIcons|string defaultSearch|string defaultSort|\
-    string url|string query|string schema|CSubpageArray subpages
+    string dataUrl|string dataQuery|string cmdUrl|string schema|CSubpageArray subpages
 includes = etherlib.h|subpage.h

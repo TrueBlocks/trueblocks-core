@@ -25,7 +25,7 @@ on, cmd,  slow, list, apps/acctScrape, list_speed_test, y, addrs = 0x12345678901
 # 10040, apps, list, acctScrape, finalized, f, true,  FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of finalized folder ([{DEF}] by default)
 # 10060, apps, list, acctScrape, staging,   s, false, FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of staging (not yet finalized) folder ([{DEF}] by default)
 # 10080, apps, list, acctScrape, unripe,    u, false, FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
-# 10100, apps, list, acctScrape, daemon,    d, ,      FALSE, FALSE, FALSE, FALSE, yes,   switch,     <boolean>,  we are being called in daemon mode which causes us to print results differently
+# 10100, apps, list, acctScrape, daemon,    d, ,      FALSE, FALSE, FALSE, FALSE, y es,   switch,     <boolean>,  we are being called in daemon mode which causes us to print results differently
 # 10120, apps, list, acctScrape, start,     S, ,      FALSE, FALSE, FALSE, FALSE, local, flag,       <blknum>,   first block to process (inclusive)
 # 10140, apps, list, acctScrape, end,       E, ,      FALSE, FALSE, FALSE, FALSE, local, flag,       <blknum>,   last block to process (inclusive)
 # 10160, apps, list, acctScrape, ,          ,  ,      FALSE, FALSE, TRUE,  TRUE,  na,    description,,           Index transactions for a given Ethereum address (or collection of addresses).

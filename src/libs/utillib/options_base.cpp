@@ -263,7 +263,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
-    replace(cmdLine, "--editcmd ", "--editcmd:");
+    replace(cmdLine, "--editCmd ", "--editCmd:");
 
     if (contains(cmdLine, "--noop ")) {
         // do nothing
@@ -308,8 +308,8 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         isRaw = true;
     }
 
-    if (isEnabled(OPT_EDITCMD) && contains(cmdLine, "--editcmd:")) {
-        replaceAll(cmdLine, "--editcmd:", "|");
+    if (isEnabled(OPT_EDITCMD) && contains(cmdLine, "--editCmd:")) {
+        replaceAll(cmdLine, "--editCmd:", "|");
         string_q pre = nextTokenClear(cmdLine, '|');
         editCmd = nextTokenClear(cmdLine, ' ');
         cmdLine = pre + " " + cmdLine;

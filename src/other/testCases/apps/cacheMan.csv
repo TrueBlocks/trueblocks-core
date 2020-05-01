@@ -60,17 +60,17 @@ on, cmd, fast, null, apps/cacheMan, rm_merge3,       n, RMFILE -f ./remove.*
 
 # 11360,apps,,cacheMan,files,,,TRUE,FALSE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
 # 11380,apps,,cacheMan,check,c,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,check for duplicates and other problems in the cache
-# 11400,apps,,cacheMan,data,d,,FALSE,FALSE,TRUE,FALSE,yes,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
+# 11400,apps,,cacheMan,data,d,,FALSE,FALSE,TRUE,FALSE,y es,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
 # 11420,apps,,cacheMan,sort,s,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)
 # 11440,apps,,cacheMan,fix,f,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,remove duplicates from the cache (if any)
 # 11460,apps,,cacheMan,list,l,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,list the contents of the cache (the default if no other option)
 # 11480,apps,,cacheMan,import,i,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,import transactions if import.txt file exists in current folder
 # 11500,apps,,cacheMan,remove,r,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,remove transactions if remove.txt file exists in current folder
-# 11520,apps,,cacheMan,truncate,u,0,FALSE,FALSE,TRUE,FALSE,yes,flag,<blknum>,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)
+# 11520,apps,,cacheMan,truncate,u,0,FALSE,FALSE,TRUE,FALSE,y es,flag,<blknum>,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)
 # 11540,apps,,cacheMan,merge,m,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,merge two or more caches into a single cache
-# 11560,apps,,cacheMan,skip,k,1,FALSE,FALSE,FALSE,FALSE,yes,flag,<uint32>,skip value for testing
-# 11580,apps,,cacheMan,start,S,,FALSE,FALSE,FALSE,FALSE,yes,flag,<blknum>,first block to process (inclusive)
-# 11600,apps,,cacheMan,end,E,,FALSE,FALSE,FALSE,FALSE,yes,flag,<blknum>,last block to process (inclusive)
+# 11560,apps,,cacheMan,skip,k,1,FALSE,FALSE,FALSE,FALSE,y es,flag,<uint32>,skip value for testing
+# 11580,apps,,cacheMan,start,S,,FALSE,FALSE,FALSE,FALSE,y es,flag,<blknum>,first block to process (inclusive)
+# 11600,apps,,cacheMan,end,E,,FALSE,FALSE,FALSE,FALSE,y es,flag,<blknum>,last block to process (inclusive)
 # 11620,apps,,cacheMan,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
 # COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),

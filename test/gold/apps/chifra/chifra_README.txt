@@ -25,26 +25,27 @@ chifra -th
 `Notes:`
 
 - Valid commands for chifa are noted here. Get additional help with `'chifra <cmd> --help'`.
- 
+ MONITORS
    list          list all appearances of an address anywhere on the chain.
    export        export every appearance (as a transaciton, receipt, log, balance, etc.)
+   rm            remove or pause a monitored address.
    slurp         query EtherScan for a list of transactions (note: will be smaller than --list)
+ SHARED DATA
+   scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).
    names         list all names known by TrueBlocks.
    abi           list all abi signatures known by TrueBlocks.
-   state         query the state of an Ethereum address.
-   tokens        query the state of an ERC20 Ethereum address.
-   when          list known (named) blocks.
-   quotes        query for price data
-   scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).
-   status        query for various status reports about the system.
-   settings      get and set various system settings (API only).
-   rm            remove or pause a monitored address.
+ BLOCKCHAIN DATA
    blocks        query the blockchain for block data
    transactions  query the blockchain for transaction data
-   receipts      query the blockchain for receipt data
    logs          query the blockchain for log data
+   receipts      query the blockchain for receipt data
    traces        query the blockchain for trace data
-   leech         tbd
-   seed          tbd
+   state         query the blockchain for the state of an address.
+   tokens        query the blockchain for the state of an ERC20 address.
+ OTHER
+   status        query for various status reports about the system.
+   settings      get and set various system settings (API only).
+   leech         tbd - future reference
+   seed          tbd - future reference
  
 
