@@ -2,7 +2,7 @@ ethNames argc: 2 [1:-th]
 ethNames -th 
 #### Usage
 
-`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
 
 `Where:`  
@@ -19,11 +19,11 @@ ethNames -th
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
 | -s | --collections | display collections data |
+| -g | --tags | export the list of tags and subtags only |
 
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |
-| -g | --tags | export the list of tags and subtags only |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

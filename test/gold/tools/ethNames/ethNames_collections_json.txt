@@ -3,7 +3,7 @@ ethNames --collections --fmt json
 { "data": [
   {
     "deleted": true,
-    "id": "0x12..01",
+    "id": "0xa6d5021b08",
     "tags": "Samples",
     "name": "Set Protocol",
     "client": "Anthony",
@@ -30,7 +30,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "id": "0x12..02",
+    "id": "0x52742586c2",
     "tags": "Samples",
     "name": "Giveth",
     "client": "Green",
@@ -51,7 +51,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "id": "0x12..04",
+    "id": "0x97283b3a44",
     "tags": "Clients",
     "name": "May Construction",
     "client": "John May",
@@ -67,7 +67,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "id": "0x12..05",
+    "id": "0x47894ddb79",
     "tags": "Clients",
     "name": "The Poetry Shop",
     "client": "Andy Tudhope",
@@ -80,7 +80,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "id": "0x12..07",
+    "id": "0xf285fffac0",
     "tags": "Clients",
     "name": "Uncle Joe",
     "client": "Prince Ton",

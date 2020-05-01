@@ -318,6 +318,14 @@ string_q nextCollectionChunk_custom(const string_q& fieldIn, const void* dataPtr
     if (col) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'i':
+                if (fieldIn % "id" && col->id.empty()) {
+                    string_q seed = col->name;
+                    for (auto addr : col->addresses)
+                        seed += addr;
+                    return keccak256(seed).substr(0, 12);
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

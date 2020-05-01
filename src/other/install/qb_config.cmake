@@ -62,6 +62,15 @@ if (NOT EXISTS "${CUSTOM_NAMES}")
 endif()
 
 #---------------------------------------------------------------
+# Copy the sample collections if it does not already exist
+#---------------------------------------------------------------
+set(CUSTOM_COLLS "${DEST_PATH}/names/collections.csv")
+if (NOT EXISTS "${CUSTOM_COLLS}")
+	message(STATUS "Copying sample collections file${DEST_PATH}/names")
+	file(COPY "${SOURCE_PATH}/names/collections.csv" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+
+#---------------------------------------------------------------
 # Clear the bin file, so it gets regenerated on each build
 #---------------------------------------------------------------
 message(STATUS "Removing binary name file: ${DEST_PATH}/cache/names/names.bin")

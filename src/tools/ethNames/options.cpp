@@ -32,7 +32,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
-    COption("tags", "g", "", OPT_HIDDEN | OPT_SWITCH, "export the list of tags and subtags only"),
+    COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -56,7 +56,6 @@ bool COptions::parseArguments(string_q& command) {
     bool named = false;
     bool other = false;
     bool addr = false;
-    bool collections = false;
     bool to_custom = false;
     // END_CODE_LOCAL_INIT
 
@@ -242,6 +241,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
+    collections = false;
     tags = false;
     // END_CODE_INIT
 

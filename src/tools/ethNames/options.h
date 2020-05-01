@@ -35,6 +35,7 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool match_case;
+    bool collections;
     bool tags;
     // END_CODE_DECLARE
 

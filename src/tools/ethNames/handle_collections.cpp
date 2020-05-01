@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 
 void COptions::exportCollections(const CStringArray& terms) {
@@ -21,7 +17,7 @@ void COptions::exportCollections(const CStringArray& terms) {
     CStringArray lines;
     explode(lines, contents, '\n');
 
-    CCollectionArray collections;
+    CCollectionArray collectionArray;
     CStringArray fields;
     for (auto line : lines) {
         if (fields.empty()) {
@@ -30,7 +26,7 @@ void COptions::exportCollections(const CStringArray& terms) {
             CCollection collection;
             collection.parseCSV(fields, line);
             explode(collection.addresses, collection.addressList, '|');
-            collections.push_back(collection);
+            collectionArray.push_back(collection);
         }
     }
 
@@ -41,7 +37,7 @@ void COptions::exportCollections(const CStringArray& terms) {
 
     bool first = true;
     bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
-    for (auto collection : collections) {
+    for (auto collection : collectionArray) {
         bool include = terms.size() == 0;
 
         if (terms.size() > 0) {
