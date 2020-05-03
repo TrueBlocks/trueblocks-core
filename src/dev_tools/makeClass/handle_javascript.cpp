@@ -591,6 +591,7 @@ bool COptions::handle_generate_js_schemas(void) {
                     string_q str = os.str();
                     replaceAll(str, "\"", "'");
                     replaceAll(str, "'getFieldValue'", "getFieldValue");
+                    replaceAll(str, "'useFieldValue'", "useFieldValue");
                     if (contains(str, "onValidate:")) {
                         replaceAll(str, "'validateUserInput'", "validateUserInput");
                         replaceAll(str, "_C_", ",");
