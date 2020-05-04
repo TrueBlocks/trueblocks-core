@@ -35,7 +35,8 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     string_q rec = substitute("," + toml.getConfigStr("settings", "recordIcons", "") + ",", ",,", "");
     replace(rec, "editing,", "header-Add,Delete/Undelete,Edit/Remove,");
     replace(rec, "viewing,", "ExternalLink,");
-    replace(rec, "exploring,", "Explorer/None,");
+    replace(rec, "view,", "View/None,");
+    replace(rec, "follow,", "AddMonitor/None/View,");
     replace(rec, "exporting,", "footer-CSV,footer-TXT,");
     replace(rec, "importing,", "footer-Import,");
     page.recordIcons = trim(rec, ',');
@@ -389,6 +390,9 @@ bool COptions::handle_generate_js_menus(void) {
     ostringstream appImportsStream;
     ostringstream appReducersStream;
     ostringstream appStateStream;
+    ostringstream appDefaultStream;
+    ostringstream allSchemasStream;
+    ostringstream useSchemasStream;
 
     menuStream << "  items: [" << endl;
     for (auto pageStr : pagesStrs) {
@@ -439,31 +443,54 @@ bool COptions::handle_generate_js_menus(void) {
 
             appStateStream << "    " << page.longName << ": { " << page.longName << ": " << page.longName
                            << "State, dispatch: " << page.longName << "Dispatch }," << endl;
+
+            appDefaultStream << "  " << page.longName << ": " << page.longName << "Default," << endl;
+
+            allSchemasStream << "import { " << page.longName << "Schema } from 'pages/" << page.properName << "/" << page.properName << "';" << endl;
+
+            useSchemasStream << "    { group: 'pages_', name: '" << page.longName << "Schema', schema: " << page.longName << "Schema }," << endl;
         }
     }
     menuStream << "  ]," << endl;
 
-    string_q indexFile = "./pages/index.jsx";
-    string_q contents = asciiFileToString(indexFile);
-    string_q orig = contents;
-    doReplace(contents, "imports", importStream.str(), "  ");
-    doReplace(contents, "pages", pageStream.str(), "  ");
-    doReplace(contents, "menus", menuStream.str(), "  ");
-    if (orig != contents) {
-        LOG_INFO("Writing: ", cTeal, indexFile, cOff);
-        stringToAsciiFile(indexFile, contents);
+    {
+        string_q indexFile = "./pages/index.jsx";
+        string_q contents = asciiFileToString(indexFile);
+        string_q orig = contents;
+        doReplace(contents, "imports", importStream.str(), "  ");
+        doReplace(contents, "pages", pageStream.str(), "  ");
+        doReplace(contents, "menus", menuStream.str(), "  ");
+        if (orig != contents) {
+            LOG_INFO("Writing: ", cTeal, indexFile, cOff);
+            stringToAsciiFile(indexFile, contents);
+        }
     }
 
-    string_q appFile = "./App.jsx";
-    contents.clear();
-    contents = asciiFileToString(appFile);
-    orig = contents;
-    doReplace(contents, "imports", appImportsStream.str(), "");
-    doReplace(contents, "reducers", appReducersStream.str(), "  ");
-    doReplace(contents, "state", appStateStream.str(), "    ");
-    if (orig != contents) {
-        LOG_INFO("Writing: ", cTeal, appFile, cOff);
-        stringToAsciiFile(appFile, contents);
+    {
+        string_q appFile = "./App.jsx";
+        string_q contents = asciiFileToString(appFile);
+        string_q orig = contents;
+        doReplace(contents, "imports", appImportsStream.str(), "");
+        doReplace(contents, "reducers", appReducersStream.str(), "  ");
+        doReplace(contents, "state", appStateStream.str(), "    ");
+        doReplace(contents, "defaults", appDefaultStream.str(), "  ");
+        if (orig != contents) {
+            LOG_INFO("Writing: ", cTeal, appFile, cOff);
+            stringToAsciiFile(appFile, contents);
+        }
+    }
+
+    {
+        string_q systemFile = "./pages/Settings/SettingsSchemas.jsx";
+        string_q contents = asciiFileToString(systemFile);
+        string_q orig = contents;
+        doReplace(contents, "all-schemas", allSchemasStream.str(), "    ");
+        cout << useSchemasStream.str() << endl;
+        doReplace(contents, "use-schemas", useSchemasStream.str(), "    ");
+        if (orig != contents) {
+            LOG_INFO("Writing: ", cTeal, systemFile, cOff);
+            stringToAsciiFile(systemFile, contents);
+        }
     }
 
     return true;
