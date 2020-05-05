@@ -22,6 +22,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.properName = classDef.base_proper;
     page.twoName = toLower(page.longName.substr(0, 2));
     page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
+    page.noPage = toml.getConfigBool("settings", "noPage", false);
     page.dataUrl = toml.getConfigStr("settings", "dataUrl", "");
     page.dataQuery = toml.getConfigStr("settings", "dataQuery", "");
     page.cmdUrl = toml.getConfigStr("settings", "cmdUrl", "");
@@ -403,37 +404,38 @@ bool COptions::handle_generate_js_menus(void) {
         if (isSeparator) {
             menuStream << "    { label: '" << page.properName << "' }," << endl;
         } else {
+            ostringstream tmpMenu;
             importStream << "import { " << page.properName << " from ./" << page.properName << "/" << page.properName
                          << "';" << endl;
 
-            menuStream << "    {" << endl;
-            menuStream << "      label: '" << page.properName << "'," << endl;
-            menuStream << "      exact: true," << endl;
+            tmpMenu << "    {" << endl;
+            tmpMenu << "      label: '" << page.properName << "'," << endl;
+            tmpMenu << "      exact: true," << endl;
             if (page.subpages.size() == 1 && page.subpages[0].route == "/")
-                menuStream << "      route: '/'," << endl;
+                tmpMenu << "      route: '/'," << endl;
             if (page.subpages.size() > 1)
-                menuStream << "      items: [" << endl;
+                tmpMenu << "      items: [" << endl;
 
             for (auto sub : page.subpages) {
-                if (!sub.isSeparator) {
+                if (!sub.isSeparator && !page.noPage) {
                     pageStream << "  '" << page.longName << "/"
                                << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route)
                                << "': { component: <" << page.properName << " /> }," << endl;
                 }
 
                 if (sub.isSeparator)
-                    menuStream << "        { label: 'Separator' }," << endl;
+                    tmpMenu << "        { label: 'Separator' }," << endl;
                 else if (sub.subpage != "") {
-                    menuStream << "        { label: '" << sub.subpage << "'";
+                    tmpMenu << "        { label: '" << sub.subpage << "'";
                     if (!sub.route.empty())
-                        menuStream << ", route: '" << sub.route << "'";
-                    menuStream << " }," << endl;
+                        tmpMenu << ", route: '" << sub.route << "'";
+                    tmpMenu << " }," << endl;
                 }
             }
             pageStream << "  //" << endl;
             if (page.subpages.size() > 1)
-                menuStream << "      ]," << endl;
-            menuStream << "    }," << endl;
+                tmpMenu << "      ]," << endl;
+            tmpMenu << "    }," << endl;
 
             appImportsStream << "import { " << page.longName << "Default, " << page.longName << "Reducer } from 'pages/"
                              << page.properName << "/" << page.properName << "';" << endl;
@@ -451,6 +453,9 @@ bool COptions::handle_generate_js_menus(void) {
 
             useSchemasStream << "    { group: 'pages_', name: '" << page.longName
                              << "Schema', schema: " << page.longName << "Schema }," << endl;
+
+            if (!page.noPage || isSeparator)
+                menuStream << tmpMenu.str();
         }
     }
     menuStream << "  ]," << endl;
@@ -487,7 +492,6 @@ bool COptions::handle_generate_js_menus(void) {
         string_q contents = asciiFileToString(systemFile);
         string_q orig = contents;
         doReplace(contents, "all-schemas", allSchemasStream.str(), "    ");
-        cout << useSchemasStream.str() << endl;
         doReplace(contents, "use-schemas", useSchemasStream.str(), "    ");
         if (orig != contents) {
             LOG_INFO("Writing: ", cTeal, systemFile, cOff);

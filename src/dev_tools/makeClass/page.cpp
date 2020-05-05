@@ -97,6 +97,11 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
                 return longName;
             }
             break;
+        case 'n':
+            if (fieldName % "noPage") {
+                return bool_2_Str(noPage);
+            }
+            break;
         case 'p':
             if (fieldName % "properName") {
                 return properName;
@@ -187,6 +192,12 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             break;
+        case 'n':
+            if (fieldName % "noPage") {
+                noPage = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 'p':
             if (fieldName % "properName") {
                 properName = fieldValue;
@@ -253,6 +264,7 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> properName;
     archive >> twoName;
     archive >> sevenName;
+    archive >> noPage;
     archive >> dest_path;
     archive >> recordIcons;
     archive >> defaultSearch;
@@ -277,6 +289,7 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << properName;
     archive << twoName;
     archive << sevenName;
+    archive << noPage;
     archive << dest_path;
     archive << recordIcons;
     archive << defaultSearch;
@@ -326,6 +339,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "properName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "noPage", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "recordIcons", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultSearch", T_TEXT, ++fieldNum);
