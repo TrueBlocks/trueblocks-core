@@ -251,7 +251,6 @@ bool COptions::parseArguments(string_q& command) {
             while (item.parseJson3(str)) {
                 item.address = str_2_Addr(toLower(item.address));
                 item.finishParse();
-                named.push_back(item);
                 abis.loadAbiByAddress(item.address);
                 item = CAccountWatch();
             }

@@ -50,7 +50,6 @@ class COptions : public COptionsBase {
 
     CAbi abis;
     CAccountWatchArray monitors;
-    CAccountWatchArray named;
     CAppearanceArray_base items;
     size_t nExported;
     string_q className;
@@ -70,6 +69,7 @@ class COptions : public COptionsBase {
 
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);
+
     bool exportData(void);
     bool exportCounts(void);
     bool exportBalances(void);
