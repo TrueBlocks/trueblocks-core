@@ -446,9 +446,11 @@ bool COptions::handle_generate_js_menus(void) {
 
             appDefaultStream << "  " << page.longName << ": " << page.longName << "Default," << endl;
 
-            allSchemasStream << "import { " << page.longName << "Schema } from 'pages/" << page.properName << "/" << page.properName << "';" << endl;
+            allSchemasStream << "import { " << page.longName << "Schema } from 'pages/" << page.properName << "/"
+                             << page.properName << "';" << endl;
 
-            useSchemasStream << "    { group: 'pages_', name: '" << page.longName << "Schema', schema: " << page.longName << "Schema }," << endl;
+            useSchemasStream << "    { group: 'pages_', name: '" << page.longName
+                             << "Schema', schema: " << page.longName << "Schema }," << endl;
         }
     }
     menuStream << "  ]," << endl;

@@ -182,6 +182,10 @@ bool COptions::parseArguments(string_q& command) {
     if (!editCmd.empty()) {
         tool_flags += " --editCmd " + editCmd;
     }
+    if (mockData) {
+        tool_flags += " --mockData ";
+        freshen_flags += " --mockData ";
+    }
     if (verbose) {
         tool_flags += " -v:" + uint_2_Str(verbose);
         freshen_flags += (" -v:" + uint_2_Str(verbose));
@@ -213,7 +217,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_HELP);
-    optionOn(OPT_EDITCMD);
+    optionOn(OPT_EDITCMD | OPT_MOCKDATA);
 
     // BEG_CODE_INIT
     sleep = 14;

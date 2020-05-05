@@ -86,6 +86,24 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+#ifdef MOCK_DATA
+    if (mockData) {
+        cerr << "Mocking" << endl;
+        verbose = 10;
+        for (size_t i = 0 ; i < 10000 ; i++) {
+            blknum_t s = (i*10000)+(i*13);
+            blknum_t e = ((i+1)*10000)-1+(i*13);
+            bool swit = (i%3);
+            ostringstream os;
+            os << (swit ? "Skip" : "Scan") << " mocks ./" << padNum9(s) << "-" << padNum9(e) << "\r";
+            LOG_INFO(os.str());
+            usleep(250);
+        }
+        cout << "{\"address\": \"0xf503017d7baf7fbc0fff7492b751025c6a78179b\",\"blockNumber\": 9931310,\"transactionIndex\": 21 }" << endl;
+        return false;
+    }
+#endif
+
     // We need at least one address to scrape...
     if (addrs.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
@@ -167,6 +185,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_MOCKDATA);
 
     // BEG_CODE_INIT
     // END_CODE_INIT

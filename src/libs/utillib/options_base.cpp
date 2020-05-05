@@ -255,7 +255,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 
 //--------------------------------------------------------------------------------
 string_q getReservedCommands(void) {
-    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd";
+    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|editCmd|mockData|api_mode|to_file|file";
 }
 
 //--------------------------------------------------------------------------------
@@ -306,6 +306,11 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
         isRaw = true;
+    }
+
+    if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mockData ")) {
+        replaceAll(cmdLine, "--mockData ", "");
+        mockData = true;
     }
 
     if (isEnabled(OPT_EDITCMD) && contains(cmdLine, "--editCmd:")) {
@@ -384,11 +389,11 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
 
     if (isEnabled(OPT_ETHER) && arg == "--ether")
         return true;
-    if (isEnabled(OPT_RAW) && arg == "--raw")
-        return true;
     if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
         return true;
-    if (isEnabled(OPT_RAW) && arg == "--very_raw")
+    if (isEnabled(OPT_RAW) && (arg == "--raw" || arg == "--very_raw"))
+        return true;
+    if (isEnabled(OPT_MOCKDATA) && arg == "--mockData")
         return true;
     if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
@@ -1011,6 +1016,7 @@ COptionsBase::COptionsBase(void) {
     isReadme = false;
     isRaw = false;
     isVeryRaw = false;
+    mockData = false;
     isNoHeader = false;
     enableBits = OPT_DEFAULT;
     scanRange = make_pair(0, NOPOS);

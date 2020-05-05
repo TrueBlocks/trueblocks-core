@@ -148,6 +148,11 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
                 return type;
             }
             break;
+        case 'u':
+            if (fieldName % "underField") {
+                return underField;
+            }
+            break;
         case 'w':
             if (fieldName % "width") {
                 return uint_2_Str(width);
@@ -269,6 +274,12 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             break;
+        case 'u':
+            if (fieldName % "underField") {
+                underField = fieldValue;
+                return true;
+            }
+            break;
         case 'w':
             if (fieldName % "width") {
                 width = str_2_Uint(fieldValue);
@@ -316,6 +327,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> range;
     archive >> searchable;
     archive >> sortable;
+    archive >> underField;
     archive >> onDisplay;
     archive >> onAccept;
     archive >> onValidate;
@@ -346,6 +358,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << range;
     archive << searchable;
     archive << sortable;
+    archive << underField;
     archive << onDisplay;
     archive << onAccept;
     archive << onValidate;
@@ -401,6 +414,7 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "underField", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onAccept", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onValidate", T_TEXT, ++fieldNum);

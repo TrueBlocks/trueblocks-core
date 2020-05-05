@@ -41,6 +41,7 @@ class CSchema : public CBaseNode {
     bool range;
     bool searchable;
     bool sortable;
+    string_q underField;
     string_q onDisplay;
     string_q onAccept;
     string_q onValidate;
@@ -123,6 +124,7 @@ inline void CSchema::initialize(void) {
     range = false;
     searchable = false;
     sortable = false;
+    underField = "";
     onDisplay = "";
     onAccept = "";
     onValidate = "";
@@ -152,6 +154,7 @@ inline void CSchema::duplicate(const CSchema& sc) {
     range = sc.range;
     searchable = sc.searchable;
     sortable = sc.sortable;
+    underField = sc.underField;
     onDisplay = sc.onDisplay;
     onAccept = sc.onAccept;
     onValidate = sc.onValidate;

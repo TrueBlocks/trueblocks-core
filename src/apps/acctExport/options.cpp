@@ -145,6 +145,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+#ifdef MOCK_DATA
+    if (mockData)
+        return false;
+#endif
+
     // Once we know how many exported items there will be (see loadAllAppearances), we will decide
     // what to cache. If the user has either told us via the command line or the config file, we will
     // use those settings. By default, user and config cache settins are off (0), so if they are
@@ -363,7 +368,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT);
+    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_MOCKDATA);
     // Since we need prefunds, let's load the names library here
     CAccountName unused;
     getNamedAccount(unused, "0x0");
