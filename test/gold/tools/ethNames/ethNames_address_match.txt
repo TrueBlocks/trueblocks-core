@@ -758,6 +758,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "91-Friends",
+    "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
+    "name": "POAPTokenSender",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
     "name": "BitDegree Token",

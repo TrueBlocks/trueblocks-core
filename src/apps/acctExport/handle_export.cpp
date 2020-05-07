@@ -164,6 +164,8 @@ bool COptions::exportData(void) {
                         }
 
                     } else {
+                        toNameExistsMap[trans.to]++;
+                        fromNameExistsMap[trans.from]++;
                         // we only articulate the transaction if we're JSON
                         if (isJson && articulate)
                             abis.articulateTransaction(&trans);
@@ -211,6 +213,103 @@ bool COptions::exportData(void) {
         ostringstream os;
         os << ", \"addresses\": []\n";
         expContext().fmtMap["meta"] = expContext().fmtMap["meta"] + os.str();
+
+    } else {
+        CNameStatsArray fromUnnamed;
+        CNameStatsArray fromNamed;
+        for (auto addr : fromNameExistsMap) {
+            CAccountName acct;
+            acct.address = addr.first;
+            getNamedAccount(acct, addr.first);
+            if (acct.name.empty()) {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                fromUnnamed.push_back(stats);
+            } else {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                fromNamed.push_back(stats);
+            }
+        }
+
+        {
+            sort(fromNamed.begin(), fromNamed.end());
+            ostringstream os;
+            bool frst = true;
+            os << ", \"namedFrom\": {";
+            for (auto stats : fromNamed) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+                   << "\", \"count\": " << stats.count << " }";
+                frst = false;
+            }
+            os << "}\n";
+            expContext().fmtMap["meta"] += os.str();
+        }
+
+        {
+            sort(fromUnnamed.begin(), fromUnnamed.end());
+            ostringstream os;
+            os << ", \"unNamedFrom\": {";
+            bool frst = true;
+            for (auto stats : fromUnnamed) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": " << stats.count;
+                frst = false;
+            }
+            os << "}";
+            expContext().fmtMap["meta"] += os.str();
+        }
+
+        CNameStatsArray toUnnamed;
+        CNameStatsArray toNamed;
+        for (auto addr : toNameExistsMap) {
+            CAccountName acct;
+            acct.address = addr.first;
+            getNamedAccount(acct, addr.first);
+            if (isZeroAddr(acct.address)) {
+                acct.tags = "Contract Creation";
+                acct.name = "Contract Creation";
+            }
+            if (acct.name.empty()) {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                toUnnamed.push_back(stats);
+            } else {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                toNamed.push_back(stats);
+            }
+        }
+
+        {
+            sort(toNamed.begin(), toNamed.end());
+            ostringstream os;
+            bool frst = true;
+            os << ", \"namedTo\": {";
+            for (auto stats : toNamed) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+                   << "\", \"count\": " << stats.count << " }";
+                frst = false;
+            }
+            os << "}\n";
+            expContext().fmtMap["meta"] += os.str();
+        }
+
+        {
+            sort(toUnnamed.begin(), toUnnamed.end());
+            ostringstream os;
+            os << ", \"unNamedTo\": {";
+            bool frst = true;
+            for (auto stats : toUnnamed) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": " << stats.count;
+                frst = false;
+            }
+            os << "}";
+            expContext().fmtMap["meta"] += os.str();
+        }
     }
 
     for (auto watch : monitors)

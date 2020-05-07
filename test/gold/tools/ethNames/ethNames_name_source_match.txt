@@ -64,6 +64,18 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
+    "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
+    "name": "ChaiToken",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
     "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
     "name": "IBTC",
     "symbol": "IBTC",
@@ -262,6 +274,18 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "91-Friends",
+    "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
+    "name": "POAPTokenSender",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
     "is_custom": false,
     "is_prefund": false
   },
@@ -615,6 +639,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
+    "name": "CoinbaseTemporaryWallet",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x408e41876cccdc0f92210600ef50372656052a38",
     "name": "Republic Token",
@@ -723,6 +759,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x445b774c012c5418d6d885f6cbfeb049a7fe6558",
+    "name": "Everest",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x45e42d659d9f9466cd5df622506033145a9b89bc",
     "name": "Nexium",
@@ -766,6 +814,18 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On Chain",
     "decimals": 7,
     "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges.",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x4936790a58f5ae1c06210cba4eb1024fd7d535ac",
+    "name": "Katerium Airdrop",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
     "is_custom": false,
     "is_prefund": false
   },
@@ -862,6 +922,18 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "91-Friends",
+    "address": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+    "name": "CooperTurley",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
     "is_custom": false,
     "is_prefund": false
   },
@@ -1059,6 +1131,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants",
+    "address": "0x7c19252abedce09724bfc3549925d3ea12770156",
+    "name": "Gitcoin - CLR Test Token",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "90-DevCon2:Individual",
     "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
     "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
@@ -1088,6 +1172,18 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Grant 183 - Tasit Native Mobile Ethereum Dapps",
     "symbol": "",
     "source": "GitCoin Website",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "80-Malicious",
+    "address": "0x7e4faec4d65db6f784599cd7aab8bc304903fd61",
+    "name": "Lendf.MeHackerRelated",
+    "symbol": "",
+    "source": "EtherScan",
     "decimals": 0,
     "description": "",
     "is_custom": false,
@@ -1169,8 +1265,8 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-    "name": "Dai Stablecoin v1.0",
-    "symbol": "DAI",
+    "name": "Sia Stablecoin v1.0",
+    "symbol": "SAI",
     "source": "Etherscan.io",
     "decimals": 0,
     "description": "",
@@ -1443,6 +1539,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts:Giveth",
+    "address": "0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343",
+    "name": "CommonsStackSender",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens",
     "address": "0xb5a5f22694352c15b00323844ad545abb2b11028",
     "name": "ICON Old Token",
@@ -1551,6 +1659,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
+    "name": "CoinbaseTemporaryWallet",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants",
     "address": "0xbc11295936aa79d594139de1b2e12629414f3bdb",
     "name": "Grant 142 - Nethermind & Grant 273 - History As A Service Untrusted Db",
@@ -1582,6 +1702,18 @@ ethNames Ether --expand --verbose --fmt json
     "source": "Etherscan.io",
     "decimals": 0,
     "description": "Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses.",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0xbe90d4bbe667196b8d36313e92db5c53c19e391b",
+    "name": "KateriumAirdropSender",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
     "is_custom": false,
     "is_prefund": false
   },
@@ -1791,6 +1923,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0xdca7ef03e98e0dc2b855be647c39abe984fcf21b",
+    "name": "EthereumDIDRegistry",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants",
     "address": "0xdcab3ac98dc87a1eb85cf9f81cf75c09ee8e7e5a",
     "name": "Grant 197 - Play Ethereum 2",
@@ -1839,6 +1983,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants",
+    "address": "0xdf869fad6db91f437b59f1edefab319493d4c4ce",
+    "name": "Gitcoin Splitter",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens",
     "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
     "name": "DGD Token",
@@ -1858,6 +2014,18 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "Description: 0x is an open, permissionless protocol allowing for tokens to be traded on the Ethereum blockchain.",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
+    "tags": "91-Friends",
+    "address": "0xe583f95bf95d0883f94efe844442c8bfc9dd7a7f",
+    "name": "PoapTokenMinter",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
     "is_custom": false,
     "is_prefund": false
   },

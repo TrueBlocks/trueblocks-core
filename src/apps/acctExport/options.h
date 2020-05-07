@@ -24,7 +24,34 @@
 #define CACHE_BYUSER (1 << 5)
 #define CACHE_BYDEFAULT (1 << 6)
 
-using uint_addr_mp = map<uint32_t, address_t>;
+//-----------------------------------------------------------------------
+class CNameStats {
+  public:
+    address_t address;
+    string_q tags;
+    string_q name;
+    uint64_t count;
+    CNameStats(const address_t& a, const string_q& t, const string_q& n, uint64_t c = 0) {
+        address = a;
+        tags = t;
+        name = n;
+        count = c;
+    }
+
+  private:
+    CNameStats() {
+    }
+};
+typedef vector<CNameStats> CNameStatsArray;
+//-------------------------------------------------------------------------
+inline bool operator<(const CNameStats& v1, const CNameStats& v2) {
+    if (v1.count != v2.count)
+        return v1.count > v2.count;  // We want to sort reverse by count
+    return v1.address < v2.address;
+}
+
+using uint_addr_map_t = map<uint32_t, address_t>;
+using addr_name_map_t = map<address_t, uint64_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -54,9 +81,11 @@ class COptions : public COptionsBase {
     size_t nExported;
     string_q className;
     address_t hackAppAddr;
-    uint_addr_mp prefundAddrMap;
-    uint_addr_mp blkRewardMap;
+    uint_addr_map_t prefundAddrMap;
+    uint_addr_map_t blkRewardMap;
     map<address_t, bool> abiMap;
+    addr_name_map_t toNameExistsMap;
+    addr_name_map_t fromNameExistsMap;
     uint32_t* ts_array;
     size_t ts_cnt;
     blknum_t latestBlock;

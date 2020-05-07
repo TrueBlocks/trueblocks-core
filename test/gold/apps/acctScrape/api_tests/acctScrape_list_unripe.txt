@@ -45,6 +45,10 @@
     "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "client": "0xdeadbeef",
+    "namedFrom": {},
+    "unNamedFrom": {},
+    "namedTo": {},
+    "unNamedTo": {}
   }
 }

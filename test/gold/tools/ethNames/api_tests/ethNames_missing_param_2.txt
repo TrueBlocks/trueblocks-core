@@ -245,6 +245,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
+      "decimals": "0"
+    },
+    {
       "address": "0x06b2387c7f56ecb61009bb31375b84e4be7f80b3",
       "decimals": "0"
     },
@@ -798,10 +802,6 @@
     },
     {
       "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
-      "decimals": 8
-    },
-    {
-      "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
       "decimals": 8
     }
   ],

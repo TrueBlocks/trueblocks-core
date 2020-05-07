@@ -22,12 +22,14 @@
         "articulatedTx": {},
         "traces": [],
         "gasCost": 0,
+        "function": "",
         "gasUsed": 0,
         "date": "2015-07-30 15:26:00 UTC",
         "datesh": "2015-07-30",
         "time": "5:26:00 UTC",
         "age": "100",
-        "ether": 440
+        "ether": 440,
+        "encoding": ""
       }
     ]
   ],
@@ -96,6 +98,10 @@
           "type": "wei"
         },
         {
+          "name": "function",
+          "type": "text"
+        },
+        {
           "name": "gasUsed",
           "type": "gas"
         },
@@ -118,6 +124,10 @@
         {
           "name": "ether",
           "type": "ether"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
         }
       ]
     }
@@ -127,6 +137,18 @@
     "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
+    "client": "0xdeadbeef",
+    "namedFrom": {},
+    "unNamedFrom": {
+      "0xPrefund": 1
+    },
+    "namedTo": {
+      "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed": {
+        "tags": "80-Prefund",
+        "name": "Prefund_8794",
+        "count": 1
+      }
+    },
+    "unNamedTo": {}
   }
 }

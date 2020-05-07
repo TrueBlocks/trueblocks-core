@@ -64,6 +64,7 @@
 "50-Tokens:ERC20","0x06147110022b768ba8f99a8f385df11a151a9cc8","ACE Token","ACE","",""
 "31-Gitcoin Grants","0x0639092a9c3d9467dd6f89a13213541c8a1e58b2","Grant 194 - Reach Platform","","",""
 "31-Gitcoin Grants","0x068792edecad424d42f0f45de7f693ca33526cf1","Grant 075 - Ethereum Dev Fund Working Group","","",""
+"50-Tokens:ERC20","0x06af07097c9eeb7fd685c692751d5c66db49c215","ChaiToken","","",""
 "60-Airdrops","0x06b2387c7f56ecb61009bb31375b84e4be7f80b3","HEALP Airdrop","HEALP","",""
 "50-Tokens:ERC20","0x0707681f344deb24184037fc0228856f2137b02e","FNKOSToken","FNKOS","","18"
 "60-Airdrops","0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78","RZM Airdrop Sender","","",""
@@ -199,4 +200,3 @@
 "50-Tokens:ERC20","0x1602af2c782cc03f9241992e243290fccf73bb13","Qubitica","QBIT","","18"
 "80-Malicious","0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3","Possibly Malicious 0x160","","",""
 "60-Airdrops","0x160e529055d084add9634fe1c2059109c8ce044e","Jury.Online Airdrop Sender","","",""
-"50-Tokens:ERC20","0x168296bb09e24a88805cb9c33356536b980d3fc5","RHOC","RHOC","","8"

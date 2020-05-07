@@ -7,7 +7,7 @@
       "tags": "30-Contracts"
     },
     {
-      "tags": "30-Contracts:Giveeth"
+      "tags": "30-Contracts:Giveth"
     },
     {
       "tags": "30-Contracts:Moloch"

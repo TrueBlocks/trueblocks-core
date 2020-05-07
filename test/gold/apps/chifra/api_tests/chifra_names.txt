@@ -423,6 +423,18 @@
     {
       "deleted": false,
       "tags": "50-Tokens:ERC20",
+      "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
+      "name": "ChaiToken",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
       "address": "0x0707681f344deb24184037fc0228856f2137b02e",
       "name": "FNKOSToken",
       "symbol": "FNKOS",
@@ -2397,18 +2409,6 @@
       "source": "On Chain",
       "decimals": 4,
       "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x27695e09149adc738a978e9a678f99e4c39e9eb9",
-      "name": "KickCoin",
-      "symbol": "KICK",
-      "source": "On Chain",
-      "decimals": 8,
-      "description": "KICKICO is a platform for safe and easy fundraising for ICO, preICO, crowdfunding and crowdinvesting.",
       "is_custom": false,
       "is_prefund": false
     }

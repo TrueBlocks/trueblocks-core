@@ -223,7 +223,8 @@ bool COptions::parseArguments(string_q& command) {
     // SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
     // SEP4("default field showing: " + defShow);
-    manageFields(defShow, true);
+    string_q show = defShow + (isApiMode() ? "|CTransaction:encoding,function" : "");
+    manageFields(show, true);
 
     CToml toml(getMonitorCnfg(monitors[0].address));
     // SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));

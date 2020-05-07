@@ -3,7 +3,7 @@ ethNames --tags
 tags
 
 30-Contracts
-30-Contracts:Giveeth
+30-Contracts:Giveth
 30-Contracts:Moloch
 30-Contracts:dAppNode
 31-Gitcoin Grants

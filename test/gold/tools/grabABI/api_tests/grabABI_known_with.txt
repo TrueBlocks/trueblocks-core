@@ -201,12 +201,36 @@
       "output_names": ""
     },
     {
+      "name": "tokensReceived",
+      "type": "function",
+      "signature": "tokensReceived(address,address,address,uint256,bytes,bytes)",
+      "encoding": "0x0023de29",
+      "input_names": "operator,from,to,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "withdraw",
+      "type": "function",
+      "signature": "withdraw(uint256,address)",
+      "encoding": "0x00f714ce",
+      "input_names": "amount,payable dest,",
+      "output_names": ""
+    },
+    {
       "name": "balanceOf",
       "type": "function",
       "signature": "balanceOf(address,uint256)",
       "encoding": "0x00fdd58e",
       "input_names": "_owner,_id,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "ProxyCreated",
+      "type": "event",
+      "signature": "ProxyCreated(address)",
+      "encoding": "0x00fffc2da0b561cae30d9826d37709e9421c4725faebc226cbbb7ef5fc5e7349",
+      "input_names": "proxy,",
+      "output_names": ""
     },
     {
       "name": "create",
@@ -217,6 +241,14 @@
       "output_names": "_id,"
     },
     {
+      "name": "vote",
+      "type": "function",
+      "signature": "vote(uint256)",
+      "encoding": "0x0121b93f",
+      "input_names": "videoID,",
+      "output_names": ""
+    },
+    {
       "name": "tokenToEthSwapOutput",
       "type": "function",
       "signature": "tokenToEthSwapOutput(uint256,uint256,uint256)",
@@ -225,12 +257,44 @@
       "output_names": "out,"
     },
     {
+      "name": "_setTokenURI",
+      "type": "function",
+      "signature": "_setTokenURI(uint256,string)",
+      "encoding": "0x01538868",
+      "input_names": "tokenId,_tokenURI,",
+      "output_names": ""
+    },
+    {
+      "name": "_updateTotalSupplySnapshot",
+      "type": "function",
+      "signature": "_updateTotalSupplySnapshot()",
+      "encoding": "0x01918c99",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "numOfAdmins",
+      "type": "function",
+      "signature": "numOfAdmins()",
+      "encoding": "0x0191dc92",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_admin",
+      "type": "function",
+      "signature": "_admin()",
+      "encoding": "0x01bc45c9",
+      "input_names": "",
+      "output_names": "adm,"
+    },
+    {
       "name": "supportsInterface",
       "type": "function",
       "signature": "supportsInterface(bytes4)",
       "encoding": "0x01ffc9a7",
-      "input_names": "interfaceID,",
-      "output_names": "ret_0,"
+      "input_names": "_interfaceID,",
+      "output_names": "val_0,"
     },
     {
       "name": "owners",
@@ -249,11 +313,51 @@
       "output_names": ""
     },
     {
+      "name": "cfoAddress",
+      "type": "function",
+      "signature": "cfoAddress()",
+      "encoding": "0x0519ce79",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "tokenMetadata",
+      "type": "function",
+      "signature": "tokenMetadata(uint256,string)",
+      "encoding": "0x0560ff44",
+      "input_names": "_tokenId,_preferredTransport,",
+      "output_names": "infoUrl,"
+    },
+    {
+      "name": "promoCreatedCount",
+      "type": "function",
+      "signature": "promoCreatedCount()",
+      "encoding": "0x05e45546",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "revoke",
+      "type": "function",
+      "signature": "revoke(address[])",
+      "encoding": "0x05f203d9",
+      "input_names": "oldAdmins,",
+      "output_names": ""
+    },
+    {
       "name": "AddLiquidity",
       "type": "event",
       "signature": "AddLiquidity(address,uint256,uint256)",
       "encoding": "0x06239653922ac7bea6aa2b19dc486b9361821d37712eb796adfd38d81de278ca",
       "input_names": "provider,eth_amount,token_amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_registerInterface",
+      "type": "function",
+      "signature": "_registerInterface(bytes4)",
+      "encoding": "0x068417d9",
+      "input_names": "interfaceId,",
       "output_names": ""
     },
     {
@@ -278,7 +382,15 @@
       "signature": "name()",
       "encoding": "0x06fdde03",
       "input_names": "",
-      "output_names": "_name,"
+      "output_names": "val_0,"
+    },
+    {
+      "name": "deployERC1820Implementer",
+      "type": "function",
+      "signature": "deployERC1820Implementer(uint256,bytes32)",
+      "encoding": "0x076c37b2",
+      "input_names": "value,salt,",
+      "output_names": ""
     },
     {
       "name": "getERC20",
@@ -297,11 +409,27 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "callback",
+      "type": "function",
+      "signature": "callback()",
+      "encoding": "0x083b2732",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "_doSafeTransferAcceptanceCheck",
       "type": "function",
       "signature": "_doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes)",
       "encoding": "0x084e9e24",
       "input_names": "_operator,_from,_to,_id,_value,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "RefundsClosed",
+      "type": "event",
+      "signature": "RefundsClosed()",
+      "encoding": "0x088672c3a6e342f7cd94a65ba63b79df24a8973927b4d05d803c44bbf787d12f",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -325,7 +453,47 @@
       "type": "function",
       "signature": "approve(address,uint256)",
       "encoding": "0x095ea7b3",
-      "input_names": "_approved,_tokenId,",
+      "input_names": "_to,_tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "participants",
+      "type": "function",
+      "signature": "participants(address)",
+      "encoding": "0x09e69ede",
+      "input_names": "participant,",
+      "output_names": "index,payable addr,paid,"
+    },
+    {
+      "name": "ceoAddress",
+      "type": "function",
+      "signature": "ceoAddress()",
+      "encoding": "0x0a0f8168",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "callSender",
+      "type": "function",
+      "signature": "callSender(bytes4)",
+      "encoding": "0x0a2df1ed",
+      "input_names": "data,",
+      "output_names": ""
+    },
+    {
+      "name": "add",
+      "type": "function",
+      "signature": "add(address)",
+      "encoding": "0x0a3b0a4f",
+      "input_names": "value,",
+      "output_names": ""
+    },
+    {
+      "name": "Birth",
+      "type": "event",
+      "signature": "Birth(address,uint256,uint256,uint256,uint256)",
+      "encoding": "0x0a5311bd2a6608f08a180df2ee7c5946819a649b204b554bb8e39825b2c50ad5",
+      "input_names": "owner,kittyId,matronId,sireId,genes,",
       "output_names": ""
     },
     {
@@ -337,12 +505,44 @@
       "output_names": "out,"
     },
     {
+      "name": "multisendToken",
+      "type": "function",
+      "signature": "multisendToken(address,address[],uint256[])",
+      "encoding": "0x0b66f3f5",
+      "input_names": "token,_contributors,_balances,",
+      "output_names": ""
+    },
+    {
+      "name": "_computeCharge",
+      "type": "function",
+      "signature": "_computeCharge(uint256,uint256,uint256)",
+      "encoding": "0x0bb1d23d",
+      "input_names": "gas,gasPrice,serviceFee,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "toUint8",
+      "type": "function",
+      "signature": "toUint8(uint256)",
+      "encoding": "0x0cc4681e",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "childContractByIndex",
       "type": "function",
       "signature": "childContractByIndex(uint256,uint256)",
       "encoding": "0x0d5a621b",
       "input_names": "_tokenId,_index,",
       "output_names": "childContract,"
+    },
+    {
+      "name": "GEN0_STARTING_PRICE",
+      "type": "function",
+      "signature": "GEN0_STARTING_PRICE()",
+      "encoding": "0x0e583df0",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "uri",
@@ -377,11 +577,67 @@
       "output_names": ""
     },
     {
+      "name": "Unstaked",
+      "type": "event",
+      "signature": "Unstaked(address,uint256)",
+      "encoding": "0x0f5bb82176feb1b5e747e28471aa92156a04d9f3ab9f45f28e2d704232b93f75",
+      "input_names": "relay,stake,",
+      "output_names": ""
+    },
+    {
+      "name": "duration",
+      "type": "function",
+      "signature": "duration()",
+      "encoding": "0x0fb5a6b4",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "RemoveLiquidity",
       "type": "event",
       "signature": "RemoveLiquidity(address,uint256,uint256)",
       "encoding": "0x0fbf06c058b90cb038a618f8c2acbf6145f8b3570fd1fa56abb8f0f3f05b36e8",
       "input_names": "provider,eth_amount,token_amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_approve",
+      "type": "function",
+      "signature": "_approve(address,address,uint256)",
+      "encoding": "0x104e81ff",
+      "input_names": "owner,spender,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "decreaseAllowance",
+      "type": "function",
+      "signature": "decreaseAllowance(uint256)",
+      "encoding": "0x10bad4cf",
+      "input_names": "amount,",
+      "output_names": ""
+    },
+    {
+      "name": "registerRelay",
+      "type": "function",
+      "signature": "registerRelay(uint256,string)",
+      "encoding": "0x1166073a",
+      "input_names": "transactionFee,url,",
+      "output_names": ""
+    },
+    {
+      "name": "_msgSender",
+      "type": "function",
+      "signature": "_msgSender()",
+      "encoding": "0x119df25f",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "increaseAllowance",
+      "type": "function",
+      "signature": "increaseAllowance(uint256)",
+      "encoding": "0x11e330b2",
+      "input_names": "amount,",
       "output_names": ""
     },
     {
@@ -393,11 +649,59 @@
       "output_names": "ret_0,ret_1,ret_2,"
     },
     {
+      "name": "ended",
+      "type": "function",
+      "signature": "ended()",
+      "encoding": "0x12fa6feb",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_vestedAmount",
+      "type": "function",
+      "signature": "_vestedAmount(IERC20)",
+      "encoding": "0x134208f3",
+      "input_names": "token,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "countAndCall",
+      "type": "function",
+      "signature": "countAndCall(ReentrancyAttack)",
+      "encoding": "0x1364184b",
+      "input_names": "attacker,",
+      "output_names": ""
+    },
+    {
       "name": "setOwner",
       "type": "function",
       "signature": "setOwner(address)",
       "encoding": "0x13af4035",
       "input_names": "owner_,",
+      "output_names": ""
+    },
+    {
+      "name": "cliff",
+      "type": "function",
+      "signature": "cliff()",
+      "encoding": "0x13d033c0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setSiringAuctionAddress",
+      "type": "function",
+      "signature": "setSiringAuctionAddress(address)",
+      "encoding": "0x14001f4c",
+      "input_names": "_address,",
+      "output_names": ""
+    },
+    {
+      "name": "Staked",
+      "type": "event",
+      "signature": "Staked(address,uint256,uint256)",
+      "encoding": "0x1449c6dd7851abc30abf37f57715f492010519147cc2652fbc38202c18a6ee90",
+      "input_names": "relay,stake,unstakeDelay,",
       "output_names": ""
     },
     {
@@ -423,6 +727,14 @@
       "encoding": "0x160b01a1",
       "input_names": "_tokenId,_childContract,_index,",
       "output_names": "childTokenId,"
+    },
+    {
+      "name": "setTokenURI",
+      "type": "function",
+      "signature": "setTokenURI(uint256,string)",
+      "encoding": "0x162094c4",
+      "input_names": "tokenId,uri,",
+      "output_names": ""
     },
     {
       "name": "isContract",
@@ -462,7 +774,7 @@
       "signature": "totalSupply()",
       "encoding": "0x18160ddd",
       "input_names": "",
-      "output_names": "ret_0,"
+      "output_names": "val_0,"
     },
     {
       "name": "poke",
@@ -473,12 +785,60 @@
       "output_names": ""
     },
     {
+      "name": "pregnantKitties",
+      "type": "function",
+      "signature": "pregnantKitties()",
+      "encoding": "0x183a7947",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "recover",
+      "type": "function",
+      "signature": "recover(bytes32,bytes)",
+      "encoding": "0x19045a25",
+      "input_names": "hash,signature,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "release",
+      "type": "function",
+      "signature": "release(address)",
+      "encoding": "0x19165587",
+      "input_names": "payable account,",
+      "output_names": ""
+    },
+    {
+      "name": "isPregnant",
+      "type": "function",
+      "signature": "isPregnant(uint256)",
+      "encoding": "0x1940a936",
+      "input_names": "_kittyId,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "GEN0_AUCTION_DURATION",
+      "type": "function",
+      "signature": "GEN0_AUCTION_DURATION()",
+      "encoding": "0x19c2f201",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "compute",
       "type": "function",
       "signature": "compute()",
       "encoding": "0x1a43c338",
       "input_names": "",
       "output_names": "val_0,val_1,"
+    },
+    {
+      "name": "register",
+      "type": "function",
+      "signature": "register()",
+      "encoding": "0x1aa3a008",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "LogSetAuthority",
@@ -497,12 +857,68 @@
       "output_names": "ret_0,ret_1,ret_2,"
     },
     {
+      "name": "_asyncTransfer",
+      "type": "function",
+      "signature": "_asyncTransfer(address,uint256)",
+      "encoding": "0x1bddcf48",
+      "input_names": "dest,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "AdminGranted",
+      "type": "event",
+      "signature": "AdminGranted(address)",
+      "encoding": "0x1c4e23de8d72c94b22992bd4d7b6786b215ba876af214ff63e6a0ca38fc97af4",
+      "input_names": "grantee,",
+      "output_names": ""
+    },
+    {
       "name": "safeTransferChild",
       "type": "function",
       "signature": "safeTransferChild(uint256,address,address,uint256)",
       "encoding": "0x1d98f3c5",
       "input_names": "_fromTokenId,_to,_childContract,_childTokenId,",
       "output_names": ""
+    },
+    {
+      "name": "getContract",
+      "type": "function",
+      "signature": "getContract(uint64[3])",
+      "encoding": "0x1df40eaa",
+      "input_names": "semanticVersion,",
+      "output_names": "contractAddress,"
+    },
+    {
+      "name": "grant",
+      "type": "function",
+      "signature": "grant(address[])",
+      "encoding": "0x1e3c9352",
+      "input_names": "newAdmins,",
+      "output_names": ""
+    },
+    {
+      "name": "setRoleAdmin",
+      "type": "function",
+      "signature": "setRoleAdmin(bytes32,bytes32)",
+      "encoding": "0x1e4e0091",
+      "input_names": "roleId,adminRoleId,",
+      "output_names": ""
+    },
+    {
+      "name": "length",
+      "type": "function",
+      "signature": "length()",
+      "encoding": "0x1f7b6d32",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_checkOnERC721Received",
+      "type": "function",
+      "signature": "_checkOnERC721Received(address,address,uint256,bytes)",
+      "encoding": "0x1fd01de1",
+      "input_names": "from,to,tokenId,_data,",
+      "output_names": "ret_0,"
     },
     {
       "name": "setShouldRejectClash",
@@ -513,12 +929,60 @@
       "output_names": ""
     },
     {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(UintToAddressMap,uint256)",
+      "encoding": "0x20a7c3a1",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "revokeConfirmation",
       "type": "function",
       "signature": "revokeConfirmation(uint256)",
       "encoding": "0x20ea8d86",
       "input_names": "transactionId,",
       "output_names": ""
+    },
+    {
+      "name": "_supportsERC165Interface",
+      "type": "function",
+      "signature": "_supportsERC165Interface(address,bytes4)",
+      "encoding": "0x20f10ae7",
+      "input_names": "account,interfaceId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "registerInterface",
+      "type": "function",
+      "signature": "registerInterface(bytes4)",
+      "encoding": "0x214cdb80",
+      "input_names": "interfaceId,",
+      "output_names": ""
+    },
+    {
+      "name": "siringAuction",
+      "type": "function",
+      "signature": "siringAuction()",
+      "encoding": "0x21717ebf",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transferInternal",
+      "type": "function",
+      "signature": "transferInternal(address,address,uint256)",
+      "encoding": "0x222f5be0",
+      "input_names": "from,to,value,",
+      "output_names": ""
+    },
+    {
+      "name": "_remove",
+      "type": "function",
+      "signature": "_remove(Map,bytes32)",
+      "encoding": "0x22c0ac93",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
     },
     {
       "name": "transferFrom",
@@ -529,12 +993,68 @@
       "output_names": ""
     },
     {
+      "name": "_move",
+      "type": "function",
+      "signature": "_move(address,address,address,uint256,bytes,bytes)",
+      "encoding": "0x23d40f1e",
+      "input_names": "operator,from,to,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "Pregnant",
+      "type": "event",
+      "signature": "Pregnant(address,uint256,uint256,uint256)",
+      "encoding": "0x241ea03ca20251805084d27d4440371c34a0b85ff108f6bb5611248f73818b80",
+      "input_names": "owner,matronId,sireId,cooldownEndBlock,",
+      "output_names": ""
+    },
+    {
+      "name": "getRoleAdmin",
+      "type": "function",
+      "signature": "getRoleAdmin(bytes32)",
+      "encoding": "0x248a9ca3",
+      "input_names": "role,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "canImplementInterfaceForAddress",
       "type": "function",
       "signature": "canImplementInterfaceForAddress(bytes32,address)",
       "encoding": "0x249cb3fa",
       "input_names": "interfaceHash,addr,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "sendValue",
+      "type": "function",
+      "signature": "sendValue(address,uint256)",
+      "encoding": "0x24a084df",
+      "input_names": "payable receiver,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_safeTransfer",
+      "type": "function",
+      "signature": "_safeTransfer(address,address,uint256,bytes)",
+      "encoding": "0x24b6b8c0",
+      "input_names": "from,to,tokenId,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "isAdmin",
+      "type": "function",
+      "signature": "isAdmin(address)",
+      "encoding": "0x24d7806c",
+      "input_names": "admin,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setGeneScienceAddress",
+      "type": "function",
+      "signature": "setGeneScienceAddress(address)",
+      "encoding": "0x24e7a38a",
+      "input_names": "_address,",
+      "output_names": ""
     },
     {
       "name": "transferWithData",
@@ -553,11 +1073,75 @@
       "output_names": "out,"
     },
     {
+      "name": "toUint64",
+      "type": "function",
+      "signature": "toUint64(uint256)",
+      "encoding": "0x2665fad0",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "mintEventToManyUsers",
+      "type": "function",
+      "signature": "mintEventToManyUsers(uint256,address[])",
+      "encoding": "0x278d9c41",
+      "input_names": "eventId,to,",
+      "output_names": ""
+    },
+    {
+      "name": "getImplementation",
+      "type": "function",
+      "signature": "getImplementation(string,string)",
+      "encoding": "0x27a0d669",
+      "input_names": "packageName,contractName,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setCEO",
+      "type": "function",
+      "signature": "setCEO(address)",
+      "encoding": "0x27d7874c",
+      "input_names": "_newCEO,",
+      "output_names": ""
+    },
+    {
       "name": "set",
       "type": "function",
       "signature": "set(address)",
       "encoding": "0x2801617e",
       "input_names": "wat,",
+      "output_names": ""
+    },
+    {
+      "name": "_send",
+      "type": "function",
+      "signature": "_send(address,address,uint256,bytes,bytes,bool)",
+      "encoding": "0x282ea174",
+      "input_names": "from,to,amount,userData,operatorData,requireReceptionAck,",
+      "output_names": ""
+    },
+    {
+      "name": "_callTokensToSend",
+      "type": "function",
+      "signature": "_callTokensToSend(address,address,address,uint256,bytes,bytes)",
+      "encoding": "0x28ba5e67",
+      "input_names": "operator,from,to,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "Received",
+      "type": "event",
+      "signature": "Received(address,address,uint256,bytes,uint256)",
+      "encoding": "0x28fa6e16458f9c24aa59ddd4085264573006dbe30304837873c7deafc702b038",
+      "input_names": "operator,from,tokenId,data,gas,",
+      "output_names": ""
+    },
+    {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(address)",
+      "encoding": "0x29092d0e",
+      "input_names": "value,",
       "output_names": ""
     },
     {
@@ -577,6 +1161,78 @@
       "output_names": ""
     },
     {
+      "name": "canRelay",
+      "type": "function",
+      "signature": "canRelay(address,address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+      "encoding": "0x2b601747",
+      "input_names": "relay,from,to,encodedFunction,transactionFee,gasPrice,gasLimit,nonce,signature,approvalData,",
+      "output_names": "status,recipientContext,"
+    },
+    {
+      "name": "average",
+      "type": "function",
+      "signature": "average(uint256,uint256)",
+      "encoding": "0x2b7423ab",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setCOO",
+      "type": "function",
+      "signature": "setCOO(address)",
+      "encoding": "0x2ba73c15",
+      "input_names": "_newCOO,",
+      "output_names": ""
+    },
+    {
+      "name": "decrement",
+      "type": "function",
+      "signature": "decrement()",
+      "encoding": "0x2baeceb7",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "deploy",
+      "type": "function",
+      "signature": "deploy(string,uint256,uint256,uint256,address,address)",
+      "encoding": "0x2be72cd5",
+      "input_names": "_name,_deposit,_limitOfParticipants,_coolingPeriod,payable _ownerAddress,_tokenAddress,",
+      "output_names": "c,"
+    },
+    {
+      "name": "_revokeRole",
+      "type": "function",
+      "signature": "_revokeRole(bytes32,address)",
+      "encoding": "0x2c95bd23",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "_willFallback",
+      "type": "function",
+      "signature": "_willFallback()",
+      "encoding": "0x2ce14d90",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "getNonce",
+      "type": "function",
+      "signature": "getNonce(address)",
+      "encoding": "0x2d0335ab",
+      "input_names": "from,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "Deposited",
+      "type": "event",
+      "signature": "Deposited(address,uint256)",
+      "encoding": "0x2da466a7b24304f47e87fa2e1e5a81b9831ce54fec19055ce277ca2f39ba42c4",
+      "input_names": "payee,weiAmount,",
+      "output_names": ""
+    },
+    {
       "name": "indexes",
       "type": "function",
       "signature": "indexes(address)",
@@ -585,11 +1241,43 @@
       "output_names": "val_0,"
     },
     {
+      "name": "registered",
+      "type": "function",
+      "signature": "registered()",
+      "encoding": "0x2de40ce3",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_lastSnapshotId",
+      "type": "function",
+      "signature": "_lastSnapshotId(uint256[])",
+      "encoding": "0x2e138e7a",
+      "input_names": "ids,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "callSender",
+      "type": "function",
+      "signature": "callSender(ContextMock)",
+      "encoding": "0x2e4de139",
+      "input_names": "context,",
+      "output_names": ""
+    },
+    {
       "name": "safeBatchTransferFrom",
       "type": "function",
       "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
       "encoding": "0x2eb2c2d6",
       "input_names": "_from,_to,_ids,_values,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "revoke",
+      "type": "function",
+      "signature": "revoke(IERC20)",
+      "encoding": "0x2eeb0a7a",
+      "input_names": "token,",
       "output_names": ""
     },
     {
@@ -601,12 +1289,44 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "grantRole",
+      "type": "function",
+      "signature": "grantRole(bytes32,address)",
+      "encoding": "0x2f2ff15d",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "set",
+      "type": "function",
+      "signature": "set(uint256,address)",
+      "encoding": "0x2f30c6f6",
+      "input_names": "key,value,",
+      "output_names": ""
+    },
+    {
       "name": "isOwner",
       "type": "function",
       "signature": "isOwner(address)",
       "encoding": "0x2f54bf6e",
       "input_names": "_addr,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "tokenOfOwnerByIndex",
+      "type": "function",
+      "signature": "tokenOfOwnerByIndex(address,uint256)",
+      "encoding": "0x2f745c59",
+      "input_names": "owner,index,",
+      "output_names": "tokenId,"
+    },
+    {
+      "name": "RoleGranted",
+      "type": "event",
+      "signature": "RoleGranted(bytes32,address,address)",
+      "encoding": "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d",
+      "input_names": "role,account,sender,",
+      "output_names": ""
     },
     {
       "name": "Minted",
@@ -617,12 +1337,52 @@
       "output_names": ""
     },
     {
+      "name": "_transfer",
+      "type": "function",
+      "signature": "_transfer(address,address,uint256)",
+      "encoding": "0x30e0789e",
+      "input_names": "sender,recipient,amount,",
+      "output_names": ""
+    },
+    {
       "name": "decimals",
       "type": "function",
       "signature": "decimals()",
       "encoding": "0x313ce567",
       "input_names": "",
-      "output_names": "out,"
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getAdmins",
+      "type": "function",
+      "signature": "getAdmins()",
+      "encoding": "0x31ae450b",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
+      "name": "withdrawPayments",
+      "type": "function",
+      "signature": "withdrawPayments(address)",
+      "encoding": "0x31b3eb94",
+      "input_names": "payable payee,",
+      "output_names": ""
+    },
+    {
+      "name": "_setBaseURI",
+      "type": "function",
+      "signature": "_setBaseURI(string)",
+      "encoding": "0x31b5b907",
+      "input_names": "baseURI_,",
+      "output_names": ""
+    },
+    {
+      "name": "_pause",
+      "type": "function",
+      "signature": "_pause()",
+      "encoding": "0x320b2ad9",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "FunctionUpdate",
@@ -630,6 +1390,14 @@
       "signature": "FunctionUpdate(bytes4,address,address,string)",
       "encoding": "0x3234040ce3bd4564874e44810f198910133a1b24c4e84aac87edbf6b458f5353",
       "input_names": "functionId,oldDelegate,newDelegate,functionSignature,",
+      "output_names": ""
+    },
+    {
+      "name": "doWithdraw",
+      "type": "function",
+      "signature": "doWithdraw(address,uint256)",
+      "encoding": "0x3381114b",
+      "input_names": "payable,val_0,",
       "output_names": ""
     },
     {
@@ -641,6 +1409,14 @@
       "output_names": ""
     },
     {
+      "name": "findUpperBound",
+      "type": "function",
+      "signature": "findUpperBound(uint256)",
+      "encoding": "0x33e3a58a",
+      "input_names": "element,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "confirmations",
       "type": "function",
       "signature": "confirmations(uint256,address)",
@@ -649,11 +1425,115 @@
       "output_names": "val_0,"
     },
     {
+      "name": "_upgradeTo",
+      "type": "function",
+      "signature": "_upgradeTo(address)",
+      "encoding": "0x34140748",
+      "input_names": "newImplementation,",
+      "output_names": ""
+    },
+    {
+      "name": "cap",
+      "type": "function",
+      "signature": "cap()",
+      "encoding": "0x355274ea",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "totalChildTokens",
       "type": "function",
       "signature": "totalChildTokens(uint256,address)",
       "encoding": "0x35b21ceb",
       "input_names": "_tokenId,_childContract,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "hasVersion",
+      "type": "function",
+      "signature": "hasVersion(uint64[3])",
+      "encoding": "0x35ce4016",
+      "input_names": "semanticVersion,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "renounceRole",
+      "type": "function",
+      "signature": "renounceRole(bytes32,address)",
+      "encoding": "0x36568abe",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "upgradeTo",
+      "type": "function",
+      "signature": "upgradeTo(address)",
+      "encoding": "0x3659cfe6",
+      "input_names": "newImplementation,",
+      "output_names": ""
+    },
+    {
+      "name": "msgData",
+      "type": "function",
+      "signature": "msgData(uint256,string)",
+      "encoding": "0x376bf262",
+      "input_names": "integerValue,stringValue,",
+      "output_names": ""
+    },
+    {
+      "name": "beneficiary",
+      "type": "function",
+      "signature": "beneficiary()",
+      "encoding": "0x38af3eed",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "penalizeIllegalTransaction",
+      "type": "function",
+      "signature": "penalizeIllegalTransaction(bytes,bytes)",
+      "encoding": "0x39002432",
+      "input_names": "unsignedTx,signature,",
+      "output_names": ""
+    },
+    {
+      "name": "safeIncreaseAllowance",
+      "type": "function",
+      "signature": "safeIncreaseAllowance(IERC20,address,uint256)",
+      "encoding": "0x390cc046",
+      "input_names": "token,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "increaseAllowance",
+      "type": "function",
+      "signature": "increaseAllowance(address,uint256)",
+      "encoding": "0x39509351",
+      "input_names": "spender,addedValue,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "TokenVestingRevoked",
+      "type": "event",
+      "signature": "TokenVestingRevoked(address)",
+      "encoding": "0x39983c6d4d174a7aee564f449d4a5c3c7ac9649d72b7793c56901183996f8af6",
+      "input_names": "token,",
+      "output_names": ""
+    },
+    {
+      "name": "_setAdmin",
+      "type": "function",
+      "signature": "_setAdmin(address)",
+      "encoding": "0x3a74a767",
+      "input_names": "newAdmin,",
+      "output_names": ""
+    },
+    {
+      "name": "totalShares",
+      "type": "function",
+      "signature": "totalShares()",
+      "encoding": "0x3a98ef39",
+      "input_names": "",
       "output_names": "ret_0,"
     },
     {
@@ -665,12 +1545,108 @@
       "output_names": ""
     },
     {
+      "name": "setAllowance",
+      "type": "function",
+      "signature": "setAllowance(uint256)",
+      "encoding": "0x3ba93f26",
+      "input_names": "allowance_,",
+      "output_names": ""
+    },
+    {
+      "name": "at",
+      "type": "function",
+      "signature": "at(UintSet,uint256)",
+      "encoding": "0x3cba95ef",
+      "input_names": "set,index,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "withdraw",
+      "type": "function",
+      "signature": "withdraw()",
+      "encoding": "0x3ccfd60b",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "getManager",
       "type": "function",
       "signature": "getManager(address)",
       "encoding": "0x3d584063",
       "input_names": "_addr,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "endedAt",
+      "type": "function",
+      "signature": "endedAt()",
+      "encoding": "0x3d6a71e4",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "createSaleAuction",
+      "type": "function",
+      "signature": "createSaleAuction(uint256,uint256,uint256,uint256)",
+      "encoding": "0x3d7d3f5a",
+      "input_names": "_kittyId,_startingPrice,_endingPrice,_duration,",
+      "output_names": ""
+    },
+    {
+      "name": "mockFunction",
+      "type": "function",
+      "signature": "mockFunction()",
+      "encoding": "0x3e6fec04",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "_updateAccountSnapshot",
+      "type": "function",
+      "signature": "_updateAccountSnapshot(address)",
+      "encoding": "0x3f48a952",
+      "input_names": "account,",
+      "output_names": ""
+    },
+    {
+      "name": "unpause",
+      "type": "function",
+      "signature": "unpause()",
+      "encoding": "0x3f4ba83a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "proxyAssert",
+      "type": "function",
+      "signature": "proxyAssert(address,uint8,bytes)",
+      "encoding": "0x3f801f91",
+      "input_names": "dest,howToCall,calldata,",
+      "output_names": ""
+    },
+    {
+      "name": "relayCall",
+      "type": "function",
+      "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+      "encoding": "0x405cec67",
+      "input_names": "from,to,encodedFunction,transactionFee,gasPrice,gasLimit,nonce,signature,approvalData,",
+      "output_names": ""
+    },
+    {
+      "name": "mint",
+      "type": "function",
+      "signature": "mint(address,uint256)",
+      "encoding": "0x40c10f19",
+      "input_names": "to,tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "PayeeAdded",
+      "type": "event",
+      "signature": "PayeeAdded(address,uint256)",
+      "encoding": "0x40c340f65e17194d14ddddb073d3c9f888e3cb52b5aae0c6c7706b4fbc905fac",
+      "input_names": "account,shares,",
+      "output_names": ""
     },
     {
       "name": "m_numOwners",
@@ -697,12 +1673,124 @@
       "output_names": ""
     },
     {
+      "name": "burn",
+      "type": "function",
+      "signature": "burn(uint256)",
+      "encoding": "0x42966c68",
+      "input_names": "tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "_withdrawDeposits",
+      "type": "function",
+      "signature": "_withdrawDeposits(uint256,address)",
+      "encoding": "0x43401e48",
+      "input_names": "amount,payable payee,",
+      "output_names": ""
+    },
+    {
+      "name": "div",
+      "type": "function",
+      "signature": "div(int256,int256)",
+      "encoding": "0x43509138",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "rootOwnerOf",
       "type": "function",
       "signature": "rootOwnerOf(uint256)",
       "encoding": "0x43a61a8e",
       "input_names": "_tokenId,",
       "output_names": "rootOwner,"
+    },
+    {
+      "name": "close",
+      "type": "function",
+      "signature": "close()",
+      "encoding": "0x43d726d6",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "ContractUpgrade",
+      "type": "event",
+      "signature": "ContractUpgrade(address)",
+      "encoding": "0x450db8da6efbe9c22f2347f7c2021231df1fc58d3ae9a2fa75d39fa446199305",
+      "input_names": "newContract,",
+      "output_names": ""
+    },
+    {
+      "name": "sireAllowedToAddress",
+      "type": "function",
+      "signature": "sireAllowedToAddress(uint256)",
+      "encoding": "0x46116e6f",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "setAllowed",
+      "type": "function",
+      "signature": "setAllowed(address,bool)",
+      "encoding": "0x4697f05d",
+      "input_names": "payee,allowed,",
+      "output_names": ""
+    },
+    {
+      "name": "canBreedWith",
+      "type": "function",
+      "signature": "canBreedWith(uint256,uint256)",
+      "encoding": "0x46d22c70",
+      "input_names": "_matronId,_sireId,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(UintSet,uint256)",
+      "encoding": "0x47cce690",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "TokensReceivedCalled",
+      "type": "event",
+      "signature": "TokensReceivedCalled(address,address,address,uint256,bytes,bytes,address,uint256,uint256)",
+      "encoding": "0x47e915878c47f3ec4d7ff646a2becb229f64fd2abe4d2b5e2bb4275b0cf50d4e",
+      "input_names": "operator,from,to,amount,data,operatorData,token,fromBalance,toBalance,",
+      "output_names": ""
+    },
+    {
+      "name": "computeAddress",
+      "type": "function",
+      "signature": "computeAddress(bytes32,bytes32)",
+      "encoding": "0x481286e6",
+      "input_names": "salt,codeHash,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "kittyIndexToApproved",
+      "type": "function",
+      "signature": "kittyIndexToApproved(uint256)",
+      "encoding": "0x481af3d3",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "_releasableAmount",
+      "type": "function",
+      "signature": "_releasableAmount(IERC20)",
+      "encoding": "0x4921cc4a",
+      "input_names": "token,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "add",
+      "type": "function",
+      "signature": "add(AddressSet,address)",
+      "encoding": "0x49ca7600",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
     },
     {
       "name": "TransferBatch",
@@ -721,12 +1809,108 @@
       "output_names": ""
     },
     {
+      "name": "createSiringAuction",
+      "type": "function",
+      "signature": "createSiringAuction(uint256,uint256,uint256,uint256)",
+      "encoding": "0x4ad8c938",
+      "input_names": "_kittyId,_startingPrice,_endingPrice,_duration,",
+      "output_names": ""
+    },
+    {
+      "name": "_callTokensReceived",
+      "type": "function",
+      "signature": "_callTokensReceived(address,address,address,uint256,bytes,bytes,bool)",
+      "encoding": "0x4b59d750",
+      "input_names": "operator,from,to,amount,userData,operatorData,requireReceptionAck,",
+      "output_names": ""
+    },
+    {
+      "name": "setAutoBirthFee",
+      "type": "function",
+      "signature": "setAutoBirthFee(uint256)",
+      "encoding": "0x4b85fd55",
+      "input_names": "val,",
+      "output_names": ""
+    },
+    {
+      "name": "supportsAllInterfaces",
+      "type": "function",
+      "signature": "supportsAllInterfaces(address,bytes4[])",
+      "encoding": "0x4b9dd904",
+      "input_names": "account,interfaceIds,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_registerInterfaceForAddress",
+      "type": "function",
+      "signature": "_registerInterfaceForAddress(bytes32,address)",
+      "encoding": "0x4c40bb60",
+      "input_names": "interfaceHash,account,",
+      "output_names": ""
+    },
+    {
       "name": "next",
       "type": "function",
       "signature": "next()",
       "encoding": "0x4c8fe526",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "PackageChanged",
+      "type": "event",
+      "signature": "PackageChanged(string,address,uint64[3])",
+      "encoding": "0x4ca1964bc3cd347906bc558f77fdd636486951cf12238150178be72a4fbb6fab",
+      "input_names": "providerName,package,version,",
+      "output_names": ""
+    },
+    {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(uint256)",
+      "encoding": "0x4cc82215",
+      "input_names": "key,",
+      "output_names": ""
+    },
+    {
+      "name": "_mint",
+      "type": "function",
+      "signature": "_mint(address,uint256,bytes,bytes)",
+      "encoding": "0x4cd4edcb",
+      "input_names": "account,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "_isApprovedOrOwner",
+      "type": "function",
+      "signature": "_isApprovedOrOwner(address,uint256)",
+      "encoding": "0x4cdc9549",
+      "input_names": "spender,tokenId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "RegisterEvent",
+      "type": "event",
+      "signature": "RegisterEvent(address,uint256)",
+      "encoding": "0x4d509eaf411f241400f13f5abf136c29e58fc43af0f27f87a1c1c9767795d03f",
+      "input_names": "addr,index,",
+      "output_names": ""
+    },
+    {
+      "name": "approveSiring",
+      "type": "function",
+      "signature": "approveSiring(address,uint256)",
+      "encoding": "0x4dfff04f",
+      "input_names": "_addr,_sireId,",
+      "output_names": ""
+    },
+    {
+      "name": "setCFO",
+      "type": "function",
+      "signature": "setCFO(address)",
+      "encoding": "0x4e0a3379",
+      "input_names": "_newCFO,",
+      "output_names": ""
     },
     {
       "name": "balanceOfBatch",
@@ -737,11 +1921,91 @@
       "output_names": "memory,"
     },
     {
+      "name": "_count",
+      "type": "function",
+      "signature": "_count()",
+      "encoding": "0x4e1b0ae9",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(AddressSet,address)",
+      "encoding": "0x4e257bd0",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setShouldRevertSend",
+      "type": "function",
+      "signature": "setShouldRevertSend(bool)",
+      "encoding": "0x4e4ae5a5",
+      "input_names": "shouldRevert,",
+      "output_names": ""
+    },
+    {
+      "name": "_mint",
+      "type": "function",
+      "signature": "_mint(address,uint256)",
+      "encoding": "0x4e6ec247",
+      "input_names": "account,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "balanceOfAt",
+      "type": "function",
+      "signature": "balanceOfAt(address,uint256)",
+      "encoding": "0x4ee2cd7e",
+      "input_names": "account,snapshotId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "upgradeToAndCall",
+      "type": "function",
+      "signature": "upgradeToAndCall(address,bytes)",
+      "encoding": "0x4f1ef286",
+      "input_names": "newImplementation,data,",
+      "output_names": ""
+    },
+    {
       "name": "approve",
       "type": "function",
       "signature": "approve(address,uint256,uint256,uint256)",
       "encoding": "0x4f4df442",
       "input_names": "_spender,_id,_currentValue,_value,",
+      "output_names": ""
+    },
+    {
+      "name": "exists",
+      "type": "function",
+      "signature": "exists(uint256)",
+      "encoding": "0x4f558e79",
+      "input_names": "tokenId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "tokenByIndex",
+      "type": "function",
+      "signature": "tokenByIndex(uint256)",
+      "encoding": "0x4f6ccce7",
+      "input_names": "index,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_setupRole",
+      "type": "function",
+      "signature": "_setupRole(bytes32,address)",
+      "encoding": "0x4fa943a6",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "setAcceptEther",
+      "type": "function",
+      "signature": "setAcceptEther(bool)",
+      "encoding": "0x4fea120c",
+      "input_names": "acceptEther,",
       "output_names": ""
     },
     {
@@ -753,11 +2017,67 @@
       "output_names": ""
     },
     {
+      "name": "getProvider",
+      "type": "function",
+      "signature": "getProvider(string)",
+      "encoding": "0x50cadc85",
+      "input_names": "packageName,",
+      "output_names": "provider,"
+    },
+    {
+      "name": "safeDecreaseAllowance",
+      "type": "function",
+      "signature": "safeDecreaseAllowance(IERC20,address,uint256)",
+      "encoding": "0x5164ffed",
+      "input_names": "token,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "withdraw",
+      "type": "function",
+      "signature": "withdraw(address)",
+      "encoding": "0x51cff8d9",
+      "input_names": "payable payee,",
+      "output_names": ""
+    },
+    {
+      "name": "_getRelayedCallSender",
+      "type": "function",
+      "signature": "_getRelayedCallSender()",
+      "encoding": "0x521bb2dd",
+      "input_names": "",
+      "output_names": "payable result,"
+    },
+    {
       "name": "ExecutionFailure",
       "type": "event",
       "signature": "ExecutionFailure(uint256)",
       "encoding": "0x526441bb6c1aba3c9a4a6ca1d6545da9c2333c8c48343ef398eb858d72b79236",
       "input_names": "_transactionId,",
+      "output_names": ""
+    },
+    {
+      "name": "MockFunctionCalled",
+      "type": "event",
+      "signature": "MockFunctionCalled()",
+      "encoding": "0x52c66ed6ec9ca819cba26fe2b2650059270d8981b295af300187a964f54a8c23",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "clear",
+      "type": "function",
+      "signature": "clear()",
+      "encoding": "0x52efea6e",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "changeName",
+      "type": "function",
+      "signature": "changeName(string)",
+      "encoding": "0x5353a2d8",
+      "input_names": "_name,",
       "output_names": ""
     },
     {
@@ -769,12 +2089,76 @@
       "output_names": "count,"
     },
     {
+      "name": "RelayRemoved",
+      "type": "event",
+      "signature": "RelayRemoved(address,uint256)",
+      "encoding": "0x5490afc1d818789c8b3d5d63bce3d2a3327d0bba4efb5a7751f783dc977d7d11",
+      "input_names": "relay,unstakeTime,",
+      "output_names": ""
+    },
+    {
+      "name": "registerInterfaceForAddress",
+      "type": "function",
+      "signature": "registerInterfaceForAddress(bytes32,address)",
+      "encoding": "0x5536e45d",
+      "input_names": "interfaceHash,account,",
+      "output_names": ""
+    },
+    {
       "name": "granularity",
       "type": "function",
       "signature": "granularity()",
       "encoding": "0x556f0dc7",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setBaseURI",
+      "type": "function",
+      "signature": "setBaseURI(string)",
+      "encoding": "0x55f804b3",
+      "input_names": "baseURI,",
+      "output_names": ""
+    },
+    {
+      "name": "createPromoKitty",
+      "type": "function",
+      "signature": "createPromoKitty(uint256,address)",
+      "encoding": "0x56129134",
+      "input_names": "_genes,_owner,",
+      "output_names": ""
+    },
+    {
+      "name": "approveInternal",
+      "type": "function",
+      "signature": "approveInternal(address,address,uint256)",
+      "encoding": "0x56189cb4",
+      "input_names": "holder,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "computeAddressWithDeployer",
+      "type": "function",
+      "signature": "computeAddressWithDeployer(bytes32,bytes32,address)",
+      "encoding": "0x56299481",
+      "input_names": "salt,codeHash,deployer,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setSecondsPerBlock",
+      "type": "function",
+      "signature": "setSecondsPerBlock(uint256)",
+      "encoding": "0x5663896e",
+      "input_names": "secs,",
+      "output_names": ""
+    },
+    {
+      "name": "setPackage",
+      "type": "function",
+      "signature": "setPackage(string,Package,uint64[3])",
+      "encoding": "0x566b894d",
+      "input_names": "packageName,package,version,",
+      "output_names": ""
     },
     {
       "name": "childExists",
@@ -785,6 +2169,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "NewParty",
+      "type": "event",
+      "signature": "NewParty(address,address)",
+      "encoding": "0x57d380dbcddc47e0e592a9fd9ac9ab20c72572944143ef72b0e201536e0174f9",
+      "input_names": "deployedAddress,deployer,",
+      "output_names": ""
+    },
+    {
       "name": "read",
       "type": "function",
       "signature": "read()",
@@ -793,12 +2185,36 @@
       "output_names": "val_0,"
     },
     {
+      "name": "TransactionRelayed",
+      "type": "event",
+      "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
+      "encoding": "0x5842ee2f1e4c9e74e454593aabf5ec184231cbffb01196c35aeabdf1e8f1e742",
+      "input_names": "relay,from,to,selector,status,charge,",
+      "output_names": ""
+    },
+    {
       "name": "OwnerRemoved",
       "type": "event",
       "signature": "OwnerRemoved(address)",
       "encoding": "0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da",
       "input_names": "oldOwner,",
       "output_names": ""
+    },
+    {
+      "name": "_contains",
+      "type": "function",
+      "signature": "_contains(Map,bytes32)",
+      "encoding": "0x5927f501",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_implementation",
+      "type": "function",
+      "signature": "_implementation()",
+      "encoding": "0x59679b0f",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "receiveChild",
@@ -817,6 +2233,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "RefundsEnabled",
+      "type": "event",
+      "signature": "RefundsEnabled()",
+      "encoding": "0x599d8e5a83cffb867d051598c4d70e805d59802d8081c1c7d6dffc5b6aca2b89",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "peek",
       "type": "function",
       "signature": "peek()",
@@ -833,12 +2257,92 @@
       "output_names": "out,"
     },
     {
+      "name": "release",
+      "type": "function",
+      "signature": "release(IERC20)",
+      "encoding": "0x5a734be6",
+      "input_names": "token,",
+      "output_names": ""
+    },
+    {
+      "name": "verify",
+      "type": "function",
+      "signature": "verify(bytes32[],bytes32,bytes32)",
+      "encoding": "0x5a9a49c7",
+      "input_names": "proof,root,leaf,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "safeTransferFrom",
+      "type": "function",
+      "signature": "safeTransferFrom(IERC20,address,address,uint256)",
+      "encoding": "0x5beae096",
+      "input_names": "token,from,to,value,",
+      "output_names": ""
+    },
+    {
+      "name": "semanticVersionHash",
+      "type": "function",
+      "signature": "semanticVersionHash(uint64[3])",
+      "encoding": "0x5c173e3c",
+      "input_names": "version,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "resetSpentToday",
       "type": "function",
       "signature": "resetSpentToday()",
       "encoding": "0x5c52c2f5",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "implementation",
+      "type": "function",
+      "signature": "implementation()",
+      "encoding": "0x5c60da1b",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "paused",
+      "type": "function",
+      "signature": "paused()",
+      "encoding": "0x5c975abb",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "_at",
+      "type": "function",
+      "signature": "_at(Map,uint256)",
+      "encoding": "0x5cff65b3",
+      "input_names": "map,index,",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "Unpaused",
+      "type": "event",
+      "signature": "Unpaused(address)",
+      "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
+      "input_names": "account,",
+      "output_names": ""
+    },
+    {
+      "name": "WithdrawEvent",
+      "type": "event",
+      "signature": "WithdrawEvent(address,uint256)",
+      "encoding": "0x5dba113b49cfa7c90315e8e604e6b506f7abcb909b01dcb19ec39005086e68fc",
+      "input_names": "addr,payout,",
+      "output_names": ""
+    },
+    {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(address)",
+      "encoding": "0x5dbe47e8",
+      "input_names": "value,",
+      "output_names": "ret_0,"
     },
     {
       "name": "setManager",
@@ -857,6 +2361,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "withdrawBalance",
+      "type": "function",
+      "signature": "withdrawBalance()",
+      "encoding": "0x5fd8c710",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "ManagerChanged",
       "type": "event",
       "signature": "ManagerChanged(address,address)",
@@ -865,11 +2377,67 @@
       "output_names": ""
     },
     {
+      "name": "_valueAt",
+      "type": "function",
+      "signature": "_valueAt(uint256,Snapshots)",
+      "encoding": "0x60a5df59",
+      "input_names": "snapshotId,snapshots,",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "ClearEvent",
+      "type": "event",
+      "signature": "ClearEvent(address,uint256)",
+      "encoding": "0x61355a34c3bc2e502a24eba7ad2fb0fd0d05c4f71de8cb041fbe39cd3649665e",
+      "input_names": "addr,leftOver,",
+      "output_names": ""
+    },
+    {
       "name": "updateContract",
       "type": "function",
       "signature": "updateContract(address,string,string)",
       "encoding": "0x61455567",
       "input_names": "_delegate,_functionSignatures,_commitMessage,",
+      "output_names": ""
+    },
+    {
+      "name": "_approveRelayedCall",
+      "type": "function",
+      "signature": "_approveRelayedCall(bytes)",
+      "encoding": "0x61513210",
+      "input_names": "context,",
+      "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "_burn",
+      "type": "function",
+      "signature": "_burn(address,uint256)",
+      "encoding": "0x6161eb18",
+      "input_names": "account,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_add",
+      "type": "function",
+      "signature": "_add(Set,bytes32)",
+      "encoding": "0x616848ba",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_setupDecimals",
+      "type": "function",
+      "signature": "_setupDecimals(uint8)",
+      "encoding": "0x61e9edb2",
+      "input_names": "decimals_,",
+      "output_names": ""
+    },
+    {
+      "name": "FinalizeEvent",
+      "type": "event",
+      "signature": "FinalizeEvent(uint256[],uint256,uint256)",
+      "encoding": "0x61ed07cde244eab019f88846ecbec7e89ca54396f1f2ee4d1a82785e4c8bbf1d",
+      "input_names": "maps,payout,endedAt,",
       "output_names": ""
     },
     {
@@ -889,12 +2457,36 @@
       "output_names": ""
     },
     {
+      "name": "Paused",
+      "type": "event",
+      "signature": "Paused(address)",
+      "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
+      "input_names": "account,",
+      "output_names": ""
+    },
+    {
+      "name": "AdminRevoked",
+      "type": "event",
+      "signature": "AdminRevoked(address)",
+      "encoding": "0x631ff1c4e1a02c54b480a34b810e03bcee61fe38efcb243930a7f820914923e2",
+      "input_names": "grantee,",
+      "output_names": ""
+    },
+    {
       "name": "ownerOf",
       "type": "function",
       "signature": "ownerOf(uint256)",
       "encoding": "0x6352211e",
-      "input_names": "_id,",
-      "output_names": "ret_0,"
+      "input_names": "_tokenId,",
+      "output_names": "owner,"
+    },
+    {
+      "name": "_approveRelayedCall",
+      "type": "function",
+      "signature": "_approveRelayedCall()",
+      "encoding": "0x63955c52",
+      "input_names": "",
+      "output_names": "ret_0,memory,"
     },
     {
       "name": "LogNote",
@@ -913,12 +2505,28 @@
       "output_names": "val_0,"
     },
     {
+      "name": "doDeposit",
+      "type": "function",
+      "signature": "doDeposit(address,uint256)",
+      "encoding": "0x65a31545",
+      "input_names": "val_0,val_1,",
+      "output_names": ""
+    },
+    {
       "name": "interfaceHash",
       "type": "function",
       "signature": "interfaceHash(string)",
       "encoding": "0x65ba36c1",
       "input_names": "_interfaceName,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "deploy",
+      "type": "function",
+      "signature": "deploy(uint256,bytes32,bytes)",
+      "encoding": "0x66cfa057",
+      "input_names": "value,salt,code,",
+      "output_names": ""
     },
     {
       "name": "setup",
@@ -929,6 +2537,14 @@
       "output_names": ""
     },
     {
+      "name": "_getRelayedCallData",
+      "type": "function",
+      "signature": "_getRelayedCallData()",
+      "encoding": "0x671457bf",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "setURI",
       "type": "function",
       "signature": "setURI(string,uint256)",
@@ -937,11 +2553,51 @@
       "output_names": ""
     },
     {
+      "name": "GEN0_CREATION_LIMIT",
+      "type": "function",
+      "signature": "GEN0_CREATION_LIMIT()",
+      "encoding": "0x680eba27",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "ReceivedERC20",
       "type": "event",
       "signature": "ReceivedERC20(address,uint256,address,uint256)",
       "encoding": "0x684ce28ace37552c6bfb98b7cceda8ed55327078eafb5dfb31218e0856382763",
       "input_names": "_from,_tokenId,_erc20Contract,_value,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawalAllowed",
+      "type": "function",
+      "signature": "withdrawalAllowed(address)",
+      "encoding": "0x685ca194",
+      "input_names": "payee,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_beforeTokenTransfer",
+      "type": "function",
+      "signature": "_beforeTokenTransfer(address,address,address,uint256)",
+      "encoding": "0x68f7dad2",
+      "input_names": "operator,from,to,tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "toString",
+      "type": "function",
+      "signature": "toString(uint256)",
+      "encoding": "0x6900a3ae",
+      "input_names": "value,",
+      "output_names": "memory,"
+    },
+    {
+      "name": "_safeMint",
+      "type": "function",
+      "signature": "_safeMint(address,uint256,bytes)",
+      "encoding": "0x6a4f832b",
+      "input_names": "to,tokenId,_data,",
       "output_names": ""
     },
     {
@@ -953,12 +2609,60 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "execTransaction",
+      "type": "function",
+      "signature": "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)",
+      "encoding": "0x6a761202",
+      "input_names": "to,value,data,operation,safeTxGas,dataGas,gasPrice,gasToken,refundReceiver,signatures,",
+      "output_names": ""
+    },
+    {
+      "name": "requiredGas",
+      "type": "function",
+      "signature": "requiredGas(uint256)",
+      "encoding": "0x6a7d84a4",
+      "input_names": "relayedCallStipend,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_addPayee",
+      "type": "function",
+      "signature": "_addPayee(address,uint256)",
+      "encoding": "0x6ae6921f",
+      "input_names": "account,shares_,",
+      "output_names": ""
+    },
+    {
+      "name": "newContractAddress",
+      "type": "function",
+      "signature": "newContractAddress()",
+      "encoding": "0x6af04a57",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "ethToTokenSwapOutput",
       "type": "function",
       "signature": "ethToTokenSwapOutput(uint256,uint256)",
       "encoding": "0x6b1d4db7",
       "input_names": "tokens_bought,deadline,",
       "output_names": "out,"
+    },
+    {
+      "name": "payoutAmount",
+      "type": "function",
+      "signature": "payoutAmount()",
+      "encoding": "0x6b46c8c3",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getImplementation",
+      "type": "function",
+      "signature": "getImplementation(string)",
+      "encoding": "0x6b683896",
+      "input_names": "contractName,",
+      "output_names": "ret_0,"
     },
     {
       "name": "setMin",
@@ -977,12 +2681,68 @@
       "output_names": ""
     },
     {
+      "name": "baseURI",
+      "type": "function",
+      "signature": "baseURI()",
+      "encoding": "0x6c0360eb",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
+      "name": "limitOfParticipants",
+      "type": "function",
+      "signature": "limitOfParticipants()",
+      "encoding": "0x6d006ae8",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "max",
+      "type": "function",
+      "signature": "max(uint256,uint256)",
+      "encoding": "0x6d5433e6",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "isPaid",
+      "type": "function",
+      "signature": "isPaid(address)",
+      "encoding": "0x6ded82f8",
+      "input_names": "_addr,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "PaymentReceived",
+      "type": "event",
+      "signature": "PaymentReceived(address,uint256)",
+      "encoding": "0x6ef95f06320e7a25a04a175ca677b7052bdd97131872c2192525a629f51be770",
+      "input_names": "from,amount,",
+      "output_names": ""
+    },
+    {
       "name": "getNonFungibleBaseType",
       "type": "function",
       "signature": "getNonFungibleBaseType(uint256)",
       "encoding": "0x6f969c2d",
       "input_names": "_id,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setSaleAuctionAddress",
+      "type": "function",
+      "signature": "setSaleAuctionAddress(address)",
+      "encoding": "0x6fbde40d",
+      "input_names": "_address,",
+      "output_names": ""
+    },
+    {
+      "name": "addAdmin",
+      "type": "function",
+      "signature": "addAdmin(address)",
+      "encoding": "0x70480275",
+      "input_names": "_new_admin,",
+      "output_names": ""
     },
     {
       "name": "addOwner",
@@ -993,11 +2753,43 @@
       "output_names": ""
     },
     {
+      "name": "Withdrawn",
+      "type": "event",
+      "signature": "Withdrawn(address,uint256)",
+      "encoding": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5",
+      "input_names": "payee,weiAmount,",
+      "output_names": ""
+    },
+    {
       "name": "balanceOf",
       "type": "function",
       "signature": "balanceOf(address)",
       "encoding": "0x70a08231",
       "input_names": "_owner,",
+      "output_names": "count,"
+    },
+    {
+      "name": "renounceOwnership",
+      "type": "function",
+      "signature": "renounceOwnership()",
+      "encoding": "0x715018a6",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "setNewAddress",
+      "type": "function",
+      "signature": "setNewAddress(address)",
+      "encoding": "0x71587988",
+      "input_names": "_v2Address,",
+      "output_names": ""
+    },
+    {
+      "name": "mod",
+      "type": "function",
+      "signature": "mod(uint256,uint256,string)",
+      "encoding": "0x71af23e8",
+      "input_names": "a,b,errorMessage,",
       "output_names": "ret_0,"
     },
     {
@@ -1007,6 +2799,14 @@
       "encoding": "0x7237e031",
       "input_names": "tokens_sold,min_eth,deadline,recipient,",
       "output_names": "out,"
+    },
+    {
+      "name": "totalAttended",
+      "type": "function",
+      "signature": "totalAttended()",
+      "encoding": "0x7238f361",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "isNonFungibleBaseType",
@@ -1025,12 +2825,52 @@
       "output_names": "val_0,"
     },
     {
+      "name": "getHubAddr",
+      "type": "function",
+      "signature": "getHubAddr()",
+      "encoding": "0x74e861d6",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_get",
+      "type": "function",
+      "signature": "_get(Map,bytes32)",
+      "encoding": "0x7586978a",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "tokensToSend",
+      "type": "function",
+      "signature": "tokensToSend(address,address,address,uint256,bytes,bytes)",
+      "encoding": "0x75ab9782",
+      "input_names": "operator,from,to,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "_setRoleAdmin",
+      "type": "function",
+      "signature": "_setRoleAdmin(bytes32,bytes32)",
+      "encoding": "0x7612997d",
+      "input_names": "role,adminRole,",
+      "output_names": ""
+    },
+    {
       "name": "add",
       "type": "function",
       "signature": "add(uint256,uint256)",
       "encoding": "0x771602f7",
       "input_names": "a,b,",
       "output_names": "c,"
+    },
+    {
+      "name": "computeAddress",
+      "type": "function",
+      "signature": "computeAddress(bytes32,bytes32,address)",
+      "encoding": "0x78065306",
+      "input_names": "salt,bytecodeHash,deployer,",
+      "output_names": "ret_0,"
     },
     {
       "name": "isConfirmed",
@@ -1049,6 +2889,14 @@
       "output_names": ""
     },
     {
+      "name": "length",
+      "type": "function",
+      "signature": "length(UintToAddressMap)",
+      "encoding": "0x795bf79a",
+      "input_names": "map,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "confirm",
       "type": "function",
       "signature": "confirm(bytes32)",
@@ -1057,11 +2905,59 @@
       "output_names": "val_0,"
     },
     {
+      "name": "burnFrom",
+      "type": "function",
+      "signature": "burnFrom(address,uint256)",
+      "encoding": "0x79cc6790",
+      "input_names": "account,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "secondsPerBlock",
+      "type": "function",
+      "signature": "secondsPerBlock()",
+      "encoding": "0x7a7d4937",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "setAuthority",
       "type": "function",
       "signature": "setAuthority(address)",
       "encoding": "0x7a9e5e4b",
       "input_names": "authority_,",
+      "output_names": ""
+    },
+    {
+      "name": "length",
+      "type": "function",
+      "signature": "length(UintSet)",
+      "encoding": "0x7ac93b84",
+      "input_names": "set,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "min",
+      "type": "function",
+      "signature": "min(uint256,uint256)",
+      "encoding": "0x7ae2b5c7",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_approve",
+      "type": "function",
+      "signature": "_approve(address,uint256)",
+      "encoding": "0x7b7d7225",
+      "input_names": "to,tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "AdminChanged",
+      "type": "event",
+      "signature": "AdminChanged(address,address)",
+      "encoding": "0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f",
+      "input_names": "previousAdmin,newAdmin,",
       "output_names": ""
     },
     {
@@ -1081,12 +2977,52 @@
       "output_names": ""
     },
     {
+      "name": "preRelayedCall",
+      "type": "function",
+      "signature": "preRelayedCall(bytes)",
+      "encoding": "0x80274db7",
+      "input_names": "context,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "Snapshot",
+      "type": "event",
+      "signature": "Snapshot(uint256)",
+      "encoding": "0x8030e83b04d87bef53480e26263266d6ca66863aa8506aca6f2559d18aa1cb67",
+      "input_names": "id,",
+      "output_names": ""
+    },
+    {
+      "name": "toUint128",
+      "type": "function",
+      "signature": "toUint128(uint256)",
+      "encoding": "0x809fdd33",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "setShouldRejectXXXX",
       "type": "function",
       "signature": "setShouldRejectXXXX(bool)",
       "encoding": "0x80f5fe74",
       "input_names": "_value,",
       "output_names": ""
+    },
+    {
+      "name": "transferFrom",
+      "type": "function",
+      "signature": "transferFrom()",
+      "encoding": "0x811c34d3",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(UintSet,uint256)",
+      "encoding": "0x81319dc3",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
     },
     {
       "name": "transferERC20",
@@ -1097,18 +3033,146 @@
       "output_names": ""
     },
     {
+      "name": "destroy",
+      "type": "function",
+      "signature": "destroy()",
+      "encoding": "0x83197ef0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "acceptRelayedCall",
+      "type": "function",
+      "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+      "encoding": "0x83947ea0",
+      "input_names": "val_0,val_1,calldata,val_2,val_3,val_4,val_5,calldata,val_6,",
+      "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "pause",
+      "type": "function",
+      "signature": "pause()",
+      "encoding": "0x8456cb59",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "tokensOfOwner",
+      "type": "function",
+      "signature": "tokensOfOwner(address)",
+      "encoding": "0x8462151c",
+      "input_names": "_owner,",
+      "output_names": "ownerTokens,"
+    },
+    {
+      "name": "decrement",
+      "type": "function",
+      "signature": "decrement(Counter)",
+      "encoding": "0x854ec98e",
+      "input_names": "counter,",
+      "output_names": ""
+    },
+    {
+      "name": "RelayAdded",
+      "type": "event",
+      "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
+      "encoding": "0x85b3ae3aae9d3fcb31142fbd8c3b4722d57825b8edd6e1366e69204afa5a0dfa",
+      "input_names": "relay,owner,transactionFee,stake,unstakeDelay,url,",
+      "output_names": ""
+    },
+    {
       "name": "",
-      "type": "fallback",
+      "type": "constructor",
       "signature": "()",
       "encoding": "0x861731d5",
       "input_names": "",
       "output_names": ""
     },
     {
+      "name": "release",
+      "type": "function",
+      "signature": "release()",
+      "encoding": "0x86d1a69f",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "revocable",
+      "type": "function",
+      "signature": "revocable()",
+      "encoding": "0x872a7810",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "Deposited",
+      "type": "event",
+      "signature": "Deposited(address,address,uint256)",
+      "encoding": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7",
+      "input_names": "recipient,from,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "getPackage",
+      "type": "function",
+      "signature": "getPackage(string)",
+      "encoding": "0x87c60483",
+      "input_names": "packageName,",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "safeMint",
+      "type": "function",
+      "signature": "safeMint(address,uint256,bytes)",
+      "encoding": "0x8832e6e3",
+      "input_names": "to,tokenId,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "giveBirth",
+      "type": "function",
+      "signature": "giveBirth(uint256)",
+      "encoding": "0x88c2a0bf",
+      "input_names": "_matronId,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "__default__",
       "type": "function",
       "signature": "__default__()",
       "encoding": "0x89402a72",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "get",
+      "type": "function",
+      "signature": "get(UintToAddressMap,uint256,string)",
+      "encoding": "0x89e0b08c",
+      "input_names": "map,key,errorMessage,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "transfer",
+      "type": "function",
+      "signature": "transfer()",
+      "encoding": "0x8a4068dd",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "deploy",
+      "type": "function",
+      "signature": "deploy(string,uint256,uint256,uint256,address)",
+      "encoding": "0x8acc1774",
+      "input_names": "_name,_deposit,_limitOfParticipants,_coolingPeriod,_tokenAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "_msgData",
+      "type": "function",
+      "signature": "_msgData()",
+      "encoding": "0x8b49d47e",
       "input_names": "",
       "output_names": ""
     },
@@ -1121,11 +3185,59 @@
       "output_names": "count,"
     },
     {
+      "name": "payee",
+      "type": "function",
+      "signature": "payee(uint256)",
+      "encoding": "0x8b83209b",
+      "input_names": "index,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "renounceAdmin",
+      "type": "function",
+      "signature": "renounceAdmin()",
+      "encoding": "0x8bad0c0a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(AddressSet,address)",
+      "encoding": "0x8bd27f2f",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "OwnershipTransferred",
+      "type": "event",
+      "signature": "OwnershipTransferred(address,address)",
+      "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "input_names": "previousOwner,newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "enableRefunds",
+      "type": "function",
+      "signature": "enableRefunds()",
+      "encoding": "0x8c52dc41",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "countThisRecursive",
+      "type": "function",
+      "signature": "countThisRecursive(uint256)",
+      "encoding": "0x8c5344fa",
+      "input_names": "n,",
+      "output_names": ""
+    },
+    {
       "name": "Approval",
       "type": "event",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "_owner,_approved,_tokenId,",
+      "input_names": "owner,approved,tokenId,",
       "output_names": ""
     },
     {
@@ -1137,12 +3249,20 @@
       "output_names": ""
     },
     {
+      "name": "getRelay",
+      "type": "function",
+      "signature": "getRelay(address)",
+      "encoding": "0x8d851460",
+      "input_names": "relay,",
+      "output_names": "totalStake,unstakeDelay,unstakeTime,payable owner,state,"
+    },
+    {
       "name": "owner",
       "type": "function",
       "signature": "owner()",
       "encoding": "0x8da5cb5b",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "totalChildContracts",
@@ -1150,6 +3270,78 @@
       "signature": "totalChildContracts(uint256)",
       "encoding": "0x8da7d0b5",
       "input_names": "_tokenId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_length",
+      "type": "function",
+      "signature": "_length(Map)",
+      "encoding": "0x8db89941",
+      "input_names": "map,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "changeAdmin",
+      "type": "function",
+      "signature": "changeAdmin(address)",
+      "encoding": "0x8f283970",
+      "input_names": "newAdmin,",
+      "output_names": ""
+    },
+    {
+      "name": "isOwner",
+      "type": "function",
+      "signature": "isOwner()",
+      "encoding": "0x8f32d59b",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getRoleMember",
+      "type": "function",
+      "signature": "getRoleMember(bytes32,uint256)",
+      "encoding": "0x9010d07c",
+      "input_names": "role,index,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "still active or you did not attend'",
+      "type": "event",
+      "signature": "still active or you did not attend'(;)",
+      "encoding": "0x9116c44b54d22941ebbc970176c5f243842aee1c1777eab4f5f5d3905ccbd2f2",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawAuctionBalances",
+      "type": "function",
+      "signature": "withdrawAuctionBalances()",
+      "encoding": "0x91876e57",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "toEthSignedMessageHash",
+      "type": "function",
+      "signature": "toEthSignedMessageHash(bytes32)",
+      "encoding": "0x918a15cf",
+      "input_names": "hash,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "invoke1CosignerSends",
+      "type": "function",
+      "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
+      "encoding": "0x91aeeedc",
+      "input_names": "v,r,s,nonce,authorizedAddress,data,",
+      "output_names": ""
+    },
+    {
+      "name": "hasRole",
+      "type": "function",
+      "signature": "hasRole(bytes32,address)",
+      "encoding": "0x91d14854",
+      "input_names": "role,account,",
       "output_names": "ret_0,"
     },
     {
@@ -1161,12 +3353,44 @@
       "output_names": ""
     },
     {
+      "name": "burn",
+      "type": "function",
+      "signature": "burn(IERC777,uint256,bytes)",
+      "encoding": "0x931f21a1",
+      "input_names": "token,amount,data,",
+      "output_names": ""
+    },
+    {
+      "name": "coolingPeriod",
+      "type": "function",
+      "signature": "coolingPeriod()",
+      "encoding": "0x9328beee",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "toUint16",
+      "type": "function",
+      "signature": "toUint16(uint256)",
+      "encoding": "0x9374068f",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "InterfaceImplementerSet",
       "type": "event",
       "signature": "InterfaceImplementerSet(address,bytes32,address)",
       "encoding": "0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153",
       "input_names": "addr,interfaceHash,implementer,",
       "output_names": ""
+    },
+    {
+      "name": "get",
+      "type": "function",
+      "signature": "get(uint256)",
+      "encoding": "0x9507d39a",
+      "input_names": "key,",
+      "output_names": "ret_0,"
     },
     {
       "name": "authorizeOperator",
@@ -1190,7 +3414,7 @@
       "signature": "symbol()",
       "encoding": "0x95d89b41",
       "input_names": "",
-      "output_names": "_symbol,"
+      "output_names": "val_0,"
     },
     {
       "name": "tokenToEthSwapInput",
@@ -1217,6 +3441,22 @@
       "output_names": ""
     },
     {
+      "name": "countLocalRecursive",
+      "type": "function",
+      "signature": "countLocalRecursive(uint256)",
+      "encoding": "0x96ffa690",
+      "input_names": "n,",
+      "output_names": ""
+    },
+    {
+      "name": "snapshot",
+      "type": "function",
+      "signature": "snapshot()",
+      "encoding": "0x9711715a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "removeERC20",
       "type": "function",
       "signature": "removeERC20(uint256,address,uint256)",
@@ -1233,12 +3473,60 @@
       "output_names": "out,"
     },
     {
+      "name": "totalSupplyAt",
+      "type": "function",
+      "signature": "totalSupplyAt(uint256)",
+      "encoding": "0x981b24d0",
+      "input_names": "snapshotId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "released",
+      "type": "function",
+      "signature": "released(address)",
+      "encoding": "0x9852595c",
+      "input_names": "account,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "OwnerAdded",
       "type": "event",
       "signature": "OwnerAdded(address)",
       "encoding": "0x994a936646fe87ffe4f1e469d3d6aa417d6b855598397f323de5b449f765f0c3",
       "input_names": "newOwner,",
       "output_names": ""
+    },
+    {
+      "name": "drasticMeasure",
+      "type": "function",
+      "signature": "drasticMeasure()",
+      "encoding": "0x9958f045",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "setLimitOfParticipants",
+      "type": "function",
+      "signature": "setLimitOfParticipants(uint256)",
+      "encoding": "0x9989a5ae",
+      "input_names": "_limitOfParticipants,",
+      "output_names": ""
+    },
+    {
+      "name": "upgrade",
+      "type": "function",
+      "signature": "upgrade(address,address)",
+      "encoding": "0x99a88ec4",
+      "input_names": "_teamAddress,_artistAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "cancelled",
+      "type": "function",
+      "signature": "cancelled()",
+      "encoding": "0x9a82a09a",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "transactions",
@@ -1249,12 +3537,44 @@
       "output_names": "destination,value,data,executed,"
     },
     {
+      "name": "beneficiaryWithdraw",
+      "type": "function",
+      "signature": "beneficiaryWithdraw()",
+      "encoding": "0x9af6549a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "_burn",
+      "type": "function",
+      "signature": "_burn(uint256)",
+      "encoding": "0x9b1f9e74",
+      "input_names": "tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "participantsIndex",
+      "type": "function",
+      "signature": "participantsIndex(uint256)",
+      "encoding": "0x9b25cacb",
+      "input_names": "val_0,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "send",
       "type": "function",
       "signature": "send(address,uint256,bytes)",
       "encoding": "0x9bd9bbc6",
       "input_names": "to,amount,data,",
       "output_names": ""
+    },
+    {
+      "name": "_length",
+      "type": "function",
+      "signature": "_length(Set)",
+      "encoding": "0x9cbb0a1c",
+      "input_names": "set,",
+      "output_names": "ret_0,"
     },
     {
       "name": "getNonFungibleIndex",
@@ -1265,6 +3585,22 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "_contains",
+      "type": "function",
+      "signature": "_contains(Set,bytes32)",
+      "encoding": "0x9ce9d722",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "singleValueAirdrop",
+      "type": "function",
+      "signature": "singleValueAirdrop(address,address[],uint256)",
+      "encoding": "0x9d065838",
+      "input_names": "_addressOfToken,_recipients,_value,",
+      "output_names": ""
+    },
+    {
       "name": "isERC165Interface",
       "type": "function",
       "signature": "isERC165Interface(bytes32)",
@@ -1273,12 +3609,44 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "cooldowns",
+      "type": "function",
+      "signature": "cooldowns(uint256)",
+      "encoding": "0x9d6fac6f",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "tokenAddress",
       "type": "function",
       "signature": "tokenAddress()",
       "encoding": "0x9d76ea58",
       "input_names": "",
-      "output_names": "out,"
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "burn",
+      "type": "function",
+      "signature": "burn(address,uint256)",
+      "encoding": "0x9dc29fac",
+      "input_names": "from,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_burn",
+      "type": "function",
+      "signature": "_burn(address,uint256,bytes,bytes)",
+      "encoding": "0x9e2a78dc",
+      "input_names": "from,amount,data,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "upgradeRelayHub",
+      "type": "function",
+      "signature": "upgradeRelayHub(address)",
+      "encoding": "0x9e30a590",
+      "input_names": "newRelayHub,",
+      "output_names": ""
     },
     {
       "name": "erc20Received",
@@ -1289,12 +3657,52 @@
       "output_names": ""
     },
     {
+      "name": "current",
+      "type": "function",
+      "signature": "current()",
+      "encoding": "0x9fa6a6e3",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "mint",
+      "type": "function",
+      "signature": "mint(uint256)",
+      "encoding": "0xa0712d68",
+      "input_names": "tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "isAttended",
+      "type": "function",
+      "signature": "isAttended(address)",
+      "encoding": "0xa07f3a56",
+      "input_names": "_addr,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "getOwners",
       "type": "function",
       "signature": "getOwners()",
       "encoding": "0xa0e67e2b",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "mintToken",
+      "type": "function",
+      "signature": "mintToken(uint256,address)",
+      "encoding": "0xa140ae23",
+      "input_names": "_id,_owner,",
+      "output_names": ""
+    },
+    {
+      "name": "safeMint",
+      "type": "function",
+      "signature": "safeMint(address,uint256)",
+      "encoding": "0xa1448194",
+      "input_names": "to,tokenId,",
+      "output_names": ""
     },
     {
       "name": "setShouldReject",
@@ -1313,12 +3721,28 @@
       "output_names": ""
     },
     {
+      "name": "fromUint256",
+      "type": "function",
+      "signature": "fromUint256(uint256)",
+      "encoding": "0xa2bd3644",
+      "input_names": "value,",
+      "output_names": "memory,"
+    },
+    {
       "name": "div",
       "type": "function",
       "signature": "div(uint256,uint256)",
       "encoding": "0xa391c15b",
       "input_names": "a,b,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "receive",
+      "type": "function",
+      "signature": "receive()",
+      "encoding": "0xa3e76c0f",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "RequirementChange",
@@ -1337,12 +3761,52 @@
       "output_names": ""
     },
     {
+      "name": "_rejectRelayedCall",
+      "type": "function",
+      "signature": "_rejectRelayedCall(uint256)",
+      "encoding": "0xa4461b91",
+      "input_names": "errorCode,",
+      "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "decreaseAllowance",
+      "type": "function",
+      "signature": "decreaseAllowance(address,uint256)",
+      "encoding": "0xa457c2d7",
+      "input_names": "spender,subtractedValue,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "kittyIndexToOwner",
+      "type": "function",
+      "signature": "kittyIndexToOwner(uint256)",
+      "encoding": "0xa45f4bfc",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "add",
+      "type": "function",
+      "signature": "add(UintSet,uint256)",
+      "encoding": "0xa58c3260",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_ownerOfChild",
       "type": "function",
       "signature": "_ownerOfChild(address,uint256)",
       "encoding": "0xa5aeb1d4",
       "input_names": "_childContract,_childTokenId,",
       "output_names": "parentTokenOwner,parentTokenId,"
+    },
+    {
+      "name": "add",
+      "type": "function",
+      "signature": "add(int256,int256)",
+      "encoding": "0xa5f3c23b",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
     },
     {
       "name": "totalERC20Contracts",
@@ -1369,6 +3833,22 @@
       "output_names": ""
     },
     {
+      "name": "maxPossibleCharge",
+      "type": "function",
+      "signature": "maxPossibleCharge(uint256,uint256,uint256)",
+      "encoding": "0xa863f8f9",
+      "input_names": "relayedCallStipend,gasPrice,transactionFee,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "cancelOrder_",
+      "type": "function",
+      "signature": "cancelOrder_(address[7],uint256[9],uint8,uint8,uint8,uint8,bytes,bytes,bytes,uint8,bytes32,bytes32)",
+      "encoding": "0xa8a41c70",
+      "input_names": "addrs,uints,feeMethod,side,saleKind,howToCall,calldata,replacementPattern,staticExtradata,v,r,s,",
+      "output_names": ""
+    },
+    {
       "name": "getTransactionIds",
       "type": "function",
       "signature": "getTransactionIds(uint256,uint256,bool,bool)",
@@ -1377,12 +3857,36 @@
       "output_names": "_transactionIds,"
     },
     {
+      "name": "registerRecipient",
+      "type": "function",
+      "signature": "registerRecipient(address)",
+      "encoding": "0xa8badaa5",
+      "input_names": "recipient,",
+      "output_names": ""
+    },
+    {
+      "name": "penalizeRepeatedNonce",
+      "type": "function",
+      "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
+      "encoding": "0xa8cd9572",
+      "input_names": "unsignedTx1,signature1,unsignedTx2,signature2,",
+      "output_names": ""
+    },
+    {
       "name": "transfer",
       "type": "function",
       "signature": "transfer(address,uint256)",
       "encoding": "0xa9059cbb",
-      "input_names": "to,value,",
-      "output_names": "success,"
+      "input_names": "_to,_tokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "semanticVersionIsZero",
+      "type": "function",
+      "signature": "semanticVersionIsZero(uint64[3])",
+      "encoding": "0xa9a514b2",
+      "input_names": "version,",
+      "output_names": "ret_0,"
     },
     {
       "name": "CommitMessage",
@@ -1393,12 +3897,52 @@
       "output_names": ""
     },
     {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(UintToAddressMap,uint256)",
+      "encoding": "0xaa3937f1",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "TokensToSendCalled",
+      "type": "event",
+      "signature": "TokensToSendCalled(address,address,address,uint256,bytes,bytes,address,uint256,uint256)",
+      "encoding": "0xaa3e88aca472e90221daf7d3d601abafb62b120319089d7a2c2f63588da85529",
+      "input_names": "operator,from,to,amount,data,operatorData,token,fromBalance,toBalance,",
+      "output_names": ""
+    },
+    {
+      "name": "depositFor",
+      "type": "function",
+      "signature": "depositFor(address)",
+      "encoding": "0xaa67c919",
+      "input_names": "target,",
+      "output_names": ""
+    },
+    {
       "name": "getInterfaceImplementer",
       "type": "function",
       "signature": "getInterfaceImplementer(address,bytes32)",
       "encoding": "0xaabbb8ca",
       "input_names": "_addr,_interfaceHash,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "execute",
+      "type": "function",
+      "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
+      "encoding": "0xaacaaf88",
+      "input_names": "_wallet,_data,_nonce,_signatures,_gasPrice,_gasLimit,",
+      "output_names": ""
+    },
+    {
+      "name": "atomicMatch_",
+      "type": "function",
+      "signature": "atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])",
+      "encoding": "0xab834bab",
+      "input_names": "addrs,uints,feeMethodsSidesKindsHowToCalls,calldataBuy,calldataSell,replacementPatternBuy,replacementPatternSell,staticExtradataBuy,staticExtradataSell,vs,rssMetadata,",
+      "output_names": ""
     },
     {
       "name": "void",
@@ -1417,12 +3961,52 @@
       "output_names": ""
     },
     {
+      "name": "current",
+      "type": "function",
+      "signature": "current(Counter)",
+      "encoding": "0xad04a8d1",
+      "input_names": "counter,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "unsetPackage",
+      "type": "function",
+      "signature": "unsetPackage(string)",
+      "encoding": "0xad358d99",
+      "input_names": "packageName,",
+      "output_names": ""
+    },
+    {
+      "name": "relayHubVersion",
+      "type": "function",
+      "signature": "relayHubVersion()",
+      "encoding": "0xad61ccd5",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "ethToTokenTransferInput",
       "type": "function",
       "signature": "ethToTokenTransferInput(uint256,uint256,address)",
       "encoding": "0xad65d76d",
       "input_names": "min_tokens,deadline,recipient,",
       "output_names": "out,"
+    },
+    {
+      "name": "totalBalance",
+      "type": "function",
+      "signature": "totalBalance()",
+      "encoding": "0xad7a672f",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "stake",
+      "type": "function",
+      "signature": "stake(address,uint256)",
+      "encoding": "0xadc9772e",
+      "input_names": "relayaddr,unstakeDelay,",
+      "output_names": ""
     },
     {
       "name": "isFungible",
@@ -1433,12 +4017,52 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "sub",
+      "type": "function",
+      "signature": "sub(int256,int256)",
+      "encoding": "0xadefc37b",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "Data",
+      "type": "event",
+      "signature": "Data(bytes,uint256,string)",
+      "encoding": "0xaf235354a0a47c91ee171961326335cb2d1a8e55b8a89859b0e61eb049e50ea0",
+      "input_names": "data,integerValue,stringValue,",
+      "output_names": ""
+    },
+    {
       "name": "",
       "type": "constructor",
       "signature": "(address[],uint256,uint256)",
       "encoding": "0xaf8342fe",
       "input_names": "_owners,_required,_daylimit,",
       "output_names": ""
+    },
+    {
+      "name": "_fallback",
+      "type": "function",
+      "signature": "_fallback()",
+      "encoding": "0xaf8f35c4",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "CanRelayFailed",
+      "type": "event",
+      "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
+      "encoding": "0xafb5afd6d1c2e8ffbfb480e674a169f493ece0b22658d4f4484e7334f0241e22",
+      "input_names": "relay,from,to,selector,reason,",
+      "output_names": ""
+    },
+    {
+      "name": "set",
+      "type": "function",
+      "signature": "set(UintToAddressMap,uint256,address)",
+      "encoding": "0xb011f8d3",
+      "input_names": "map,key,value,",
+      "output_names": "ret_0,"
     },
     {
       "name": "tokenToTokenSwapOutput",
@@ -1449,6 +4073,30 @@
       "output_names": "out,"
     },
     {
+      "name": "cooAddress",
+      "type": "function",
+      "signature": "cooAddress()",
+      "encoding": "0xb047fb50",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Penalized",
+      "type": "event",
+      "signature": "Penalized(address,address,uint256)",
+      "encoding": "0xb0595266ccec357806b2691f348b128209f1060a0bda4f5c95f7090730351ff8",
+      "input_names": "relay,sender,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "autoBirthFee",
+      "type": "function",
+      "signature": "autoBirthFee()",
+      "encoding": "0xb0c35c05",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "tokenToExchangeSwapInput",
       "type": "function",
       "signature": "tokenToExchangeSwapInput(uint256,uint256,uint256,uint256,address)",
@@ -1457,11 +4105,27 @@
       "output_names": "out,"
     },
     {
+      "name": "mintInternal",
+      "type": "function",
+      "signature": "mintInternal(address,uint256,bytes,bytes)",
+      "encoding": "0xb1f0b5be",
+      "input_names": "to,amount,userData,operatorData,",
+      "output_names": ""
+    },
+    {
       "name": "setDailyLimit",
       "type": "function",
       "signature": "setDailyLimit(uint256)",
       "encoding": "0xb20d30a9",
       "input_names": "_newLimit,",
+      "output_names": ""
+    },
+    {
+      "name": "_safeMint",
+      "type": "function",
+      "signature": "_safeMint(address,uint256)",
+      "encoding": "0xb3e1c718",
+      "input_names": "to,tokenId,",
       "output_names": ""
     },
     {
@@ -1479,6 +4143,14 @@
       "encoding": "0xb5dc40c3",
       "input_names": "transactionId,",
       "output_names": "_confirmations,"
+    },
+    {
+      "name": "_snapshot",
+      "type": "function",
+      "signature": "_snapshot()",
+      "encoding": "0xb613cb8c",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "execute",
@@ -1503,6 +4175,22 @@
       "encoding": "0xb7056765",
       "input_names": "_contract,_interfaceId,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "div",
+      "type": "function",
+      "signature": "div(uint256,uint256,string)",
+      "encoding": "0xb745d336",
+      "input_names": "a,b,errorMessage,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "approve",
+      "type": "function",
+      "signature": "approve(uint256)",
+      "encoding": "0xb759f954",
+      "input_names": "amount,",
+      "output_names": ""
     },
     {
       "name": "revoke",
@@ -1537,6 +4225,22 @@
       "output_names": ""
     },
     {
+      "name": "releaseTime",
+      "type": "function",
+      "signature": "releaseTime()",
+      "encoding": "0xb91d4001",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "RelayHubChanged",
+      "type": "event",
+      "signature": "RelayHubChanged(address,address)",
+      "encoding": "0xb9f84b8e65164b14439ae3620df0a4d8786d896996c0282b683f9d8c08f046e8",
+      "input_names": "oldRelayHub,newRelayHub,",
+      "output_names": ""
+    },
+    {
       "name": "changeRequirement",
       "type": "function",
       "signature": "changeRequirement(uint256)",
@@ -1561,12 +4265,60 @@
       "output_names": ""
     },
     {
+      "name": "_setImplementation",
+      "type": "function",
+      "signature": "_setImplementation(address)",
+      "encoding": "0xbb913f41",
+      "input_names": "newImplementation,",
+      "output_names": ""
+    },
+    {
+      "name": "mul",
+      "type": "function",
+      "signature": "mul(int256,int256)",
+      "encoding": "0xbbe93d91",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "onERC1155BatchReceived",
       "type": "function",
       "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
       "encoding": "0xbc197c81",
       "input_names": "_operator,_from,_ids,_values,_data,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "erc721Metadata",
+      "type": "function",
+      "signature": "erc721Metadata()",
+      "encoding": "0xbc4006f5",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Upgraded",
+      "type": "event",
+      "signature": "Upgraded(address)",
+      "encoding": "0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b",
+      "input_names": "implementation,",
+      "output_names": ""
+    },
+    {
+      "name": "_get",
+      "type": "function",
+      "signature": "_get(Map,bytes32,string)",
+      "encoding": "0xbcb6f61d",
+      "input_names": "map,key,errorMessage,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "RoleAdminChanged",
+      "type": "event",
+      "signature": "RoleAdminChanged(bytes32,bytes32,bytes32)",
+      "encoding": "0xbd79b86ffe0ab8e8776151514217cd7cacd52c909f66475c3af44e129f0b00ff",
+      "input_names": "role,previousAdminRole,newAdminRole,",
+      "output_names": ""
     },
     {
       "name": "transfer",
@@ -1577,11 +4329,27 @@
       "output_names": "success,"
     },
     {
+      "name": "start",
+      "type": "function",
+      "signature": "start()",
+      "encoding": "0xbe9a6555",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "set",
       "type": "function",
       "signature": "set(bytes12,address)",
       "encoding": "0xbeb38b43",
       "input_names": "pos,wat,",
+      "output_names": ""
+    },
+    {
+      "name": "_callOptionalReturn",
+      "type": "function",
+      "signature": "_callOptionalReturn(IERC20,bytes)",
+      "encoding": "0xbecc5a20",
+      "input_names": "token,data,",
       "output_names": ""
     },
     {
@@ -1625,6 +4393,30 @@
       "output_names": ""
     },
     {
+      "name": "state",
+      "type": "function",
+      "signature": "state()",
+      "encoding": "0xc19d93fb",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_at",
+      "type": "function",
+      "signature": "_at(Set,uint256)",
+      "encoding": "0xc203e0ff",
+      "input_names": "set,index,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "changeDeposit",
+      "type": "function",
+      "signature": "changeDeposit(uint256)",
+      "encoding": "0xc2a2ce06",
+      "input_names": "_deposit,",
+      "output_names": ""
+    },
+    {
       "name": "hasConfirmed",
       "type": "function",
       "signature": "hasConfirmed(bytes32,address)",
@@ -1633,11 +4425,83 @@
       "output_names": "val_0,"
     },
     {
+      "name": "withdrawDeposits",
+      "type": "function",
+      "signature": "withdrawDeposits(uint256,address)",
+      "encoding": "0xc2db1abe",
+      "input_names": "amount,payable payee,",
+      "output_names": ""
+    },
+    {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(uint256)",
+      "encoding": "0xc34052e0",
+      "input_names": "key,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getLatestByMajor",
+      "type": "function",
+      "signature": "getLatestByMajor(uint64)",
+      "encoding": "0xc356d5b0",
+      "input_names": "major,",
+      "output_names": "semanticVersion,contractAddress,contentURI,"
+    },
+    {
+      "name": "getLatest",
+      "type": "function",
+      "signature": "getLatest()",
+      "encoding": "0xc36af460",
+      "input_names": "",
+      "output_names": "semanticVersion,contractAddress,contentURI,"
+    },
+    {
+      "name": "supportsERC165",
+      "type": "function",
+      "signature": "supportsERC165(address)",
+      "encoding": "0xc398a925",
+      "input_names": "account,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "createGen0Auction",
+      "type": "function",
+      "signature": "createGen0Auction(uint256)",
+      "encoding": "0xc3bea9af",
+      "input_names": "_genes,",
+      "output_names": ""
+    },
+    {
+      "name": "isRegistered",
+      "type": "function",
+      "signature": "isRegistered(address)",
+      "encoding": "0xc3c5a547",
+      "input_names": "_addr,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "TransferSingle",
       "type": "event",
       "signature": "TransferSingle(address,address,address,uint256,uint256)",
       "encoding": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62",
       "input_names": "_operator,_from,_to,_id,_value,",
+      "output_names": ""
+    },
+    {
+      "name": "removeRelayByOwner",
+      "type": "function",
+      "signature": "removeRelayByOwner(address)",
+      "encoding": "0xc3e712f2",
+      "input_names": "relay,",
+      "output_names": ""
+    },
+    {
+      "name": "VersionAdded",
+      "type": "event",
+      "signature": "VersionAdded(uint64[3],address,bytes)",
+      "encoding": "0xc5b9b96b4952fc60f5a916010c882de0324dd4fdfaa999f9ad6947f55d842762",
+      "input_names": "semanticVersion,contractAddress,contentURI,",
       "output_names": ""
     },
     {
@@ -1649,12 +4513,28 @@
       "output_names": "transactionId,"
     },
     {
+      "name": "TokensReleased",
+      "type": "event",
+      "signature": "TokensReleased(address,uint256)",
+      "encoding": "0xc7798891864187665ac6dd119286e44ec13f014527aeeb2b8eb3fd413df93179",
+      "input_names": "token,amount,",
+      "output_names": ""
+    },
+    {
       "name": "Revoke",
       "type": "event",
       "signature": "Revoke(address,bytes32)",
       "encoding": "0xc7fb647e59b18047309aa15aad418e5d7ca96d173ad704f1031a2c3d7591734b",
       "input_names": "owner,operation,",
       "output_names": ""
+    },
+    {
+      "name": "toUint32",
+      "type": "function",
+      "signature": "toUint32(uint256)",
+      "encoding": "0xc8193255",
+      "input_names": "a,",
+      "output_names": "ret_0,"
     },
     {
       "name": "tokenURI",
@@ -1671,6 +4551,30 @@
       "encoding": "0xc8a4ac9c",
       "input_names": "a,b,",
       "output_names": "c,"
+    },
+    {
+      "name": "setShouldRevertReceive",
+      "type": "function",
+      "signature": "setShouldRevertReceive(bool)",
+      "encoding": "0xc97e18fc",
+      "input_names": "shouldRevert,",
+      "output_names": ""
+    },
+    {
+      "name": "getRoleMemberCount",
+      "type": "function",
+      "signature": "getRoleMemberCount(bytes32)",
+      "encoding": "0xca15c873",
+      "input_names": "role,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "_beforeTokenTransfer",
+      "type": "function",
+      "signature": "_beforeTokenTransfer(address,address,uint256)",
+      "encoding": "0xcad3be83",
+      "input_names": "from,to,amount,",
+      "output_names": ""
     },
     {
       "name": "_transferFrom",
@@ -1697,6 +4601,38 @@
       "output_names": "_type,"
     },
     {
+      "name": "_remove",
+      "type": "function",
+      "signature": "_remove(Set,bytes32)",
+      "encoding": "0xccc22744",
+      "input_names": "set,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "length",
+      "type": "function",
+      "signature": "length(AddressSet)",
+      "encoding": "0xccdae21e",
+      "input_names": "set,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "create",
+      "type": "function",
+      "signature": "create(string,string,address,bytes)",
+      "encoding": "0xcd3e318a",
+      "input_names": "packageName,contractName,admin,data,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "findUpperBound",
+      "type": "function",
+      "signature": "findUpperBound(uint256[],uint256)",
+      "encoding": "0xcd59bed9",
+      "input_names": "array,element,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "TokenPurchase",
       "type": "event",
       "signature": "TokenPurchase(address,uint256,uint256)",
@@ -1721,11 +4657,99 @@
       "output_names": ""
     },
     {
+      "name": "_grantRole",
+      "type": "function",
+      "signature": "_grantRole(bytes32,address)",
+      "encoding": "0xce2cc1d0",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "shares",
+      "type": "function",
+      "signature": "shares(address)",
+      "encoding": "0xce7c2ac2",
+      "input_names": "account,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "mint",
       "type": "function",
       "signature": "mint(uint256,address[],uint256[])",
       "encoding": "0xcfa84fc1",
       "input_names": "_id,_to,_quantities,",
+      "output_names": ""
+    },
+    {
+      "name": "increment",
+      "type": "function",
+      "signature": "increment()",
+      "encoding": "0xd09de08a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "safeTransfer",
+      "type": "function",
+      "signature": "safeTransfer(IERC20,address,uint256)",
+      "encoding": "0xd0c407e1",
+      "input_names": "token,to,value,",
+      "output_names": ""
+    },
+    {
+      "name": "deposit",
+      "type": "function",
+      "signature": "deposit()",
+      "encoding": "0xd0e30db0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "Withdrawn",
+      "type": "event",
+      "signature": "Withdrawn(address,address,uint256)",
+      "encoding": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb",
+      "input_names": "account,dest,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "send",
+      "type": "function",
+      "signature": "send(IERC777,address,uint256,bytes)",
+      "encoding": "0xd1c689fc",
+      "input_names": "token,to,amount,data,",
+      "output_names": ""
+    },
+    {
+      "name": "_transferOwnership",
+      "type": "function",
+      "signature": "_transferOwnership(address)",
+      "encoding": "0xd29d44ee",
+      "input_names": "newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "senderFor",
+      "type": "function",
+      "signature": "senderFor(address)",
+      "encoding": "0xd2de6474",
+      "input_names": "account,",
+      "output_names": ""
+    },
+    {
+      "name": "isReadyToBreed",
+      "type": "function",
+      "signature": "isReadyToBreed(uint256)",
+      "encoding": "0xd3e6f49f",
+      "input_names": "_kittyId,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "callTransfer",
+      "type": "function",
+      "signature": "callTransfer(address,uint256)",
+      "encoding": "0xd4440991",
+      "input_names": "dest,amount,",
       "output_names": ""
     },
     {
@@ -1745,6 +4769,54 @@
       "output_names": "out,"
     },
     {
+      "name": "revokeRole",
+      "type": "function",
+      "signature": "revokeRole(bytes32,address)",
+      "encoding": "0xd547741f",
+      "input_names": "role,account,",
+      "output_names": ""
+    },
+    {
+      "name": "Sender",
+      "type": "event",
+      "signature": "Sender(address)",
+      "encoding": "0xd6558c3ed910d959271054471fd1c326679d9fece99c5091b00ed89627cf2bfc",
+      "input_names": "sender,",
+      "output_names": ""
+    },
+    {
+      "name": "register",
+      "type": "function",
+      "signature": "register(uint256,uint256)",
+      "encoding": "0xd66d6c10",
+      "input_names": "_maxGasPrice,_maxFeePerClaim,",
+      "output_names": ""
+    },
+    {
+      "name": "safeApprove",
+      "type": "function",
+      "signature": "safeApprove(IERC20,address,uint256)",
+      "encoding": "0xd6dcec8d",
+      "input_names": "token,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "addVersion",
+      "type": "function",
+      "signature": "addVersion(uint64[3],address,bytes)",
+      "encoding": "0xd6ef25d5",
+      "input_names": "semanticVersion,contractAddress,contentURI,",
+      "output_names": ""
+    },
+    {
+      "name": "msgSender",
+      "type": "function",
+      "signature": "msgSender()",
+      "encoding": "0xd737d0c7",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "MAX_OWNER_COUNT",
       "type": "function",
       "signature": "MAX_OWNER_COUNT()",
@@ -1753,12 +4825,28 @@
       "output_names": "val_0,"
     },
     {
+      "name": "supportsInterface",
+      "type": "function",
+      "signature": "supportsInterface(address,bytes4)",
+      "encoding": "0xd9057007",
+      "input_names": "account,interfaceId,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "isOperatorFor",
       "type": "function",
       "signature": "isOperatorFor(address,address)",
       "encoding": "0xd95b6371",
       "input_names": "operator,holder,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "_callERC165SupportsInterface",
+      "type": "function",
+      "signature": "_callERC165SupportsInterface(address,bytes4)",
+      "encoding": "0xdb2ea5c0",
+      "input_names": "account,interfaceId,",
+      "output_names": "ret_0,ret_1,"
     },
     {
       "name": "required",
@@ -1781,7 +4869,7 @@
       "type": "event",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "input_names": "_from,_to,_tokenId,",
+      "input_names": "from,to,tokenId,",
       "output_names": ""
     },
     {
@@ -1793,6 +4881,70 @@
       "output_names": "out,"
     },
     {
+      "name": "allowance",
+      "type": "function",
+      "signature": "allowance()",
+      "encoding": "0xde242ff4",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "MockFunctionCalled",
+      "type": "event",
+      "signature": "MockFunctionCalled(uint256)",
+      "encoding": "0xde4813f7525e49908b98ef6c9c80c5bc8c7d0842981a49420eb45ef36a60e0c0",
+      "input_names": "senderBalance,",
+      "output_names": ""
+    },
+    {
+      "name": "PROMO_CREATION_LIMIT",
+      "type": "function",
+      "signature": "PROMO_CREATION_LIMIT()",
+      "encoding": "0xdefb9584",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "PaymentReleased",
+      "type": "event",
+      "signature": "PaymentReleased(address,uint256)",
+      "encoding": "0xdf20fd1e76bc69d672e4814fafb2c449bba3a5369d8359adf9e05e6fde87b056",
+      "input_names": "to,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "_set",
+      "type": "function",
+      "signature": "_set(Map,bytes32,bytes32)",
+      "encoding": "0xdf28944e",
+      "input_names": "map,key,value,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "toInt256",
+      "type": "function",
+      "signature": "toInt256(uint256)",
+      "encoding": "0xdfbe873b",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "postRelayedCall",
+      "type": "function",
+      "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+      "encoding": "0xe06e0e22",
+      "input_names": "context,success,actualCharge,preRetVal,",
+      "output_names": ""
+    },
+    {
+      "name": "at",
+      "type": "function",
+      "signature": "at(uint256)",
+      "encoding": "0xe0886f90",
+      "input_names": "index,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "unset",
       "type": "function",
       "signature": "unset(bytes12)",
@@ -1801,11 +4953,43 @@
       "output_names": ""
     },
     {
+      "name": "recipientFor",
+      "type": "function",
+      "signature": "recipientFor(address)",
+      "encoding": "0xe0eb2180",
+      "input_names": "account,",
+      "output_names": ""
+    },
+    {
+      "name": "setMetadataAddress",
+      "type": "function",
+      "signature": "setMetadataAddress(address)",
+      "encoding": "0xe17b25af",
+      "input_names": "_contractAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "finalize",
+      "type": "function",
+      "signature": "finalize(uint256[])",
+      "encoding": "0xe17e082b",
+      "input_names": "_maps,",
+      "output_names": ""
+    },
+    {
       "name": "Confirmation",
       "type": "event",
       "signature": "Confirmation(address,bytes32)",
       "encoding": "0xe1c52dc63b719ade82e8bea94cc41a0d5d28e4aaf536adb5e9cccc9ff8c1aeda",
       "input_names": "owner,operation,",
+      "output_names": ""
+    },
+    {
+      "name": "registerSender",
+      "type": "function",
+      "signature": "registerSender(address)",
+      "encoding": "0xe1ecbd30",
+      "input_names": "sender,",
       "output_names": ""
     },
     {
@@ -1833,6 +5017,62 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "payments",
+      "type": "function",
+      "signature": "payments(address)",
+      "encoding": "0xe2982c21",
+      "input_names": "dest,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "increment",
+      "type": "function",
+      "signature": "increment(Counter)",
+      "encoding": "0xe2bee435",
+      "input_names": "counter,",
+      "output_names": ""
+    },
+    {
+      "name": "getVersion",
+      "type": "function",
+      "signature": "getVersion(uint64[3])",
+      "encoding": "0xe30329e9",
+      "input_names": "semanticVersion,",
+      "output_names": "contractAddress,contentURI,"
+    },
+    {
+      "name": "sub",
+      "type": "function",
+      "signature": "sub(uint256,uint256,string)",
+      "encoding": "0xe31bdc0a",
+      "input_names": "a,b,errorMessage,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "totalReleased",
+      "type": "function",
+      "signature": "totalReleased()",
+      "encoding": "0xe33b7de3",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "from the proxy admin",
+      "type": "",
+      "signature": "from the proxy admin(;)",
+      "encoding": "0xe368f052",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
+      "name": "depositsOf",
+      "type": "function",
+      "signature": "depositsOf(address)",
+      "encoding": "0xe3a9db1a",
+      "input_names": "payee,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "isNonFungible",
       "type": "function",
       "signature": "isNonFungible(uint256)",
@@ -1846,6 +5086,30 @@
       "signature": "_doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes)",
       "encoding": "0xe51c223d",
       "input_names": "_operator,_from,_to,_ids,_values,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "at",
+      "type": "function",
+      "signature": "at(UintToAddressMap,uint256)",
+      "encoding": "0xe57b5a47",
+      "input_names": "map,index,",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "saleAuction",
+      "type": "function",
+      "signature": "saleAuction()",
+      "encoding": "0xe6cbe351",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "normalProcess",
+      "type": "function",
+      "signature": "normalProcess()",
+      "encoding": "0xe7651d7a",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -1865,12 +5129,52 @@
       "output_names": ""
     },
     {
+      "name": "UpdateParticipantLimit",
+      "type": "event",
+      "signature": "UpdateParticipantLimit(uint256)",
+      "encoding": "0xe7fc560b4d0182164d7320ccef844dcc3375441f095669f48dbd47915ebbde68",
+      "input_names": "limit,",
+      "output_names": ""
+    },
+    {
+      "name": "_upgradeRelayHub",
+      "type": "function",
+      "signature": "_upgradeRelayHub(address)",
+      "encoding": "0xe8dcdc07",
+      "input_names": "newRelayHub,",
+      "output_names": ""
+    },
+    {
+      "name": "_postRelayedCall",
+      "type": "function",
+      "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
+      "encoding": "0xe90e066b",
+      "input_names": "memory,val_0,val_1,val_2,",
+      "output_names": ""
+    },
+    {
+      "name": "CancelEvent",
+      "type": "event",
+      "signature": "CancelEvent(uint256)",
+      "encoding": "0xe933406ce445ea24d84ca4529e514adc8926e62cdc8b5a67c568c9fd578f1a8a",
+      "input_names": "endedAt,",
+      "output_names": ""
+    },
+    {
       "name": "isApprovedForAll",
       "type": "function",
       "signature": "isApprovedForAll(address,address)",
       "encoding": "0xe985e9c5",
       "input_names": "_owner,_operator,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "getKitty",
+      "type": "function",
+      "signature": "getKitty(uint256)",
+      "encoding": "0xe98b7f4d",
+      "input_names": "_id,",
+      "output_names": "isGestating,isReady,cooldownIndex,nextActionAt,siringWithId,birthTime,matronId,sireId,generation,genes,"
     },
     {
       "name": "onERCXXXXBatchReceived",
@@ -1887,6 +5191,14 @@
       "encoding": "0xea650c7d",
       "input_names": "tokens_bought,max_tokens_sold,max_eth_sold,deadline,exchange_addr,",
       "output_names": "out,"
+    },
+    {
+      "name": "cancel",
+      "type": "function",
+      "signature": "cancel()",
+      "encoding": "0xea8a1af0",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "ownerOfChild",
@@ -1913,12 +5225,28 @@
       "output_names": "out,"
     },
     {
+      "name": "bidOnSiringAuction",
+      "type": "function",
+      "signature": "bidOnSiringAuction(uint256,uint256)",
+      "encoding": "0xed60ade6",
+      "input_names": "_sireId,_matronId,",
+      "output_names": ""
+    },
+    {
       "name": "rootOwnerOfChild",
       "type": "function",
       "signature": "rootOwnerOfChild(address,uint256)",
       "encoding": "0xed81cdda",
       "input_names": "_childContract,_childTokenId,",
       "output_names": "rootOwner,"
+    },
+    {
+      "name": "OperationResult",
+      "type": "event",
+      "signature": "OperationResult(bool)",
+      "encoding": "0xed9840e0775590557ad736875d96c95cf1458b766335f74339951a32c82a9e33",
+      "input_names": "result,",
+      "output_names": ""
     },
     {
       "name": "executeTransaction",
@@ -1934,6 +5262,14 @@
       "signature": "transferFromWithData(address,address,uint256,bytes)",
       "encoding": "0xee532f31",
       "input_names": "_from,_to,_value,_data,",
+      "output_names": ""
+    },
+    {
+      "name": "_updateSnapshot",
+      "type": "function",
+      "signature": "_updateSnapshot(Snapshots,uint256)",
+      "encoding": "0xefd1cc82",
+      "input_names": "snapshots,currentValue,",
       "output_names": ""
     },
     {
@@ -1953,10 +5289,26 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "_delegate",
+      "type": "function",
+      "signature": "_delegate(address)",
+      "encoding": "0xf13101e9",
+      "input_names": "implementation,",
+      "output_names": ""
+    },
+    {
       "name": "m_dailyLimit",
       "type": "function",
       "signature": "m_dailyLimit()",
       "encoding": "0xf1736d86",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "gen0CreatedCount",
+      "type": "function",
+      "signature": "gen0CreatedCount()",
+      "encoding": "0xf1ca9410",
       "input_names": "",
       "output_names": "val_0,"
     },
@@ -1977,11 +5329,59 @@
       "output_names": ""
     },
     {
+      "name": "unstake",
+      "type": "function",
+      "signature": "unstake(address)",
+      "encoding": "0xf2888dbb",
+      "input_names": "relay,",
+      "output_names": ""
+    },
+    {
+      "name": "geneScience",
+      "type": "function",
+      "signature": "geneScience()",
+      "encoding": "0xf2b47d52",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "setNext",
       "type": "function",
       "signature": "setNext(bytes12)",
       "encoding": "0xf2c5925d",
       "input_names": "next_,",
+      "output_names": ""
+    },
+    {
+      "name": "callData",
+      "type": "function",
+      "signature": "callData(ContextMock,uint256,string)",
+      "encoding": "0xf2e034dc",
+      "input_names": "context,integerValue,stringValue,",
+      "output_names": ""
+    },
+    {
+      "name": "transferOwnership",
+      "type": "function",
+      "signature": "transferOwnership(address)",
+      "encoding": "0xf2fde38b",
+      "input_names": "payable newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "_preRelayedCall",
+      "type": "function",
+      "signature": "_preRelayedCall(bytes)",
+      "encoding": "0xf30492e8",
+      "input_names": "memory,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "deposit",
+      "type": "function",
+      "signature": "deposit(address)",
+      "encoding": "0xf340fa01",
+      "input_names": "payee,",
       "output_names": ""
     },
     {
@@ -2009,11 +5409,27 @@
       "output_names": "out,"
     },
     {
+      "name": "mod",
+      "type": "function",
+      "signature": "mod(uint256,uint256)",
+      "encoding": "0xf43f523a",
+      "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "AuthorizedOperator",
       "type": "event",
       "signature": "AuthorizedOperator(address,address)",
       "encoding": "0xf4caeb2d6ca8932a215a353d0703c326ec2d81fc68170f320eb2ab49e9df61f9",
       "input_names": "operator,holder,",
+      "output_names": ""
+    },
+    {
+      "name": "destroyAndSend",
+      "type": "function",
+      "signature": "destroyAndSend(address)",
+      "encoding": "0xf5074f41",
+      "input_names": "payable _recipient,",
       "output_names": ""
     },
     {
@@ -2033,6 +5449,14 @@
       "output_names": "out,"
     },
     {
+      "name": "RoleRevoked",
+      "type": "event",
+      "signature": "RoleRevoked(bytes32,address,address)",
+      "encoding": "0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b",
+      "input_names": "role,account,sender,",
+      "output_names": ""
+    },
+    {
       "name": "Revocation",
       "type": "event",
       "signature": "Revocation(address,uint256)",
@@ -2046,6 +5470,22 @@
       "signature": "implementsERC165Interface(address,bytes4)",
       "encoding": "0xf712f3e8",
       "input_names": "_contract,_interfaceId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "breedWithAuto",
+      "type": "function",
+      "signature": "breedWithAuto(uint256,uint256)",
+      "encoding": "0xf7d8c883",
+      "input_names": "_matronId,_sireId,",
+      "output_names": ""
+    },
+    {
+      "name": "admin",
+      "type": "function",
+      "signature": "admin()",
+      "encoding": "0xf851a440",
+      "input_names": "",
       "output_names": "ret_0,"
     },
     {
@@ -2073,12 +5513,44 @@
       "output_names": "out,out,"
     },
     {
+      "name": "_exists",
+      "type": "function",
+      "signature": "_exists(uint256)",
+      "encoding": "0xf8e76cc0",
+      "input_names": "tokenId,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "mintNonFungible",
       "type": "function",
       "signature": "mintNonFungible(uint256,address[])",
       "encoding": "0xf9419088",
       "input_names": "_type,_to,",
       "output_names": ""
+    },
+    {
+      "name": "mintUserToManyEvents",
+      "type": "function",
+      "signature": "mintUserToManyEvents(uint256[],address)",
+      "encoding": "0xf980f3dc",
+      "input_names": "eventIds,to,",
+      "output_names": ""
+    },
+    {
+      "name": "revoked",
+      "type": "function",
+      "signature": "revoked(address)",
+      "encoding": "0xfa01dc06",
+      "input_names": "token,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "at",
+      "type": "function",
+      "signature": "at(AddressSet,uint256)",
+      "encoding": "0xfa3592c6",
+      "input_names": "set,index,",
+      "output_names": "ret_0,"
     },
     {
       "name": "revokeOperator",
@@ -2089,11 +5561,27 @@
       "output_names": ""
     },
     {
+      "name": "token",
+      "type": "function",
+      "signature": "token()",
+      "encoding": "0xfc0c546a",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "operatorBurn",
       "type": "function",
       "signature": "operatorBurn(address,uint256,bytes,bytes)",
       "encoding": "0xfc673c4f",
       "input_names": "from,amount,data,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "_unpause",
+      "type": "function",
+      "signature": "_unpause()",
+      "encoding": "0xfc8234cb",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -2111,6 +5599,22 @@
       "encoding": "0xfdacd576",
       "input_names": "completed,",
       "output_names": ""
+    },
+    {
+      "name": "get",
+      "type": "function",
+      "signature": "get(UintToAddressMap,uint256)",
+      "encoding": "0xfdba3d0b",
+      "input_names": "map,key,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "toUint256",
+      "type": "function",
+      "signature": "toUint256(int256)",
+      "encoding": "0xfdcf791b",
+      "input_names": "a,",
+      "output_names": "ret_0,"
     },
     {
       "name": "burn",

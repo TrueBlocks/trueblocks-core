@@ -1,0 +1,454 @@
+[
+
+
+    {
+    "name": "mintUserToManyEvents",
+    "type": "function",
+    "signature": "mintUserToManyEvents(uint256[],address)",
+    "encoding": "0xf980f3dc",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "eventIds",
+        "is_array": true
+      },
+      {
+        "type": "address",
+        "name": "to"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mintEventToManyUsers",
+    "type": "function",
+    "signature": "mintEventToManyUsers(uint256,address[])",
+    "encoding": "0x278d9c41",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "eventId"
+      },
+      {
+        "type": "address[]",
+        "name": "to",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mintToken",
+    "type": "function",
+    "signature": "mintToken(uint256,address)",
+    "encoding": "0xa140ae23",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_id"
+      },
+      {
+        "type": "address",
+        "name": "_owner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "upgrade",
+    "type": "function",
+    "signature": "upgrade(address,address)",
+    "encoding": "0x99a88ec4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_teamAddress"
+      },
+      {
+        "type": "address",
+        "name": "_artistAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "execute",
+    "type": "function",
+    "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
+    "encoding": "0xaacaaf88",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_wallet"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      },
+      {
+        "type": "uint256",
+        "name": "_nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "_signatures"
+      },
+      {
+        "type": "uint256",
+        "name": "_gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "_gasLimit"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "vote",
+    "type": "function",
+    "signature": "vote(uint256)",
+    "encoding": "0x0121b93f",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "videoID"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "execTransaction",
+    "type": "function",
+    "signature": "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)",
+    "encoding": "0x6a761202",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      },
+      {
+        "type": "uint8",
+        "name": "operation"
+      },
+      {
+        "type": "uint256",
+        "name": "safeTxGas"
+      },
+      {
+        "type": "uint256",
+        "name": "dataGas"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "address",
+        "name": "gasToken"
+      },
+      {
+        "type": "address",
+        "name": "refundReceiver"
+      },
+      {
+        "type": "bytes",
+        "name": "signatures"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "singleValueAirdrop",
+    "type": "function",
+    "signature": "singleValueAirdrop(address,address[],uint256)",
+    "encoding": "0x9d065838",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addressOfToken"
+      },
+      {
+        "type": "address[]",
+        "name": "_recipients",
+        "is_array": true
+      },
+      {
+        "type": "uint256",
+        "name": "_value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "multisendToken",
+    "type": "function",
+    "signature": "multisendToken(address,address[],uint256[])",
+    "encoding": "0x0b66f3f5",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address[]",
+        "name": "_contributors",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_balances",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "proxyAssert",
+    "type": "function",
+    "signature": "proxyAssert(address,uint8,bytes)",
+    "encoding": "0x3f801f91",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "dest"
+      },
+      {
+        "type": "uint8",
+        "name": "howToCall"
+      },
+      {
+        "type": "bytes",
+        "name": "calldata"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "addAdmin",
+    "type": "function",
+    "signature": "addAdmin(address)",
+    "encoding": "0x70480275",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_new_admin"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "renounceAdmin",
+    "type": "function",
+    "signature": "renounceAdmin()",
+    "encoding": "0x8bad0c0a",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "invoke1CosignerSends",
+    "type": "function",
+    "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
+    "encoding": "0x91aeeedc",
+    "inputs": [
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "address",
+        "name": "authorizedAddress"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelOrder_",
+    "type": "function",
+    "signature": "cancelOrder_(address[7],uint256[9],uint8,uint8,uint8,uint8,bytes,bytes,bytes,uint8,bytes32,bytes32)",
+    "encoding": "0xa8a41c70",
+    "inputs": [
+      {
+        "type": "address[7]",
+        "name": "addrs",
+        "is_array": true
+      },
+      {
+        "type": "uint256[9]",
+        "name": "uints",
+        "is_array": true
+      },
+      {
+        "type": "uint8",
+        "name": "feeMethod"
+      },
+      {
+        "type": "uint8",
+        "name": "side"
+      },
+      {
+        "type": "uint8",
+        "name": "saleKind"
+      },
+      {
+        "type": "uint8",
+        "name": "howToCall"
+      },
+      {
+        "type": "bytes",
+        "name": "calldata"
+      },
+      {
+        "type": "bytes",
+        "name": "replacementPattern"
+      },
+      {
+        "type": "bytes",
+        "name": "staticExtradata"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "atomicMatch_",
+    "type": "function",
+    "signature": "atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])",
+    "encoding": "0xab834bab",
+    "inputs": [
+      {
+        "type": "address[14]",
+        "name": "addrs",
+        "is_array": true
+      },
+      {
+        "type": "uint256[18]",
+        "name": "uints",
+        "is_array": true
+      },
+      {
+        "type": "uint8[8]",
+        "name": "feeMethodsSidesKindsHowToCalls",
+        "is_array": true
+      },
+      {
+        "type": "bytes",
+        "name": "calldataBuy"
+      },
+      {
+        "type": "bytes",
+        "name": "calldataSell"
+      },
+      {
+        "type": "bytes",
+        "name": "replacementPatternBuy"
+      },
+      {
+        "type": "bytes",
+        "name": "replacementPatternSell"
+      },
+      {
+        "type": "bytes",
+        "name": "staticExtradataBuy"
+      },
+      {
+        "type": "bytes",
+        "name": "staticExtradataSell"
+      },
+      {
+        "type": "uint8[2]",
+        "name": "vs",
+        "is_array": true
+      },
+      {
+        "type": "bytes32[5]",
+        "name": "rssMetadata",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "register",
+    "type": "function",
+    "signature": "register(uint256,uint256)",
+    "encoding": "0xd66d6c10",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_maxGasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "_maxFeePerClaim"
+      }
+    ],
+    "outputs": []
+  }
+
+]

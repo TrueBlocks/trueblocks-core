@@ -255,7 +255,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 
 //--------------------------------------------------------------------------------
 string_q getReservedCommands(void) {
-    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|editCmd|mockData|api_mode|to_file|file";
+    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|editCmd|"
+           "mockData|api_mode|to_file|file";
 }
 
 //--------------------------------------------------------------------------------

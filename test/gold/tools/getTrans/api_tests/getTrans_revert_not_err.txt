@@ -206,7 +206,7 @@
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "count",
                 "value": "0"
               }
             ]
@@ -241,7 +241,7 @@
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "count",
                 "value": "0"
               }
             ]
@@ -276,7 +276,7 @@
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "count",
                 "value": "100000000"
               }
             ]
@@ -311,7 +311,7 @@
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "balance",
                 "value": "100000000"
               }
             ]
@@ -346,7 +346,7 @@
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "balance",
                 "value": "100000000"
               }
             ]
