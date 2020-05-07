@@ -157,7 +157,8 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
 
 #define SPEEDY1
 #define SPEEDY2
-#define right(s, r) (s.substr(s.length() - r))  // NOLINT
+#define right(s, r) (s.length() >= r ? s.substr(s.length() - r) : "")  // NOLINT
+#define middle(str, s, e) (str.length() >= s ? str.substr(s, e) : "")  // NOLINT
 typedef map<string_q, NEXTCHUNKFUNC> parse_map_t;
 parse_map_t parseMap;
 //-----------------------------------------------------------------------------------------
@@ -165,7 +166,7 @@ string_q parse_addr(const string_q& input, const void* data = NULL) {
     return "0x" + right(input, 40);
 }
 string_q parse_bool(const string_q& input, const void* data = NULL) {
-    if (input[input.length() - 1] == '1')
+    if (right(input, 1) == "1")
         return "true";
     return "false";
 }
@@ -203,16 +204,16 @@ string_q parse_i256(const string_q& input, const void* data = NULL) {
     return bni_2_Str(str_2_BigInt("0x" + input, 256));
 }
 string_q parse_u8__(const string_q& input, const void* data = NULL) {
-    return uint_2_Str(str_2_Uint("0x" + input.substr(input.length() - (8 / 4))));
+    return uint_2_Str(str_2_Uint("0x" + middle(input, input.length() - (8 / 4), string::npos)));
 }
 string_q parse_u16_(const string_q& input, const void* data = NULL) {
-    return uint_2_Str(str_2_Uint("0x" + input.substr(input.length() - (16 / 4))));
+    return uint_2_Str(str_2_Uint("0x" + middle(input, input.length() - (16 / 4), string::npos)));
 }
 string_q parse_u32_(const string_q& input, const void* data = NULL) {
-    return uint_2_Str(str_2_Uint("0x" + input.substr(input.length() - (32 / 4))));
+    return uint_2_Str(str_2_Uint("0x" + middle(input, input.length() - (32 / 4), string::npos)));
 }
 string_q parse_u64_(const string_q& input, const void* data = NULL) {
-    return uint_2_Str(str_2_Uint("0x" + input.substr(input.length() - (64 / 4))));
+    return uint_2_Str(str_2_Uint("0x" + middle(input, input.length() - (64 / 4), string::npos)));
 }
 string_q parse_u128(const string_q& input, const void* data = NULL) {
 #ifdef SPEEDY2
@@ -235,124 +236,124 @@ string_q parse_by32(const string_q& input, const void* data = NULL) {
     return "0x" + input;
 }
 string_q parse_addr_addr(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64));
 }
 string_q parse_addr_bool(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_bool(input.substr(64, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_bool(middle(input, 64, 64));
 }
 string_q parse_addr_by32(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_by32(input.substr(64, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_by32(middle(input, 64, 64));
 }
 string_q parse_str(const string_q& input, const void* data) {
-    uint64_t len = str_2_Uint("0x" + right(input.substr(64, 64), 16)) * 2;
-    return hex_2_Str(input.substr(128, len));
+    uint64_t len = str_2_Uint("0x" + right(middle(input, 64, 64), 16)) * 2;
+    return hex_2_Str(middle(input, 128, len));
 }
 string_q parse_addr_i256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_i256(input.substr(64, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_i256(middle(input, 64, 64));
 }
 string_q parse_addr_u256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64));
 }
 string_q parse_u8___u8__(const string_q& input, const void* data) {
-    return parse_u8__(input.substr(0, 64)) + "," + parse_u8__(input.substr(64, 64));
+    return parse_u8__(middle(input, 0, 64)) + "," + parse_u8__(middle(input, 64, 64));
 }
 string_q parse_u16__u16_(const string_q& input, const void* data) {
-    return parse_u16_(input.substr(0, 64)) + "," + parse_u16_(input.substr(64, 64));
+    return parse_u16_(middle(input, 0, 64)) + "," + parse_u16_(middle(input, 64, 64));
 }
 string_q parse_u32__u32_(const string_q& input, const void* data) {
-    return parse_u32_(input.substr(0, 64)) + "," + parse_u32_(input.substr(64, 64));
+    return parse_u32_(middle(input, 0, 64)) + "," + parse_u32_(middle(input, 64, 64));
 }
 string_q parse_u64__u64_(const string_q& input, const void* data) {
-    return parse_u64_(input.substr(0, 64)) + "," + parse_u64_(input.substr(64, 64));
+    return parse_u64_(middle(input, 0, 64)) + "," + parse_u64_(middle(input, 64, 64));
 }
 string_q parse_u256_addr(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64));
 }
 string_q parse_u256_bool(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_bool(input.substr(64, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_bool(middle(input, 64, 64));
 }
 string_q parse_u256_u8__(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u8__(input.substr(64, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u8__(middle(input, 64, 64));
 }
 string_q parse_u256_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64));
 }
 string_q parse_by32_addr(const string_q& input, const void* data) {
-    return parse_by32(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64));
+    return parse_by32(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64));
 }
 string_q parse_by32_by32(const string_q& input, const void* data) {
-    return parse_by32(input.substr(0, 64)) + "," + parse_by32(input.substr(64, 64));
+    return parse_by32(middle(input, 0, 64)) + "," + parse_by32(middle(input, 64, 64));
 }
 string_q parse_by32_u256(const string_q& input, const void* data) {
-    return parse_by32(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64));
+    return parse_by32(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64));
 }
 string_q parse_addr_addr_addr(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64)) + "," +
-           parse_addr(input.substr(128, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
+           parse_addr(middle(input, 128, 64));
 }
 string_q parse_addr_addr_u256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64));
 }
 string_q parse_addr_u256_addr(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_addr(input.substr(128, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_addr(middle(input, 128, 64));
 }
 string_q parse_addr_u256_u256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64));
 }
 string_q parse_by32_by32_u256(const string_q& input, const void* data) {
-    return parse_by32(input.substr(0, 64)) + "," + parse_by32(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64));
+    return parse_by32(middle(input, 0, 64)) + "," + parse_by32(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64));
 }
 string_q parse_u256_addr_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64));
 }
 string_q parse_u256_u256_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64));
 }
 string_q parse_addr_addr_addr_u256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_addr(input.substr(64, 64)) + "," +
-           parse_addr(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
+           parse_addr(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64));
 }
 string_q parse_addr_u256_u256_u256(const string_q& input, const void* data) {
-    return parse_addr(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64));
+    return parse_addr(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64));
 }
 string_q parse_u256_u256_u256_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64));
 }
 string_q parse_u256_u256_u256_u256_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64)) + "," +
-           parse_u256(input.substr(256, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64)) + "," +
+           parse_u256(middle(input, 256, 64));
 }
 string_q parse_u256_u256_u256_u256_u256_u256(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64)) + "," +
-           parse_u256(input.substr(256, 64)) + "," + parse_u256(input.substr(320, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64)) + "," +
+           parse_u256(middle(input, 256, 64)) + "," + parse_u256(middle(input, 320, 64));
 }
 string_q parse_two_u256_one_addr(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_addr(input.substr(128, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_addr(middle(input, 128, 64));
 }
 string_q parse_three_u256_one_addr(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_addr(input.substr(192, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_addr(middle(input, 192, 64));
 }
 string_q parse_four_u256_one_addr(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64)) + "," +
-           parse_addr(input.substr(256, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64)) + "," +
+           parse_addr(middle(input, 256, 64));
 }
 string_q parse_four_u256_two_addr(const string_q& input, const void* data) {
-    return parse_u256(input.substr(0, 64)) + "," + parse_u256(input.substr(64, 64)) + "," +
-           parse_u256(input.substr(128, 64)) + "," + parse_u256(input.substr(192, 64)) + "," +
-           parse_addr(input.substr(256, 64)) + "," + parse_addr(input.substr(320, 64));
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64)) + "," +
+           parse_addr(middle(input, 256, 64)) + "," + parse_addr(middle(input, 320, 64));
 }
 
 //-----------------------------------------------------------------------------------------
