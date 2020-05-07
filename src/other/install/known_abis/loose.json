@@ -2,6 +2,408 @@
 
 
     {
+    "name": "setAddr",
+    "type": "function",
+    "signature": "setAddr(bytes32,address)",
+    "encoding": "0xd5fa2b00",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "node"
+      },
+      {
+        "type": "address",
+        "name": "addr"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "execute",
+    "type": "function",
+    "signature": "execute(bytes)",
+    "encoding": "0x09c5eabe",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "val_0"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawToken",
+    "type": "function",
+    "signature": "withdrawToken(address,uint256)",
+    "encoding": "0x9e281a98",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "trade",
+    "type": "function",
+    "signature": "trade(address,uint256,address,uint256,uint256,uint256,address,uint8,bytes32,bytes32,uint256)",
+    "encoding": "0x0a19b14a",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenGet"
+      },
+      {
+        "type": "uint256",
+        "name": "amountGet"
+      },
+      {
+        "type": "address",
+        "name": "tokenGive"
+      },
+      {
+        "type": "uint256",
+        "name": "amountGive"
+      },
+      {
+        "type": "uint256",
+        "name": "expires"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint8",
+        "name": "v"
+      },
+      {
+        "type": "bytes32",
+        "name": "r"
+      },
+      {
+        "type": "bytes32",
+        "name": "s"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelAuction",
+    "type": "function",
+    "signature": "cancelAuction(uint256)",
+    "encoding": "0x96b5a755",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "bid",
+    "type": "function",
+    "signature": "bid(uint256)",
+    "encoding": "0x454a2ab3",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mintBatchFrozenTokens",
+    "type": "function",
+    "signature": "mintBatchFrozenTokens(address[],uint256[])",
+    "encoding": "0x54b2b176",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "accounts",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "execute",
+    "type": "function",
+    "signature": "execute(address,bytes)",
+    "encoding": "0x1cff79cd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_target"
+      },
+      {
+        "type": "bytes",
+        "name": "_data"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "multiGenerate",
+    "type": "function",
+    "signature": "multiGenerate(address,address[],bytes)",
+    "encoding": "0xf725839f",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_merkleMineContract"
+      },
+      {
+        "type": "address[]",
+        "name": "_recipients",
+        "is_array": true
+      },
+      {
+        "type": "bytes",
+        "name": "_merkleProofs"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "build",
+    "type": "function",
+    "signature": "build()",
+    "encoding": "0x8e1a55fc",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "airdropTokens",
+    "type": "function",
+    "signature": "airdropTokens(address[],uint256[])",
+    "encoding": "0x706f6937",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_recipients",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amounts",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "batchSend",
+    "type": "function",
+    "signature": "batchSend(address,uint160,uint256[])",
+    "encoding": "0x2c39da94",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_token"
+      },
+      {
+        "type": "uint160",
+        "name": "_lotSize"
+      },
+      {
+        "type": "uint256[]",
+        "name": "_transfers",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mintToAddresses",
+    "type": "function",
+    "signature": "mintToAddresses(address[],uint256)",
+    "encoding": "0xf190ac5f",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "addresses",
+        "is_array": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "split",
+    "type": "function",
+    "signature": "split(address,address)",
+    "encoding": "0x0f2c9329",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "targetFork"
+      },
+      {
+        "type": "address",
+        "name": "targetNoFork"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "massNotify",
+    "type": "function",
+    "signature": "massNotify(address[])",
+    "encoding": "0x0e6848cc",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_owners",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "transferPresaleTokens",
+    "type": "function",
+    "signature": "transferPresaleTokens(address,uint256)",
+    "encoding": "0x9b03a211",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "destination"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "drop",
+    "type": "function",
+    "signature": "drop(address,address[],uint256[])",
+    "encoding": "0x7da5efc8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "address[]",
+        "name": "recipients",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "values",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "send",
+    "type": "function",
+    "signature": "send(address[],uint256[])",
+    "encoding": "0xa645ff5f",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "receivers",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "values",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "multisend",
+    "type": "function",
+    "signature": "multisend(address,address[],uint256[])",
+    "encoding": "0xad8733ca",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddr"
+      },
+      {
+        "type": "address[]",
+        "name": "dests",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "values",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
     "name": "mintUserToManyEvents",
     "type": "function",
     "signature": "mintUserToManyEvents(uint256[],address)",

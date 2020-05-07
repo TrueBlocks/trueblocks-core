@@ -222,6 +222,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x0c140a5442ea50172c55730753f4e8e651b39fa1	ben		https://kickback.events/			false	false	false
 81-Other:DAO Whales	0x0c2808b951ed9e872d7b32790fcc5994ae41ffdc	DAO_WHALE_18		WhaleWatch.io			false	false	true
 34-Humanity DAO	0x0c312c0d6707e8ad8bf34e4676ea827a9b22f210	jameswatanila		https://www.humanitydao.org/humans			false	false	false
+91-Friends	0x0c3239e2e841242db989a61518c22247e8c55208	BitCoinAcctnt3		EtherScan			false	false	false
 80-Malicious	0x0c35a2e957e8f88027bc7b2779b9f95f0848992d	Malicious 0x0c3		TrueBlocks.io			false	false	false
 80-Malicious	0x0c40cf6dd1b74c6edfc4729021a11f57b31e3c27	Possibly Malicious 0x0c4		TrueBlocks.io			false	false	false
 30-Contracts:dAppNode	0x0c564ca7b948008fb324268d8baedaeb1bd47bce	dAppNode AppProxyUpgradeable		TrueBlocks.io			false	false	false
@@ -3724,6 +3725,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious	0xd6a64d7e8c8a94fa5068ca33229d88436a743b14	Possibly Malicious 0xd6a		TrueBlocks.io			false	false	false
 81-Other	0xd6a791710cba46a6e39ee8fb3a7408947f219ecb	DynamicToken_id326_cnt5_23da		Ether Camp			false	false	false
 32-Kickback:Friends	0xd6b6c1d686d67a3cda450d31fc9d4463f7a1bfac	cahlan		https://kickback.events/			false	false	false
+91-Friends	0xd6c067af8fa9c364daf50beb31b2837c2e539f35	BitCoinAcctnt		EtherScan			false	false	false
 34-Humanity DAO	0xd6c0e7c9c328e2b09f9d8baac65e2dcd6d9ef8ee	DavidRyan386		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0xd6d30f186e802c1558b8137bd730f7f4aec17ae7	adrianmcli		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xd6e1401a079922469e9b965cb090ea6ff64c6839	HOLD	HOLD	On Chain	18	HOLD is a revolutionary card that provides instant cash against cryptocurrency collateral. Leverage the power of your portfolio without having to sell it.	false	false	false
@@ -3871,6 +3873,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xde6d757a69f0a57f27b7c456926ee59fef4c12be	iuri matias		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0xde7d85157d9714eadf595045cc12ca4a5f3e2adb	STPT	STPT	On Chain	18		false	false	false
 34-Humanity DAO	0xde7e3ec4442ba87247797bea433985449edea893	JayBWelsh		https://www.humanitydao.org/humans			false	false	false
+91-Friends	0xde926f5d6e6c730cd7f2e26d0252f3595991147b	BitCoinAcctnt2		EtherScan			false	false	false
 32-Kickback:Friends	0xdeaf1d7775d198dfa5ed9f1df7fa664cfda920f6	mgarciap		https://kickback.events/			false	false	false
 34-Humanity DAO	0xdeca4febf75de678a426a5491cb00dd9146bb21f	dustintownsend		https://www.humanitydao.org/humans			false	false	false
 81-Other:Consensys	0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb	Probable_Exchange, oloniex's DAO Wallet		Consensys, Slack Nation			false	false	false
