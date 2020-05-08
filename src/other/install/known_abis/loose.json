@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "setAddr",
     "type": "function",
     "signature": "setAddr(bytes32,address)",
@@ -9,18 +7,51 @@
     "inputs": [
       {
         "type": "bytes32",
-        "name": "node"
+        "name": "val_0"
       },
       {
         "type": "address",
-        "name": "addr"
+        "name": "val_1"
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
+    "name": "sendTokensArray",
+    "type": "function",
+    "signature": "sendTokensArray(address[],uint256)",
+    "encoding": "0x36ea5d40",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "beneficiaries",
+        "is_array": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "buy",
+    "type": "function",
+    "signature": "buy(uint256,uint256)",
+    "encoding": "0xd6febde8",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "execute",
     "type": "function",
     "signature": "execute(bytes)",
@@ -32,10 +63,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawToken",
     "type": "function",
     "signature": "withdrawToken(address,uint256)",
@@ -51,10 +80,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "trade",
     "type": "function",
     "signature": "trade(address,uint256,address,uint256,uint256,uint256,address,uint8,bytes32,bytes32,uint256)",
@@ -106,10 +133,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelAuction",
     "type": "function",
     "signature": "cancelAuction(uint256)",
@@ -121,10 +146,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "bid",
     "type": "function",
     "signature": "bid(uint256)",
@@ -136,10 +159,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mintBatchFrozenTokens",
     "type": "function",
     "signature": "mintBatchFrozenTokens(address[],uint256[])",
@@ -157,10 +178,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "execute",
     "type": "function",
     "signature": "execute(address,bytes)",
@@ -176,10 +195,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "multiGenerate",
     "type": "function",
     "signature": "multiGenerate(address,address[],bytes)",
@@ -200,20 +217,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "build",
     "type": "function",
     "signature": "build()",
     "encoding": "0x8e1a55fc",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "airdropTokens",
     "type": "function",
     "signature": "airdropTokens(address[],uint256[])",
@@ -231,10 +244,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchSend",
     "type": "function",
     "signature": "batchSend(address,uint160,uint256[])",
@@ -255,10 +266,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mintToAddresses",
     "type": "function",
     "signature": "mintToAddresses(address[],uint256)",
@@ -275,10 +284,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "split",
     "type": "function",
     "signature": "split(address,address)",
@@ -294,10 +301,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "massNotify",
     "type": "function",
     "signature": "massNotify(address[])",
@@ -310,10 +315,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferPresaleTokens",
     "type": "function",
     "signature": "transferPresaleTokens(address,uint256)",
@@ -329,10 +332,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "drop",
     "type": "function",
     "signature": "drop(address,address[],uint256[])",
@@ -354,10 +355,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "send",
     "type": "function",
     "signature": "send(address[],uint256[])",
@@ -375,10 +374,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "multisend",
     "type": "function",
     "signature": "multisend(address,address[],uint256[])",
@@ -400,10 +397,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mintUserToManyEvents",
     "type": "function",
     "signature": "mintUserToManyEvents(uint256[],address)",
@@ -420,10 +415,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mintEventToManyUsers",
     "type": "function",
     "signature": "mintEventToManyUsers(uint256,address[])",
@@ -440,10 +433,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mintToken",
     "type": "function",
     "signature": "mintToken(uint256,address)",
@@ -459,10 +450,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "upgrade",
     "type": "function",
     "signature": "upgrade(address,address)",
@@ -478,10 +467,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "execute",
     "type": "function",
     "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
@@ -513,10 +500,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "vote",
     "type": "function",
     "signature": "vote(uint256)",
@@ -528,10 +513,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "execTransaction",
     "type": "function",
     "signature": "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)",
@@ -579,10 +562,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "singleValueAirdrop",
     "type": "function",
     "signature": "singleValueAirdrop(address,address[],uint256)",
@@ -603,10 +584,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "multisendToken",
     "type": "function",
     "signature": "multisendToken(address,address[],uint256[])",
@@ -628,10 +607,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "proxyAssert",
     "type": "function",
     "signature": "proxyAssert(address,uint8,bytes)",
@@ -651,10 +628,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "addAdmin",
     "type": "function",
     "signature": "addAdmin(address)",
@@ -666,20 +641,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "renounceAdmin",
     "type": "function",
     "signature": "renounceAdmin()",
     "encoding": "0x8bad0c0a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "invoke1CosignerSends",
     "type": "function",
     "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
@@ -711,10 +682,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelOrder_",
     "type": "function",
     "signature": "cancelOrder_(address[7],uint256[9],uint8,uint8,uint8,uint8,bytes,bytes,bytes,uint8,bytes32,bytes32)",
@@ -772,10 +741,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "atomicMatch_",
     "type": "function",
     "signature": "atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])",
@@ -832,10 +799,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "register",
     "type": "function",
     "signature": "register(uint256,uint256)",
@@ -852,5 +817,4 @@
     ],
     "outputs": []
   }
-
 ]
