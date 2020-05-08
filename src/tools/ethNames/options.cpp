@@ -267,6 +267,7 @@ COptions::COptions(void) {
     notes.push_back("When there are two search terms, both must match.");
     notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    notes.push_back("For `editCmd` add or update, use `terms` TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.");
     // clang-format on
     // END_CODE_NOTES
     notes.push_back("Name file: `" + configPathRelative("names/names.tab") + "` (" +

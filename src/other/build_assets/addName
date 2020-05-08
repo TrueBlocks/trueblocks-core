@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+chifra names --editCmd add "$1!$2!$3!$4!EtherScan!"
+cp -pf /Users/jrush/.quickBlocks/names/names.tab ../src/other/install/names/names.tab

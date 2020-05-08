@@ -152,6 +152,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12466,tools,names,ethNames,,,,false,false,false,false,--,note,,When there are two search terms&#44; both must match.
 12468,tools,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
 12470,tools,names,ethNames,,,,false,false,false,false,--,note,,To customize the list of names add a `custom` section to the config file (see documentation).
+12480,tools,names,ethNames,,,,false,false,false,false,--,note,,For `editCmd` add or update&#44; use `terms` TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.
 
 12500,tools,blocks,getBlock,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12520,tools,blocks,getBlock,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
