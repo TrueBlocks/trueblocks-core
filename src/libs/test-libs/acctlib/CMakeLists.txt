@@ -9,3 +9,4 @@ project (test-acctlib)
 
 # Compile the libraries in this order
 add_subdirectory(acctTest)
+add_subdirectory(ensTest)

@@ -175,8 +175,6 @@ extern const char* STR_DISPLAY_TOKENBALANCERECORD;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
-extern string_q doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                          const CAbi& abi);
 extern string_q getTokenBalanceOf(const CTokenBalanceRecord& token, const address_t& holder, blknum_t blockNum);
 extern string_q getTokenState(const string_q& what, const CTokenBalanceRecord& token, blknum_t blockNum);
 // EXISTING_CODE

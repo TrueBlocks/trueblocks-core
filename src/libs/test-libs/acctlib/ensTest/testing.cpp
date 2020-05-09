@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,22 +10,21 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "accountwatch.h"
-#include "treeroot.h"
-#include "acctlib.h"
-#include "branch.h"
-#include "infix.h"
-#include "leaf.h"
-#include "treenode.h"
-#include "apispec.h"
-#include "indexing.h"
-#include "ethstate.h"
-#include "tokenbalancerecord.h"
-#include "balancerecord.h"
-#include "balancedelta.h"
-#include "ens.h"
+#include "options.h"
 
-extern void acctlib_init(QUITHANDLER qh);
-extern void acctlib_cleanup(void);
+//-----------------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    etherlib_init(quickQuitHandler);
 
-using namespace qblocks;  // NOLINT
+    cout << "namehash:  " << namehash("") << endl;
+    cout << "should be: " << "0x0000000000000000000000000000000000000000000000000000000000000000" << endl;
+
+    cout << "namehash:  " << namehash("eth") << endl;
+    cout << "should be: " << "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae" << endl;
+
+    cout << "namehash:  " << namehash("foo.eth") << endl;
+    cout << "should be: " << "0xde9b09fd7c5f901e23a3f19fecc54828e9c848539801e86591bd9801b019f84f" << endl;
+
+    etherlib_cleanup();
+    return 0;
+}

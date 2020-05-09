@@ -11,22 +11,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "accountwatch.h"
-#include "treeroot.h"
+#include "etherlib.h"
 #include "acctlib.h"
-#include "branch.h"
-#include "infix.h"
-#include "leaf.h"
-#include "treenode.h"
-#include "apispec.h"
-#include "indexing.h"
-#include "ethstate.h"
-#include "tokenbalancerecord.h"
-#include "balancerecord.h"
-#include "balancedelta.h"
-#include "ens.h"
 
-extern void acctlib_init(QUITHANDLER qh);
-extern void acctlib_cleanup(void);
-
-using namespace qblocks;  // NOLINT
+//-----------------------------------------------------------------------------
+class COptions : public COptionsBase {
+  public:
+    COptions(void);
+    ~COptions(void);
+    bool parseArguments(string_q& command);
+    void Init(void);
+};

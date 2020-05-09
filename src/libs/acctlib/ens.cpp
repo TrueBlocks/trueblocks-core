@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,22 +10,25 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "accountwatch.h"
-#include "treeroot.h"
-#include "acctlib.h"
-#include "branch.h"
-#include "infix.h"
-#include "leaf.h"
-#include "treenode.h"
-#include "apispec.h"
-#include "indexing.h"
-#include "ethstate.h"
-#include "tokenbalancerecord.h"
-#include "balancerecord.h"
-#include "balancedelta.h"
 #include "ens.h"
 
-extern void acctlib_init(QUITHANDLER qh);
-extern void acctlib_cleanup(void);
+namespace qblocks {
 
-using namespace qblocks;  // NOLINT
+hash_t namehash(const string_q& domainIn) {
+    CStringArray parts;
+    explode(parts, domainIn, '.');
+    hash_t node = "0x" + string_q(64,'0');
+    for (auto part : parts)
+        node = keccak256(node + keccak256(part));
+    return "Doesn't work: " + node;
+}
+
+address_t addressFromENSName(const string_q& name) {
+    return "";
+}
+
+string_q ensNameFromAddress(const address_t& addr) {
+    return "";
+}
+
+}
