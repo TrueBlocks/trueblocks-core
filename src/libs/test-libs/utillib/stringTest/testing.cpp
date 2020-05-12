@@ -260,37 +260,33 @@ TEST_F(CThisTest, TestExtract) {
 }
 }
 
-//--------------------------------------------------------------------------------
-string_q removeCharacters1(const string_q& str, size_t n, const char* chars) {
-    string_q ret;
-    for (auto ch : str) {
-        bool found = false;
-        for (size_t i = 0; i < n && !found; i++) {
-            if (chars[i] == ch) {
-                found = true;
-            }
-        }
-        if (!found) {
-            if (ch > 0x1F)
-                ret += ch;
-        }
-    }
-    return ret;
-}
-
 //------------------------------------------------------------------------
 TEST_F(CThisTest, TestClear) {
     string_q code;
     asciiFileToString("./solidity_code.sol", code);
-    cout << TESTID("code", 15) << code << endl;
 
-    string_q code1 = code, code2 = code;
-    //    cleanString(code1, false); cout << TESTID("code1", 15) << code1 << endl;
+    // show the code we got
+    cout << TESTID("code as read", 15) << code << endl;
+    cout << endl;
+
+    string_q code1 = code;
+    simplifySolidity(code1);
+    cout << TESTID("code with simplifySolidity", 15) << code1 << endl;
+    cout << endl;
+
+    // show the code as cleaned
+    string_q code2 = code;
     cleanString(code2, true);
-    cout << TESTID("code2", 15) << code2 << endl;
+    cout << TESTID("code as cleaned", 15) << code2 << endl;
+    cout << endl;
+
+    // extra test to show removing characters
     const char* str = "A";
     string_q str1 = "AaAbAcAdAeAfAgAh";
-    ASSERT_EQ("removeChars", removeCharacters1(str1, 1, str), "abcdefgh");
+    ASSERT_EQ("before removeChars", str1, "AaAbAcAdAeAfAgAh");
+    removeCharacters(str1, 1, str);
+    ASSERT_EQ("removeChars", str1, "abcdefgh");
+    cout << endl;
 
     return true;
 }

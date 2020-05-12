@@ -44,7 +44,8 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
               }
             ],
             "outputs": []
-          }
+          },
+          "compressedLog": "Transfer ( _from: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _amount: 100000000 )"
         },
         {
           "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -57,7 +58,8 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             "name": "",
             "inputs": [],
             "outputs": []
-          }
+          },
+          "compressedLog": ""
         }
       ],
       "status": 1
@@ -67,11 +69,13 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
       "inputs": [],
       "outputs": []
     },
+    "compressedTx": "",
     "traces": [
       {
         "type": "call",
         "error": "",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -93,6 +97,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
         "type": "call",
         "error": "",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -114,6 +119,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
         "type": "call",
         "error": "",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -135,6 +141,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
         "type": "call",
         "error": "",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -156,6 +163,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
         "type": "create",
         "error": "",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -177,6 +185,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
         "type": "call",
         "error": "Reverted",
         "articulatedTrace": {},
+        "compressedTrace": "",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -207,11 +216,12 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
           ],
           "outputs": [
             {
-              "name": "count",
+              "name": "balance",
               "value": "0"
             }
           ]
         },
+        "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -242,11 +252,12 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
           ],
           "outputs": [
             {
-              "name": "count",
+              "name": "balance",
               "value": "0"
             }
           ]
         },
+        "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -277,11 +288,12 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
           ],
           "outputs": [
             {
-              "name": "count",
+              "name": "balance",
               "value": "100000000"
             }
           ]
         },
+        "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -317,6 +329,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             }
           ]
         },
+        "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -352,6 +365,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             }
           ]
         },
+        "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -375,5 +389,5 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
     "date": "2018-12-13 01:26:32 UTC",
     "ether": 0.000000000000000000
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ] }

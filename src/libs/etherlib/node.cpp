@@ -1330,9 +1330,9 @@ const string_q defHide =
     "is_flags";
 
 const string_q defShow =
-    "CTransaction: gasCost, articulatedTx, traces, isError, date, ether"
-    "|CLogEntry: articulatedLog"
-    "|CTrace: articulatedTrace"
+    "CTransaction: gasCost, articulatedTx, compressedTx, traces, isError, date, ether"
+    "|CLogEntry: articulatedLog, compressedLog"
+    "|CTrace: articulatedTrace, compressedTrace"
     "|CTraceAction: "
     "|CTraceResult: "
     "|CFunction: "

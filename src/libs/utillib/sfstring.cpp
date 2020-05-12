@@ -478,6 +478,80 @@ void cleanString(string_q& str, bool isCode) {
     str.resize(pos);
 }
 
+//--------------------------------------------------------------------------------
+string_q removeCharacters_inner(const string_q& str, size_t n, const char* chars) {
+    string_q ret;
+    for (auto ch : str) {
+        bool found = false;
+        for (size_t i = 0; i < n && !found; i++) {
+            if (chars[i] == ch) {
+                found = true;
+            }
+        }
+        if (!found)
+            ret += ch;
+    }
+    return ret;
+}
+
+//--------------------------------------------------------------------------------
+void removeCharacters(string_q& str, size_t n, const char* chars) {
+    str = removeCharacters_inner(str, n, chars);
+}
+
+//-----------------------------------------------------------------------
+void simplifySolidity(string_q& code) {
+    replaceAll(code, "`", "");    // easier
+    replaceAll(code, "*/", "`");  // easier
+    string_q ret;
+    char endChar = '\0';
+    typedef enum { OUT, START, STOP, IN } State;
+    State state = OUT;
+    for (auto ch : code) {
+        if (ch == '\r')
+            ch = '\n';
+        if (ch == '{')
+            ch = ';';
+        switch (state) {
+            case OUT:
+                switch (ch) {
+                    case '/':
+                        state = START;
+                        break;
+                    default:
+                        ret += ch;
+                        break;
+                }
+                break;
+            case START:
+                switch (ch) {
+                    case '*':
+                        state = IN;
+                        endChar = '`';  // easier
+                        break;
+                    case '/':
+                        state = IN;
+                        endChar = '\n';
+                        break;
+                    default:
+                        ret += '/';
+                        state = OUT;
+                        break;
+                }
+                break;
+            case IN:
+                if (ch == endChar) {
+                    state = OUT;
+                }
+                break;
+            default:
+                ASSERT(0);
+                return;
+        }
+    }
+    code = substitute(substitute(ret, "\t", " "), "  ", " ");
+}
+
 //---------------------------------------------------------------------------------------
 bool containsAny(const string_q& haystack, const string_q& needle) {
     string need = needle.c_str();

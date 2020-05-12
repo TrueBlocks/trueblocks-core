@@ -3,6 +3,7 @@
   "type": "call",
   "error": "",
   "articulatedTrace": {},
+  "compressedTrace": "",
   "action": {
     "address": "0x0",
     "balance": 0,
@@ -24,6 +25,7 @@
   "type": "call",
   "error": "",
   "articulatedTrace": {},
+  "compressedTrace": "",
   "action": {
     "address": "0x0",
     "balance": 0,
@@ -43,7 +45,8 @@
 }
 ]
 ], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFromAndTo": {}
+, "unNamedFromAndTo": {}, "namedFrom": {}
 , "unNamedFrom": {}, "namedTo": {}
 , "unNamedTo": {} } }

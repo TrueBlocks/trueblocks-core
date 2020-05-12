@@ -533,5 +533,63 @@ void removeDuplicateEncodings(CAbiArray& abis) {
     }
     abis[j++] = abis[n - 1];
 }
+
+// TODO(tjayrush): This is terrible code
+extern void snagSignatures(string_q& str);
+//-----------------------------------------------------------------------
+bool sol_2_Abi(CAbi& abi, const string_q& addr) {
+    string_q solFile = addr + ".sol";
+    string_q contents = asciiFileToString(solFile);
+
+    // remove any unneeded characters (all comments, unused whitespace
+    simplifySolidity(contents);
+
+    // prepare the code for identifying the functions and events
+    replaceAll(contents, "function ", "~function ");
+    replaceAll(contents, "event ", "~event ");
+    // replaceAll(contents, "interface ", "contract ");
+    replaceAll(contents, " memory ", " ");
+    replaceAll(contents, " storage ", " ");
+    replaceAll(contents, " calldata ", " ");
+    cleanString(contents, true);
+
+    // preserve only characters between '~' and the next following ';' (removing both '~'
+    // and ';' and adding newline in place of the ';'
+    snagSignatures(contents);
+
+    CStringArray lines;
+    explode(lines, contents, '\n');
+    for (auto line : lines) {
+        replaceAll(line, "  ", " ");
+        CFunction func;
+        func.fromDefinition(line);
+        abi.interfaces.push_back(func);
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void snagSignatures(string_q& str) {
+    size_t pos = 0;
+    typedef enum { OUT, IN } StateThing;
+    StateThing state = OUT;
+    for (auto ch : str) {
+        switch (state) {
+            case OUT:
+                if (ch == '~')
+                    state = IN;
+                break;
+            case IN:
+                str[pos++] = ch;
+                if (ch == ';') {
+                    str[pos++] = '\n';
+                    state = OUT;
+                }
+                break;
+        }
+    }
+    str[pos] = '\0';
+    str.resize(pos);
+}
 // EXISTING_CODE
 }  // namespace qblocks

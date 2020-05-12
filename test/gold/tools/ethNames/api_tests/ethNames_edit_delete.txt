@@ -7,7 +7,7 @@
       "name": "NAME_CHANGED",
       "symbol": "SYMBOL_CHANGED",
       "source": "SOURCE_CHANGED",
-      "decimals": "0",
+      "decimals": 13,
       "description": "DESCRIPTION_CHANGED",
       "is_custom": false,
       "is_prefund": false

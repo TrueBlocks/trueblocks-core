@@ -25,9 +25,7 @@
         "inputs": [],
         "outputs": []
       },
-      "traces": [
-        ""
-      ],
+      "compressedTx": "",
       "gasCost": 1066000000000000,
       "gasUsed": 53300,
       "date": "2016-07-11 20:58:05 UTC",
@@ -98,8 +96,8 @@
           "type": "object"
         },
         {
-          "name": "traces",
-          "type": "object|ts_array"
+          "name": "compressedTx",
+          "type": "text"
         },
         {
           "name": "gasCost",

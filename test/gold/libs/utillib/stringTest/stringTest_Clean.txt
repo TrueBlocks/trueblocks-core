@@ -1,6 +1,6 @@
 stringTest argc: 2 [1:5] 
 stringTest 5 
-0. 	000.000 code            ==> pragma solidity 0.4.25;
+0. 	000.000 code as read    ==> pragma solidity 0.4.25;
 
 /* ----------------------------------------------------------------------------
 // SAFE MATH
@@ -308,5 +308,256 @@ _verifyMetaData) public
 	event Message(string fName, string message);
 }
 
-	000.001 code2           ==> pragma solidity 0.4.25;   contract SafeMath { function add(uint a, uint b) internal pure returns (uint c) { c = a + b; require(c >= a); } function sub(uint a, uint b) internal pure returns (uint c) { require(b <= a); c = a - b; } function mul(uint a, uint b) internal pure returns (uint c) { c = a * b; require(a == 0 || c / a == b); } function div(uint a, uint b) internal pure returns (uint c) { require(b > 0); c = a / b; } }   contract ERC20Interface { function totalSupply() public constant returns (uint); function balanceOf(address tokenOwner) public constant returns (uint balance); function allowance(address tokenOwner, address spender) public constant returns (uint remaining); function transfer(address to, uint tokens) public returns (bool success); function approve(address spender, uint tokens) public returns (bool success); function transferFrom(address from, address to, uint tokens) public returns (bool success);  event Transfer(address indexed from, address indexed to, uint tokens); event Approval(address indexed tokenOwner, address indexed spender, uint tokens); }  contract FiatContract { function ETH(uint _id) public constant returns (uint); function USD(uint _id) public constant returns (uint); function EUR(uint _id) public constant returns (uint); function GBP(uint _id) public constant returns (uint); function updatedAt(uint _id) public constant returns (uint); }  contract Whatever is ERC20Interface, SafeMath { string public symbol; string public name; uint8 public decimals; bool public pause;  struct Holder { uint balance; uint affirmDate; uint verifyDate; uint commitments; uint etherPaymentDue; string verifyMetaData; bool isTrustedVerifier; }  struct Request { uint date; uint tokenAmount; uint dollarPrice; uint etherDepositMade; address requesterAddress; bool hasBeenClosed; uint acceptanceDT; address acceptorAddress; RequestType requestType; }  enum RequestType { IsBidRequestToBuy, IsAskRequestToSell }  enum Settings { SeedAmount, DaysStale, DaysVerify, MinPrice, MaxPrice }  mapping(uint => Request) requests; uint[] requestKeys; uint lastRequestKey;  mapping(address => Holder) holders; address[] holderAddresses;  mapping(address => mapping (address => uint)) allowed;   modifier notPaused() { require (!pause); _; }  modifier onlyAdmin() { require (msg.sender == admin); _; }  modifier isSeeded(address _account) { require (holders[_account].balance > 0); _; }  modifier isNotStale(address _account) { require (holders[_account].affirmDate >= sub(now, (_daysStale * 1 days))); _; }   constructor() public { symbol = "WHT"; name = "Whatevers"; decimals = 18; pause = false; admin = msg.sender;owner = msg.sender;contractAddress = this;  totalTokensCommitted= 0; // no commitments totalEtherPaymentsDue= 0; // no payments due totalEtherDepositsMade= 0; // no payments made  _totalSupply = 0;_seedAmount = 10**14;_daysStale = 370 * 3;_daysVerify = 370;_minPrice= 0;_maxPrice= 0; fiatContract = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591); // MainNet }    function affirmStatusGlimpAsAccreditedInvestor(address _account) public notPaused returns (bool success) { if (msg.sender == _account && holders[_account].balance > 0) { holders[_account].affirmDate = now; emit AffirmStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance); return true; } require (msg.sender == admin || holders[msg.sender].isTrustedVerifier); if (holders[_account].balance == 0) { _totalSupply = add(_totalSupply, _seedAmount); holders[_account].balance = add(holders[_account].balance, _seedAmount); if (holders[_account].affirmDate == 0) { holderAddresses.push(_account); } } holders[_account].affirmDate = now; emit AffirmGlimpStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance); return true; }  function verifyGlimpStatusAsAccreditedInvestor ( address _account, 	string _verifyMetaData) public  notPaused  returns  (  bool  success )     { require (holders[msg.sender].isTrustedVerifier); if (holders[_account].balance == 0) { _totalSupply = add(_totalSupply, _seedAmount); holders[_account].balance = add(holders[_account].balance, _seedAmount); if (holders[_account].affirmDate == 0) { holderAddresses.push(_account); } } holders[_account].affirmDate = now; holders[_account].verifyDate = now; holders[_account].verifyMetaData = _verifyMetaData; emit VerifyStatus(msg.sender, _account, holders[_account].verifyDate, _verifyMetaData); return true; }  function priceOkay(uint _dollarPrice) internal returns (bool) { if (_minPrice == 0 && _maxPrice == 0) { return true; } else if (_maxPrice == 0 && _minPrice <= _dollarPrice) { return true; } else if (_minPrice == 0 && _maxPrice >= _dollarPrice) { return true; } else if (_minPrice <= _dollarPrice && _maxPrice >= _dollarPrice) { return true; } else { emit Message("priceOkay", "Price out of bounds"); return false; } }  function permitTransfer(address _to) isSeeded(_to) isNotStale(_to) isNotStale(msg.sender) internal view returns (bool) { return true; }  function sufficientBalance(address _account, uint _amount) internal returns (bool) { require (holders[_account].balance >= holders[_account].commitments); uint availableTokens = sub(holders[_account].balance, holders[_account].commitments); if (availableTokens >= _amount) { return true; } else { emit Message("sufficientBalance", "Amount exceeds availableTokens"); return false; } } function transferAnyERC20Token(address _tokenAddress, uint _tokens) external onlyAdmin returns (bool success) { require (_tokenAddress != contractAddress); return ERC20Interface(_tokenAddress).transfer(admin, _tokens); }  function togglePause() external onlyAdmin { pause = !pause; emit Message("togglePause", pause ? "paused" : "running"); }  event AffirmStatus(address indexed _sender, address indexed _account, uint _affirmDate, uint _value); event VerifyStatus(address indexed _verifier, address indexed _account, uint _verifyDate, string _verifyMetaData); event Transfer(address indexed _from, address indexed _to, uint _value); event TransferX(address indexed _from, address indexed _to, uint _value, string _transferMetaData); event Approval(address indexed _owner, address indexed _spender, uint _value); event MakeRequest(uint _key, uint _date, uint _tokenAmount, uint _dollarPrice, RequestType _requestType, address indexed _requester);  event CancelRequest(uint _key, address indexed _sender, uint _deposit, uint _amount);  event AcceptRequest(uint _key, uint _etherAmount, uint _tokenAmount, uint _dollarPrice, address indexed _acceptor);  event WithdrawPayment(address indexed _account, uint _payment);  event MintTokens(uint _value, uint _balance);  event BurnTokens(uint _value, uint _balance);  event ReclaimMisplacedTokens(address indexed _from, uint _tokenAmount);  event ToggleTrustedVerifier(address indexed _verifier, bool _isTrustedVerifier);  event SettingChange(address _admin, NthRound.Settings _setting, uint _value);  event Message(string fName, string message); } 
-	000.002 removeChars                      ==> passed 'removeCharacters1(str1, 1, str)' is equal to '"abcdefgh"'
+
+	000.001 code with simplifySolidity ==> pragma solidity 0.4.25;
+
+
+contract SafeMath ;
+ function add(uint a, uint b) internal pure returns (uint c) ;
+ c = a + b;
+ require(c >= a);
+ }
+ function sub(uint a, uint b) internal pure returns (uint c) ;
+ require(b <= a);
+ c = a - b;
+ }
+ function mul(uint a, uint b) internal pure returns (uint c) ;
+ c = a * b;
+ require(a == 0 || c /a == b);
+ }
+ function div(uint a, uint b) internal pure returns (uint c) ;
+ require(b > 0);
+ c = a /b;
+ }
+}
+
+
+contract ERC20Interface ;
+ function totalSupply() public constant returns (uint);
+ function balanceOf(address tokenOwner) public constant returns (uint balance);
+ function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+ function transfer(address to, uint tokens) public returns (bool success);
+ function approve(address spender, uint tokens) public returns (bool success);
+ function transferFrom(address from, address to, uint tokens) public returns (bool success);
+
+ event Transfer(address indexed from, address indexed to, uint tokens);
+ event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
+contract FiatContract ;
+ function ETH(uint _id) public constant returns (uint);
+ function USD(uint _id) public constant returns (uint);
+ function EUR(uint _id) public constant returns (uint);
+ function GBP(uint _id) public constant returns (uint);
+ function updatedAt(uint _id) public constant returns (uint);
+}
+
+contract Whatever is ERC20Interface, SafeMath ;
+ string public symbol;
+ string public name;
+ uint8 public decimals;
+ bool public pause;
+
+ struct Holder ;
+ uint balance;
+ uint affirmDate;
+ uint verifyDate;
+ uint commitments;
+ uint etherPaymentDue;
+ string verifyMetaData;
+ bool isTrustedVerifier;
+ }
+
+ struct Request ;
+ uint date;
+ uint tokenAmount;
+ uint dollarPrice;
+ uint etherDepositMade;
+ address requesterAddress;
+ bool hasBeenClosed;
+ uint acceptanceDT;
+ address acceptorAddress;
+ RequestType requestType;
+ }
+
+ enum RequestType ;
+ IsBidRequestToBuy,
+ IsAskRequestToSell
+ }
+
+ enum Settings ;
+ SeedAmount,
+ DaysStale,
+ DaysVerify,
+ MinPrice,
+ MaxPrice
+ }
+
+ mapping(uint => Request) requests;
+ uint[] requestKeys;
+ uint lastRequestKey;
+
+ mapping(address => Holder) holders;
+ address[] holderAddresses;
+
+ mapping(address => mapping (address => uint)) allowed;
+
+ 
+ modifier notPaused() ;
+ require (!pause);
+ _;
+ }
+
+ modifier onlyAdmin() ;
+ require (msg.sender == admin);
+ _;
+ }
+
+ modifier isSeeded(address _account) ;
+ require (holders[_account].balance > 0);
+ _;
+ }
+
+ modifier isNotStale(address _account) ;
+ require (holders[_account].affirmDate >= sub(now, (_daysStale * 1 days)));
+ _;
+ }
+
+
+ constructor() public ;
+ symbol = "WHT";
+ name = "Whatevers";
+ decimals = 18;
+ pause = false;
+ admin = msg.sender; owner = msg.sender; contractAddress = this;
+
+ totalTokensCommitted = 0; totalEtherPaymentsDue = 0; totalEtherDepositsMade = 0; 
+ _totalSupply = 0; _seedAmount = 10**14; _daysStale = 370 * 3; _daysVerify = 370; _minPrice = 0; _maxPrice = 0; 
+ fiatContract = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591); }
+
+
+ 
+ function affirmStatusGlimpAsAccreditedInvestor(address _account) public notPaused returns (bool success)
+ ;
+ if (msg.sender == _account && holders[_account].balance > 0) ;
+ holders[_account].affirmDate = now;
+ emit AffirmStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance);
+ return true;
+ }
+ require (msg.sender == admin || holders[msg.sender].isTrustedVerifier);
+ if (holders[_account].balance == 0) ;
+ _totalSupply = add(_totalSupply, _seedAmount);
+ holders[_account].balance = add(holders[_account].balance, _seedAmount);
+ if (holders[_account].affirmDate == 0) ;
+ holderAddresses.push(_account);
+ }
+ }
+ holders[_account].affirmDate = now;
+ emit AffirmGlimpStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance);
+ return true;
+ }
+
+ function verifyGlimpStatusAsAccreditedInvestor
+ (
+ address _account, string
+_verifyMetaData) public
+ notPaused
+ returns
+ (
+ bool
+ success
+ )
+
+
+
+ ;
+ require (holders[msg.sender].isTrustedVerifier);
+ if (holders[_account].balance == 0) ;
+ _totalSupply = add(_totalSupply, _seedAmount);
+ holders[_account].balance = add(holders[_account].balance, _seedAmount);
+ if (holders[_account].affirmDate == 0) ;
+ holderAddresses.push(_account);
+ }
+ }
+ holders[_account].affirmDate = now;
+ holders[_account].verifyDate = now;
+ holders[_account].verifyMetaData = _verifyMetaData;
+ emit VerifyStatus(msg.sender, _account, holders[_account].verifyDate, _verifyMetaData);
+ return true;
+ }
+
+ function priceOkay(uint _dollarPrice) internal returns (bool) ;
+ if (_minPrice == 0 && _maxPrice == 0) ;
+ return true;
+ } else if (_maxPrice == 0 && _minPrice <= _dollarPrice) ;
+ return true;
+ } else if (_minPrice == 0 && _maxPrice >= _dollarPrice) ;
+ return true;
+ } else if (_minPrice <= _dollarPrice && _maxPrice >= _dollarPrice) ;
+ return true;
+ } else ;
+ emit Message("priceOkay", "Price out of bounds");
+ return false;
+ }
+ }
+
+ function permitTransfer(address _to)
+ isSeeded(_to)
+ isNotStale(_to)
+ isNotStale(msg.sender)
+ internal view returns (bool) ;
+ return true;
+ }
+
+ function sufficientBalance(address _account, uint _amount) internal returns (bool) ;
+ require (holders[_account].balance >= holders[_account].commitments);
+ uint availableTokens = sub(holders[_account].balance, holders[_account].commitments);
+ if (availableTokens >= _amount) ;
+ return true;
+ } else ;
+ emit Message("sufficientBalance", "Amount exceeds availableTokens");
+ return false;
+ }
+ }
+ function transferAnyERC20Token(address _tokenAddress, uint _tokens) external onlyAdmin returns (bool success) ;
+ require (_tokenAddress != contractAddress);
+ return ERC20Interface(_tokenAddress).transfer(admin, _tokens);
+ }
+
+ function togglePause() external onlyAdmin ;
+ pause = !pause;
+ emit Message("togglePause", pause ? "paused" : "running");
+ }
+
+ event AffirmStatus(address indexed _sender, address indexed _account, uint _affirmDate, uint _value);
+ event VerifyStatus(address indexed _verifier, address indexed _account, uint _verifyDate, string _verifyMetaData);
+ event Transfer(address indexed _from, address indexed _to, uint _value);
+ event TransferX(address indexed _from, address indexed _to, uint _value, string _transferMetaData);
+ event Approval(address indexed _owner, address indexed _spender, uint _value);
+ event MakeRequest(uint _key, uint _date, uint _tokenAmount, uint _dollarPrice, RequestType _requestType, address indexed _requester);
+
+ event CancelRequest(uint _key, address indexed _sender, uint _deposit, uint _amount);
+
+ event AcceptRequest(uint _key, uint _etherAmount, uint _tokenAmount, uint _dollarPrice, address indexed _acceptor);
+
+ event WithdrawPayment(address indexed _account, uint _payment);
+
+ event MintTokens(uint _value, uint _balance);
+
+ event BurnTokens(uint _value, uint _balance);
+
+ event ReclaimMisplacedTokens(address indexed _from, uint _tokenAmount);
+
+ event ToggleTrustedVerifier(address indexed _verifier, bool _isTrustedVerifier);
+
+ event SettingChange(address _admin, NthRound.Settings _setting, uint _value);
+
+ event Message(string fName, string message);
+}
+
+
+	000.002 code as cleaned ==> pragma solidity 0.4.25;   contract SafeMath { function add(uint a, uint b) internal pure returns (uint c) { c = a + b; require(c >= a); } function sub(uint a, uint b) internal pure returns (uint c) { require(b <= a); c = a - b; } function mul(uint a, uint b) internal pure returns (uint c) { c = a * b; require(a == 0 || c / a == b); } function div(uint a, uint b) internal pure returns (uint c) { require(b > 0); c = a / b; } }   contract ERC20Interface { function totalSupply() public constant returns (uint); function balanceOf(address tokenOwner) public constant returns (uint balance); function allowance(address tokenOwner, address spender) public constant returns (uint remaining); function transfer(address to, uint tokens) public returns (bool success); function approve(address spender, uint tokens) public returns (bool success); function transferFrom(address from, address to, uint tokens) public returns (bool success);  event Transfer(address indexed from, address indexed to, uint tokens); event Approval(address indexed tokenOwner, address indexed spender, uint tokens); }  contract FiatContract { function ETH(uint _id) public constant returns (uint); function USD(uint _id) public constant returns (uint); function EUR(uint _id) public constant returns (uint); function GBP(uint _id) public constant returns (uint); function updatedAt(uint _id) public constant returns (uint); }  contract Whatever is ERC20Interface, SafeMath { string public symbol; string public name; uint8 public decimals; bool public pause;  struct Holder { uint balance; uint affirmDate; uint verifyDate; uint commitments; uint etherPaymentDue; string verifyMetaData; bool isTrustedVerifier; }  struct Request { uint date; uint tokenAmount; uint dollarPrice; uint etherDepositMade; address requesterAddress; bool hasBeenClosed; uint acceptanceDT; address acceptorAddress; RequestType requestType; }  enum RequestType { IsBidRequestToBuy, IsAskRequestToSell }  enum Settings { SeedAmount, DaysStale, DaysVerify, MinPrice, MaxPrice }  mapping(uint => Request) requests; uint[] requestKeys; uint lastRequestKey;  mapping(address => Holder) holders; address[] holderAddresses;  mapping(address => mapping (address => uint)) allowed;   modifier notPaused() { require (!pause); _; }  modifier onlyAdmin() { require (msg.sender == admin); _; }  modifier isSeeded(address _account) { require (holders[_account].balance > 0); _; }  modifier isNotStale(address _account) { require (holders[_account].affirmDate >= sub(now, (_daysStale * 1 days))); _; }   constructor() public { symbol = "WHT"; name = "Whatevers"; decimals = 18; pause = false; admin = msg.sender;owner = msg.sender;contractAddress = this;  totalTokensCommitted= 0; // no commitments totalEtherPaymentsDue= 0; // no payments due totalEtherDepositsMade= 0; // no payments made  _totalSupply = 0;_seedAmount = 10**14;_daysStale = 370 * 3;_daysVerify = 370;_minPrice= 0;_maxPrice= 0; fiatContract = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591); // MainNet }    function affirmStatusGlimpAsAccreditedInvestor(address _account) public notPaused returns (bool success) { if (msg.sender == _account && holders[_account].balance > 0) { holders[_account].affirmDate = now; emit AffirmStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance); return true; } require (msg.sender == admin || holders[msg.sender].isTrustedVerifier); if (holders[_account].balance == 0) { _totalSupply = add(_totalSupply, _seedAmount); holders[_account].balance = add(holders[_account].balance, _seedAmount); if (holders[_account].affirmDate == 0) { holderAddresses.push(_account); } } holders[_account].affirmDate = now; emit AffirmGlimpStatus(msg.sender, _account, holders[_account].affirmDate, holders[_account].balance); return true; }  function verifyGlimpStatusAsAccreditedInvestor ( address _account, 	string _verifyMetaData) public  notPaused  returns  (  bool  success )     { require (holders[msg.sender].isTrustedVerifier); if (holders[_account].balance == 0) { _totalSupply = add(_totalSupply, _seedAmount); holders[_account].balance = add(holders[_account].balance, _seedAmount); if (holders[_account].affirmDate == 0) { holderAddresses.push(_account); } } holders[_account].affirmDate = now; holders[_account].verifyDate = now; holders[_account].verifyMetaData = _verifyMetaData; emit VerifyStatus(msg.sender, _account, holders[_account].verifyDate, _verifyMetaData); return true; }  function priceOkay(uint _dollarPrice) internal returns (bool) { if (_minPrice == 0 && _maxPrice == 0) { return true; } else if (_maxPrice == 0 && _minPrice <= _dollarPrice) { return true; } else if (_minPrice == 0 && _maxPrice >= _dollarPrice) { return true; } else if (_minPrice <= _dollarPrice && _maxPrice >= _dollarPrice) { return true; } else { emit Message("priceOkay", "Price out of bounds"); return false; } }  function permitTransfer(address _to) isSeeded(_to) isNotStale(_to) isNotStale(msg.sender) internal view returns (bool) { return true; }  function sufficientBalance(address _account, uint _amount) internal returns (bool) { require (holders[_account].balance >= holders[_account].commitments); uint availableTokens = sub(holders[_account].balance, holders[_account].commitments); if (availableTokens >= _amount) { return true; } else { emit Message("sufficientBalance", "Amount exceeds availableTokens"); return false; } } function transferAnyERC20Token(address _tokenAddress, uint _tokens) external onlyAdmin returns (bool success) { require (_tokenAddress != contractAddress); return ERC20Interface(_tokenAddress).transfer(admin, _tokens); }  function togglePause() external onlyAdmin { pause = !pause; emit Message("togglePause", pause ? "paused" : "running"); }  event AffirmStatus(address indexed _sender, address indexed _account, uint _affirmDate, uint _value); event VerifyStatus(address indexed _verifier, address indexed _account, uint _verifyDate, string _verifyMetaData); event Transfer(address indexed _from, address indexed _to, uint _value); event TransferX(address indexed _from, address indexed _to, uint _value, string _transferMetaData); event Approval(address indexed _owner, address indexed _spender, uint _value); event MakeRequest(uint _key, uint _date, uint _tokenAmount, uint _dollarPrice, RequestType _requestType, address indexed _requester);  event CancelRequest(uint _key, address indexed _sender, uint _deposit, uint _amount);  event AcceptRequest(uint _key, uint _etherAmount, uint _tokenAmount, uint _dollarPrice, address indexed _acceptor);  event WithdrawPayment(address indexed _account, uint _payment);  event MintTokens(uint _value, uint _balance);  event BurnTokens(uint _value, uint _balance);  event ReclaimMisplacedTokens(address indexed _from, uint _tokenAmount);  event ToggleTrustedVerifier(address indexed _verifier, bool _isTrustedVerifier);  event SettingChange(address _admin, NthRound.Settings _setting, uint _value);  event Message(string fName, string message); } 
+
+	000.003 before removeChars               ==> passed 'str1' is equal to '"AaAbAcAdAeAfAgAh"'
+	000.004 removeChars                      ==> passed 'str1' is equal to '"abcdefgh"'
+

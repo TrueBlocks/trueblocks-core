@@ -49,6 +49,9 @@ typedef vector<CAppearance_base> CAppearanceArray_base;
 inline bool operator<(const CAppearance_base& v1, const CAppearance_base& v2) {
     return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
+inline bool sortAppearanceBaseReverse(const CAppearance_base& v1, const CAppearance_base& v2) {
+    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
+}
 
 //----------------------------------------------------------------
 struct CHeaderRecord_base {

@@ -27,6 +27,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
+    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -55,6 +56,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
+    "compressedTrace": "cancelExistingRequest ( _key: 1 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -85,14 +87,9 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "name": "targetNoFork",
           "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
         }
-      ],
-      "outputs": [
-        {
-          "name": "val_0",
-          "value": "true"
-        }
       ]
     },
+    "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -122,6 +119,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
+    "compressedTrace": "forked ( )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -146,6 +144,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "inputs": [],
       "outputs": []
     },
+    "compressedTrace": "",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -163,5 +162,5 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "output": "0x"
     }
   }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
 ] }

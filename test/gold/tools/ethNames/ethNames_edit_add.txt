@@ -1,5 +1,5 @@
-ethNames argc: 7 [1:--editCmd] [2:add] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false] [4:--expand] [5:--verbose] [6:10] 
-ethNames --editCmd add TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false --expand --verbose 10 
+ethNames argc: 7 [1:--editCmd] [2:add] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false] [4:--expand] [5:--verbose] [6:10] 
+ethNames --editCmd add TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false --expand --verbose 10 
 TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
@@ -11,4 +11,4 @@ TIME ~ CLOCK - : 4-----Finished adding names from prefunds database...
 TIME ~ CLOCK - : 4-----Writing binary cache
 TIME ~ CLOCK - : 4-----Finished writing binary cache...
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
-TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE		DESCRIPTION	false	false	false
+TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE	11	DESCRIPTION	false	false	false

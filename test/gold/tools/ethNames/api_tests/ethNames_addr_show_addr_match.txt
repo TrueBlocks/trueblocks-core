@@ -45,6 +45,10 @@
       "decimals": "0"
     },
     {
+      "address": "0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9",
+      "decimals": "0"
+    },
+    {
       "address": "0xb6ed7644c69416d67b522e20bc294a9a9b405b31",
       "decimals": 8
     },

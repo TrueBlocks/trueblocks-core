@@ -12,6 +12,7 @@
         "value": 4.4e+20,
         "gas": 0,
         "gasPrice": 0,
+        "input": "",
         "isError": 0,
         "receipt": {
           "contractAddress": "0x0",
@@ -20,8 +21,10 @@
           "status": null
         },
         "articulatedTx": {},
+        "compressedTx": "",
         "traces": [],
         "gasCost": 0,
+        "etherGasCost": 0,
         "function": "",
         "gasUsed": 0,
         "date": "2015-07-30 15:26:00 UTC",
@@ -78,6 +81,10 @@
           "type": "gas"
         },
         {
+          "name": "input",
+          "type": "text"
+        },
+        {
           "name": "isError",
           "type": "unumber"
         },
@@ -90,11 +97,19 @@
           "type": "object"
         },
         {
+          "name": "compressedTx",
+          "type": "text"
+        },
+        {
           "name": "traces",
           "type": "object|ts_array"
         },
         {
           "name": "gasCost",
+          "type": "wei"
+        },
+        {
+          "name": "etherGasCost",
           "type": "wei"
         },
         {
@@ -138,6 +153,8 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "namedFromAndTo": {},
+    "unNamedFromAndTo": {},
     "namedFrom": {},
     "unNamedFrom": {
       "0xPrefund": 1

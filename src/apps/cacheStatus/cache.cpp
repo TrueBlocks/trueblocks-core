@@ -321,9 +321,8 @@ bool CCache::readBinaryCache(const string_q& cacheType, bool details, bool ignor
                 for (auto field : pClass->fieldList) {
                     string_q ff = field.getName();
                     string_q val = cache->getValueByName(ff);
-                    string_q removeCharacters(const string_q& str, size_t n, const char* chars);
                     char chars[] = {'\t', '\r', '\"', '\n', 0x1f};
-                    val = removeCharacters(val, 5, chars);
+                    removeCharacters(val, 5, chars);
                     setValueByName(ff, val);
                 }
             }
@@ -373,21 +372,6 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     LOG4("needsRefresh:", res);
     return (res);
 #endif
-}
-//--------------------------------------------------------------------------------
-string_q removeCharacters(const string_q& str, size_t n, const char* chars) {
-    string_q ret;
-    for (auto ch : str) {
-        bool found = false;
-        for (size_t i = 0; i < n && !found; i++) {
-            if (chars[i] == ch) {
-                found = true;
-            }
-        }
-        if (!found)
-            ret += ch;
-    }
-    return ret;
 }
 // EXISTING_CODE
 }  // namespace qblocks

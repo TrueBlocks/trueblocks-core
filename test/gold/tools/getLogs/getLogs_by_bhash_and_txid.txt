@@ -12,7 +12,8 @@ getLogs 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --f
       "name": "",
       "inputs": [],
       "outputs": []
-    }
+    },
+    "compressedLog": ""
   }], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }] }
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
 ] }

@@ -28,8 +28,10 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x7b0c06043468469967dba22d1af33d77d44056c8	Morpheus.Network	MRPH		4
 50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP		8
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN		18
+50-Tokens	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18
 33-Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy
 50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN		18
+50-Tokens	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18
 34-Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18
@@ -38,6 +40,7 @@ tags	address	name	symbol	decimals
 34-Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9
 50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX
+50-Tokens	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18
 34-Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List
 31-Gitcoin Grants	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 037 - Connext Network
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR		18
@@ -56,6 +59,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token	ZNT		18
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO		18
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN		18
+34-Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper
 31-Gitcoin Grants	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 044 - Chainid Network
 50-Tokens:ERC20	0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network Token	PAL		18
 50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET		8

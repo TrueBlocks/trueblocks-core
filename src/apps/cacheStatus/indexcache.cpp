@@ -287,9 +287,8 @@ bool CIndexCache::readBinaryCache(const string_q& cacheType, bool details, bool 
         //        for (auto field : pClass->fieldList) {
         //            string_q ff = field.getName();
         //            string_q val = cache->getValueByName(ff);
-        //      //              string_q removeCharacters(const string_q& str, size_t n, const char* chars);
         //      //              char chars[] = {'\t', '\r', '\"', '\n', 0x1f};
-        //      //              val = removeCharacters(val, 5, chars);
+        //      //              removeCharacters(val, 5, chars);
         //            setValueByName(ff, val);
         //        }
         //    }

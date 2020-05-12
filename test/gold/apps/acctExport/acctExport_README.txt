@@ -30,6 +30,7 @@ acctExport -th
 | -g | --grab_abis | using each trace's 'to' address, grab the abi for that address (improves articulation) |
 | -f | --freshen | freshen but do not print the exported data |
 | -D | --deltas | for --balances option only, export only changes in balances |
+| -T | --reverseSort | export transactions in reverse order |
 | -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 #### Hidden options (shown during testing only)

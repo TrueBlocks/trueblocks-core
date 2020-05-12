@@ -1,5 +1,5 @@
-ethNames argc: 7 [1:--editCmd] [2:invalid] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false] [4:--expand] [5:--verbose] [6:10] 
-ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!false --expand --verbose 10 
+ethNames argc: 7 [1:--editCmd] [2:invalid] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!no!false] [4:--expand] [5:--verbose] [6:10] 
+ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!no!false --expand --verbose 10 
 
   Invalid edit command 'invalid'. Quitting...
 
@@ -34,6 +34,7 @@ ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!
 	- When there are two search terms, both must match.
 	- The --match_case option requires case sensitive matching. It works with all other options.
 	- To customize the list of names add a custom section to the config file (see documentation).
-	- Name file: ~/.quickBlocks/names/names.tab (601002)
+	- For editCmd add or update, use terms TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.
+	- Name file: ~/.quickBlocks/names/names.tab (624302)
 
   Powered by QBlocks

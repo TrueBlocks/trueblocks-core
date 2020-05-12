@@ -10,6 +10,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants",
+      "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
+      "name": "chainlinkp",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
       "name": "BitCapitalVendorToken",
@@ -62,6 +71,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Decentralized credit scoring powered by Ethereum and IPFS."
+    },
+    {
+      "tags": "75-EarlyActors",
+      "address": "0x108b54b7e3c09f8127cb8b28ffa3ad4001b32998",
+      "name": "Miner_0086_64",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "80-Malicious",
@@ -118,6 +136,15 @@
       "description": ""
     },
     {
+      "tags": "75-EarlyActors",
+      "address": "0x1217627fe41a00f0b828317f43e6d58f47dbfc43",
+      "name": "Miner_0028_253",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
       "name": "ITL (Italian Lira)",
@@ -134,6 +161,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
+    },
+    {
+      "tags": "75-EarlyActors",
+      "address": "0x123843545fb525c8e134c9a5f15ada6865cc3848",
+      "name": "Miner_0033_208",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -334,6 +370,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens",
+      "address": "0x14094949152eddbfcd073717200da82fed8dc960",
+      "name": "Fulcrum iSAI",
+      "symbol": "ISAI",
+      "source": "defipulse.com",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants",
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
       "name": "Grant 212 - Thx Open Protocol For Online Rewards",
@@ -352,11 +397,11 @@
       "description": "A decentralized cryptocurrency-concentrated & content payment community."
     },
     {
-      "tags": "91-Friends",
+      "tags": "35-Pool Together",
       "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
-      "name": "Pool Together God",
+      "name": "Pool Together Sender",
       "symbol": "",
-      "source": "TrueBlocks.io",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },
@@ -368,6 +413,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
+    },
+    {
+      "tags": "31-Gitcoin Grants",
+      "address": "0x1464d4e3c815de3028572b850c6c34dfc57e9320",
+      "name": "mariapaulafn",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -496,6 +550,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants",
+      "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
+      "name": "evanswd",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
       "name": "Alpha Coin",
@@ -516,9 +579,9 @@
     {
       "tags": "31-Gitcoin Grants",
       "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-      "name": "Grant 211 - Trust Graphic Novel",
+      "name": "Grant 211 Trust Graphic Novel (anneconnelly)",
       "symbol": "",
-      "source": "GitCoin Website",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },
@@ -759,7 +822,7 @@
     {
       "tags": "91-Friends",
       "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-      "name": "POAPTokenSender",
+      "name": "POAP Token Sender",
       "symbol": "",
       "source": "EtherScan",
       "decimals": "0",
@@ -816,6 +879,15 @@
       "name": "Hacker Gold",
       "symbol": "HKG",
       "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "75-EarlyActors",
+      "address": "0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e",
+      "name": "Miner_0064_93",
+      "symbol": "",
+      "source": "OnChain",
       "decimals": "0",
       "description": ""
     },
@@ -946,6 +1018,15 @@
       "description": ""
     },
     {
+      "tags": "75-EarlyActors",
+      "address": "0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c",
+      "name": "Miner_0006_1133",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
       "name": "ViteToken",
@@ -1016,6 +1097,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
+    },
+    {
+      "tags": "31-Gitcoin Grants",
+      "address": "0x1c6640089c6af02e11f04f0ee44b2cc6ef924057",
+      "name": "ecruz01",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1099,6 +1189,24 @@
       "description": ""
     },
     {
+      "tags": "75-EarlyActors",
+      "address": "0x1d60d424337de37e16ef2d1a71496c9fd596d7a5",
+      "name": "Miner_0035_198",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "75-EarlyActors",
+      "address": "0x1d889aff5d57138c9819412d63b5d877567b5936",
+      "name": "Miner_0081_68",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1da015ea4ad2d3e5586e54b9fb0682ca3ca8a17a",
       "name": "DragonToken",
@@ -1110,9 +1218,9 @@
     {
       "tags": "34-ENS",
       "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
-      "name": "ENS: Old Resolver",
+      "name": "ENS: Old Public Resolver 1",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },
@@ -1261,11 +1369,11 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts:Moloch",
+      "tags": "30-Contracts",
       "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
       "name": "Moloch DAO",
       "symbol": "",
-      "source": "Moloch Website",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },

@@ -27,6 +27,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10460,apps,export,acctExport,grab_abis,g,,false,false,false,false,header,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
+10505,apps,export,acctExport,reverseSort,T,,false,false,false,false,header,switch,<boolean>,export transactions in reverse order
 10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurrence
 10515,apps,export,acctExport,emitter,M,,false,false,true,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
 10520,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
@@ -246,6 +247,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13840,tools,abi,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
 13850,tools,abi,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13855,tools,abi,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
+13860,tools,abi,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
 13880,tools,abi,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 13885,tools,abi,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 

@@ -18,5 +18,5 @@
 #include "etherlib.h"
 
 namespace qblocks {
-    hash_t namehash(const string_q& domainIn);
+hash_t namehash(const string_q& domainIn);
 }

@@ -17,6 +17,7 @@
 extern bool visitAbi(CAbi& abi, void* data);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    nodeNotRequired();
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -31,7 +32,7 @@ int main(int argc, const char* argv[]) {
             cout << exportPreamble(expContext().fmtMap["header"],
                                    isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
         if (!options.generate)
-            forEveryAbiInArray(visitAbi, &options, options.abis);
+            forEveryAbiInArray(visitAbi, &options, options.abiList);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

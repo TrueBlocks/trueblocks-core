@@ -14,7 +14,8 @@ getLogs 2222222.0 2332332.0 --fmt json
       "name": "",
       "inputs": [],
       "outputs": []
-    }
+    },
+    "compressedLog": ""
   }], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }] }
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
 ] }

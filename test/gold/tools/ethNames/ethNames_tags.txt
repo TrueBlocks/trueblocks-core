@@ -7,6 +7,7 @@ tags
 30-Contracts:Moloch
 30-Contracts:dAppNode
 31-Gitcoin Grants
+32-Commons Stack
 33-Set Protocol
 33-Set Protocol:Core
 33-Set Protocol:Core Caller
@@ -18,11 +19,15 @@ tags
 33-Set Protocol:Wrappers
 34-ENS
 34-Kyber Network
+35-Pool Together
+36-Compound
+37-Sablier
 40-Exchanges
 50-Tokens
 50-Tokens:ERC20
 60-Airdrops
 70-Vendors
+75-EarlyActors
 80-Malicious
 80-Prefund
 81-Custom

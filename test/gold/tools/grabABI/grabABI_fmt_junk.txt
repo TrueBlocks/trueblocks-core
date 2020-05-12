@@ -14,6 +14,11 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
 	-m  (--monitored)     load ABIs from monitored addresses
 	-k  (--known)         load common 'known' ABIs from cache
 	-a  (--addr)          include address of smart contract for the abi in output
+
+#### Hidden options (shown during testing only)
+	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
+#### Hidden options (shown during testing only)
+
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

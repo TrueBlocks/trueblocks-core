@@ -160,7 +160,8 @@ bool COptions::handle_options(void) {
                                 positionals.push_back(pos_stream.str());
 
                         } else {
-                            cerr << "skipping option_kind " << option.option_kind << endl;
+                            cerr << cRed << "skipping option_kind " << option.option_kind << cOff << endl;
+                            exit(0);
                         }
 
                     } else if (option.generate == "header") {

@@ -30,6 +30,7 @@ static const COption params[] = {
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
+    COption("reverseSort", "T", "", OPT_HIDDEN | OPT_SWITCH, "export transactions in reverse order"),
     COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurrence"),  // NOLINT
     COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
@@ -115,6 +116,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-D" || arg == "--deltas") {
             deltas = true;
+
+        } else if (arg == "-T" || arg == "--reverseSort") {
+            reverseSort = true;
 
         } else if (startsWith(arg, "-o:") || startsWith(arg, "--occurrence:")) {
             if (!confirmBlockNum("occurrence", occurrence, arg, latest))
@@ -223,7 +227,7 @@ bool COptions::parseArguments(string_q& command) {
     // SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
     // SEP4("default field showing: " + defShow);
-    string_q show = defShow + (isApiMode() ? "|CTransaction:encoding,function,input,compressedTx,etherGasCost,dollars" : "");
+    string_q show = defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars" : "");
     manageFields(show, true);
 
     CToml toml(getMonitorCnfg(monitors[0].address));
@@ -242,7 +246,9 @@ bool COptions::parseArguments(string_q& command) {
     // Try to articulate the watched addresses
     for (size_t i = 0; i < monitors.size(); i++) {
         CAccountWatch* watch = &monitors[i];
-        abis.loadAbiByAddress(watch->address);
+        // abis.loadAbiByAddress(watch->address);
+        if (isContractAt(watch->address, latestBlock))
+            loadAbiAndCache(abis, watch->address, false, errors);
         // abis.loadAbiKnown();
         string_q path = getMonitorCnfg(watch->address);
         if (fileExists(path)) {  // if there's a config file, let's use it user can tell us the names of other addresses
@@ -389,6 +395,7 @@ void COptions::Init(void) {
     grab_abis = false;
     freshen = false;
     deltas = false;
+    reverseSort = false;
     occurrence = NOPOS;
     emitter = false;
     // END_CODE_INIT
@@ -513,7 +520,11 @@ bool COptions::loadAllAppearances(void) {
     }
 
     // Should be sorted already, so it can't hurt
-    sort(tmp.begin(), tmp.end());
+    if (reverseSort) {
+        sort(tmp.begin(), tmp.end(), sortAppearanceBaseReverse);
+    } else {
+        sort(tmp.begin(), tmp.end());
+    }
 
     items.push_back(tmp[0]);
     for (auto item : tmp) {

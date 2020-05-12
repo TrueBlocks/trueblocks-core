@@ -27,6 +27,7 @@ static const COption params[] = {
     COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
+    COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -44,11 +45,12 @@ bool COptions::parseArguments(string_q& command) {
     bool monitored = false;
     bool known = false;
     bool addr = false;
+    string_q sol = "";
     // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = NOPOS;  // getLatestBlock_client();
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
@@ -71,6 +73,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
 
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
+            sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -85,6 +90,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!sol.empty()) {
+        if (!fileExists(sol + ".sol") && !fileExists(sol))
+            return usage("Cannot find .sol file at '" + sol + "'. Quitting...");
+        convertFromSol(substitute(sol, ".col", ""));
+        cerr << sol << " coverted in current folder." << endl;
+        return false;
+    }
+
     if (!addrs.size() && !known && !monitored)
         return usage("Please supply at least one Ethereum address.\n");
 
@@ -95,25 +108,7 @@ bool COptions::parseArguments(string_q& command) {
             cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
 
         } else if (fileExists(a + ".sol")) {
-            CAbi abi;
-            sol_2_Abi(abi, a);
-            bool first1 = true;
-            expContext().spcs = 2;
-            ostringstream os;
-            os << "[" << endl;
-            incIndent();
-            for (auto func : abi.interfaces) {
-                if (!first1)
-                    os << ",";
-                os << endl;
-                os << "\n    " << func;
-                first1 = false;
-            }
-            decIndent();
-            os << endl << "]" << endl;
-            ::remove((a + ".json").c_str());
-            stringToAsciiFile(a + ".json", os.str());
-            isRaw = false;
+            convertFromSol(a);
         }
     }
 
@@ -160,20 +155,20 @@ bool COptions::parseArguments(string_q& command) {
         for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
             i->address = a;
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-        abis.push_back(abi);
+        abiList.push_back(abi);
     }
 
     if (known) {
         CAbi abi;
         abi.loadAbiKnown();
-        abis.push_back(abi);
+        abiList.push_back(abi);
     }
 
     if (monitored) {
         CAbi abi;
         abi.loadAbisMonitors();
         sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-        abis.push_back(abi);
+        abiList.push_back(abi);
     }
 
     if (generate)
@@ -201,7 +196,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields("CParameter:all", false);
     manageFields("CParameter:type,name,is_array,indexed", true);
 
-    removeDuplicateEncodings(abis);
+    removeDuplicateEncodings(abiList);
 
     return true;
 }
@@ -268,4 +263,27 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
     for (auto f : f2.inputs)
         s2 += f.name;
     return s1 < s2;
+}
+
+//-----------------------------------------------------------------------
+void COptions::convertFromSol(const address_t& a) {
+    CAbi abi;
+    sol_2_Abi(abi, a);
+    bool first1 = true;
+    expContext().spcs = 2;
+    ostringstream os;
+    os << "[" << endl;
+    incIndent();
+    for (auto func : abi.interfaces) {
+        if (!first1)
+            os << ",";
+        os << endl;
+        os << "\n    " << func;
+        first1 = false;
+    }
+    decIndent();
+    os << endl << "]" << endl;
+    ::remove((a + ".json").c_str());
+    stringToAsciiFile(a + ".json", os.str());
+    isRaw = false;
 }

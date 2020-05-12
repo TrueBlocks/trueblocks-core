@@ -1,5 +1,149 @@
 [
   {
+    "name": "clone",
+    "type": "function",
+    "signature": "clone(address,uint256,uint256)",
+    "encoding": "0xed74de9d",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_to"
+      },
+      {
+        "type": "uint256",
+        "name": "_tokenId"
+      },
+      {
+        "type": "uint256",
+        "name": "_numClonesRequested"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "pay",
+    "type": "function",
+    "signature": "pay(address,uint256,address,address,uint256,uint256,address,bytes,bytes,address)",
+    "encoding": "0xd337e37b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "src"
+      },
+      {
+        "type": "uint256",
+        "name": "srcAmount"
+      },
+      {
+        "type": "address",
+        "name": "dest"
+      },
+      {
+        "type": "address",
+        "name": "destAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "maxDestAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "minConversionRate"
+      },
+      {
+        "type": "address",
+        "name": "walletId"
+      },
+      {
+        "type": "bytes",
+        "name": "paymentData"
+      },
+      {
+        "type": "bytes",
+        "name": "hint"
+      },
+      {
+        "type": "address",
+        "name": "kyberNetworkProxy"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "presentto",
+    "type": "function",
+    "signature": "presentto()",
+    "encoding": "0x396aa68f",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "present",
+    "type": "function",
+    "signature": "present(address[])",
+    "encoding": "0x83a0b24d",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "nanee",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "airDrop",
+    "type": "function",
+    "signature": "airDrop(address,uint256[],address[])",
+    "encoding": "0xd6916c34",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "parent"
+      },
+      {
+        "type": "uint256[]",
+        "name": "amounts",
+        "is_array": true
+      },
+      {
+        "type": "address[]",
+        "name": "droptargets",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "splitTransfer",
+    "type": "function",
+    "signature": "splitTransfer(address,address,uint256,uint256,address)",
+    "encoding": "0xab832b43",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "toFirst"
+      },
+      {
+        "type": "address",
+        "name": "toSecond"
+      },
+      {
+        "type": "uint256",
+        "name": "valueFirst"
+      },
+      {
+        "type": "uint256",
+        "name": "valueSecond"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "migrateAll",
     "type": "function",
     "signature": "migrateAll(uint256[])",

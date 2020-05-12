@@ -31,11 +31,14 @@ string_q params_2_Str(CParameterArray& interfaces) {
 
 //------------------------------------------------------------------------------------------------
 size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex) {
-    if (interfaces.size() > dataArray.size()) {
-        cerr << "{ \"error\": \"Bad data encountered in decodeTheData. Ignoring...\" }," << endl;
+    uint64_t nDataItems = dataArray.size();
+    if (interfaces.size() > nDataItems) {
+        cerr << "{ \"error\": \"Error encountered in decodeTheData: more interfaces than data items. Ignoring...\" },"
+             << endl;
         return 1;
     }
 
+    uint64_t startOfDynamicData = NOPOS;
     for (size_t q = 0; q < interfaces.size(); q++) {
         CParameter* pPtr = &interfaces[q];
         string_q type = pPtr->type;
@@ -77,17 +80,28 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
                 uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
-                size_t nWords = (nBytes / 32) + 1;
-                if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                    for (size_t w = 0; w < nWords; w++) {
-                        size_t pos = dataStart + 1 + w;
-                        if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                        nBytes -= 32;
+                if (startOfDynamicData == NOPOS)
+                    startOfDynamicData = dataStart;
+                if (readIndex > startOfDynamicData) {
+                    pPtr->value = "";  // we've run out of bytes -- protect ourselves from bad data
+                } else {
+                    uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
+                    size_t nWords = (nBytes / 32) + 1;
+                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                        for (size_t w = 0; w < nWords; w++) {
+                            size_t pos = dataStart + 1 + w;
+                            if (pos < dataArray.size())
+                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                            if (nBytes >= 32)
+                                nBytes -= 32;
+                            else
+                                nBytes = 0;
+                        }
+                        pPtr->value = (type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
+                    } else {
+                        pPtr->value = "";  // we've run out of bytes -- protect ourselves from bad data
                     }
                 }
-                pPtr->value = (type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
 
             } else if (type.find("bytes") != string::npos) {
                 // bytes1 through bytes32 are fixed length

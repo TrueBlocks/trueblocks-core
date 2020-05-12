@@ -1,4 +1,27 @@
 #!/usr/bin/env bash
 
-chifra names --editCmd add "$1!$2!$3!$4!EtherScan!"
+
+defTag="81 Other"
+defSource="EtherScan"
+defDecimals=18
+
+ADDRESS=$1
+NAME=$2
+TAG=${3:-$defTag}
+SOURCE=${4:-$defSource}
+DECIMALS=${5:-$defDecimals}
+SYMBOL=$6
+DESCR=$7
+
+echo "---------------------- Adding -----------------------"
+echo "Address: " $ADDRESS
+echo "Name: " $NAME
+echo "TAG: " $TAG
+echo "SOURCE: " $SOURCE
+echo "DECIMALS: " $DECIMALS
+echo "SYMBOL: " $SYMBOL
+echo "DESCR: " $DESCR
+
+# tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund
+chifra names --editCmd add "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS"
 cp -pf /Users/jrush/.quickBlocks/names/names.tab ../src/other/install/names/names.tab

@@ -75,9 +75,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
 
-    if (trace)
-        SHOW_FIELD(CTransaction, "traces");
-
     if (isRaw)
         expContext().exportFmt = JSON1;
 
@@ -91,6 +88,13 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CTransaction:input", true);       // show
         manageFields("CLogEntry:data,topics", true);    // show
         abi_spec.loadAbiKnown();
+    }
+
+    // order matters
+    if (trace) {
+        SHOW_FIELD(CTransaction, "traces");
+    } else {
+        HIDE_FIELD(CTransaction, "traces");
     }
 
     // Display formatting

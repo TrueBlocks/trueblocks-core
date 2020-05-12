@@ -21,6 +21,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
+    "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -55,6 +56,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
+    "compressedTrace": "USD ( _id: 0 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -89,6 +91,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
+    "compressedTrace": "USD ( _id: 0 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -106,5 +109,5 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
       "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
     }
   }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

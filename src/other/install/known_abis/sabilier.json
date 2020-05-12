@@ -1,0 +1,6516 @@
+[
+
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken()",
+    "encoding": "0xfe9c44ae",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOfUnderlying",
+    "type": "function",
+    "signature": "balanceOfUnderlying(address)",
+    "encoding": "0x3af9e669",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "exchangeRateCurrent",
+    "type": "function",
+    "signature": "exchangeRateCurrent()",
+    "encoding": "0xbd6d894d",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mint",
+    "type": "function",
+    "signature": "mint(uint256)",
+    "encoding": "0xa0712d68",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "mintAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeem",
+    "type": "function",
+    "signature": "redeem(uint256)",
+    "encoding": "0xdb006a75",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemTokens"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeemUnderlying",
+    "type": "function",
+    "signature": "redeemUnderlying(uint256)",
+    "encoding": "0x852a12e3",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgSender",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgSender()",
+    "encoding": "0x119df25f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgData",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgData()",
+    "encoding": "0x8b49d47e",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isConstructor",
+    "type": "function",
+    "constant": true,
+    "signature": "isConstructor()",
+    "encoding": "0xc4cbfa44",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "owner",
+    "type": "function",
+    "constant": true,
+    "signature": "owner()",
+    "encoding": "0x8da5cb5b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isOwner",
+    "type": "function",
+    "constant": true,
+    "signature": "isOwner()",
+    "encoding": "0x8f32d59b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_transferOwnership",
+    "type": "function",
+    "signature": "_transferOwnership(address)",
+    "encoding": "0xd29d44ee",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "DiscardCToken",
+    "type": "event",
+    "signature": "DiscardCToken(address)",
+    "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WhitelistCToken",
+    "type": "event",
+    "signature": "WhitelistCToken(address)",
+    "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "whitelistCToken",
+    "type": "function",
+    "signature": "whitelistCToken(address)",
+    "encoding": "0x0a7d2e1d",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "discardCToken",
+    "type": "function",
+    "signature": "discardCToken(address)",
+    "encoding": "0xdd219635",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken(address)",
+    "encoding": "0x2f52e595",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "whitelistCToken",
+    "type": "function",
+    "signature": "whitelistCToken(address)",
+    "encoding": "0x0a7d2e1d",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "discardCToken",
+    "type": "function",
+    "signature": "discardCToken(address)",
+    "encoding": "0xdd219635",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken(address)",
+    "encoding": "0x2f52e595",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isConstructor",
+    "type": "function",
+    "constant": true,
+    "signature": "isConstructor()",
+    "encoding": "0xc4cbfa44",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getHubAddr",
+    "type": "function",
+    "constant": true,
+    "signature": "getHubAddr()",
+    "encoding": "0x74e861d6",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "acceptRelayedCall",
+    "type": "function",
+    "constant": true,
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "encoding": "0x83947ea0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "bytes",
+        "name": "encodedFunction"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "gasLimit"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalData"
+      },
+      {
+        "type": "uint256",
+        "name": "maxPossibleCharge"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "preRelayedCall",
+    "type": "function",
+    "signature": "preRelayedCall(bytes)",
+    "encoding": "0x80274db7",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "context"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "postRelayedCall",
+    "type": "function",
+    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "encoding": "0xe06e0e22",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "context"
+      },
+      {
+        "type": "bool",
+        "name": "success"
+      },
+      {
+        "type": "uint256",
+        "name": "actualCharge"
+      },
+      {
+        "type": "bytes32",
+        "name": "preRetVal"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "preRelayedCall",
+    "type": "function",
+    "signature": "preRelayedCall(bytes)",
+    "encoding": "0x80274db7",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "context"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "postRelayedCall",
+    "type": "function",
+    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "encoding": "0xe06e0e22",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "context"
+      },
+      {
+        "type": "bool",
+        "name": "success"
+      },
+      {
+        "type": "uint256",
+        "name": "actualCharge"
+      },
+      {
+        "type": "bytes32",
+        "name": "preRetVal"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_approveRelayedCall",
+    "type": "function",
+    "signature": "_approveRelayedCall()",
+    "encoding": "0x63955c52",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_approveRelayedCall",
+    "type": "function",
+    "signature": "_approveRelayedCall(bytes)",
+    "encoding": "0x61513210",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "context"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_rejectRelayedCall",
+    "type": "function",
+    "signature": "_rejectRelayedCall(uint256)",
+    "encoding": "0xa4461b91",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "errorCode"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_preRelayedCall",
+    "type": "function",
+    "signature": "_preRelayedCall(bytes)",
+    "encoding": "0xf30492e8",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_postRelayedCall",
+    "type": "function",
+    "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
+    "encoding": "0xe90e066b",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      },
+      {
+        "type": "bool",
+        "name": "val_0"
+      },
+      {
+        "type": "uint256",
+        "name": "val_1"
+      },
+      {
+        "type": "bytes32",
+        "name": "val_2"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_computeCharge",
+    "type": "function",
+    "signature": "_computeCharge(uint256,uint256,uint256)",
+    "encoding": "0x0bb1d23d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "gas"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "serviceFee"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "recover",
+    "type": "function",
+    "signature": "recover(bytes32,bytes)",
+    "encoding": "0x19045a25",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "toEthSignedMessageHash",
+    "type": "function",
+    "signature": "toEthSignedMessageHash(bytes32)",
+    "encoding": "0x918a15cf",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "hash"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "trustedSigner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "acceptRelayedCall",
+    "type": "function",
+    "constant": true,
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "encoding": "0x83947ea0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "bytes",
+        "name": "encodedFunction"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "gasLimit"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalData"
+      },
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_getTrustedSigner",
+    "type": "function",
+    "constant": true,
+    "signature": "_getTrustedSigner()",
+    "encoding": "0x4b3ab4b7",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "trustedSigner"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_setTrustedSigner",
+    "type": "function",
+    "signature": "_setTrustedSigner(address)",
+    "encoding": "0xd1b8278a",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "trustedSigner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_msgSender",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgSender()",
+    "encoding": "0x119df25f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgData",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgData()",
+    "encoding": "0x8b49d47e",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "RelayHubChanged",
+    "type": "event",
+    "signature": "RelayHubChanged(address,address)",
+    "encoding": "0xb9f84b8e65164b14439ae3620df0a4d8786d896996c0282b683f9d8c08f046e8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "oldRelayHub",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newRelayHub",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize()",
+    "encoding": "0x8129fc1c",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_getRelayHub",
+    "type": "function",
+    "constant": true,
+    "signature": "_getRelayHub()",
+    "encoding": "0x4e239ea0",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "relayHub"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_upgradeRelayHub",
+    "type": "function",
+    "signature": "_upgradeRelayHub(address)",
+    "encoding": "0xe8dcdc07",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newRelayHub"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_msgSender",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgSender()",
+    "encoding": "0x119df25f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgData",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgData()",
+    "encoding": "0x8b49d47e",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_getRelayedCallSender",
+    "type": "function",
+    "signature": "_getRelayedCallSender()",
+    "encoding": "0x521bb2dd",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "result"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_getRelayedCallData",
+    "type": "function",
+    "signature": "_getRelayedCallData()",
+    "encoding": "0x671457bf",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "stake",
+    "type": "function",
+    "signature": "stake(address,uint256)",
+    "encoding": "0xadc9772e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relayaddr"
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeDelay"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Staked",
+    "type": "event",
+    "signature": "Staked(address,uint256,uint256)",
+    "encoding": "0x1449c6dd7851abc30abf37f57715f492010519147cc2652fbc38202c18a6ee90",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "stake"
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeDelay"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "registerRelay",
+    "type": "function",
+    "signature": "registerRelay(uint256,string)",
+    "encoding": "0x1166073a",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "string",
+        "name": "url"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "RelayAdded",
+    "type": "event",
+    "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
+    "encoding": "0x85b3ae3aae9d3fcb31142fbd8c3b4722d57825b8edd6e1366e69204afa5a0dfa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "stake"
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeDelay"
+      },
+      {
+        "type": "string",
+        "name": "url"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "removeRelayByOwner",
+    "type": "function",
+    "signature": "removeRelayByOwner(address)",
+    "encoding": "0xc3e712f2",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "RelayRemoved",
+    "type": "event",
+    "signature": "RelayRemoved(address,uint256)",
+    "encoding": "0x5490afc1d818789c8b3d5d63bce3d2a3327d0bba4efb5a7751f783dc977d7d11",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeTime"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "unstake",
+    "type": "function",
+    "signature": "unstake(address)",
+    "encoding": "0xf2888dbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Unstaked",
+    "type": "event",
+    "signature": "Unstaked(address,uint256)",
+    "encoding": "0x0f5bb82176feb1b5e747e28471aa92156a04d9f3ab9f45f28e2d704232b93f75",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "stake"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getRelay",
+    "type": "function",
+    "constant": true,
+    "signature": "getRelay(address)",
+    "encoding": "0x8d851460",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "totalStake"
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeDelay"
+      },
+      {
+        "type": "uint256",
+        "name": "unstakeTime"
+      },
+      {
+        "type": "address",
+        "name": "payable owner"
+      },
+      {
+        "type": "RelayState",
+        "name": "state"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "depositFor",
+    "type": "function",
+    "signature": "depositFor(address)",
+    "encoding": "0xaa67c919",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Deposited",
+    "type": "event",
+    "signature": "Deposited(address,address,uint256)",
+    "encoding": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "target"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdraw",
+    "type": "function",
+    "signature": "withdraw(uint256,address)",
+    "encoding": "0x00f714ce",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "payable dest"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Withdrawn",
+    "type": "event",
+    "signature": "Withdrawn(address,address,uint256)",
+    "encoding": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "dest",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "canRelay",
+    "type": "function",
+    "constant": true,
+    "signature": "canRelay(address,address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "encoding": "0x2b601747",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "bytes",
+        "name": "encodedFunction"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "gasLimit"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalData"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "status"
+      },
+      {
+        "type": "bytes",
+        "name": "recipientContext"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "relayCall",
+    "type": "function",
+    "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "encoding": "0x405cec67",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "bytes",
+        "name": "encodedFunction"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "gasLimit"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalData"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "CanRelayFailed",
+    "type": "event",
+    "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
+    "encoding": "0xafb5afd6d1c2e8ffbfb480e674a169f493ece0b22658d4f4484e7334f0241e22",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "bytes4",
+        "name": "selector"
+      },
+      {
+        "type": "uint256",
+        "name": "reason"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "TransactionRelayed",
+    "type": "event",
+    "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
+    "encoding": "0x5842ee2f1e4c9e74e454593aabf5ec184231cbffb01196c35aeabdf1e8f1e742",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "bytes4",
+        "name": "selector"
+      },
+      {
+        "type": "RelayCallStatus",
+        "name": "status"
+      },
+      {
+        "type": "uint256",
+        "name": "charge"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "requiredGas",
+    "type": "function",
+    "constant": true,
+    "signature": "requiredGas(uint256)",
+    "encoding": "0x6a7d84a4",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "relayedCallStipend"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "maxPossibleCharge",
+    "type": "function",
+    "constant": true,
+    "signature": "maxPossibleCharge(uint256,uint256,uint256)",
+    "encoding": "0xa863f8f9",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "relayedCallStipend"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "penalizeRepeatedNonce",
+    "type": "function",
+    "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
+    "encoding": "0xa8cd9572",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "unsignedTx1"
+      },
+      {
+        "type": "bytes",
+        "name": "signature1"
+      },
+      {
+        "type": "bytes",
+        "name": "unsignedTx2"
+      },
+      {
+        "type": "bytes",
+        "name": "signature2"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "penalizeIllegalTransaction",
+    "type": "function",
+    "signature": "penalizeIllegalTransaction(bytes,bytes)",
+    "encoding": "0x39002432",
+    "inputs": [
+      {
+        "type": "bytes",
+        "name": "unsignedTx"
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Penalized",
+    "type": "event",
+    "signature": "Penalized(address,address,uint256)",
+    "encoding": "0xb0595266ccec357806b2691f348b128209f1060a0bda4f5c95f7090730351ff8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getNonce",
+    "type": "function",
+    "constant": true,
+    "signature": "getNonce(address)",
+    "encoding": "0x2d0335ab",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize()",
+    "encoding": "0x8129fc1c",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getHubAddr",
+    "type": "function",
+    "constant": true,
+    "signature": "getHubAddr()",
+    "encoding": "0x74e861d6",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "relayHubVersion",
+    "type": "function",
+    "constant": true,
+    "signature": "relayHubVersion()",
+    "encoding": "0xad61ccd5",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_withdrawDeposits",
+    "type": "function",
+    "signature": "_withdrawDeposits(uint256,address)",
+    "encoding": "0x43401e48",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "address",
+        "name": "payable payee"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "totalSupply",
+    "type": "function",
+    "constant": true,
+    "signature": "totalSupply()",
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "allowance",
+    "type": "function",
+    "constant": true,
+    "signature": "allowance(address,address)",
+    "encoding": "0xdd62ed3e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "Transfer",
+    "type": "event",
+    "signature": "Transfer(address,address,uint256)",
+    "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Approval",
+    "type": "event",
+    "signature": "Approval(address,address,uint256)",
+    "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "spender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize()",
+    "encoding": "0x8129fc1c",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mulUInt",
+    "type": "function",
+    "signature": "mulUInt(uint256,uint256)",
+    "encoding": "0x20b43094",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divUInt",
+    "type": "function",
+    "signature": "divUInt(uint256,uint256)",
+    "encoding": "0x1bc2b813",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "subUInt",
+    "type": "function",
+    "signature": "subUInt(uint256,uint256)",
+    "encoding": "0x9b7efac7",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addUInt",
+    "type": "function",
+    "signature": "addUInt(uint256,uint256)",
+    "encoding": "0xdb27b0bc",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addThenSubUInt",
+    "type": "function",
+    "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "encoding": "0x65dbcc0f",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      },
+      {
+        "type": "uint256",
+        "name": "c"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getExp",
+    "type": "function",
+    "signature": "getExp(uint256,uint256)",
+    "encoding": "0xba9316b7",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "num"
+      },
+      {
+        "type": "uint256",
+        "name": "denom"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addExp",
+    "type": "function",
+    "signature": "addExp(Exp,Exp)",
+    "encoding": "0xd1c254ae",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "subExp",
+    "type": "function",
+    "signature": "subExp(Exp,Exp)",
+    "encoding": "0xd23e7096",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalar",
+    "type": "function",
+    "signature": "mulScalar(Exp,uint256)",
+    "encoding": "0xe6247a38",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalarTruncate",
+    "type": "function",
+    "signature": "mulScalarTruncate(Exp,uint256)",
+    "encoding": "0x185c070f",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalarTruncateAddUInt",
+    "type": "function",
+    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "encoding": "0xfe799fc9",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "uint256",
+        "name": "addend"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalar",
+    "type": "function",
+    "signature": "divScalar(Exp,uint256)",
+    "encoding": "0x69fbe45e",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalarByExp",
+    "type": "function",
+    "signature": "divScalarByExp(uint256,Exp)",
+    "encoding": "0x9d70934e",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "Exp",
+        "name": "divisor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalarByExpTruncate",
+    "type": "function",
+    "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "encoding": "0x100045df",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "Exp",
+        "name": "divisor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp",
+    "type": "function",
+    "signature": "mulExp(Exp,Exp)",
+    "encoding": "0x9ba9c354",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp",
+    "type": "function",
+    "signature": "mulExp(uint256,uint256)",
+    "encoding": "0xde32abd1",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp3",
+    "type": "function",
+    "signature": "mulExp3(Exp,Exp,Exp)",
+    "encoding": "0xe19ccb27",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      },
+      {
+        "type": "Exp",
+        "name": "c"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divExp",
+    "type": "function",
+    "signature": "divExp(Exp,Exp)",
+    "encoding": "0x943ab3fd",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "truncate",
+    "type": "function",
+    "signature": "truncate(Exp)",
+    "encoding": "0xabe932d9",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "exp"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "lessThanExp",
+    "type": "function",
+    "signature": "lessThanExp(Exp,Exp)",
+    "encoding": "0xd2196cd2",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "lessThanOrEqualExp",
+    "type": "function",
+    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "encoding": "0xf96d822c",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "greaterThanExp",
+    "type": "function",
+    "signature": "greaterThanExp(Exp,Exp)",
+    "encoding": "0x8732ffe7",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isZeroExp",
+    "type": "function",
+    "signature": "isZeroExp(Exp)",
+    "encoding": "0x6c13c023",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken()",
+    "encoding": "0xfe9c44ae",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOfUnderlying",
+    "type": "function",
+    "signature": "balanceOfUnderlying(address)",
+    "encoding": "0x3af9e669",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "exchangeRateCurrent",
+    "type": "function",
+    "signature": "exchangeRateCurrent()",
+    "encoding": "0xbd6d894d",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mint",
+    "type": "function",
+    "signature": "mint(uint256)",
+    "encoding": "0xa0712d68",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "mintAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeem",
+    "type": "function",
+    "signature": "redeem(uint256)",
+    "encoding": "0xdb006a75",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemTokens"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeemUnderlying",
+    "type": "function",
+    "signature": "redeemUnderlying(uint256)",
+    "encoding": "0x852a12e3",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "owner",
+    "type": "function",
+    "constant": true,
+    "signature": "owner()",
+    "encoding": "0x8da5cb5b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isOwner",
+    "type": "function",
+    "constant": true,
+    "signature": "isOwner()",
+    "encoding": "0x8f32d59b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_transferOwnership",
+    "type": "function",
+    "signature": "_transferOwnership(address)",
+    "encoding": "0xd29d44ee",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "add",
+    "type": "function",
+    "signature": "add(Role,address)",
+    "encoding": "0xb782197a",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "remove",
+    "type": "function",
+    "signature": "remove(Role,address)",
+    "encoding": "0x3e59fb33",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "has",
+    "type": "function",
+    "constant": true,
+    "signature": "has(Role,address)",
+    "encoding": "0xced709a2",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "PauserAdded",
+    "type": "event",
+    "signature": "PauserAdded(address)",
+    "encoding": "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "PauserRemoved",
+    "type": "event",
+    "signature": "PauserRemoved(address)",
+    "encoding": "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isPauser",
+    "type": "function",
+    "constant": true,
+    "signature": "isPauser(address)",
+    "encoding": "0x46fbf68e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addPauser",
+    "type": "function",
+    "signature": "addPauser(address)",
+    "encoding": "0x82dc1ec4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_addPauser",
+    "type": "function",
+    "signature": "_addPauser(address)",
+    "encoding": "0xca2f5cb4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_removePauser",
+    "type": "function",
+    "signature": "_removePauser(address)",
+    "encoding": "0xddc8d7a6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Paused",
+    "type": "event",
+    "signature": "Paused(address)",
+    "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Unpaused",
+    "type": "event",
+    "signature": "Unpaused(address)",
+    "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "paused",
+    "type": "function",
+    "constant": true,
+    "signature": "paused()",
+    "encoding": "0x5c975abb",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "pause",
+    "type": "function",
+    "signature": "pause()",
+    "encoding": "0x8456cb59",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "unpause",
+    "type": "function",
+    "signature": "unpause()",
+    "encoding": "0x3f4ba83a",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "DiscardCToken",
+    "type": "event",
+    "signature": "DiscardCToken(address)",
+    "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WhitelistCToken",
+    "type": "event",
+    "signature": "WhitelistCToken(address)",
+    "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "whitelistCToken",
+    "type": "function",
+    "signature": "whitelistCToken(address)",
+    "encoding": "0x0a7d2e1d",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "discardCToken",
+    "type": "function",
+    "signature": "discardCToken(address)",
+    "encoding": "0xdd219635",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken(address)",
+    "encoding": "0x2f52e595",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "CreateStream",
+    "type": "event",
+    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
+    "encoding": "0x7b01d409597969366dc268d7f957a990d1ca3d3449baf8fb45db67351aecfe78",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WithdrawFromStream",
+    "type": "event",
+    "signature": "WithdrawFromStream(uint256,address,uint256)",
+    "encoding": "0x36c3ab437e6a424ed25dc4bfdeb62706aa06558660fab2dab229d2555adaf89c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "CancelStream",
+    "type": "event",
+    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
+    "encoding": "0xca3e6079b726e7728802a0537949e2d1c7762304fa641fb06eb56daf2ba8c6b9",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "senderBalance"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientBalance"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(uint256,address)",
+    "encoding": "0x3656eec2",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "balance"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getStream(uint256)",
+    "encoding": "0x894e9a0d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      },
+      {
+        "type": "uint256",
+        "name": "balance"
+      },
+      {
+        "type": "uint256",
+        "name": "rate"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createStream",
+    "type": "function",
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "encoding": "0xcc1b4bf6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdrawFromStream",
+    "type": "function",
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "encoding": "0x7a9b2c6c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "funds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "cancelStream",
+    "type": "function",
+    "signature": "cancelStream(uint256)",
+    "encoding": "0x6db9241b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "CreateCompoundingStream",
+    "type": "event",
+    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
+    "encoding": "0xa9bbfc8562a8e1e6b889a428f128c90ed60c6204c37e4fb4354a202b4db59204",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "exchangeRate"
+      },
+      {
+        "type": "uint256",
+        "name": "senderSharePercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientSharePercentage"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "PayInterest",
+    "type": "event",
+    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
+    "encoding": "0x5a8a03e48302e0bd2e011a3a2b54d1f849c55497f462f404bf52dce4290456b5",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "senderInterest"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientInterest"
+      },
+      {
+        "type": "uint256",
+        "name": "sablierInterest"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "TakeEarnings",
+    "type": "event",
+    "signature": "TakeEarnings(address,uint256)",
+    "encoding": "0x13e8af02ad3e36f8d82fc8b86dcd67b7ed11f718f0e52fb245d2038eb71856ba",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "UpdateFee",
+    "type": "event",
+    "signature": "UpdateFee(uint256)",
+    "encoding": "0x38e229a7f3f9c329892d08eb37c4e91ccac6d12c798d394990ca4f56028ec266",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "fee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "updateFee",
+    "type": "function",
+    "signature": "updateFee(uint256)",
+    "encoding": "0x9012c4a8",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "feePercentage"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "takeEarnings",
+    "type": "function",
+    "signature": "takeEarnings(address,uint256)",
+    "encoding": "0xc1eb9ee0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getStream(uint256)",
+    "encoding": "0x894e9a0d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "deltaOf",
+    "type": "function",
+    "constant": true,
+    "signature": "deltaOf(uint256)",
+    "encoding": "0xa82ccd4d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(uint256,address)",
+    "encoding": "0x3656eec2",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCompoundingStream",
+    "type": "function",
+    "constant": true,
+    "signature": "isCompoundingStream(uint256)",
+    "encoding": "0xa734d51b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getCompoundingStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getCompoundingStream(uint256)",
+    "encoding": "0x2b8a119d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "interestOf",
+    "type": "function",
+    "signature": "interestOf(uint256,uint256)",
+    "encoding": "0x8c9a3252",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getEarnings",
+    "type": "function",
+    "constant": true,
+    "signature": "getEarnings(address)",
+    "encoding": "0x131b9c04",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createStream",
+    "type": "function",
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "encoding": "0xcc1b4bf6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createCompoundingStream",
+    "type": "function",
+    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "encoding": "0x8195aeaa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      },
+      {
+        "type": "uint256",
+        "name": "senderSharePercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientSharePercentage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdrawFromStream",
+    "type": "function",
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "encoding": "0x7a9b2c6c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelStream",
+    "type": "function",
+    "signature": "cancelStream(uint256)",
+    "encoding": "0x6db9241b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawFromStreamInternal",
+    "type": "function",
+    "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "encoding": "0x0e454254",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawFromCompoundingStreamInternal",
+    "type": "function",
+    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "encoding": "0xdb3e1b83",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelStreamInternal",
+    "type": "function",
+    "signature": "cancelStreamInternal(uint256)",
+    "encoding": "0x36bfcbaf",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelCompoundingStreamInternal",
+    "type": "function",
+    "signature": "cancelCompoundingStreamInternal(uint256)",
+    "encoding": "0x8ef15ecc",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "CreateSalary",
+    "type": "event",
+    "signature": "CreateSalary(uint256,uint256,address)",
+    "encoding": "0xc590dd516f4793872d9eaf042b84a80519946118b9313d57ea49fdb6c0fa95d1",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "company",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WithdrawFromSalary",
+    "type": "event",
+    "signature": "WithdrawFromSalary(uint256,uint256,address)",
+    "encoding": "0x959f03f88f71fcaf842c68ddfeec5db0162cff55f29bebf0edf0c99cdbe4f7b6",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "company",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "CancelSalary",
+    "type": "event",
+    "signature": "CancelSalary(uint256,uint256,address)",
+    "encoding": "0x0ebba76804edfc459696b2dd872e917416f03011cc6e0420b8af454bc19a8a0e",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "company",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address,address,address)",
+    "encoding": "0xc0c53b8b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "ownerAddress"
+      },
+      {
+        "type": "address",
+        "name": "signerAddress"
+      },
+      {
+        "type": "address",
+        "name": "sablierAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "whitelistRelayer",
+    "type": "function",
+    "signature": "whitelistRelayer(address,uint256)",
+    "encoding": "0x52e877d2",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relayer"
+      },
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "discardRelayer",
+    "type": "function",
+    "signature": "discardRelayer(address,uint256)",
+    "encoding": "0x591bc226",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relayer"
+      },
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "acceptRelayedCall",
+    "type": "function",
+    "constant": true,
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "encoding": "0x83947ea0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "relay"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "bytes",
+        "name": "encodedFunction"
+      },
+      {
+        "type": "uint256",
+        "name": "transactionFee"
+      },
+      {
+        "type": "uint256",
+        "name": "gasPrice"
+      },
+      {
+        "type": "uint256",
+        "name": "gasLimit"
+      },
+      {
+        "type": "uint256",
+        "name": "nonce"
+      },
+      {
+        "type": "bytes",
+        "name": "approvalData"
+      },
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      },
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getSalary",
+    "type": "function",
+    "constant": true,
+    "signature": "getSalary(uint256)",
+    "encoding": "0x80bfacc2",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "createSalary",
+    "type": "function",
+    "signature": "createSalary(address,uint256,address,uint256,uint256)",
+    "encoding": "0xdc7d9369",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "employee"
+      },
+      {
+        "type": "uint256",
+        "name": "salary"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createCompoundingSalary",
+    "type": "function",
+    "signature": "createCompoundingSalary(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "encoding": "0x73f4823e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "employee"
+      },
+      {
+        "type": "uint256",
+        "name": "salary"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      },
+      {
+        "type": "uint256",
+        "name": "senderSharePercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientSharePercentage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdrawFromSalary",
+    "type": "function",
+    "signature": "withdrawFromSalary(uint256,uint256)",
+    "encoding": "0xfea7c53f",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelSalary",
+    "type": "function",
+    "signature": "cancelSalary(uint256)",
+    "encoding": "0xc5a66ff9",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "salaryId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "totalSupply",
+    "type": "function",
+    "constant": true,
+    "signature": "totalSupply()",
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "allowance",
+    "type": "function",
+    "constant": true,
+    "signature": "allowance(address,address)",
+    "encoding": "0xdd62ed3e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "Transfer",
+    "type": "event",
+    "signature": "Transfer(address,address,uint256)",
+    "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Approval",
+    "type": "event",
+    "signature": "Approval(address,address,uint256)",
+    "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "spender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isConstructor",
+    "type": "function",
+    "constant": true,
+    "signature": "isConstructor()",
+    "encoding": "0xc4cbfa44",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize()",
+    "encoding": "0x8129fc1c",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "mulUInt",
+    "type": "function",
+    "signature": "mulUInt(uint256,uint256)",
+    "encoding": "0x20b43094",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divUInt",
+    "type": "function",
+    "signature": "divUInt(uint256,uint256)",
+    "encoding": "0x1bc2b813",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "subUInt",
+    "type": "function",
+    "signature": "subUInt(uint256,uint256)",
+    "encoding": "0x9b7efac7",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addUInt",
+    "type": "function",
+    "signature": "addUInt(uint256,uint256)",
+    "encoding": "0xdb27b0bc",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addThenSubUInt",
+    "type": "function",
+    "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "encoding": "0x65dbcc0f",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      },
+      {
+        "type": "uint256",
+        "name": "c"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getExp",
+    "type": "function",
+    "signature": "getExp(uint256,uint256)",
+    "encoding": "0xba9316b7",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "num"
+      },
+      {
+        "type": "uint256",
+        "name": "denom"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addExp",
+    "type": "function",
+    "signature": "addExp(Exp,Exp)",
+    "encoding": "0xd1c254ae",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "subExp",
+    "type": "function",
+    "signature": "subExp(Exp,Exp)",
+    "encoding": "0xd23e7096",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalar",
+    "type": "function",
+    "signature": "mulScalar(Exp,uint256)",
+    "encoding": "0xe6247a38",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalarTruncate",
+    "type": "function",
+    "signature": "mulScalarTruncate(Exp,uint256)",
+    "encoding": "0x185c070f",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulScalarTruncateAddUInt",
+    "type": "function",
+    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "encoding": "0xfe799fc9",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "uint256",
+        "name": "addend"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalar",
+    "type": "function",
+    "signature": "divScalar(Exp,uint256)",
+    "encoding": "0x69fbe45e",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "scalar"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalarByExp",
+    "type": "function",
+    "signature": "divScalarByExp(uint256,Exp)",
+    "encoding": "0x9d70934e",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "Exp",
+        "name": "divisor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divScalarByExpTruncate",
+    "type": "function",
+    "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "encoding": "0x100045df",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "scalar"
+      },
+      {
+        "type": "Exp",
+        "name": "divisor"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "uint256",
+        "name": "ret_1"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp",
+    "type": "function",
+    "signature": "mulExp(Exp,Exp)",
+    "encoding": "0x9ba9c354",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp",
+    "type": "function",
+    "signature": "mulExp(uint256,uint256)",
+    "encoding": "0xde32abd1",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mulExp3",
+    "type": "function",
+    "signature": "mulExp3(Exp,Exp,Exp)",
+    "encoding": "0xe19ccb27",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      },
+      {
+        "type": "Exp",
+        "name": "c"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "divExp",
+    "type": "function",
+    "signature": "divExp(Exp,Exp)",
+    "encoding": "0x943ab3fd",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "a"
+      },
+      {
+        "type": "Exp",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "MathError",
+        "name": "ret_0"
+      },
+      {
+        "type": "Exp",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "truncate",
+    "type": "function",
+    "signature": "truncate(Exp)",
+    "encoding": "0xabe932d9",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "exp"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "lessThanExp",
+    "type": "function",
+    "signature": "lessThanExp(Exp,Exp)",
+    "encoding": "0xd2196cd2",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "lessThanOrEqualExp",
+    "type": "function",
+    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "encoding": "0xf96d822c",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "greaterThanExp",
+    "type": "function",
+    "signature": "greaterThanExp(Exp,Exp)",
+    "encoding": "0x8732ffe7",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "left"
+      },
+      {
+        "type": "Exp",
+        "name": "right"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isZeroExp",
+    "type": "function",
+    "signature": "isZeroExp(Exp)",
+    "encoding": "0x6c13c023",
+    "inputs": [
+      {
+        "type": "Exp",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken()",
+    "encoding": "0xfe9c44ae",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOfUnderlying",
+    "type": "function",
+    "signature": "balanceOfUnderlying(address)",
+    "encoding": "0x3af9e669",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "exchangeRateCurrent",
+    "type": "function",
+    "signature": "exchangeRateCurrent()",
+    "encoding": "0xbd6d894d",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mint",
+    "type": "function",
+    "signature": "mint(uint256)",
+    "encoding": "0xa0712d68",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "mintAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeem",
+    "type": "function",
+    "signature": "redeem(uint256)",
+    "encoding": "0xdb006a75",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemTokens"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "redeemUnderlying",
+    "type": "function",
+    "signature": "redeemUnderlying(uint256)",
+    "encoding": "0x852a12e3",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "redeemAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgSender",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgSender()",
+    "encoding": "0x119df25f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgData",
+    "type": "function",
+    "constant": true,
+    "signature": "_msgData()",
+    "encoding": "0x8b49d47e",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "memory"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "owner",
+    "type": "function",
+    "constant": true,
+    "signature": "owner()",
+    "encoding": "0x8da5cb5b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "isOwner",
+    "type": "function",
+    "constant": true,
+    "signature": "isOwner()",
+    "encoding": "0x8f32d59b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_transferOwnership",
+    "type": "function",
+    "signature": "_transferOwnership(address)",
+    "encoding": "0xd29d44ee",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "add",
+    "type": "function",
+    "signature": "add(Role,address)",
+    "encoding": "0xb782197a",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "remove",
+    "type": "function",
+    "signature": "remove(Role,address)",
+    "encoding": "0x3e59fb33",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "has",
+    "type": "function",
+    "constant": true,
+    "signature": "has(Role,address)",
+    "encoding": "0xced709a2",
+    "inputs": [
+      {
+        "type": "Role",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "PauserAdded",
+    "type": "event",
+    "signature": "PauserAdded(address)",
+    "encoding": "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "PauserRemoved",
+    "type": "event",
+    "signature": "PauserRemoved(address)",
+    "encoding": "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isPauser",
+    "type": "function",
+    "constant": true,
+    "signature": "isPauser(address)",
+    "encoding": "0x46fbf68e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "addPauser",
+    "type": "function",
+    "signature": "addPauser(address)",
+    "encoding": "0x82dc1ec4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_addPauser",
+    "type": "function",
+    "signature": "_addPauser(address)",
+    "encoding": "0xca2f5cb4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_removePauser",
+    "type": "function",
+    "signature": "_removePauser(address)",
+    "encoding": "0xddc8d7a6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Paused",
+    "type": "event",
+    "signature": "Paused(address)",
+    "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Unpaused",
+    "type": "event",
+    "signature": "Unpaused(address)",
+    "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "initialize",
+    "type": "function",
+    "signature": "initialize(address)",
+    "encoding": "0xc4d66de8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "paused",
+    "type": "function",
+    "constant": true,
+    "signature": "paused()",
+    "encoding": "0x5c975abb",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "pause",
+    "type": "function",
+    "signature": "pause()",
+    "encoding": "0x8456cb59",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "unpause",
+    "type": "function",
+    "signature": "unpause()",
+    "encoding": "0x3f4ba83a",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "DiscardCToken",
+    "type": "event",
+    "signature": "DiscardCToken(address)",
+    "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WhitelistCToken",
+    "type": "event",
+    "signature": "WhitelistCToken(address)",
+    "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "whitelistCToken",
+    "type": "function",
+    "signature": "whitelistCToken(address)",
+    "encoding": "0x0a7d2e1d",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "discardCToken",
+    "type": "function",
+    "signature": "discardCToken(address)",
+    "encoding": "0xdd219635",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCToken",
+    "type": "function",
+    "constant": true,
+    "signature": "isCToken(address)",
+    "encoding": "0x2f52e595",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "CreateStream",
+    "type": "event",
+    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
+    "encoding": "0x7b01d409597969366dc268d7f957a990d1ca3d3449baf8fb45db67351aecfe78",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "WithdrawFromStream",
+    "type": "event",
+    "signature": "WithdrawFromStream(uint256,address,uint256)",
+    "encoding": "0x36c3ab437e6a424ed25dc4bfdeb62706aa06558660fab2dab229d2555adaf89c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "CancelStream",
+    "type": "event",
+    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
+    "encoding": "0xca3e6079b726e7728802a0537949e2d1c7762304fa641fb06eb56daf2ba8c6b9",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "senderBalance"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientBalance"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(uint256,address)",
+    "encoding": "0x3656eec2",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "balance"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getStream(uint256)",
+    "encoding": "0x894e9a0d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "token"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      },
+      {
+        "type": "uint256",
+        "name": "balance"
+      },
+      {
+        "type": "uint256",
+        "name": "rate"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createStream",
+    "type": "function",
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "encoding": "0xcc1b4bf6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdrawFromStream",
+    "type": "function",
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "encoding": "0x7a9b2c6c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "funds"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "cancelStream",
+    "type": "function",
+    "signature": "cancelStream(uint256)",
+    "encoding": "0x6db9241b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "CreateCompoundingStream",
+    "type": "event",
+    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
+    "encoding": "0xa9bbfc8562a8e1e6b889a428f128c90ed60c6204c37e4fb4354a202b4db59204",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "exchangeRate"
+      },
+      {
+        "type": "uint256",
+        "name": "senderSharePercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientSharePercentage"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "PayInterest",
+    "type": "event",
+    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
+    "encoding": "0x5a8a03e48302e0bd2e011a3a2b54d1f849c55497f462f404bf52dce4290456b5",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "senderInterest"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientInterest"
+      },
+      {
+        "type": "uint256",
+        "name": "sablierInterest"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "TakeEarnings",
+    "type": "event",
+    "signature": "TakeEarnings(address,uint256)",
+    "encoding": "0x13e8af02ad3e36f8d82fc8b86dcd67b7ed11f718f0e52fb245d2038eb71856ba",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "UpdateFee",
+    "type": "event",
+    "signature": "UpdateFee(uint256)",
+    "encoding": "0x38e229a7f3f9c329892d08eb37c4e91ccac6d12c798d394990ca4f56028ec266",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "fee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "updateFee",
+    "type": "function",
+    "signature": "updateFee(uint256)",
+    "encoding": "0x9012c4a8",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "feePercentage"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "takeEarnings",
+    "type": "function",
+    "signature": "takeEarnings(address,uint256)",
+    "encoding": "0xc1eb9ee0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getStream(uint256)",
+    "encoding": "0x894e9a0d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "deltaOf",
+    "type": "function",
+    "constant": true,
+    "signature": "deltaOf(uint256)",
+    "encoding": "0xa82ccd4d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "constant": true,
+    "signature": "balanceOf(uint256,address)",
+    "encoding": "0x3656eec2",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "address",
+        "name": "who"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isCompoundingStream",
+    "type": "function",
+    "constant": true,
+    "signature": "isCompoundingStream(uint256)",
+    "encoding": "0xa734d51b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "getCompoundingStream",
+    "type": "function",
+    "constant": true,
+    "signature": "getCompoundingStream(uint256)",
+    "encoding": "0x2b8a119d",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "interestOf",
+    "type": "function",
+    "signature": "interestOf(uint256,uint256)",
+    "encoding": "0x8c9a3252",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "getEarnings",
+    "type": "function",
+    "constant": true,
+    "signature": "getEarnings(address)",
+    "encoding": "0x131b9c04",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createStream",
+    "type": "function",
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "encoding": "0xcc1b4bf6",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "createCompoundingStream",
+    "type": "function",
+    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "encoding": "0x8195aeaa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "deposit"
+      },
+      {
+        "type": "address",
+        "name": "tokenAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      },
+      {
+        "type": "uint256",
+        "name": "stopTime"
+      },
+      {
+        "type": "uint256",
+        "name": "senderSharePercentage"
+      },
+      {
+        "type": "uint256",
+        "name": "recipientSharePercentage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "withdrawFromStream",
+    "type": "function",
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "encoding": "0x7a9b2c6c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelStream",
+    "type": "function",
+    "signature": "cancelStream(uint256)",
+    "encoding": "0x6db9241b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawFromStreamInternal",
+    "type": "function",
+    "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "encoding": "0x0e454254",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawFromCompoundingStreamInternal",
+    "type": "function",
+    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "encoding": "0xdb3e1b83",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelStreamInternal",
+    "type": "function",
+    "signature": "cancelStreamInternal(uint256)",
+    "encoding": "0x36bfcbaf",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "cancelCompoundingStreamInternal",
+    "type": "function",
+    "signature": "cancelCompoundingStreamInternal(uint256)",
+    "encoding": "0x8ef15ecc",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "streamId"
+      }
+    ],
+    "outputs": []
+  }
+
+]

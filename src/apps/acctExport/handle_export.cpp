@@ -215,6 +215,63 @@ bool COptions::exportData(void) {
         expContext().fmtMap["meta"] = expContext().fmtMap["meta"] + os.str();
 
     } else {
+        addr_name_map_t fromAndToMap;
+        for (auto addr : fromNameExistsMap)
+            fromAndToMap[addr.first] = 1L;
+        for (auto addr : toNameExistsMap)
+            if (fromAndToMap[addr.first] == 1L)
+                fromAndToMap[addr.first] = 2L;
+
+        CNameStatsArray fromAndToUnnamed;
+        CNameStatsArray fromAndToNamed;
+        for (auto addr : fromAndToMap) {
+            CAccountName acct;
+            acct.address = addr.first;
+            getNamedAccount(acct, addr.first);
+            if (acct.name.empty()) {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                fromAndToUnnamed.push_back(stats);
+            } else {
+                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+                fromAndToNamed.push_back(stats);
+            }
+        }
+
+        {
+            sort(fromAndToNamed.begin(), fromAndToNamed.end());
+            ostringstream os;
+            bool frst = true;
+            os << ", \"namedFromAndTo\": {";
+            for (auto stats : fromAndToNamed) {
+                if (fromAndToMap[stats.address] == 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
+                       << stats.name << "\", \"count\": " << stats.count << " }";
+                    frst = false;
+                }
+            }
+            os << "}\n";
+            expContext().fmtMap["meta"] += os.str();
+        }
+
+        {
+            sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
+            ostringstream os;
+            os << ", \"unNamedFromAndTo\": {";
+            bool frst = true;
+            for (auto stats : fromAndToUnnamed) {
+                if (fromAndToMap[stats.address] == 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": " << stats.count;
+                    frst = false;
+                }
+            }
+            os << "}";
+            expContext().fmtMap["meta"] += os.str();
+        }
+
         CNameStatsArray fromUnnamed;
         CNameStatsArray fromNamed;
         for (auto addr : fromNameExistsMap) {
@@ -236,11 +293,13 @@ bool COptions::exportData(void) {
             bool frst = true;
             os << ", \"namedFrom\": {";
             for (auto stats : fromNamed) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
+                if (fromAndToMap[stats.address] != 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
+                       << stats.name << "\", \"count\": " << stats.count << " }";
+                    frst = false;
+                }
             }
             os << "}\n";
             expContext().fmtMap["meta"] += os.str();
@@ -252,10 +311,12 @@ bool COptions::exportData(void) {
             os << ", \"unNamedFrom\": {";
             bool frst = true;
             for (auto stats : fromUnnamed) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
+                if (fromAndToMap[stats.address] != 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": " << stats.count;
+                    frst = false;
+                }
             }
             os << "}";
             expContext().fmtMap["meta"] += os.str();
@@ -286,11 +347,13 @@ bool COptions::exportData(void) {
             bool frst = true;
             os << ", \"namedTo\": {";
             for (auto stats : toNamed) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
+                if (fromAndToMap[stats.address] != 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
+                       << stats.name << "\", \"count\": " << stats.count << " }";
+                    frst = false;
+                }
             }
             os << "}\n";
             expContext().fmtMap["meta"] += os.str();
@@ -302,10 +365,12 @@ bool COptions::exportData(void) {
             os << ", \"unNamedTo\": {";
             bool frst = true;
             for (auto stats : toUnnamed) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
+                if (fromAndToMap[stats.address] != 2) {
+                    if (!frst)
+                        os << ",";
+                    os << "\"" << stats.address << "\": " << stats.count;
+                    frst = false;
+                }
             }
             os << "}";
             expContext().fmtMap["meta"] += os.str();

@@ -454,15 +454,15 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         return usage("Invalid edit command '" + editCmd + "'. Quitting...");
 
     bool isEdit = editCmd == "add" || editCmd == "update";
-    string_q fmt =
-        isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdeleted\tis_custom\tis_prefund" : "address";
+    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund"
+                          : "address";
     CStringArray fields;
     explode(fields, fmt, '\t');
 
     ostringstream dataStream;
     for (auto term : terms)
-        dataStream << term;
-    string_q data = substitute(dataStream.str(), "!", "\t");
+        dataStream << term << " ";
+    string_q data = trim(trim(substitute(dataStream.str(), "!", "\t"), ' '), '\t');
 
     CAccountName target;
     target.parseText(fields, data);

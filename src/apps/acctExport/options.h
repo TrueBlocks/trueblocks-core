@@ -69,6 +69,7 @@ class COptions : public COptionsBase {
     bool grab_abis;
     bool freshen;
     bool deltas;
+    bool reverseSort;
     blknum_t occurrence;
     bool emitter;
     // END_CODE_DECLARE

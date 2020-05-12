@@ -1,4 +1,11 @@
 contract A {
+  function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) { }
+  function pay(address src, uint256 srcAmount, address dest, address destAddress, uint256 maxDestAmount, uint256 minConversionRate, address walletId, bytes paymentData, 
+bytes hint, address kyberNetworkProxy);
+  function presentto( ) { }
+  function present(address[] nanee) { }
+  function airDrop(address parent, uint256[] amounts, address[] droptargets) { }
+  function splitTransfer(address toFirst,address toSecond,uint256 valueFirst,uint256 valueSecond,address tokenAddress) external { }
   function migrateAll(uint256[] tokenIds) { }
   function sendTokensArray(address[] beneficiaries, uint256 amount) { }
   function buy(uint256 id, uint256 amount) { }

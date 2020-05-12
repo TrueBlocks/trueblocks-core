@@ -98,8 +98,11 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (opt->articulate) {
         opt->abi_spec.loadAbiByAddress(trans.to);
+        for (auto log : trans.receipt.logs)
+            opt->abi_spec.loadAbiByAddress(log.address);
         opt->abi_spec.articulateTransaction(&trans);
     }
+
     manageFields("CFunction:message", !trans.articulatedTx.message.empty());
     if (true) {
         if (isText) {

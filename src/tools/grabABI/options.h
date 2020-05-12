@@ -30,7 +30,7 @@ class COptions : public COptionsBase {
 
     bool first;
     uint64_t parts;
-    CAbiArray abis;
+    CAbiArray abiList;
     string_q classDir;
     string_q prefix;
 
@@ -50,8 +50,8 @@ class COptions : public COptionsBase {
         return isToken() || isWallet();
     }
     void handle_generate(void);
+    void convertFromSol(const address_t& a);
 };
 
 //-----------------------------------------------------------------------
 extern string_q getPrefix(const string_q& in);
-extern bool sol_2_Abi(CAbi& abi, const string_q& solFile);

@@ -19,6 +19,9 @@
       "tags": "31-Gitcoin Grants"
     },
     {
+      "tags": "32-Commons Stack"
+    },
+    {
       "tags": "33-Set Protocol"
     },
     {
@@ -52,6 +55,15 @@
       "tags": "34-Kyber Network"
     },
     {
+      "tags": "35-Pool Together"
+    },
+    {
+      "tags": "36-Compound"
+    },
+    {
+      "tags": "37-Sablier"
+    },
+    {
       "tags": "40-Exchanges"
     },
     {
@@ -65,6 +77,9 @@
     },
     {
       "tags": "70-Vendors"
+    },
+    {
+      "tags": "75-EarlyActors"
     },
     {
       "tags": "80-Malicious"
