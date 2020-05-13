@@ -10,11 +10,11 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
       "name": "chainlinkp",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -55,9 +55,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
-      "name": "Grant 083 - Poa Network Community Management Grant For Adj",
+      "name": "Grant 083 Poa Network Community Management Grant For Adj",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -127,9 +127,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
-      "name": "Grant 048 - Uniswap",
+      "name": "Grant 048 Uniswap",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -147,7 +147,7 @@
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
-      "name": "ITL (Italian Lira)",
+      "name": "ITL Italian Lira",
       "symbol": "ITL",
       "source": "On Chain",
       "decimals": 8,
@@ -289,18 +289,18 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
-      "name": "Grant 160 - Antiprosynth Twitter Account Activity",
+      "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
-      "name": "Grant 120 - Nori",
+      "name": "Grant 120 Nori",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -379,9 +379,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
-      "name": "Grant 212 - Thx Open Protocol For Online Rewards",
+      "name": "Grant 212 Thx Open Protocol For Online Rewards",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -394,14 +394,14 @@
       "symbol": "KAN",
       "source": "On Chain",
       "decimals": 18,
-      "description": "A decentralized cryptocurrency-concentrated & content payment community."
+      "description": "A decentralized cryptocurrency-concentrated content payment community."
     },
     {
       "tags": "35-Pool Together",
       "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
       "name": "Pool Together Sender",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -412,14 +412,14 @@
       "symbol": "CHX",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets."
+      "description": "Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1464d4e3c815de3028572b850c6c34dfc57e9320",
       "name": "mariapaulafn",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -541,20 +541,20 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1591b9056822c273252fcea32963223650db18e1",
-      "name": "Grant 220 - Cryptorado",
+      "name": "Grant 220 Cryptorado",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
       "name": "evanswd",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -577,11 +577,11 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-      "name": "Grant 211 Trust Graphic Novel (anneconnelly)",
+      "name": "Grant 211 Trust Graphic Novel anneconnelly",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -775,9 +775,9 @@
       "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
-      "name": "Grant 133 - Abridged",
+      "name": "Grant 133 Abridged",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -824,7 +824,7 @@
       "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
       "name": "POAP Token Sender",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -964,9 +964,9 @@
       "description": "Self-mining smart contract."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
-      "name": "Grant 150 - Ethereum Egift Cards",
+      "name": "Grant 150 Ethereum Egift Cards",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1099,11 +1099,11 @@
       "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1c6640089c6af02e11f04f0ee44b2cc6ef924057",
       "name": "ecruz01",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -1114,7 +1114,7 @@
       "symbol": "TEAM",
       "source": "On Chain",
       "decimals": 4,
-      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level."
+      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level."
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1220,7 +1220,7 @@
       "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
       "name": "ENS: Old Public Resolver 1",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1254,7 +1254,7 @@
     {
       "tags": "60-Airdrops",
       "address": "0x1dba1131000664b884a1ba238464159892252d3a",
-      "name": "WHG: Jordi Baylina (Giveth Wallet Owner 4)",
+      "name": "WHG: Jordi Baylina Giveth Wallet Owner 4",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": "0",
@@ -1373,7 +1373,7 @@
       "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
       "name": "Moloch DAO",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1389,9 +1389,9 @@
     {
       "tags": "91-Friends",
       "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
-      "name": "Poliniex Exchange, DAO Whale 4 & Vlad Zamphir 0x127 Sender 1 & Sept_DDOS_ACCOUNT_1",
+      "name": "Poliniex Exchange, DAO Whale 4 Vlad Zamphir 0x127 Sender 1 Sept_DDOS_ACCOUNT_1",
       "symbol": "",
-      "source": "TrueBlocks.io & CarbonVote & WhaleWatch.io & SEPT_DDOS & http://www.reddit.com/r/ethereum/",
+      "source": "TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/",
       "decimals": "0",
       "description": ""
     }

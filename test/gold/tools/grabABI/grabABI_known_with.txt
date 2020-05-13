@@ -525,6 +525,7 @@ encoding	type	name	signature	input_names	output_names
 0x584e492a	function	arr	arr(address,uint256)	_a,_b,	r,,
 0x58619076adf5bb0943d100ef88d52d7c3fd691b19d3a9071b555b651fbf418da	event	OwnerRemoved	OwnerRemoved(address)	oldOwner,	,
 0x587cff5b	function	_installNonDefaultApp	_installNonDefaultApp(Kernel,bytes32,bytes)	_dao,_appId,_initializeData,	ret_0,,
+0x58948f07	function	deploy	deploy(string,uint256,uint256,uint256)	val_0,val_1,val_2,val_3,	,
 0x58e5fa4e	constructor		(address,address,bytes32,uint256)	_ens,_previousRegistrar,_baseNode,_transferPeriodEnds,	,
 0x58e9b208	function	Controlled	Controlled()		,
 0x591bc226	function	discardRelayer	discardRelayer(address,uint256)	relayer,salaryId,	,

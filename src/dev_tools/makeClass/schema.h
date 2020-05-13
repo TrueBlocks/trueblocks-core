@@ -39,6 +39,7 @@ class CSchema : public CBaseNode {
     string_q cn;
     bool domain;
     bool range;
+    bool copyable;
     bool searchable;
     bool sortable;
     string_q underField;
@@ -122,6 +123,7 @@ inline void CSchema::initialize(void) {
     cn = "";
     domain = false;
     range = false;
+    copyable = false;
     searchable = false;
     sortable = false;
     underField = "";
@@ -152,6 +154,7 @@ inline void CSchema::duplicate(const CSchema& sc) {
     cn = sc.cn;
     domain = sc.domain;
     range = sc.range;
+    copyable = sc.copyable;
     searchable = sc.searchable;
     sortable = sc.sortable;
     underField = sc.underField;

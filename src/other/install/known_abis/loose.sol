@@ -1,4 +1,5 @@
 contract A {
+  function deploy(string,uint256,uint256,uint256);
   function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) { }
   function pay(address src, uint256 srcAmount, address dest, address destAddress, uint256 maxDestAmount, uint256 minConversionRate, address walletId, bytes paymentData, 
 bytes hint, address kyberNetworkProxy);

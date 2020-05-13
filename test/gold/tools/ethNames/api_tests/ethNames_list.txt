@@ -5,7 +5,7 @@
       "address": "0x000000000000000000000000000000000000dead",
       "name": "ENS: Burn Address",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -32,7 +32,7 @@
       "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
       "name": "ENS: Registry with Fallback",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -100,11 +100,20 @@
       "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
+      "name": "Democracy Earth",
+      "symbol": "HOUR",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "35-Pool Together",
       "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
       "name": "Pool Usdc MCDAwarePool v0.2.12",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -122,7 +131,7 @@
       "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
       "name": "BrightID Agent",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -163,9 +172,9 @@
       "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
-      "name": "Grant 143 - Dappnode",
+      "name": "Grant 143 Dappnode",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -181,9 +190,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-      "name": "Grant 012 - Grant 086 - Gitcoin Sustainability Fund",
+      "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -244,9 +253,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
-      "name": "Grant 190 - Groundhog",
+      "name": "Grant 190 Groundhog",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -334,9 +343,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
-      "name": "Grant 031 - Grantops",
+      "name": "Grant 031 Grantops",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -451,9 +460,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x04bb33c3a8c2d018836a1f938054ebb59e0036b2",
-      "name": "Grant 104 - Walletsreview",
+      "name": "Grant 104 Walletsreview",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -628,21 +637,21 @@
       "symbol": "ACE",
       "source": "On Chain",
       "decimals": "0",
-      "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers."
+      "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x0639092a9c3d9467dd6f89a13213541c8a1e58b2",
-      "name": "Grant 194 - Reach Platform",
+      "name": "Grant 194 Reach Platform",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
-      "name": "Grant 075 - Ethereum Dev Fund Working Group",
+      "name": "Grant 075 Ethereum Dev Fund Working Group",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -653,7 +662,7 @@
       "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
       "name": "SingularDTV Sender 2",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -662,7 +671,7 @@
       "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
       "name": "ChaiToken",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -703,20 +712,29 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
+      "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
+      "name": "Grant 141 Metamoneymarket jacobshiach",
+      "symbol": "",
+      "source": "Gitcoin Website https://www.humanitydao.org/humans",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
-      "name": "Grant 268 - Simpleaswater",
+      "name": "Grant 268 Simpleaswater",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x073c841e832b7cc2e75d0fb1f8a98dca355bf485",
       "name": "gitcoingranterog",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -754,7 +772,7 @@
       "symbol": "QURO",
       "source": "On Chain",
       "decimals": 18,
-      "description": "The online community where you earn for sharing knowledge & ideas."
+      "description": "The online community where you earn for sharing knowledge ideas."
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -847,9 +865,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
-      "name": "Grant 122 - Austin Griffith Ethereum Rampd",
+      "name": "Grant 122 Austin Griffith Ethereum Rampd",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -874,11 +892,11 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95",
       "name": "vs77bb",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -914,7 +932,7 @@
       "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
       "name": "ENS: Wallet 1 nickdjohnson",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1015,7 +1033,7 @@
       "symbol": "MTX",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset."
+      "description": "Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset."
     },
     {
       "tags": "60-Airdrops",
@@ -1042,7 +1060,7 @@
       "symbol": "RIYA",
       "source": "On Chain",
       "decimals": 8,
-      "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace."
+      "description": "AN Ethereum Token Backed Micro Macro Freelance Marketplace."
     },
     {
       "tags": "90-DevCon2:Individual",
@@ -1074,9 +1092,9 @@
     {
       "tags": "60-Airdrops",
       "address": "0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6",
-      "name": "HEX (HEX) Airdrop Sender",
-      "symbol": "",
-      "source": "EtherScan",
+      "name": "HEX Airdrop Sender",
+      "symbol": "HEX",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1207,9 +1225,9 @@
       "description": "decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements."
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5",
-      "name": "Grant 276 - Winiwallet",
+      "name": "Grant 276 Winiwallet",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1222,7 +1240,7 @@
       "symbol": "uDOO",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Howdoo is a decentralized social platform for users, content creators, & advertisers."
+      "description": "Howdoo is a decentralized social platform for users, content creators, advertisers."
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1258,7 +1276,7 @@
       "symbol": "ABYSS",
       "source": "On Chain",
       "decimals": 18,
-      "description": "The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community."
+      "description": "The next-generation digital distribution platform, delivering all types of video games including AAA-titles, to the fast-growing global game community."
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1288,20 +1306,20 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x0efe994201e2b0136dd40d5033b5f437e4c5f958",
-      "name": "Grant 274 - Abridged 2",
+      "name": "Grant 274 Abridged 2",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x0f01a0c3f5255745f31a7fbd555ec6461f405287",
       "name": "lyricalpolymath",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -1315,9 +1333,9 @@
       "description": "Saving management on blockchain technology"
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x0f1025f754b3eb32ab3105127b563084bfa03a6f",
-      "name": "Grant 155 - Tensortrade Trade Efficiently With Reinforcement L",
+      "name": "Grant 155 Tensortrade Trade Efficiently With Reinforcement L",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1414,11 +1432,11 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
       "name": "chainlinkp",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
@@ -1459,9 +1477,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
-      "name": "Grant 083 - Poa Network Community Management Grant For Adj",
+      "name": "Grant 083 Poa Network Community Management Grant For Adj",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1531,9 +1549,9 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
-      "name": "Grant 048 - Uniswap",
+      "name": "Grant 048 Uniswap",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1551,7 +1569,7 @@
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
-      "name": "ITL (Italian Lira)",
+      "name": "ITL Italian Lira",
       "symbol": "ITL",
       "source": "On Chain",
       "decimals": 8,
@@ -1693,18 +1711,18 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
-      "name": "Grant 160 - Antiprosynth Twitter Account Activity",
+      "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
-      "name": "Grant 120 - Nori",
+      "name": "Grant 120 Nori",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -1783,29 +1801,11 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
-      "name": "Grant 212 - Thx Open Protocol For Online Rewards",
+      "name": "Grant 212 Thx Open Protocol For Online Rewards",
       "symbol": "",
       "source": "GitCoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
-      "name": "KAN",
-      "symbol": "KAN",
-      "source": "On Chain",
-      "decimals": 18,
-      "description": "A decentralized cryptocurrency-concentrated & content payment community."
-    },
-    {
-      "tags": "35-Pool Together",
-      "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
-      "name": "Pool Together Sender",
-      "symbol": "",
-      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     }

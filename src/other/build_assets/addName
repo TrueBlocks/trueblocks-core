@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-
 defTag="81 Other"
-defSource="EtherScan"
-defDecimals=18
+defSource="Etherscan"
+defDecimals=""
 
 ADDRESS=$1
 NAME=$2

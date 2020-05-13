@@ -35,6 +35,6 @@ ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!
 	- The --match_case option requires case sensitive matching. It works with all other options.
 	- To customize the list of names add a custom section to the config file (see documentation).
 	- For editCmd add or update, use terms TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.
-	- Name file: ~/.quickBlocks/names/names.tab (624302)
+	- Name file: ~/.quickBlocks/names/names.tab (630844)
 
   Powered by QBlocks

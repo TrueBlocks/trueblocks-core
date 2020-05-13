@@ -10,4 +10,4 @@ tags	address	name	symbol	decimals
 90-DevCon2:Individual	0xcbbf6758a9e032d68628a5294c6b340160410eb6	Hillmer Reyes
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18
-31-Gitcoin Grants	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 275 Walletconnect 2 (pedrouid)
+31-Gitcoin Grants:Contracts	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 275 Walletconnect 2 pedrouid

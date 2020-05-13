@@ -464,7 +464,7 @@
       "symbol": "ACE",
       "source": "On Chain",
       "decimals": "0",
-      "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers.",
+      "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -474,7 +474,7 @@
       "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
       "name": "SingularDTV Sender 2",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": "",
       "is_custom": false,
@@ -486,7 +486,7 @@
       "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
       "name": "ChaiToken",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "Etherscan",
       "decimals": "0",
       "description": "",
       "is_custom": false,
@@ -548,7 +548,7 @@
       "symbol": "QURO",
       "source": "On Chain",
       "decimals": 18,
-      "description": "The online community where you earn for sharing knowledge & ideas.",
+      "description": "The online community where you earn for sharing knowledge ideas.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -776,7 +776,7 @@
       "symbol": "MTX",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.",
+      "description": "Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -800,7 +800,7 @@
       "symbol": "RIYA",
       "source": "On Chain",
       "decimals": 8,
-      "description": "AN Ethereum Token Backed Micro & Macro Freelance Marketplace.",
+      "description": "AN Ethereum Token Backed Micro Macro Freelance Marketplace.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -944,7 +944,7 @@
       "symbol": "uDOO",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Howdoo is a decentralized social platform for users, content creators, & advertisers.",
+      "description": "Howdoo is a decentralized social platform for users, content creators, advertisers.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -980,7 +980,7 @@
       "symbol": "ABYSS",
       "source": "On Chain",
       "decimals": 18,
-      "description": "The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community.",
+      "description": "The next-generation digital distribution platform, delivering all types of video games including AAA-titles, to the fast-growing global game community.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -1180,7 +1180,7 @@
       "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
-      "name": "ITL (Italian Lira)",
+      "name": "ITL Italian Lira",
       "symbol": "ITL",
       "source": "On Chain",
       "decimals": 8,
@@ -1400,7 +1400,7 @@
       "symbol": "KAN",
       "source": "On Chain",
       "decimals": 18,
-      "description": "A decentralized cryptocurrency-concentrated & content payment community.",
+      "description": "A decentralized cryptocurrency-concentrated content payment community.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -1412,7 +1412,7 @@
       "symbol": "CHX",
       "source": "On Chain",
       "decimals": 18,
-      "description": "Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets.",
+      "description": "Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets.",
       "is_custom": false,
       "is_prefund": false
     },
@@ -1928,7 +1928,7 @@
       "symbol": "TEAM",
       "source": "On Chain",
       "decimals": 4,
-      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level.",
+      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level.",
       "is_custom": false,
       "is_prefund": false
     },

@@ -1,5 +1,30 @@
 [
   {
+    "name": "deploy",
+    "type": "function",
+    "signature": "deploy(string,uint256,uint256,uint256)",
+    "encoding": "0x58948f07",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "val_0"
+      },
+      {
+        "type": "uint256",
+        "name": "val_1"
+      },
+      {
+        "type": "uint256",
+        "name": "val_2"
+      },
+      {
+        "type": "uint256",
+        "name": "val_3"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "clone",
     "type": "function",
     "signature": "clone(address,uint256,uint256)",

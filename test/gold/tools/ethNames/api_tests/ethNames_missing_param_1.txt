@@ -10,6 +10,7 @@ tags	address	name	symbol	decimals
 50-Tokens	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD		18
 30-Contracts	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Hacker Gold Sender
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX		18
+30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12
 75-EarlyActors	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent
@@ -17,16 +18,16 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x009e864923b49263c7f10d19b7f8ab7a9a5aad33	Knoxstertoken	FKX		18
 90-DevCon2:Individual	0x00c4734f88e8da8e24bf9085d60bb34690957ee1	will
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC		18
-31-Gitcoin Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 143 - Dappnode
+31-Gitcoin Grants:Contracts	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 143 Dappnode
 60-Airdrops	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Amber Airdrop Token
-31-Gitcoin Grants	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 - Grant 086 - Gitcoin Sustainability Fund
+31-Gitcoin Grants:Contracts	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 Grant 086 Gitcoin Sustainability Fund
 60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Airdrop Sender
 60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Airdrop Sender
 50-Tokens:ERC20	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos Token	PYN		18
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS			6
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO		8
-31-Gitcoin Grants	0x017946fc126d57e7823e68c647c24f28e5dc9988	Grant 190 - Groundhog
+31-Gitcoin Grants:Contracts	0x017946fc126d57e7823e68c647c24f28e5dc9988	Grant 190 Groundhog
 75-EarlyActors	0x0193d941b50d91be6567c7ee1c0fe7af498b4137	Miner_0015_427
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA		18
 50-Tokens:ERC20	0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f	BF Token	BFT		18
@@ -36,7 +37,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18
 50-Tokens:ERC20	0x02e3083a51e8632e571fbd6a62ac396c10c653ba	EplusCoin	EPLUS		8
-31-Gitcoin Grants	0x02eb002d88051c03ef312f63bbf3e38aada0b902	Grant 031 - Grantops
+31-Gitcoin Grants:Contracts	0x02eb002d88051c03ef312f63bbf3e38aada0b902	Grant 031 Grantops
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG		18
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE		18
 50-Tokens:ERC20	0x033030feebd93e3178487c35a9c8ca80874353c9	BDT Token	BDT		18
@@ -49,7 +50,7 @@ tags	address	name	symbol	decimals
 90-DevCon2:Individual	0x0492104bbf24a97deeb64c03377fb8d6d75a711c	Kung Chen-Yalie
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT		18
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB		8
-31-Gitcoin Grants	0x04bb33c3a8c2d018836a1f938054ebb59e0036b2	Grant 104 - Walletsreview
+31-Gitcoin Grants:Contracts	0x04bb33c3a8c2d018836a1f938054ebb59e0036b2	Grant 104 Walletsreview
 30-Contracts	0x04d702ebd0a77503b154865fe3e8da97255b931b	MiniMeToken CS
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP		2
 30-Contracts:dAppNode	0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4	dAddNode Package 001
@@ -69,16 +70,17 @@ tags	address	name	symbol	decimals
 30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK
 90-DevCon2:Individual	0x06105042f9e891ad291a39f49be2eaa94f796945	bernard lin
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE
-31-Gitcoin Grants	0x0639092a9c3d9467dd6f89a13213541c8a1e58b2	Grant 194 - Reach Platform
-31-Gitcoin Grants	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 - Ethereum Dev Fund Working Group
+31-Gitcoin Grants:Contracts	0x0639092a9c3d9467dd6f89a13213541c8a1e58b2	Grant 194 Reach Platform
+31-Gitcoin Grants:Contracts	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2
 50-Tokens:ERC20	0x06af07097c9eeb7fd685c692751d5c66db49c215	ChaiToken
 60-Airdrops	0x06b2387c7f56ecb61009bb31375b84e4be7f80b3	HEALP Airdrop	HEALP
 75-EarlyActors	0x06d138312754bdeb5c1175f47ce00620c480e9c9	Miner_0067_90
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender
-31-Gitcoin Grants	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 268 - Simpleaswater
-31-Gitcoin Grants	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	gitcoingranterog
+31-Gitcoin Grants:Contracts	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach
+31-Gitcoin Grants:Contracts	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 268 Simpleaswater
+31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	gitcoingranterog
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18
 50-Tokens:ERC20	0x076641af1b8f06b7f8c92587156143c109002cbe	SoPay	SOP		18
 50-Tokens:ERC20	0x0766e79a6fd74469733e8330b3b461c0320ff059	EXN	EXN		18
@@ -93,10 +95,10 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18
 50-Tokens:ERC20	0x07ef9e82721ac16809d24dafbe1792ce01654db4	Chimpion	BNANA		18
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius
-31-Gitcoin Grants	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 - Austin Griffith Ethereum Rampd
+31-Gitcoin Grants:Contracts	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 Austin Griffith Ethereum Rampd
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG
 50-Tokens:ERC20	0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f	LiteCoinGold	LTG
-31-Gitcoin Grants	0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95	vs77bb
+31-Gitcoin Grants:Friends	0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95	vs77bb
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL		18
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	DENT
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
@@ -118,7 +120,7 @@ tags	address	name	symbol	decimals
 90-DevCon2:Individual	0x0b1fb677b07375b781b4551b2e265d05590fd62f	Cheyne
 50-Tokens:ERC20	0x0b4bdc478791897274652dc15ef5c135cae61e60	DAEX Token	DAX		18
 50-Tokens:ERC20	0x0b76544f6c413a555f309bf76260d1e02377c02a	Internet Node Token	INT		6
-60-Airdrops	0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6	HEX (HEX) Airdrop Sender
+60-Airdrops	0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6	HEX Airdrop Sender	HEX
 90-DevCon2:Individual	0x0b892db974847d91ba4eeee99e3249539fbddd79	Jacob Horne
 50-Tokens:ERC20	0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC		8
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN		18
@@ -133,7 +135,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0d8775f648430679a709e98d2b0cb6250d2887ef	Basic Attention Token	BAT		18
 50-Tokens	0x0d88ed6e74bbfd96b831231638b66c05571e824f	AVT	AVT
 50-Tokens:ERC20	0x0db8d8b76bc361bacbb72e2c491e06085a97ab31	iQeon	IQN		18
-31-Gitcoin Grants	0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5	Grant 276 - Winiwallet
+31-Gitcoin Grants:Contracts	0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5	Grant 276 Winiwallet
 50-Tokens:ERC20	0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e	uDOO	uDOO		18
 50-Tokens:ERC20	0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195	Po.et	POE		8
 50-Tokens:ERC20	0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47	CarLive Chain	IOV		8
@@ -142,10 +144,10 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0ea984e789302b7b612147e4e4144e64f21425eb	WaleTokeN	WTN		8
 50-Tokens:ERC20	0x0ebb614204e47c09b6c3feb9aaecad8ee060e23e	CPAY Token	CPAY
 90-DevCon2:Individual	0x0ed1374a831744af48174a890bba5ac333e76717	mtbitcoin
-31-Gitcoin Grants	0x0efe994201e2b0136dd40d5033b5f437e4c5f958	Grant 274 - Abridged 2
-31-Gitcoin Grants	0x0f01a0c3f5255745f31a7fbd555ec6461f405287	lyricalpolymath
+31-Gitcoin Grants:Contracts	0x0efe994201e2b0136dd40d5033b5f437e4c5f958	Grant 274 Abridged 2
+31-Gitcoin Grants:Friends	0x0f01a0c3f5255745f31a7fbd555ec6461f405287	lyricalpolymath
 50-Tokens:ERC20	0x0f02e27745e3b6e9e1310d19469e2b5d7b5ec99a	Peculium	PCL		8
-31-Gitcoin Grants	0x0f1025f754b3eb32ab3105127b563084bfa03a6f	Grant 155 - Tensortrade Trade Efficiently With Reinforcement L
+31-Gitcoin Grants:Contracts	0x0f1025f754b3eb32ab3105127b563084bfa03a6f	Grant 155 Tensortrade Trade Efficiently With Reinforcement L
 50-Tokens:ERC20	0x0f1ed66c251bcb52ecf7e67ac64bb72482048adb	SEER-ERC20-Token	SEER		18
 60-Airdrops	0x0f22d8d872bb7c3f377f21a64ff2fe16053ed34d	XCEL Airdrop	XCEL
 30-Contracts:dAppNode	0x0f3b8ec182deee2381a9041e30f65f10098a3b91	dAddNode Package 004
@@ -156,12 +158,12 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0f8c45b896784a1e408526b9300519ef8660209c	XMAX	XMX		8
 80-Malicious	0x0fc599f7cfe83bf2e9e549212b8aa1b73137fcf0	Possibly Malicious 0x0fc
 50-Tokens:ERC20	0x10086399dd8c1e3de736724af52587a2044c9fa2	The Midas Touch Gold	TMTG		18
-31-Gitcoin Grants	0x1013b52a256dd531554fdd13178ea489ce0d691d	chainlinkp
+31-Gitcoin Grants:Friends	0x1013b52a256dd531554fdd13178ea489ce0d691d	chainlinkp
 50-Tokens:ERC20	0x1014613e2b3cbc4d575054d4982e580d9b99d7b1	BitCapitalVendorToken	BCV		8
 50-Tokens:ERC20	0x103c3a209da59d3e7c4a89307e66521e081cfdf0	Genesis Vision Token	GVT		18
 50-Tokens:ERC20	0x1063ce524265d5a3a624f4914acd573dd89ce988	Aigang	AIX		18
 50-Tokens:ERC20	0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c	Rock Token	RKT		18
-31-Gitcoin Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 - Poa Network Community Management Grant For Adj
+31-Gitcoin Grants:Contracts	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 Poa Network Community Management Grant For Adj
 50-Tokens:ERC20	0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom Token	BLT		18
 75-EarlyActors	0x108b54b7e3c09f8127cb8b28ffa3ad4001b32998	Miner_0086_64
 80-Malicious	0x10fa9f37f646bb353945fe90d41a44e1c60745fb	Possibly Malicious 0x10f
@@ -169,9 +171,9 @@ tags	address	name	symbol	decimals
 90-DevCon2:Individual	0x11378851299a15a849ad0057a834c23ef1b3d381	tandava
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT		18
 90-DevCon2:Individual	0x1191be4dbfac983c9ce87e3411542d69d382f7d6	durandal
-31-Gitcoin Grants	0x11e4857bb9993a50c685a79afad4e6f65d518dda	Grant 048 - Uniswap
+31-Gitcoin Grants:Contracts	0x11e4857bb9993a50c685a79afad4e6f65d518dda	Grant 048 Uniswap
 75-EarlyActors	0x1217627fe41a00f0b828317f43e6d58f47dbfc43	Miner_0028_253
-50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL (Italian Lira)	ITL		8
+50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL Italian Lira	ITL		8
 50-Tokens:ERC20	0x1234567461d3f8db7496581774bd869c83d51c93	BitClave	CAT		18
 75-EarlyActors	0x123843545fb525c8e134c9a5f15ada6865cc3848	Miner_0033_208
 50-Tokens:ERC20	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO Token	LGO		8
@@ -187,8 +189,8 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf	Spectre.ai D-Token	SXDT		18
 50-Tokens:ERC20	0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e	Cofoundit	CFI		18
 50-Tokens:ERC20	0x13119e34e140097a507b07a5564bde1bc375d9e6	MoneyToken	IMT		18
-31-Gitcoin Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 - Antiprosynth Twitter Account Activity
-31-Gitcoin Grants	0x1352400bf96d73d41e033f5a14416357a5e0b6bf	Grant 120 - Nori
+31-Gitcoin Grants:Contracts	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity
+31-Gitcoin Grants:Contracts	0x1352400bf96d73d41e033f5a14416357a5e0b6bf	Grant 120 Nori
 50-Tokens:ERC20	0x138a8752093f4f9a79aaedf48d4b9248fab93c9c	Musiconomi	MCI		18
 50-Tokens:ERC20	0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3	BoutsPro	BOUTS		18
 50-Tokens:ERC20	0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96	PHI Token	PHI		18
@@ -197,6 +199,4 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2	Accelerator	ACC		18
 50-Tokens:ERC20	0x13f25cd52b21650caa8225c9942337d914c9b030	realchain token	RCT		18
 50-Tokens	0x14094949152eddbfcd073717200da82fed8dc960	Fulcrum iSAI	ISAI		18
-31-Gitcoin Grants	0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65	Grant 212 - Thx Open Protocol For Online Rewards
-50-Tokens:ERC20	0x1410434b0346f5be678d0fb554e5c7ab620f8f4a	KAN	KAN		18
-35-Pool Together	0x14300cd613d6a719ac19de68c2f1042b3217cbff	Pool Together Sender
+31-Gitcoin Grants:Contracts	0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65	Grant 212 Thx Open Protocol For Online Rewards

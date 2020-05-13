@@ -1,9 +1,9 @@
 {
   "data": [
     {
-      "tags": "31-Gitcoin Grants",
+      "tags": "31-Gitcoin Grants:Contracts",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
-      "name": "Grant 160 - Antiprosynth Twitter Account Activity",
+      "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
       "source": "GitCoin Website",
       "decimals": "0",
@@ -30,9 +30,9 @@
     {
       "tags": "90-DevCon2:Individual",
       "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
-      "name": "My Ethereum Wallet Tip Jar & Taylor Van Orden",
+      "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
       "symbol": "",
-      "source": "Slack & DevCon2 Token Contract",
+      "source": "Slack DevCon2 Token Contract",
       "decimals": "0",
       "description": ""
     },

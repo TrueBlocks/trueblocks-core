@@ -2211,20 +2211,20 @@ getTrans 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
             "name": "NewOwner",
             "inputs": [
               {
-                "name": "_node",
+                "name": "node",
                 "value": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86"
               },
               {
-                "name": "_label",
+                "name": "label",
                 "value": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
               },
               {
-                "name": "_owner",
+                "name": "owner",
                 "value": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
               }
             ]
           },
-          "compressedLog": "NewOwner ( _node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, _label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, _owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
+          "compressedLog": "NewOwner ( node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
         },
         {
           "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -2284,16 +2284,16 @@ getTrans 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
             "name": "Transfer",
             "inputs": [
               {
-                "name": "_node",
+                "name": "node",
                 "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
               },
               {
-                "name": "_owner",
+                "name": "owner",
                 "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
               }
             ]
           },
-          "compressedLog": "Transfer ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
+          "compressedLog": "Transfer ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
         },
         {
           "address": "0x546aa2eae2514494eeadb7bbb35243348983c59d",

@@ -4492,6 +4492,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "deploy",
+      "type": "function",
+      "signature": "deploy(string,uint256,uint256,uint256)",
+      "encoding": "0x58948f07",
+      "address": "0x0",
+      "input_names": "val_0,val_1,val_2,val_3,",
+      "output_names": ""
+    },
+    {
       "name": "",
       "type": "constructor",
       "signature": "(address,address,bytes32,uint256)",

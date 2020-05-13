@@ -41,14 +41,14 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect Token	LCT	On Chain	18	Aims to be a passive-income-generating Platform.	false	false	false
 50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU	On Chain	18	Coin for custom CyberFM 'Mainstream For The Underground' royalty payments.	false	false	false
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On Chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false
-50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On Chain		ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents & celebrities with fans and advertisers.	false	false	false
-50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		EtherScan			false	false	false
-50-Tokens:ERC20	0x06af07097c9eeb7fd685c692751d5c66db49c215	ChaiToken		EtherScan			false	false	false
+50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On Chain		ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false
+50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		Etherscan			false	false	false
+50-Tokens:ERC20	0x06af07097c9eeb7fd685c692751d5c66db49c215	ChaiToken		Etherscan			false	false	false
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS	On Chain	18	FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources.	false	false	false
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3	On Chain	18	A global decentralized blockchain deal and discount marketplace.	false	false	false
 50-Tokens:ERC20	0x076641af1b8f06b7f8c92587156143c109002cbe	SoPay	SOP	On Chain	18		false	false	false
 50-Tokens:ERC20	0x0766e79a6fd74469733e8330b3b461c0320ff059	EXN	EXN	On Chain	18		false	false	false
-50-Tokens:ERC20	0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	On Chain	18	The online community where you earn for sharing knowledge & ideas.	false	false	false
+50-Tokens:ERC20	0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	On Chain	18	The online community where you earn for sharing knowledge ideas.	false	false	false
 50-Tokens:ERC20	0x076c97e1c869072ee22f8c91978c99b4bcb02591	CommerceBlock Token	CBT	On Chain	18	Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols	false	false	false
 50-Tokens:ERC20	0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon	BUL	On Chain	18	Revolutionizing the way of Financial Transactions	false	false	false
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	On Chain	18	IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.	false	false	false
@@ -67,9 +67,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE	On Chain	18		false	false	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On Chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false
 50-Tokens:ERC20	0x0aef06dcccc531e581f0440059e6ffcc206039ee	Intelligent Trading Technologies	ITT	On Chain	8	Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets.	false	false	false
-50-Tokens:ERC20	0x0af44e2784637218dd1d32a322d44e603a8f0c6a	MatryxToken	MTX	On Chain	18	Matryx is the Collaborative Research & Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.	false	false	false
+50-Tokens:ERC20	0x0af44e2784637218dd1d32a322d44e603a8f0c6a	MatryxToken	MTX	On Chain	18	Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.	false	false	false
 50-Tokens:ERC20	0x0affa06e7fbe5bc9a764c979aa66e8256a631f02	Polybius Token	PLBT	On Chain	6	Private banking platform	false	false	false
-50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA	On Chain	8	AN Ethereum Token Backed Micro & Macro Freelance Marketplace.	false	false	false
+50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA	On Chain	8	AN Ethereum Token Backed Micro Macro Freelance Marketplace.	false	false	false
 50-Tokens:ERC20	0x0b4bdc478791897274652dc15ef5c135cae61e60	DAEX Token	DAX	On Chain	18	DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges.	false	false	false
 50-Tokens:ERC20	0x0b76544f6c413a555f309bf76260d1e02377c02a	Internet Node Token	INT	On Chain	6	IOT applications	false	false	false
 50-Tokens:ERC20	0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC	On Chain	8	SWFT is a cross-blockchain platform.	false	false	false
@@ -81,10 +81,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0d8775f648430679a709e98d2b0cb6250d2887ef	Basic Attention Token	BAT	On Chain	18	The Basic Attention Token is the new token for the digital advertising industry.	false	false	false
 50-Tokens	0x0d88ed6e74bbfd96b831231638b66c05571e824f	AVT	AVT	Etherscan.io		An open-source protocol that delivers the global standard for ticketing.	false	false	false
 50-Tokens:ERC20	0x0db8d8b76bc361bacbb72e2c491e06085a97ab31	iQeon	IQN	On Chain	18	decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements.	false	false	false
-50-Tokens:ERC20	0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e	uDOO	uDOO	On Chain	18	Howdoo is a decentralized social platform for users, content creators, & advertisers.	false	false	false
+50-Tokens:ERC20	0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e	uDOO	uDOO	On Chain	18	Howdoo is a decentralized social platform for users, content creators, advertisers.	false	false	false
 50-Tokens:ERC20	0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195	Po.et	POE	On Chain	8	Po.et aims to reclaim value for content creators, publishers and consumers.	false	false	false
 50-Tokens:ERC20	0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47	CarLive Chain	IOV	On Chain	8		false	false	false
-50-Tokens:ERC20	0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6	ABYSS	ABYSS	On Chain	18	The next-generation digital distribution platform, delivering all types of video games (including AAA-titles), to the fast-growing global game community.	false	false	false
+50-Tokens:ERC20	0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6	ABYSS	ABYSS	On Chain	18	The next-generation digital distribution platform, delivering all types of video games including AAA-titles, to the fast-growing global game community.	false	false	false
 50-Tokens:ERC20	0x0ea984e789302b7b612147e4e4144e64f21425eb	WaleTokeN	WTN	On Chain	8	Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging.	false	false	false
 50-Tokens:ERC20	0x0ebb614204e47c09b6c3feb9aaecad8ee060e23e	CPAY Token	CPAY	On Chain		Cryptopay aims to provide the ability to spend, save, and transact digital currencies.	false	false	false
 50-Tokens:ERC20	0x0f02e27745e3b6e9e1310d19469e2b5d7b5ec99a	Peculium	PCL	On Chain	8	Saving management on blockchain technology	false	false	false
@@ -101,7 +101,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom Token	BLT	On Chain	18	Decentralized credit scoring powered by Ethereum and IPFS.	false	false	false
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	On Chain	18	Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points.	false	false	false
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT	On Chain	18	Sell and buy crypto assets around the world for local payment methods.	false	false	false
-50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL (Italian Lira)	ITL	On Chain	8		false	false	false
+50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL Italian Lira	ITL	On Chain	8		false	false	false
 50-Tokens:ERC20	0x1234567461d3f8db7496581774bd869c83d51c93	BitClave	CAT	On Chain	18	BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required.	false	false	false
 50-Tokens:ERC20	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO Token	LGO	On Chain	8	Exchange with decentralized ledgers	false	false	false
 50-Tokens:ERC20	0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	On Chain	8	Trading crypto-currency terminal for two exchanges simultaneously.	false	false	false
@@ -119,8 +119,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2	Accelerator	ACC	On Chain	18	A proof-of-stake smart contract backed by a physical mining facility.	false	false	false
 50-Tokens:ERC20	0x13f25cd52b21650caa8225c9942337d914c9b030	realchain token	RCT	On Chain	18		false	false	false
 50-Tokens	0x14094949152eddbfcd073717200da82fed8dc960	Fulcrum iSAI	ISAI	defipulse.com	18		false	false	false
-50-Tokens:ERC20	0x1410434b0346f5be678d0fb554e5c7ab620f8f4a	KAN	KAN	On Chain	18	A decentralized cryptocurrency-concentrated & content payment community.	false	false	false
-50-Tokens:ERC20	0x1460a58096d80a50a2f1f956dda497611fa4f165	Chainium	CHX	On Chain	18	Own (formerly Chainium) is a security token blockchain project focused on revolutionising equity markets.	false	false	false
+50-Tokens:ERC20	0x1410434b0346f5be678d0fb554e5c7ab620f8f4a	KAN	KAN	On Chain	18	A decentralized cryptocurrency-concentrated content payment community.	false	false	false
+50-Tokens:ERC20	0x1460a58096d80a50a2f1f956dda497611fa4f165	Chainium	CHX	On Chain	18	Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets.	false	false	false
 50-Tokens:ERC20	0x146d8d942048ad517479c9bab1788712af180fde	Mobile Integrated Blockchain	MIB	On Chain	18	MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network.	false	false	false
 50-Tokens:ERC20	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER	On Chain	18	Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.	false	false	false
 50-Tokens:ERC20	0x14f37b574242d366558db61f3335289a5035c506	HackerGold	HKG	On Chain	3		false	false	false
@@ -163,7 +163,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1c4481750daa5ff521a2a7490d9981ed46465dbd	BLOCKMASON CREDIT PROTOCOL TOKEN	BCPT	On Chain	18	Democratizing the creation of credit through permanently recorded debts and obligations.	false	false	false
 50-Tokens:ERC20	0x1c4b7d0e1885bd7667af3378e0c538f74e712006	IOGToken	IOG	On Chain	18		false	false	false
 50-Tokens:ERC20	0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff	Soniq Token	SONIQ	On Chain	18	The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby.	false	false	false
-50-Tokens:ERC20	0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7	TEAM	TEAM	On Chain	4	TEAM is a utility token for TokenStars - the talent management platform, that connects sports & entertainment stars with fans and advertisers, bringing interaction between them to a new level.	false	false	false
+50-Tokens:ERC20	0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7	TEAM	TEAM	On Chain	4	TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level.	false	false	false
 50-Tokens:ERC20	0x1c83501478f1320977047008496dacbd60bb15ef	DigitexFutures	DGTX	On Chain	18	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.	false	false	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On Chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false
 50-Tokens:ERC20	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter Token	FACE	On Chain	18	A computer vision surveillance technology powered by fog network of miners.	false	false	false
