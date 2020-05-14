@@ -227,7 +227,8 @@ bool COptions::parseArguments(string_q& command) {
     // SEP4("default field hiding: " + defHide);
     manageFields(defHide, false);
     // SEP4("default field showing: " + defShow);
-    string_q show = defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars" : "");
+    string_q show =
+        defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars|CTrace:traceAddress" : "");
     manageFields(show, true);
 
     CToml toml(getMonitorCnfg(monitors[0].address));

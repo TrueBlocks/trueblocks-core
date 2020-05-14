@@ -1,10 +1,12 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
 34-ENS	0x000000000000000000000000000000000000dead	ENS: Burn Address		Etherscan			false	false	false
+Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b93b58547b4a71c78317f391a28		Etherscan			false	false	false
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	false	false	false
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		Etherscan			false	false	false
 30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	Etherscan			false	false	false
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		Etherscan			false	false	false
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent		Etherscan			false	false	false
+30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis		Etherscan			false	false	false
 50-Tokens	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN	Etherscan.io		Biotron is a fully transparent personal data analytics platform on blockchain.	false	false	false
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On Chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false
 30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	Etherscan.io		The famous first ERC721 token	false	false	false
@@ -198,5 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0xc719d010b63e5bbf2c0551872cd5316ed26acd83	Etherisc	DIP	defipulse.com	18		false	false	false
 31-Gitcoin Grants:Contracts	0xc9a872868afa68ba937f65a1c5b4b252dab15d85	Grant 025 Lighthouse Ethereum 20 Client paulhauner		GitCoin Website			false	false	false
 50-Tokens:ERC20	0xcced5b8288086be8c38e23567e684c3740be4d48	Roulette Token	RLT	On Chain	10	Developed and launched the prototype of ¬¨¬¥European Roulette¬¨¬™ game based on Ethereum smart contract.	false	false	false
-31-Gitcoin Grants:Contracts	0xcda84cc75ec5c92a5dacabc13241256beceef964	Grant 176 Twigwam Rethereum Mod General Intelligence Relay S		GitCoin Website			false	false	false
-50-Tokens:ERC20	0xcdcfc0f66c522fd086a1b725ea3c0eeb9f9e8814	Aurora DAO	AURA	On Chain	18	Aurora is a collection of Ethereum applications and protocols that together form a decentralized banking and finance platform.	false	false	false

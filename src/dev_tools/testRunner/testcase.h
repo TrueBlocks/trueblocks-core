@@ -186,5 +186,6 @@ extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern void cleanMonitors(void);
 // EXISTING_CODE
 }  // namespace qblocks

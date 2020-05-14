@@ -1,5 +1,6 @@
 {"data": [
 [{
+  "traceAddress": null,
   "type": "call",
   "error": "",
   "articulatedTrace": {},
@@ -22,6 +23,7 @@
   }
 }
 , {
+  "traceAddress": null,
   "type": "call",
   "error": "",
   "articulatedTrace": {},
@@ -45,7 +47,7 @@
 }
 ]
 ], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+{ "type": "CTrace", "fields": [{ "name": "traceAddress", "type": "text" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFromAndTo": {}
 , "unNamedFromAndTo": {}, "namedFrom": {}
 , "unNamedFrom": {}, "namedTo": {}

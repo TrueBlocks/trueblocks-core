@@ -10,6 +10,15 @@
       "description": ""
     },
     {
+      "tags": "Maker: MCD Join DAI",
+      "address": "0x000000000000000000000000000030-contracts",
+      "name": "0x9759a6ac90977b93b58547b4a71c78317f391a28",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "Homework",
@@ -403,6 +412,15 @@
       "symbol": "KCS",
       "source": "On Chain",
       "decimals": 6,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
+      "name": "Maker: Oasis",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
       "description": ""
     },
     {
@@ -1789,24 +1807,6 @@
       "symbol": "RCT",
       "source": "On Chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens",
-      "address": "0x14094949152eddbfcd073717200da82fed8dc960",
-      "name": "Fulcrum iSAI",
-      "symbol": "ISAI",
-      "source": "defipulse.com",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Contracts",
-      "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
-      "name": "Grant 212 Thx Open Protocol For Online Rewards",
-      "symbol": "",
-      "source": "GitCoin Website",
-      "decimals": "0",
       "description": ""
     }
   ],

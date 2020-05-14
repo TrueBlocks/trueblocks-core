@@ -437,6 +437,12 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "CLEANUP"};
+CStringArray testAddrs = {
+    "0x1111111111111111111111111111111111111111", "0x1111122222111112222211111222221111122222",
+    "0x1234567812345678123456781234567812345678", "0x5555533333555553333355555333335555533333",
+    "0x9876543210987654321098765432109876543210", "0xfb744b951d094b310262c8f986c860df9ab1de65",
+    "0x1234567890123456789012345678901234567890", "0x001d14804b399c6ef80e64576f657660804fec0b",
+};
 
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
@@ -444,13 +450,7 @@ bool prepareBuiltIn(string_q& options) {
         string_q match = nextTokenClear(cmd, '|');
         if (startsWith(options, match)) {
             if (match == "CLEANUP") {
-                CStringArray arr = {
-                    "0x001d14804b399c6ef80e64576f657660804fec0b", "0x1111111111111111111111111111111111111111",
-                    "0x1111122222111112222211111222221111122222", "0x1234567812345678123456781234567812345678",
-                    "0x5555533333555553333355555333335555533333", "0x9876543210987654321098765432109876543210",
-                    "0xfb744b951d094b310262c8f986c860df9ab1de65", "0x1234567890123456789012345678901234567890",
-                    "0x001d14804b399c6ef80e64576f657660804fec0b"};
-                for (auto a : arr) {
+                for (auto a : testAddrs) {
                     ::remove(getMonitorPath(a).c_str());
                     ::remove(getMonitorLast(a).c_str());
                     ::remove(getMonitorExpt(a).c_str());
@@ -493,6 +493,17 @@ bool prepareBuiltIn(string_q& options) {
         }
     }
     return false;
+}
+
+//-----------------------------------------------------------------------
+void cleanMonitors(void) {
+    for (auto a : testAddrs) {
+        ::remove(getMonitorPath(a).c_str());
+        ::remove(getMonitorLast(a).c_str());
+        ::remove(getMonitorExpt(a).c_str());
+        ::remove(getMonitorBals(a).c_str());
+        ::remove(getMonitorCnfg(a).c_str());
+    }
 }
 
 //-----------------------------------------------------------------------

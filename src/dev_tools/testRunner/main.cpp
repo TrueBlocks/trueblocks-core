@@ -124,6 +124,8 @@ int main(int argc, const char* argv[]) {
         cerr << fail;
     cerr << endl;
 
+    cleanMonitors();
+
     return 0;
 }
 

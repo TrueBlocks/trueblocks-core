@@ -47,6 +47,15 @@ ethNames --named --custom --owned --fmt api
     "description": ""
   },
   {
+    "tags": "Maker: MCD Join DAI",
+    "address": "0x000000000000000000000000000030-contracts",
+    "name": "0x9759a6ac90977b93b58547b4a71c78317f391a28",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "Homework",
@@ -440,6 +449,15 @@ ethNames --named --custom --owned --fmt api
     "symbol": "KCS",
     "source": "On Chain",
     "decimals": 6,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
+    "name": "Maker: Oasis",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1791,24 +1809,6 @@ ethNames --named --custom --owned --fmt api
     "source": "On Chain",
     "decimals": 18,
     "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x13e9ec660d872f55405d70e5c52d872136f0970c",
-    "name": "TKT",
-    "symbol": "TKT",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
-    "name": "Divi Exchange Token",
-    "symbol": "DIVX",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "Digital Currency"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
