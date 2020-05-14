@@ -1,6 +1,5 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
 34-ENS	0x000000000000000000000000000000000000dead	ENS: Burn Address		Etherscan			false	false	false
-Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b93b58547b4a71c78317f391a28		Etherscan			false	false	false
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	Homework		TrueBlocks.io			false	false	false
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	false	false	false
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		Etherscan			false	false	false
@@ -22,6 +21,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 81-Other:DAO Curators	0x0037a6b811ffeb6e072da21179d11b1406371c63	Gavin Wood		DAO_Curator			false	false	false
 75-EarlyActors	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260		OnChain			false	false	false
 32-Kickback:Friends	0x0039f22efb07a647557c7c5d17854cfd6d489ef3	rstorm		https://kickback.events/			false	false	false
+60-Airdrop	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		Etherscan			false	false	false
 32-Kickback:Friends	0x0048d6225d1f3ea4385627efdc5b4709cab4a21c	niklask		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x0054bb3d675c6f00909d5dd15cfe2d3c7513f597	joseph		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x005bee87d3489b0ab57692dcc1e5bf58d3a494e6	cassshih		https://kickback.events/			false	false	false
@@ -755,6 +755,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 34-Humanity DAO	0x26404746cd2228018f86c98f580e5030b06ff3c8	nofunnolife0		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x264dc2dedcdcbb897561a57cba5085ca416fb7b4	QunQunCommunities	QUN	On Chain	18	Incentive community platform based on blockchain technology.	false	false	false
 30-Contracts	0x26588a9301b0428d95e6fc3a5024fce8bec12d51	Oraclize		TrueBlocks.io			false	false	false
+40-Exchanges	0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0	Kraken 4 03		Etherscan			false	false	false
 90-DevCon2:Individual	0x26a72f03e65bc9306298c31af6562e3016907216	crystal.ann		DevCon2 Token Contract			false	false	false
 34-Humanity DAO	0x26b7929ce02124e8ff4aa380da99f92abc45f167	sirwang2		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0x26b87c0cc673e0a71cc4b874a80c429cf61461ec	feeeei		https://www.humanitydao.org/humans			false	false	false
@@ -2453,6 +2454,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 81-Other	0x83051e225a06682ff0dde9bcd267d8418c4cbcd7	Parallelgambling		Etherscan.io			false	false	false
 50-Tokens:ERC20	0x832904863978b94802123106e6eb491bdf0df928	OptiToken	OPTI	On Chain	18	An algorithmically traded hyper-deflationary cryptocurrency	false	false	false
 81-Other	0x83651a62b632c261442f396ad7202fe2a4995e3a	Littleethereumdoubler		Etherscan.io			false	false	false
+60-Airdrop	0x83795ddfcda25819524e8849787d193b1dd51d3a	LPT Airdrop Sender		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x839395e20bbb182fa440d08f850e6c7a8f6f0780	griffgreen		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x83984d6142934bb535793a82adb0a46ef0f66b6d	REMME token	REM	On Chain	4	Distributed Public Key Infrastructure PKI protocol with a set of DApps to enable passwordless authentication	false	false	false
 34-Humanity DAO	0x83b8d6086c42bad1b528a69c412f63c89812c7b5	ChunKin00197891		https://www.humanitydao.org/humans			false	false	false
@@ -2858,6 +2860,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 32-Kickback:Friends	0x986204cc94428354885e237d87dc0ff9836dfc89	wally		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x986ee2b944c42d017f52af21c4c69b84dbea35d8	BitMartToken	BMC	On Chain	18	BitMart is a globally integrated trading platform founded by a group of cryptocurrency enthusiasts.	false	false	false
 34-Humanity DAO	0x9885a84930e3c8c865a1d3debdc204f990bab7c3	bitsikka		https://www.humanitydao.org/humans			false	false	false
+60-Airdrops	0x98a8c31e9fb57b08165c1d50ce7b81b925843c5f	Katerium Airdrop Sender		Etherscan			false	false	false
 32-Kickback:Friends	0x98ed5d71373281c4fcb09b66ac1bdc3cd2cf0fbe	sailormeows		https://kickback.events/			false	false	false
 81-Other	0x98f9e314a874e17c77e7ec24f228649f21a52368	LilyCoin_id328_cnt2_22da		Ether Camp			false	false	false
 80-Malicious	0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef	Possibly Malicious 0x991		TrueBlocks.io			false	false	false
@@ -3097,6 +3100,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 50-Tokens:ERC20	0xa66daa57432024023db65477ba87d4e7f5f95213	HuobiPoolToken	HPT	On Chain	18		false	false	false
 50-Tokens:ERC20	0xa6714a2e5f0b1bdb97b895b0913b4fcd3a775e4d	PromotionCoin	PC	On Chain	5		false	false	false
 81-Other	0xa68f65bb1169359df1a7c66113c5b4e9a9bbb5d6	CrowdFund_id237_cnt12_2mo		Ether Camp			false	false	false
+60-Airdrops	0xa69858f49385060371beb872c39d2f90b7a26e03	Katerium Airdrop		Etherscan			false	false	false
 32-Kickback:Friends	0xa6a70f01495222a18389d63bafaabd794e93d377	iphara		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0xa6a840e50bcaa50da017b91a0d86b8b2d41156ee	EchoLink	EKO	On Chain	18		false	false	false
 34-Humanity DAO	0xa6dcddf74d332d07e9f4a758c40d272c5fbf11fc	samuloko		https://www.humanitydao.org/humans			false	false	false
@@ -3573,7 +3577,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 34-Humanity DAO	0xbe84115990e0be631cae78691a57f87bfb707028	jinhe666		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0xbe863bff03e8eb0c6416e0fcd45520d3cffd5890	tcbean		https://www.humanitydao.org/humans			false	false	false
 81-Other	0xbe8eb2544083691c76f113ed36bc45e3ffe969f5	Lastisme		Etherscan.io			false	false	false
-60-Airdrops	0xbe90d4bbe667196b8d36313e92db5c53c19e391b	KateriumAirdropSender		Etherscan			false	false	false
+60-Airdrops	0xbe90d4bbe667196b8d36313e92db5c53c19e391b	Katerium Airdrop Sender		Etherscan			false	false	false
 32-Kickback:Friends	0xbe91c35196c8525bdcb4515e1fdf706d806925cf	mahoneyjkt		https://kickback.events/			false	false	false
 34-Humanity DAO	0xbeaf3dcb8a1fd8ed87baa0fbcf7c1e60aa95763b	yanroux		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1	Melon Token	MLN	On Chain	18	The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform	false	false	false
