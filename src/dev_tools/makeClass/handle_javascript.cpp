@@ -27,7 +27,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.dataUrl = toml.getConfigStr("settings", "dataUrl", "");
     page.dataQuery = toml.getConfigStr("settings", "dataQuery", "");
     page.cmdUrl = toml.getConfigStr("settings", "cmdUrl", "");
-    if (page.cmdUrl == "")
+    if (page.cmdUrl.empty())
         page.cmdUrl = page.dataUrl;
 
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
@@ -363,7 +363,8 @@ bool COptions::handle_generate_js_menus(void) {
             string_q contents = asciiFileToString(templateFile);
             replaceAll(contents, "[{DATAURL}]", page.dataUrl);
             replaceAll(contents, "[{DATAQUERY}]", page.dataQuery);
-            replaceAll(contents, "[{CMDURL}]", page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
+            replaceAll(contents, "[{CMDURL}]",
+                       page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
             replaceAll(contents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
             replaceAll(contents, "[{LONG}]", page.longName);
             replaceAll(contents, "[{PROPER}]", page.properName);
@@ -695,38 +696,38 @@ bool COptions::handle_generate_js_schemas(void) {
     return true;
 }
 
-const char* STR_DELETE_CMDS = ""
-"        case 'delete':\n"
-"          {\n"
-"            const cmdQuery = 'editCmd=delete&terms=' + action.record_id + addendum(record, action.record_id);\n"
-"            statusDispatch(LOADING);\n"
-"            dispatch(action);\n"
-"            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
-"              // we assume the delete worked, so we don't reload the data\n"
-"              statusDispatch(NOT_LOADING);\n"
-"            });\n"
-"          }\n"
-"          break;\n"
-"        case 'undelete':\n"
-"          {\n"
-"            const cmdQuery = 'editCmd=undelete&terms=' + action.record_id + addendum(record, action.record_id);\n"
-"            statusDispatch(LOADING);\n"
-"            dispatch(action);\n"
-"            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
-"              // we assume the delete worked, so we don't reload the data\n"
-"              statusDispatch(NOT_LOADING);\n"
-"            });\n"
-"          }\n"
-"          break;\n"
-"        case 'remove':\n"
-"          {\n"
-"            const cmdQuery = 'editCmd=remove&terms=' + action.record_id + addendum(record, action.record_id);\n"
-"            statusDispatch(LOADING);\n"
-"            sendServerCommand(cmdUrl, cmdQuery).then((theData) => {\n"
-"              // the command worked, but now we need to reload the data\n"
-"              refresh[{PROPER}]Data(dataUrl, dataQuery, dispatch);\n"
-"              statusDispatch(NOT_LOADING);\n"
-"            });\n"
-"          }\n"
-"          break;\n";
-
+const char* STR_DELETE_CMDS =
+    ""
+    "        case 'delete':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=delete&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            dispatch(action);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
+    "              // we assume the delete worked, so we don't reload the data\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n"
+    "        case 'undelete':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=undelete&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            dispatch(action);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
+    "              // we assume the delete worked, so we don't reload the data\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n"
+    "        case 'remove':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=remove&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then((theData) => {\n"
+    "              // the command worked, but now we need to reload the data\n"
+    "              refresh[{PROPER}]Data(dataUrl, dataQuery, dispatch);\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n";

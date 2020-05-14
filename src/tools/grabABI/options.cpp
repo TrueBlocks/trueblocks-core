@@ -23,7 +23,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),  // NOLINT
-    COption("noconst", "n", "", OPT_SWITCH, "generate encodings for non-constant functions and events only (always true when generating)"),  // NOLINT
     COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
@@ -61,9 +60,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-g" || arg == "--generate") {
             generate = true;
 
-        } else if (arg == "-n" || arg == "--noconst") {
-            noconst = true;
-
         } else if (arg == "-m" || arg == "--monitored") {
             monitored = true;
 
@@ -98,34 +94,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (!addrs.size() && !known && !monitored)
-        return usage("Please supply at least one Ethereum address.\n");
-
-    for (auto a : addrs) {
-        if (!isContractAt(a, latest) &&
-            a != "0x1234567812345678123456781234567812345678") {  // 0x1234...is a weird test address that we want to
-                                                                  // ignore during testing
-            cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
-
-        } else if (fileExists(a + ".sol")) {
-            convertFromSol(a);
-        }
-    }
-
-    if (generate) {
-        classDir = getCWD();
-        prefix = getPrefix(classDir);
-    }
-
-    if (canonical)
-        parts |= SIG_CANONICAL;
-
-    if (parts == 0)
-        parts = SIG_DEFAULT;
-
-    if (parts != SIG_CANONICAL && verbose)
-        parts |= SIG_DETAILS;
-
     if (isRaw) {
         for (auto a : addrs) {
             string_q fileName = getCachePath("abis/" + a + ".json");
@@ -141,21 +109,42 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
+    if (!addrs.size() && !known && !monitored)
+        return usage("Please supply at least one Ethereum address.\n");
+
+    if (generate) {
+        classDir = getCWD();
+        prefix = getPrefix(classDir);
+    }
+
+    if (canonical)
+        parts |= SIG_CANONICAL;
+
+    if (parts == 0)
+        parts = SIG_DEFAULT;
+
+    if (parts != SIG_CANONICAL && verbose)
+        parts |= SIG_DETAILS;
+
     for (auto a : addrs) {
-        CAbi abi;
-        loadAbiAndCache(abi, a, isRaw, errors);
-        if (errors.size() > 0) {
-            ostringstream os;
-            for (auto err : errors)
-                os << err;
-            // report but do not quit processing
-            cerr << os.str() << endl;
+        if (!isContractAt(a, latest)) {
+            cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
+        } else {
+            CAbi abi;
+            loadAbiAndCache(abi, a, isRaw, errors);
+            if (errors.size() > 0) {
+                ostringstream os;
+                for (auto err : errors)
+                    os << err;
+                // report but do not quit processing
+                cerr << os.str() << endl;
+            }
+            abi.address = a;
+            for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
+                i->address = a;
+            sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+            abiList.push_back(abi);
         }
-        abi.address = a;
-        for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
-            i->address = a;
-        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-        abiList.push_back(abi);
     }
 
     if (known) {
@@ -208,7 +197,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     generate = false;
-    noconst = false;
     // END_CODE_INIT
 
     parts = (SIG_DEFAULT | SIG_ENCODE);

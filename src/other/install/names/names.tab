@@ -21,7 +21,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Curators	0x0037a6b811ffeb6e072da21179d11b1406371c63	Gavin Wood		DAO_Curator			false	false	false
 75-EarlyActors	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260		OnChain			false	false	false
 32-Kickback:Friends	0x0039f22efb07a647557c7c5d17854cfd6d489ef3	rstorm		https://kickback.events/			false	false	false
-60-Airdrop	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		Etherscan			false	false	false
+60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		Etherscan			false	false	false
 32-Kickback:Friends	0x0048d6225d1f3ea4385627efdc5b4709cab4a21c	niklask		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x0054bb3d675c6f00909d5dd15cfe2d3c7513f597	joseph		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x005bee87d3489b0ab57692dcc1e5bf58d3a494e6	cassshih		https://kickback.events/			false	false	false
@@ -2454,7 +2454,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x83051e225a06682ff0dde9bcd267d8418c4cbcd7	Parallelgambling		Etherscan.io			false	false	false
 50-Tokens:ERC20	0x832904863978b94802123106e6eb491bdf0df928	OptiToken	OPTI	On Chain	18	An algorithmically traded hyper-deflationary cryptocurrency	false	false	false
 81-Other	0x83651a62b632c261442f396ad7202fe2a4995e3a	Littleethereumdoubler		Etherscan.io			false	false	false
-60-Airdrop	0x83795ddfcda25819524e8849787d193b1dd51d3a	LPT Airdrop Sender		Etherscan			false	false	false
+60-Airdrops	0x83795ddfcda25819524e8849787d193b1dd51d3a	LPT Airdrop Sender		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x839395e20bbb182fa440d08f850e6c7a8f6f0780	griffgreen		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x83984d6142934bb535793a82adb0a46ef0f66b6d	REMME token	REM	On Chain	4	Distributed Public Key Infrastructure PKI protocol with a set of DApps to enable passwordless authentication	false	false	false
 34-Humanity DAO	0x83b8d6086c42bad1b528a69c412f63c89812c7b5	ChunKin00197891		https://www.humanitydao.org/humans			false	false	false

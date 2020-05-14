@@ -48,15 +48,13 @@ bool visitAbi(CAbi& abi, void* data) {
         cout << expContext().fmtMap["header"] << endl;
 
     for (auto interface : abi.interfaces) {
-        if (!interface.constant || !opt->noconst) {
-            if (!opt->first) {
-                if (!isText)
-                    cout << ",";
-                cout << endl;
-            }
-            cout << interface.Format(expContext().fmtMap["format"]);
-            opt->first = false;
+        if (!opt->first) {
+            if (!isText)
+                cout << ",";
+            cout << endl;
         }
+        cout << interface.Format(expContext().fmtMap["format"]);
+        opt->first = false;
     }
     return true;
 }

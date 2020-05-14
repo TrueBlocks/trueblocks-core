@@ -29,6 +29,7 @@ static const COption params[] = {
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
+    COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("reverseSort", "T", "", OPT_HIDDEN | OPT_SWITCH, "export transactions in reverse order"),
     COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurrence"),  // NOLINT
@@ -113,6 +114,10 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
+
+        } else if (startsWith(arg, "-F:") || startsWith(arg, "--freshen_max:")) {
+            if (!confirmBlockNum("freshen_max", freshen_max, arg, latest))
+                return false;
 
         } else if (arg == "-D" || arg == "--deltas") {
             deltas = true;
@@ -395,6 +400,7 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     grab_abis = false;
     freshen = false;
+    freshen_max = 5000;
     deltas = false;
     reverseSort = false;
     occurrence = NOPOS;
@@ -402,6 +408,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     nExported = 0;
+    nFreshened = 0;
     scanRange.second = getLatestBlock_cache_ripe();
     items.clear();
 

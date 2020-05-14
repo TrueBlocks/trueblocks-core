@@ -107,9 +107,6 @@
     },
     {
       "tags": "91-Friends"
-    },
-    {
-      "tags": "Maker: MCD Join DAI"
     }
   ],
   "types": [

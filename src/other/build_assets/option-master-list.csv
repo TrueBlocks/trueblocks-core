@@ -26,6 +26,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10440,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
 10460,apps,export,acctExport,grab_abis,g,,false,false,false,false,header,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
+10480,apps,export,acctExport,freshen_max,F,5000,false,false,false,false,header,flag,<blknum>,maximum number of records to process for --freshen option
 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
 10505,apps,export,acctExport,reverseSort,T,,false,false,false,false,header,switch,<boolean>,export transactions in reverse order
 10510,apps,export,acctExport,occurrence,o,NOPOS,false,false,true,true,header,flag,<blknum>,for each loaded list of appearances&#44; export only this occurrence
@@ -243,7 +244,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13660,tools,abi,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,abi,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
 13700,tools,abi,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
-13740,tools,abi,grabABI,noconst,n,,false,false,true,true,header,switch,<boolean>,generate encodings for non-constant functions and events only (always true when generating)
 13840,tools,abi,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
 13850,tools,abi,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13855,tools,abi,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output

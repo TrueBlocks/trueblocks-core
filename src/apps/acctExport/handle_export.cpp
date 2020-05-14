@@ -17,13 +17,15 @@ bool COptions::exportData(void) {
         cout << "[";
 
     bool first = true;
-    for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk < ts_cnt; i++) {
+    for (size_t i = 0;
+         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nFreshened < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             if (appearances) {
                 if (isJson && shouldDisplay && !first)
                     cout << ", ";
                 nExported++;
+                nFreshened++;
                 if (shouldDisplay) {
                     CDisplayApp d(hackAppAddr, item->blk, item->txid);
                     cout << d.Format() << endl;
@@ -86,6 +88,7 @@ bool COptions::exportData(void) {
                                 if (isJson && shouldDisplay && !first)
                                     cout << ", ";
                                 nExported++;
+                                nFreshened++;
                                 if (shouldDisplay)
                                     cout << trace.Format() << endl;
                                 first = false;
@@ -107,6 +110,7 @@ bool COptions::exportData(void) {
                                 if (isJson && shouldDisplay && !first)
                                     cout << ", ";
                                 nExported++;
+                                nFreshened++;
                                 if (shouldDisplay)
                                     cout << copy.Format() << endl;
                             }
@@ -130,6 +134,7 @@ bool COptions::exportData(void) {
                                 if (isJson && shouldDisplay && !first)
                                     cout << ", ";
                                 nExported++;
+                                nFreshened++;
                                 if (shouldDisplay)
                                     cout << copy.Format() << endl;
                             }
@@ -144,6 +149,7 @@ bool COptions::exportData(void) {
                         if (isJson && shouldDisplay && !first)
                             cout << ", ";
                         nExported++;
+                        nFreshened++;
                         if (shouldDisplay)
                             cout << trans.receipt.Format() << endl;
                         first = false;
@@ -157,6 +163,7 @@ bool COptions::exportData(void) {
                                 if (articulate)
                                     abis.articulateLog(&log);
                                 nExported++;
+                                nFreshened++;
                                 if (shouldDisplay)
                                     cout << log.Format() << endl;
                                 first = false;
@@ -172,6 +179,7 @@ bool COptions::exportData(void) {
                         if (isJson && shouldDisplay && !first)
                             cout << ", ";
                         nExported++;
+                        nFreshened++;
                         if (shouldDisplay)
                             cout << trans.Format() << endl;
                         first = false;

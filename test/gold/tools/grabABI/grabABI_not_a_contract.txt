@@ -1,6 +1,4 @@
 grabABI argc: 2 [1:0xf1aa581f353005ba3765b81bf52d6b1c488c2101] 
 grabABI 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 
 Address 0xf1aa581f353005ba3765b81bf52d6b1c488c2101 is not a smart contract. Skipping...
-Could not get the ABI for 0xf1aa581f353005ba3765b81bf52d6b1c488c2101. Etherscan returned: {'status':'0','message':'NOTOK','result':'Contract source code not verified'}. Copy the ABI to 0xf1aa581f353005ba3765b81bf52d6b1c488c2101.json in the current folder and re-run.
 encoding	type	name	signature	input_names	output_names
-"Could not get the ABI for 0xf1aa581f353005ba3765b81bf52d6b1c488c2101. Etherscan returned: 'status':'0','message':'NOTOK','result':'Contract source code not verified'. Copy the ABI to 0xf1aa581f353005ba3765b81bf52d6b1c488c2101.json in the current folder and re-run."

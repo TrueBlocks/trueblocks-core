@@ -5,10 +5,6 @@
       "decimals": "0"
     },
     {
-      "address": "0x000000000000000000000000000030-contracts",
-      "decimals": "0"
-    },
-    {
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "decimals": "0"
     },
@@ -58,6 +54,10 @@
     },
     {
       "address": "0x0037ce3d4b7f8729c8607d8d0248252be68202c0",
+      "decimals": "0"
+    },
+    {
+      "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
       "decimals": "0"
     },
     {

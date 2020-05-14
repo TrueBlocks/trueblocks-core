@@ -1,10 +1,10 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
 34-ENS	0x000000000000000000000000000000000000dead	ENS: Burn Address		Etherscan			false	false	false
-Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b93b58547b4a71c78317f391a28		Etherscan			false	false	false
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	false	false	false
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		Etherscan			false	false	false
 30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	Etherscan			false	false	false
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		Etherscan			false	false	false
+60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		Etherscan			false	false	false
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent		Etherscan			false	false	false
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis		Etherscan			false	false	false
 50-Tokens	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN	Etherscan.io		Biotron is a fully transparent personal data analytics platform on blockchain.	false	false	false
@@ -46,6 +46,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET	On Chain	18	RoBet is an Ethereum based sportsbook platform regulated by smart contracts.	false	false	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On Chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On Chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false
+40-Exchanges	0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0	Kraken 4 03		Etherscan			false	false	false
 50-Tokens:ERC20	0x27054b13b1b798b345b591a4d22e6562d47ea75a	AirSwap Token	AST	On Chain	4	AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens	false	false	false
 35-Pool Together	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1		Etherscan			false	false	false
 50-Tokens:ERC20	0x27dce1ec4d3f72c3e457cc50354f1f975ddef488	AirToken	AIR	On Chain	8	AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees.	false	false	false
@@ -131,6 +132,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 80-Malicious	0x7e4faec4d65db6f784599cd7aab8bc304903fd61	Lendf.MeHackerRelated		Etherscan			false	false	false
 50-Tokens:ERC20	0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5	Kin	KIN	On Chain	18	The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market.	false	false	false
 50-Tokens:ERC20	0x826e62ea830b7943154cfa7317debad096125207	SingularDTV Sender 1		Etherscan			false	false	false
+60-Airdrops	0x83795ddfcda25819524e8849787d193b1dd51d3a	LPT Airdrop Sender		Etherscan			false	false	false
 50-Tokens	0x84119cb33e8f590d75c2d6ea4e6b0741a7494eda	Gigwatt Token	WTT	Etherscan.io		Full-service mining solution provider.	false	false	false
 50-Tokens:ERC20	0x859a9c0b44cb7066d956a958b0b82e54c9e44b4b	iEthereum	iETH	On Chain	8	iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.	false	false	false
 31-Gitcoin Grants:Contracts	0x85cab7143ff3c01b93e88f5b017692374bb939c2	Grant 223 Ethereum Magicians Magician's Registration		GitCoin Website TrueBlocks.io			false	false	false
@@ -152,6 +154,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 30-Contracts	0x983dd5e5ce0f33774f49666e00d6a820ff8d8a07	BrightID Tokens		Etherscan			false	false	false
 50-Tokens	0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63	SONM Token	SNM	Etherscan.io		SONM's aims to be a secure and cost-effective fog supercomputer for general-purpose computing, from mobile app hosting to video rendering to DNA analysis.	false	false	false
 80-Malicious	0x985641983d506259f4a5fbdf5a9c3c807cf12559	Lendf.Me Hacker: Bridge Address		Etherscan			false	false	false
+60-Airdrops	0x98a8c31e9fb57b08165c1d50ce7b81b925843c5f	Katerium Airdrop Sender		Etherscan			false	false	false
 30-Contracts	0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2	Maker	MKR	Etherscan.io		Maker is a Decentralized Autonomous Organization that creates and insures the dai stablecoin on the Ethereum blockchain	false	false	false
 31-Gitcoin Grants:Contracts	0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f	Grant 233 Ethereumetl medvedev1088		Gitcoin Website			false	false	false
 50-Tokens	0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48	USD Coin	USDC	Etherscan.io		USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers.	false	false	false
@@ -162,6 +165,7 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 37-Sablier	0xa4fc358455febe425536fd1878be67ffdbdec59a	Sablier: Real-Time Finance		Etherscan			false	false	false
 60-Airdrops	0xa5025faba6e70b84f74e9b1113e5f7f4e7f4859f	AGLD Airdrop MultiSender App		Etherscan			false	false	false
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On Chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.	false	false	false
+60-Airdrops	0xa69858f49385060371beb872c39d2f90b7a26e03	Katerium Airdrop		Etherscan			false	false	false
 34-ENS	0xa964ed4077ad3ba1946d118ce90544657bb4003b	ENS: Related 1		Etherscan			false	false	false
 80-Malicious	0xa9bf70a420d364e923c74448d9d817d3f2a77822	Lendf.Me Hacker 1		Etherscan			false	false	false
 50-Tokens	0xaa0bb10cec1fa372eb3abc17c933fc6ba863dd9e	Hms Token	HMC	Etherscan.io		HMS Hi Mutual Society is a blockchain project developed and operated by Qfund, the largest online crowdfunding platform in Asia. HMS intends to build up a decentralized Mutual Society using blockchain technology.	false	false	false
@@ -191,12 +195,8 @@ Maker: MCD Join DAI	0x000000000000000000000000000030-contracts	0x9759a6ac90977b9
 37-Sablier	0xbd6a40bb904aea5a49c59050b5395f7484a4203d	Sablier: Proxy		Etherscan			false	false	false
 35-Pool Together	0xbd87447f48ad729c5c4b8bcb503e1395f62e8b98	Pool Usdc Token plUsdc RecipientWhitelistPoolTokenDecimals v0.2.12		Etherscan			false	false	false
 50-Tokens	0xbdeb4b83251fb146687fa19d1c660f99411eefe3	savedroid	SVD	Etherscan.io		Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses.	false	false	false
-60-Airdrops	0xbe90d4bbe667196b8d36313e92db5c53c19e391b	KateriumAirdropSender		Etherscan			false	false	false
+60-Airdrops	0xbe90d4bbe667196b8d36313e92db5c53c19e391b	Katerium Airdrop Sender		Etherscan			false	false	false
 50-Tokens:ERC20	0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1	Melon Token	MLN	On Chain	18	The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform	false	false	false
 50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX	Etherscan.io		Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.	false	false	false
 50-Tokens:ERC20	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	Wrapped Ether	WETH	On Chain	18		false	false	false
 60-Airdrops	0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e	KickAirdrop		Etherscan			false	false	false
-50-Tokens:ERC20	0xc429e7b63dc30b51f5a7e4be23fd5eb4baf8a1c3	Bitibu	BTB	On Chain	18	Bitibu is the simple and secure exchange platform to trade Bitcoin, Ethereum, Litecoin and other altcoins easily.	false	false	false
-50-Tokens	0xc719d010b63e5bbf2c0551872cd5316ed26acd83	Etherisc	DIP	defipulse.com	18		false	false	false
-31-Gitcoin Grants:Contracts	0xc9a872868afa68ba937f65a1c5b4b252dab15d85	Grant 025 Lighthouse Ethereum 20 Client paulhauner		GitCoin Website			false	false	false
-50-Tokens:ERC20	0xcced5b8288086be8c38e23567e684c3740be4d48	Roulette Token	RLT	On Chain	10	Developed and launched the prototype of ¬¨¬¥European Roulette¬¨¬™ game based on Ethereum smart contract.	false	false	false

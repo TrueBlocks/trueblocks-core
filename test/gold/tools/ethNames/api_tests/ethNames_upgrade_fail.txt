@@ -10,15 +10,6 @@
       "description": ""
     },
     {
-      "tags": "Maker: MCD Join DAI",
-      "address": "0x000000000000000000000000000030-contracts",
-      "name": "0x9759a6ac90977b93b58547b4a71c78317f391a28",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "30-Contracts",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "Homework",
@@ -132,6 +123,15 @@
       "name": "Miner_0027_260",
       "symbol": "",
       "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
+      "name": "HEALP Airdrop Sender",
+      "symbol": "",
+      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },

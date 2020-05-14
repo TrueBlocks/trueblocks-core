@@ -25,7 +25,6 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     CAddressArray addrs;
     bool generate;
-    bool noconst;
     // END_CODE_DECLARE
 
     bool first;

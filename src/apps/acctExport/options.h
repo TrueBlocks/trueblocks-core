@@ -68,6 +68,7 @@ class COptions : public COptionsBase {
     uint64_t max_traces;
     bool grab_abis;
     bool freshen;
+    blknum_t freshen_max;
     bool deltas;
     bool reverseSort;
     blknum_t occurrence;
@@ -80,6 +81,7 @@ class COptions : public COptionsBase {
     CAccountWatchArray monitors;
     CAppearanceArray_base items;
     size_t nExported;
+    size_t nFreshened;
     string_q className;
     address_t hackAppAddr;
     uint_addr_map_t prefundAddrMap;
