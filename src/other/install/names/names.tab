@@ -4024,7 +4024,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xd9ceb2bb4b8324d36c284799eb00c7cc19a0f618	opresidente		https://kickback.events/			false	false	false
 34-Humanity DAO	0xd9ded0500fbdbb7edfb69692b9316bc6f6d19ea5	dafingis		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0xda273eff599dfafe0800bb3b3c717ad24a4b0372	Maxime		DevCon2 Token Contract			false	false	false
-81-Other:DAO Related	0xda4a4626d3e16e094de3225a751aab7128e96526	CuratorMultiSig		The Dao			false	false	false
+81-Other:DAO Related	0xda4a4626d3e16e094de3225a751aab7128e96526	DAO Curator Multisig		Etherscan			false	false	false
 32-Kickback:Friends	0xda521f6de82bbc4b99978ae778088763c48a6aca	lexlewthor		https://kickback.events/			false	false	false
 34-ENS	0xda5c1cb1f005a69df23f21ee546cd937f4605f10	ENS: Related 2		Etherscan			false	false	false
 50-Tokens:ERC20	0xda6cb58a0d0c01610a29c5a65c303e13e885887c	cVToken	cV	On Chain	18	Decentralized Car History Registry Built on Blockchain	false	false	false

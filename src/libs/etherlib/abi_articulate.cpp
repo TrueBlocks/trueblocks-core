@@ -232,31 +232,23 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
 //----------------------------------------------------------------------------
 // If we can reasonably convert this byte input into a string, do so, otherwise bail out
 bool toPrintable(const string_q& inHex, string_q& result) {
-    bool hasControlChar = false;
-    string_q in = substitute(inHex, "0x", "");
-    string_q temp;
-    while (!in.empty() && in.size() >= 2) {
-        string_q nibble = extract(in, 0, 2);
-        in = extract(in, 2);
+    string_q cleaned;
+    string_q nibbles = substitute(inHex, "0x", "");
+    while (nibbles.size() >= 2) {
+        string_q nibble = extract(nibbles, 0, 2);
+        nibbles = extract(nibbles, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-        if (temp.size() > 0 && ch == '\0') {
-            result = temp;
-            return true;
-        }
-        if (ch == 0x19)
-            hasControlChar = true;
-        if (!isprint(ch) && !isspace(ch) && ch != 0x19)
+        if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
+            cleaned += ch;
+        } else if (ch == 0x19) {
+            // do nothing
+        } else {
+            // give up
+            result = inHex;
             return false;
-        temp += ch;
+        }
     }
-    result = hex_2_Str(inHex);
-    if (hasControlChar) {
-        // TODO(tjayrush): hack alert
-        string s;
-        s += (char)0x20;  // NOLINT
-        s += (char)0x19;  // NOLINT
-        result = substitute(result, s, "'");
-    }
+    result = cleaned;
     return true;
 }
 

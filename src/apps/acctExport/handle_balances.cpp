@@ -69,7 +69,7 @@ bool COptions::exportBalances(void) {
         wei_t priorBalance = 0;
         bool first = true;
         for (size_t i = 0;
-             i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt&& (!freshen || (nFreshened < freshen_max));
+             i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt && (!freshen || (nFreshened < freshen_max));
              i++) {
             const CAppearance_base* item = &apps[i];
             if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {

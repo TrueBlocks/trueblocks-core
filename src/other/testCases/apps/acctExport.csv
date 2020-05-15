@@ -26,8 +26,6 @@ on, both, fast, export, apps/acctExport, export_apps_c,         n, addrs = 0x001
 on, both, fast, export, apps/acctExport, export_balances_dol,   n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & dollars & end = 001507000
 on, both, fast, export, apps/acctExport, export_balances_d_eth, n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & ether & end = 001507000
 
-on, both, fast, export, apps/acctExport, export_former_bug,     y, addrs = 0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb & verbose = 7 & dollars & articulate & fmt = api
-
 # 10200,apps,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
 # 10300,apps,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
 # 10240,apps,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
