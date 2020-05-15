@@ -826,6 +826,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x2a05d22db079bc40c2f77a1d1ff703a56e631cc1	BitAsean	BAS	On Chain	8	BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region.	false	false	false
 50-Tokens:ERC20	0x2a093bcf0c98ef744bb6f69d74f2f85605324290	FoodCoin	FOOD	On Chain	8	FoodCoin Ecosystem is a blockchain ecosystem, architecturally designed to create a global marketplace of food and agricultural products based on our experience with the active 1000 EcoFarms platform.	false	false	false
 32-Kickback:Friends	0x2a151f4f99d0cd3800a945d859944070ccb2c87f	sdhruv93		https://kickback.events/			false	false	false
+40-Exchanges	0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667	Uniswap: DAI		Etherscan			false	false	false
 81-Other	0x2a3967d9b88c11612503d45411c7d07a13554250	Market_id73_cnt1_5mo		Etherscan.io			false	false	false
 32-Kickback:Friends	0x2a52309edf998799c4a8b89324ccad91848c8676	santisiri		https://kickback.events/			false	false	false
 81-Other	0x2a53f42ad8bba138c21b50a4e5711f18381a61e9	Bigrisk		Etherscan.io			false	false	false
@@ -1247,6 +1248,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x423b5f62b328d0d6d44870f4eee316befa0b2df5	GoToken	GOT	On Chain	18	GOToken aims to be the cryptocurrency for mobility services: those of the ParkinGO world. It is introduced into its business processes to ensure transparency.	false	false	false
 30-Contracts:dAppNode	0x423d2c4c796df65342825d241a42f5ae2aa5d2a4	dAddNode Package 009		TrueBlocks.io			false	false	false
 81-Other	0x426259b0a756701a8b663528522156c0288f0f24	Early_Partners_027		Ether Camp			false	false	true
+60-Airdrops	0x426ca1ea2406c07d75db9585f22781c096e3d0e0	Minereum Airdrop		Etherscan			false	false	false
 50-Tokens:ERC20	0x4270bb238f6dd8b1c3ca01f96ca65b2647c06d3c	FOTA	FOTA	On Chain	18	Blockchain Platform for Global OTC Derivatives Market	false	false	false
 50-Tokens:ERC20	0x4289c043a12392f1027307fb58272d8ebd853912	AiLink Token	ALI	On Chain	18	Open social platform based on blockchain	false	false	false
 81-Other	0x428da5ff72d8be0efaa85336b6c6a9fc9e0f73fe	Niceguyponzi		Etherscan.io			false	false	false
@@ -3019,6 +3021,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	Pundi X Token	NPXS	On Chain	18		false	false	false
 34-Humanity DAO	0xa15ca74e65bf72730811abf95163e89ad9b9dff6	eric_rsno		https://www.humanitydao.org/humans			false	false	false
 75-EarlyActors	0xa1623430350c5df1b52b0b57483a5bb45d1796da	Miner_0016_400		OnChain			false	false	false
+60-Airdrops	0xa1907d33b417155faaecce2779b52df84928e28a	Minereum Airdrop Sender		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0xa19fcdad77c1f0fd184689aca88babcf68010347	Grant 040 Ethhub		GitCoin Website			false	false	false
 31-Gitcoin Grants:Contracts	0xa1b02d8c67b0fdcf4e379855868deb470e169cfb	Grant 169 Alice 34		GitCoin Website https://kickback.events/			false	false	false
 34-Humanity DAO	0xa1bd817e13ed6bb524ed491cff76c83afec773ac	akimqc		https://www.humanitydao.org/humans			false	false	false
@@ -3072,6 +3075,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xa502f8112b2491718855f01a01a60462cc97a0d5	Ufoponzi		Etherscan.io			false	false	false
 34-Humanity DAO	0xa5099df16f5d74dca261dd1bdd053473ba09a2b6	volkangurel		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0xa50bac54b04208606606fd7be7fc1f984f1c3d90	benjamincalder		https://www.humanitydao.org/humans			false	false	false
+40-Exchanges	0xa50d0f016b4820699eb6bd90449e8129bbe31d49	Uniswap: TAPE		Etherscan			false	false	false
 75-EarlyActors	0xa50ec0d39fa913e62f1bae7074e6f36caa71855b	Miner_0008_591		OnChain			false	false	false
 32-Kickback:Friends	0xa5127ed18eee0b3ac45e86f38396c9dfda1f1edf	danielque		https://kickback.events/			false	false	false
 34-Humanity DAO	0xa5188ffb1038729bd3eab99d0356a3106ec39f08	custom_jonathan		https://www.humanitydao.org/humans			false	false	false

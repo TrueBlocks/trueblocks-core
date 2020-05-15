@@ -35,6 +35,7 @@ class CPage : public CBaseNode {
     string_q recordIcons;
     string_q defaultSearch;
     string_q defaultSort;
+    string_q defaultTags;
     string_q dataUrl;
     string_q dataQuery;
     string_q cmdUrl;
@@ -113,6 +114,7 @@ inline void CPage::initialize(void) {
     recordIcons = "";
     defaultSearch = "";
     defaultSort = "";
+    defaultTags = "";
     dataUrl = "";
     dataQuery = "";
     cmdUrl = "";
@@ -137,6 +139,7 @@ inline void CPage::duplicate(const CPage& pa) {
     recordIcons = pa.recordIcons;
     defaultSearch = pa.defaultSearch;
     defaultSort = pa.defaultSort;
+    defaultTags = pa.defaultTags;
     dataUrl = pa.dataUrl;
     dataQuery = pa.dataQuery;
     cmdUrl = pa.cmdUrl;

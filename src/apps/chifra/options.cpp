@@ -144,6 +144,7 @@ bool COptions::parseArguments(string_q& command) {
 
     scrapeSleep = (useconds_t)sleep;
 
+    string_q origMode = mode;
     if (mode == "blocks" || mode == "transactions" || mode == "receipts" || mode == "names" || mode == "logs" ||
         mode == "traces" || mode == "state" || mode == "tokens" || mode == "message" || mode == "abi" ||
         mode == "when") {
@@ -182,10 +183,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!editCmd.empty()) {
         tool_flags += " --editCmd " + editCmd;
     }
-    if (mockData) {
-        tool_flags += " --mockData ";
-        freshen_flags += " --mockData ";
-    }
     if (verbose) {
         tool_flags += " -v:" + uint_2_Str(verbose);
         freshen_flags += (" -v:" + uint_2_Str(verbose));
@@ -210,6 +207,36 @@ bool COptions::parseArguments(string_q& command) {
     if (mode == "scrape" && !isTestMode())
         LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
 
+    if (mockData) {
+        string_q which = origMode;
+        if (origMode == "names") {
+            if (contains(tool_flags, "tags")) {
+                origMode = "tags";
+            } else if (contains(tool_flags, "collections")) {
+                origMode = "collections";
+            }
+        } else if (origMode == "status") {
+            if (contains(tool_flags, "monitors")) {
+                origMode = "monitors";
+            }
+        }
+        string_q path = configPath("mockData/" + origMode + ".json");
+        LOG_INFO("Locking for mock data at: ", path, " found?: ", fileExists(path));
+        if (fileExists(path)) {
+            if (origMode == "export") {
+                for (size_t i = 0 ; i < 100 ; i++) {
+                    LOG_INFO(i, " of 100");
+                    usleep(30000);
+                }
+                LOG_INFO("Done");
+            }
+            cout << asciiFileToString(path);
+            return false;
+        }
+        tool_flags += " --mockData ";
+        freshen_flags += " --mockData ";
+    }
+
     EXIT_NOMSG(true);
 }
 
@@ -217,7 +244,7 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_HELP);
-    optionOn(OPT_EDITCMD | OPT_MOCKDATA);
+    optionOn(OPT_EDITCMD);
 
     // BEG_CODE_INIT
     sleep = 14;

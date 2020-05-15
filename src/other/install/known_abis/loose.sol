@@ -1,5 +1,7 @@
 contract A {
-  function deploy(string,uint256,uint256,uint256);
+  function fulfillBounty(uint256 _bountyID, string _dataIPFSHash, address _standardBounties, uint256 _standardBountiesVersion, address[] _members, bytes[] _signatures, 
+uint256[] _salts) { }
+  function deploy(string,uint256,uint256,uint256) { }
   function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) { }
   function pay(address src, uint256 srcAmount, address dest, address destAddress, uint256 maxDestAmount, uint256 minConversionRate, address walletId, bytes paymentData, 
 bytes hint, address kyberNetworkProxy);

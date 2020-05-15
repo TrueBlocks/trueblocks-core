@@ -57,6 +57,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x28c8d01ff633ea9cd8fc6a451d7457889e698de6	Ethereum Gold	ETG	Etherscan.io		Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.	false	false	false
 35-Pool Together	0x29fe7d60ddf151e5b52e5fab4f1325da6b2bd958	Pool Dai MCDAwarePool v0.2.12		Etherscan			false	false	false
 50-Tokens:ERC20	0x2a05d22db079bc40c2f77a1d1ff703a56e631cc1	BitAsean	BAS	On Chain	8	BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region.	false	false	false
+40-Exchanges	0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667	Uniswap: DAI		Etherscan			false	false	false
 60-Airdrops	0x2afbc96be0ac57e9e2194506d5565c45b2481f88	YOO Airdrop Sender		Etherscan			false	false	false
 60-Airdrops	0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f	BasicCoin Airdrop		Etherscan			false	false	false
 50-Tokens:ERC20	0x2e071d2966aa7d8decb1005885ba1977d6038a65	DICE	ROL	On Chain	16	Provably fair online Ether gaming on the Ethereum Blockchain	false	false	false
@@ -78,6 +79,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x408e41876cccdc0f92210600ef50372656052a38	Republic Token	REN	On Chain	18	A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.	false	false	false
 50-Tokens	0x419b8ed155180a8c9c64145e76dad49c0a4efb97	AltEstate token		Etherscan.io		ALT is a utility token for Alt.Estate ‚Äö√Ñ√Æ the IT company offering a new solution for real estate tokenization	false	false	false
 50-Tokens:ERC20	0x419d0d8bdd9af5e606ae2232ed285aff190e711b	FunFair	FUN	On Chain	8	FunFair is a decentralised gaming platform powered by Ethereum smart contracts	false	false	false
+60-Airdrops	0x426ca1ea2406c07d75db9585f22781c096e3d0e0	Minereum Airdrop		Etherscan			false	false	false
 50-Tokens:ERC20	0x42d6622dece394b54999fbd73d108123806f6a18	SPANK	SPANK	On Chain	18	A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.	false	false	false
 50-Tokens:ERC20	0x4355fc160f74328f9b383df2ec589bb3dfd82ba0	Opus Token	OPT	On Chain	18	Decentralised music platform built on Ethereum and IPFS.	false	false	false
 50-Tokens:ERC20	0x436f0f3a982074c4a05084485d421466a994fe53	Rate3	RTE	On Chain	18	Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.	false	false	false
@@ -161,11 +163,13 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Contracts	0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f	Grant 233 Ethereumetl medvedev1088		Gitcoin Website			false	false	false
 50-Tokens	0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48	USD Coin	USDC	Etherscan.io		USDC is a fully collateralized US Dollar stablecoin developed by CENTRE, the open source project and membership consortium, with Circle being the first of several forthcoming issuers.	false	false	false
 35-Pool Together	0xa145f5436741d9675f84a357249c4b90fae4b77e	Pool Creator		Etherscan			false	false	false
+60-Airdrops	0xa1907d33b417155faaecce2779b52df84928e28a	Minereum Airdrop Sender		Etherscan			false	false	false
 50-Tokens	0xa31108e5bab5494560db34c95492658af239357c	DACSEE	DACS	Etherscan.io		Global Decentralized Ride-Sharing Platform	false	false	false
 60-Airdrops	0xa3c52fd3235422d2ef328be58ffa77a0aa7ad683	EMANToken		Etherscan			false	false	false
 34-ENS	0xa4f29fc548856180f6b1e319ee4d86715875cce4	ENS: Nifty		Etherscan			false	false	false
 37-Sablier	0xa4fc358455febe425536fd1878be67ffdbdec59a	Sablier: Real-Time Finance		Etherscan			false	false	false
 60-Airdrops	0xa5025faba6e70b84f74e9b1113e5f7f4e7f4859f	AGLD Airdrop MultiSender App		Etherscan			false	false	false
+40-Exchanges	0xa50d0f016b4820699eb6bd90449e8129bbe31d49	Uniswap: TAPE		Etherscan			false	false	false
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On Chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.	false	false	false
 60-Airdrops	0xa69858f49385060371beb872c39d2f90b7a26e03	Katerium Airdrop		Etherscan			false	false	false
 34-ENS	0xa964ed4077ad3ba1946d118ce90544657bb4003b	ENS: Related 1		Etherscan			false	false	false
@@ -198,7 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 35-Pool Together	0xbd87447f48ad729c5c4b8bcb503e1395f62e8b98	Pool Usdc Token plUsdc RecipientWhitelistPoolTokenDecimals v0.2.12		Etherscan			false	false	false
 50-Tokens	0xbdeb4b83251fb146687fa19d1c660f99411eefe3	savedroid	SVD	Etherscan.io		Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses.	false	false	false
 60-Airdrops	0xbe90d4bbe667196b8d36313e92db5c53c19e391b	Katerium Airdrop Sender		Etherscan			false	false	false
-50-Tokens:ERC20	0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1	Melon Token	MLN	On Chain	18	The Melon protocol is a blockchain protocol for digital asset management built on the Ethereum platform	false	false	false
-50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX	Etherscan.io		Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.	false	false	false
-50-Tokens:ERC20	0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2	Wrapped Ether	WETH	On Chain	18		false	false	false
-60-Airdrops	0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e	KickAirdrop		Etherscan			false	false	false

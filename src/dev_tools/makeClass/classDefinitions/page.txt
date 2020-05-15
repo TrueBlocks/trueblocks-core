@@ -1,6 +1,6 @@
 [settings]
 class = CPage
 fields = string longName|string properName|string twoName|string sevenName|\
-    bool noPage|string dest_path|string recordIcons|string defaultSearch|string defaultSort|\
+    bool noPage|string dest_path|string recordIcons|string defaultSearch|string defaultSort|string defaultTags|\
     string dataUrl|string dataQuery|string cmdUrl|string schema|CSubpageArray subpages
 includes = etherlib.h|subpage.h

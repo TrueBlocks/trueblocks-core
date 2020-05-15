@@ -15,6 +15,7 @@
 
 extern bool visitField(const CFieldData& field, void* data);
 extern const char* STR_DELETE_CMDS;
+extern const char* STR_DEFAULT_TAGS;
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef) {
@@ -33,7 +34,8 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
     page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
-    page.defaultSearch = toml.getConfigStr("settings", "defaultSort", "");
+    page.defaultSearch = toml.getConfigStr("settings", "defaultSearch", page.defaultSort);
+    page.defaultTags = toml.getConfigStr("settings", "defaultTags", STR_DEFAULT_TAGS);
     string_q rec = substitute("," + toml.getConfigStr("settings", "recordIcons", "") + ",", ",,", "");
     replace(rec, "editing,", "header-Add,Delete/Undelete,Edit/Remove,");
     replace(rec, "viewing,", "ExternalLink,");
@@ -361,6 +363,7 @@ bool COptions::handle_generate_js_menus(void) {
                 page.dataQuery = t.getConfigStr("settings", "query_" + parts[1], "");
             }
             string_q contents = asciiFileToString(templateFile);
+            replaceAll(contents, "[{DEFAULT_TAGS}]", page.defaultTags);
             replaceAll(contents, "[{DATAURL}]", page.dataUrl);
             replaceAll(contents, "[{DATAQUERY}]", page.dataQuery);
             replaceAll(contents, "[{CMDURL}]",
@@ -731,3 +734,7 @@ const char* STR_DELETE_CMDS =
     "            });\n"
     "          }\n"
     "          break;\n";
+
+const char* STR_DEFAULT_TAGS =
+    "sortStrings([...new Set([{LONG}].data.map((item) => calcValue(item, { selector: 'tags', onDisplay: getFieldValue "
+    "})))], true)";

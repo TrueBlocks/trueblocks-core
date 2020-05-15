@@ -1,1003 +1,129 @@
 [
   {
-    "name": "deploy",
-    "type": "function",
-    "signature": "deploy(string,uint256,uint256,uint256)",
-    "encoding": "0x58948f07",
+    "constant": false,
     "inputs": [
       {
-        "type": "string",
-        "name": "val_0"
-      },
-      {
-        "type": "uint256",
-        "name": "val_1"
-      },
-      {
-        "type": "uint256",
-        "name": "val_2"
-      },
-      {
-        "type": "uint256",
-        "name": "val_3"
+        "name": "newImplementation",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "upgradeTo",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    "name": "clone",
-    "type": "function",
-    "signature": "clone(address,uint256,uint256)",
-    "encoding": "0xed74de9d",
+    "constant": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "_to"
+        "name": "newImplementation",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "_tokenId"
-      },
-      {
-        "type": "uint256",
-        "name": "_numClonesRequested"
+        "name": "data",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    "name": "pay",
-    "type": "function",
-    "signature": "pay(address,uint256,address,address,uint256,uint256,address,bytes,bytes,address)",
-    "encoding": "0xd337e37b",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "src"
-      },
-      {
-        "type": "uint256",
-        "name": "srcAmount"
-      },
-      {
-        "type": "address",
-        "name": "dest"
-      },
-      {
-        "type": "address",
-        "name": "destAddress"
-      },
-      {
-        "type": "uint256",
-        "name": "maxDestAmount"
-      },
-      {
-        "type": "uint256",
-        "name": "minConversionRate"
-      },
-      {
-        "type": "address",
-        "name": "walletId"
-      },
-      {
-        "type": "bytes",
-        "name": "paymentData"
-      },
-      {
-        "type": "bytes",
-        "name": "hint"
-      },
-      {
-        "type": "address",
-        "name": "kyberNetworkProxy"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "presentto",
-    "type": "function",
-    "signature": "presentto()",
-    "encoding": "0x396aa68f",
+    "constant": true,
     "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "present",
-    "type": "function",
-    "signature": "present(address[])",
-    "encoding": "0x83a0b24d",
-    "inputs": [
+    "name": "implementation",
+    "outputs": [
       {
-        "type": "address[]",
-        "name": "nanee",
-        "is_array": true
+        "name": "",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "name": "airDrop",
-    "type": "function",
-    "signature": "airDrop(address,uint256[],address[])",
-    "encoding": "0xd6916c34",
+    "constant": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "parent"
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "is_array": true
-      },
-      {
-        "type": "address[]",
-        "name": "droptargets",
-        "is_array": true
+        "name": "newAdmin",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "changeAdmin",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    "name": "splitTransfer",
-    "type": "function",
-    "signature": "splitTransfer(address,address,uint256,uint256,address)",
-    "encoding": "0xab832b43",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "toFirst"
-      },
-      {
-        "type": "address",
-        "name": "toSecond"
-      },
-      {
-        "type": "uint256",
-        "name": "valueFirst"
-      },
-      {
-        "type": "uint256",
-        "name": "valueSecond"
-      },
-      {
-        "type": "address",
-        "name": "tokenAddress"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "migrateAll",
-    "type": "function",
-    "signature": "migrateAll(uint256[])",
-    "encoding": "0x8e7e879f",
-    "inputs": [
-      {
-        "type": "uint256[]",
-        "name": "tokenIds",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "sendTokensArray",
-    "type": "function",
-    "signature": "sendTokensArray(address[],uint256)",
-    "encoding": "0x36ea5d40",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "beneficiaries",
-        "is_array": true
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "buy",
-    "type": "function",
-    "signature": "buy(uint256,uint256)",
-    "encoding": "0xd6febde8",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "id"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "setAddr",
-    "type": "function",
-    "signature": "setAddr(bytes32,address)",
-    "encoding": "0xd5fa2b00",
-    "inputs": [
-      {
-        "type": "bytes32",
-        "name": "node"
-      },
-      {
-        "type": "address",
-        "name": "addr"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "execute",
-    "type": "function",
-    "signature": "execute(bytes)",
-    "encoding": "0x09c5eabe",
-    "inputs": [
-      {
-        "type": "bytes",
-        "name": "val_0"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "withdrawToken",
-    "type": "function",
-    "signature": "withdrawToken(address,uint256)",
-    "encoding": "0x9e281a98",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "trade",
-    "type": "function",
-    "signature": "trade(address,uint256,address,uint256,uint256,uint256,address,uint8,bytes32,bytes32,uint256)",
-    "encoding": "0x0a19b14a",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "tokenGet"
-      },
-      {
-        "type": "uint256",
-        "name": "amountGet"
-      },
-      {
-        "type": "address",
-        "name": "tokenGive"
-      },
-      {
-        "type": "uint256",
-        "name": "amountGive"
-      },
-      {
-        "type": "uint256",
-        "name": "expires"
-      },
-      {
-        "type": "uint256",
-        "name": "nonce"
-      },
-      {
-        "type": "address",
-        "name": "user"
-      },
-      {
-        "type": "uint8",
-        "name": "v"
-      },
-      {
-        "type": "bytes32",
-        "name": "r"
-      },
-      {
-        "type": "bytes32",
-        "name": "s"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "cancelAuction",
-    "type": "function",
-    "signature": "cancelAuction(uint256)",
-    "encoding": "0x96b5a755",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "val_0"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "bid",
-    "type": "function",
-    "signature": "bid(uint256)",
-    "encoding": "0x454a2ab3",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "val_0"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "mintBatchFrozenTokens",
-    "type": "function",
-    "signature": "mintBatchFrozenTokens(address[],uint256[])",
-    "encoding": "0x54b2b176",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "accounts",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "amounts",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "execute",
-    "type": "function",
-    "signature": "execute(address,bytes)",
-    "encoding": "0x1cff79cd",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_target"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "multiGenerate",
-    "type": "function",
-    "signature": "multiGenerate(address,address[],bytes)",
-    "encoding": "0xf725839f",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_merkleMineContract"
-      },
-      {
-        "type": "address[]",
-        "name": "_recipients",
-        "is_array": true
-      },
-      {
-        "type": "bytes",
-        "name": "_merkleProofs"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "build",
-    "type": "function",
-    "signature": "build()",
-    "encoding": "0x8e1a55fc",
+    "constant": true,
     "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "airdropTokens",
-    "type": "function",
-    "signature": "airdropTokens(address[],uint256[])",
-    "encoding": "0x706f6937",
-    "inputs": [
+    "name": "admin",
+    "outputs": [
       {
-        "type": "address[]",
-        "name": "_recipients",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "_amounts",
-        "is_array": true
+        "name": "",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "name": "batchSend",
-    "type": "function",
-    "signature": "batchSend(address,uint160,uint256[])",
-    "encoding": "0x2c39da94",
     "inputs": [
       {
-        "type": "address",
-        "name": "_token"
+        "name": "_implementation",
+        "type": "address"
       },
       {
-        "type": "uint160",
-        "name": "_lotSize"
+        "name": "_admin",
+        "type": "address"
       },
       {
-        "type": "uint256[]",
-        "name": "_transfers",
-        "is_array": true
+        "name": "_data",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "constructor"
   },
   {
-    "name": "mintToAddresses",
-    "type": "function",
-    "signature": "mintToAddresses(address[],uint256)",
-    "encoding": "0xf190ac5f",
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address[]",
-        "name": "addresses",
-        "is_array": true
+        "indexed": false,
+        "name": "previousAdmin",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "indexed": false,
+        "name": "newAdmin",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "AdminChanged",
+    "type": "event"
   },
   {
-    "name": "split",
-    "type": "function",
-    "signature": "split(address,address)",
-    "encoding": "0x0f2c9329",
+    "anonymous": false,
     "inputs": [
       {
-        "type": "address",
-        "name": "targetFork"
-      },
-      {
-        "type": "address",
-        "name": "targetNoFork"
+        "indexed": true,
+        "name": "implementation",
+        "type": "address"
       }
     ],
-    "outputs": []
-  },
-  {
-    "name": "massNotify",
-    "type": "function",
-    "signature": "massNotify(address[])",
-    "encoding": "0x0e6848cc",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "_owners",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "transferPresaleTokens",
-    "type": "function",
-    "signature": "transferPresaleTokens(address,uint256)",
-    "encoding": "0x9b03a211",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "destination"
-      },
-      {
-        "type": "uint256",
-        "name": "amount"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "drop",
-    "type": "function",
-    "signature": "drop(address,address[],uint256[])",
-    "encoding": "0x7da5efc8",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token"
-      },
-      {
-        "type": "address[]",
-        "name": "recipients",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "values",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "send",
-    "type": "function",
-    "signature": "send(address[],uint256[])",
-    "encoding": "0xa645ff5f",
-    "inputs": [
-      {
-        "type": "address[]",
-        "name": "receivers",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "values",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "multisend",
-    "type": "function",
-    "signature": "multisend(address,address[],uint256[])",
-    "encoding": "0xad8733ca",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_tokenAddr"
-      },
-      {
-        "type": "address[]",
-        "name": "dests",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "values",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "mintUserToManyEvents",
-    "type": "function",
-    "signature": "mintUserToManyEvents(uint256[],address)",
-    "encoding": "0xf980f3dc",
-    "inputs": [
-      {
-        "type": "uint256[]",
-        "name": "eventIds",
-        "is_array": true
-      },
-      {
-        "type": "address",
-        "name": "to"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "mintEventToManyUsers",
-    "type": "function",
-    "signature": "mintEventToManyUsers(uint256,address[])",
-    "encoding": "0x278d9c41",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "eventId"
-      },
-      {
-        "type": "address[]",
-        "name": "to",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "mintToken",
-    "type": "function",
-    "signature": "mintToken(uint256,address)",
-    "encoding": "0xa140ae23",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_id"
-      },
-      {
-        "type": "address",
-        "name": "_owner"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "upgrade",
-    "type": "function",
-    "signature": "upgrade(address,address)",
-    "encoding": "0x99a88ec4",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_teamAddress"
-      },
-      {
-        "type": "address",
-        "name": "_artistAddress"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "execute",
-    "type": "function",
-    "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
-    "encoding": "0xaacaaf88",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_wallet"
-      },
-      {
-        "type": "bytes",
-        "name": "_data"
-      },
-      {
-        "type": "uint256",
-        "name": "_nonce"
-      },
-      {
-        "type": "bytes",
-        "name": "_signatures"
-      },
-      {
-        "type": "uint256",
-        "name": "_gasPrice"
-      },
-      {
-        "type": "uint256",
-        "name": "_gasLimit"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "vote",
-    "type": "function",
-    "signature": "vote(uint256)",
-    "encoding": "0x0121b93f",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "videoID"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "execTransaction",
-    "type": "function",
-    "signature": "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)",
-    "encoding": "0x6a761202",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "to"
-      },
-      {
-        "type": "uint256",
-        "name": "value"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      },
-      {
-        "type": "uint8",
-        "name": "operation"
-      },
-      {
-        "type": "uint256",
-        "name": "safeTxGas"
-      },
-      {
-        "type": "uint256",
-        "name": "dataGas"
-      },
-      {
-        "type": "uint256",
-        "name": "gasPrice"
-      },
-      {
-        "type": "address",
-        "name": "gasToken"
-      },
-      {
-        "type": "address",
-        "name": "refundReceiver"
-      },
-      {
-        "type": "bytes",
-        "name": "signatures"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "singleValueAirdrop",
-    "type": "function",
-    "signature": "singleValueAirdrop(address,address[],uint256)",
-    "encoding": "0x9d065838",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_addressOfToken"
-      },
-      {
-        "type": "address[]",
-        "name": "_recipients",
-        "is_array": true
-      },
-      {
-        "type": "uint256",
-        "name": "_value"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "multisendToken",
-    "type": "function",
-    "signature": "multisendToken(address,address[],uint256[])",
-    "encoding": "0x0b66f3f5",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token"
-      },
-      {
-        "type": "address[]",
-        "name": "_contributors",
-        "is_array": true
-      },
-      {
-        "type": "uint256[]",
-        "name": "_balances",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "proxyAssert",
-    "type": "function",
-    "signature": "proxyAssert(address,uint8,bytes)",
-    "encoding": "0x3f801f91",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "dest"
-      },
-      {
-        "type": "uint8",
-        "name": "howToCall"
-      },
-      {
-        "type": "bytes",
-        "name": "calldata"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "addAdmin",
-    "type": "function",
-    "signature": "addAdmin(address)",
-    "encoding": "0x70480275",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "_new_admin"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "renounceAdmin",
-    "type": "function",
-    "signature": "renounceAdmin()",
-    "encoding": "0x8bad0c0a",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "name": "invoke1CosignerSends",
-    "type": "function",
-    "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
-    "encoding": "0x91aeeedc",
-    "inputs": [
-      {
-        "type": "uint8",
-        "name": "v"
-      },
-      {
-        "type": "bytes32",
-        "name": "r"
-      },
-      {
-        "type": "bytes32",
-        "name": "s"
-      },
-      {
-        "type": "uint256",
-        "name": "nonce"
-      },
-      {
-        "type": "address",
-        "name": "authorizedAddress"
-      },
-      {
-        "type": "bytes",
-        "name": "data"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "cancelOrder_",
-    "type": "function",
-    "signature": "cancelOrder_(address[7],uint256[9],uint8,uint8,uint8,uint8,bytes,bytes,bytes,uint8,bytes32,bytes32)",
-    "encoding": "0xa8a41c70",
-    "inputs": [
-      {
-        "type": "address[7]",
-        "name": "addrs",
-        "is_array": true
-      },
-      {
-        "type": "uint256[9]",
-        "name": "uints",
-        "is_array": true
-      },
-      {
-        "type": "uint8",
-        "name": "feeMethod"
-      },
-      {
-        "type": "uint8",
-        "name": "side"
-      },
-      {
-        "type": "uint8",
-        "name": "saleKind"
-      },
-      {
-        "type": "uint8",
-        "name": "howToCall"
-      },
-      {
-        "type": "bytes",
-        "name": "calldata"
-      },
-      {
-        "type": "bytes",
-        "name": "replacementPattern"
-      },
-      {
-        "type": "bytes",
-        "name": "staticExtradata"
-      },
-      {
-        "type": "uint8",
-        "name": "v"
-      },
-      {
-        "type": "bytes32",
-        "name": "r"
-      },
-      {
-        "type": "bytes32",
-        "name": "s"
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "atomicMatch_",
-    "type": "function",
-    "signature": "atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])",
-    "encoding": "0xab834bab",
-    "inputs": [
-      {
-        "type": "address[14]",
-        "name": "addrs",
-        "is_array": true
-      },
-      {
-        "type": "uint256[18]",
-        "name": "uints",
-        "is_array": true
-      },
-      {
-        "type": "uint8[8]",
-        "name": "feeMethodsSidesKindsHowToCalls",
-        "is_array": true
-      },
-      {
-        "type": "bytes",
-        "name": "calldataBuy"
-      },
-      {
-        "type": "bytes",
-        "name": "calldataSell"
-      },
-      {
-        "type": "bytes",
-        "name": "replacementPatternBuy"
-      },
-      {
-        "type": "bytes",
-        "name": "replacementPatternSell"
-      },
-      {
-        "type": "bytes",
-        "name": "staticExtradataBuy"
-      },
-      {
-        "type": "bytes",
-        "name": "staticExtradataSell"
-      },
-      {
-        "type": "uint8[2]",
-        "name": "vs",
-        "is_array": true
-      },
-      {
-        "type": "bytes32[5]",
-        "name": "rssMetadata",
-        "is_array": true
-      }
-    ],
-    "outputs": []
-  },
-  {
-    "name": "register",
-    "type": "function",
-    "signature": "register(uint256,uint256)",
-    "encoding": "0xd66d6c10",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "_maxGasPrice"
-      },
-      {
-        "type": "uint256",
-        "name": "_maxFeePerClaim"
-      }
-    ],
-    "outputs": []
+    "name": "Upgraded",
+    "type": "event"
   }
 ]

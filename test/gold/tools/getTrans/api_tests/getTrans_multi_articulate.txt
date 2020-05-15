@@ -2281,21 +2281,21 @@
               "name": "NewOwner",
               "inputs": [
                 {
-                  "name": "node",
+                  "name": "_node",
                   "value": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86"
                 },
                 {
-                  "name": "label",
+                  "name": "_label",
                   "value": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
                 },
                 {
-                  "name": "owner",
+                  "name": "_owner",
                   "value": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
                 }
               ],
               "outputs": []
             },
-            "compressedLog": "NewOwner ( node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
+            "compressedLog": "NewOwner ( _node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, _label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, _owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
           },
           {
             "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -2309,17 +2309,17 @@
               "name": "NewResolver",
               "inputs": [
                 {
-                  "name": "_node",
+                  "name": "node",
                   "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
                 },
                 {
-                  "name": "_resolver",
+                  "name": "resolver",
                   "value": "0x1da022710df5002339274aadee8d58218e9d6ab5"
                 }
               ],
               "outputs": []
             },
-            "compressedLog": "NewResolver ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
+            "compressedLog": "NewResolver ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
           },
           {
             "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",

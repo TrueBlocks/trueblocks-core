@@ -389,22 +389,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -428,22 +428,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -496,22 +496,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -535,22 +535,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -1469,7 +1469,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 578418,
       "output": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -1495,7 +1496,7 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "outputs": [
         {
           "name": "appProxy",
-          "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+          "value": ""
         }
       ]
     },
@@ -1516,7 +1517,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 397026,
       "output": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -1542,7 +1544,7 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "outputs": [
         {
           "name": "appProxy",
-          "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+          "value": ""
         }
       ]
     },
@@ -1617,22 +1619,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -1656,22 +1658,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -1792,22 +1794,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -1831,22 +1833,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "_namespace",
+          "name": "namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "_appId",
+          "name": "appId",
           "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
         }
       ]
     },
-    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -1972,30 +1974,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2097,30 +2099,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2137,7 +2139,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 2380,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -2145,8 +2148,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -2167,7 +2170,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 3268,
       "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -2175,8 +2179,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -2424,30 +2428,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2471,30 +2475,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2518,30 +2522,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2643,30 +2647,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2760,30 +2764,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2807,30 +2811,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2854,30 +2858,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -2979,30 +2983,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, what: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -4339,7 +4343,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 9471,
       "output": "0x"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -4347,8 +4352,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -4369,7 +4374,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 3268,
       "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -4377,8 +4383,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -4626,30 +4632,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -4673,30 +4679,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -4720,30 +4726,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -4845,30 +4851,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0x"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -5581,22 +5587,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -5620,22 +5626,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -5706,18 +5712,18 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "resolver",
       "inputs": [
         {
-          "name": "_node",
+          "name": "node",
           "value": "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x5ffc014343cd971b7eb70732021e26c35b744cc4"
         }
       ]
     },
-    "compressedTrace": "resolver ( _node: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
+    "compressedTrace": "resolver ( node: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -5814,22 +5820,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x190de54345fdacbe5509ea112be053f6592a8d95"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1 )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -5853,22 +5859,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x190de54345fdacbe5509ea112be053f6592a8d95"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1 )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0x7b4f7602faf178a4a239b8b2ed4155358e256b08ee7c6b6b1b01ebec891ce1f1 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -6071,22 +6077,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -6110,22 +6116,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -6246,22 +6252,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x836835289a2e81b66ae5d95b7c8dbc0480dcf9da"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -6285,22 +6291,22 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "getApp",
       "inputs": [
         {
-          "name": "namespace",
+          "name": "_namespace",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
         },
         {
-          "name": "appId",
+          "name": "_appId",
           "value": "0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x836835289a2e81b66ae5d95b7c8dbc0480dcf9da"
         }
       ]
     },
-    "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
+    "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xbf8491150dafc5dcaee5b861414dca922de09ccffa344964ae167212e8c673ae )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -6357,18 +6363,18 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "resolver",
       "inputs": [
         {
-          "name": "_node",
+          "name": "node",
           "value": "0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x5ffc014343cd971b7eb70732021e26c35b744cc4"
         }
       ]
     },
-    "compressedTrace": "resolver ( _node: 0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f )",
+    "compressedTrace": "resolver ( node: 0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -7235,18 +7241,18 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "resolver",
       "inputs": [
         {
-          "name": "_node",
+          "name": "node",
           "value": "0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4"
         }
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "0x5ffc014343cd971b7eb70732021e26c35b744cc4"
         }
       ]
     },
-    "compressedTrace": "resolver ( _node: 0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
+    "compressedTrace": "resolver ( node: 0x9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -7553,30 +7559,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -7678,30 +7684,30 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "hasPermission",
       "inputs": [
         {
-          "name": "_who",
+          "name": "who",
           "value": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c"
         },
         {
-          "name": "_where",
+          "name": "where",
           "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
         },
         {
-          "name": "_what",
+          "name": "what",
           "value": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
         },
         {
-          "name": "_how",
+          "name": "how",
           "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4"
         }
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
     },
-    "compressedTrace": "hasPermission ( _who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
+    "compressedTrace": "hasPermission ( who: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f9fa3927f639745e587912d4b0fea7ef9013bf93fb907d29faeab57417ba6e1d4 )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -8913,7 +8919,7 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true"
         }
       ]
@@ -11625,7 +11631,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 2368,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IEVMScriptRegistry in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -11633,8 +11640,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -11733,7 +11740,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 920,
       "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IEVMScriptRegistry in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -11741,8 +11749,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -15923,7 +15931,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 9471,
       "output": "0x"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -15931,8 +15940,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -15953,7 +15962,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "gasUsed": 3268,
       "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
     }
-  },  {
+  }TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+,  {
     "type": "call",
     "error": "",
     "articulatedTrace": {
@@ -15961,8 +15971,8 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "inputs": [],
       "outputs": [
         {
-          "name": "val_0",
-          "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+          "name": "ret_0",
+          "value": ""
         }
       ]
     },
@@ -17168,7 +17178,7 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "setSubnodeOwner",
       "inputs": [
         {
-          "name": "node",
+          "name": "_node",
           "value": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86"
         },
         {
@@ -17176,12 +17186,12 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
           "value": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
         },
         {
-          "name": "owner",
+          "name": "_owner",
           "value": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
         }
       ]
     },
-    "compressedTrace": "setSubnodeOwner ( node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )",
+    "compressedTrace": "setSubnodeOwner ( _node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, _owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )",
     "action": {
       "address": "0x0",
       "balance": 0,
@@ -17341,16 +17351,16 @@ getTrace 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --ar
       "name": "setOwner",
       "inputs": [
         {
-          "name": "node",
+          "name": "_node",
           "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
         },
         {
-          "name": "owner",
+          "name": "_owner",
           "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
         }
       ]
     },
-    "compressedTrace": "setOwner ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )",
+    "compressedTrace": "setOwner ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )",
     "action": {
       "address": "0x0",
       "balance": 0,
