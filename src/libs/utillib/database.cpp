@@ -400,6 +400,8 @@ bool writeTheCode(const codewrite_t& cw) {
     if (contains(codeOut, "virtual") || contains(codeOut, "override")) {
         replace(codeOut, "~C", "virtual ~C");
         replace(codeOut, "~Q", "virtual ~Q");
+        replace(codeOut, "::virtual ~C", "::~C");
+        replace(codeOut, "::virtual ~Q", "::~Q");
     }
 
     bool testing = cw.testing;

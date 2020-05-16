@@ -56,7 +56,6 @@ class CAbi : public CBaseNode {
     bool articulateLog(CLogEntry* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
-    friend class CAccountWatch;
     size_t nFunctions(void) const {
         size_t cnt = 0;
         for (auto i : interfaces)

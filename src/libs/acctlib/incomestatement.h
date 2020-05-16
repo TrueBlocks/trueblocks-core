@@ -52,7 +52,6 @@ class CIncomeStatement : public CBaseNode {
     void correct(void) {
         endBal = curBalance;
     }
-    friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CIncomeStatement& item) const;
     bool operator!=(const CIncomeStatement& item) const {

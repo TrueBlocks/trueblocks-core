@@ -16,6 +16,7 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "acctlib.h"
+#include "tokenbalancerecord.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

@@ -23,7 +23,6 @@ void acctlib_init(QUITHANDLER qh) {
     CIncomeStatement::registerClass();
     CBalanceRecord::registerClass();
     CBalanceDelta::registerClass();
-    CTokenBalanceRecord::registerClass();
 
     CTreeRoot::registerClass();
     CTreeNode::registerClass();

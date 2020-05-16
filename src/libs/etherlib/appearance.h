@@ -16,7 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "zappearance.h"
+#include "appearance.h"
 
 namespace qblocks {
 
@@ -208,6 +208,67 @@ extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCT
 extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorCnfg(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorCnfg(const string_q& addr);
+
+//----------------------------------------------------------------
+struct CAddressRecord_base {
+    uint8_t bytes[20];
+    uint32_t offset;
+    uint32_t cnt;
+};
+
+//----------------------------------------------------------------
+struct CAppearance_base {
+    uint32_t blk;
+    uint32_t txid;
+    CAppearance_base(void) {
+        blk = txid = 0;
+    }
+    CAppearance_base(uint32_t b, uint32_t t) : blk(b), txid(t) {
+    }
+    CAppearance_base(const string_q& b, const string_q& t)
+        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
+    }
+    CAppearance_base(string_q& line) {  // NOLINT
+        replaceAll(line, ".", "\t");
+        if (!contains(line, "\t"))
+            return;
+        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
+        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
+    }
+};
+typedef vector<CAppearance_base> CAppearanceArray_base;
+inline bool operator<(const CAppearance_base& v1, const CAppearance_base& v2) {
+    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
+}
+inline bool sortAppearanceBaseReverse(const CAppearance_base& v1, const CAppearance_base& v2) {
+    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
+}
+
+//----------------------------------------------------------------
+struct CHeaderRecord_base {
+    uint32_t magic;
+    uint8_t hash[32];
+    uint32_t nAddrs;
+    uint32_t nRows;
+};
+
+//---------------------------------------------------------------------------
+class CIndexArchive : public CArchive {
+  public:
+    CHeaderRecord_base header;
+    uint64_t nAddrs;
+    uint64_t nApps;
+    CAddressRecord_base* addresses;
+    CAppearance_base* appearances;
+
+    explicit CIndexArchive(bool mode);
+    ~CIndexArchive(void);
+    bool ReadIndexFromBinary(const string_q& fn);
+
+  private:
+    CIndexArchive(void) : CArchive(READING_ARCHIVE) {
+    }
+};
 // EXISTING_CODE
 }  // namespace qblocks

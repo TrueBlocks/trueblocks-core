@@ -455,7 +455,6 @@ bool prepareBuiltIn(string_q& options) {
                     ::remove(getMonitorLast(a).c_str());
                     ::remove(getMonitorExpt(a).c_str());
                     ::remove(getMonitorBals(a).c_str());
-                    ::remove(getMonitorCnfg(a).c_str());
                 }
 
                 string_q loc = getCWD() + "./app_tests/";
@@ -502,7 +501,6 @@ void cleanMonitors(void) {
         ::remove(getMonitorLast(a).c_str());
         ::remove(getMonitorExpt(a).c_str());
         ::remove(getMonitorBals(a).c_str());
-        ::remove(getMonitorCnfg(a).c_str());
     }
 }
 

@@ -21,7 +21,6 @@
 #include "apispec.h"
 #include "indexing.h"
 #include "ethstate.h"
-#include "tokenbalancerecord.h"
 #include "balancerecord.h"
 #include "balancedelta.h"
 #include "ens.h"

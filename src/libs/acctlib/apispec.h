@@ -40,7 +40,6 @@ class CApiSpec : public CBaseNode {
     // EXISTING_CODE
     bool sendData(const string_q& data);
     string_q getData(const string_q& params);
-    friend class CAccountWatch;
     // EXISTING_CODE
     bool operator==(const CApiSpec& item) const;
     bool operator!=(const CApiSpec& item) const {

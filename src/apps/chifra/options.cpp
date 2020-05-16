@@ -224,7 +224,7 @@ bool COptions::parseArguments(string_q& command) {
         LOG_INFO("Locking for mock data at: ", path, " found?: ", fileExists(path));
         if (fileExists(path)) {
             if (origMode == "export") {
-                for (size_t i = 0 ; i < 100 ; i++) {
+                for (size_t i = 0; i < 100; i++) {
                     LOG_INFO(i, " of 100");
                     usleep(30000);
                 }
