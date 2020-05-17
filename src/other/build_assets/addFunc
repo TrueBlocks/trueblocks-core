@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-export HOME="/Users/jrush/.quickBlocks/"
-export CACHE="/Users/jrush/.quickBlocks/cache/abis"
+export HOME="/Users/jrush/.quickBlocks/known_abis"
 export SOURCE="../src/other/install/known_abis"
 
 pico $SOURCE/loose.sol
 cp -p $SOURCE/loose.sol ./0x22c1f6050e56d2876009903609a2cc3fef83b415.sol
-grabAbi 0x22c1f6050e56d2876009903609a2cc3fef83b415
-cat $CACHE/0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq >$SOURCE/loose.json
-cat $CACHE/0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq  >$HOME/known_abis/loose.json
-rm -f ./0x22c1f6050e56d2876009903609a2cc3fef83b415.json $CACHE/0x22c1f6050e56d2876009903609a2cc3fef83b415.json
+grabAbi --sol 0x22c1f6050e56d2876009903609a2cc3fef83b415
+cat ./0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq >$HOME/loose.json
+cat ./0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq >$SOURCE/loose.json
+

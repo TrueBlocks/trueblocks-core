@@ -2829,6 +2829,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x96d4f0e75ae86e4c46cd8e9d4ae2f2309bd6ec45	EvanvanNess		Various Places			false	false	false
 90-DevCon2:Individual	0x96e8737891530c89c3fa7b848ce35b54b400f6c3	Marco Giglio		DevCon2 Token Contract			false	false	false
 75-EarlyActors	0x970a90087889561eee7432daa7be584df9e67f75	Miner_0061_95		OnChain			false	false	false
+31-Gitcoin Grants:Contracts	0x970cc8c95c614a7335c1487eb2e16848983d5fe6	GitCoin Subscription Sender		Etherscan			false	false	false
 50-Tokens:ERC20	0x970e035e2a013cf4becd67e300d65bc32a56d826	Bodhi Ethereum	BOE	On Chain	8	Bodhi aims to build a credible, autonomous, and global decentralized prediction market platform.	false	false	false
 50-Tokens:ERC20	0x9720b467a710382a232a32f540bdced7d662a10b	Vezt	VZT	On Chain	18	Vezt is an intellectual property rights marketplace that lets music fans buy rights in their favorite songs.	false	false	false
 50-Tokens:ERC20	0x973e52691176d36453868d9d86572788d27041a9	DxChain Token	DX	On Chain	18	Provide solutions to big data problems	false	false	false
