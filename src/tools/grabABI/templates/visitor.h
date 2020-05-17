@@ -66,8 +66,8 @@ class COptions : public COptionsBase {
     CTransBuffer tBuffer;
 #endif
 
-    CAccountWatchArray monitors;
-    CAccountWatchArray named;
+    C AccountWatchArray monitors;
+    C AccountWatchArray named;
 
     string_q transFmt;
     string_q traceFmt;
@@ -88,8 +88,8 @@ class COptions : public COptionsBase {
 
     void displayTrans(ostream& os, const CTransaction* theTrans) const;
     void displayTrace(ostream& os, const CTransaction* theTrans) const;
-    typedef bool (*NAMEVISITFUNC)(string_q& str, const CAccountWatch& watch);
-    void renameItems(string_q& str, const CAccountWatchArray& array) const;
+    typedef bool (*NAMEVISITFUNC)(string_q& str, const C AccountWatch& watch);
+    void renameItems(string_q& str, const C AccountWatchArray& array) const;
 };
 
 // EXISTING_CODE

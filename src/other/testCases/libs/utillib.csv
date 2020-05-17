@@ -81,7 +81,6 @@ on, cmd,  fast, null, utillib/tomlTest,     test14,         n, val = test14.toml
 on, cmd,  fast, null, utillib/tomlTest2,    acctExport,     n, val = acctExport.toml
 on, cmd,  fast, null, utillib/tomlTest2,    acctScrape,     n, val = acctScrape.toml
 on, cmd,  fast, null, utillib/tomlTest2,    blockScrape,    n, val = blockScrape.toml
-on, cmd,  fast, null, utillib/tomlTest2,    cacheMan,       n, val = cacheMan.toml
 on, cmd,  fast, null, utillib/tomlTest2,    chifra,         n, val = chifra.toml
 on, cmd,  fast, null, utillib/tomlTest2,    ethslurp,       n, val = ethslurp.toml
 on, cmd,  fast, null, utillib/tomlTest2,    ethNames,       n, val = ethNames.toml

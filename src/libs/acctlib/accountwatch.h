@@ -56,6 +56,8 @@ class CAccountWatch : public CAccountName {
     void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);
+    blknum_t nextBlockAsPerMonitor(void) const;
+    bool isLocked(string_q& msg) const;
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
     bool operator!=(const CAccountWatch& item) const {
@@ -202,5 +204,6 @@ extern const char* STR_DISPLAY_ACCOUNTWATCH;
 // EXISTING_CODE
 typedef map<address_t, CAccountWatch> CAccountWatchMap;  // NOLINT
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
+#define CMonitor CAccountWatch
 // EXISTING_CODE
 }  // namespace qblocks

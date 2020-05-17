@@ -119,9 +119,11 @@ bool COptions::parseArguments(string_q& command) {
     //        expContext().fmtMap["header"] = "";
 
     // Scan the monitors to see if any are locked (fail if so)...
-    for (auto monitor : monitors)
-        if (!checkLocks(monitor.address))
-            EXIT_NOMSG(false);
+    for (auto monitor : monitors) {
+        string_q msg;
+        if (monitor.isLocked(msg))
+            EXIT_USAGE(msg);
+    }
 
     //
     // Find the earliest block we need to start scanning at
@@ -132,7 +134,7 @@ bool COptions::parseArguments(string_q& command) {
     //       next_block = last visited block + 1
     blknum_t nextBlockToVisit = NOPOS;
     for (auto monitor : monitors)
-        nextBlockToVisit = min(nextBlockToVisit, nextBlockAsPerMonitor(monitor.address));
+        nextBlockToVisit = min(nextBlockToVisit, monitor.nextBlockAsPerMonitor());
 
     blknum_t lastBlockToVisit =
         (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
@@ -193,36 +195,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-#define checkLock(a, b)                                                                                                \
-    {                                                                                                                  \
-        string_q fn = (a);                                                                                             \
-        if (fileExists(fn + ".lck"))                                                                                   \
-            return usage("The " + string_q(b) + " file '" + fn + "' is locked. Quitting...");                          \
-    }
-
-bool COptions::checkLocks(const address_t& address) const {
-    checkLock(getMonitorPath(address), "cache");
-    checkLock(getMonitorLast(address), "last block");
-    checkLock(getMonitorExpt(address), "last export");
-    checkLock(getMonitorBals(address), "last export");
-    checkLock(getMonitorCnfg(address), "config");
-    checkLock(getMonitorPath(address) + ".deleted", "marker");
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-blknum_t COptions::nextBlockAsPerMonitor(const address_t& address) const {
-    if (fileExists(getMonitorLast(address)))
-        return str_2_Uint(asciiFileToString(getMonitorLast(address)));
-
-    // Contracts can receive ether prior to being deployed (counter-factually). By default, we ignore
-    // this and start our scan at the deploy block. EOAs return NOPOS as deploy block.
-    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
-        blknum_t deployed = getDeployBlock(address);
-        return (deployed == NOPOS ? 0 : deployed);
-    }
-    return 0;
 }

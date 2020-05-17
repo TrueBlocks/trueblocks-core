@@ -428,5 +428,37 @@ void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
         *tx_cache << item.blk << item.txid;
     tx_cache->flush();
 }
+
+//--------------------------------------------------------------------------------
+blknum_t CAccountWatch::nextBlockAsPerMonitor(void) const {
+    if (fileExists(getMonitorLast(address)))
+        return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+
+    // Contracts can receive ether prior to being deployed (counter-factually). By default, we ignore
+    // this and start our scan at the deploy block. EOAs return NOPOS as deploy block.
+    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+        blknum_t deployed = getDeployBlock(address);
+        return (deployed == NOPOS ? 0 : deployed);
+    }
+    return 0;
+}
+
+//--------------------------------------------------------------------------------
+#define checkLock(fn, b)                                                                                               \
+    if (fileExists((fn) + ".lck")) {                                                                                   \
+        msg = ("The " + string_q(b) + " file '" + fn + "' is locked. Quitting...");                                    \
+        return true;                                                                                                   \
+    }
+
+//--------------------------------------------------------------------------------
+bool CAccountWatch::isLocked(string_q& msg) const {
+    checkLock(getMonitorPath(address), "cache");
+    checkLock(getMonitorLast(address), "last block");
+    checkLock(getMonitorExpt(address), "last export");
+    checkLock(getMonitorBals(address), "last export");
+    checkLock(getMonitorCnfg(address), "config");
+    checkLock(getMonitorPath(address) + ".deleted", "marker");
+    return false;
+}
 // EXISTING_CODE
 }  // namespace qblocks

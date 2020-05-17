@@ -128,7 +128,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::renameItems(string_q& str, const CAccountWatchArray& watchArray) const {
+void COptions::renameItems(string_q& str, const C AccountWatchArray& watchArray) const {
     for (auto watch : watchArray) {
         if (json_on) {
             CStringArray fields = {"to", "from", "address", "contractAddress"};
@@ -168,7 +168,7 @@ bool COptions::loadWatches(const CToml& toml) {
 
     // Check the watches for validity
     for (uint32_t i = 0; i < watches.size(); i++) {
-        CAccountWatch* watch = &watches.at(i);
+        C AccountWatch* watch = &watches.at(i);
         if (!isAddress(watch->address))
             return usage("Invalid watch address " + watch->address + "\n");
 
@@ -181,6 +181,6 @@ bool COptions::loadWatches(const CToml& toml) {
         blockStats.maxWatchBlock = max(blockStats.maxWatchBlock, watch->lastBlock);
     }
 
-    watches.push_back(CAccountWatch("Others", "Other Accts", 0, UINT32_MAX, bRed));
+    watches.push_back(C AccountWatch("Others", "Other Accts", 0, UINT32_MAX, bRed));
     return true;
 }

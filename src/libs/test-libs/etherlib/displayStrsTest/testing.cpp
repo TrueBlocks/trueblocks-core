@@ -36,9 +36,9 @@ int main(int argc, const char* argv[]) {
 bool testDisplayStr(COptions& options) {
     cout << string_q(30, '-') << options.className << string_q(30, '-') << endl;
     if (options.className == "CAccountWatch") {
-        CAccountWatch watch;
+        CMonitor monitor;
         SHOW_FIELD(CAccountWatch, "abi_spec");
-        watch.name = "watch";
+        monitor.name = "monitor";
 
         CFunction func;
         func.name = "interface";
@@ -52,7 +52,7 @@ bool testDisplayStr(COptions& options) {
         CAbi abi;
         abi.address = "0x1234567890123456789012345678901234567890";
         abi.interfaces.push_back(func);
-        watch.abi_spec = abi;
+        monitor.abi_spec = abi;
 
         CEthState es;
         es.address = "0x1234567890123456789012345678901234567890";
@@ -60,24 +60,24 @@ bool testDisplayStr(COptions& options) {
         es.nonce = 1001234;
         es.code = "0xTHIS_IS_BOGUS_CODE";
         es.storage = "0xTHIS_IS_BOGUS_STORAGE_DATA";
-        watch.stateHistory.push_back(es);
+        monitor.stateHistory.push_back(es);
 
         CIncomeStatement is;
         is.inflow = str_2_Wei("2000000000000000000");
-        watch.statement = is;
+        monitor.statement = is;
 
-        cout << watch.Format("[{p:STATEMENT::INFLOW}]: [{STATEMENT::INFLOW}]") << endl;
+        cout << monitor.Format("[{p:STATEMENT::INFLOW}]: [{STATEMENT::INFLOW}]") << endl;
         // TODO(tjayrush): To address elements of array it should look like this:
-        //      watch.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
+        //      monitor.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
         // or
-        //      watch.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
-        cout << watch.abi_spec.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << watch.abi_spec.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << watch.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
-        cout << watch.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
-        cout << watch.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;
-        cout << watch.stateHistory[0].Format("[{p:CODE}]: [{CODE}]") << endl;
-        cout << watch.stateHistory[0].Format("[{p:STORAGE}]: [{STORAGE}]") << endl;
+        //      monitor.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
+        cout << monitor.abi_spec.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
+        cout << monitor.abi_spec.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
+        cout << monitor.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
+        cout << monitor.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
+        cout << monitor.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;
+        cout << monitor.stateHistory[0].Format("[{p:CODE}]: [{CODE}]") << endl;
+        cout << monitor.stateHistory[0].Format("[{p:STORAGE}]: [{STORAGE}]") << endl;
 
     } else if (options.className == "CBlock") {
         CTraceResult tr;

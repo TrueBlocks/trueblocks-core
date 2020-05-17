@@ -31,8 +31,6 @@ class COptions : public COptionsBase {
 
     bool visitBinaryFile(const string_q& path, void* data);
     void moveToProduction(void);
-    bool checkLocks(const address_t& addr) const;
-    blknum_t nextBlockAsPerMonitor(const address_t& addr) const;
 };
 
 #define VIS_FINAL (1 << 1)
