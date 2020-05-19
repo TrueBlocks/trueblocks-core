@@ -16,7 +16,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "accountwatch.h"
 
 namespace qblocks {
 

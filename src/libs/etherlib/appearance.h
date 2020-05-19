@@ -204,13 +204,6 @@ class CUniqueState {
 
 extern int findAppearance(const void* v1, const void* v2);
 
-typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
-extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorCnfg(const string_q& addr);
-
 //----------------------------------------------------------------
 struct CAddressRecord_base {
     uint8_t bytes[20];

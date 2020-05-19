@@ -4217,6 +4217,14 @@
       "output_names": ""
     },
     {
+      "name": "submitProposal",
+      "type": "function",
+      "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
+      "encoding": "0x590f940b",
+      "input_names": "applicant,sharesRequested,lootRequested,tributeOffered,tributeToken,paymentRequested,paymentToken,details,",
+      "output_names": ""
+    },
+    {
       "name": "discardRelayer",
       "type": "function",
       "signature": "discardRelayer(address,uint256)",
@@ -6761,6 +6769,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "sponsorProposal",
+      "type": "function",
+      "signature": "sponsorProposal(uint256)",
+      "encoding": "0x9746d940",
+      "input_names": "proposalId,",
+      "output_names": ""
+    },
+    {
       "name": "removeERC20",
       "type": "function",
       "signature": "removeERC20(uint256,address,uint256)",
@@ -6854,6 +6870,14 @@
       "signature": "drasticMeasure()",
       "encoding": "0x9958f045",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "submitVote",
+      "type": "function",
+      "signature": "submitVote(uint256,uint8)",
+      "encoding": "0x99653fbe",
+      "input_names": "proposalIndex,uintVote,",
       "output_names": ""
     },
     {

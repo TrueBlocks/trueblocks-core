@@ -3463,6 +3463,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x47bc01597798dcd7506dcca36ac4302fc93a8cfb	Crowd Machine Compute Token	CMCT	On Chain	8	Cyber Movie Chain is a project base on ERC-20 platform to develop a comprehensive block chain technology solution consisting of its Cyber Movie Chain Platform.	false	false	false
 76-Verified	0x47bef29a73f5af37ed666f9bda9aae1c554fc163	PLAT		Etherscan			false	false	false
 76-Verified	0x47c4b020eed6552446da7642356dc4a52e278fe8	MDPLPToken		Etherscan			false	false	false
+30-Contracts	0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936	Tornado.Cash 1 ETH		Etherscan			false	false	false
 50-Tokens	0x47d1a59cbdd19aee060c859c0009277e245328ae	Sonder Token	SNR	Etherscan.io		Overcome the barriers to integration of blockchain-technologies into e-commerce market.	false	false	false
 34-Humanity DAO	0x47d7dd47488f4dc106602555183c0272d3206f43	ExtroOverman		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x47d9d899bfb70cc53634e0cd7eea105217ad1649	TokenERC20		Etherscan			false	false	false
@@ -3994,6 +3995,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x521659ddae7188ac1972a8c9c9d7ffb8e37cdfb3	Dcdc		Etherscan			false	false	false
 34-Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner		TrueBlocks.io			false	false	false
 76-Verified	0x521a2ac7b33b09fa21a1ad7c040f4e1b5912c1d0	ZTokens_ERC20		Etherscan			false	false	false
+30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related		Etherscan			false	false	false
 76-Verified	0x521da4a05a7a4c1714fdb747bb1a91296352e89c	SAMPLE		Etherscan			false	false	false
 76-Verified	0x521fa45ce25b0679a7df4f60f78a407c4bfa2f05	Contract		Etherscan			false	false	false
 34-Humanity DAO	0x52252e87a76187bb8aa1de22576cda3313f93aa3	syerubandi		https://www.humanitydao.org/humans			false	false	false
@@ -8633,6 +8635,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Contracts	0xb53b0255895c4f9e3a185e484e5b674bccfbc076	Grant 213 Metagame		GitCoin Website			false	false	false
 76-Verified	0xb53e08b97724126bda6d237b94f766c0b81c90fe	PIXBY		Etherscan			false	false	false
 81-Other	0xb5409036f98c121b91f28dce7b855737c3aed5c7	Matching_Finneys_id160_cnt1_4mo		Ether Camp			false	false	false
+30-Contracts	0xb541fc07bc7619fd4062a54d96268525cbc6ffef	Tornado.Cash Mixer 2		Etherscan			false	false	false
 76-Verified	0xb545f2841cb5c03e4c35605c3103e3045af614b6	SuperConductToken		Etherscan			false	false	false
 76-Verified	0xb553cbf80c7bf5450a942c9803be9910bdd1f31c	CurveFlash		Etherscan			false	false	false
 76-Verified	0xb553ebbc620d8c8b0c65e8676420742919a70eb5	ERC20Wrapper		Etherscan			false	false	false
@@ -8641,6 +8644,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xb55aad20a6c310a5e4b68c3ff1abe5e3ba1b7ffb	PermittedExchanges		Etherscan			false	false	false
 76-Verified	0xb55b0f33d6a2a03a275ca85d58e9357e1a141187	LoanManager		Etherscan			false	false	false
 91-Friends	0xb55b33a590058c26bd5aeda4cf89382665f49d26	Giveth Wallet Owner 3		TrueBlocks.io			false	false	false
+50-Tokens:ERC20	0xb55c5cac5014c662fdbf21a2c59cd45403c482fd	Clovers Network Token	CLV	Etherscan			false	false	false
 34-Humanity DAO	0xb55daf0e6d1b535b34a370ed764d105c57d1ff78	rleshner		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xb561239d96ba2283bab9aabc3401828c05bdc753	Exchange		Etherscan			false	false	false
 76-Verified	0xb56523013db3c29144f779ba441a483c04de1640	HSIERC20Token		Etherscan			false	false	false
@@ -9595,7 +9599,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xc92a1016e6707cd4d330ddd2368f8f1d880f598a	Zealpay		Etherscan			false	false	false
 32-Kickback:Friends	0xc92d279482efdbcd69b0f0cebb10222d8b11aeeb	chrisnatoli		https://kickback.events/			false	false	false
 32-Kickback:Friends	0xc92d76e01bd4e7ce25819c94fc6c3aea7b2cd155	ceresstation		https://kickback.events/			false	false	false
-6-Airdrops	0xc92e74b131d7b1d46e60e07f3fae5d8877dd03f0	Minereum Old Token 2		Etherscan			false	false	false
+60-Airdrops	0xc92e74b131d7b1d46e60e07f3fae5d8877dd03f0	Minereum Airdrop		Etherscan			false	false	false
 81-Other:DAO Curators	0xc947faed052820f1ad6f4dda435e684a2cd06bb4	Fabian Vogelsteller		DAO_Curator			false	false	false
 76-Verified	0xc949fc82a15964fb5b97e5cf8f9ffed139086821	TokenERC20		Etherscan			false	false	false
 76-Verified	0xc94ff26042f761ecf585cd25bc44866946c74ae7	TokenERC20		Etherscan			false	false	false

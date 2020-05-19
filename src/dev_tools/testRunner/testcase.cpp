@@ -437,7 +437,7 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "CLEANUP"};
-CStringArray testAddrs = {
+CAddressArray testAddrs = {
     "0x001d14804b399c6ef80e64576f657660804fec0b", "0x1111111111111111111111111111111111111111",
     "0x1111122222111112222211111222221111122222", "0x1234567812345678123456781234567812345678",
     "0x1234567890123456789012345678901234567890", "0x5555533333555553333355555333335555533333",
@@ -451,29 +451,8 @@ bool prepareBuiltIn(string_q& options) {
         string_q match = nextTokenClear(cmd, '|');
         if (startsWith(options, match)) {
             if (match == "CLEANUP") {
-                for (auto a : testAddrs) {
-                    ::remove(getMonitorPath(a).c_str());
-                    ::remove(getMonitorLast(a).c_str());
-                    ::remove(getMonitorExpt(a).c_str());
-                    ::remove(getMonitorBals(a).c_str());
-                }
-
-                string_q loc = getCWD() + "./app_tests/";
-                if (!folderExists(loc)) {
-                    cerr << "apps test files not found at: " << loc << endl;
-                    exit(0);
-                }
-
-                ostringstream os;
-                os << "cp -p " << loc << "app_tests.tar.gz " << getMonitorPath("") << " && ";
-                os << "cd " << getMonitorPath("") << " && ";
-                os << "gunzip *.gz 2>/dev/null && ";
-                os << "tar -xvf *.tar 2>/dev/null && ";
-                os << "rm -f *.tar && ";
-                os << "cd - 2>&1 1>/dev/null";
-                // clang-format off
-                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                // clang-format on
+                cleanMonitors(testAddrs);
+                establishTestMonitors();
 
             } else {
                 ostringstream os;
@@ -493,16 +472,6 @@ bool prepareBuiltIn(string_q& options) {
         }
     }
     return false;
-}
-
-//-----------------------------------------------------------------------
-void cleanMonitors(void) {
-    for (auto a : testAddrs) {
-        ::remove(getMonitorPath(a).c_str());
-        ::remove(getMonitorLast(a).c_str());
-        ::remove(getMonitorExpt(a).c_str());
-        ::remove(getMonitorBals(a).c_str());
-    }
 }
 
 //-----------------------------------------------------------------------

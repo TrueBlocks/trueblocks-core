@@ -16,16 +16,16 @@ bool COptions::openIncomeStatement(const CBlock& block) {
     if (!accounting_on)
         return true;
 
-    for (auto& watch : watches) {
-        watch.statement.inflow = watch.statement.outflow = watch.statement.gasCostInWei = 0;
-        if (isAddress(watch.address)) {
-            watch.statement.curBalance = get NodeBal(watch.stateHistory, watch.address, block.blockNumber - 1);
-            bigint_t diff = (watch.statement.curBalance - watch.statement.endBal);
+    for (auto& w atch : w atches) {
+        w atch.statement.inflow = w atch.statement.outflow = w atch.statement.gasCostInWei = 0;
+        if (isAddress(w atch.address)) {
+            w atch.statement.curBalance = get NodeBal(w atch.stateHistory, w atch.address, block.blockNumber - 1);
+            bigint_t diff = (w atch.statement.curBalance - w atch.statement.endBal);
             if (!no_check && (diff != 0)) {
                 single_on = true;
-                string_q c1 = watch.color, c2 = cOff;
+                string_q c1 = w atch.color, c2 = cOff;
                 cout << "\r\n" << bRed << string_q(5, '-') << " WARNING " << string_q(166, '-') << "\r\n";
-                cout << c1 << watch.address << c2 << " is out of balance by " << cRed << wei_2_Ether(bni_2_Str(diff))
+                cout << c1 << w atch.address << c2 << " is out of balance by " << cRed << wei_2_Ether(bni_2_Str(diff))
                      << cOff << " ether at the start of block " << cYellow << block.blockNumber << "\r\n"
                      << cOff;
                 cout << bRed << string_q(180, '-') << cOff << "\r\n";
@@ -58,20 +58,20 @@ bool COptions::accountForExtTransaction(const CBlock& block, const CTransaction*
     }
 
     // find the contracts we have to account for...
-    size_t tWhich = watches.size() - 1;
-    size_t fWhich = watches.size() - 1;
+    size_t tWhich = w atches.size() - 1;
+    size_t fWhich = w atches.size() - 1;
     size_t cnt = 0;
-    for (auto watch : watches) {
-        if (containsI(trans->to, watch.address))
+    for (auto w atch : w atches) {
+        if (containsI(trans->to, w atch.address))
             tWhich = cnt;
-        if (containsI(trans->from, watch.address))
+        if (containsI(trans->from, w atch.address))
             fWhich = cnt;
         cnt++;
     }
-    if (tWhich == watches.size() - 1) {
+    if (tWhich == w atches.size() - 1) {
         cnt = 0;
-        for (auto watch : watches) {
-            if (containsI(trans->receipt.contractAddress, watch.address))
+        for (auto w atch : w atches) {
+            if (containsI(trans->receipt.contractAddress, w atch.address))
                 tWhich = cnt;
             cnt++;
         }
@@ -79,8 +79,8 @@ bool COptions::accountForExtTransaction(const CBlock& block, const CTransaction*
 
     // Nothing to record if there was an error, but we do have to account for gas
     if (trans->isError) {  // || trans->value == 0)
-        if (fWhich != watches.size() - 1) {
-            watches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
+        if (fWhich != w atches.size() - 1) {
+            w atches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
             transStats.nAccountedFor++;
         }
 #ifdef DEBUGGER_ON
@@ -89,10 +89,10 @@ bool COptions::accountForExtTransaction(const CBlock& block, const CTransaction*
         return true;
     }
 
-    watches.at(fWhich).statement.outflow += trans->value;
-    if (fWhich != watches.size() - 1)
-        watches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
-    watches.at(tWhich).statement.inflow += trans->value;
+    w atches.at(fWhich).statement.outflow += trans->value;
+    if (fWhich != w atches.size() - 1)
+        w atches.at(fWhich).statement.gasCostInWei += (trans->receipt.gasUsed * trans->gasPrice);
+    w atches.at(tWhich).statement.inflow += trans->value;
     transStats.nAccountedFor++;
 #ifdef DEBUGGER_ON
     tBuffer.addItem(trans->blockNumber, trans->transactionIndex, trans->hash);
@@ -116,20 +116,20 @@ bool COptions::accountForIntTransaction(const CBlock& block, const CTransaction*
     }
 
     // find the contracts we have to account for...
-    size_t tWhich = watches.size() - 1;
-    size_t fWhich = watches.size() - 1;
-    for (size_t i = 0; i < watches.size() - 1; i++) {
-        if (containsI(trace->action.to, watches[i].address))
+    size_t tWhich = w atches.size() - 1;
+    size_t fWhich = w atches.size() - 1;
+    for (size_t i = 0; i < w atches.size() - 1; i++) {
+        if (containsI(trace->action.to, w atches[i].address))
             tWhich = i;
-        if (containsI(trace->action.from, watches[i].address))
+        if (containsI(trace->action.from, w atches[i].address))
             fWhich = i;
     }
 
-    watches.at(fWhich).statement.outflow += trace->action.value;
+    w atches.at(fWhich).statement.outflow += trace->action.value;
     // gas is paid by originating account
-    //    if (fWhich != watches.size() - 1)
-    //        watches[fWhich].statement.gasCostInWei += (trans->receipt.gasUsed * trace->gasPrice);
-    watches.at(tWhich).statement.inflow += trace->action.value;
+    //    if (fWhich != w atches.size() - 1)
+    //        w atches[fWhich].statement.gasCostInWei += (trans->receipt.gasUsed * trace->gasPrice);
+    w atches.at(tWhich).statement.inflow += trace->action.value;
     transStats.nAccountedFor++;
     //    tBuffer.addItem(trace->blockNumber, trace->transactionIndex, trace->hash);
     return true;
@@ -175,8 +175,8 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
     }
 
     CIncomeStatement total;
-    for (size_t i = 0; i < watches.size(); i++) {
-        total += watches[i].statement;
+    for (size_t i = 0; i < w atches.size(); i++) {
+        total += w atches[i].statement;
     }
 
     size_t nOutOfBal = 0;
@@ -192,29 +192,29 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         thing(cout, header, theWidth + 1);
         cout << padCenter("curBalance", theWidth + (theWidth / 2)) << cOff << "\r\n";
         //        cout << bBlack << string_q(theWidth+1, ' ') << string_q(155, '-') << cOff << "\r\n";
-        for (size_t i = 0; i < watches.size(); i++) {
-            watches.at(i).statement.blockNum = block.blockNumber;
-            watches.at(i).statement.begBal = watches[i].statement.endBal;
-            watches.at(i).statement.endBal = (watches[i].statement.begBal + watches[i].statement.inflow -
-                                              watches[i].statement.outflow - watches[i].statement.gasCostInWei);
+        for (size_t i = 0; i < w atches.size(); i++) {
+            w atches.at(i).statement.blockNum = block.blockNumber;
+            w atches.at(i).statement.begBal = w atches[i].statement.endBal;
+            w atches.at(i).statement.endBal = (w atches[i].statement.begBal + w atches[i].statement.inflow -
+                                              w atches[i].statement.outflow - w atches[i].statement.gasCostInWei);
 
-            cout << watches[i].color << padRight(watches[i].displayName(false, true, false, 14, 6), theWidth + 2)
+            cout << w atches[i].color << padRight(w atches[i].displayName(false, true, false, 14, 6), theWidth + 2)
                  << cOff;
-            thing(cout, watches[i].statement, theWidth);
+            thing(cout, w atches[i].statement, theWidth);
             cout << "   ";
-            // cout << watches[i].statement << "   ";
+            // cout << w atches[i].statement << "   ";
 
-            if (i < watches.size() - 1) {
-                watches.at(i).statement.curBalance =
-                    get NodeBal(watches.at(i).stateHistory, watches[i].address, block.blockNumber);
-                cout << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.curBalance)), theWidth + 1);
-                if (!watches[i].statement.balanced()) {
+            if (i < w atches.size() - 1) {
+                w atches.at(i).statement.curBalance =
+                    get NodeBal(w atches.at(i).stateHistory, w atches[i].address, block.blockNumber);
+                cout << padLeft(wei_2_Ether(bni_2_Str(w atches[i].statement.curBalance)), theWidth + 1);
+                if (!w atches[i].statement.balanced()) {
                     cout << " " << bRed
-                         << padLeft(wei_2_Ether(bni_2_Str(watches[i].statement.difference())), theWidth + 1) << cOff
+                         << padLeft(wei_2_Ether(bni_2_Str(w atches[i].statement.difference())), theWidth + 1) << cOff
                          << " " << redX;
                     if (report_bals) {
                         ostringstream os;
-                        os << block.blockNumber << "\t" << watches[i].address << "\t" << watches[i].statement.endBal
+                        os << block.blockNumber << "\t" << w atches[i].address << "\t" << w atches[i].statement.endBal
                            << "\n";
                         appendToAsciiFile("./balance_import.txt", os.str().c_str());
                     }
@@ -259,8 +259,8 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
                 esc_hit = false;
                 return false;
             } else if (ch == 'c') {
-                for (size_t i = 0; i < watches.size(); i++)
-                    watches.at(i).statement.correct();
+                for (size_t i = 0; i < w atches.size(); i++)
+                    w atches.at(i).statement.correct();
             } else if (ch == 'n') {
                 single_on = !single_on;
             }
@@ -268,8 +268,8 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
     }
 
     if (autocorrect_on) {
-        for (size_t i = 0; i < watches.size(); i++)
-            watches.at(i).statement.correct();
+        for (size_t i = 0; i < w atches.size(); i++)
+            w atches.at(i).statement.correct();
     }
     esc_hit = false;
     return true;

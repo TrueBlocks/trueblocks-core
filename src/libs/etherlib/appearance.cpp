@@ -402,49 +402,6 @@ bool foundPot(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t t
     return potentialAddr(func, data, item, potList);
 }
 
-//---------------------------------------------------------------------------
-string_q getMonitorPath(const string_q& addr, freshen_e mode) {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isAddress(addr))  // empty for example
-        return getCachePath(base + addr);
-    return getCachePath(base + addr + ".acct.bin");
-}
-
-//---------------------------------------------------------------------------
-string_q getMonitorLast(const string_q& addr, freshen_e mode) {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".last.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q getMonitorExpt(const string_q& addr, freshen_e mode) {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".expt.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q getMonitorBals(const string_q& addr, freshen_e mode) {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".bals.bin");
-}
-
-//---------------------------------------------------------------------------
-string_q getMonitorCnfg(const string_q& addr) {
-    return getCachePath("monitors/" + addr + ".toml");
-}
-
 //----------------------------------------------------------------
 int findAppearance(const void* v1, const void* v2) {
     const CAddressRecord_base* at1 = (CAddressRecord_base*)v1;  // NOLINT

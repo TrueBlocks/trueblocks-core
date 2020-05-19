@@ -15,7 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "acctlib.h"
 
 namespace qblocks {
 
@@ -186,6 +186,6 @@ extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern void cleanMonitors(void);
+extern CAddressArray testAddrs;
 // EXISTING_CODE
 }  // namespace qblocks

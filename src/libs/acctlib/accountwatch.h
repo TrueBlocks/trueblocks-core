@@ -23,6 +23,7 @@
 namespace qblocks {
 
 // EXISTING_CODE
+typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -203,6 +204,13 @@ extern const char* STR_DISPLAY_ACCOUNTWATCH;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorCnfg(const string_q& addr);
+extern void cleanMonitors(const CAddressArray& addrs);
+extern void establishTestMonitors(void);
 typedef map<address_t, CAccountWatch> CAccountWatchMap;  // NOLINT
 extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
 #define CMonitor CAccountWatch

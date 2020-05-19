@@ -2,6 +2,6 @@
 class = CMonitorCacheItem
 base_class = CAccountName
 fields = string type|bool deleted
-includes = etherlib.h|accountwatch.h
+includes = etherlib.h
 serialize = true
 display_str = display_name, firstAppearance, lastAppearance, appearanceRange, nRecords, appearanceInterval, sizeInBytes, curEther

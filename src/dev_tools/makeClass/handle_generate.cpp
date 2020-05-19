@@ -603,7 +603,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
 
 //------------------------------------------------------------------------------------------------------------
 string_q convertTypes(const string_q& inStr) {
-    // Note: Watch out for trailing spaces. They are here to make sure it
+    // Note: Look out for trailing spaces. They are here to make sure it
     // matches only the types and not the field names.
     string_q outStr = inStr;
     replaceAll(outStr, "address ", "address_t ");

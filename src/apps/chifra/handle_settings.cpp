@@ -111,7 +111,7 @@ string_q colors[] = {
 uint64_t nColors = sizeof(colors) / sizeof(string_q);
 
 //----------------------------------------------------------------
-const char* STR_WATCH =
+const char* STR_W ATCH =
 "    { address = \"{ADDRESS}\", name = \"{NAME}\", firstBlock = {FB}, color = \"{COLOR}\" },\n";
 
 //----------------------------------------------------------------
@@ -129,15 +129,15 @@ bool COptions::createConfigFile(const address_t& addr) {
     replace(config, "[{NAME}]", (name.empty() ? addr : name));
 
     LOG_INFO("\tAdding monitor for address: " + addr);
-    string_q watch = STR_WATCH;
-    replaceAll(watch, "{ADDRESS}",  addr);
-    replaceAll(watch, "{NAME}",  name);
-    replaceAll(watch, "{FB}",    uint_2_Str(0));
+    string_q w atch = STR_W ATCH;
+    replaceAll(w atch, "{ADDRESS}",  addr);
+    replaceAll(w atch, "{NAME}",  name);
+    replaceAll(w atch, "{FB}",    uint_2_Str(0));
     time_q now = Now();
     size_t randIdx = (isTestMode() ? 1 : ((size_t)date_2_Ts(now)) % nColors);
-    replaceAll(watch, "{COLOR}", colors[randIdx]);
+    replaceAll(w atch, "{COLOR}", colors[randIdx]);
 
-    replace(config, "[{JSON_WATCH}]", "list = [\n" + watch + "]\n");
+    replace(config, "[{JSON_W ATCH}]", "list = [\n" + w atch + "]\n");
     if (isTestMode()) {
         cout << cleanPath(fileName) << endl;
         cout << config;

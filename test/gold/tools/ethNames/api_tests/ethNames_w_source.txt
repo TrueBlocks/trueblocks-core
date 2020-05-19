@@ -17,6 +17,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18	On Chain
 76-Verified	0x4ddd5fc76fa654e15132c606c0d65d38056c4be9	HypersonicNetwork				Etherscan
 34-Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner				TrueBlocks.io
+30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related				Etherscan
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT		18	On Chain
 76-Verified	0x55d18731286af2daa27d50a1d15f5d77512e6723	NetworkManagerContract				Etherscan
 34-Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve				TrueBlocks.io
@@ -24,6 +25,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC		9	On Chain
 76-Verified	0x625b428079330ee2a17c56f55f67126014551396	MokaNetwork				Etherscan
 34-Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve				TrueBlocks.io
+40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ			Etherscan
 31-Gitcoin Grants:Contracts	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 049 Blockchain Education Network				GitCoin Website
 76-Verified	0x679131f591b4f369acb8cd8c51e68596806c3916	TrustlinesNetworkToken				Etherscan
 76-Verified	0x6f9afee7645ed0f115f39a64346e7cb2cd17b26f	LibraNetwork				Etherscan
@@ -51,6 +53,7 @@ tags	address	name	symbol	decimals	source
 76-Verified	0xafbf0d08269a7eee8d587121f3b0616c8cef5077	KyberNetwork				Etherscan
 34-Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve				TrueBlocks.io
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9	On Chain
+50-Tokens:ERC20	0xb55c5cac5014c662fdbf21a2c59cd45403c482fd	Clovers Network Token	CLV			Etherscan
 76-Verified	0xbf2389bcf81a343bc913ab3476612b1dc357cc52	MokaNetwork				Etherscan
 50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			Etherscan.io
 50-Tokens	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18	defipulse.com

@@ -498,5 +498,78 @@ void CAccountWatch::moveToProduction(void) {
     }
     lockSection(false);
 }
+
+//---------------------------------------------------------------------------
+string_q getMonitorPath(const string_q& addr, freshen_e mode) {
+    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+    if (!isAddress(addr))  // empty for example
+        return getCachePath(base + addr);
+    return getCachePath(base + addr + ".acct.bin");
+}
+
+//---------------------------------------------------------------------------
+string_q getMonitorLast(const string_q& addr, freshen_e mode) {
+    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+    if (!isTestMode() && !isAddress(addr)) {
+        cerr << "Not an address: " << addr << endl;
+        quickQuitHandler(0);
+    }
+    return getCachePath(base + addr + ".last.txt");
+}
+
+//---------------------------------------------------------------------------
+string_q getMonitorExpt(const string_q& addr, freshen_e mode) {
+    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+    if (!isTestMode() && !isAddress(addr)) {
+        cerr << "Not an address: " << addr << endl;
+        quickQuitHandler(0);
+    }
+    return getCachePath(base + addr + ".expt.txt");
+}
+
+//---------------------------------------------------------------------------
+string_q getMonitorBals(const string_q& addr, freshen_e mode) {
+    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
+    if (!isTestMode() && !isAddress(addr)) {
+        cerr << "Not an address: " << addr << endl;
+        quickQuitHandler(0);
+    }
+    return getCachePath(base + addr + ".bals.bin");
+}
+
+//---------------------------------------------------------------------------
+string_q getMonitorCnfg(const string_q& addr) {
+    return getCachePath("monitors/" + addr + ".toml");
+}
+
+//---------------------------------------------------------------------------
+void cleanMonitors(const CAddressArray& addrs) {
+    for (auto addr : addrs) {
+        ::remove(getMonitorPath(addr).c_str());
+        ::remove(getMonitorLast(addr).c_str());
+        ::remove(getMonitorExpt(addr).c_str());
+        ::remove(getMonitorBals(addr).c_str());
+    }
+}
+
+//----------------------------------------------------------------
+void establishTestMonitors(void) {
+    string_q loc = getCWD() + "./app_tests/";
+    if (!folderExists(loc)) {
+        cerr << "apps test files not found at: " << loc << endl;
+        exit(0);
+    }
+
+    ostringstream os;
+    os << "cp -p " << loc << "app_tests.tar.gz " << getMonitorPath("") << " && ";
+    os << "cd " << getMonitorPath("") << " && ";
+    os << "gunzip *.gz 2>/dev/null && ";
+    os << "tar -xvf *.tar 2>/dev/null && ";
+    os << "rm -f *.tar && ";
+    os << "cd - 2>&1 1>/dev/null";
+    // clang-format off
+    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+}
 // EXISTING_CODE
 }  // namespace qblocks

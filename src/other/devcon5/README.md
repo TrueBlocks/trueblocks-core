@@ -7,7 +7,7 @@ This video show us giving a demonstration of the MVP of our decentralized blockc
 
 Here is a podcast recording of Thomas Rush discussing the TrueBlocks project as well as discussion of why the project is important and what we're trying to keep in mind as we build out the project:
 
-[Daxia Podcast - with Thomas Jay Rush](https://www.youtube.com/watch?v=rOWDO-IydyQ)
+[Daxia Podcast - with Thomas Jay Rush](https://www.youtube.com/w atch?v=rOWDO-IydyQ)
 
 Here's a link to a number of white papers we've written about the project. Some of tehse are a bit outdated:
 
