@@ -14,7 +14,7 @@
 
 extern void regenerate(void);
 extern void check(void);
-extern void truncate(void);
+extern void trunc(void);
 extern void list(void);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -29,7 +29,7 @@ int main(int argc, const char* argv[]) {
             check();
             break;
         case 2:
-            truncate();
+            trunc();
             break;
         case 3:
             list();
@@ -113,7 +113,7 @@ void check(void) {
     delete[] ts_array;
 }
 
-void truncate(void) {
+void trunc(void) {
     string_q fn = configPath("ts.bin");
 
     CArchive file(READING_ARCHIVE);

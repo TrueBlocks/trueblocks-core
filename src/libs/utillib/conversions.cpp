@@ -390,19 +390,19 @@ string_q gas_2_Str(const gas_t& gas) {
 
 //--------------------------------------------------------------------------------
 string_q double_2_Str(double f, size_t nDecimals) {
-    // if no nDecimals specified, default to 10 with trailing zero truncation
-    bool truncate = false;
+    // if no nDecimals specified, default to 10 with trailing zero trunc cation
+    bool trunc = false;
     if (nDecimals == NOPOS) {
         nDecimals = 10;
-        truncate = true;
+        trunc = true;
     }
 
     stringstream stream;
     stream << fixed << setprecision(static_cast<int>(nDecimals)) << f;
     string_q str = stream.str();
-    if (truncate) {
+    if (trunc) {
         str.erase(str.find_last_not_of('0') + 1, string_q::npos);
-        // if all decimals gone, truncate period
+        // if all decimals gone, trunc period
         str.erase(str.find_last_not_of('.') + 1, string_q::npos);
     }
     return str;

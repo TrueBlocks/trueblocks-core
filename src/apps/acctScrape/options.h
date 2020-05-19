@@ -30,7 +30,6 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool visitBinaryFile(const string_q& path, void* data);
-    void moveToProduction(void);
 };
 
 #define VIS_FINAL (1 << 1)

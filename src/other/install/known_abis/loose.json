@@ -1,5 +1,89 @@
 [
   {
+    "name": "setCompleted",
+    "type": "function",
+    "signature": "setCompleted(uint256)",
+    "encoding": "0xfdacd576",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "completed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "submitProposal",
+    "type": "function",
+    "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
+    "encoding": "0x590f940b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "applicant"
+      },
+      {
+        "type": "uint256",
+        "name": "sharesRequested"
+      },
+      {
+        "type": "uint256",
+        "name": "lootRequested"
+      },
+      {
+        "type": "uint256",
+        "name": "tributeOffered"
+      },
+      {
+        "type": "address",
+        "name": "tributeToken"
+      },
+      {
+        "type": "uint256",
+        "name": "paymentRequested"
+      },
+      {
+        "type": "address",
+        "name": "paymentToken"
+      },
+      {
+        "type": "string",
+        "name": "details"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "sponsorProposal",
+    "type": "function",
+    "signature": "sponsorProposal(uint256)",
+    "encoding": "0x9746d940",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "proposalId"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "submitVote",
+    "type": "function",
+    "signature": "submitVote(uint256,uint8)",
+    "encoding": "0x99653fbe",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "proposalIndex"
+      },
+      {
+        "type": "uint8",
+        "name": "uintVote"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "executeSubscription",
     "type": "function",
     "signature": "executeSubscription(address,address,address,uint256,uint256,uint256,uint256,bytes)",

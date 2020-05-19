@@ -338,7 +338,7 @@ CTreeNode* CInfix::remove(const string_q& _key) {
         string_q newKey = extract(_key, prefixS.length());
         next = next->remove(newKey);
         if (auto p = next) {
-            // merge with child...
+            // join with child...
             p->prefixS = prefixS + p->prefixS;
             next = nullptr;
             delete this;

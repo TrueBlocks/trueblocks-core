@@ -1,11 +1,13 @@
 contract A {
+  function setCompleted(uint256 completed) { }
+  function submitProposal(address applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details) { }
+  function sponsorProposal(uint256 proposalId) { }
+  function submitVote(uint256 proposalIndex, uint8 uintVote) { }
   function executeSubscription(address from, address to, address tokenAddress, uint256 tokenAmount, uint256 periodSeconds, uint256 gasPrice, uint256 nonce, bytes signature) { }
-  function fulfillBounty(uint256 _bountyID, string _dataIPFSHash, address _standardBounties, uint256 _standardBountiesVersion, address[] _members, bytes[] _signatures, 
-uint256[] _salts) { }
+  function fulfillBounty(uint256 _bountyID, string _dataIPFSHash, address _standardBounties, uint256 _standardBountiesVersion, address[] _members, bytes[] _signatures, uint256[] _salts) { }
   function deploy(string,uint256,uint256,uint256) { }
   function clone(address _to, uint256 _tokenId, uint256 _numClonesRequested) { }
-  function pay(address src, uint256 srcAmount, address dest, address destAddress, uint256 maxDestAmount, uint256 minConversionRate, address walletId, bytes paymentData, 
-bytes hint, address kyberNetworkProxy) { }
+  function pay(address src, uint256 srcAmount, address dest, address destAddress, uint256 maxDestAmount, uint256 minConversionRate, address walletId, bytes paymentData, bytes hint, address kyberNetworkProxy) { }
   function presentto( ) { }
   function present(address[] nanee) { }
   function airDrop(address parent, uint256[] amounts, address[] droptargets) { }

@@ -281,6 +281,14 @@
       "output_names": "_id,"
     },
     {
+      "name": "vote",
+      "type": "function",
+      "signature": "vote(uint256)",
+      "encoding": "0x0121b93f",
+      "input_names": "videoID,",
+      "output_names": ""
+    },
+    {
       "name": "tokenToEthSwapOutput",
       "type": "function",
       "signature": "tokenToEthSwapOutput(uint256,uint256,uint256)",
@@ -689,6 +697,14 @@
       "output_names": ""
     },
     {
+      "name": "execute",
+      "type": "function",
+      "signature": "execute(bytes)",
+      "encoding": "0x09c5eabe",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
       "name": "participants",
       "type": "function",
       "signature": "participants(address)",
@@ -711,6 +727,14 @@
       "encoding": "0x0a0f8168",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "trade",
+      "type": "function",
+      "signature": "trade(address,uint256,address,uint256,uint256,uint256,address,uint8,bytes32,bytes32,uint256)",
+      "encoding": "0x0a19b14a",
+      "input_names": "tokenGet,amountGet,tokenGive,amountGive,expires,nonce,user,v,r,s,amount,",
+      "output_names": ""
     },
     {
       "name": "callSender",
@@ -767,6 +791,14 @@
       "encoding": "0x0b573638",
       "input_names": "tokens_bought,deadline,recipient,",
       "output_names": "out,"
+    },
+    {
+      "name": "multisendToken",
+      "type": "function",
+      "signature": "multisendToken(address,address[],uint256[])",
+      "encoding": "0x0b66f3f5",
+      "input_names": "token,_contributors,_balances,",
+      "output_names": ""
     },
     {
       "name": "_computeCharge",
@@ -841,6 +873,14 @@
       "output_names": "val_0,"
     },
     {
+      "name": "massNotify",
+      "type": "function",
+      "signature": "massNotify(address[])",
+      "encoding": "0x0e6848cc",
+      "input_names": "_owners,",
+      "output_names": ""
+    },
+    {
       "name": "uri",
       "type": "function",
       "signature": "uri(uint256)",
@@ -886,6 +926,14 @@
       "signature": "HashRegistered(bytes32,address,uint256,uint256)",
       "encoding": "0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670",
       "input_names": "hash,owner,value,registrationDate,",
+      "output_names": ""
+    },
+    {
+      "name": "split",
+      "type": "function",
+      "signature": "split(address,address)",
+      "encoding": "0x0f2c9329",
+      "input_names": "targetFork,targetNoFork,",
       "output_names": ""
     },
     {
@@ -1553,6 +1601,14 @@
       "output_names": ""
     },
     {
+      "name": "execute",
+      "type": "function",
+      "signature": "execute(address,bytes)",
+      "encoding": "0x1cff79cd",
+      "input_names": "_target,_data,",
+      "output_names": ""
+    },
+    {
       "name": "ENS",
       "type": "function",
       "signature": "ENS()",
@@ -2009,6 +2065,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "mintEventToManyUsers",
+      "type": "function",
+      "signature": "mintEventToManyUsers(uint256,address[])",
+      "encoding": "0x278d9c41",
+      "input_names": "eventId,to,",
+      "output_names": ""
+    },
+    {
       "name": "VaultDeposit",
       "type": "event",
       "signature": "VaultDeposit(address,address,uint256)",
@@ -2215,6 +2279,14 @@
       "encoding": "0x2be72cd5",
       "input_names": "_name,_deposit,_limitOfParticipants,_coolingPeriod,payable _ownerAddress,_tokenAddress,",
       "output_names": "c,"
+    },
+    {
+      "name": "batchSend",
+      "type": "function",
+      "signature": "batchSend(address,uint160,uint256[])",
+      "encoding": "0x2c39da94",
+      "input_names": "_token,_lotSize,_transfers,",
+      "output_names": ""
     },
     {
       "name": "_installPayrollApp",
@@ -2689,6 +2761,14 @@
       "output_names": ""
     },
     {
+      "name": "sendTokensArray",
+      "type": "function",
+      "signature": "sendTokensArray(address[],uint256)",
+      "encoding": "0x36ea5d40",
+      "input_names": "beneficiaries,amount,",
+      "output_names": ""
+    },
+    {
       "name": "msgData",
       "type": "function",
       "signature": "msgData(uint256,string)",
@@ -2759,6 +2839,14 @@
       "encoding": "0x39509351",
       "input_names": "spender,addedValue,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "presentto",
+      "type": "function",
+      "signature": "presentto()",
+      "encoding": "0x396aa68f",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "_makePaymentTransaction",
@@ -3025,6 +3113,14 @@
       "output_names": ""
     },
     {
+      "name": "proxyAssert",
+      "type": "function",
+      "signature": "proxyAssert(address,uint8,bytes)",
+      "encoding": "0x3f801f91",
+      "input_names": "dest,howToCall,calldata,",
+      "output_names": ""
+    },
+    {
       "name": "AddEmployee",
       "type": "event",
       "signature": "AddEmployee(uint256,address,uint256,uint64,string)",
@@ -3190,6 +3286,14 @@
       "signature": "ContractUpgrade(address)",
       "encoding": "0x450db8da6efbe9c22f2347f7c2021231df1fc58d3ae9a2fa75d39fa446199305",
       "input_names": "newContract,",
+      "output_names": ""
+    },
+    {
+      "name": "bid",
+      "type": "function",
+      "signature": "bid(uint256)",
+      "encoding": "0x454a2ab3",
+      "input_names": "val_0,",
       "output_names": ""
     },
     {
@@ -3905,6 +4009,14 @@
       "output_names": ""
     },
     {
+      "name": "mintBatchFrozenTokens",
+      "type": "function",
+      "signature": "mintBatchFrozenTokens(address[],uint256[])",
+      "encoding": "0x54b2b176",
+      "input_names": "accounts,amounts,",
+      "output_names": ""
+    },
+    {
       "name": "_ensureAragonIdIsValid",
       "type": "function",
       "signature": "_ensureAragonIdIsValid(address)",
@@ -4079,6 +4191,14 @@
       "encoding": "0x587cff5b",
       "input_names": "_dao,_appId,_initializeData,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "deploy",
+      "type": "function",
+      "signature": "deploy(string,uint256,uint256,uint256)",
+      "encoding": "0x58948f07",
+      "input_names": "val_0,val_1,val_2,val_3,",
+      "output_names": ""
     },
     {
       "name": "",
@@ -4569,14 +4689,6 @@
       "output_names": ""
     },
     {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,address,bytes)",
-      "encoding": "0x6208615f",
-      "input_names": "_implementation,_admin,_data,",
-      "output_names": ""
-    },
-    {
       "name": "setABI",
       "type": "function",
       "signature": "setABI(bytes32,uint256,bytes)",
@@ -4905,6 +5017,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "execTransaction",
+      "type": "function",
+      "signature": "execTransaction(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,bytes)",
+      "encoding": "0x6a761202",
+      "input_names": "to,value,data,operation,safeTxGas,dataGas,gasPrice,gasToken,refundReceiver,signatures,",
+      "output_names": ""
+    },
+    {
       "name": "requiredGas",
       "type": "function",
       "signature": "requiredGas(uint256)",
@@ -5129,11 +5249,27 @@
       "output_names": ""
     },
     {
+      "name": "addAdmin",
+      "type": "function",
+      "signature": "addAdmin(address)",
+      "encoding": "0x70480275",
+      "input_names": "_new_admin,",
+      "output_names": ""
+    },
+    {
       "name": "addOwner",
       "type": "function",
       "signature": "addOwner(address)",
       "encoding": "0x7065cb48",
       "input_names": "_owner,",
+      "output_names": ""
+    },
+    {
+      "name": "airdropTokens",
+      "type": "function",
+      "signature": "airdropTokens(address[],uint256[])",
+      "encoding": "0x706f6937",
+      "input_names": "_recipients,_amounts,",
       "output_names": ""
     },
     {
@@ -5601,6 +5737,14 @@
       "output_names": "val_0,"
     },
     {
+      "name": "drop",
+      "type": "function",
+      "signature": "drop(address,address[],uint256[])",
+      "encoding": "0x7da5efc8",
+      "input_names": "token,recipients,values,",
+      "output_names": ""
+    },
+    {
       "name": "lockDomainOwnershipTransfers",
       "type": "function",
       "signature": "lockDomainOwnershipTransfers()",
@@ -5823,6 +5967,14 @@
       "encoding": "0x839df945",
       "input_names": "val_0,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "present",
+      "type": "function",
+      "signature": "present(address[])",
+      "encoding": "0x83a0b24d",
+      "input_names": "nanee,",
+      "output_names": ""
     },
     {
       "name": "rentPrice",
@@ -6121,6 +6273,14 @@
       "output_names": ""
     },
     {
+      "name": "renounceAdmin",
+      "type": "function",
+      "signature": "renounceAdmin()",
+      "encoding": "0x8bad0c0a",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "contains",
       "type": "function",
       "signature": "contains(AddressSet,address)",
@@ -6233,11 +6393,27 @@
       "output_names": ""
     },
     {
+      "name": "build",
+      "type": "function",
+      "signature": "build()",
+      "encoding": "0x8e1a55fc",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "allocateShares",
       "type": "function",
       "signature": "allocateShares(address,uint256)",
       "encoding": "0x8e2a6470",
       "input_names": "who,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "migrateAll",
+      "type": "function",
+      "signature": "migrateAll(uint256[])",
+      "encoding": "0x8e7e879f",
+      "input_names": "tokenIds,",
       "output_names": ""
     },
     {
@@ -6351,6 +6527,14 @@
       "encoding": "0x918a15cf",
       "input_names": "hash,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "invoke1CosignerSends",
+      "type": "function",
+      "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
+      "encoding": "0x91aeeedc",
+      "input_names": "v,r,s,nonce,authorizedAddress,data,",
+      "output_names": ""
     },
     {
       "name": "hasRole",
@@ -6529,6 +6713,14 @@
       "output_names": ""
     },
     {
+      "name": "cancelAuction",
+      "type": "function",
+      "signature": "cancelAuction(uint256)",
+      "encoding": "0x96b5a755",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
       "name": "available",
       "type": "function",
       "signature": "available(uint256)",
@@ -6689,6 +6881,14 @@
       "output_names": ""
     },
     {
+      "name": "upgrade",
+      "type": "function",
+      "signature": "upgrade(address,address)",
+      "encoding": "0x99a88ec4",
+      "input_names": "_teamAddress,_artistAddress,",
+      "output_names": ""
+    },
+    {
       "name": "getLatestForContractAddress",
       "type": "function",
       "signature": "getLatestForContractAddress(address)",
@@ -6718,6 +6918,14 @@
       "signature": "beneficiaryWithdraw()",
       "encoding": "0x9af6549a",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "transferPresaleTokens",
+      "type": "function",
+      "signature": "transferPresaleTokens(address,uint256)",
+      "encoding": "0x9b03a211",
+      "input_names": "destination,amount,",
       "output_names": ""
     },
     {
@@ -6809,6 +7017,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "singleValueAirdrop",
+      "type": "function",
+      "signature": "singleValueAirdrop(address,address[],uint256)",
+      "encoding": "0x9d065838",
+      "input_names": "_addressOfToken,_recipients,_value,",
+      "output_names": ""
+    },
+    {
       "name": "revokePermission",
       "type": "function",
       "signature": "revokePermission(address,address,bytes32)",
@@ -6881,6 +7097,14 @@
       "output_names": ""
     },
     {
+      "name": "withdrawToken",
+      "type": "function",
+      "signature": "withdrawToken(address,uint256)",
+      "encoding": "0x9e281a98",
+      "input_names": "token,amount,",
+      "output_names": ""
+    },
+    {
       "name": "_burn",
       "type": "function",
       "signature": "_burn(address,uint256,bytes,bytes)",
@@ -6902,6 +7126,14 @@
       "signature": "_createFinancePermissions(ACL,Finance,address,address)",
       "encoding": "0x9e47c084",
       "input_names": "_acl,_finance,_grantee,_manager,",
+      "output_names": ""
+    },
+    {
+      "name": "fulfillBounty",
+      "type": "function",
+      "signature": "fulfillBounty(uint256,string,address,uint256,address[],bytes[],uint256[])",
+      "encoding": "0x9e73d1b8",
+      "input_names": "_bountyID,_dataIPFSHash,_standardBounties,_standardBountiesVersion,_members,_signatures,_salts,",
       "output_names": ""
     },
     {
@@ -6967,6 +7199,14 @@
       "encoding": "0xa0e67e2b",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "mintToken",
+      "type": "function",
+      "signature": "mintToken(uint256,address)",
+      "encoding": "0xa140ae23",
+      "input_names": "_id,_owner,",
+      "output_names": ""
     },
     {
       "name": "safeMint",
@@ -7121,6 +7361,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "send",
+      "type": "function",
+      "signature": "send(address[],uint256[])",
+      "encoding": "0xa645ff5f",
+      "input_names": "receivers,values,",
+      "output_names": ""
+    },
+    {
       "name": "tryTransitionAccountingPeriod",
       "type": "function",
       "signature": "tryTransitionAccountingPeriod(uint64)",
@@ -7233,6 +7481,14 @@
       "output_names": ""
     },
     {
+      "name": "cancelOrder_",
+      "type": "function",
+      "signature": "cancelOrder_(address[7],uint256[9],uint8,uint8,uint8,uint8,bytes,bytes,bytes,uint8,bytes32,bytes32)",
+      "encoding": "0xa8a41c70",
+      "input_names": "addrs,uints,feeMethod,side,saleKind,howToCall,calldata,replacementPattern,staticExtradata,v,r,s,",
+      "output_names": ""
+    },
+    {
       "name": "getTransactionIds",
       "type": "function",
       "signature": "getTransactionIds(uint256,uint256,bool,bool)",
@@ -7337,6 +7593,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "execute",
+      "type": "function",
+      "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
+      "encoding": "0xaacaaf88",
+      "input_names": "_wallet,_data,_nonce,_signatures,_gasPrice,_gasLimit,",
+      "output_names": ""
+    },
+    {
       "name": "PRECISION",
       "type": "function",
       "signature": "PRECISION()",
@@ -7366,6 +7630,22 @@
       "signature": "_recordTransaction(bool,address,address,uint256,uint256,uint64,string)",
       "encoding": "0xab70dde3",
       "input_names": "_incoming,_token,_entity,_amount,_paymentId,_paymentExecutionNumber,_reference,",
+      "output_names": ""
+    },
+    {
+      "name": "splitTransfer",
+      "type": "function",
+      "signature": "splitTransfer(address,address,uint256,uint256,address)",
+      "encoding": "0xab832b43",
+      "input_names": "toFirst,toSecond,valueFirst,valueSecond,tokenAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "atomicMatch_",
+      "type": "function",
+      "signature": "atomicMatch_(address[14],uint256[18],uint8[8],bytes,bytes,bytes,bytes,bytes,bytes,uint8[2],bytes32[5])",
+      "encoding": "0xab834bab",
+      "input_names": "addrs,uints,feeMethodsSidesKindsHowToCalls,calldataBuy,calldataSell,replacementPatternBuy,replacementPatternSell,staticExtradataBuy,staticExtradataSell,vs,rssMetadata,",
       "output_names": ""
     },
     {
@@ -7463,6 +7743,14 @@
       "encoding": "0xad7a672f",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "multisend",
+      "type": "function",
+      "signature": "multisend(address,address[],uint256[])",
+      "encoding": "0xad8733ca",
+      "input_names": "_tokenAddr,dests,values,",
+      "output_names": ""
     },
     {
       "name": "stake",
@@ -9049,6 +9337,22 @@
       "output_names": ""
     },
     {
+      "name": "pay",
+      "type": "function",
+      "signature": "pay(address,uint256,address,address,uint256,uint256,address,bytes,bytes,address)",
+      "encoding": "0xd337e37b",
+      "input_names": "src,srcAmount,dest,destAddress,maxDestAmount,minConversionRate,walletId,paymentData,hint,kyberNetworkProxy,",
+      "output_names": ""
+    },
+    {
+      "name": "executeSubscription",
+      "type": "function",
+      "signature": "executeSubscription(address,address,address,uint256,uint256,uint256,uint256,bytes)",
+      "encoding": "0xd3c576cd",
+      "input_names": "from,to,tokenAddress,tokenAmount,periodSeconds,gasPrice,nonce,signature,",
+      "output_names": ""
+    },
+    {
       "name": "destroyTokens",
       "type": "function",
       "signature": "destroyTokens(address,uint256)",
@@ -9169,11 +9473,27 @@
       "output_names": ""
     },
     {
+      "name": "register",
+      "type": "function",
+      "signature": "register(uint256,uint256)",
+      "encoding": "0xd66d6c10",
+      "input_names": "_maxGasPrice,_maxFeePerClaim,",
+      "output_names": ""
+    },
+    {
       "name": "DomainTransfersLocked",
       "type": "event",
       "signature": "DomainTransfersLocked()",
       "encoding": "0xd68bbea4b8d77ea0826a260170e3b50080b57c9ed7420ef5920b1a58e613e179",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "airDrop",
+      "type": "function",
+      "signature": "airDrop(address,uint256[],address[])",
+      "encoding": "0xd6916c34",
+      "input_names": "parent,amounts,droptargets,",
       "output_names": ""
     },
     {
@@ -9198,6 +9518,14 @@
       "signature": "addVersion(uint64[3],address,bytes)",
       "encoding": "0xd6ef25d5",
       "input_names": "semanticVersion,contractAddress,contentURI,",
+      "output_names": ""
+    },
+    {
+      "name": "buy",
+      "type": "function",
+      "signature": "buy(uint256,uint256)",
+      "encoding": "0xd6febde8",
+      "input_names": "id,amount,",
       "output_names": ""
     },
     {
@@ -10121,6 +10449,14 @@
       "output_names": ""
     },
     {
+      "name": "clone",
+      "type": "function",
+      "signature": "clone(address,uint256,uint256)",
+      "encoding": "0xed74de9d",
+      "input_names": "_to,_tokenId,_numClonesRequested,",
+      "output_names": ""
+    },
+    {
       "name": "rootOwnerOfChild",
       "type": "function",
       "signature": "rootOwnerOfChild(address,uint256)",
@@ -10223,6 +10559,14 @@
       "encoding": "0xf1736d86",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "mintToAddresses",
+      "type": "function",
+      "signature": "mintToAddresses(address[],uint256)",
+      "encoding": "0xf190ac5f",
+      "input_names": "addresses,amount,",
+      "output_names": ""
     },
     {
       "name": "div",
@@ -10561,6 +10905,14 @@
       "output_names": ""
     },
     {
+      "name": "multiGenerate",
+      "type": "function",
+      "signature": "multiGenerate(address,address[],bytes)",
+      "encoding": "0xf725839f",
+      "input_names": "_merkleMineContract,_recipients,_merkleProofs,",
+      "output_names": ""
+    },
+    {
       "name": "_vote",
       "type": "function",
       "signature": "_vote(uint256,bool,address,bool)",
@@ -10598,7 +10950,7 @@
       "signature": "admin()",
       "encoding": "0xf851a440",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "authorisations",
@@ -10663,6 +11015,14 @@
       "encoding": "0xf96d822c",
       "input_names": "left,right,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "mintUserToManyEvents",
+      "type": "function",
+      "signature": "mintUserToManyEvents(uint256[],address)",
+      "encoding": "0xf980f3dc",
+      "input_names": "eventIds,to,",
+      "output_names": ""
     },
     {
       "name": "executeVote",

@@ -58,6 +58,7 @@ class CAccountWatch : public CAccountName {
     bool openCacheFile1(void);
     blknum_t nextBlockAsPerMonitor(void) const;
     bool isLocked(string_q& msg) const;
+    void moveToProduction(void);
     // EXISTING_CODE
     bool operator==(const CAccountWatch& item) const;
     bool operator!=(const CAccountWatch& item) const {

@@ -18,4 +18,4 @@ The following tools are not available as open source. We intend to sell or licen
 
 - [**chifra**](chifra/README.md): This tool builds parsing libraries for particular sets of blockchain addresses. Developers may later link to these libraries to fully parse transactional input and event data from the contract. We've called this data `articulated data` elsewhere. **Note:** This application will be delivered through our [website](http://quickblocks.io).
 
-- [**cacheMan**](../../src/monitors/cacheMan/README.md): This tool allows one to explore the per-account transactional caches produced by chifra monitors. It performs various checks on the data. The tool provides options for truncating the cache and/or merging two caches into one which may be useful in certain circumstances. **Note:** This application will be delivered through our [website](http://quickblocks.io).
+- [**cacheMan**](../../src/monitors/cacheMan/README.md): This tool allows one to explore the per-account transactional caches produced by chifra monitors. It performs various checks on the data. **Note:** This application will be delivered through our [website](http://quickblocks.io).

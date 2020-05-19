@@ -785,11 +785,11 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     if (isBool)  // we know it's true, so we want to only show the pre and post
         fieldValue = "";
     if (rightJust) {
-        fieldValue = truncPadR(fieldValue, maxWidth);  // pad or truncate
+        fieldValue = truncPadR(fieldValue, maxWidth);  // pad or trun cate
     } else if (zeroJust) {
         fieldValue = padLeft(fieldValue, maxWidth, '0');  // pad
     } else {
-        fieldValue = truncPad(fieldValue, maxWidth);  // pad or truncate
+        fieldValue = truncPad(fieldValue, maxWidth);  // pad or trun cate
     }
     if (lineJust) {
         extern string_q reformat1(const string_q& in, size_t len);
@@ -804,9 +804,9 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
     // We are working on a prompt.  Pick up customizations if any
     string_q prompt = promptName;
     if (rightJust) {
-        prompt = truncPadR(prompt, maxWidth);  // pad or truncate
+        prompt = truncPadR(prompt, maxWidth);  // pad or trun cate
     } else {
-        prompt = truncPad(prompt, maxWidth);  // pad or truncate
+        prompt = truncPad(prompt, maxWidth);  // pad or trun cate
     }
     return pre + prompt + post;
 }

@@ -1,9 +1,5 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd, fast, null, apps/cacheMan, CLEANUP,        n, CLEANUP
-
-#
-# Note: we use the hotkey options in some of these test cases to test that feature. Generally we don't test hotkeys elswhere
-#
+on, cmd, fast, null, apps/cacheMan, CLEANUP,         n, CLEANUP
 
 on, cmd, fast, null, apps/cacheMan, README,          n, @th
 on, cmd, fast, null, apps/cacheMan, help,            n, @h
@@ -11,79 +7,21 @@ on, cmd, fast, null, apps/cacheMan, help_long,       n, help
 
 on, cmd, fast, null, apps/cacheMan, no_params,       n,
 on, cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
-on, cmd, fast, null, apps/cacheMan, invalid_param_2, n, @l & junk
 on, cmd, fast, null, apps/cacheMan, noFile,          n, stats
 
-# on, cmd, fast, null, apps/cacheMan, copy_1,          n, COPYFILE -f ./testing_data/0x1111122222111112222211111222221111122222.history ./0x1111122222111112222211111222221111122222.acct.bin
-# on, cmd, fast, null, apps/cacheMan, copy_2,          n, COPYFILE -f ./testing_data/0x5555533333555553333355555333335555533333.history ./0x5555533333555553333355555333335555533333.acct.bin
-on, cmd, fast, null, apps/cacheMan, copy_3,          n, COPYFILE -f ./testing_data/0x9876543210987654321098765432109876543210.history ./0x9876543210987654321098765432109876543210.acct.bin
-on, cmd, fast, null, apps/cacheMan, copy_4,          n, COPYFILE -f ./testing_data/*.txt ./
+on, cmd, fast, null, apps/cacheMan, list_0x9,        n, addrs = 0x9876543210987654321098765432109876543210 & list & no_fix & fmt = txt
+on, cmd, fast, null, apps/cacheMan, fix_0x9,         n, addrs = 0x9876543210987654321098765432109876543210 & verbose & fmt = txt
 
-on, cmd, fast, null, apps/cacheMan, list_0x9,        n, @l & addrs = 0x9876543210987654321098765432109876543210
-on, cmd, fast, null, apps/cacheMan, check_0x9,       n, @c & addrs = 0x9876543210987654321098765432109876543210
-on, cmd, fast, null, apps/cacheMan, fix_0x9,         n, fix & addrs = 0x9876543210987654321098765432109876543210
-on, cmd, fast, null, apps/cacheMan, check2_0x9,      n, @c & addrs = 0x9876543210987654321098765432109876543210
-on, cmd, fast, null, apps/cacheMan, list2_0x9,       n, @l & addrs = 0x9876543210987654321098765432109876543210
+on, cmd, fast, null, apps/cacheMan, list_0x5,        n, addrs = 0x5555533333555553333355555333335555533333 & list & no_fix & fmt = txt & no_header
+on, cmd, fast, null, apps/cacheMan, fix_0x5,         n, addrs = 0x5555533333555553333355555333335555533333 & list & verbose
 
-on, cmd, fast, null, apps/cacheMan, list_0x5,        n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = txt & no_header
-on, cmd, fast, null, apps/cacheMan, check_0x5,       n, check & addrs = 0x5555533333555553333355555333335555533333
-on, cmd, fast, null, apps/cacheMan, fix_0x5,         n, fix & addrs = 0x5555533333555553333355555333335555533333
-on, cmd, fast, null, apps/cacheMan, check2_0x5,      n, check & addrs = 0x5555533333555553333355555333335555533333
-on, cmd, fast, null, apps/cacheMan, list2_0x5,       n, list & addrs = 0x5555533333555553333355555333335555533333 & fmt = csv
+on, cmd, slow, null, apps/cacheMan, list_x01,        n, addrs = 0x1111122222111112222211111222221111122222 & list & no_fix & verbose
+on, cmd, slow, null, apps/cacheMan, fix_x01,         n, addrs = 0x1111122222111112222211111222221111122222 & list & verbose
+on, cmd, slow, null, apps/cacheMan, txt_x01,         n, fmt = txt & addrs = 0x1111122222111112222211111222221111122222 & list 
+on, cmd, slow, null, apps/cacheMan, csv_x01,         n, fmt = csv & addrs = 0x1111122222111112222211111222221111122222 & list 
+on, cmd, slow, null, apps/cacheMan, json_x01,        n, fmt = json & addrs = 0x1111122222111112222211111222221111122222 & list 
 
-on, cmd, slow, null, apps/cacheMan, list_x01,        n, @l & addrs = 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, check_x01,       n, @c & addrs = 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, fix_x01,         n, fix & addrs = 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, txt_x01,         n, fmt = txt & addrs = 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, csv_x01,         n, fmt = csv & addrs = 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, json_x01,        n, fmt = json & addrs = 0x1111122222111112222211111222221111122222
+on, cmd, fast, null, apps/cacheMan, combined,        n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & no_fix & fmt = txt
+on, cmd, fast, null, apps/cacheMan, combined_fixed,  n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & fmt = txt
 
-on, cmd, slow, null, apps/cacheMan, merge,           n, @md & addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210
-on, cmd, slow, null, apps/cacheMan, copy_merge,      n, MOVEFILE ./merged.bin ./0x1111111111111111111111111111111111111111.acct.bin
-on, cmd, slow, null, apps/cacheMan, merge2,          n, @md & addrs = 0x1111111111111111111111111111111111111111 0x1111122222111112222211111222221111122222
-on, cmd, slow, null, apps/cacheMan, copy_merge2,     n, MOVEFILE ./merged.bin ./0x1111111111111111111111111111111111111111.acct.bin
-on, cmd, slow, null, apps/cacheMan, merge_list,      n, @l & addrs = 0x1111111111111111111111111111111111111111
-on, cmd, slow, null, apps/cacheMan, merge_remove,    n, @r & addrs = 0x1111111111111111111111111111111111111111
-on, cmd, slow, null, apps/cacheMan, merge_rlist,     n, @l & addrs = 0x1111111111111111111111111111111111111111
-on, cmd, slow, null, apps/cacheMan, merge_import,    n, @i & addrs = 0x1111111111111111111111111111111111111111
-on, cmd, slow, null, apps/cacheMan, merge_ilist,     n, @l & addrs = 0x1111111111111111111111111111111111111111
-
-on, cmd, fast, null, apps/cacheMan, extract,         n, @e & 0 addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 & list & data
-on, cmd, fast, null, apps/cacheMan, extract_list,    n, @l & extract & data
-on, cmd, fast, null, apps/cacheMan, truncate_unused, n, truncate 1001001
-on, cmd, fast, null, apps/cacheMan, skip_unused,     n, skip
-
-on, cmd, fast, null, apps/cacheMan, rm_0x9,          n, RMFILE -f ./0x*.*
-on, cmd, fast, null, apps/cacheMan, rm_merge1,       n, RMFILE -f ./merged.*
-on, cmd, fast, null, apps/cacheMan, rm_merge2,       n, RMFILE -f ./import.*
-on, cmd, fast, null, apps/cacheMan, rm_merge3,       n, RMFILE -f ./remove.*
-
-# 11360,apps,,cacheMan,files,,,TRUE,FALSE,TRUE,TRUE,,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
-# 11380,apps,,cacheMan,check,c,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,check for duplicates and other problems in the cache
-# 11400,apps,,cacheMan,data,d,,FALSE,FALSE,TRUE,FALSE,y es,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
-# 11420,apps,,cacheMan,sort,s,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)
-# 11440,apps,,cacheMan,fix,f,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,remove duplicates from the cache (if any)
-# 11460,apps,,cacheMan,list,l,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,list the contents of the cache (the default if no other option)
-# 11480,apps,,cacheMan,import,i,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,import transactions if import.txt file exists in current folder
-# 11500,apps,,cacheMan,remove,r,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,remove transactions if remove.txt file exists in current folder
-# 11520,apps,,cacheMan,truncate,u,0,FALSE,FALSE,TRUE,FALSE,y es,flag,<blknum>,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)
-# 11540,apps,,cacheMan,merge,m,,FALSE,FALSE,TRUE,FALSE,local,switch,<boolean>,merge two or more caches into a single cache
-# 11560,apps,,cacheMan,skip,k,1,FALSE,FALSE,FALSE,FALSE,y es,flag,<uint32>,skip value for testing
-# 11580,apps,,cacheMan,start,S,,FALSE,FALSE,FALSE,FALSE,y es,flag,<blknum>,first block to process (inclusive)
-# 11600,apps,,cacheMan,end,E,,FALSE,FALSE,FALSE,FALSE,y es,flag,<blknum>,last block to process (inclusive)
-# 11620,apps,,cacheMan,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
-
-# COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "path(s) of files to check, merge, fix or display (default=display)"),
-# COption("check", "c", "", OPT_SWITCH, "check for duplicates and other problems in the cache"),
-# COption("data", "d", "", OPT_SWITCH, "in 'list' mode, render results as data (i.e export mode)"),
-# COption("sort", "s", "", OPT_SWITCH, "sort the list of transactions and re-write (precludes other modes, other than --dedup)"),
-# COption("fix", "f", "", OPT_SWITCH, "remove duplicates from the cache (if any)"),
-# COption("list", "l", "", OPT_SWITCH, "list the contents of the cache (the default if no other option)"),
-# COption("import", "i", "", OPT_SWITCH, "import transactions if import.txt file exists in current folder"),
-# COption("remove", "r", "", OPT_SWITCH, "remove transactions if remove.txt file exists in current folder"),
-# COption("truncate", "u", "<blknum>", OPT_FLAG, "truncate the cache at block :n (keeps block 'n' and before, implies --fix)"),
-# COption("merge", "m", "", OPT_SWITCH, "merge two or more caches into a single cache"),
-# COption("skip", "k", "<uint32>", OPT_HIDDEN | OPT_FLAG, "skip value for testing"),
-# COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-# COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-# COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),
+#on, cmd, fast, null, apps/cacheMan, rm_0x9,          n, RMFILE -f ./0x*.*

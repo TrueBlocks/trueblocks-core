@@ -73,19 +73,9 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
 
-11360,apps,,cacheMan,files,,,true,false,true,true,local,positional,list<path>,path(s) of files to check&#44; merge&#44; fix or display (default=display)
-11380,apps,,cacheMan,check,c,,false,false,true,false,local,switch,<boolean>,check for duplicates and other problems in the cache
-11400,apps,,cacheMan,data,d,,false,false,true,false,header,switch,<boolean>,in 'list' mode&#44; render results as data (i.e export mode)
-11420,apps,,cacheMan,sort,s,,false,false,true,false,local,switch,<boolean>,sort the list of transactions and re-write (precludes other modes&#44; other than --dedup)
-11440,apps,,cacheMan,fix,f,,false,false,true,false,local,switch,<boolean>,remove duplicates from the cache (if any)
-11460,apps,,cacheMan,list,l,,false,false,true,false,local,switch,<boolean>,list the contents of the cache (the default if no other option)
-11480,apps,,cacheMan,import,i,,false,false,true,false,local,switch,<boolean>,import transactions if import.txt file exists in current folder
-11500,apps,,cacheMan,remove,r,,false,false,true,false,local,switch,<boolean>,remove transactions if remove.txt file exists in current folder
-11520,apps,,cacheMan,truncate,u,0,false,false,true,false,header,flag,<blknum>,truncate the cache at block :n (keeps block 'n' and before&#44; implies --fix)
-11540,apps,,cacheMan,merge,m,,false,false,true,false,local,switch,<boolean>,merge two or more caches into a single cache
-11560,apps,,cacheMan,skip,k,1,false,false,false,false,header,flag,<uint32>,skip value for testing
-11580,apps,,cacheMan,start,S,,false,false,false,false,header,flag,<blknum>,first block to process (inclusive)
-11600,apps,,cacheMan,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
+11360,apps,,cacheMan,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to process
+11365,apps,,cacheMan,list,l,,false,false,true,true,header,switch,<boolean>,list the transactions in the cache (not listing is the default)
+11370,apps,,cacheMan,no_fix,n,false,false,false,true,true,header,switch,<boolean>,do not fix the cache (fixing is the default behaviour)
 11620,apps,,cacheMan,,,,false,false,true,false,--,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
 11660,dev_tools,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files

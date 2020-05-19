@@ -1,18 +1,36 @@
 ethNames argc: 3 [1:tip] [2:--expand] 
 ethNames tip --expand 
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
+76-Verified	0x05b837ea9a4f3a56f883d5991c6c9ca32c49403e	HintoTips		Etherscan			false	false	false
+76-Verified	0x09afd24acc170c16f4ff64bdf2a4818c515440e8	ExpiringMultiPartyLib		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity		GitCoin Website			false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On Chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On Chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false
 50-Tokens:ERC20	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	On Chain	4	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	false	false	false
 50-Tokens:ERC20	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	On Chain	6	SkinCoin is a multipurpose cryptocurrency for gaming industry.	false	false	false
+76-Verified	0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad	Tip		Etherscan			false	false	false
 50-Tokens:ERC20	0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	On Chain	18	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.	false	false	false
+76-Verified	0x4b702fc17fc11859aeb8eb0d3bd876a6a4bff910	BancorMultiPrice		Etherscan			false	false	false
 91-Friends	0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner		TrueBlocks.io			false	false	false
+76-Verified	0x57917da61304f309694993c18bbc0f15e5507a6a	MultiPlanetValue		Etherscan			false	false	false
 91-Friends	0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar		TrueBlocks.io			false	false	false
+76-Verified	0x740623d2c797b7d8d1ecb98e9b4afcf99ec31e14	DoYourTip		Etherscan			false	false	false
 90-DevCon2:Individual	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	My Ethereum Wallet Tip Jar Taylor Van Orden		Slack DevCon2 Token Contract			false	false	false
+76-Verified	0x7f1cd65679d73eb98fcebe8b61c13d3d68605717	MultiPoolZapV1_4		Etherscan			false	false	false
 50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns	🦄	Ethereum.org		Ethereum tip jar unicorn tokens	false	false	false
+76-Verified	0x94be924c9f2a99dbc0da1c6105ca8b8eee5d3228	KyberMultiPrice		Etherscan			false	false	false
+76-Verified	0x9a4d5ec269fd4a4714915b3bc1f3a37034010cea	GetMultiPostLikeCount		Etherscan			false	false	false
 50-Tokens:ERC20	0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e	ABX Token	ABX	On Chain	18	A blockchain powered trading platform that integrates crypto assets from multiple exchanges.	false	false	false
+76-Verified	0x9ec022f82c5004a2fd71ce354ea2e57baf6b81ab	_TippProtocolToken		Etherscan			false	false	false
+76-Verified	0xa15cc53c0bf65df796916111479e7224eec7db72	tipscoin		Etherscan			false	false	false
+76-Verified	0xad218d31d19ef8681ba35095f597917cd040f759	tipscoin		Etherscan			false	false	false
 50-Tokens:ERC20	0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3	PCHAIN	PAI	On Chain	18	Native multichain system in the world that supports Ethereum Virtual Machine EVM, which consists of one main chain and multiple derived chains.	false	false	false
+76-Verified	0xc1d89236ed82c2edf997e09c8c2314bec254cb57	UniswapMultiPrice		Etherscan			false	false	false
+76-Verified	0xc25a0b9681abf6f090aed71a8c08fb564b41dab6	MultipleArbitrableTokenTransaction		Etherscan			false	false	false
+76-Verified	0xc541110f4da8303f56657bc2ff0575118b7e6434	_TippProtocolCoin		Etherscan			false	false	false
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	On Chain	18	The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.	false	false	false
+76-Verified	0xdebb91ab3e473025bb8ce278c02361a3c4f13124	ExpiringMultiPartyCreator		Etherscan			false	false	false
+76-Verified	0xe0388fa2fa04557a82616386ec0e7cf59883ae35	TipCoin		Etherscan			false	false	false
+76-Verified	0xebd93e64936fbba77bef3d13ad4f2c26d07a11a8	TellorTipper		Etherscan			false	false	false
 50-Tokens:ERC20	0xee74110fb5a1007b06282e0de5d73a61bf41d9cd	BHPCash	BHPC	On Chain	18	Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.	false	false	false
 30-Contracts	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Etherum Tip Jar	TIP	TrueBlocks.io		The ethereum tip jar	false	false	false

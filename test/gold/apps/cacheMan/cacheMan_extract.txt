@@ -1,22 +1,16 @@
-cacheMan argc: 8 [1:-e] [2:--0] [3:addrs] [4:0x5555533333555553333355555333335555533333] [5:0x9876543210987654321098765432109876543210] [6:--list] [7:--data] 
-cacheMan -e --0 addrs 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 --list --data 
+cacheMan argc: 7 [1:-e] [2:--0] [3:addrs] [4:0x5555533333555553333355555333335555533333] [5:0x9876543210987654321098765432109876543210] [6:--list] 
+cacheMan -e --0 addrs 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 --list 
 
   Invalid option: -e
 
-  Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] <file> [file...]  
+  Usage:    cacheMan [-c|-f|-l|-v|-h] <file> [file...]  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
 
   Where:  
-	files                 path(s) of files to check, merge, fix or display (default=display) (required)
+	files                 path(s) of files to check, fix or display (default=display) (required)
 	-c  (--check)         check for duplicates and other problems in the cache
-	-d  (--data)          in 'list' mode, render results as data (i.e export mode)
-	-s  (--sort)          sort the list of transactions and re-write (precludes other modes, other than --dedup)
 	-f  (--fix)           remove duplicates from the cache (if any)
 	-l  (--list)          list the contents of the cache (the default if no other option)
-	-i  (--import)        import transactions if import.txt file exists in current folder
-	-r  (--remove)        remove transactions if remove.txt file exists in current folder
-	-u  (--truncate <num>)truncate the cache at block :n (keeps block 'n' and before, implies --fix)
-	-m  (--merge)         merge two or more caches into a single cache
 
 #### Hidden options (shown during testing only)
 	-k  (--skip <num>)    skip value for testing

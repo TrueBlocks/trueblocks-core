@@ -18,7 +18,7 @@
         "contractAddress": "0x0",
         "gasUsed": 21000,
         "logs": [],
-        "status": null
+        "status": 0
       },
       "gasUsed": 21000,
       "date": "2016-09-08 15:22:44 UTC",

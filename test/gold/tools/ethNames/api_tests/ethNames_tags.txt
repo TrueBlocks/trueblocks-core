@@ -4,6 +4,9 @@
       "tags": ""
     },
     {
+      "tags": "20-Friends"
+    },
+    {
       "tags": "30-Contracts"
     },
     {
@@ -23,9 +26,6 @@
     },
     {
       "tags": "31-Gitcoin Grants:Friends"
-    },
-    {
-      "tags": "32-Commons Stack"
     },
     {
       "tags": "33-Set Protocol"
@@ -79,6 +79,9 @@
       "tags": "50-Tokens:ERC20"
     },
     {
+      "tags": "50-Tokens:ERC721"
+    },
+    {
       "tags": "60-Airdrops"
     },
     {
@@ -86,6 +89,9 @@
     },
     {
       "tags": "75-EarlyActors"
+    },
+    {
+      "tags": "76-Verified"
     },
     {
       "tags": "80-Malicious"

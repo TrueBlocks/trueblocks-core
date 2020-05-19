@@ -460,5 +460,43 @@ bool CAccountWatch::isLocked(string_q& msg) const {
     checkLock(getMonitorPath(address) + ".deleted", "marker");
     return false;
 }
+
+//--------------------------------------------------------------------------------
+void doMoveFile(const string_q& from, const string_q& to) {
+#define CLEAN(a) (cTeal + (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)) + cOff)
+    LOG4("Moving ", CLEAN(from), " to ", CLEAN(to));
+    if (fileExists(from))
+        moveFile(from, to);
+}
+
+//--------------------------------------------------------------------------------
+void CAccountWatch::moveToProduction(void) {
+    if (fm_mode == FM_PRODUCTION)
+        return;
+    ASSERT(fm_mode == FM_STAGING);
+
+    fm_mode = FM_PRODUCTION;
+    if (tx_cache) {
+        tx_cache->Release();
+        delete tx_cache;
+        tx_cache = NULL;
+    }
+    lockSection(true);
+    bool binExists = fileExists(getMonitorPath(address, FM_STAGING));
+    if (binExists) {
+        doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
+        doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
+        doMoveFile(getMonitorExpt(address, FM_STAGING), getMonitorExpt(address));
+        doMoveFile(getMonitorBals(address, FM_STAGING), getMonitorBals(address));
+    } else {
+        // For some reason (user quit, UI switched to adding a different address to monitor, something went
+        // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
+        ::remove(getMonitorPath(address, FM_STAGING).c_str());
+        ::remove(getMonitorLast(address, FM_STAGING).c_str());
+        ::remove(getMonitorExpt(address, FM_STAGING).c_str());
+        ::remove(getMonitorBals(address, FM_STAGING).c_str());
+    }
+    lockSection(false);
+}
 // EXISTING_CODE
 }  // namespace qblocks

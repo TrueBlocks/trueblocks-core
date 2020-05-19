@@ -31,7 +31,7 @@ bool COptions::handle_list(void) {
 
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cacheMan --fix " << addr << " >&2 && ";
+        os << "cacheMan " << addr << " >&2 && ";
         os << "acctExport --appearances " << tool_flags << " " << addr;
         LOG_CALL(os.str());
         // clang-format off

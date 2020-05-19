@@ -2421,17 +2421,17 @@
         "name": "Transfer",
         "inputs": [
           {
-            "name": "node",
+            "name": "_node",
             "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
           },
           {
-            "name": "owner",
+            "name": "_owner",
             "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
           }
         ],
         "outputs": []
       },
-      "compressedLog": "Transfer ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )",
+      "compressedLog": "Transfer ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )",
       "type": "mined"
     },
     {

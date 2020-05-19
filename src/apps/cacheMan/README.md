@@ -1,6 +1,6 @@
 ## cacheMan
 
-The `cacheMan` program allows one to  manage and explore [monitor cache files](../../monitors/README.md). You may list cache entries, check for duplicate or invalid cache entries (and optionally remove them), and merge or unmerge one or more caches. Use the tool with caution and please make sure to backup your data before proceeding.
+The `cacheMan` program allows one to  manage and explore [monitor cache files](../../monitors/README.md). You may list cache entries, check for duplicate or invalid cache entries (and fix them). Use the tool with caution and please make sure to backup your data before proceeding.
 
 #### Usage
 
@@ -11,16 +11,12 @@ The `cacheMan` program allows one to  manage and explore [monitor cache files](.
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | files | path(s) of files to check, merge, fix or display (default=display) (required) |
+|  | files | path(s) of files to check, fix or display (default=display) (required) |
 | -c | --check | check for duplicates and other problems in the cache |
 | -d | --data | in 'list' mode, render results as data (i.e export mode) |
 | -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
 | -f | --fix | remove duplicates from the cache (if any) |
 | -l | --list | list the contents of the cache (the default if no other option) |
-| -i | --import | import transactions if import.txt file exists in current folder |
-| -r | --remove | remove transactions if remove.txt file exists in current folder |
-| -u | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
-| -m | --merge | merge two or more caches into a single cache |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

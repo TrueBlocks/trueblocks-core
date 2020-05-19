@@ -141,6 +141,7 @@ inline bool CAppearance::operator==(const CAppearance& item) const {
 //-------------------------------------------------------------------------
 inline bool operator<(const CAppearance& v1, const CAppearance& v2) {
     // EXISTING_CODE
+    return ((v1.bn != v2.bn) ? v1.bn < v2.bn : v1.tx < v2.tx);
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
     return true;

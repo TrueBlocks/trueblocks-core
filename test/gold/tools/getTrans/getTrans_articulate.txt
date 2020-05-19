@@ -32,7 +32,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
         },
         {
-          "name": "_amount",
+          "name": "_value",
           "value": "8263636363636363636"
         }
       ],
@@ -43,7 +43,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTx": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _amount: 8263636363636363636 )",
+    "compressedTx": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )",
     "traces": [
       {
         "type": "call",
@@ -60,7 +60,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
               "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
             },
             {
-              "name": "_amount",
+              "name": "_value",
               "value": "8263636363636363636"
             }
           ],
@@ -71,7 +71,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
             }
           ]
         },
-        "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _amount: 8263636363636363636 )",
+        "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )",
         "action": {
           "address": "0x0",
           "balance": 0,
@@ -221,12 +221,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "name": "targetNoFork",
           "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
         }
-      ],
-      "outputs": [
-        {
-          "name": "val_0",
-          "value": "true"
-        }
       ]
     },
     "compressedTx": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )",
@@ -244,12 +238,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
             {
               "name": "targetNoFork",
               "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "val_0",
-              "value": "true"
             }
           ]
         },
