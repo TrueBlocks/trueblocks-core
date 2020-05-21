@@ -22,12 +22,11 @@ class COptions : public COptionsBase {
     bool no_fix;
     // END_CODE_DECLARE
 
-    CAccountWatchArray monitors;
+    CMonitorArray monitors;
 
     COptions(void);
     ~COptions(void);
 
-    bool loadMonitorData(CAppearanceArray& items, const address_t& addr);
     bool parseArguments(string_q& command);
     void Init(void);
 };

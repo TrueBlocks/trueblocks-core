@@ -5,13 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-int nn = 0;
-#define HERE(a)                                                                                                        \
-    if (isTestMode()) {                                                                                                \
-        cout << ++nn << ": " << (a) << endl;                                                                           \
-        cout << "----------------------------------------------" << endl;                                              \
-    }
-
 //-----------------------------------------------------------------------
 bool COptions::exportBalances(void) {
     ENTER("exportBalances");
@@ -56,8 +49,6 @@ bool COptions::exportBalances(void) {
                 }
                 balIn.Release();
             }
-            // TODO(tjayrush) : remove this
-            HERE("as read")
             if (isTestMode()) {
                 cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
                 for (auto delta : deltasMap)
@@ -65,12 +56,10 @@ bool COptions::exportBalances(void) {
             }
         }
 
-        HERE("data")
         wei_t priorBalance = 0;
         bool first = true;
         for (size_t i = 0;
-             i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt && (!freshen || (nFreshened < freshen_max));
-             i++) {
+             i < apps.size() && !shouldQuit() && apps[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
             const CAppearance_base* item = &apps[i];
             if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
                 CBalanceRecord record;
@@ -99,9 +88,7 @@ bool COptions::exportBalances(void) {
                     if (isJson && !first)
                         cout << ", ";
                     cout << record;
-                    //                    cout << endl;
                     nExported++;
-                    nFreshened++;
                     first = false;
                 }
                 priorBalance = record.balance;
@@ -127,7 +114,6 @@ bool COptions::exportBalances(void) {
                     cout << ", ";
                 cout << delta.second;
                 nExported++;
-                nFreshened++;
                 first = false;
             }
         }
@@ -144,8 +130,6 @@ bool COptions::exportBalances(void) {
             }
             balOut.Release();
 
-            // TODO(tjayrush): remove this
-            HERE("Out")
             if (isTestMode()) {
                 cerr << "nDeltas: " << nDeltas << "\tlastDelta: --lastDelta--" << endl;
                 for (auto delta : deltasMap)

@@ -166,8 +166,8 @@ CBaseNode* getNode(const string_q& nodeType) {
         node = CTreeNode::createObject();
     else if (nodeType == "CTreeRoot")
         node = CTreeRoot::createObject();
-    else if (nodeType == "CAccountWatch")
-        node = CAccountWatch::createObject();
+    else if (nodeType == "CMonitor")
+        node = CMonitor::createObject();
     else if (nodeType == "CApiSpec")
         node = CApiSpec::createObject();
     else if (nodeType == "CBlock")

@@ -20,33 +20,20 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         options.className =
-            (options.count_only
-                 ? GETRUNTIME_CLASS(CCounts)->m_ClassName
-                 : (options.hashes_only
-                        ? GETRUNTIME_CLASS(CIpfshash)->m_ClassName
-                        : (options.appearances
-                               ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                               : (options.balances
-                                      ? GETRUNTIME_CLASS(CEthState)->m_ClassName
-                                      : (options.traces
-                                             ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                                             : (options.receipts
-                                                    ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                                                    : (options.logs
-                                                           ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                           : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))))));
+            (options.appearances
+                 ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
+                 : (options.balances
+                        ? GETRUNTIME_CLASS(CEthState)->m_ClassName
+                        : (options.traces
+                               ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                               : (options.receipts ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                                                   : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                                   : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        if (options.count_only) {
-            options.exportCounts();
-
-        } else if (options.hashes_only) {
-            options.loadAllAppearances();  // allow the balance query to continue even with no appearances
-            options.exportIPFSHashes();
-
-        } else if (options.balances) {
+        if (options.balances) {
             options.loadAllAppearances();  // allow the balance query to continue even with no appearances
             options.exportBalances();
 
@@ -65,7 +52,7 @@ int main(int argc, const char* argv[]) {
     if (!options.isRedirected())
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!options.freshen && !options.count_only)
+    if (!options.freshen)
         LOG_INFO("exported ", options.nExported, " ",
                  (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(),
                  " transactions", string_q(55, ' '));

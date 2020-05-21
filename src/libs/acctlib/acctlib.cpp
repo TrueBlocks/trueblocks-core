@@ -17,7 +17,7 @@
 void acctlib_init(QUITHANDLER qh) {
     etherlib_init(qh);
 
-    CAccountWatch::registerClass();
+    CMonitor::registerClass();
     CApiSpec::registerClass();
     CEthState::registerClass();
     CIncomeStatement::registerClass();

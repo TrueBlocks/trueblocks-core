@@ -46,7 +46,6 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     bool handle_status(ostream& os);
-    bool handle_listing(ostream& os);
     bool handle_config(ostream& os);
     bool handle_config_get(ostream& os);
     bool handle_config_set(ostream& os);

@@ -44,12 +44,12 @@ Found 109 (109) files
 ../dataUpgradeTest/dataUpgradeTest_AllClasses.txt
 ../dataUpgradeTest/dataUpgradeTest_CAbi.txt
 ../dataUpgradeTest/dataUpgradeTest_CAccount.txt
-../dataUpgradeTest/dataUpgradeTest_CAccountWatch.txt
 ../dataUpgradeTest/dataUpgradeTest_CApiSpec.txt
 ../dataUpgradeTest/dataUpgradeTest_CBlock.txt
 ../dataUpgradeTest/dataUpgradeTest_CFunction.txt
 ../dataUpgradeTest/dataUpgradeTest_CIncomeStatement.txt
 ../dataUpgradeTest/dataUpgradeTest_CLogEntry.txt
+../dataUpgradeTest/dataUpgradeTest_CMonitor.txt
 ../dataUpgradeTest/dataUpgradeTest_CNewBlock.txt
 ../dataUpgradeTest/dataUpgradeTest_CNewReceipt.txt
 ../dataUpgradeTest/dataUpgradeTest_CParameter.txt
@@ -67,12 +67,12 @@ Found 109 (109) files
 ../decodeAbiTest/decodeAbiTest_README.txt
 ../decodeAbiTest/speed_test.txt
 ../displayStrsTest/displayStrsTest_CAccountName.txt
-../displayStrsTest/displayStrsTest_CAccountWatch.txt
 ../displayStrsTest/displayStrsTest_CAcctCacheItem.txt
 ../displayStrsTest/displayStrsTest_CBlock.txt
 ../displayStrsTest/displayStrsTest_CBranch.txt
 ../displayStrsTest/displayStrsTest_CInfix.txt
 ../displayStrsTest/displayStrsTest_CLeaf.txt
+../displayStrsTest/displayStrsTest_CMonitor.txt
 ../displayStrsTest/displayStrsTest_CPriceQuote.txt
 ../displayStrsTest/displayStrsTest_CRPCResult.txt
 ../displayStrsTest/displayStrsTest_CTreeNode.txt

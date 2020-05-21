@@ -35,7 +35,7 @@ on, cmd,  fast, null, etherlib/dataUpgradeTest, 05,               n, val = 5
 on, cmd,  fast, null, etherlib/dataUpgradeTest, 06,               n, file:cmd_file1
 on, cmd,  fast, null, etherlib/dataUpgradeTest, CAbi,             n, val = CAbi
 on, cmd,  fast, null, etherlib/dataUpgradeTest, CAccount,         n, val = CAccount
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CAccountWatch,    n, val = CAccountWatch
+on, cmd,  fast, null, etherlib/dataUpgradeTest, CMonitor,         n, val = CMonitor
 on, cmd,  fast, null, etherlib/dataUpgradeTest, CApiSpec,         n, val = CApiSpec
 on, cmd,  fast, null, etherlib/dataUpgradeTest, CBlock,           n, val = CBlock
 on, cmd,  fast, null, etherlib/dataUpgradeTest, CFunction,        n, val = CFunction
@@ -58,7 +58,7 @@ on, cmd,  fast, null, etherlib/decodeAbiTest,   01,               n, verbose
 
 on, cmd,  fast, null, etherlib/displayStrsTest, README,           n,
 on, cmd,  fast, null, etherlib/displayStrsTest, CAccountName,     n, val = CAccountName
-on, cmd,  fast, null, etherlib/displayStrsTest, CAccountWatch,    n, val = CAccountWatch
+on, cmd,  fast, null, etherlib/displayStrsTest, CMonitor,    n, val = CMonitor
 on, cmd,  fast, null, etherlib/displayStrsTest, CAcctCacheItem,   n, val = CAcctCacheItem
 on, cmd,  fast, null, etherlib/displayStrsTest, CBlock,           n, val = CBlock
 on, cmd,  fast, null, etherlib/displayStrsTest, CBranch,          n, val = CBranch

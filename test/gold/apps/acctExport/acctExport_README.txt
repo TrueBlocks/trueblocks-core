@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-i|-R|-o|-M|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-r|-l|-t|-b|-n|-u|-C|-a|-i|-R|-M|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -15,23 +15,21 @@ acctExport -th
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -b | --balances | export balance history instead of transaction list |
-| -e | --hashes_only | export the IPFS hashes of the index chunks the address appears in |
-| -c | --count_only | display only the count of the number of data items requested |
+| -n | --creations | export contract creations instead of transaction list |
+| -u | --selfdestructs | export contract selfdestructs instead of transaction list |
+| -C | --accounting | export accounting records instead of transaction list |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |
-| -o | --occurrence <num> | for each loaded list of appearances, export only this occurrence |
 | -M | --emitter | available for --logs option only, export will only export if the address emitted the event |
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -A | --all_abis | load all previously cached abi files |
-| -g | --grab_abis | using each trace's 'to' address, grab the abi for that address (improves articulation) |
 | -f | --freshen | freshen but do not print the exported data |
 | -F | --freshen_max <num> | maximum number of records to process for --freshen option |
 | -D | --deltas | for --balances option only, export only changes in balances |
-| -T | --reverseSort | export transactions in reverse order |
 | -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
 #### Hidden options (shown during testing only)

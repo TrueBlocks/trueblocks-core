@@ -21,8 +21,6 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -b | --balances | export balance history instead of transaction list |
-| -e | --hashes_only | export the IPFS hashes of the index chunks the address appears in |
-| -c | --count_only | display only the count of the number of data items requested |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |

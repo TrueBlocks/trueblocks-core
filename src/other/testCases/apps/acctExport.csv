@@ -8,23 +8,23 @@ on, cmd,  fast, export, apps/acctExport, help_long,             n, help
 on, both, fast, export, apps/acctExport, no_params,             y,
 
 on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 001506480
-on, both, fast, export, apps/acctExport, export_occ,            n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 1506480 & occurrence = 2
 on, both, fast, export, apps/acctExport, export_apps,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & end = 001506480
 on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt & end = 001506480
 on, both, fast, export, apps/acctExport, export_receipts,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = csv & end = 001506480
 on, both, fast, export, apps/acctExport, export_traces,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480
-on, both, fast, export, apps/acctExport, export_hashes,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & hashes_only & end = 001506480
 on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt & end = 001506480
 on, both, fast, export, apps/acctExport, export_balances_d,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & end = 001506480
 
 on, both, fast, export, apps/acctExport, export_dao,            n, addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & receipts & fmt = csv & end = 1430970
 
-on, both, fast, export, apps/acctExport, export_c,              n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count_only
-on, both, fast, export, apps/acctExport, export_apps_c,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count_only
-
 # state tests
 on, both, fast, export, apps/acctExport, export_balances_dol,   n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & dollars & end = 001507000
 on, both, fast, export, apps/acctExport, export_balances_d_eth, n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & ether & end = 001507000
+
+#on, both, fast, export, apps/acctExport, export_occ,            n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 1506480 & occurrence = 2
+#on, both, fast, export, apps/acctExport, export_hashes,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & hashes_only & end = 001506480
+#on, both, fast, export, apps/acctExport, export_c,              n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count_only
+#on, both, fast, export, apps/acctExport, export_apps_c,         n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count_only
 
 # 10200,apps,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
 # 10300,apps,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances

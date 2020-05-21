@@ -114,10 +114,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // We're going to turn some of these fields back on
     manageFields("CAccountName:is_custom,is_prefund,tags,name,symbol,source,decimals,description", false);
-    manageFields("CAccountWatch:all", false);
+    manageFields("CMonitor:all", false);
     manageFields("CTokenBalanceRecord:all", false);
 
-    UNHIDE_FIELD(CAccountWatch, "address");
+    UNHIDE_FIELD(CMonitor, "address");
     if (userBlocks) {
         UNHIDE_FIELD(CTokenBalanceRecord, "blockNumber");
     } else {

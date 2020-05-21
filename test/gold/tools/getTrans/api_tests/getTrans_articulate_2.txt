@@ -119,7 +119,7 @@
             "compressedLog": "NewBid ( hash: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811, bidder: 0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb, deposit: 10000000000000000 )"
           }
         ],
-        "status": 0
+        "status": null
       },
       "articulatedTx": {
         "name": "startAuctionsAndBid",

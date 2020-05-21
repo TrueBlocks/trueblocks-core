@@ -23,9 +23,13 @@ bool COptions::handle_export(void) {
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 
-    CFreshenArray fa;
-    for (auto a : addrs)
-        fa.push_back(CFreshen(a));
+    CMonitorArray fa;
+    for (auto a : addrs) {
+        CMonitor m;
+        m.address = a;
+        m.cntBefore = m.cntAfter = m.getRecordCount();
+        fa.push_back(m);
+    }
     if (!freshen_internal(FM_PRODUCTION, fa, "--silent", freshen_flags))
         EXIT_FAIL("'chifra export' freshen_internal returned false");
 

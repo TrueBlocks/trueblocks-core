@@ -18,14 +18,13 @@ bool COptions::exportData(void) {
 
     bool first = true;
     for (size_t i = 0;
-         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nFreshened < freshen_max)); i++) {
+         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             if (appearances) {
                 if (isJson && shouldDisplay && !first)
                     cout << ", ";
                 nExported++;
-                nFreshened++;
                 if (shouldDisplay) {
                     CDisplayApp d(hackAppAddr, item->blk, item->txid);
                     cout << d.Format() << endl;
@@ -73,26 +72,20 @@ bool COptions::exportData(void) {
                         bool isCreation = trace.result.address != "";
 
                         if (!isSuicide) {
-                            if (grab_abis) {
-                                abiMap[trace.action.to] = true;
-                            } else {
-                                if (!isTestMode() && isApiMode()) {
-                                    qblocks::eLogger->setEndline('\r');
-                                    LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".",
-                                             trans.transactionIndex, "-", trace.getValueByName("traceAddress"),
-                                             string_q(50, ' '));
-                                    qblocks::eLogger->setEndline('\n');
-                                }
-                                if (articulate)
-                                    abis.articulateTrace(&trace);
-                                if (isJson && shouldDisplay && !first)
-                                    cout << ", ";
-                                nExported++;
-                                nFreshened++;
-                                if (shouldDisplay)
-                                    cout << trace.Format() << endl;
-                                first = false;
+                            if (!isTestMode() && isApiMode()) {
+                                qblocks::eLogger->setEndline('\r');
+                                LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".", trans.transactionIndex,
+                                         "-", trace.getValueByName("traceAddress"), string_q(50, ' '));
+                                qblocks::eLogger->setEndline('\n');
                             }
+                            if (articulate)
+                                abis.articulateTrace(&trace);
+                            if (isJson && shouldDisplay && !first)
+                                cout << ", ";
+                            nExported++;
+                            if (shouldDisplay)
+                                cout << trace.Format() << endl;
+                            first = false;
                         }
 
                         if (isSuicide) {  // suicide
@@ -104,16 +97,11 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = "0x";
-                            if (grab_abis) {
-                                abiMap[trace.action.to] = true;
-                            } else {
-                                if (isJson && shouldDisplay && !first)
-                                    cout << ", ";
-                                nExported++;
-                                nFreshened++;
-                                if (shouldDisplay)
-                                    cout << copy.Format() << endl;
-                            }
+                            if (isJson && shouldDisplay && !first)
+                                cout << ", ";
+                            nExported++;
+                            if (shouldDisplay)
+                                cout << copy.Format() << endl;
                         }
 
                         if (isCreation) {  // contract creation
@@ -127,17 +115,11 @@ bool COptions::exportData(void) {
                             copy.traceAddress.push_back("s");
                             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                             copy.action.input = trace.action.input;
-                            if (grab_abis) {
-                                abiMap[trace.action.to] = true;
-
-                            } else {
-                                if (isJson && shouldDisplay && !first)
-                                    cout << ", ";
-                                nExported++;
-                                nFreshened++;
-                                if (shouldDisplay)
-                                    cout << copy.Format() << endl;
-                            }
+                            if (isJson && shouldDisplay && !first)
+                                cout << ", ";
+                            nExported++;
+                            if (shouldDisplay)
+                                cout << copy.Format() << endl;
                         }
                     }
 
@@ -149,7 +131,6 @@ bool COptions::exportData(void) {
                         if (isJson && shouldDisplay && !first)
                             cout << ", ";
                         nExported++;
-                        nFreshened++;
                         if (shouldDisplay)
                             cout << trans.receipt.Format() << endl;
                         first = false;
@@ -163,7 +144,6 @@ bool COptions::exportData(void) {
                                 if (articulate)
                                     abis.articulateLog(&log);
                                 nExported++;
-                                nFreshened++;
                                 if (shouldDisplay)
                                     cout << log.Format() << endl;
                                 first = false;
@@ -179,7 +159,6 @@ bool COptions::exportData(void) {
                         if (isJson && shouldDisplay && !first)
                             cout << ", ";
                         nExported++;
-                        nFreshened++;
                         if (shouldDisplay)
                             cout << trans.Format() << endl;
                         first = false;
@@ -198,196 +177,175 @@ bool COptions::exportData(void) {
     if (!isTestMode() && shouldDisplay)
         LOG_INFO(string_q(120, ' '), "\r");
 
-    if (grab_abis) {
-        // acctExport --grab_abis (downloads and writes the ABIs for all the traces to disc)
-        for (pair<address_t, bool> item : abiMap) {
-            if (isContractAt(item.first, latestBlock)) {
-                CAbi unused;
-                loadAbiAndCache(unused, item.first, false, errors);
-                cerr << "ABI for " << item.first << " ";
-                cerr << (fileExists(getCachePath("abis/" + item.first + ".json")) ? "cached" : "not cached") << endl;
-                if (isApiMode())
-                    errors.clear();
-            }
-        }
-    }
-
     if (isJson && shouldDisplay)
         cout << "]";
     if (isTestMode())
         cout << endl;
 
-    if (occurrence != NOPOS) {
-        ostringstream os;
-        os << ", \"addresses\": []\n";
-        expContext().fmtMap["meta"] = expContext().fmtMap["meta"] + os.str();
+    addr_name_map_t fromAndToMap;
+    for (auto addr : fromNameExistsMap)
+        fromAndToMap[addr.first] = 1L;
+    for (auto addr : toNameExistsMap)
+        if (fromAndToMap[addr.first] == 1L)
+            fromAndToMap[addr.first] = 2L;
 
-    } else {
-        addr_name_map_t fromAndToMap;
-        for (auto addr : fromNameExistsMap)
-            fromAndToMap[addr.first] = 1L;
-        for (auto addr : toNameExistsMap)
-            if (fromAndToMap[addr.first] == 1L)
-                fromAndToMap[addr.first] = 2L;
-
-        CNameStatsArray fromAndToUnnamed;
-        CNameStatsArray fromAndToNamed;
-        for (auto addr : fromAndToMap) {
-            CAccountName acct;
-            acct.address = addr.first;
-            getNamedAccount(acct, addr.first);
-            if (acct.name.empty()) {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                fromAndToUnnamed.push_back(stats);
-            } else {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                fromAndToNamed.push_back(stats);
-            }
-        }
-
-        {
-            sort(fromAndToNamed.begin(), fromAndToNamed.end());
-            ostringstream os;
-            bool frst = true;
-            os << ", \"namedFromAndTo\": {";
-            for (auto stats : fromAndToNamed) {
-                if (fromAndToMap[stats.address] == 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
-                       << stats.name << "\", \"count\": " << stats.count << " }";
-                    frst = false;
-                }
-            }
-            os << "}\n";
-            expContext().fmtMap["meta"] += os.str();
-        }
-
-        {
-            sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
-            ostringstream os;
-            os << ", \"unNamedFromAndTo\": {";
-            bool frst = true;
-            for (auto stats : fromAndToUnnamed) {
-                if (fromAndToMap[stats.address] == 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": " << stats.count;
-                    frst = false;
-                }
-            }
-            os << "}";
-            expContext().fmtMap["meta"] += os.str();
-        }
-
-        CNameStatsArray fromUnnamed;
-        CNameStatsArray fromNamed;
-        for (auto addr : fromNameExistsMap) {
-            CAccountName acct;
-            acct.address = addr.first;
-            getNamedAccount(acct, addr.first);
-            if (acct.name.empty()) {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                fromUnnamed.push_back(stats);
-            } else {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                fromNamed.push_back(stats);
-            }
-        }
-
-        {
-            sort(fromNamed.begin(), fromNamed.end());
-            ostringstream os;
-            bool frst = true;
-            os << ", \"namedFrom\": {";
-            for (auto stats : fromNamed) {
-                if (fromAndToMap[stats.address] != 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
-                       << stats.name << "\", \"count\": " << stats.count << " }";
-                    frst = false;
-                }
-            }
-            os << "}\n";
-            expContext().fmtMap["meta"] += os.str();
-        }
-
-        {
-            sort(fromUnnamed.begin(), fromUnnamed.end());
-            ostringstream os;
-            os << ", \"unNamedFrom\": {";
-            bool frst = true;
-            for (auto stats : fromUnnamed) {
-                if (fromAndToMap[stats.address] != 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": " << stats.count;
-                    frst = false;
-                }
-            }
-            os << "}";
-            expContext().fmtMap["meta"] += os.str();
-        }
-
-        CNameStatsArray toUnnamed;
-        CNameStatsArray toNamed;
-        for (auto addr : toNameExistsMap) {
-            CAccountName acct;
-            acct.address = addr.first;
-            getNamedAccount(acct, addr.first);
-            if (isZeroAddr(acct.address)) {
-                acct.tags = "Contract Creation";
-                acct.name = "Contract Creation";
-            }
-            if (acct.name.empty()) {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                toUnnamed.push_back(stats);
-            } else {
-                CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-                toNamed.push_back(stats);
-            }
-        }
-
-        {
-            sort(toNamed.begin(), toNamed.end());
-            ostringstream os;
-            bool frst = true;
-            os << ", \"namedTo\": {";
-            for (auto stats : toNamed) {
-                if (fromAndToMap[stats.address] != 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \""
-                       << stats.name << "\", \"count\": " << stats.count << " }";
-                    frst = false;
-                }
-            }
-            os << "}\n";
-            expContext().fmtMap["meta"] += os.str();
-        }
-
-        {
-            sort(toUnnamed.begin(), toUnnamed.end());
-            ostringstream os;
-            os << ", \"unNamedTo\": {";
-            bool frst = true;
-            for (auto stats : toUnnamed) {
-                if (fromAndToMap[stats.address] != 2) {
-                    if (!frst)
-                        os << ",";
-                    os << "\"" << stats.address << "\": " << stats.count;
-                    frst = false;
-                }
-            }
-            os << "}";
-            expContext().fmtMap["meta"] += os.str();
+    CNameStatsArray fromAndToUnnamed;
+    CNameStatsArray fromAndToNamed;
+    for (auto addr : fromAndToMap) {
+        CAccountName acct;
+        acct.address = addr.first;
+        getNamedAccount(acct, addr.first);
+        if (acct.name.empty()) {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            fromAndToUnnamed.push_back(stats);
+        } else {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            fromAndToNamed.push_back(stats);
         }
     }
 
-    for (auto watch : monitors)
+    {
+        sort(fromAndToNamed.begin(), fromAndToNamed.end());
+        ostringstream os;
+        bool frst = true;
+        os << ", \"namedFromAndTo\": {";
+        for (auto stats : fromAndToNamed) {
+            if (fromAndToMap[stats.address] == 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+                   << "\", \"count\": " << stats.count << " }";
+                frst = false;
+            }
+        }
+        os << "}\n";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    {
+        sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
+        ostringstream os;
+        os << ", \"unNamedFromAndTo\": {";
+        bool frst = true;
+        for (auto stats : fromAndToUnnamed) {
+            if (fromAndToMap[stats.address] == 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": " << stats.count;
+                frst = false;
+            }
+        }
+        os << "}";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    CNameStatsArray fromUnnamed;
+    CNameStatsArray fromNamed;
+    for (auto addr : fromNameExistsMap) {
+        CAccountName acct;
+        acct.address = addr.first;
+        getNamedAccount(acct, addr.first);
+        if (acct.name.empty()) {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            fromUnnamed.push_back(stats);
+        } else {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            fromNamed.push_back(stats);
+        }
+    }
+
+    {
+        sort(fromNamed.begin(), fromNamed.end());
+        ostringstream os;
+        bool frst = true;
+        os << ", \"namedFrom\": {";
+        for (auto stats : fromNamed) {
+            if (fromAndToMap[stats.address] != 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+                   << "\", \"count\": " << stats.count << " }";
+                frst = false;
+            }
+        }
+        os << "}\n";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    {
+        sort(fromUnnamed.begin(), fromUnnamed.end());
+        ostringstream os;
+        os << ", \"unNamedFrom\": {";
+        bool frst = true;
+        for (auto stats : fromUnnamed) {
+            if (fromAndToMap[stats.address] != 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": " << stats.count;
+                frst = false;
+            }
+        }
+        os << "}";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    CNameStatsArray toUnnamed;
+    CNameStatsArray toNamed;
+    for (auto addr : toNameExistsMap) {
+        CAccountName acct;
+        acct.address = addr.first;
+        getNamedAccount(acct, addr.first);
+        if (isZeroAddr(acct.address)) {
+            acct.tags = "Contract Creation";
+            acct.name = "Contract Creation";
+        }
+        if (acct.name.empty()) {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            toUnnamed.push_back(stats);
+        } else {
+            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
+            toNamed.push_back(stats);
+        }
+    }
+
+    {
+        sort(toNamed.begin(), toNamed.end());
+        ostringstream os;
+        bool frst = true;
+        os << ", \"namedTo\": {";
+        for (auto stats : toNamed) {
+            if (fromAndToMap[stats.address] != 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+                   << "\", \"count\": " << stats.count << " }";
+                frst = false;
+            }
+        }
+        os << "}\n";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    {
+        sort(toUnnamed.begin(), toUnnamed.end());
+        ostringstream os;
+        os << ", \"unNamedTo\": {";
+        bool frst = true;
+        for (auto stats : toUnnamed) {
+            if (fromAndToMap[stats.address] != 2) {
+                if (!frst)
+                    os << ",";
+                os << "\"" << stats.address << "\": " << stats.count;
+                frst = false;
+            }
+        }
+        os << "}";
+        expContext().fmtMap["meta"] += os.str();
+    }
+
+    for (auto monitor : monitors)
         if (items.size() > 0)
-            watch.writeLastExport(items[items.size() - 1].blk);
+            monitor.writeLastExport(items[items.size() - 1].blk);
 
     EXIT_NOMSG(true);
 }

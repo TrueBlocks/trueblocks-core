@@ -19,20 +19,18 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
-    COption("hashes_only", "e", "", OPT_SWITCH, "export the IPFS hashes of the index chunks the address appears in"),
-    COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
+    COption("creations", "n", "", OPT_SWITCH, "export contract creations instead of transaction list"),
+    COption("selfdestructs", "u", "", OPT_SWITCH, "export contract selfdestructs instead of transaction list"),
+    COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-    COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
-    COption("reverseSort", "T", "", OPT_HIDDEN | OPT_SWITCH, "export transactions in reverse order"),
-    COption("occurrence", "o", "<blknum>", OPT_FLAG, "for each loaded list of appearances, export only this occurrence"),  // NOLINT
     COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
@@ -84,11 +82,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-b" || arg == "--balances") {
             balances = true;
 
-        } else if (arg == "-e" || arg == "--hashes_only") {
-            hashes_only = true;
+        } else if (arg == "-n" || arg == "--creations") {
+            creations = true;
 
-        } else if (arg == "-c" || arg == "--count_only") {
-            count_only = true;
+        } else if (arg == "-u" || arg == "--selfdestructs") {
+            selfdestructs = true;
+
+        } else if (arg == "-C" || arg == "--accounting") {
+            accounting = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -109,9 +110,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-A" || arg == "--all_abis") {
             all_abis = true;
 
-        } else if (arg == "-g" || arg == "--grab_abis") {
-            grab_abis = true;
-
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
@@ -121,13 +119,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-D" || arg == "--deltas") {
             deltas = true;
-
-        } else if (arg == "-T" || arg == "--reverseSort") {
-            reverseSort = true;
-
-        } else if (startsWith(arg, "-o:") || startsWith(arg, "--occurrence:")) {
-            if (!confirmBlockNum("occurrence", occurrence, arg, latest))
-                return false;
 
         } else if (arg == "-M" || arg == "--emitter") {
             emitter = true;
@@ -176,40 +167,37 @@ bool COptions::parseArguments(string_q& command) {
     // or traces if there are less than 1,000 exported items
 
     for (auto addr : addrs) {
-        string_q fn = getMonitorPath(addr);
-        if (!fileExists(fn)) {
-            fn = (isTestMode() ? substitute(fn, getMonitorPath(""), "./") : fn);
-            EXIT_USAGE("File not found '" + fn + ". Quitting...");
-        }
+        CMonitor monitor;
 
-        if (fileExists(fn + ".lck"))
+        // below - don't change the next line, it sets bloom value also
+        monitor.setValueByName("address", toLower(addr));
+        // below - don't change the previous line, it sets bloom value also
+        monitor.setValueByName("name", toLower(addr));
+
+        if (!monitor.exists())
+            EXIT_USAGE("Monitor file for address " + addr + " not found. Quitting...");
+        string_q unused;
+        if (monitor.isLocked(unused))
             EXIT_USAGE(
-                "The cache lock file is present. The program is either already "
+                "The cache file is locked. The program is either already "
                 "running or it did not end cleanly the\n\tlast time it ran. "
                 "Quit the already running program or, if it is not running, "
                 "remove the lock\n\tfile: " +
-                fn + ".lck'. Quitting...");
+                getMonitorPath(addr) + +".lck'. Quitting...");
 
-        CAccountWatch watch;
-        // below - don't change, sets bloom value also
-        watch.setValueByName("address", toLower(addr));
-        // above - don't change, sets bloom value also
-        watch.setValueByName("name", toLower(addr));
-        watch.finishParse();
-        monitors.push_back(watch);
+        monitor.finishParse();
+        monitors.push_back(monitor);
     }
 
     if (start != NOPOS)
         scanRange.first = start;
     if (end != NOPOS)
         scanRange.second = end;
-    if (grab_abis)
-        traces = true;
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((appearances + receipts + logs + traces + balances + hashes_only) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, traces, balances or hashes_only. Quitting...");
+    if ((appearances + receipts + logs + traces + balances) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, traces, or balances. Quitting...");
 
     if (emitter && !logs)
         EXIT_USAGE("The emitter option is only available when exporting logs. Quitting...");
@@ -231,45 +219,26 @@ bool COptions::parseArguments(string_q& command) {
         defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars|CTrace:traceAddress" : "");
     manageFields(show, true);
 
-    CToml toml(getMonitorCnfg(monitors[0].address));
-    // SEP4("field hiding: " + toml.getConfigStr("fields", "hide", ""));
-    manageFields(toml.getConfigStr("fields", "hide", ""), false);
-    // SEP4("field showing: " + toml.getConfigStr("fields", "show", ""));
-    manageFields(toml.getConfigStr("fields", "show", ""), true);
-
     // Load as many ABI files as we have
-    if (!appearances && !balances && !hashes_only) {
+    if (!appearances && !balances) {
         abis.loadAbiKnown();
         if (all_abis)
             abis.loadAbisMonitors();
     }
 
-    // Try to articulate the watched addresses
+    // Try to articulate the monitored addresses
     for (size_t i = 0; i < monitors.size(); i++) {
-        CAccountWatch* watch = &monitors[i];
-        // abis.loadAbiByAddress(watch->address);
-        if (isContractAt(watch->address, latestBlock))
-            loadAbiAndCache(abis, watch->address, false, errors);
+        CMonitor* monitor = &monitors[i];
+        // abis.loadAbiByAddress(monitor->address);
+        if (isContractAt(monitor->address, latestBlock))
+            loadAbiAndCache(abis, monitor->address, false, errors);
         // abis.loadAbiKnown();
-        string_q path = getMonitorCnfg(watch->address);
-        if (fileExists(path)) {  // if there's a config file, let's use it user can tell us the names of other addresses
-            CToml thisToml(path);
-            string_q str = substitute(substitute(thisToml.getConfigJson("named", "list", ""), "[", ""), "=", ":");
-            CAccountWatch item;
-            while (item.parseJson3(str)) {
-                item.address = str_2_Addr(toLower(item.address));
-                item.finishParse();
-                abis.loadAbiByAddress(item.address);
-                item = CAccountWatch();
-            }
-        }
     }
 
     if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
-        string_q deflt, format;
+        string_q format;
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
-        format = toml.getConfigStr("formats", "trans_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
         expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
 
         if (format.empty())
@@ -277,26 +246,21 @@ bool COptions::parseArguments(string_q& command) {
         if (!contains(toLower(format), "trace"))
             HIDE_FIELD(CTransaction, "traces");
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
-        format = toml.getConfigStr("formats", "receipt_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
         expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
-        format = toml.getConfigStr("formats", "logentry_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
         expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-        format = toml.getConfigStr("formats", "trace_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
         expContext().fmtMap["trace_fmt"] = cleanFmt(format);
 
         // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future
         // reference.
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
-        format = toml.getConfigStr("formats", "displayapp_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
         expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
-        format = toml.getConfigStr("formats", "balancerecord_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
         if (expContext().asEther) {
             format = substitute(format, "{BALANCE}", "{ETHER}");
             format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
@@ -309,8 +273,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format);
 
-        deflt = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
-        format = toml.getConfigStr("formats", "balancedelta_fmt", deflt);
+        format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
         if (expContext().asEther) {
             format = substitute(format, "{BALANCE}", "{ETHER}");
             format = substitute(format, "{DIFF}", "{ETHERDIFF}");
@@ -343,31 +306,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (occurrence != NOPOS) {
-        if (freshen)
-            EXIT_USAGE("The 'occurrence' option cannot be used with the 'freshe' option. Quitting...");
-        if (monitors.size() > 1)
-            EXIT_USAGE("The 'occurrence' option is only available for a single address. Quitting...");
-        // weird hack because 'latest' in the sense of an occurrence is different than latest in the sense of a block
-        if ((contains(command, "occurrence:latest") || contains(command, "o:latest")) && occurrence == latestBlock) {
-            occurrence = (NOPOS - 1);
-        }
-    }
-
     if (freshen)
         expContext().exportFmt = NONE1;
-
-    //    if (count_only && !doAppearances)
-    //        EXIT_USAGE("the --count_only option is only available with the --appearances option. Quitting...");
-
-    if (count_only) {
-        string_q header;
-        if (expContext().exportFmt == TXT1)
-            header = "address\tcount";
-        else if (expContext().exportFmt == CSV1)
-            header = ("\"" + substitute(header, "\t", "\",\"") + "\"");
-        expContext().fmtMap["header"] = header;
-    }
 
     EXIT_NOMSG(true);
 }
@@ -388,22 +328,19 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     balances = false;
-    hashes_only = false;
-    count_only = false;
+    creations = false;
+    selfdestructs = false;
+    accounting = false;
     articulate = false;
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
-    grab_abis = false;
     freshen = false;
     freshen_max = 5000;
     deltas = false;
-    reverseSort = false;
-    occurrence = NOPOS;
     emitter = false;
     // END_CODE_INIT
 
     nExported = 0;
-    nFreshened = 0;
     scanRange.second = getLatestBlock_cache_ripe();
     items.clear();
 
@@ -417,8 +354,6 @@ COptions::COptions(void) {
     ts_cnt = 0;
     Init();
     CDisplayApp::registerClass();
-    CCounts::registerClass();
-    CIpfshash::registerClass();
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
@@ -465,28 +400,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
-            if (occurrence == NOPOS) {  // no filter
-                apps.push_back(buffer[i]);
-            } else if (occurrence == (NOPOS - 1) && i == (nRecords - 1)) {  // special case for 'latest'
-                apps.push_back(buffer[i]);
-                occurrence = i;
-            } else if (occurrence == i) {
-                apps.push_back(buffer[i]);
-            }
-        }
-
-        if (expContext().fmtMap["meta"].empty() && occurrence != NOPOS) {
-            blknum_t next = (occurrence == nRecords - 1) ? occurrence : occurrence + 1;
-            blknum_t prev = (occurrence == 0) ? 0 : occurrence - 1;
-            string_q links;
-            links += ",\n\"links\": ";
-            links += "{";
-            links += " \"next\": " + uint_2_Str(next) + ",";
-            links += " \"prev\": " + uint_2_Str(prev) + ",";
-            links += " \"current\": " + uint_2_Str(occurrence) + ",";
-            links += " \"count\": " + uint_2_Str(nRecords);
-            links += "}\n";
-            expContext().fmtMap["meta"] = links;
+            apps.push_back(buffer[i]);
         }
 
         delete[] buffer;
@@ -508,7 +422,7 @@ bool COptions::loadAllAppearances(void) {
             EXIT_FAIL("Could not load data.");
         if (freshen) {
             // If we're freshening...
-            blknum_t lastExport = str_2_Uint(asciiFileToString(getMonitorExpt(monitor.address)));
+            blknum_t lastExport = monitor.getLastExportedBlock();
             if (scanRange.first == 0)  // we can start where the last export happened on any address...
                 scanRange.first = lastExport;
             if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
@@ -523,11 +437,7 @@ bool COptions::loadAllAppearances(void) {
     }
 
     // Should be sorted already, so it can't hurt
-    if (reverseSort) {
-        sort(tmp.begin(), tmp.end(), sortAppearanceBaseReverse);
-    } else {
-        sort(tmp.begin(), tmp.end());
-    }
+    sort(tmp.begin(), tmp.end());
 
     items.push_back(tmp[0]);
     for (auto item : tmp) {

@@ -19,7 +19,7 @@ getTrans 2222221.* --fmt api
       "contractAddress": "0x0",
       "gasUsed": 21000,
       "logs": [],
-      "status": 0
+      "status": null
     },
     "gasUsed": 21000
   },  {

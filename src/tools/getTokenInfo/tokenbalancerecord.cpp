@@ -20,7 +20,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CTokenBalanceRecord, CAccountWatch);
+IMPLEMENT_NODE(CTokenBalanceRecord, CMonitor);
 
 //---------------------------------------------------------------------------
 extern string_q nextTokenbalancerecordChunk(const string_q& fieldIn, const void* dataPtr);
@@ -109,7 +109,7 @@ string_q CTokenBalanceRecord::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CAccountWatch::getValueByName(fieldName);
+    return CMonitor::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
     }
     // EXISTING_CODE
 
-    if (CAccountWatch::setValueByName(fieldName, fieldValue))
+    if (CMonitor::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -185,7 +185,7 @@ bool CTokenBalanceRecord::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CAccountWatch::Serialize(archive);
+    CMonitor::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -205,7 +205,7 @@ bool CTokenBalanceRecord::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CAccountWatch::SerializeC(archive);
+    CMonitor::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -247,7 +247,7 @@ void CTokenBalanceRecord::registerClass(void) {
     if (HAS_FIELD(CTokenBalanceRecord, "schema"))
         return;
 
-    CAccountWatch::registerClass();
+    CMonitor::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(CTokenBalanceRecord, "schema", T_NUMBER, ++fieldNum);

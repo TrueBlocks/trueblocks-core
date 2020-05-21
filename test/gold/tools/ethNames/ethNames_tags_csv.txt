@@ -19,6 +19,7 @@ ethNames --tags --fmt csv
 "33-Set Protocol:Other"
 "33-Set Protocol:Wrapers"
 "33-Set Protocol:Wrappers"
+"33-Set Prototcol"
 "34-ENS"
 "34-Kyber Network"
 "35-Pool Together"

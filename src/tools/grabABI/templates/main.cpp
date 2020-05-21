@@ -40,18 +40,18 @@ int main(int argc, const char* argv[]) {
             return 0;
         }
 
-        uint64_t blockNum = visitor.blockStats.minWatchBlock - 1;
+        uint64_t blockNum = visitor.blockStats.minW atchBlock - 1;
         if (visitor.kBlock > blockNum)
             blockNum = visitor.kBlock;
 
-        // Figure out which block to start on. Use earliest block from the watches. Note that
+        // Figure out which block to start on. Use earliest block from the w atches. Note that
         // 'displayFromCache' may modify this to lastest visited block
         cout << "\r\n";
         if (visitor.kBlock) {
             // we're not starting at the beginning
-            for (uint32_t i = 0; i < visitor.watches.size(); i++) {
-                visitor.watches.at(i).statement.endBal =
-                    get NodeBal(visitor.watches.at(i).stateHistory, visitor.watches.at(i).address, blockNum);
+            for (uint32_t i = 0; i < visitor.w atches.size(); i++) {
+                visitor.w atches.at(i).statement.endBal =
+                    get NodeBal(visitor.w atches.at(i).stateHistory, visitor.w atches.at(i).address, blockNum);
             }
         }
 

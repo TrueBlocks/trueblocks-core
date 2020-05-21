@@ -1,7 +1,7 @@
-dataUpgradeTest argc: 2 [1:CAccountWatch] 
-dataUpgradeTest CAccountWatch 
+dataUpgradeTest argc: 2 [1:CMonitor] 
+dataUpgradeTest CMonitor 
 --------------------------------------------------------------------------------
-className: CAccountWatch
+className: CMonitor
 baseClass: CAccountName
 schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
@@ -37,7 +37,7 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 }
 
 --------------------------------------------------------------------------------
-className: CAccountWatch
+className: CMonitor
 baseClass: CAccountName
 schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
@@ -58,7 +58,7 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 }
 
 --------------------------------------------------------------------------------
-className: CAccountWatch
+className: CMonitor
 baseClass: CAccountName
 schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
@@ -76,7 +76,7 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
   "schema": 7000,
   "deleted": false,
   "showing": true,
-  "cname": "AccountWatch",
+  "cname": "Monitor",
   "abi_spec": {
     "address": "0x0",
     "interfaces": []

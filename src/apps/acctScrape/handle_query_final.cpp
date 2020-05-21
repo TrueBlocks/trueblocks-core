@@ -83,12 +83,10 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 LOG_INFO(os.str());
             }
             // none of them hit, so write last block for each of them
-            for (size_t ac = 0; ac < monitors.size() && !hit; ac++) {
-                CAccountWatch* acct = &monitors[ac];
-                string_q filename = getMonitorPath(acct->address);
-                bool exists = fileExists(filename);
-                acct->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
-                acct->writeLastBlock(fileRange.second + 1);
+            for (auto monitor : monitors) {
+                string_q filename = getMonitorPath(monitor.address);
+                monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
+                monitor.writeLastBlock(fileRange.second + 1);
             }
             return true;
         }
@@ -106,19 +104,19 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
     bool indexHit = false;
     string_q hits;
-    for (size_t ac = 0; ac < monitors.size() && !shouldQuit(); ac++) {
-        CAccountWatch* acct = &monitors[ac];
-        string_q filename = getMonitorPath(acct->address);
+    for (size_t mo = 0; mo < monitors.size() && !shouldQuit(); mo++) {
+        CMonitor* monitor = &monitors[mo];
+        string_q filename = getMonitorPath(monitor->address);
         bool exists = fileExists(filename);
-        acct->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
+        monitor->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
 
-        if (!acct->openCacheFile1())
-            EXIT_FAIL("Could not open cache file " + getMonitorPath(acct->address, acct->fm_mode) + ".");
+        if (!monitor->openCacheFile1())
+            EXIT_FAIL("Could not open cache file " + getMonitorPath(monitor->address, monitor->fm_mode) + ".");
 
         CAppearanceArray_base items;
         items.reserve(300000);
 
-        addrbytes_t array = addr_2_Bytes(acct->address);
+        addrbytes_t array = addr_2_Bytes(monitor->address);
 
         if (!chunk) {
             chunk = new CArchive(READING_ARCHIVE);
@@ -155,7 +153,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
         if (found) {
             indexHit = true;
-            hits += (acct->address.substr(0, 6) + "..");
+            hits += (monitor->address.substr(0, 6) + "..");
             CAddressRecord_base* addrsOnFile =
                 reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
             CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
@@ -166,12 +164,12 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
             if (items.size()) {
                 lockSection(true);
-                acct->writeAnArray(items);
-                acct->writeLastBlock(fileRange.second + 1);
+                monitor->writeAnArray(items);
+                monitor->writeLastBlock(fileRange.second + 1);
                 lockSection(false);
             }
         } else {
-            acct->writeLastBlock(fileRange.second + 1);
+            monitor->writeLastBlock(fileRange.second + 1);
         }
     }
 

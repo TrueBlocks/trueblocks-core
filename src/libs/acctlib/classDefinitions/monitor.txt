@@ -1,5 +1,5 @@
 [settings]
-class = CAccountWatch
+class = CMonitor
 base_class = CAccountName
 fields = CAbi abi_spec|CIncomeStatement statement|CEthStateArray stateHistory|wei curBalance|bool enabled=true|freshen_e fm_mode=FM_PRODUCTION (nowrite)
 includes = etherlib.h|transaction.h|incomestatement.h|ethstate.h

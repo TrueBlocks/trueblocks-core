@@ -317,6 +317,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x0000000000c90bc353314b6911180ed7e06019a9",
+    "name": "Arbitrage Bot",
+    "symbol": "",
+    "source": "0xTracker",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "76-Verified",
     "address": "0x0000000000cccf289727c20269911159a7bf9ebd",
     "name": "DharmaDaiUpgradeBeacon",
@@ -376,6 +385,15 @@ ethNames --fmt json
     "name": "DharmaUpgradeInformation",
     "symbol": "",
     "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x0000000006adbd7c01bc0738cdbfc3932600ad63",
+    "name": "1inch Exchange",
+    "symbol": "",
+    "source": "0xTracker",
     "decimals": 0,
     "description": ""
   },
@@ -448,6 +466,15 @@ ethNames --fmt json
     "name": "AdharmaSmartWalletImplementation",
     "symbol": "",
     "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x0000000053d411becdb4a82d8603edc6d8b8b3bc",
+    "name": "1inch Exchange",
+    "symbol": "",
+    "source": "0xTracker",
     "decimals": 0,
     "description": ""
   },
@@ -529,6 +556,24 @@ ethNames --fmt json
     "name": "DaiBackstopSyndicateV1",
     "symbol": "",
     "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x00000000af5a61acaf76190794e3fdf1289288a1",
+    "name": "Arbitrage Bot",
+    "symbol": "",
+    "source": "0xTracker",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x00000000b1786c9698c160d78232c78d6f6474fe",
+    "name": "Arbitrage Bot",
+    "symbol": "",
+    "source": "0xTracker",
     "decimals": 0,
     "description": ""
   },
@@ -632,6 +677,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x0000000f8ef4be2b7aed6724e893c1b674b9682d",
+    "name": "1inch Exchange",
+    "symbol": "",
+    "source": "0xTracker",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens",
     "address": "0x00000100f2a2bd000715001920eb70d229700085",
     "name": "TrueCAD",
@@ -646,6 +700,15 @@ ethNames --fmt json
     "name": "BokkyPooBah",
     "symbol": "",
     "source": "DevCon2 Token Contract",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x000005edbbc1f258302add96b5e20d3442e5dd89",
+    "name": "1inch Exchange",
+    "symbol": "",
+    "source": "0xTracker",
     "decimals": 0,
     "description": ""
   },
@@ -1136,6 +1199,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x0122676358aee287246b2a84377c8ab664d013cb",
+    "name": "dYdX 0x Wrapper",
+    "symbol": "",
+    "source": "0xTracker",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "76-Verified",
     "address": "0x0122db5fba163b123ebc047d735437c6a6677e6f",
     "name": "InProfitToken",
@@ -1348,6 +1420,15 @@ ethNames --fmt json
     "name": "UltrAlphaToken",
     "symbol": "",
     "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x01da73c4ec1355f953ad0aaca3ef20e342aea92a",
+    "name": "Arbitrage Bot",
+    "symbol": "",
+    "source": "0xTracker",
     "decimals": 0,
     "description": ""
   },
@@ -1724,87 +1805,6 @@ ethNames --fmt json
     "tags": "76-Verified",
     "address": "0x0301db8ddf7e441b0fb4d2b4d198d852df47ccf7",
     "name": "BancorConverter",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x033030feebd93e3178487c35a9c8ca80874353c9",
-    "name": "BDT Token",
-    "symbol": "BDT",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x0333bd82e1f5ff89c19ec44ab5302a0041b33139",
-    "name": "iETHRewards",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x033671b4d777bd8eaf6d391d48422948504eb6a9",
-    "name": "NFT_B2E_Listing",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x033a9e38edcf3086dbecb16f8946e13c45015ba4",
-    "name": "LukiuToken",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x033b4d852356914eba166383d2c9d532b28df9bb",
-    "name": "ERC20Seller",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x033bbe355ff37e57f93ca06c3ca20bcd0e95ab04",
-    "name": "ZxcBurner",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x033cfadab259da77e02d037c4341ee66e1b6b2f0",
-    "name": "GX_Team_Funds",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x035afa4df29cdae9b0829aea574d3f2e07c09129",
-    "name": "ERCDICE",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x035df12e0f3ac6671126525f1015e47d79dfeddf",
-    "name": "_0xMoneroToken",
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,

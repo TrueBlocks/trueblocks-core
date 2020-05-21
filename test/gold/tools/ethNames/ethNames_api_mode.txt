@@ -47,6 +47,15 @@ ethNames tip --fmt api
     "description": ""
   },
   {
+    "tags": "20-Friends",
+    "address": "0x4ff1c812ebccc16487c17f537d849cb5dc557ff0",
+    "name": "EthSlurp Tip Jar Sender Sender",
+    "symbol": "",
+    "source": "TrueBlocks.io",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "91-Friends",
     "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
     "name": "TrueBlocks Tip Jar Doner",

@@ -19,7 +19,7 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     // END_CODE_DECLARE
 
-    CAccountWatchArray monitors;
+    CMonitorArray monitors;
     blkrange_t fileRange;
     size_t visitTypes;
 

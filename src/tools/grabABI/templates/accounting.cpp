@@ -196,7 +196,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
             w atches.at(i).statement.blockNum = block.blockNumber;
             w atches.at(i).statement.begBal = w atches[i].statement.endBal;
             w atches.at(i).statement.endBal = (w atches[i].statement.begBal + w atches[i].statement.inflow -
-                                              w atches[i].statement.outflow - w atches[i].statement.gasCostInWei);
+                                               w atches[i].statement.outflow - w atches[i].statement.gasCostInWei);
 
             cout << w atches[i].color << padRight(w atches[i].displayName(false, true, false, 14, 6), theWidth + 2)
                  << cOff;

@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------
 bool COptions::displayFromCache(uint64_t st artBlock) {
     // Make sure we have a cache file...
-    string_q cacheFileName = get MonitorPath(watches[0].address);
+    string_q cacheFileName = get MonitorPath(w atches[0].address);
     if (!fileExists(cacheFileName))
         return false;
 
@@ -128,18 +128,18 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::renameItems(string_q& str, const C AccountWatchArray& watchArray) const {
-    for (auto watch : watchArray) {
+void COptions::renameItems(string_q& str, const C AccountW atchArray& w atchArray) const {
+    for (auto w atch : w atchArray) {
         if (json_on) {
             CStringArray fields = {"to", "from", "address", "contractAddress"};
             for (auto field : fields) {
-                string_q target = "\"" + field + "\": \"" + watch.address + "\"";
-                str = substitute(str, target, target + ", \"" + field + "Name\": \"" + watch.name + "\"");
+                string_q target = "\"" + field + "\": \"" + w atch.address + "\"";
+                str = substitute(str, target, target + ", \"" + field + "Name\": \"" + w atch.name + "\"");
             }
         } else {
-            str = substitute(str, watch.address, watch.color + watch.displayName(false, true, true, 8) + cOff);
-            str = substitute(str, "000000000000000000000000" + extract(watch.address, 2),
-                             watch.color + "000000000000000000000000" + extract(watch.address, 2) + cWhite);
+            str = substitute(str, w atch.address, w atch.color + w atch.displayName(false, true, true, 8) + cOff);
+            str = substitute(str, "000000000000000000000000" + extract(w atch.address, 2),
+                             w atch.color + "000000000000000000000000" + extract(w atch.address, 2) + cWhite);
         }
     }
 }
@@ -147,40 +147,40 @@ void COptions::renameItems(string_q& str, const C AccountWatchArray& watchArray)
 //-----------------------------------------------------------------------
 string_q COptions::annotate(const string_q& strIn) const {
     string_q ret = strIn;
-    renameItems(ret, watches);
+    renameItems(ret, w atches);
     renameItems(ret, named);
     return substitute(substitute(ret, "+=+", "{"), "=+=", "}");
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadWatches(const CToml& toml) {
+bool COptions::loadW atches(const CToml& toml) {
     // okay if it's empty
-    loadWatchList(toml, named, "named");
+    loadW atchList(toml, named, "named");
 
     // not okay if it's empty
-    loadWatchList(toml, watches, "list");
+    loadW atchList(toml, w atches, "list");
 
-    if (watches.size() == 0)
-        return usage("Empty list of watches. Quitting...\n");
+    if (w atches.size() == 0)
+        return usage("Empty list of w atches. Quitting...\n");
 
-    blockStats.minWatchBlock = UINT32_MAX;
-    blockStats.maxWatchBlock = 0;
+    blockStats.minW atchBlock = UINT32_MAX;
+    blockStats.maxW atchBlock = 0;
 
-    // Check the watches for validity
-    for (uint32_t i = 0; i < watches.size(); i++) {
-        C AccountWatch* watch = &watches.at(i);
-        if (!isAddress(watch->address))
-            return usage("Invalid watch address " + watch->address + "\n");
+    // Check the w atches for validity
+    for (uint32_t i = 0; i < w atches.size(); i++) {
+        C AccountW atch* w atch = &w atches.at(i);
+        if (!isAddress(w atch->address))
+            return usage("Invalid w atch address " + w atch->address + "\n");
 
-        if (watch->name.empty())
-            return usage("Empty watch name " + watch->name + "\n");
+        if (w atch->name.empty())
+            return usage("Empty w atch name " + w atch->name + "\n");
 
-        watch->curBalance = get NodeBal(watch->stateHistory, watch->address, watch->firstBlock - 1);
+        w atch->curBalance = get NodeBal(w atch->stateHistory, w atch->address, w atch->firstBlock - 1);
 
-        blockStats.minWatchBlock = min(blockStats.minWatchBlock, watch->firstBlock);
-        blockStats.maxWatchBlock = max(blockStats.maxWatchBlock, watch->lastBlock);
+        blockStats.minW atchBlock = min(blockStats.minW atchBlock, w atch->firstBlock);
+        blockStats.maxW atchBlock = max(blockStats.maxW atchBlock, w atch->lastBlock);
     }
 
-    watches.push_back(C AccountWatch("Others", "Other Accts", 0, UINT32_MAX, bRed));
+    w atches.push_back(C AccountW atch("Others", "Other Accts", 0, UINT32_MAX, bRed));
     return true;
 }

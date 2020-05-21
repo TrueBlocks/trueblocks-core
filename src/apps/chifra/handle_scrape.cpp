@@ -5,6 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+extern bool visitMonitor(const string_q& path, void* data);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
@@ -140,25 +141,20 @@ bool COptions::handle_scrape(void) {
             // Catch the timestamp file up to the scraper
             freshenTimestamps(getLatestBlock_cache_ripe());
 
-            // sometimes catch the monitors addresses up to the scraper
-            if (!isTestMode() && daemonMode) {
-                CStringArray files;
-                listFilesInFolder(files, getMonitorPath("*.acct.bin"), false);
-                CAddressArray monitors;
-                if (files.size()) {
-                    for (auto file : files) {
-                        file = substitute(substitute(file, getMonitorPath(""), ""), ".acct.bin", "");
-                        if (isAddress(file))
-                            monitors.push_back(file);
-                    }
-                    CFreshenArray fa;
-                    for (auto a : monitors)
-                        fa.push_back(CFreshen(a));
-                    freshen_internal(FM_PRODUCTION, fa, "--silent", freshen_flags);
-                    for (auto f : fa) {
-                        if (f.cntBefore != f.cntAfter) {
+            if (isTestMode()) {
+                // Do nothing related in --daemon mode while testing
+
+            } else {
+                if (daemonMode) {
+                    // Catch the monitors addresses up to the scraper if in --deamon mode
+                    CMonitorArray monitors;
+                    forEveryFileInFolder(getMonitorPath(""), visitMonitor, &monitors);
+
+                    freshen_internal(FM_PRODUCTION, monitors, "--silent", freshen_flags);
+                    for (auto monitor : monitors) {
+                        if (monitor.cntBefore != monitor.cntAfter) {
                             ostringstream os1;
-                            os1 << "acctExport " << f.address << " --freshen";  // << " >/dev/null";
+                            os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
                             LOG_INFO("Calling: ", os1.str());
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -171,10 +167,8 @@ bool COptions::handle_scrape(void) {
                     cerr << "\t  freshening: " << cYellow << "    finished." << cOff
                          << "                                                           " << endl;
                 }
-            }
-
-            if (!isTestMode())
                 usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);  // stay responsive to cntrl+C
+            }
         }
 
         waitFileExists = fileExists(waitFile);
@@ -187,4 +181,20 @@ bool COptions::handle_scrape(void) {
         }
     }
     EXIT_NOMSG(true);
+}
+
+//---------------------------------------------------------------------------
+bool visitMonitor(const string_q& path, void* data) {
+    if (!endsWith(path, ".acct.bin"))  // we only want to process monitor files
+        return true;
+
+    CMonitor m;
+    m.address = substitute(substitute(path, getMonitorPath(""), ""), ".acct.bin", "");
+    if (isAddress(m.address)) {
+        m.cntBefore = m.cntAfter = m.getRecordCount();
+        CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
+        array->push_back(m);
+    }
+
+    return true;
 }

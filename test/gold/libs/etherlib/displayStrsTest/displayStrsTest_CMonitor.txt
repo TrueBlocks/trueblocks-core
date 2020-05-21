@@ -1,6 +1,6 @@
-displayStrsTest argc: 2 [1:CAccountWatch] 
-displayStrsTest CAccountWatch 
-------------------------------CAccountWatch------------------------------
+displayStrsTest argc: 2 [1:CMonitor] 
+displayStrsTest CMonitor 
+------------------------------CMonitor------------------------------
 STATEMENT::INFLOW: 2000000000000000000
 NAME: interface
 NAME: input

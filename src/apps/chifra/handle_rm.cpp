@@ -24,16 +24,10 @@ bool COptions::handle_rm(void) {
     CStringArray removed;
     bool hasYes = editCmd == "remove";  // contains(tool_flags, "--yes");
     for (auto addr : addrs) {
-        bool itExists = false;
-        itExists |= fileExists(getMonitorPath(addr));
-        itExists |= fileExists(getMonitorLast(addr));
-        itExists |= fileExists(getMonitorExpt(addr));
-        itExists |= fileExists(getMonitorBals(addr));
-        itExists |= fileExists(getMonitorCnfg(addr));
-        string_q delFn = getMonitorPath(addr + ".deleted");
-        itExists |= fileExists(delFn);
+        CMonitor monitor;
+        monitor.address = addr;
 
-        if (!itExists) {
+        if (!monitor.exists()) {
             if (!hasYes)
                 LOG_WARN("Monitor not found for address " + addr + ".");
 
@@ -41,11 +35,10 @@ bool COptions::handle_rm(void) {
             int ch = 'n';  // default to no in both command line and api cases
             if (!hasYes) {
                 if (isApiMode()) {
-                    bool exists = fileExists(delFn);
-                    if (exists)
-                        ::remove(delFn.c_str());
+                    if (monitor.isDeleted())
+                        monitor.undeleteMonitor();
                     else
-                        stringToAsciiFile(delFn, Now().Format(FMT_EXPORT));
+                        monitor.deleteMonitor();
                     return true;
                 } else {
                     cerr << "Remove monitor for " << addr << "? (y=yes) >";
@@ -55,13 +48,7 @@ bool COptions::handle_rm(void) {
             }
 
             if (ch == 'y' || ch == 'Y' || hasYes) {
-                ostringstream os;
-                os << "cd " << getMonitorPath("") << " && ";
-                os << "rm -f " << addr << ".*";
-                LOG_CALL(os.str());
-                // clang-format off
-                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                // clang-format on
+                cleanMonitor(addr);
                 removed.push_back("{ \"removed\": \"" + addr + "\" }");
 
             } else {

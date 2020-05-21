@@ -35,7 +35,7 @@ typedef enum {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CTokenBalanceRecord : public CAccountWatch {
+class CTokenBalanceRecord : public CMonitor {
   public:
     blknum_t blockNumber;
     wei_t totalSupply;
@@ -105,7 +105,7 @@ inline void CTokenBalanceRecord::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CTokenBalanceRecord::initialize(void) {
-    CAccountWatch::initialize();
+    CMonitor::initialize();
 
     blockNumber = 0;
     totalSupply = 0;
@@ -122,7 +122,7 @@ inline void CTokenBalanceRecord::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CTokenBalanceRecord::duplicate(const CTokenBalanceRecord& to) {
     clear();
-    CAccountWatch::duplicate(to);
+    CMonitor::duplicate(to);
 
     blockNumber = to.blockNumber;
     totalSupply = to.totalSupply;

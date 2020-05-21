@@ -35,9 +35,9 @@ int main(int argc, const char* argv[]) {
 //--------------------------------------------------------------
 bool testDisplayStr(COptions& options) {
     cout << string_q(30, '-') << options.className << string_q(30, '-') << endl;
-    if (options.className == "CAccountWatch") {
+    if (options.className == "CMonitor") {
         CMonitor monitor;
-        SHOW_FIELD(CAccountWatch, "abi_spec");
+        SHOW_FIELD(CMonitor, "abi_spec");
         monitor.name = "monitor";
 
         CFunction func;

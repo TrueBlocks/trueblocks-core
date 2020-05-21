@@ -6,7 +6,7 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
+bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
     ENTER("freshen_internal");
     nodeNotRequired();
 
@@ -41,8 +41,8 @@ bool freshen_internal(freshen_e mode, CFreshenArray& fa, const string_q& tool_fl
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 
-    for (CFreshen& f : fa)
-        f.cntAfter = fileSize(getMonitorPath(f.address)) / sizeof(CAppearance_base);
+    for (CMonitor& f : fa)
+        f.cntAfter = f.getRecordCount();
 
     EXIT_NOMSG(true);
 }

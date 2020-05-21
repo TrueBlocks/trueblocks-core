@@ -61,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must provide at least one filename. Quitting...");
 
     for (auto addr : addrs) {
-        CAccountWatch monitor(addr, addr);
+        CMonitor monitor(addr, addr);
         monitors.push_back(monitor);
     }
 
@@ -106,42 +106,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadMonitorData(CAppearanceArray& items, const address_t& addr) {
-    ENTER("loadMonitorData");
-
-    string_q fn = getMonitorPath(addr);
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
-    if (!nRecords)
-        EXIT_MSG("No records found for address '" + addr + "'.", true);
-
-    CAppearance_base* buffer = new CAppearance_base[nRecords];
-    if (buffer) {
-        bzero(buffer, nRecords * sizeof(CAppearance_base));
-        CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-            txCache.Release();
-        } else {
-            EXIT_FAIL("Could not open cache file'" + fn + "'. Quitting...\n");
-        }
-        // Expand the apps array (which may be non-empty)
-        items.reserve(items.size() + nRecords);
-        for (size_t i = 0; i < nRecords; i++) {
-            CAppearance app;
-            app.bn = buffer[i].blk;
-            app.tx = buffer[i].txid;
-            items.push_back(app);
-        }
-        delete[] buffer;
-    } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr + "Quitting...\n");
-    }
-
-    // Sort them, so when we write them later we can remove dups
-    sort(items.begin(), items.end());
-
-    EXIT_NOMSG(true);
 }

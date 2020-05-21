@@ -27,7 +27,7 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccountWatch : public CAccountName {
+class CMonitor : public CAccountName {
   public:
     CAbi abi_spec;
     CIncomeStatement statement;
@@ -37,18 +37,20 @@ class CAccountWatch : public CAccountName {
     freshen_e fm_mode;
 
   public:
-    CAccountWatch(void);
-    CAccountWatch(const CAccountWatch& ac);
-    virtual ~CAccountWatch(void);
-    CAccountWatch& operator=(const CAccountWatch& ac);
+    CMonitor(void);
+    CMonitor(const CMonitor& mo);
+    virtual ~CMonitor(void);
+    CMonitor& operator=(const CMonitor& mo);
 
-    DECLARE_NODE(CAccountWatch);
+    DECLARE_NODE(CMonitor);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
-    CAccountWatch(const address_t& _addr, const string_q& _name);
+    uint64_t cntBefore;
+    uint64_t cntAfter;
+    CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
+    CMonitor(const address_t& _addr, const string_q& _name);
     bloom_t bloom;
     bool inBlock;
     CArchive* tx_cache;
@@ -60,18 +62,27 @@ class CAccountWatch : public CAccountName {
     blknum_t nextBlockAsPerMonitor(void) const;
     bool isLocked(string_q& msg) const;
     void moveToProduction(void);
+    bool loadMonitor(CAppearanceArray& items);
+    uint64_t getRecordCount(void) const;
+    bool exists(void) const;
+    blknum_t getLastVisitedBlock(void) const;
+    blknum_t getLastExportedBlock(void) const;
+    bool isDeleted(void) const;
+    void undeleteMonitor(void);
+    void deleteMonitor(void);
+    void removeMonitor(void);
     // EXISTING_CODE
-    bool operator==(const CAccountWatch& item) const;
-    bool operator!=(const CAccountWatch& item) const {
+    bool operator==(const CMonitor& item) const;
+    bool operator!=(const CMonitor& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CAccountWatch& v1, const CAccountWatch& v2);
-    friend ostream& operator<<(ostream& os, const CAccountWatch& item);
+    friend bool operator<(const CMonitor& v1, const CMonitor& v2);
+    friend ostream& operator<<(ostream& os, const CMonitor& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAccountWatch& ac);
+    void duplicate(const CMonitor& mo);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -79,23 +90,23 @@ class CAccountWatch : public CAccountName {
 };
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(void) {
+inline CMonitor::CMonitor(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const CAccountWatch& ac) {
+inline CMonitor::CMonitor(const CMonitor& mo) {
     // EXISTING_CODE
     tx_cache = NULL;
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(mo);
 }
 
 // EXISTING_CODE
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB) {
+inline CMonitor::CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB) {
     initialize();
     address = toLower(_addr);
     name = _name;
@@ -104,7 +115,7 @@ inline CAccountWatch::CAccountWatch(const string_q& _addr, const string_q& _name
 }
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _name) {
+inline CMonitor::CMonitor(const address_t& _addr, const string_q& _name) {
     initialize();
     address = toLower(_addr);
     name = _name;
@@ -114,25 +125,27 @@ inline CAccountWatch::CAccountWatch(const address_t& _addr, const string_q& _nam
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccountWatch::~CAccountWatch(void) {
+inline CMonitor::~CMonitor(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::clear(void) {
+inline void CMonitor::clear(void) {
     // EXISTING_CODE
     if (tx_cache) {
         tx_cache->Release();
         delete tx_cache;
     }
     tx_cache = NULL;
+    cntBefore = 0;
+    cntAfter = 0;
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::initialize(void) {
+inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
     abi_spec = CAbi();
@@ -147,39 +160,43 @@ inline void CAccountWatch::initialize(void) {
     bloom = 0;
     inBlock = false;
     tx_cache = NULL;
+    cntBefore = 0;
+    cntAfter = 0;
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccountWatch::duplicate(const CAccountWatch& ac) {
+inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
-    CAccountName::duplicate(ac);
+    CAccountName::duplicate(mo);
 
-    abi_spec = ac.abi_spec;
-    statement = ac.statement;
-    stateHistory = ac.stateHistory;
-    curBalance = ac.curBalance;
-    enabled = ac.enabled;
-    fm_mode = ac.fm_mode;
+    abi_spec = mo.abi_spec;
+    statement = mo.statement;
+    stateHistory = mo.stateHistory;
+    curBalance = mo.curBalance;
+    enabled = mo.enabled;
+    fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
-    latestAppearance = ac.latestAppearance;
-    bloom = ac.bloom;
-    inBlock = ac.inBlock;
+    latestAppearance = mo.latestAppearance;
+    bloom = mo.bloom;
+    inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
+    cntBefore = mo.cntBefore;
+    cntAfter = mo.cntAfter;
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccountWatch& CAccountWatch::operator=(const CAccountWatch& ac) {
-    duplicate(ac);
+inline CMonitor& CMonitor::operator=(const CMonitor& mo) {
+    duplicate(mo);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccountWatch::operator==(const CAccountWatch& item) const {
+inline bool CMonitor::operator==(const CMonitor& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -187,7 +204,7 @@ inline bool CAccountWatch::operator==(const CAccountWatch& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
+inline bool operator<(const CMonitor& v1, const CMonitor& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -195,12 +212,12 @@ inline bool operator<(const CAccountWatch& v1, const CAccountWatch& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccountWatch> CAccountWatchArray;
-extern CArchive& operator>>(CArchive& archive, CAccountWatchArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array);
+typedef vector<CMonitor> CMonitorArray;
+extern CArchive& operator>>(CArchive& archive, CMonitorArray& array);
+extern CArchive& operator<<(CArchive& archive, const CMonitorArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCOUNTWATCH;
+extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -208,11 +225,12 @@ extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCT
 extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorCnfg(const string_q& addr);
+extern string_q getMonitorDels(const string_q& addr, freshen_e mode = FM_PRODUCTION);
 extern void cleanMonitors(const CAddressArray& addrs);
+extern void cleanMonitor(const address_t& addr);
 extern void establishTestMonitors(void);
-typedef map<address_t, CAccountWatch> CAccountWatchMap;  // NOLINT
-extern void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key);
-#define CMonitor CAccountWatch
+typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
+extern void establishMonitorFolders(void);
+extern void cleanMonitorStage(void);
 // EXISTING_CODE
 }  // namespace qblocks

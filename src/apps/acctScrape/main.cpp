@@ -21,7 +21,7 @@ int main(int argc, const char* argv[]) {
 
         // Clean the staging folder since we want to start with clean scrapes for both
         // never scraped or unfinished (partial) scrapes
-        cleanFolder(getMonitorPath("", FM_STAGING));
+        cleanMonitorStage();
 
         if (options.visitTypes & VIS_FINAL)
             forEveryFileInFolder(indexFolder_finalized, visitFinalIndexFiles, &options);

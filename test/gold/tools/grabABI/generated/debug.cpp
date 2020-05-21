@@ -103,8 +103,8 @@ bool COptions::enterDebugger(const CBlock& block) {
                 break;
             case 10:  // 'enter'
                 if (curCmd == "c" || curCmd == "correct") {
-                    for (size_t i = 0; i < watches.size(); i++)
-                        watches.at(i).statement.correct();
+                    for (size_t i = 0; i < w atches.size(); i++)
+                        w atches.at(i).statement.correct();
                     done = true;
                     history(curCmd);
 
@@ -156,12 +156,12 @@ bool COptions::enterDebugger(const CBlock& block) {
                 } else if (curCmd == "l" || curCmd == "list") {
                     cout << "\r\nAccounts:\r\n";
                     cout << cOff << "[";
-                    for (size_t i = 0; i < watches.size() - 1; i++) {
+                    for (size_t i = 0; i < w atches.size() - 1; i++) {
                         cout << " { ";
-                        cout << "\"address\": \"" << watches[i].color << watches[i].address << cOff << "\", ";
-                        cout << "\"firstBlock\": " << bRed << watches[i].firstBlock << cOff << ", ";
-                        cout << "\"name\": \"" << watches[i].color << watches[i].name << cOff << "\"";
-                        cout << " }" << (i < watches.size() - 2 ? ",\r\n " : " ]\r\n");
+                        cout << "\"address\": \"" << w atches[i].color << w atches[i].address << cOff << "\", ";
+                        cout << "\"firstBlock\": " << bRed << w atches[i].firstBlock << cOff << ", ";
+                        cout << "\"name\": \"" << w atches[i].color << w atches[i].name << cOff << "\"";
+                        cout << " }" << (i < w atches.size() - 2 ? ",\r\n " : " ]\r\n");
                     }
                     history(curCmd);
 
@@ -171,9 +171,9 @@ bool COptions::enterDebugger(const CBlock& block) {
                     replace(curCmd, "s ", "");
                     replace(curCmd, "source:", "");
                     replace(curCmd, "source ", "");
-                    for (size_t i = 0; i < watches.size(); i++) {
-                        if (watches[i].address == curCmd || watches[i].name == curCmd)
-                            curCmd = ("source/" + watches[i].name + ".sol");
+                    for (size_t i = 0; i < w atches.size(); i++) {
+                        if (w atches[i].address == curCmd || w atches[i].name == curCmd)
+                            curCmd = ("source/" + w atches[i].name + ".sol");
                     }
                     editFile(curCmd);
 

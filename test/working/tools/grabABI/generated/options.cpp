@@ -103,21 +103,21 @@ bool COptions::parseArguments(string_q& command) {
             colorsOff();
             CToml toml("./con fig.toml");
             COptions visitor;
-            if (!visitor.loadWatches(toml))
+            if (!visitor.loadW atches(toml))
                 return false;
 
-            if (visitor.watches.size() > 2)
+            if (visitor.w atches.size() > 2)
                 cout << "[";
 
-            for (uint32_t i = 0; i < visitor.watches.size() - 1; i++) {
+            for (uint32_t i = 0; i < visitor.w atches.size() - 1; i++) {
                 cout << " { ";
-                cout << "\"address\": \"" << visitor.watches[i].color << visitor.watches[i].address << cOff << "\", ";
-                cout << "\"firstBlock\": " << bRed << visitor.watches[i].firstBlock << cOff << ", ";
-                cout << "\"name\": \"" << visitor.watches[i].color << visitor.watches[i].name << cOff << "\"";
-                cout << " }" << (i < visitor.watches.size() - 2 ? ",\r\n " : " \r\n");
+                cout << "\"address\": \"" << visitor.w atches[i].color << visitor.w atches[i].address << cOff << "\", ";
+                cout << "\"firstBlock\": " << bRed << visitor.w atches[i].firstBlock << cOff << ", ";
+                cout << "\"name\": \"" << visitor.w atches[i].color << visitor.w atches[i].name << cOff << "\"";
+                cout << " }" << (i < visitor.w atches.size() - 2 ? ",\r\n " : " \r\n");
             }
 
-            if (visitor.watches.size() > 2)
+            if (visitor.w atches.size() > 2)
                 cout << "]";
 
             e xit(0);
@@ -138,7 +138,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("The con fig.toml file was not found. Are you in the right folder? Quitting...\n");
 
     CToml toml("./con fig.toml");
-    if (!loadWatches(toml))
+    if (!loadW atches(toml))
         return false;
     theWidth = toml.getConfigInt("display", "width", theWidth);
 

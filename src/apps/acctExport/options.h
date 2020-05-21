@@ -11,8 +11,6 @@
 #include "etherlib.h"
 #include "acctlib.h"
 #include "displayapp.h"
-#include "counts.h"
-#include "ipfshash.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -61,32 +59,28 @@ class COptions : public COptionsBase {
     bool logs;
     bool traces;
     bool balances;
-    bool hashes_only;
-    bool count_only;
+    bool creations;
+    bool selfdestructs;
+    bool accounting;
     bool articulate;
     bool skip_ddos;
     uint64_t max_traces;
-    bool grab_abis;
     bool freshen;
     blknum_t freshen_max;
     bool deltas;
-    bool reverseSort;
-    blknum_t occurrence;
     bool emitter;
     // END_CODE_DECLARE
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)
 
     CAbi abis;
-    CAccountWatchArray monitors;
+    CMonitorArray monitors;
     CAppearanceArray_base items;
     size_t nExported;
-    size_t nFreshened;
     string_q className;
     address_t hackAppAddr;
     uint_addr_map_t prefundAddrMap;
     uint_addr_map_t blkRewardMap;
-    map<address_t, bool> abiMap;
     addr_name_map_t toNameExistsMap;
     addr_name_map_t fromNameExistsMap;
     uint32_t* ts_array;
@@ -103,7 +97,5 @@ class COptions : public COptionsBase {
     bool loadAllAppearances(void);
 
     bool exportData(void);
-    bool exportCounts(void);
     bool exportBalances(void);
-    bool exportIPFSHashes(void);
 };

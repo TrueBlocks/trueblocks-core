@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "accountwatch.h"
+#include "monitor.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccountWatch, CAccountName);
+IMPLEMENT_NODE(CMonitor, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountwatchChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextMonitorChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CMonitor::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accountwatch_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["monitor_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CAccountWatch::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) c
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextAccountwatchChunk, this);
+        ctx << getNextChunk(fmt, nextMonitorChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountwatchChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextMonitorChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccountWatch*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CMonitor*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextAccountwatchChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
+string_q CMonitor::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextAccountwatchChunk_custom(fieldName, this);
+    string_q ret = nextMonitorChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -141,7 +141,7 @@ string_q CAccountWatch::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -208,7 +208,7 @@ bool CAccountWatch::setValueByName(const string_q& fieldNameIn, const string_q& 
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccountWatch::finishParse() {
+void CMonitor::finishParse() {
     // EXISTING_CODE
     if (getCurlContext()->nodeRequired)
         bloom = makeBloom(address);
@@ -216,7 +216,7 @@ void CAccountWatch::finishParse() {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::Serialize(CArchive& archive) {
+bool CMonitor::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -239,7 +239,7 @@ bool CAccountWatch::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccountWatch::SerializeC(CArchive& archive) const {
+bool CMonitor::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CAccountName::SerializeC(archive);
 
@@ -256,7 +256,7 @@ bool CAccountWatch::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
+CArchive& operator>>(CArchive& archive, CMonitorArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -268,7 +268,7 @@ CArchive& operator>>(CArchive& archive, CAccountWatchArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
+CArchive& operator<<(CArchive& archive, const CMonitorArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -277,53 +277,53 @@ CArchive& operator<<(CArchive& archive, const CAccountWatchArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CAccountWatch::registerClass(void) {
+void CMonitor::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAccountWatch, "schema"))
+    if (HAS_FIELD(CMonitor, "schema"))
         return;
 
     CAccountName::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAccountWatch, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "abi_spec", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "statement", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "stateHistory", T_OBJECT | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "curBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "enabled", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccountWatch, "fm_mode", T_NUMBER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "fm_mode");
+    ADD_FIELD(CMonitor, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMonitor, "abi_spec", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CMonitor, "statement", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
+    ADD_FIELD(CMonitor, "enabled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);
+    HIDE_FIELD(CMonitor, "fm_mode");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAccountWatch, "schema");
-    HIDE_FIELD(CAccountWatch, "deleted");
-    HIDE_FIELD(CAccountWatch, "showing");
-    HIDE_FIELD(CAccountWatch, "cname");
+    HIDE_FIELD(CMonitor, "schema");
+    HIDE_FIELD(CMonitor, "deleted");
+    HIDE_FIELD(CMonitor, "showing");
+    HIDE_FIELD(CMonitor, "cname");
 
-    builtIns.push_back(_biCAccountWatch);
+    builtIns.push_back(_biCMonitor);
 
     // EXISTING_CODE
-    ADD_FIELD(CAccountWatch, "curEther", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "curEther");
-    ADD_FIELD(CAccountWatch, "curDollars", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CAccountWatch, "curDollars");
+    ADD_FIELD(CMonitor, "curEther", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CMonitor, "curEther");
+    ADD_FIELD(CMonitor, "curDollars", T_ETHER, ++fieldNum);
+    HIDE_FIELD(CMonitor, "curDollars");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CAccountWatch* acc = reinterpret_cast<const CAccountWatch*>(dataPtr);
-    if (acc) {
+string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CMonitor* mon = reinterpret_cast<const CMonitor*>(dataPtr);
+    if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'c':
-                if (startsWith(fieldIn, "cur") && acc->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
+                if (startsWith(fieldIn, "cur") && mon->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
                     return "\"n/a\"";
                 if (fieldIn % "curEther")
-                    return "\"" + wei_2_Ether(wei_2_Str(acc->curBalance)) + "\"";
+                    return "\"" + wei_2_Ether(wei_2_Str(mon->curBalance)) + "\"";
                 if (fieldIn % "curDollars")
                     return "not-implemented";
                 break;
@@ -331,7 +331,7 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataP
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, acc);
+                    return nextBasenodeChunk(fieldIn, mon);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -345,7 +345,7 @@ string_q nextAccountwatchChunk_custom(const string_q& fieldIn, const void* dataP
 }
 
 //---------------------------------------------------------------------------
-bool CAccountWatch::readBackLevel(CArchive& archive) {
+bool CMonitor::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -353,7 +353,7 @@ bool CAccountWatch::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAccountWatch& item) {
+ostream& operator<<(ostream& os, const CMonitor& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -363,7 +363,7 @@ ostream& operator<<(ostream& os, const CAccountWatch& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CAccountWatch::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "abi_spec")
         return &abi_spec;
     if (fieldName % "statement")
@@ -374,26 +374,12 @@ const CBaseNode* CAccountWatch::getObjectAt(const string_q& fieldName, size_t in
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNTWATCH = "";
+const char* STR_DISPLAY_MONITOR = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-// This assumes there are valid watches. Caller is expected to check
-void loadWatchList(const CToml& toml, CAccountWatchArray& monitors, const string_q& key) {
-    string_q watchStr = toml.getConfigJson("watches", key, "");
-    CAccountWatch watch;
-    while (watch.parseJson3(watchStr)) {
-        // cleanup and add to list of watches
-        watch.address = str_2_Addr(toLower(watch.address));
-        monitors.push_back(watch);
-        watch = CAccountWatch();  // reset
-    }
-    return;
-}
-
-//-------------------------------------------------------------------------
-bool CAccountWatch::openCacheFile1(void) {
+bool CMonitor::openCacheFile1(void) {
     if (tx_cache != NULL)
         return true;
     tx_cache = new CArchive(WRITING_ARCHIVE);
@@ -403,17 +389,17 @@ bool CAccountWatch::openCacheFile1(void) {
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeLastBlock(blknum_t bn) {
+void CMonitor::writeLastBlock(blknum_t bn) {
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeLastExport(blknum_t bn) {
+void CMonitor::writeLastExport(blknum_t bn) {
     stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
+void CMonitor::writeARecord(blknum_t bn, blknum_t tx_id) {
     if (tx_cache == NULL)
         return;
     *tx_cache << bn << tx_id;
@@ -421,7 +407,7 @@ void CAccountWatch::writeARecord(blknum_t bn, blknum_t tx_id) {
 }
 
 //-------------------------------------------------------------------------
-void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
+void CMonitor::writeAnArray(const CAppearanceArray_base& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)
@@ -430,7 +416,7 @@ void CAccountWatch::writeAnArray(const CAppearanceArray_base& items) {
 }
 
 //--------------------------------------------------------------------------------
-blknum_t CAccountWatch::nextBlockAsPerMonitor(void) const {
+blknum_t CMonitor::nextBlockAsPerMonitor(void) const {
     if (fileExists(getMonitorLast(address)))
         return str_2_Uint(asciiFileToString(getMonitorLast(address)));
 
@@ -446,18 +432,17 @@ blknum_t CAccountWatch::nextBlockAsPerMonitor(void) const {
 //--------------------------------------------------------------------------------
 #define checkLock(fn, b)                                                                                               \
     if (fileExists((fn) + ".lck")) {                                                                                   \
-        msg = ("The " + string_q(b) + " file '" + fn + "' is locked. Quitting...");                                    \
+        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
         return true;                                                                                                   \
     }
 
 //--------------------------------------------------------------------------------
-bool CAccountWatch::isLocked(string_q& msg) const {
+bool CMonitor::isLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
     checkLock(getMonitorExpt(address), "last export");
     checkLock(getMonitorBals(address), "last export");
-    checkLock(getMonitorCnfg(address), "config");
-    checkLock(getMonitorPath(address) + ".deleted", "marker");
+    checkLock(getMonitorDels(address), "marker");
     return false;
 }
 
@@ -470,7 +455,7 @@ void doMoveFile(const string_q& from, const string_q& to) {
 }
 
 //--------------------------------------------------------------------------------
-void CAccountWatch::moveToProduction(void) {
+void CMonitor::moveToProduction(void) {
     if (fm_mode == FM_PRODUCTION)
         return;
     ASSERT(fm_mode == FM_STAGING);
@@ -538,18 +523,23 @@ string_q getMonitorBals(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorCnfg(const string_q& addr) {
-    return getCachePath("monitors/" + addr + ".toml");
+string_q getMonitorDels(const string_q& addr, freshen_e mode) {
+    return getMonitorPath(addr) + ".deleted";
+}
+
+//---------------------------------------------------------------------------
+void cleanMonitor(const address_t& addr) {
+    ::remove(getMonitorPath(addr).c_str());
+    ::remove(getMonitorLast(addr).c_str());
+    ::remove(getMonitorExpt(addr).c_str());
+    ::remove(getMonitorBals(addr).c_str());
+    ::remove(getMonitorDels(addr).c_str());
 }
 
 //---------------------------------------------------------------------------
 void cleanMonitors(const CAddressArray& addrs) {
-    for (auto addr : addrs) {
-        ::remove(getMonitorPath(addr).c_str());
-        ::remove(getMonitorLast(addr).c_str());
-        ::remove(getMonitorExpt(addr).c_str());
-        ::remove(getMonitorBals(addr).c_str());
-    }
+    for (auto addr : addrs)
+        cleanMonitor(addr);
 }
 
 //----------------------------------------------------------------
@@ -570,6 +560,100 @@ void establishTestMonitors(void) {
     // clang-format off
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
+}
+
+//----------------------------------------------------------------
+void establishMonitorFolders(void) {
+    establishFolder(getMonitorPath("", FM_PRODUCTION));
+    establishFolder(getMonitorPath("", FM_STAGING));
+}
+
+//----------------------------------------------------------------
+void cleanMonitorStage(void) {
+    cleanFolder(getMonitorPath("", FM_STAGING));
+}
+
+//-----------------------------------------------------------------------
+bool CMonitor::loadMonitor(CAppearanceArray& items) {
+    ENTER("loadMonitor");
+
+    string_q fn = getMonitorPath(address);
+    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    if (!nRecords)
+        EXIT_MSG("No records found for address '" + address + "'.", true);
+
+    CAppearance_base* buffer = new CAppearance_base[nRecords];
+    if (buffer) {
+        bzero(buffer, nRecords * sizeof(CAppearance_base));
+        CArchive txCache(READING_ARCHIVE);
+        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
+            txCache.Release();
+        } else {
+            EXIT_FAIL("Could not open cache file'" + fn + "'. Quitting...\n");
+        }
+        // Expand the apps array (which may be non-empty)
+        items.reserve(items.size() + nRecords);
+        for (size_t i = 0; i < nRecords; i++) {
+            CAppearance app;
+            app.bn = buffer[i].blk;
+            app.tx = buffer[i].txid;
+            items.push_back(app);
+        }
+        delete[] buffer;
+    } else {
+        EXIT_FAIL("Could not allocate memory for address " + address + "Quitting...\n");
+    }
+
+    // Sort them, so when we write them later we can remove dups
+    sort(items.begin(), items.end());
+
+    EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+uint64_t CMonitor::getRecordCount(void) const {
+    return fileSize(getMonitorPath(address)) / sizeof(CAppearance_base);
+}
+
+//-----------------------------------------------------------------------
+bool CMonitor::exists(void) const {
+    if (fileExists(getMonitorPath(address)))
+        return true;
+    if (fileExists(getMonitorLast(address)))
+        return true;
+    if (fileExists(getMonitorExpt(address)))
+        return true;
+    if (fileExists(getMonitorBals(address)))
+        return true;
+    if (fileExists(getMonitorDels(address)))
+        return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastVisitedBlock(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+}
+
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastExportedBlock(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorExpt(address)));
+}
+
+//-----------------------------------------------------------------------
+bool CMonitor::isDeleted(void) const {
+    return fileExists(getMonitorDels(address));
+}
+
+//-----------------------------------------------------------------------
+void CMonitor::undeleteMonitor(void) {
+    ::remove(getMonitorDels(address).c_str());
+}
+
+//-----------------------------------------------------------------------
+void CMonitor::deleteMonitor(void) {
+    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
 }
 // EXISTING_CODE
 }  // namespace qblocks

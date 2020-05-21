@@ -25,9 +25,9 @@ class CBlockStats {
     blknum_t nBlocks;
     blknum_t firstBlock;
     blknum_t lastBlock;
-    blknum_t minWatchBlock;
-    blknum_t maxWatchBlock;
-    CBlockStats(void) : nBlocks(0), firstBlock(0), lastBlock(0), minWatchBlock(0), maxWatchBlock(UINT32_MAX) {
+    blknum_t minW atchBlock;
+    blknum_t maxW atchBlock;
+    CBlockStats(void) : nBlocks(0), firstBlock(0), lastBlock(0), minW atchBlock(0), maxW atchBlock(UINT32_MAX) {
     }
 };
 
@@ -66,8 +66,8 @@ class COptions : public COptionsBase {
     CTransBuffer tBuffer;
 #endif
 
-    C AccountWatchArray monitors;
-    C AccountWatchArray named;
+    C AccountW atchArray monitors;
+    C AccountW atchArray named;
 
     string_q transFmt;
     string_q traceFmt;
@@ -83,13 +83,13 @@ class COptions : public COptionsBase {
     bool enterDebugger(const CBlock& block);
     bool displayFromCache(uint64_t startBlock);
 
-    bool loadWatches(const CToml& toml);
+    bool loadW atches(const CToml& toml);
     string_q annotate(const string_q& strIn) const;
 
     void displayTrans(ostream& os, const CTransaction* theTrans) const;
     void displayTrace(ostream& os, const CTransaction* theTrans) const;
-    typedef bool (*NAMEVISITFUNC)(string_q& str, const C AccountWatch& watch);
-    void renameItems(string_q& str, const C AccountWatchArray& array) const;
+    typedef bool (*NAMEVISITFUNC)(string_q& str, const C AccountW atch& w atch);
+    void renameItems(string_q& str, const C AccountW atchArray& array) const;
 };
 
 // EXISTING_CODE

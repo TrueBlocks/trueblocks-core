@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
         bool first = true;
         for (auto monitor : options.monitors) {
             CAppearanceArray items;
-            if (!options.loadMonitorData(items, monitor.address)) {
+            if (!monitor.loadMonitor(items)) {
                 cerr << "Could not load monitor for address " << monitor.address << endl;
                 continue;
             } else if (items.size() == 0) {
@@ -68,7 +68,7 @@ int main(int argc, const char* argv[]) {
 
                 // We may have visited blocks for this address that do not contain txs of interest, so don't lost that
                 string_q msg = options.no_fix ? STR_MSG_NOTREPAIRED : STR_MSG_REPAIRED;
-                blknum_t currentLastBlock = str_2_Uint(asciiFileToString(getMonitorLast(monitor.address)));
+                blknum_t currentLastBlock = monitor.getLastVisitedBlock();
                 if (fixed.size() == items.size()) {
                     msg = STR_MSG_OKAY;
                     if (currentLastBlock < fixed.back().bn) {

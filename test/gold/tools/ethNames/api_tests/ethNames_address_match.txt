@@ -370,6 +370,33 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x111111254b08ceeee8ad6ca827de9952d2a46781",
+      "name": "1inch Exchange",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
+      "name": "1inch Exchange",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x111112549cfedf7822eb11fbd8fd485d8a10f93f",
+      "name": "1inch Exchange",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "76-Verified",
       "address": "0x112157162bc4b655bbaf3a0b61423d205a3a5e58",
       "name": "GRV",
@@ -600,6 +627,15 @@
       "name": "CHEEUR",
       "symbol": "",
       "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x1200563cfaeb481e1f0542a246f0cefcde4c4753",
+      "name": "Arbitrage Bot",
+      "symbol": "",
+      "source": "0xTracker",
       "decimals": "0",
       "description": ""
     },
@@ -892,6 +928,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x12dfc577544d002c57fbb02c389511a37bc4490c",
+      "name": "Set Kyber Wrapper",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "76-Verified",
       "address": "0x12e4c875157c002e6a3385d14a1620e4f3703fc9",
       "name": "SimpleRestrictedFDT",
@@ -935,6 +980,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x13032deb2d37556cf49301f713e9d7e1d1a8b169",
+      "name": "Kyber Uniswap Reserve",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "76-Verified",
@@ -1752,60 +1806,6 @@
       "name": "Stephen King",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x150f14991f9b890749bb4a635c3c8df8a1d26b48",
-      "name": "Token",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x151202c9c18e495656f372281f493eb7698961d5",
-      "name": "DEBITUM",
-      "symbol": "DEB",
-      "source": "On Chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1518cf262d4273d0e987402a97345c3dca1cf731",
-      "name": "VEL",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x15231f21a6d599ef470593b0c42c278084cf293e",
-      "name": "ModelCalculator",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x15243152b6a65500e1f2ae87be8383c987d2b148",
-      "name": "GDC",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x15269c511dd43d97d71740ea364cfc964b605cdf",
-      "name": "ResolverContenthashSignerENS",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     }

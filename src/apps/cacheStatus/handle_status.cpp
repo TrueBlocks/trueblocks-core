@@ -361,7 +361,9 @@ bool noteMonitor(const string_q& path, void* data) {
             mdi.address = "---address---";
         }
 
-        mdi.deleted = fileExists(substitute(path, ".acct.bin", ".deleted"));
+        CMonitor m;
+        m.address = mdi.address;
+        mdi.deleted = m.isDeleted();
         counter->monitorArray->push_back(mdi);
         if (isTestMode())
             return false;

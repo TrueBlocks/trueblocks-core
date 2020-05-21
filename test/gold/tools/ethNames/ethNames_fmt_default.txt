@@ -11,6 +11,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad	Tip		Etherscan			false	false	false
 50-Tokens:ERC20	0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	On Chain	18	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.	false	false	false
 76-Verified	0x4b702fc17fc11859aeb8eb0d3bd876a6a4bff910	BancorMultiPrice		Etherscan			false	false	false
+20-Friends	0x4ff1c812ebccc16487c17f537d849cb5dc557ff0	EthSlurp Tip Jar Sender Sender		TrueBlocks.io			false	false	false
 91-Friends	0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner		TrueBlocks.io			false	false	false
 76-Verified	0x57917da61304f309694993c18bbc0f15e5507a6a	MultiPlanetValue		Etherscan			false	false	false
 91-Friends	0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar		TrueBlocks.io			false	false	false

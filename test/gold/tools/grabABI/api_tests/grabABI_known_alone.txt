@@ -46,6 +46,15 @@
       "output_names": ""
     },
     {
+      "name": "isEqual",
+      "type": "function",
+      "signature": "isEqual(address[],address[])",
+      "encoding": "0x00775c1a",
+      "address": "0x0",
+      "input_names": "A,B,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "ChangePrivilege",
       "type": "event",
       "signature": "ChangePrivilege(address,bool,bool)",
@@ -145,6 +154,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "unitShares",
+      "type": "function",
+      "signature": "unitShares()",
+      "encoding": "0x0193aea2",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_admin",
       "type": "function",
       "signature": "_admin()",
@@ -199,6 +217,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "getUnits",
+      "type": "function",
+      "signature": "getUnits()",
+      "encoding": "0x027aa9f5",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "arr",
       "type": "function",
       "signature": "arr(uint256,uint256,uint256,uint256)",
@@ -226,6 +253,15 @@
       "output_names": ""
     },
     {
+      "name": "validateMultipleOfBasisPoint",
+      "type": "function",
+      "signature": "validateMultipleOfBasisPoint(uint256)",
+      "encoding": "0x02f4858d",
+      "address": "0x0",
+      "input_names": "_value,",
+      "output_names": ""
+    },
+    {
       "name": "_getOwedPayrollPeriod",
       "type": "function",
       "signature": "_getOwedPayrollPeriod(Employee)",
@@ -250,6 +286,15 @@
       "encoding": "0x0371ddf2288ad1ba92626a7e31c86a9d006e592cfe57d7d946ef08b13457c08b",
       "address": "0x0",
       "input_names": "_from,_tokenId,_childContract,_childTokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "validateTokensAreComponents",
+      "type": "function",
+      "signature": "validateTokensAreComponents(address,address[])",
+      "encoding": "0x03cd8870",
+      "address": "0x0",
+      "input_names": "_set,_tokens,",
       "output_names": ""
     },
     {
@@ -323,6 +368,15 @@
       "address": "0x0",
       "input_names": "oldAdmins,",
       "output_names": ""
+    },
+    {
+      "name": "minimumBid",
+      "type": "function",
+      "signature": "minimumBid(address)",
+      "encoding": "0x060f0203",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "ret_0,"
     },
     {
       "name": "AddLiquidity",
@@ -559,6 +613,15 @@
       "output_names": ""
     },
     {
+      "name": "calculateNextSetNewUnitShares",
+      "type": "function",
+      "signature": "calculateNextSetNewUnitShares(uint256)",
+      "encoding": "0x09a9991d",
+      "address": "0x0",
+      "input_names": "_issueQuantity,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "execute",
       "type": "function",
       "signature": "execute(bytes)",
@@ -721,6 +784,15 @@
       "output_names": ""
     },
     {
+      "name": "validateUnitShares",
+      "type": "function",
+      "signature": "validateUnitShares(uint256)",
+      "encoding": "0x0d54240a",
+      "address": "0x0",
+      "input_names": "_newUnitShares,",
+      "output_names": ""
+    },
+    {
       "name": "childContractByIndex",
       "type": "function",
       "signature": "childContractByIndex(uint256,uint256)",
@@ -736,6 +808,15 @@
       "encoding": "0x0d6d1437",
       "address": "0x0",
       "input_names": "who,newName,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawModule",
+      "type": "function",
+      "signature": "withdrawModule(address,address,address,uint256)",
+      "encoding": "0x0e1fd334",
+      "address": "0x0",
+      "input_names": "_from,_to,_token,_quantity,",
       "output_names": ""
     },
     {
@@ -883,6 +964,15 @@
       "output_names": "ret_0,ret_1,"
     },
     {
+      "name": "getBidPrice",
+      "type": "function",
+      "signature": "getBidPrice(address,uint256)",
+      "encoding": "0x102d32c0",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": "memory,"
+    },
+    {
       "name": "_approve",
       "type": "function",
       "signature": "_approve(address,address,uint256)",
@@ -998,6 +1088,24 @@
       "address": "0x0",
       "input_names": "executor,",
       "output_names": "id,"
+    },
+    {
+      "name": "getCombinedCurrentSetUnits",
+      "type": "function",
+      "signature": "getCombinedCurrentSetUnits(address)",
+      "encoding": "0x1273a666",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "memory,"
+    },
+    {
+      "name": "batchIncrementTokenOwner",
+      "type": "function",
+      "signature": "batchIncrementTokenOwner(address[],address,uint256[])",
+      "encoding": "0x12a3bbe3",
+      "address": "0x0",
+      "input_names": "_tokens,_owner,_quantities,",
+      "output_names": ""
     },
     {
       "name": "ended",
@@ -1252,6 +1360,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "rebalanceInterval",
+      "type": "function",
+      "signature": "rebalanceInterval()",
+      "encoding": "0x16d1d916",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "ApprovalForAll",
       "type": "event",
       "signature": "ApprovalForAll(address,address,bool)",
@@ -1369,6 +1486,15 @@
       "output_names": ""
     },
     {
+      "name": "tokenIsComponent",
+      "type": "function",
+      "signature": "tokenIsComponent(address)",
+      "encoding": "0x18c53aca",
+      "address": "0x0",
+      "input_names": "_tokenAddress,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "domainOwner",
       "type": "function",
       "signature": "domainOwner(string)",
@@ -1450,6 +1576,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "getSetDetails",
+      "type": "function",
+      "signature": "getSetDetails(address)",
+      "encoding": "0x1a2e9c74",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "memory,"
+    },
+    {
       "name": "compute",
       "type": "function",
       "signature": "compute()",
@@ -1484,6 +1619,15 @@
       "address": "0x0",
       "input_names": "authority,",
       "output_names": ""
+    },
+    {
+      "name": "safePower",
+      "type": "function",
+      "signature": "safePower(uint256,uint256)",
+      "encoding": "0x1ad50586",
+      "address": "0x0",
+      "input_names": "a,pow,",
+      "output_names": "ret_0,"
     },
     {
       "name": "_paymentReferenceFor",
@@ -1555,6 +1699,15 @@
       "encoding": "0x1c26cc85",
       "address": "0x0",
       "input_names": "ensAddr,resolverAddr,",
+      "output_names": ""
+    },
+    {
+      "name": "redeemAndWithdrawTo",
+      "type": "function",
+      "signature": "redeemAndWithdrawTo(address,address,uint256,uint256)",
+      "encoding": "0x1c2a0e40",
+      "address": "0x0",
+      "input_names": "_set,_to,_quantity,_toExclude,",
       "output_names": ""
     },
     {
@@ -1666,6 +1819,24 @@
       "output_names": "node,"
     },
     {
+      "name": "redeem",
+      "type": "function",
+      "signature": "redeem(address,uint256)",
+      "encoding": "0x1e9a6950",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": ""
+    },
+    {
+      "name": "transitionToRebalance",
+      "type": "function",
+      "signature": "transitionToRebalance(ISetToken)",
+      "encoding": "0x1ec477bd",
+      "address": "0x0",
+      "input_names": "_nextSet,",
+      "output_names": ""
+    },
+    {
       "name": "compare",
       "type": "function",
       "signature": "compare(uint256,Op,uint256)",
@@ -1690,6 +1861,15 @@
       "encoding": "0x1f7b6d32",
       "address": "0x0",
       "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getOwnerBalance",
+      "type": "function",
+      "signature": "getOwnerBalance(address,address)",
+      "encoding": "0x1f98ade3",
+      "address": "0x0",
+      "input_names": "_token,_owner,",
       "output_names": "ret_0,"
     },
     {
@@ -1720,6 +1900,15 @@
       "output_names": ""
     },
     {
+      "name": "batchTransferBalance",
+      "type": "function",
+      "signature": "batchTransferBalance(address[],address,address,uint256[])",
+      "encoding": "0x20153c38",
+      "address": "0x0",
+      "input_names": "_tokens,_from,_to,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "setShouldRejectClash",
       "type": "function",
       "signature": "setShouldRejectClash(bool)",
@@ -1736,6 +1925,15 @@
       "address": "0x0",
       "input_names": "map,key,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "extend",
+      "type": "function",
+      "signature": "extend(address[],address[])",
+      "encoding": "0x20af660c",
+      "address": "0x0",
+      "input_names": "A,B,",
+      "output_names": "memory,"
     },
     {
       "name": "mulUInt",
@@ -1771,6 +1969,15 @@
       "encoding": "0x20f10ae7",
       "address": "0x0",
       "input_names": "account,interfaceId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "updateAndGetFee",
+      "type": "function",
+      "signature": "updateAndGetFee()",
+      "encoding": "0x20f55404",
+      "address": "0x0",
+      "input_names": "",
       "output_names": "ret_0,"
     },
     {
@@ -1873,6 +2080,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "getCombinedNextSetUnits",
+      "type": "function",
+      "signature": "getCombinedNextSetUnits(address)",
+      "encoding": "0x22c1107a",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "memory,"
+    },
+    {
       "name": "mul",
       "type": "function",
       "signature": "mul(uint64,uint64)",
@@ -1891,6 +2107,24 @@
       "output_names": "sealedBid,"
     },
     {
+      "name": "actualizeFee",
+      "type": "function",
+      "signature": "actualizeFee()",
+      "encoding": "0x231e004e",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "batchWithdrawTo",
+      "type": "function",
+      "signature": "batchWithdrawTo(address[],address,uint256[])",
+      "encoding": "0x2321af6a",
+      "address": "0x0",
+      "input_names": "_tokens,_to,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "terminateEmployee",
       "type": "function",
       "signature": "terminateEmployee(uint256,uint64)",
@@ -1906,6 +2140,15 @@
       "encoding": "0x239e7f6cdac8fb35a788a46b431b54da87de90b82448a2c294be5e92a6e579af",
       "address": "0x0",
       "input_names": "token,to,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "validatePlaceBid",
+      "type": "function",
+      "signature": "validatePlaceBid(uint256)",
+      "encoding": "0x239fa36f",
+      "address": "0x0",
+      "input_names": "_quantity,",
       "output_names": ""
     },
     {
@@ -2044,6 +2287,15 @@
       "output_names": ""
     },
     {
+      "name": "validateManager",
+      "type": "function",
+      "signature": "validateManager()",
+      "encoding": "0x25700ba1",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "_createTokenManagerPermissions",
       "type": "function",
       "signature": "_createTokenManagerPermissions(ACL,TokenManager,address,address)",
@@ -2158,6 +2410,15 @@
       "encoding": "0x27e02676",
       "address": "0x0",
       "input_names": "_employeeId,_token,",
+      "output_names": ""
+    },
+    {
+      "name": "validateFeeActualization",
+      "type": "function",
+      "signature": "validateFeeActualization()",
+      "encoding": "0x28000375",
+      "address": "0x0",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -2278,6 +2539,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "minimumTimeToPivot",
+      "type": "function",
+      "signature": "minimumTimeToPivot()",
+      "encoding": "0x2b135733",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_unsafeMakePaymentTransaction",
       "type": "function",
       "signature": "_unsafeMakePaymentTransaction(address,address,uint256,uint256,uint64,string)",
@@ -2339,6 +2609,24 @@
       "address": "0x0",
       "input_names": "_name,_deposit,_limitOfParticipants,_coolingPeriod,payable _ownerAddress,_tokenAddress,",
       "output_names": "c,"
+    },
+    {
+      "name": "scale",
+      "type": "function",
+      "signature": "scale(uint256)",
+      "encoding": "0x2bec1547",
+      "address": "0x0",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "pop",
+      "type": "function",
+      "signature": "pop(address[],uint256)",
+      "encoding": "0x2bff89b9",
+      "address": "0x0",
+      "input_names": "A,index,",
+      "output_names": "memory,ret_0,"
     },
     {
       "name": "batchSend",
@@ -2413,6 +2701,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "NewFeeRecipient",
+      "type": "event",
+      "signature": "NewFeeRecipient(address,address)",
+      "encoding": "0x2d63d620fb255d563fc112849cc79d42a367a3c51694709297b3ef80b28a8929",
+      "address": "0x0",
+      "input_names": "newFeeRecipient,oldFeeRecipient,",
+      "output_names": ""
+    },
+    {
       "name": "Deposited",
       "type": "event",
       "signature": "Deposited(address,uint256)",
@@ -2465,6 +2762,15 @@
       "address": "0x0",
       "input_names": "amount,",
       "output_names": ""
+    },
+    {
+      "name": "rebalanceFee",
+      "type": "function",
+      "signature": "rebalanceFee()",
+      "encoding": "0x2e35bcca",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "callSender",
@@ -2593,6 +2899,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "validateRebalancingSettlement",
+      "type": "function",
+      "signature": "validateRebalancingSettlement()",
+      "encoding": "0x2fb2b50b",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "Minted",
       "type": "event",
       "signature": "Minted(address,address,uint256,bytes,bytes)",
@@ -2609,6 +2924,24 @@
       "address": "0x0",
       "input_names": "node,hash,",
       "output_names": ""
+    },
+    {
+      "name": "batchDeposit",
+      "type": "function",
+      "signature": "batchDeposit(address[],uint256[])",
+      "encoding": "0x30a90736",
+      "address": "0x0",
+      "input_names": "_tokens,_quantities,",
+      "output_names": ""
+    },
+    {
+      "name": "currentSet",
+      "type": "function",
+      "signature": "currentSet()",
+      "encoding": "0x30b86627",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "_transfer",
@@ -2701,6 +3034,15 @@
       "output_names": "token,receiver,amount,initialPaymentTime,interval,maxExecutions,inactive,executions,createdBy,"
     },
     {
+      "name": "areValidAddresses",
+      "type": "function",
+      "signature": "areValidAddresses(address[])",
+      "encoding": "0x32ed010e",
+      "address": "0x0",
+      "input_names": "_addresses,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "getRecoveryVault",
       "type": "function",
       "signature": "getRecoveryVault()",
@@ -2779,6 +3121,15 @@
       "encoding": "0x34140748",
       "address": "0x0",
       "input_names": "newImplementation,",
+      "output_names": ""
+    },
+    {
+      "name": "batchIncrementTokenOwnerModule",
+      "type": "function",
+      "signature": "batchIncrementTokenOwnerModule(address[],address,uint256[])",
+      "encoding": "0x34650cd7",
+      "address": "0x0",
+      "input_names": "_tokens,_owner,_quantities,",
       "output_names": ""
     },
     {
@@ -2890,6 +3241,15 @@
       "output_names": ""
     },
     {
+      "name": "whiteList",
+      "type": "function",
+      "signature": "whiteList(address)",
+      "encoding": "0x372c12b1",
+      "address": "0x0",
+      "input_names": "_address,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "msgData",
       "type": "function",
       "signature": "msgData(uint256,string)",
@@ -2962,6 +3322,15 @@
       "output_names": ""
     },
     {
+      "name": "batchDecrementTokenOwner",
+      "type": "function",
+      "signature": "batchDecrementTokenOwner(address[],address,uint256[])",
+      "encoding": "0x3911477c",
+      "address": "0x0",
+      "input_names": "_tokens,_owner,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "increaseAllowance",
       "type": "function",
       "signature": "increaseAllowance(address,uint256)",
@@ -3004,6 +3373,15 @@
       "encoding": "0x39983c6d4d174a7aee564f449d4a5c3c7ac9649d72b7793c56901183996f8af6",
       "address": "0x0",
       "input_names": "token,",
+      "output_names": ""
+    },
+    {
+      "name": "liquidatorRebalancingStart",
+      "type": "function",
+      "signature": "liquidatorRebalancingStart(ISetToken,uint256,bytes)",
+      "encoding": "0x39b0e7a7",
+      "address": "0x0",
+      "input_names": "_nextSet,_startingCurrentSetQuantity,_liquidatorData,",
       "output_names": ""
     },
     {
@@ -3086,6 +3464,15 @@
       "address": "0x0",
       "input_names": "_dao,_acl,_members,_votingSettings,_financePeriod,_useAgentAsVault,",
       "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "hasRebalanceFailed",
+      "type": "function",
+      "signature": "hasRebalanceFailed(address)",
+      "encoding": "0x3b52de3b",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "ret_0,"
     },
     {
       "name": "_createVaultPermissions",
@@ -3205,6 +3592,15 @@
       "output_names": ""
     },
     {
+      "name": "contains",
+      "type": "function",
+      "signature": "contains(address[],address)",
+      "encoding": "0x3da80d66",
+      "address": "0x0",
+      "input_names": "A,a,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "getVesting",
       "type": "function",
       "signature": "getVesting(address,uint256)",
@@ -3248,6 +3644,15 @@
       "address": "0x0",
       "input_names": "sender,oldSigner,newSigner,",
       "output_names": ""
+    },
+    {
+      "name": "getTokenFlows",
+      "type": "function",
+      "signature": "getTokenFlows(IRebalancingSetToken,uint256)",
+      "encoding": "0x3f08ae92",
+      "address": "0x0",
+      "input_names": "_rebalancingSetToken,_quantity,",
+      "output_names": "memory,memory,memory,"
     },
     {
       "name": "ens",
@@ -3302,6 +3707,15 @@
       "address": "0x0",
       "input_names": "from,to,encodedFunction,transactionFee,gasPrice,gasLimit,nonce,signature,approvalData,",
       "output_names": ""
+    },
+    {
+      "name": "liquidatorBreached",
+      "type": "function",
+      "signature": "liquidatorBreached()",
+      "encoding": "0x4093fb18",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "mint",
@@ -3385,6 +3799,15 @@
       "output_names": ""
     },
     {
+      "name": "naturalUnit",
+      "type": "function",
+      "signature": "naturalUnit()",
+      "encoding": "0x42a7cfd5",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "getBlockNumber",
       "type": "function",
       "signature": "getBlockNumber()",
@@ -3419,6 +3842,24 @@
       "address": "0x0",
       "input_names": "name,owner,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "startingCurrentSetAmount",
+      "type": "function",
+      "signature": "startingCurrentSetAmount()",
+      "encoding": "0x4394380b",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "initialize",
+      "type": "function",
+      "signature": "initialize(bytes)",
+      "encoding": "0x439fab91",
+      "address": "0x0",
+      "input_names": "_feeCalculatorData,",
+      "output_names": ""
     },
     {
       "name": "rootOwnerOf",
@@ -3646,6 +4087,15 @@
       "output_names": ""
     },
     {
+      "name": "remainingCurrentSets",
+      "type": "function",
+      "signature": "remainingCurrentSets(address)",
+      "encoding": "0x48454433",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "decodeParamOp",
       "type": "function",
       "signature": "decodeParamOp(uint256)",
@@ -3680,6 +4130,15 @@
       "address": "0x0",
       "input_names": "token,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "isMultipleOfSetNaturalUnit",
+      "type": "function",
+      "signature": "isMultipleOfSetNaturalUnit(address,uint256)",
+      "encoding": "0x49468457",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": ""
     },
     {
       "name": "AddEmployeeAccruedSalary",
@@ -3835,6 +4294,15 @@
       "output_names": ""
     },
     {
+      "name": "maxUInt256",
+      "type": "function",
+      "signature": "maxUInt256()",
+      "encoding": "0x4c2097fd",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "getBySemanticVersion",
       "type": "function",
       "signature": "getBySemanticVersion(uint16[3])",
@@ -3923,6 +4391,15 @@
       "address": "0x0",
       "input_names": "addr,index,",
       "output_names": ""
+    },
+    {
+      "name": "calculateMaxIssueAmount",
+      "type": "function",
+      "signature": "calculateMaxIssueAmount(SetTokenLibrary.SetDetails)",
+      "encoding": "0x4d6d401d",
+      "address": "0x0",
+      "input_names": "_setToken,",
+      "output_names": "ret_0,"
     },
     {
       "name": "StartVote",
@@ -4058,6 +4535,15 @@
       "address": "0x0",
       "input_names": "index,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "EntryFeePaid",
+      "type": "event",
+      "signature": "EntryFeePaid(address,uint256)",
+      "encoding": "0x4f97c4974c69e34351de4be43b70406a96a48f940ec7d8853b4be6e7e6d98c7b",
+      "address": "0x0",
+      "input_names": "feeRecipient,feeQuantity,",
+      "output_names": ""
     },
     {
       "name": "_setupRole",
@@ -4204,6 +4690,15 @@
       "output_names": ""
     },
     {
+      "name": "batchTransferModule",
+      "type": "function",
+      "signature": "batchTransferModule(address[],uint256[],address,address)",
+      "encoding": "0x52a5ce53",
+      "address": "0x0",
+      "input_names": "_tokens,_quantities,_from,_to,",
+      "output_names": ""
+    },
+    {
       "name": "MockFunctionCalled",
       "type": "event",
       "signature": "MockFunctionCalled()",
@@ -4330,6 +4825,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "auctionPriceParameters",
+      "type": "function",
+      "signature": "auctionPriceParameters(address)",
+      "encoding": "0x558a7c06",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "memory,"
+    },
+    {
       "name": "newAppProxyPinned",
       "type": "function",
       "signature": "newAppProxyPinned(IKernel,bytes32,bytes)",
@@ -4337,6 +4841,15 @@
       "address": "0x0",
       "input_names": "_kernel,_appId,_initializePayload,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "batchTransferBalanceModule",
+      "type": "function",
+      "signature": "batchTransferBalanceModule(address[],address,address,uint256[])",
+      "encoding": "0x55d2d9cd",
+      "address": "0x0",
+      "input_names": "_tokens,_from,_to,_quantities,",
+      "output_names": ""
     },
     {
       "name": "_addBonus",
@@ -4393,6 +4906,15 @@
       "output_names": ""
     },
     {
+      "name": "remove",
+      "type": "function",
+      "signature": "remove(address[],address)",
+      "encoding": "0x566a691b",
+      "address": "0x0",
+      "input_names": "A,a,",
+      "output_names": "memory,"
+    },
+    {
       "name": "setPackage",
       "type": "function",
       "signature": "setPackage(string,Package,uint64[3])",
@@ -4411,6 +4933,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "createSet",
+      "type": "function",
+      "signature": "createSet(address[],uint256[],uint256,bytes32,bytes32,bytes)",
+      "encoding": "0x569f7494",
+      "address": "0x0",
+      "input_names": "_components,_units,_naturalUnit,_name,_symbol,_callData,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "newInstance",
       "type": "function",
       "signature": "newInstance(string,address[],uint64[3],uint64,bool,uint256[4])",
@@ -4418,6 +4949,24 @@
       "address": "0x0",
       "input_names": "_id,_members,_votingSettings,_financePeriod,_useAgentAsVault,_payrollSettings,",
       "output_names": ""
+    },
+    {
+      "name": "exchangeIds",
+      "type": "function",
+      "signature": "exchangeIds(uint8)",
+      "encoding": "0x56fe2784",
+      "address": "0x0",
+      "input_names": "_exchangeId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getCombinedTokenArrayLength",
+      "type": "function",
+      "signature": "getCombinedTokenArrayLength()",
+      "encoding": "0x570f3167",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "removeProtectedToken",
@@ -4429,6 +4978,24 @@
       "output_names": ""
     },
     {
+      "name": "calculateSetIssueQuantity",
+      "type": "function",
+      "signature": "calculateSetIssueQuantity(ISetToken)",
+      "encoding": "0x57b031c1",
+      "address": "0x0",
+      "input_names": "_setToken,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "decomposeTokenFlowToBidPrice",
+      "type": "function",
+      "signature": "decomposeTokenFlowToBidPrice(TokenFlow)",
+      "encoding": "0x57c6626e",
+      "address": "0x0",
+      "input_names": "_tokenFlow,",
+      "output_names": "memory,memory,"
+    },
+    {
       "name": "NewParty",
       "type": "event",
       "signature": "NewParty(address,address)",
@@ -4436,6 +5003,24 @@
       "address": "0x0",
       "input_names": "deployedAddress,deployer,",
       "output_names": ""
+    },
+    {
+      "name": "biddingParameters",
+      "type": "function",
+      "signature": "biddingParameters()",
+      "encoding": "0x57d3810e",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
+      "name": "startingCurrentSets",
+      "type": "function",
+      "signature": "startingCurrentSets(address)",
+      "encoding": "0x57dc13ec",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "ret_0,"
     },
     {
       "name": "read",
@@ -4600,6 +5185,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "redeemModule",
+      "type": "function",
+      "signature": "redeemModule(address,address,address,uint256)",
+      "encoding": "0x5990ca08",
+      "address": "0x0",
+      "input_names": "_burnAddress,_incrementAddress,_set,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "decodeParamsList",
       "type": "function",
       "signature": "decodeParamsList(uint256)",
@@ -4634,6 +5228,15 @@
       "address": "0x0",
       "input_names": "node,key,",
       "output_names": "ret,"
+    },
+    {
+      "name": "internalTransfer",
+      "type": "function",
+      "signature": "internalTransfer(address,address,uint256)",
+      "encoding": "0x59e026f7",
+      "address": "0x0",
+      "input_names": "_token,_to,_quantity,",
+      "output_names": ""
     },
     {
       "name": "peek",
@@ -4672,12 +5275,30 @@
       "output_names": "open,executed,startDate,snapshotBlock,supportRequired,minAcceptQuorum,yea,nay,votingPower,script,"
     },
     {
+      "name": "maximumTimeToPivot",
+      "type": "function",
+      "signature": "maximumTimeToPivot()",
+      "encoding": "0x5a565085",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "release",
       "type": "function",
       "signature": "release(IERC20)",
       "encoding": "0x5a734be6",
       "address": "0x0",
       "input_names": "token,",
+      "output_names": ""
+    },
+    {
+      "name": "issueNextSet",
+      "type": "function",
+      "signature": "issueNextSet(uint256)",
+      "encoding": "0x5a810853",
+      "address": "0x0",
+      "input_names": "_issueQuantity,",
       "output_names": ""
     },
     {
@@ -4753,12 +5374,30 @@
       "output_names": ""
     },
     {
+      "name": "validateRebalanceStateIsNot",
+      "type": "function",
+      "signature": "validateRebalanceStateIsNot(RebalancingLibrary.State)",
+      "encoding": "0x5c0cde52",
+      "address": "0x0",
+      "input_names": "_requiredState,",
+      "output_names": ""
+    },
+    {
       "name": "semanticVersionHash",
       "type": "function",
       "signature": "semanticVersionHash(uint64[3])",
       "encoding": "0x5c173e3c",
       "address": "0x0",
       "input_names": "version,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "createSet",
+      "type": "function",
+      "signature": "createSet(address,address[],uint256[],uint256,bytes32,bytes32,bytes)",
+      "encoding": "0x5c217114",
+      "address": "0x0",
+      "input_names": "_factory,_components,_units,_naturalUnit,_name,_symbol,_callData,",
       "output_names": "ret_0,"
     },
     {
@@ -4879,6 +5518,15 @@
       "output_names": ""
     },
     {
+      "name": "transitionToNewState",
+      "type": "function",
+      "signature": "transitionToNewState(RebalancingLibrary.State)",
+      "encoding": "0x5e3bff09",
+      "address": "0x0",
+      "input_names": "_newRebalanceState,",
+      "output_names": ""
+    },
+    {
       "name": "sealedBids",
       "type": "function",
       "signature": "sealedBids(address,bytes32)",
@@ -4886,6 +5534,15 @@
       "address": "0x0",
       "input_names": "val_0,val_1,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "validModules",
+      "type": "function",
+      "signature": "validModules(address)",
+      "encoding": "0x5e633498",
+      "address": "0x0",
+      "input_names": "val_0,",
+      "output_names": "ret_0,"
     },
     {
       "name": "isNonFungibleItem",
@@ -4913,6 +5570,15 @@
       "address": "0x0",
       "input_names": "_minAcceptQuorumPct,",
       "output_names": ""
+    },
+    {
+      "name": "calculateRebalanceFeeInflation",
+      "type": "function",
+      "signature": "calculateRebalanceFeeInflation(uint256)",
+      "encoding": "0x5ee59470",
+      "address": "0x0",
+      "input_names": "_rebalanceFeePercent,",
+      "output_names": "ret_0,"
     },
     {
       "name": "Registration",
@@ -5158,6 +5824,15 @@
       "output_names": ""
     },
     {
+      "name": "hasDuplicate",
+      "type": "function",
+      "signature": "hasDuplicate(address[])",
+      "encoding": "0x64c20abc",
+      "address": "0x0",
+      "input_names": "A,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "TerminateEmployee",
       "type": "event",
       "signature": "TerminateEmployee(uint256,uint64)",
@@ -5201,6 +5876,15 @@
       "address": "0x0",
       "input_names": "_id,_members,_votingSettings,_financePeriod,_useAgentAsVault,",
       "output_names": ""
+    },
+    {
+      "name": "calculateNewUnitShares",
+      "type": "function",
+      "signature": "calculateNewUnitShares()",
+      "encoding": "0x659d9c21",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "doDeposit",
@@ -5284,6 +5968,15 @@
       "output_names": "isCurrent,startTime,endTime,firstTransactionId,lastTransactionId,"
     },
     {
+      "name": "setLiquidator",
+      "type": "function",
+      "signature": "setLiquidator(ILiquidator)",
+      "encoding": "0x670fd8f1",
+      "address": "0x0",
+      "input_names": "_newLiquidator,",
+      "output_names": ""
+    },
+    {
       "name": "setPeriodDuration",
       "type": "function",
       "signature": "setPeriodDuration(uint64)",
@@ -5345,6 +6038,15 @@
       "address": "0x0",
       "input_names": "_entity,_app,_role,_params,",
       "output_names": ""
+    },
+    {
+      "name": "scaleFactor",
+      "type": "function",
+      "signature": "scaleFactor()",
+      "encoding": "0x683dd191",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "ReceivedERC20",
@@ -5509,6 +6211,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "validateStartRebalance",
+      "type": "function",
+      "signature": "validateStartRebalance(ISetToken)",
+      "encoding": "0x6b7ba1d6",
+      "address": "0x0",
+      "input_names": "_nextSet,",
+      "output_names": ""
+    },
+    {
       "name": "setMin",
       "type": "function",
       "signature": "setMin(uint96)",
@@ -5624,6 +6335,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "transferProxy",
+      "type": "function",
+      "signature": "transferProxy()",
+      "encoding": "0x6e667db3",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "SetBudget",
@@ -5815,6 +6535,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "validateGetBidPrice",
+      "type": "function",
+      "signature": "validateGetBidPrice(uint256)",
+      "encoding": "0x7285be9f",
+      "address": "0x0",
+      "input_names": "_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "transferableBalance",
       "type": "function",
       "signature": "transferableBalance(address,uint256)",
@@ -5830,6 +6559,15 @@
       "encoding": "0x73053410",
       "address": "0x0",
       "input_names": "_newSemanticVersion,_contractAddress,_contentURI,",
+      "output_names": ""
+    },
+    {
+      "name": "issueTo",
+      "type": "function",
+      "signature": "issueTo(address,address,uint256)",
+      "encoding": "0x73088bf7",
+      "address": "0x0",
+      "input_names": "_recipient,_set,_quantity,",
       "output_names": ""
     },
     {
@@ -5959,12 +6697,30 @@
       "output_names": ""
     },
     {
+      "name": "endFailedAuction",
+      "type": "function",
+      "signature": "endFailedAuction()",
+      "encoding": "0x75aff3c1",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "_setRoleAdmin",
       "type": "function",
       "signature": "_setRoleAdmin(bytes32,bytes32)",
       "encoding": "0x7612997d",
       "address": "0x0",
       "input_names": "role,adminRole,",
+      "output_names": ""
+    },
+    {
+      "name": "propose",
+      "type": "function",
+      "signature": "propose(address,address,uint256,uint256,uint256)",
+      "encoding": "0x7632b24b",
+      "address": "0x0",
+      "input_names": "_nextSet,_auctionLibrary,_auctionTimeToPivot,_auctionStartPrice,_auctionPivotPrice,",
       "output_names": ""
     },
     {
@@ -6013,6 +6769,15 @@
       "output_names": "success,"
     },
     {
+      "name": "getCombinedTokenArray",
+      "type": "function",
+      "signature": "getCombinedTokenArray(address)",
+      "encoding": "0x77b7a8d8",
+      "address": "0x0",
+      "input_names": "_set,",
+      "output_names": "memory,"
+    },
+    {
       "name": "arr",
       "type": "function",
       "signature": "arr(address)",
@@ -6047,6 +6812,15 @@
       "address": "0x0",
       "input_names": "transactionId,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "union",
+      "type": "function",
+      "signature": "union(address[],address[])",
+      "encoding": "0x78537808",
+      "address": "0x0",
+      "input_names": "A,B,",
+      "output_names": "memory,"
     },
     {
       "name": "mintFungible",
@@ -6139,6 +6913,15 @@
       "output_names": ""
     },
     {
+      "name": "calculateIncentiveFeeInflation",
+      "type": "function",
+      "signature": "calculateIncentiveFeeInflation(uint256)",
+      "encoding": "0x7ac92150",
+      "address": "0x0",
+      "input_names": "_feePercentage,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "length",
       "type": "function",
       "signature": "length(UintSet)",
@@ -6208,6 +6991,15 @@
       "encoding": "0x7c1d0b87",
       "address": "0x0",
       "input_names": "_supportRequiredPct,",
+      "output_names": ""
+    },
+    {
+      "name": "issueModule",
+      "type": "function",
+      "signature": "issueModule(address,address,address,uint256)",
+      "encoding": "0x7c68561f",
+      "address": "0x0",
+      "input_names": "_owner,_recipient,_set,_quantity,",
       "output_names": ""
     },
     {
@@ -6382,6 +7174,15 @@
       "output_names": "appProxy,"
     },
     {
+      "name": "decrementTokenOwner",
+      "type": "function",
+      "signature": "decrementTokenOwner(address,address,uint256)",
+      "encoding": "0x80ddda30",
+      "address": "0x0",
+      "input_names": "_token,_owner,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "setShouldRejectXXXX",
       "type": "function",
       "signature": "setShouldRejectXXXX(bool)",
@@ -6424,6 +7225,33 @@
       "encoding": "0x8195aeaa",
       "address": "0x0",
       "input_names": "recipient,deposit,tokenAddress,startTime,stopTime,senderSharePercentage,recipientSharePercentage,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "IncentiveFeePaid",
+      "type": "event",
+      "signature": "IncentiveFeePaid(address,uint256,uint256,uint256)",
+      "encoding": "0x819f13b7ecdde26dc2f4f306d33b2d6e5b32f631d969f8c98a806896a06a5760",
+      "address": "0x0",
+      "input_names": "feeRecipient,feeQuantity,feePercentage,newUnitShares,",
+      "output_names": ""
+    },
+    {
+      "name": "minimumRebalanceInterval",
+      "type": "function",
+      "signature": "minimumRebalanceInterval()",
+      "encoding": "0x81b1c820",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "divCeil",
+      "type": "function",
+      "signature": "divCeil(uint256,uint256)",
+      "encoding": "0x82251512",
+      "address": "0x0",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -6607,6 +7435,24 @@
       "output_names": ""
     },
     {
+      "name": "getCombinedTokenArray",
+      "type": "function",
+      "signature": "getCombinedTokenArray()",
+      "encoding": "0x8618711c",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
+      "name": "issue",
+      "type": "function",
+      "signature": "issue(address,uint256)",
+      "encoding": "0x867904b4",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "release",
       "type": "function",
       "signature": "release()",
@@ -6614,6 +7460,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "decomposeTokenFlow",
+      "type": "function",
+      "signature": "decomposeTokenFlow(TokenFlow)",
+      "encoding": "0x86f41e1b",
+      "address": "0x0",
+      "input_names": "_tokenFlow,",
+      "output_names": "memory,memory,memory,"
     },
     {
       "name": "revocable",
@@ -6751,6 +7606,15 @@
       "output_names": ""
     },
     {
+      "name": "endFailedRebalance",
+      "type": "function",
+      "signature": "endFailedRebalance()",
+      "encoding": "0x8a411b76",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "_newVote",
       "type": "function",
       "signature": "_newVote(bytes,string,bool,bool)",
@@ -6868,6 +7732,15 @@
       "output_names": ""
     },
     {
+      "name": "maximumNaturalUnit",
+      "type": "function",
+      "signature": "maximumNaturalUnit()",
+      "encoding": "0x8be5c466",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "enableRefunds",
       "type": "function",
       "signature": "enableRefunds()",
@@ -6910,6 +7783,15 @@
       "encoding": "0x8c9a3252",
       "address": "0x0",
       "input_names": "streamId,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "validateMint",
+      "type": "function",
+      "signature": "validateMint()",
+      "encoding": "0x8d4192dd",
+      "address": "0x0",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -7129,6 +8011,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "requireValidSet",
+      "type": "function",
+      "signature": "requireValidSet(ICore,address)",
+      "encoding": "0x91ab00f3",
+      "address": "0x0",
+      "input_names": "_core,_set,",
+      "output_names": ""
+    },
+    {
       "name": "invoke1CosignerSends",
       "type": "function",
       "signature": "invoke1CosignerSends(uint8,bytes32,bytes32,uint256,address,bytes)",
@@ -7309,6 +8200,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "auctionLibrary",
+      "type": "function",
+      "signature": "auctionLibrary()",
+      "encoding": "0x96213fc7",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_deposit",
       "type": "function",
       "signature": "_deposit(address,uint256,string,address,bool)",
@@ -7390,6 +8290,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "RebalanceSettled",
+      "type": "event",
+      "signature": "RebalanceSettled(address,uint256,uint256,uint256,uint256,uint256)",
+      "encoding": "0x973319ae5c915d7b31c697261193cb1acf72a6b9286dc987e24cbe0d2e784b5c",
+      "address": "0x0",
+      "input_names": "feeRecipient,feeQuantity,feePercentage,rebalanceIndex,issueQuantity,unitShares,",
+      "output_names": ""
+    },
+    {
       "name": "sponsorProposal",
       "type": "function",
       "signature": "sponsorProposal(uint256)",
@@ -7423,6 +8332,15 @@
       "encoding": "0x97dafbbd",
       "address": "0x0",
       "input_names": "_voteId,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getPartialAmount",
+      "type": "function",
+      "signature": "getPartialAmount(uint256,uint256,uint256)",
+      "encoding": "0x98024a8b",
+      "address": "0x0",
+      "input_names": "_principal,_numerator,_denominator,",
       "output_names": "ret_0,"
     },
     {
@@ -7534,6 +8452,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "placeBid",
+      "type": "function",
+      "signature": "placeBid(uint256)",
+      "encoding": "0x9979ef45",
+      "address": "0x0",
+      "input_names": "_quantity,",
+      "output_names": "memory,memory,memory,"
+    },
+    {
       "name": "setLimitOfParticipants",
       "type": "function",
       "signature": "setLimitOfParticipants(uint256)",
@@ -7550,6 +8477,15 @@
       "address": "0x0",
       "input_names": "_teamAddress,_artistAddress,",
       "output_names": ""
+    },
+    {
+      "name": "getComponents",
+      "type": "function",
+      "signature": "getComponents()",
+      "encoding": "0x99d50d5d",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
     },
     {
       "name": "getLatestForContractAddress",
@@ -7586,6 +8522,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "getBidPrice",
+      "type": "function",
+      "signature": "getBidPrice(uint256)",
+      "encoding": "0x9b013aee",
+      "address": "0x0",
+      "input_names": "_quantity,",
+      "output_names": "memory,memory,"
     },
     {
       "name": "transferPresaleTokens",
@@ -7667,6 +8612,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "RebalanceStarted",
+      "type": "event",
+      "signature": "RebalanceStarted(address,address,uint256,uint256)",
+      "encoding": "0x9c6ae00de948f7b7024af2cf50454197682e662953f3c8b35e74ce63ec5fcd8f",
+      "address": "0x0",
+      "input_names": "oldSet,newSet,rebalanceIndex,currentSetQuantity,",
+      "output_names": ""
     },
     {
       "name": "_length",
@@ -7849,6 +8803,15 @@
       "output_names": ""
     },
     {
+      "name": "intersect",
+      "type": "function",
+      "signature": "intersect(address[],address[])",
+      "encoding": "0x9ea98d55",
+      "address": "0x0",
+      "input_names": "A,B,",
+      "output_names": "memory,"
+    },
+    {
       "name": "getBlockNumber64",
       "type": "function",
       "signature": "getBlockNumber64()",
@@ -7867,6 +8830,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "indexOf",
+      "type": "function",
+      "signature": "indexOf(address[],address)",
+      "encoding": "0x9fce5c8e",
+      "address": "0x0",
+      "input_names": "A,a,",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
       "name": "getPermissionParam",
       "type": "function",
       "signature": "getPermissionParam(address,address,bytes32,uint256)",
@@ -7874,6 +8846,15 @@
       "address": "0x0",
       "input_names": "_entity,_app,_role,_index,",
       "output_names": "ret_0,ret_1,ret_2,"
+    },
+    {
+      "name": "getAuctionPriceParameters",
+      "type": "function",
+      "signature": "getAuctionPriceParameters()",
+      "encoding": "0xa065172b",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
     },
     {
       "name": "mint",
@@ -7901,6 +8882,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "ceilLog10",
+      "type": "function",
+      "signature": "ceilLog10(uint256)",
+      "encoding": "0xa12bb301",
+      "address": "0x0",
+      "input_names": "_value,",
+      "output_names": "ret_0,"
     },
     {
       "name": "mintToken",
@@ -7939,6 +8929,15 @@
       "output_names": ""
     },
     {
+      "name": "_burnFrom",
+      "type": "function",
+      "signature": "_burnFrom(address,uint256)",
+      "encoding": "0xa22b35ce",
+      "address": "0x0",
+      "input_names": "account,value,",
+      "output_names": ""
+    },
+    {
       "name": "setApprovalForAll",
       "type": "function",
       "signature": "setApprovalForAll(address,bool)",
@@ -7948,12 +8947,39 @@
       "output_names": ""
     },
     {
+      "name": "reissueSetIfRevertToDefault",
+      "type": "function",
+      "signature": "reissueSetIfRevertToDefault(RebalancingLibrary.State)",
+      "encoding": "0xa235287c",
+      "address": "0x0",
+      "input_names": "_newRebalanceState,",
+      "output_names": ""
+    },
+    {
       "name": "fromUint256",
       "type": "function",
       "signature": "fromUint256(uint256)",
       "encoding": "0xa2bd3644",
       "address": "0x0",
       "input_names": "value,",
+      "output_names": "memory,"
+    },
+    {
+      "name": "validPriceLibraries",
+      "type": "function",
+      "signature": "validPriceLibraries(address)",
+      "encoding": "0xa2c9eb6d",
+      "address": "0x0",
+      "input_names": "_priceLibrary,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "getBiddingParameters",
+      "type": "function",
+      "signature": "getBiddingParameters()",
+      "encoding": "0xa2e59c91",
+      "address": "0x0",
+      "input_names": "",
       "output_names": "memory,"
     },
     {
@@ -8056,6 +9082,15 @@
       "output_names": ""
     },
     {
+      "name": "issueInVault",
+      "type": "function",
+      "signature": "issueInVault(address,uint256)",
+      "encoding": "0xa57de4cf",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "add",
       "type": "function",
       "signature": "add(UintSet,uint256)",
@@ -8101,6 +9136,15 @@
       "output_names": "success,"
     },
     {
+      "name": "deScale",
+      "type": "function",
+      "signature": "deScale(uint256)",
+      "encoding": "0xa693cacd",
+      "address": "0x0",
+      "input_names": "a,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_nextPaymentTime",
       "type": "function",
       "signature": "_nextPaymentTime(uint256)",
@@ -8126,6 +9170,15 @@
       "address": "0x0",
       "input_names": "_tokenId,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "redeemInVault",
+      "type": "function",
+      "signature": "redeemInVault(address,uint256)",
+      "encoding": "0xa782132c",
+      "address": "0x0",
+      "input_names": "_set,_quantity,",
+      "output_names": ""
     },
     {
       "name": "Burned",
@@ -8290,6 +9343,15 @@
       "output_names": ""
     },
     {
+      "name": "proposalStartTime",
+      "type": "function",
+      "signature": "proposalStartTime()",
+      "encoding": "0xa9faafd9",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "ABIChanged",
       "type": "event",
       "signature": "ABIChanged(bytes32,uint256)",
@@ -8362,6 +9424,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "handleFees",
+      "type": "function",
+      "signature": "handleFees()",
+      "encoding": "0xab0fa214",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,ret_1,"
+    },
+    {
       "name": "previousRegistrar",
       "type": "function",
       "signature": "previousRegistrar()",
@@ -8432,6 +9503,15 @@
       "address": "0x0",
       "input_names": "paymentId,active,",
       "output_names": ""
+    },
+    {
+      "name": "composeTokenFlow",
+      "type": "function",
+      "signature": "composeTokenFlow(address[],uint256[],uint256[])",
+      "encoding": "0xacb75403",
+      "address": "0x0",
+      "input_names": "_addresses,_inflow,_outflow,",
+      "output_names": "memory,"
     },
     {
       "name": "RequirementChanged",
@@ -8576,6 +9656,15 @@
       "address": "0x0",
       "input_names": "namespace,appId,app,",
       "output_names": ""
+    },
+    {
+      "name": "naturalUnitsAreValid",
+      "type": "function",
+      "signature": "naturalUnitsAreValid(ISetToken,ISetToken)",
+      "encoding": "0xae90948a",
+      "address": "0x0",
+      "input_names": "_currentSet,_nextSet,",
+      "output_names": "ret_0,"
     },
     {
       "name": "approveAndCall",
@@ -8783,6 +9872,15 @@
       "address": "0x0",
       "input_names": "_app,_role,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "transferBalance",
+      "type": "function",
+      "signature": "transferBalance(address,address,address,uint256)",
+      "encoding": "0xb19ad577",
+      "address": "0x0",
+      "input_names": "_token,_from,_to,_quantity,",
+      "output_names": ""
     },
     {
       "name": "tokenToExchangeSwapInput",
@@ -9046,6 +10144,15 @@
       "output_names": ""
     },
     {
+      "name": "lastRebalanceTimestamp",
+      "type": "function",
+      "signature": "lastRebalanceTimestamp()",
+      "encoding": "0xb83d8157",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_createPermissionForTemplate",
       "type": "function",
       "signature": "_createPermissionForTemplate(ACL,address,bytes32)",
@@ -9091,6 +10198,15 @@
       "output_names": ""
     },
     {
+      "name": "append",
+      "type": "function",
+      "signature": "append(address[],address)",
+      "encoding": "0xb9dbe28b",
+      "address": "0x0",
+      "input_names": "A,a,",
+      "output_names": "memory,"
+    },
+    {
       "name": "RelayHubChanged",
       "type": "event",
       "signature": "RelayHubChanged(address,address)",
@@ -9134,6 +10250,15 @@
       "address": "0x0",
       "input_names": "num,denom,",
       "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "incrementTokenOwner",
+      "type": "function",
+      "signature": "incrementTokenOwner(address,address,uint256)",
+      "encoding": "0xbada5726",
+      "address": "0x0",
+      "input_names": "_token,_owner,_quantity,",
+      "output_names": ""
     },
     {
       "name": "arr",
@@ -9197,6 +10322,15 @@
       "address": "0x0",
       "input_names": "node,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "validateBurn",
+      "type": "function",
+      "signature": "validateBurn()",
+      "encoding": "0xbc3ab3c4",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "erc721Metadata",
@@ -9271,6 +10405,15 @@
       "output_names": ""
     },
     {
+      "name": "validateFailRebalance",
+      "type": "function",
+      "signature": "validateFailRebalance()",
+      "encoding": "0xbe41742d",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "transfer",
       "type": "function",
       "signature": "transfer(address,uint256,bytes)",
@@ -9340,6 +10483,33 @@
       "encoding": "0xbef44f18",
       "address": "0x0",
       "input_names": "_fromTokenId,_to,_childContract,_childTokenId,",
+      "output_names": ""
+    },
+    {
+      "name": "minimumNaturalUnit",
+      "type": "function",
+      "signature": "minimumNaturalUnit()",
+      "encoding": "0xbefbe99c",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "startRebalance",
+      "type": "function",
+      "signature": "startRebalance(ISetToken,bytes)",
+      "encoding": "0xbf12a1b8",
+      "address": "0x0",
+      "input_names": "_nextSet,_liquidatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "NewEntryFee",
+      "type": "event",
+      "signature": "NewEntryFee(uint256,uint256)",
+      "encoding": "0xbf7417a972a6451dbb2afbe07f2846cb433f2c3ab380fecbf70e38684eda554a",
+      "address": "0x0",
+      "input_names": "newEntryFee,oldEntryFee,",
       "output_names": ""
     },
     {
@@ -9604,6 +10774,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "withdrawTo",
+      "type": "function",
+      "signature": "withdrawTo(address,address,uint256)",
+      "encoding": "0xc3b35a7e",
+      "address": "0x0",
+      "input_names": "_token,_to,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "createGen0Auction",
       "type": "function",
       "signature": "createGen0Auction(uint256)",
@@ -9784,6 +10963,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "startRebalance",
+      "type": "function",
+      "signature": "startRebalance(ISetToken,ISetToken,uint256,bytes)",
+      "encoding": "0xc726bb84",
+      "address": "0x0",
+      "input_names": "_currentSet,_nextSet,_startingCurrentSetQuantity,_liquidatorData,",
+      "output_names": ""
+    },
+    {
       "name": "TokensReleased",
       "type": "event",
       "signature": "TokensReleased(address,uint256)",
@@ -9829,6 +11017,15 @@
       "output_names": "x,y,"
     },
     {
+      "name": "setWithdrawComponentsIfDrawdown",
+      "type": "function",
+      "signature": "setWithdrawComponentsIfDrawdown(RebalancingLibrary.State)",
+      "encoding": "0xc873299e",
+      "address": "0x0",
+      "input_names": "_newRebalanceState,",
+      "output_names": ""
+    },
+    {
       "name": "tokenURI",
       "type": "function",
       "signature": "tokenURI(uint256)",
@@ -9865,6 +11062,15 @@
       "output_names": ""
     },
     {
+      "name": "validateCallerIsModule",
+      "type": "function",
+      "signature": "validateCallerIsModule()",
+      "encoding": "0xc9ce376c",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "getRoleMemberCount",
       "type": "function",
       "signature": "getRoleMemberCount(bytes32)",
@@ -9872,6 +11078,15 @@
       "address": "0x0",
       "input_names": "role,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "batchDecrementTokenOwnerModule",
+      "type": "function",
+      "signature": "batchDecrementTokenOwnerModule(address[],address,uint256[])",
+      "encoding": "0xca1ce8ce",
+      "address": "0x0",
+      "input_names": "_tokens,_owner,_quantities,",
+      "output_names": ""
     },
     {
       "name": "_addPauser",
@@ -9890,6 +11105,15 @@
       "address": "0x0",
       "input_names": "streamId,sender,recipient,senderBalance,recipientBalance,",
       "output_names": ""
+    },
+    {
+      "name": "getNewRebalanceState",
+      "type": "function",
+      "signature": "getNewRebalanceState()",
+      "encoding": "0xca5d7c45",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "NameRegistered",
@@ -9919,6 +11143,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "batchDepositModule",
+      "type": "function",
+      "signature": "batchDepositModule(address,address,address[],uint256[])",
+      "encoding": "0xcaaa3ada",
+      "address": "0x0",
+      "input_names": "_from,_to,_tokens,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "_beforeTokenTransfer",
       "type": "function",
       "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -9935,6 +11168,15 @@
       "address": "0x0",
       "input_names": "_paymentId,",
       "output_names": ""
+    },
+    {
+      "name": "nextSet",
+      "type": "function",
+      "signature": "nextSet()",
+      "encoding": "0xcb631699",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "_transferFrom",
@@ -9961,6 +11203,15 @@
       "encoding": "0xcbf0b0c0",
       "address": "0x0",
       "input_names": "_to,",
+      "output_names": ""
+    },
+    {
+      "name": "adjustFee",
+      "type": "function",
+      "signature": "adjustFee(bytes)",
+      "encoding": "0xcbf1c354",
+      "address": "0x0",
+      "input_names": "_newFeeData,",
       "output_names": ""
     },
     {
@@ -10090,6 +11341,15 @@
       "output_names": "out,"
     },
     {
+      "name": "getCombinedNextSetUnits",
+      "type": "function",
+      "signature": "getCombinedNextSetUnits()",
+      "encoding": "0xcdb026a1",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "canVote",
       "type": "function",
       "signature": "canVote(uint256,address)",
@@ -10162,6 +11422,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "getFee",
+      "type": "function",
+      "signature": "getFee()",
+      "encoding": "0xced72f87",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "locked",
       "type": "function",
       "signature": "locked()",
@@ -10207,6 +11476,15 @@
       "output_names": ""
     },
     {
+      "name": "rebalanceAuctionModule",
+      "type": "function",
+      "signature": "rebalanceAuctionModule()",
+      "encoding": "0xd0d2ba3e",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "deposit",
       "type": "function",
       "signature": "deposit()",
@@ -10214,6 +11492,24 @@
       "address": "0x0",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setManager",
+      "type": "function",
+      "signature": "setManager(address)",
+      "encoding": "0xd0ebdbe7",
+      "address": "0x0",
+      "input_names": "_newManager,",
+      "output_names": ""
+    },
+    {
+      "name": "difference",
+      "type": "function",
+      "signature": "difference(address[],address[])",
+      "encoding": "0xd124dd8e",
+      "address": "0x0",
+      "input_names": "A,B,",
+      "output_names": "memory,"
     },
     {
       "name": "_setTrustedSigner",
@@ -10396,6 +11692,15 @@
       "output_names": ""
     },
     {
+      "name": "updateHasBiddedIfNecessary",
+      "type": "function",
+      "signature": "updateHasBiddedIfNecessary()",
+      "encoding": "0xd56d6ed3",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "newVote",
       "type": "function",
       "signature": "newVote(bytes,string)",
@@ -10423,6 +11728,15 @@
       "output_names": ""
     },
     {
+      "name": "auctionPriceParameters",
+      "type": "function",
+      "signature": "auctionPriceParameters()",
+      "encoding": "0xd600ae48",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "permissionHash",
       "type": "function",
       "signature": "permissionHash(address,address,bytes32)",
@@ -10430,6 +11744,15 @@
       "address": "0x0",
       "input_names": "_who,_where,_what,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "transitionToDefault",
+      "type": "function",
+      "signature": "transitionToDefault(uint256)",
+      "encoding": "0xd6255607",
+      "address": "0x0",
+      "input_names": "_newUnitShares,",
+      "output_names": ""
     },
     {
       "name": "_setPermissionManager",
@@ -10531,6 +11854,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "validateLessThanEqualOneHundredPercent",
+      "type": "function",
+      "signature": "validateLessThanEqualOneHundredPercent(uint256)",
+      "encoding": "0xd72daa00",
+      "address": "0x0",
+      "input_names": "_value,",
+      "output_names": ""
+    },
+    {
       "name": "msgSender",
       "type": "function",
       "signature": "msgSender()",
@@ -10538,6 +11870,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "calculateStartingSetQuantity",
+      "type": "function",
+      "signature": "calculateStartingSetQuantity()",
+      "encoding": "0xd739813c",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "MAX_OWNER_COUNT",
@@ -10846,6 +12187,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "depositModule",
+      "type": "function",
+      "signature": "depositModule(address,address,address,uint256)",
+      "encoding": "0xde30f6ee",
+      "address": "0x0",
+      "input_names": "_from,_to,_token,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "mulExp",
       "type": "function",
       "signature": "mulExp(uint256,uint256)",
@@ -10990,6 +12340,15 @@
       "output_names": ""
     },
     {
+      "name": "batchWithdraw",
+      "type": "function",
+      "signature": "batchWithdraw(address[],uint256[])",
+      "encoding": "0xe131243e",
+      "address": "0x0",
+      "input_names": "_tokens,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "setMetadataAddress",
       "type": "function",
       "signature": "setMetadataAddress(address)",
@@ -11080,6 +12439,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "NewLiquidatorAdded",
+      "type": "event",
+      "signature": "NewLiquidatorAdded(address,address)",
+      "encoding": "0xe26fceb0d040e26e9c96b5be39f9a7b88bc48ce7a787f1e3cfd08e7f97626de6",
+      "address": "0x0",
+      "input_names": "newLiquidator,oldLiquidator,",
+      "output_names": ""
+    },
+    {
       "name": "startAuctions",
       "type": "function",
       "signature": "startAuctions(bytes32[])",
@@ -11095,6 +12463,15 @@
       "encoding": "0xe2982c21",
       "address": "0x0",
       "input_names": "dest,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "failPeriodBreached",
+      "type": "function",
+      "signature": "failPeriodBreached()",
+      "encoding": "0xe2bc8a7e",
+      "address": "0x0",
+      "input_names": "",
       "output_names": "ret_0,"
     },
     {
@@ -11177,6 +12554,15 @@
       "address": "0x0",
       "input_names": "_id,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "validateRebalanceStateIs",
+      "type": "function",
+      "signature": "validateRebalanceStateIs(RebalancingLibrary.State)",
+      "encoding": "0xe45d8238",
+      "address": "0x0",
+      "input_names": "_requiredState,",
+      "output_names": ""
     },
     {
       "name": "ResetVote",
@@ -11275,6 +12661,24 @@
       "encoding": "0xe6fe39ed",
       "address": "0x0",
       "input_names": "_resolver,",
+      "output_names": ""
+    },
+    {
+      "name": "handleEntryFees",
+      "type": "function",
+      "signature": "handleEntryFees(uint256)",
+      "encoding": "0xe74a9a92",
+      "address": "0x0",
+      "input_names": "_quantity,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "setFeeRecipient",
+      "type": "function",
+      "signature": "setFeeRecipient(address)",
+      "encoding": "0xe74b981b",
+      "address": "0x0",
+      "input_names": "_newFeeRecipient,",
       "output_names": ""
     },
     {
@@ -11458,6 +12862,15 @@
       "output_names": ""
     },
     {
+      "name": "redeemTo",
+      "type": "function",
+      "signature": "redeemTo(address,address,uint256)",
+      "encoding": "0xea466061",
+      "address": "0x0",
+      "input_names": "_recipient,_set,_quantity,",
+      "output_names": ""
+    },
+    {
       "name": "tokenToExchangeSwapOutput",
       "type": "function",
       "signature": "tokenToExchangeSwapOutput(uint256,uint256,uint256,uint256,address)",
@@ -11501,6 +12914,15 @@
       "address": "0x0",
       "input_names": "_operator,_from,_id,_value,_data,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setEntryFee",
+      "type": "function",
+      "signature": "setEntryFee(uint256)",
+      "encoding": "0xeb770d0c",
+      "address": "0x0",
+      "input_names": "_newEntryFee,",
+      "output_names": ""
     },
     {
       "name": "tokenToExchangeTransferInput",
@@ -11647,6 +13069,24 @@
       "output_names": ""
     },
     {
+      "name": "getFailedAuctionWithdrawComponents",
+      "type": "function",
+      "signature": "getFailedAuctionWithdrawComponents()",
+      "encoding": "0xf0284b1c",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
+      "name": "getCombinedCurrentUnits",
+      "type": "function",
+      "signature": "getCombinedCurrentUnits()",
+      "encoding": "0xf056a9ae",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "memory,"
+    },
+    {
       "name": "onERC721Received",
       "type": "function",
       "signature": "onERC721Received(address,uint256,bytes)",
@@ -11719,6 +13159,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "validateCallerIsCore",
+      "type": "function",
+      "signature": "validateCallerIsCore()",
+      "encoding": "0xf208b8b1",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "onERC1155Received",
       "type": "function",
       "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
@@ -11789,6 +13238,15 @@
       "address": "0x0",
       "input_names": "context,integerValue,stringValue,",
       "output_names": ""
+    },
+    {
+      "name": "core",
+      "type": "function",
+      "signature": "core()",
+      "encoding": "0xf2f4eb26",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "transferOwnership",
@@ -11869,6 +13327,15 @@
       "encoding": "0xf3d7b71d",
       "address": "0x0",
       "input_names": "_time,",
+      "output_names": ""
+    },
+    {
+      "name": "withdraw",
+      "type": "function",
+      "signature": "withdraw(address,uint256)",
+      "encoding": "0xf3fef3a3",
+      "address": "0x0",
+      "input_names": "_token,_quantity,",
       "output_names": ""
     },
     {
@@ -12088,6 +13555,15 @@
       "output_names": ""
     },
     {
+      "name": "rebalanceState",
+      "type": "function",
+      "signature": "rebalanceState()",
+      "encoding": "0xf75af97f",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "registerWithConfig",
       "type": "function",
       "signature": "registerWithConfig(string,address,uint256,bytes32,address,address)",
@@ -12112,6 +13588,15 @@
       "encoding": "0xf7ed2d34",
       "address": "0x0",
       "input_names": "_holder,_time,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "minimumProposalPeriod",
+      "type": "function",
+      "signature": "minimumProposalPeriod()",
+      "encoding": "0xf81d6d32",
+      "address": "0x0",
+      "input_names": "",
       "output_names": "ret_0,"
     },
     {
@@ -12214,6 +13699,15 @@
       "output_names": ""
     },
     {
+      "name": "NewManagerAdded",
+      "type": "event",
+      "signature": "NewManagerAdded(address,address)",
+      "encoding": "0xf9c15f5b74b4e002e8881b2d9810116b1d4d45461e6dd7ac8111381b592e2c65",
+      "address": "0x0",
+      "input_names": "newManager,oldManager,",
+      "output_names": ""
+    },
+    {
       "name": "getStorageAddress",
       "type": "function",
       "signature": "getStorageAddress(bytes32)",
@@ -12239,6 +13733,15 @@
       "address": "0x0",
       "input_names": "token,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "settleRebalance",
+      "type": "function",
+      "signature": "settleRebalance()",
+      "encoding": "0xfa2d8c90",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
     },
     {
       "name": "at",
@@ -12295,6 +13798,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "vault",
+      "type": "function",
+      "signature": "vault()",
+      "encoding": "0xfbfa77cf",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "token",
       "type": "function",
       "signature": "token()",
@@ -12337,6 +13849,15 @@
       "encoding": "0xfcd52c14",
       "address": "0x0",
       "input_names": "_owners,_required,",
+      "output_names": ""
+    },
+    {
+      "name": "transferModule",
+      "type": "function",
+      "signature": "transferModule(address,uint256,address,address)",
+      "encoding": "0xfd496ebf",
+      "address": "0x0",
+      "input_names": "_token,_quantity,_from,_to,",
       "output_names": ""
     },
     {
@@ -12421,6 +13942,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "batchWithdrawModule",
+      "type": "function",
+      "signature": "batchWithdrawModule(address,address,address[],uint256[])",
+      "encoding": "0xfe93620e",
+      "address": "0x0",
+      "input_names": "_from,_to,_tokens,_quantities,",
+      "output_names": ""
+    },
+    {
       "name": "isCToken",
       "type": "function",
       "signature": "isCToken()",
@@ -12455,6 +13985,15 @@
       "address": "0x0",
       "input_names": "hashes,sealedBid,",
       "output_names": ""
+    },
+    {
+      "name": "validSets",
+      "type": "function",
+      "signature": "validSets(address)",
+      "encoding": "0xfef3ee73",
+      "address": "0x0",
+      "input_names": "val_0,",
+      "output_names": "ret_0,"
     },
     {
       "name": "getEmployeeIdByAddress",

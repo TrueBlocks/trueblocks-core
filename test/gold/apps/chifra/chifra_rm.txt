@@ -3,6 +3,5 @@ chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 --editCmd remove --verbose 
 TIME ~ CLOCK - : 4-----Enter(chifra,parseArguments): 
 TIME ~ CLOCK - : 4-----Exit(chifra,parseArguments): 
 TIME ~ CLOCK - : 4-----Enter(chifra,handle_rm): 
-TIME ~ CLOCK - : 4-----handle_rm ----> cd $CACHE/monitors/ && rm -f 0xfb744b951d094b310262c8f986c860df9ab1de65.*
 TIME ~ CLOCK - : 4-----Exit(chifra,handle_rm): 
 TIME ~ CLOCK - : 4-----Exit(chifra,chifra): 

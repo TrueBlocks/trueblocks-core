@@ -160,10 +160,8 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_USAGE("Please specify " + params[0].description);
     }
 
-    if (mode != "scrape") {
-        establishFolder(getMonitorPath("", FM_PRODUCTION));
-        establishFolder(getMonitorPath("", FM_STAGING));
-    }
+    if (mode != "scrape")
+        establishMonitorFolders();
 
     if (tool_help) {
         tool_flags += " --help";

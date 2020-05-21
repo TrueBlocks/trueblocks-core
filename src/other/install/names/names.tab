@@ -34,6 +34,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0000000000ab32e9e7bd6bd3c37a7e99fb8c2d43	DharmaSmartWalletImplementationV6		Etherscan			false	false	false
 76-Verified	0x0000000000b4004dd6771bf29079c3699e5d9c95	DharmaUpgradeBeaconControllerManager		Etherscan			false	false	false
 76-Verified	0x0000000000bda2152794ac8c76b2dc86cba57cad	DharmaKeyRingUpgradeBeacon		Etherscan			false	false	false
+30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x0000000000cccf289727c20269911159a7bf9ebd	DharmaDaiUpgradeBeacon		Etherscan			false	false	false
 76-Verified	0x0000000000ccdfcb0aadf8e9a9b6794ce56b76eb	DharmaUpgradeBeaconControllerManager		Etherscan			false	false	false
 76-Verified	0x0000000000dfed903ad76996fc07bf89c0127b1e	DharmaAccountRecoveryManagerV2		Etherscan			false	false	false
@@ -41,6 +42,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0000000000f732b182f375af6baa1770d83077ed	DharmaKeyRingImplementationV0		Etherscan			false	false	false
 76-Verified	0x00000000011df015e8ad00d7b2486a88c2eb8210	DharmaKeyRingUpgradeBeaconController		Etherscan			false	false	false
 76-Verified	0x00000000054e5a7f91db6b7db5e91eab56fac5e4	DharmaUpgradeInformation		Etherscan			false	false	false
+30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x000000000d38df53b45c5733c7b34000de0bdf52	DharmaKeyRegistryV2		Etherscan			false	false	false
 76-Verified	0x0000000010a653849f221a573e00f3a37c8c4082	DharmaSmartWalletImplementationV1		Etherscan			false	false	false
 76-Verified	0x00000000175121e210e2a36f3cd9468bad41e660	DaiBackstopSyndicateEnlisterV3		Etherscan			false	false	false
@@ -49,6 +51,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP	defipulse.com	18		false	false	false
 76-Verified	0x00000000480003d5ee4f51134ce73cc9ac00f693	AdharmaKeyRingImplementation		Etherscan			false	false	false
 76-Verified	0x0000000053d300f11703dcdd1e90921db83f0048	AdharmaSmartWalletImplementation		Etherscan			false	false	false
+30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x0000000055551209abf26d0061000b3ccd81ec98	AdharmaKeyRingImplementation		Etherscan			false	false	false
 76-Verified	0x00000000580090b7b5b593ab408000b1abb5f78d	DharmaDaiImplementationV1		Etherscan			false	false	false
 76-Verified	0x000000005bf12f10b4e7001adf7e7400e49431fa	DharmaAccountRecoveryManager		Etherscan			false	false	false
@@ -58,6 +61,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0000000088ad0c701dd873c5915addc65f54fa05	MetalTracker		Etherscan			false	false	false
 76-Verified	0x000000008eb3d0a15fb54e6c00464ab8f55b5f8c	DharmaSmartWalletImplementationV8		Etherscan			false	false	false
 76-Verified	0x00000000938f41360a846490409500d08919856c	DaiBackstopSyndicateV1		Etherscan			false	false	false
+30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot		0xTracker			false	false	false
+30-Contracts	0x00000000b1786c9698c160d78232c78d6f6474fe	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x00000000c8bdb2c7db23eccf7500efc3c2ab7b99	DharmaSmartWalletImplementationV9		Etherscan			false	false	false
 76-Verified	0x00000000d1dbc357a3f3d0f1f934d0186ba40396	DharmaKeyRegistryV1Mimic		Etherscan			false	false	false
 76-Verified	0x00000000d750176e38660203c678d88ee7e28d36	DharmaAccountRecoveryManager		Etherscan			false	false	false
@@ -69,8 +74,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x00000000f534674c252dfe4b9834a4d62ef40015	DharmaKeyRegistryV2		Etherscan			false	false	false
 76-Verified	0x00000000fde3b69fecd50c8a4c001678f00011ab	AdharmaSmartWalletImplementation		Etherscan			false	false	false
 76-Verified	0x00000001008b2ff2004f00a7c8a0f48c675e5034	DharmaUpgradeMultisig		Etherscan			false	false	false
+30-Contracts	0x0000000f8ef4be2b7aed6724e893c1b674b9682d	1inch Exchange		0xTracker			false	false	false
 50-Tokens	0x00000100f2a2bd000715001920eb70d229700085	TrueCAD	TCAD	defipulse.com	18		false	false	false
 90-DevCon2:Individual	0x000001f568875f378bf6d170b790967fe429c81a	BokkyPooBah		DevCon2 Token Contract			false	false	false
+30-Contracts	0x000005edbbc1f258302add96b5e20d3442e5dd89	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x000009b11c29428832d039d0af4b2e2b25a02969	MarbleCoin		Etherscan			false	false	false
 50-Tokens	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD	defipulse.com	18		false	false	false
 50-Tokens	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD	defipulse.com	18		false	false	false
@@ -151,6 +158,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x010c282118aa76174ce5952572ba715cf60a0c9b	VINX		Etherscan			false	false	false
 76-Verified	0x010d14d36c3ea6570d240ae3ac9d660398f7c48e	CenfuraToken		Etherscan			false	false	false
 81-Other:ENS Related	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar		ENS Gitter Channel			false	false	false
+30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0x0122db5fba163b123ebc047d735437c6a6677e6f	InProfitToken		Etherscan			false	false	false
 76-Verified	0x0123a7dae08fb4d3e88a34511a3e230eda83c941	FlashTokenFactory		Etherscan			false	false	false
 76-Verified	0x0135af07a88fbb8a6ebf8b12f1d49b9c47a22c3e	MYNT		Etherscan			false	false	false
@@ -181,6 +189,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Contracts	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers' Night		https://kickback.events/event/[{ADDRESS}]			false	false	false
 81-Other	0x01d04122aeccab138a47103b500f7b3d3b356a27	IOU_id153_cnt1_4mo		Ether Camp			false	false	false
 34-Humanity DAO	0x01d0d009f94604de56b9c3290aab7ac3cb83e8ce	cryptonewsfeeds		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x01da73c4ec1355f953ad0aaca3ef20e342aea92a	Arbitrage Bot		0xTracker			false	false	false
 34-Humanity DAO	0x01e1c239a3b11cd21a1c8e762421eaa5554faa1c	xppiao123456		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x01eee9f6dad971da52f3d0400431692b29573da3	ChicagoEX		Etherscan			false	false	false
 76-Verified	0x01fa1b31766c0e58a2c66b6fba3c36128aea60e4	PoolPortal		Etherscan			false	false	false
@@ -247,6 +256,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x033bbe355ff37e57f93ca06c3ca20bcd0e95ab04	ZxcBurner		Etherscan			false	false	false
 76-Verified	0x033cfadab259da77e02d037c4341ee66e1b6b2f0	GX_Team_Funds		Etherscan			false	false	false
 32-Kickback:Friends	0x0351e99d464cbb642757f2dd932adff3efbd197c	yermoodao		https://kickback.events/			false	false	false
+30-Contracts	0x0358629bd27fa559b88d0f41ea3da28d057c3414	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x035afa4df29cdae9b0829aea574d3f2e07c09129	ERCDICE		Etherscan			false	false	false
 76-Verified	0x035df12e0f3ac6671126525f1015e47d79dfeddf	_0xMoneroToken		Etherscan			false	false	false
 76-Verified	0x035f34a8c9ce0c72d526f50a4c6db23f747fe99f	JEMToken		Etherscan			false	false	false
@@ -262,6 +272,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	On Chain	6		false	false	false
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis		Etherscan			false	false	false
 76-Verified	0x03a2e346c61bb19a4976e55ecf506e9a984d5752	ERC20Proxy		Etherscan			false	false	false
+30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot		0xTracker			false	false	false
 34-Humanity DAO	0x03b3e02a27d083032bfc5b801d7fe3deb560dc50	loganfeatures		https://www.humanitydao.org/humans			false	false	false
 80-Malicious	0x03b904c8b912194464ae97eaa0381e5518446d25	Possibly Malicious 0x03b		TrueBlocks.io			false	false	false
 76-Verified	0x03b9445a4f6a6d78fdc1b77c38425e7128afe212	Competition		Etherscan			false	false	false
@@ -292,6 +303,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x047547a016486e5c81961d71a1231e7478580b29	IETToken		Etherscan			false	false	false
 60-Airdrops	0x0475929d867e95b3828ab4ef2d08a7f80766bf90	OCN Airdrop Sender		TrueBlocks.io			false	false	false
 81-Other	0x04786aada9deea2150deab7b3b8911c309f5ed90	GateCoin_Hack_1		Ether Camp			false	false	false
+30-Contracts	0x047ed17511d9287b2bf82a456aa87ba9cd45bb0d	Totle Bancor Wrapper		0xTracker			false	false	false
 76-Verified	0x0481d19cdd6a12aa2f85b4a46a31d1d17ba33543	Registry		Etherscan			false	false	false
 76-Verified	0x0485a423c0b8ff2f5aa2ec35a32d1c67a2e99b6c	Synthetic		Etherscan			false	false	false
 76-Verified	0x0487fc87df11933ace3c3dd98e287fd53c2109b4	BusinessAlliance		Etherscan			false	false	false
@@ -302,6 +314,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x049e4d10c1b7280cfed5b0d990e39f9c54529a32	DssSpell		Etherscan			false	false	false
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB	On Chain	8		false	false	false
 76-Verified	0x04a2045f76e890a6430b5fa66ab2b3bac59ce51c	lexCHAI		Etherscan			false	false	false
+30-Contracts	0x04a487afd662c4f9deacc07a7b10cfb686b682a4	Kyber Oasis Reserve		0xTracker			false	false	false
 76-Verified	0x04aa51bbcb46541455ccf1b8bef2ebc5d3787ec9	yWBTC		Etherscan			false	false	false
 76-Verified	0x04ad70466a79dd1251f22ad426248088724ff32b	TokenErc20		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x04bb33c3a8c2d018836a1f938054ebb59e0036b2	Grant 104 Walletsreview		GitCoin Website			false	false	false
@@ -369,7 +382,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On Chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false
 81-Other	0x05f65ab88dc474a83a98994291c7a0abd13c9ae1	OtherContract7		WhaleWatch.io			false	false	false
 76-Verified	0x05f7fff4c8d593ad60e327aa6c755536208c1f4a	NCSVentures		Etherscan			false	false	false
-30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	Etherscan.io		The famous first ERC721 token	false	false	false
+30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties: Core	CK	Etherscan			false	false	false
 90-DevCon2:Individual	0x06105042f9e891ad291a39f49be2eaa94f796945	bernard lin		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On Chain		ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false
 76-Verified	0x0619ed1187ecad8d089269ce6c21ef12c8c0b72d	PrivatixServiceContract		Etherscan			false	false	false
@@ -385,6 +398,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x06741096ef84fd751b0805a96583123b5cb11540	Recipient		Etherscan			false	false	false
 34-Humanity DAO	0x06755ed99e055bb98aa540943b969373f3cd897c	tang_cola		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0x0680faa835b5a0bd91f0eb6a0cf8ed07a468870b	kadvani		https://kickback.events/			false	false	false
+30-Contracts	0x0681e844593a051e2882ec897ecd5444efe19ff2	StarbitEx		0xTracker			false	false	false
 32-Kickback:Contracts	0x0684ccbccfe36a4e92ef54c8eed031d81de2dd70	Codeup #33 Git coin Hackathon Edition		https://kickback.events/event/[{ADDRESS}]			false	false	false
 31-Gitcoin Grants:Contracts	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group		GitCoin Website			false	false	false
 76-Verified	0x068c202b9a91f6e8cf4c2b584d82b219070e7a11	SmartToken		Etherscan			false	false	false
@@ -462,6 +476,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x07f56574ee85a0ccb64d29dc1ddff2ca32778dbe	RecipientWhitelistPoolToken		Etherscan			false	false	false
 76-Verified	0x08037cdde3c8967a0249dae024502c2b48e021eb	Airdrop		Etherscan			false	false	false
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius		DevCon2 Token Contract			false	false	false
+30-Contracts	0x080bf510fcbf18b91105470639e9561022937712	0x Exchange V2.1		0xTracker			false	false	false
 76-Verified	0x080d24749e4032300b82353512277c21d5aba69e	UniswapProxy		Etherscan			false	false	false
 76-Verified	0x081f5489a66d3c75d615040fddd64d9ba1e74e76	Natretix		Etherscan			false	false	false
 76-Verified	0x082e6d22225a6a26ed3cd35342e6722db31f42e5	SGNToken		Etherscan			false	false	false
@@ -557,6 +572,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0a0db74ef8b4480cc29b7d68647727feeb1ea4ec	GLEXtoken		Etherscan			false	false	false
 76-Verified	0x0a1ab3441a56be6e5baa6cbb423e6cc66c951226	ZeldaCoin		Etherscan			false	false	false
 76-Verified	0x0a202d2e821655c15ff4830445a155a9ee3d509c	WhitelistedAggregatorProxy		Etherscan			false	false	false
+30-Contracts	0x0a236b41add0073df05eac5fc8505ad745c7859d	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x0a294e9b3af4c3579ea6584f3e26914b2daa72ca	MultiSigWalletWithTimelock		Etherscan			false	false	false
 76-Verified	0x0a33107950fe187d10bd39f35c3a962593878ee4	FartThing2		Etherscan			false	false	false
 76-Verified	0x0a3567f18c53f58c8b1e8f3b42bbe7f547f94c35	ResourcesCash		Etherscan			false	false	false
@@ -568,7 +584,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0a57ea1b0152858a4b07b1ee8548a86f49189256	LexTokenFactory		Etherscan			false	false	false
 76-Verified	0x0a63cdce75c04aa76d2b5efff6550940115ce20c	ADRAToken		Etherscan			false	false	false
 76-Verified	0x0a6b2931a74a2fd058d160dc1d677f401696ca8c	customToken		Etherscan			false	false	false
-76-Verified	0x0a6bb2770450f8bb7cc0b42ee859ac7f9177010d	SplitSwap		Etherscan			false	false	false
+76-Verified	0x0a6bb2770450f8bb7cc0b42ee859ac7f9177010d	1inch Exchange SplitSwap		0xTracker			false	false	false
 76-Verified	0x0a6c9f09d22e6dfcf13c2812c55e5c9314eb2e8f	ESDA		Etherscan			false	false	false
 76-Verified	0x0a6f0c541be542c098b7ee03c9c634f20bcf8422	MerkleDrop		Etherscan			false	false	false
 76-Verified	0x0a73f00d425245f9a0881344f3d350d01ec14590	Oracle		Etherscan			false	false	false
@@ -590,10 +606,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0ab703ae22e73309cd688090cdea72f8fc4a9a66	MyAdvancedToken		Etherscan			false	false	false
 34-Humanity DAO	0x0abd6688715d521182848f903f8ce270b36865cd	shakedog		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On Chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false
-76-Verified	0x0ac2d6f5f5afc669d3ca38f830dad2b4f238ad3f	Eth2DaiBridge		Etherscan			false	false	false
+76-Verified	0x0ac2d6f5f5afc669d3ca38f830dad2b4f238ad3f	Eth2DaiBridge		0xTracker			false	false	false
 76-Verified	0x0ac7bd7ae9d4eabe2c50400cd9c1af349deff495	DssSpell		Etherscan			false	false	false
 32-Kickback:Friends	0x0acb691ff5530040c5cbf275623e7641058b5ccb	madhur4444		https://kickback.events/			false	false	false
-76-Verified	0x0acd0b5cf881cd8398ac563872209de1ce15df0f	ZeroExExchangeWrapper		Etherscan			false	false	false
+76-Verified	0x0acd0b5cf881cd8398ac563872209de1ce15df0f	Set Protocol 0x Wrapper		0xTracker			false	false	false
 76-Verified	0x0ad0216262cced8b543ed62d9a21a518aa06d1d2	ProofOfExistence		Etherscan			false	false	false
 32-Kickback:Friends	0x0ad6022631c9bd23c3dc324b18ca4347d2c0b258	powersimple		https://kickback.events/			false	false	false
 76-Verified	0x0addedfee0e8a65c9a60067b9fe0f24af96da51d	PEG		Etherscan			false	false	false
@@ -658,6 +674,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0c1f5107ad9dc9e4125f3af94f5c93dbadce99dd	Egold		Etherscan			false	false	false
 76-Verified	0x0c24c236f169e7c832909d1c226a5cd20e858322	Voting		Etherscan			false	false	false
 81-Other:DAO Whales	0x0c2808b951ed9e872d7b32790fcc5994ae41ffdc	DAO_WHALE_18		WhaleWatch.io			false	false	true
+30-Contracts	0x0c2b4761c4a3d6c87584948721ea242bc27584a4	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x0c2b7c1b73229483464d3fc4db4d4c2130374e4f	KeyRingUpgradeBeaconProxyV1		Etherscan			false	false	false
 76-Verified	0x0c2dcf13ba0fc7a1bcd235d3f9037aa0ab7c43cd	ECOINV		Etherscan			false	false	false
 76-Verified	0x0c306eac4ffd1a5332a016cc74e92edb3619741a	INSTAKASH		Etherscan			false	false	false
@@ -816,6 +833,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0f5eb292ae3822f13b1479e37ffe3fff795d220a	InstaCompoundResolver		Etherscan			false	false	false
 80-Malicious	0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf	Possibly Malicious 0x0f6		TrueBlocks.io			false	false	false
 50-Tokens:ERC20	0x0f612a09ead55bb81b6534e80ed5a21bf0a27b16	EUNOMIA	ENTS	On Chain	8		false	false	false
+30-Contracts	0x0f780de58182bfbfe1cdc4c80e94d178ef2a3d2b	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x0f7ad062479bc90934a23aa6ba75a72aadf4c349	CompoundSaverProxy		Etherscan			false	false	false
 34-Humanity DAO	0x0f7e9f461e84cc1c089bf9953af5893015d483c1	LochnessCrypto ronnieBoise		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x0f7f5c74c21f79adcd0f74035b272e8dbc7848b0	Isonex		Etherscan			false	false	false
@@ -894,6 +912,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x110c11de11cce962604c28bb05bbc399cbaa7bda	Dice		Etherscan.io			false	false	false
 76-Verified	0x110f1c8ce1f0b7977193eda2ba144dc45b0dd7aa	ETH_Balancer_General_Zap_v1		Etherscan			false	false	false
 76-Verified	0x11105d1fbc4c8ad6f0280a0b52b8091232fb7363	Blagada		Etherscan			false	false	false
+30-Contracts	0x111111254b08ceeee8ad6ca827de9952d2a46781	1inch Exchange		0xTracker			false	false	false
+30-Contracts	0x11111254369792b2ca5d084ab5eea397ca8fa48b	1inch Exchange		0xTracker			false	false	false
+30-Contracts	0x111112549cfedf7822eb11fbd8fd485d8a10f93f	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x112157162bc4b655bbaf3a0b61423d205a3a5e58	GRV		Etherscan			false	false	false
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	On Chain	18	Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points.	false	false	false
 76-Verified	0x1125a7a5978614b4b1835029410d8d96a76cd5b6	ERC20Chocolate		Etherscan			false	false	false
@@ -931,6 +952,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x11eba93a0a852fd34002f5411e1663cf864edb8b	Morality		Etherscan			false	false	false
 76-Verified	0x11eca524a2b6b2ca7015cf3ff0823fb988c322fa	Token		Etherscan			false	false	false
 76-Verified	0x11f77714eae329f57b07b55dc2c43b7f2b7f887c	CHEEUR		Etherscan			false	false	false
+30-Contracts	0x1200563cfaeb481e1f0542a246f0cefcde4c4753	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x12034f265c1dc4a0f638f55159ae184ea16a01eb	PaymentQueue		Etherscan			false	false	false
 81-Other	0x120a270bbc009644e35f0bb6ab13f95b8199c4ad	Shapeshift 1		CarbonVote			false	false	false
 81-Other	0x1213c29b5e1a6f33e0d044f850a57b665e3cde21	Littlecactus		Etherscan.io			false	false	false
@@ -970,11 +992,13 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x12bac8c392f5a2ec82f3c2799289a1a7515d8f02	SMASH		Etherscan			false	false	false
 76-Verified	0x12ce7ea7359cb28dfd600430b4e2b411eba5bd40	SaverExchange		Etherscan			false	false	false
 76-Verified	0x12dace5707185d19325d16e3a7a651d3207c354f	NKCL		Etherscan			false	false	false
+30-Contracts	0x12dfc577544d002c57fbb02c389511a37bc4490c	Set Kyber Wrapper		0xTracker			false	false	false
 76-Verified	0x12e4c875157c002e6a3385d14a1620e4f3703fc9	SimpleRestrictedFDT		Etherscan			false	false	false
 76-Verified	0x12ef4d13ab43ba4de1be7cc8385c6e9242aa42c0	KauriStaking		Etherscan			false	false	false
 76-Verified	0x12f208476f64de6e6f933e55069ba9596d818e08	Staking		Etherscan			false	false	false
 76-Verified	0x12f8551a516085e4cef5e2451d54ede7d24983cc	CompoundBasicProxy		Etherscan			false	false	false
 50-Tokens:ERC20	0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e	Cofoundit	CFI	On Chain	18	Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses	false	false	false
+30-Contracts	0x13032deb2d37556cf49301f713e9d7e1d1a8b169	Kyber Uniswap Reserve		0xTracker			false	false	false
 32-Kickback:Friends	0x1307845b4c66dc47056c6c049cacac5d737c444d	1pet3rpan		https://kickback.events/			false	false	false
 76-Verified	0x13110480c3c83ad103159ca239d82feb7a9b1a45	MAIUSD		Etherscan			false	false	false
 50-Tokens:ERC20	0x13119e34e140097a507b07a5564bde1bc375d9e6	MoneyToken	IMT	On Chain	18	MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service	false	false	false
@@ -1116,6 +1140,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x1564d040ec290c743f67f5cb11f3c1958b39872a	InstaPool		Etherscan			false	false	false
 76-Verified	0x156f2de97db47366e05464e7e0d477778a93b09b	ShekzCoin		Etherscan			false	false	false
 80-Malicious	0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8	Possibly Malicious 0x157		TrueBlocks.io			false	false	false
+30-Contracts	0x15847a5a44aa0551f655d28d716d247df84d002b	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x15881560b103a310fe371e18e3269c01bc214c8f	Token		Etherscan			false	false	false
 32-Kickback:Friends	0x1589f607ff975d354805f31689bd012dff38b935	ederenn		https://kickback.events/			false	false	false
 76-Verified	0x158a4714d9097d21938738796d1fb09cce690527	LaborContractDisputable		Etherscan			false	false	false
@@ -1233,6 +1258,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x180e0cfb1b74de8f99cef66ddf68959187908f4f	CurveFlash		Etherscan			false	false	false
 76-Verified	0x180f0e433be3550f93bc1842bb2b6a3af96dfe1f	DydxSavingsProtocol		Etherscan			false	false	false
 76-Verified	0x181174aec65dcb8e6ff9054d1594e78b03af7a85	XTRLPAY		Etherscan			false	false	false
+30-Contracts	0x1814222fa8c8c1c1bf380e3bbfbd9de8657da476	1inch Exchange		0xTracker			false	false	false
 30-Contracts	0x1820a4b7618bde71dce8cdc73aab6c95905fad24	1820 Registry	REG	TrueBlocks.io		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820	false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On Chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false
 60-Airdrops	0x182ebf4c80b28efc45ad992ecbb9f730e31e8c7f	LPT Airdrop	LPT	TrueBlocks.io			false	false	false
@@ -1244,6 +1270,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Contracts	0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9	Grant 133 Abridged		GitCoin Website			false	false	false
 76-Verified	0x18541d7335c5af22bf7f6dbc48acdf74e826ec68	ReserveVault		Etherscan			false	false	false
 76-Verified	0x185479fb2caecba11227db4186046496d6230243	AccountCreator		Etherscan			false	false	false
+30-Contracts	0x1857ae37ba3005113f9809b0e19a2a6563ee0d3b	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x186106d8369591facd3d80124b6e4f5d0f2f9418	ChaiTokenAdapter		Etherscan			false	false	false
 76-Verified	0x18758f16988e61cd4b61e6b930694bd9fb07c22f	BondedECDSAKeepFactory		Etherscan			false	false	false
 76-Verified	0x1877ef648d116de7889f84392d5c5f31f8a990a3	SmartexCrowdsale		Etherscan			false	false	false
@@ -1432,7 +1459,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x1c19839c88c0cdb4d0b10208833101d75454d7c1	EMO Airdrop Sender		TrueBlocks.io			false	false	false
 76-Verified	0x1c20b02eed174b822111a02e576e870d61402f8f	CouncilVesting		Etherscan			false	false	false
 76-Verified	0x1c2349acbb7f83d07577692c75b6d7654899bf10	TransferLogic		Etherscan			false	false	false
-76-Verified	0x1c29670f7a77f1052d30813a0a4f632c78a02610	KyberBridge		Etherscan			false	false	false
+76-Verified	0x1c29670f7a77f1052d30813a0a4f632c78a02610	Kyber Bridge		0xTracker			false	false	false
 76-Verified	0x1c3031e02e9a0ec237f5bd674eaaa5e56a2ae174	Rebalance		Etherscan			false	false	false
 81-Other	0x1c4112b81a5bfb3288573c8d5b8fecc8504ac59d	LCT_id192_cnt256_3mo		Ether Camp			false	false	false
 50-Tokens:ERC20	0x1c4481750daa5ff521a2a7490d9981ed46465dbd	BLOCKMASON CREDIT PROTOCOL TOKEN	BCPT	On Chain	18	Democratizing the creation of credit through permanently recorded debts and obligations.	false	false	false
@@ -1468,6 +1495,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x1ccd1b13b7473cdcc9b1b858cb813de95b465e79	LoanMover		Etherscan			false	false	false
 32-Kickback:Contracts	0x1ccd352006f2f93b7d8ecf62ef83c58313114cfd	Community buidlr Gathering at EthDenver		https://kickback.events/event/[{ADDRESS}]			false	false	false
 76-Verified	0x1cee89ae9b3e388c48f672926b367f7df40456a7	MintingPool		Etherscan			false	false	false
+30-Contracts	0x1cf6ccc7e15d0d99a9498f37e16ba65b5c54bdd0	Curve Bridge		0xTracker			false	false	false
 76-Verified	0x1cf7be9ebac23df3c2a0046e2494981a019dfb88	ADD		Etherscan			false	false	false
 76-Verified	0x1d01a98f559530f9904631d0a243462b74062478	Staking		Etherscan			false	false	false
 76-Verified	0x1d02e1574624b7d9bca53adc7c97c112c9e39642	BitbeneCoin		Etherscan			false	false	false
@@ -1497,6 +1525,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x1d7aec4654fd4d0fd0ade624bebb6e874d2068d1	CompoundBasicProxy		Etherscan			false	false	false
 75-EarlyActors	0x1d889aff5d57138c9819412d63b5d877567b5936	Miner_0081_68		OnChain			false	false	false
 76-Verified	0x1d8d1386bdbc742a2240cc1af0aeb81e7bd1fc97	SaromsaryCoin		Etherscan			false	false	false
+30-Contracts	0x1d92ed2c7cb9bb19c654dcec059d043856b601e4	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x1d9a14b02e062279a66ceedccee5946347aa2576	CryptoHarborExchangeGameToken		Etherscan			false	false	false
 76-Verified	0x1d9bb9efc11ce34cb16751ab35ba5a7a0a5e1a4a	DonghoChoiCoin		Etherscan			false	false	false
 81-Other	0x1d9e61248f88dc60889bb269fcf2244827f3a682	dEthereumlotteryNet		Ether Camp			false	false	false
@@ -1531,10 +1560,12 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x1e11be122d06ed8cc2caba092426d12e1a193b82	John		DevCon2 Token Contract			false	false	false
 76-Verified	0x1e129947d8758f483f2a0b1e4ed8240887276b9c	FlashETH		Etherscan			false	false	false
 76-Verified	0x1e13627cd6b6eae63a594fddd7d55528bf7e3b59	FZC		Etherscan			false	false	false
+30-Contracts	0x1e158c0e93c30d24e918ef83d1e0be23595c3c0f	Kyber Oasis Reserve		0xTracker			false	false	false
 76-Verified	0x1e197b3a3d6922bb080744fb60fd6ee4bc18045b	TokenERC20		Etherscan			false	false	false
 76-Verified	0x1e1b3e5821099977e3b3fa7489a90bcfdea490d0	MainToken		Etherscan			false	false	false
 81-Other	0x1e2520bdcc56c78ac1c60ae9710656dbbdf6d5c9	@acidsun		Steem			false	false	false
 50-Tokens:ERC20	0x1e26b3d07e57f453cae30f7ddd2f945f5bf3ef33	ClearCoin	XCLR	On Chain	8	ClearCoin makes buying and selling of media on the blockchain simple and seamless. Its platform powers a system allowing for complete data transparency everyone can trust.	false	false	false
+30-Contracts	0x1e30124fde14533231216d95f7798cd0061e5cf8	DeFi Saver Uniswap Wrapper		0xTracker			false	false	false
 76-Verified	0x1e32444bf6ca3b8714903a6009e087b614aa42fa	BatchTransfer		Etherscan			false	false	false
 34-Humanity DAO	0x1e37151e37c1ee4b931fe7eb33f51146dd77abed	BeTheb0x		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x1e49ff77c355a3e38d6651ce8404af0e48c5395f	ModulTrade Token	MTRc	On Chain	18	A smart-contract open ecosystem providing small businesses access to global trade by using a crypto token for payment or borrowing.	false	false	false
@@ -1709,6 +1740,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x21d5678a62dfe63a47062469ebb2fac2817d8832	YoloCash	YLC	On Chain	8	A decentralized e-commerce platform builds on blockchain for loyalty rewards.	false	false	false
 32-Kickback:Friends	0x21d5e578dc101a132b1457f8a696e8eeff97a4b1	sebohe		https://kickback.events/			false	false	false
 76-Verified	0x21da3d4277cd39b835f83f37d870bac9137191e4	BebPos		Etherscan			false	false	false
+30-Contracts	0x21e15dedf234d52bf911b505658c33397ac35fc2	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x21f9faf6ff679e6b01812ba32c0e8c073a1130a4	UBitcoin		Etherscan			false	false	false
 60-Airdrops	0x220232f6023d5655b1f63348658b7f8bf941d96f	TRX Airdrop		TrueBlocks.io			false	false	false
 76-Verified	0x220cfb3a7d00af77bc411cfb7ed63177dca0251a	TokenERC20		Etherscan			false	false	false
@@ -1761,6 +1793,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x230451cc96eb02df59fb2dc99dd1b701fd119329	KEYGOLD		Etherscan			false	false	false
 90-DevCon2:Individual	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler		DevCon2 Token Contract			false	false	true
 76-Verified	0x230aa8dd32f096b0c664d506bb855160cf9345a5	RAYSAToken		Etherscan			false	false	false
+30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x23136ab3dd4701d1fd167503ac8d96ef360f7b5d	Jewelcoin		Etherscan			false	false	false
 81-Other	0x23141df767233776f7cbbec497800ddedaa4c684	BranchSender_id305		Ether Camp			false	false	false
 76-Verified	0x231544beb75c4bd72333b38252794688922d1904	SimpleRestrictedFDTFactory		Etherscan			false	false	false
@@ -1825,6 +1858,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x245ef47d4d0505ecf3ac463f4d81f41ade8f1fd1	Nuggets	NUG	On Chain	18		false	false	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On Chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false
 76-Verified	0x247227714bd121c528310e3bbff401ae34c9f9f6	OptimizedReserveInterestRateStrategy		Etherscan			false	false	false
+30-Contracts	0x248363c37452be586df09f4d961210fafb4059d2	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x2484000059004afb720000dc738434fa6200f49d	DharmaKeyRingFactoryV2		Etherscan			false	false	false
 76-Verified	0x248a0316d862f6c7945067f8bd12c035bb4a12d5	locashToken		Etherscan			false	false	false
 76-Verified	0x24a42fd28c976a61df5d00d0599c34c4f90748c8	LendingPoolAddressesProvider		Etherscan			false	false	false
@@ -1879,6 +1913,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3	LML	LML	On Chain	18		false	false	false
 76-Verified	0x25b78ade6b3ac3ac3556cdd737992ebb9cfa12da	InstaPool		Etherscan			false	false	false
 76-Verified	0x25bfb48c791f6464de8fca01542dec64b83d8199	UpCar		Etherscan			false	false	false
+30-Contracts	0x25c40bc17e4bf2f8c23acc99a7a38568f0890157	1inch Exchange		0xTracker			false	false	false
 33-Set Protocol:Other	0x25c499e7306248c308cef403d9824110817b305c	Transfer Proxy		https://github.com/SetProtocol/set-protocol-contracts			false	false	false
 76-Verified	0x25c7b64a93eb1261e130ec21a3e9918caa38b611	WrappedVG0		Etherscan			false	false	false
 34-Humanity DAO	0x25c7c14308afad849a29b1569beeea378c84d7d5	pfletcherhill		https://www.humanitydao.org/humans			false	false	false
@@ -1990,6 +2025,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x2822afe488b47ae1379f368523aa9189094199da	WanCoinToken		Etherscan			false	false	false
 76-Verified	0x282a131376add1a9f09940195447f4be1efdfa90	Rewards		Etherscan			false	false	false
 34-Humanity DAO	0x283eec5a3eb0caa4dd00d33e7ad7fd57115e199d	ChuckChain		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x2840411594cffef97df411bf5f0dbf042fef6d21	Totle 0x Wrapper		0xTracker			false	false	false
+30-Contracts	0x284620b56318d18db45e40614556b9cb1d0dd92b	Arbitrage Bot		0xTracker			false	false	false
 31-Gitcoin Grants:Friends	0x284feeb047896deb74e80980e9f7dd9134ff1442	wimel		Gitcoin Website			false	false	false
 76-Verified	0x28515e3a4932c3a780875d329fda8e2c93b79e43	REGISTER		Etherscan			false	false	false
 81-Other:DAO Related	0x2853d92e14928308500e2f1db1a69b20b09187be	Prop_99_4		The Dao			false	false	false
@@ -2116,6 +2153,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x2ac9f89e4133a7b50d0250ba62aba925e89235bc	OrchidDirectory		Etherscan			false	false	false
 76-Verified	0x2acf7db66b767a431acfdfe9f8834ddf5835c53d	GlobalCoin		Etherscan			false	false	false
 76-Verified	0x2ad55649e384646267ab89bf952934df4b685e61	Claims		Etherscan			false	false	false
+30-Contracts	0x2ad672fda8a042c4c78c411bf9d4f1b320aa915a	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x2ad798c91624724811c1f18b4db3e1d4bcf8bfbe	Staking		Etherscan			false	false	false
 76-Verified	0x2ada3f0bedaffb5f3dfe0aeac43ac34f893d02ea	MolochSummoner		Etherscan			false	false	false
 81-Other	0x2add087d02fe18f1855f99b64d44354f2ebdfa98	Tokensalefactory		Etherscan.io			false	false	false
@@ -2202,6 +2240,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x2c54036c505b762b6ca2873dfcfecb632f83fe27	Airdrop		Etherscan			false	false	false
 76-Verified	0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad	Tip		Etherscan			false	false	false
 50-Tokens:ERC20	0x2c594e1cb006e86c3879b1d8191a8b059af52be7	ExcaliburCoin	EXC	On Chain	8		false	false	false
+30-Contracts	0x2c6b36530c0f25fa2765e2901101b4fcf149dec4	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x2c6e51bf140c3dc184c0f317101bea273cdf5178	PremiumFeedPrices		Etherscan			false	false	false
 76-Verified	0x2c702d98d4d7e2af742f071c2038565b1cc07bef	S3Coin		Etherscan			false	false	false
 76-Verified	0x2c737fe5d28679a3aa2999176406c7581a974f1c	TokenMintERC20MintableToken		Etherscan			false	false	false
@@ -2211,6 +2250,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x2c90ff262d2699667faf14c5aba4495ad1acb4ee	ARSToken		Etherscan			false	false	false
 50-Tokens:ERC20	0x2c949199cff14aeaf1b33d64db01f48fb57f592f	CoinBene Coin	CONI	On Chain	8		false	false	false
 50-Tokens:ERC20	0x2c974b2d0ba1716e644c1fc59982a89ddd2ff724	Vibe	VIB	On Chain	18	Viberate is a crowdsourced live music ecosystem and a blockchain-based marketplace, where musicians are matched with booking agencies and event organizers.	false	false	false
+30-Contracts	0x2c9bd9db61eccf16ed766b598bc5e0706c992296	Arbitrage Bot		0xTracker			false	false	false
 32-Kickback:Contracts	0x2cbdfb038afb5ed69c65af987c80d5ec6e3ea4f9	DaiSuki Meetup		https://kickback.events/event/[{ADDRESS}]			false	false	false
 50-Tokens:ERC20	0x2cc114bbe7b551d62b15c465c7bdcccd9125b182	IDOLCOIN	IDOL	On Chain	8		false	false	false
 76-Verified	0x2ccbfba2cc646715d67dbf515d65d1aae6b98db6	againstTokenRegister		Etherscan			false	false	false
@@ -2445,7 +2485,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x31a458d9c6979218a2fa9630e57207fb4ccd98d9	TokenBank		Etherscan			false	false	false
 76-Verified	0x31cceeb1fa3dbeaf7baad25125b972a17624a40a	LendingPoolLiquidationManager		Etherscan			false	false	false
 76-Verified	0x31d3a8ac24ba0eda71b600174bfcc59b37036e3c	RavencoinGold		Etherscan			false	false	false
-76-Verified	0x31e085afd48a1d6e51cc193153d625e8f0514c7f	KyberUniswapReserve		Etherscan			false	false	false
+76-Verified	0x31e085afd48a1d6e51cc193153d625e8f0514c7f	Kyber Uniswap Reserve		0xTracker			false	false	false
 81-Other	0x31e13882c45c1023d9b16c3794c1a780bb6cb88d	Matching_Ethers		Etherscan.io			false	false	false
 34-Humanity DAO	0x31ed202f38072c3c5c9f0b02b06418fdae30abed	joel_massimov		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x31ed5285e8fe7eddf73c2685629dc92a21b81f97	ZixiToken		Etherscan			false	false	false
@@ -2659,7 +2699,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x365fb0e024fb179288e3d65c4aadf6f58c8ae114	DSSpell		Etherscan			false	false	false
 76-Verified	0x366199bb0a6deacf11b867dbe014922e5de10d16	ERC20Migrator		Etherscan			false	false	false
 76-Verified	0x3668e5b02640dba32edb7fd6360f80f2b287640e	FixedSupplyToken		Etherscan			false	false	false
-76-Verified	0x36691c4f426eb8f42f150ebde43069a31cb080ad	UniswapBridge		Etherscan			false	false	false
+76-Verified	0x36691c4f426eb8f42f150ebde43069a31cb080ad	Uniswap Bridge		0xTracker			false	false	false
 60-Airdrops	0x366fc90ade76d3bf35af5e0553b6043b7bf7f1bf	SW Airdrop Sender		TrueBlocks.io			false	false	false
 81-Other:DAO Whales	0x3673954399f6dfbe671818259bb278e2e92ee315	DAO_WHALE_19		WhaleWatch.io			false	false	true
 81-Other	0x3675811b6565be50a48bbac14ff781949f5838fd	@wcordova		Steem			false	false	false
@@ -2820,7 +2860,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x396dde07a94920718fdf7af11ea1eb3741a35b28	FeeTransactionManager		Etherscan			false	false	false
 76-Verified	0x396ea3c3376cc78864f51ce2fddb275d3dc0968b	OasisDirectMigrateProxyActions		Etherscan			false	false	false
 76-Verified	0x39731cb7727250bc42b7b72055934e8b3eeac3b4	glaretoken		Etherscan			false	false	false
-30-Contracts	0x39755357759ce0d7f32dc8dc45414cca409ae24e	Eth2Dai		TrueBlocks.io			false	false	false
+30-Contracts	0x39755357759ce0d7f32dc8dc45414cca409ae24e	Oasis Dex Contract		0xTracker			false	false	false
 76-Verified	0x39771dc7003b9719bd87e3440222268861f7aec7	DSToken		Etherscan			false	false	false
 76-Verified	0x39799db6b6a81b995ffcaac61e9c337c672deb0b	AirDrop		Etherscan			false	false	false
 76-Verified	0x397bcf94f08da84f8a036d18107d08f361428ed5	LexToken		Etherscan			false	false	false
@@ -2910,6 +2950,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x3bc1f674afcfb012f189e9969871c5d0ad1443fc	guti0815		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x3bcb2283b8a696c12e907ea7410d2ee6691d0cfb	CrowdsaleTokenExt		Etherscan			false	false	false
 76-Verified	0x3bcdcce9b65c3af4764609c76bd3ac035d130a0c	LockTokens		Etherscan			false	false	false
+30-Contracts	0x3bd3ddadff7a66612df199154e682bc6b20733ff	Totle Oasis Wrapper		0xTracker			false	false	false
 76-Verified	0x3bd40b4258fbc246ccc5571d438f0323ae132e28	Unlock		Etherscan			false	false	false
 76-Verified	0x3bdb3bc896af8d70755d5516061651d6f51fb00b	ShareholderCWT		Etherscan			false	false	false
 76-Verified	0x3bdb8b7d03ab4299250e9b7ef0c717c8a1fd3913	AddressRegistry		Etherscan			false	false	false
@@ -3077,6 +3118,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x3f30a9ac5f4d9cccfe0331948f5a8f5df1ba3856	MyAdvancedToken		Etherscan			false	false	false
 76-Verified	0x3f38cdae6c197ff2d011c2ed4ab768144375743a	ONIX		Etherscan			false	false	false
 76-Verified	0x3f3c0000d26d00ac000004848d00bd883f956efc	DharmaAccountRecoveryMultisig		Etherscan			false	false	false
+30-Contracts	0x3f3e18aef051dc2b489cef138bb9e224f78f7117	1inch Exchange		0xTracker			false	false	false
 34-Humanity DAO	0x3f46680099cf623163c96747a8addb85a1da1cd1	insider0x		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x3f6f3718921fe9f7c113ee3d46928ff995864078	WpcToken		Etherscan			false	false	false
 76-Verified	0x3f82be785b9a037ce687f811e070b5c0cab46d77	ExchangeView		Etherscan			false	false	false
@@ -3096,6 +3138,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x3fe88d527630632292d7d5182b8f50e2fb515311	SimpleToken		Etherscan			false	false	false
 34-Humanity DAO	0x3fec716797f6b5d4ee38fae8cc61df06b1423cfe	cryto00611444		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x3fee076a0f0218899b89fe7e3f54dd2dc18917e0	Wafl		Etherscan			false	false	false
+30-Contracts	0x3ff1445be5674f0594f1614db8606428342732d4	Totle TokenStore Wrapper		0xTracker			false	false	false
 76-Verified	0x400794a29d947c8a22fe7b336ef443d9f54d155e	multiSend		Etherscan			false	false	false
 76-Verified	0x401dca7116d1cacb3c3bc1b4ace16fc87f7efaba	SignedOperationProxy		Etherscan			false	false	false
 81-Other	0x4028b9672bfd71ba2fcd97a6c82e06f72eaa14ba	Theultimatepyramid		Etherscan.io			false	false	false
@@ -3126,6 +3169,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x408c52a3c8162c5ebdf0ceabb1d45a02d62af242	LaborContractSignable		Etherscan			false	false	false
 50-Tokens:ERC20	0x408e41876cccdc0f92210600ef50372656052a38	Republic Token	REN	On Chain	18	A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.	false	false	false
 50-Tokens:ERC20	0x4092678e4e78230f46a1534c0fbc8fa39780892b	OCoin	OCN	On Chain	18	ODYSSEY‚Äö√Ñ√¥s mission is to build the next-generation decentralized sharing economy Peer to Peer Ecosystem.	false	false	false
+30-Contracts	0x409b512e1cf94500877c5353b2a0c13b2d24914f	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x409cde438aa416d82981b16d1c08448aec467439	TokenWarranty		Etherscan			false	false	false
 76-Verified	0x40a930851bd2e590bd5a5c981b436de25742e980	DefaultCallbackHandler		Etherscan			false	false	false
 34-Humanity DAO	0x40ad5487d534e1ed211db9bec33c16d6440caa9b	lhizestrella		https://www.humanitydao.org/humans			false	false	false
@@ -3203,6 +3247,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x41f07be8fc32b9ec66041c225b32664437f2a896	EgorasTokenSale		Etherscan			false	false	false
 81-Other	0x41f274c0023f83391de4e0733c609df5a124c3d4	Test_id224_cnt48614_2mo		Ether Camp			false	false	false
 81-Other	0x41f2d5040726c5328f8366f17041ec012ac8f338	Ethventuresfinal		Etherscan.io			false	false	false
+30-Contracts	0x41f8d14c9475444f30a80431c68cf24dc9a8369a	Tokenlon		0xTracker			false	false	false
 76-Verified	0x420eb07beff2e0d90236db7ebcbe1e52ac0a8e0c	flashIt		Etherscan			false	false	false
 50-Tokens:ERC20	0x4212fea9fec90236ecc51e41e2096b16ceb84555	Six Domain Asset	SDA	On Chain	18	SixDomainChain SDChain is a decentralized public blockchain ecosystem that integrates international standards of IoT Six-Domain Model and reference architecture standards for distributed blockchain.	false	false	false
 34-Humanity DAO	0x421507debcc6e26cdb8d30f46dfe6405157e0368	comex_vip		https://www.humanitydao.org/humans			false	false	false
@@ -3245,6 +3290,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x42cad86beef643b6669a3f134b67d4287edaddd3	EthfinexAdapter		Etherscan			false	false	false
 90-DevCon2:Individual	0x42cf8b657d0057087ff8752f83b38e7db9d4ccfe	Denis Granha		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x42d6622dece394b54999fbd73d108123806f6a18	SPANK	SPANK	On Chain	18	A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.	false	false	false
+30-Contracts	0x42da4f7fe0bc60d1b78522d1edcb5d64c6a81372	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x42e91a50c99ef32952f939669bfb55ff14328394	ShowEth2DAI		Etherscan			false	false	false
 76-Verified	0x42e98f6ed27fc8f76118efb7d4fe9a254bf3bcc9	GAWToken		Etherscan			false	false	false
 76-Verified	0x42ea07790394888473865edde8769be21163156e	MemberDripDrop		Etherscan			false	false	false
@@ -3269,6 +3315,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x4357f5857357541272d331a32e753ba5c2bffc4b	Token		Etherscan			false	false	false
 76-Verified	0x435b67f0dcae34c046720de42fcdc135b8f90e55	BistoxExhangeToken		Etherscan			false	false	false
 76-Verified	0x435d4183ae0aeb1babc31bd25a815d6244fc3562	RHC		Etherscan			false	false	false
+30-Contracts	0x435ffa6d9c310033cb6322ff2bc8957566d06516	Arbitrage Bot		0xTracker			false	false	false
 34-Humanity DAO	0x436266c46e2c2e7c8546573d72d51b96652ad76d	Drewmau		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0x4366d72a3e347734df93633fa301a8b5cdbcc445	jiaofeide		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x436f0f3a982074c4a05084485d421466a994fe53	Rate3	RTE	On Chain	18	Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.	false	false	false
@@ -3484,6 +3531,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x4809f44e7f070487db1cbf992fc1b93dfc20ce6a	LPT Airdrop		TrueBlocks.io			false	false	false
 76-Verified	0x481346923f507d900031a5b463a365e1f71b8d57	StackLib		Etherscan			false	false	false
 90-DevCon2:Individual	0x4813745e51d305b77904820da8aff438b9fb2db8	sean		DevCon2 Token Contract			false	false	false
+30-Contracts	0x4815901c771e61859173e2a05e6f55ff728ff54f	Arbitrage Bot		0xTracker			false	false	false
 32-Kickback:Friends	0x481da65923aaba65451a62b074f5d0d624795041	taeyeon		https://kickback.events/			false	false	false
 76-Verified	0x481f0a7ce9113d5a502be13ad84bdf5c56b26c7b	MainToken		Etherscan			false	false	false
 81-Other:DAO Related	0x48229752de3f97d6b5081619564acefa0375049b	Funded 0b656... GaveMoneyToNewDAOCreator		Slack Nation The Dao			false	false	false
@@ -3595,6 +3643,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x4a38c18f58e574c28c57e3344f140a32141775d4	datakarima		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x4a42d2c580f83dce404acad18dab26db11a1750e	Relex	RLX	On Chain	18	Relex- setting new standards for FDI real estate development.	false	false	false
 76-Verified	0x4a4c44bcb36343ce6e2ab66bc72b6cbf856fecf6	TTBToken		Etherscan			false	false	false
+30-Contracts	0x4a4dff5e12c2422261ebf0042ed57b02b5bdc621	Set Rebalancer		0xTracker			false	false	false
 34-Humanity DAO	0x4a4eab0bcc39ef8861494906c4b0249f3820f7e3	lovcrypto		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x4a5025d943dcc6db2e1d76eb46aaf2d647d5562c	KOLFund		Etherscan			false	false	false
 50-Tokens:ERC20	0x4a527d8fc13c5203ab24ba0944f4cb14658d1db6	Morpheus Infrastructure Token	MITx	On Chain	18	Morpheus Labs Blockchain Platform as a Service BPaaS simplifies and expedites your blockchain application development and gives you the flexibility to choose between available programming languages and blockchain runtimes that better suit your needs.	false	false	false
@@ -3608,10 +3657,11 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x4a6283944350d250daec102c3bea3657869069d0	mernit		https://kickback.events/			false	false	false
 34-Humanity DAO	0x4a64227943ee5c973df4d5e307f29989d5590e80	fredrocious		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x4a656f5b407e0b1cf1e6d43ce3bbc0e148dea7e1	UniswapSwapper		Etherscan			false	false	false
+30-Contracts	0x4a821aa1affbf7ee89a245bf750d1d7374e77409	Tokenmom		0xTracker			false	false	false
 34-Humanity DAO	0x4a82b1bbfd9b93b02a3baa4aef9ca2bbe49e6d5e	theguti		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x4a8c31600da5aa5b850324baeb6a3205f312f7a4	ShareToken		Etherscan			false	false	false
 32-Kickback:Friends	0x4a8f6434499f8c9371a98db9824b4b8ae2ba9fe2	afisher		https://kickback.events/			false	false	false
-76-Verified	0x4aa817c6f383c8e8ae77301d18ce48efb16fd2be	Forwarder		Etherscan			false	false	false
+76-Verified	0x4aa817c6f383c8e8ae77301d18ce48efb16fd2be	0x Forwarder 3.0		0xTracker			false	false	false
 76-Verified	0x4aab76c4442db9067a35ac9212e3f31128e2af6f	StokrToken		Etherscan			false	false	false
 50-Tokens:ERC20	0x4aac461c86abfa71e9d00d9a2cde8d74e4e1aeea	ZINC	ZINC	On Chain	18	With a straightforward integration into any hiring process, Zinc simplifies, accelerates and reduces the cost of the hiring journey for workers and recruiters within the technology sector.	false	false	false
 81-Other	0x4ab274fc3a81b300a0016b3805d9b94c81fa54d2	MeatConversionCalculator_id88_cnt10_5mo		Ether Camp			false	false	false
@@ -3627,6 +3677,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x4acbbb40527018e73efb04eff5af8873c4b61385	CheckReserveSplit		Etherscan			false	false	false
 34-Humanity DAO	0x4ad610b4a338c9d1c4820ecc53ebc68d35b35962	DelicatoMB		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x4ae4862348bf909197bfb9abaf21ad8ace42d046	LightEnergyEcologicalChain		Etherscan			false	false	false
+30-Contracts	0x4aec5a747e0a64fee366ddb0d647e4cf87c03b28	IDEX Whale		0xTracker			false	false	false
 90-DevCon2:Individual	0x4af2625f42a2b460223b2e4ddaec743f944c85af	Tim Coulter		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x4af328c52921706dcb739f25786210499169afe6	Sakura Bloom	SKB	On Chain	8	SKB is a token used for various services, including Bitcoin exchange, direct cash exchange, making purchases, etc.	false	false	false
 90-DevCon2:Individual	0x4b00f4bae0ba40dd41f69d94d4e02003939fcebf	ErikVoorhees		DevCon2 Token Contract			false	false	false
@@ -3753,7 +3804,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x4d31997922fdf1f72e8528487221aad1f73990e7	ERC20Token		Etherscan			false	false	false
 81-Other	0x4d31e13f445d1940a776f1c3d695fcf448806c67	Contract_id39_cnt2_5mo		Ether Camp			false	false	false
 76-Verified	0x4d35c3c17751c510135b2261f85845cf4366f47a	BatchSendTokens		Etherscan			false	false	false
-31-Gitcoin Grants:Contracts	0x4d37f28d2db99e8d35a6c725a5f1749a085850a3	Grant 246 1Split		GitCoin Website			false	false	false
+31-Gitcoin Grants:Contracts	0x4d37f28d2db99e8d35a6c725a5f1749a085850a3	Grant 246 1Split		0xTracker			false	false	false
 76-Verified	0x4d37fce35e69c0368565ccbb53d6ea7558a964a1	InstaMemory		Etherscan			false	false	false
 76-Verified	0x4d38b38d46328d732c6470968049ceb26021fdbe	CustomToken		Etherscan			false	false	false
 76-Verified	0x4d431047b53db36b2ba13a3e5670c0ec637d3dcd	Karvuon		Etherscan			false	false	false
@@ -3831,6 +3882,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x4ed792a66f2b4cf51671c42137dff7f8703b0875	EDT		Etherscan			false	false	false
 30-Contracts	0x4ee46dc4962c2c2f6bcd4c098a0e2b28f66a5e90	Humanity Registry		TrueBlocks.io			false	false	false
 81-Other	0x4eecf99d543b278106ac0c0e8ffe616f2137f10a	LockMyEther_id33_cnt12_6mo		Ether Camp			false	false	false
+30-Contracts	0x4ef40d1bf0983899892946830abf99eca2dbc5ce	0x Forwarder 3.0		0xTracker			false	false	false
 76-Verified	0x4ef5ccb263b9d0b4472759cb8b53c8054965ff0e	Elitecoin		Etherscan			false	false	false
 34-Humanity DAO	0x4efa8bf0dc9253185ff428319eb3b52d6211f7ea	alexhevans		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0x4efef16a7158d18c73b3dc46a0639d6348d0e9b9	drcode		DevCon2 Token Contract			false	false	false
@@ -3852,8 +3904,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x4f464372d8f8a89e99ce56658ec1fd8f883394e7	EDISON		Etherscan			false	false	false
 60-Airdrops	0x4f4a591dfa6bb5ca83f996195654cf7fddd43433	FIFA Airdrop	FIFA	TrueBlocks.io			false	false	false
 60-Airdrops	0x4f4d22ca77222ae3d51e308c9a8f0e564f98e77a	Bulleon X Airdrop		TrueBlocks.io			false	false	false
+30-Contracts	0x4f4e0f2cb72e718fc0433222768c57e823162152	bZx Exploiter		0xTracker			false	false	false
 76-Verified	0x4f51b25232324bfa7591768c8b1a420fa6d91760	standardTokenFactory		Etherscan			false	false	false
 76-Verified	0x4f565a2f91ac4bb0d09ff17918ee202b828837df	yCRV		Etherscan			false	false	false
+33-Set Prototcol	0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180	Set: Rebalancing Set Exchange Issuance Module V2		Etherscan			false	false	false
 76-Verified	0x4f5f0933158569c026d617337614d00ee6589b6e	GovActions		Etherscan			false	false	false
 76-Verified	0x4f64d8ed0b0acbb5a24bfc4bf22ff5011469bbdd	ERC20Token		Etherscan			false	false	false
 76-Verified	0x4f65c5f0f89be0305dd9f07ff9cd1390c614f21a	ForgeCombined		Etherscan			false	false	false
@@ -3887,6 +3941,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x4fe56ab3bae1b0a44433458333c4b05a248f8241	Early_Partners_025		Ether Camp			false	false	true
 76-Verified	0x4fe585e982ace724d937a18040835df4669fd249	Token		Etherscan			false	false	false
 34-Humanity DAO	0x4fe992e566f8a28248acc4cb401b7ffd7df959b0	NipolNipol		https://www.humanitydao.org/humans			false	false	false
+20-Friends	0x4ff1c812ebccc16487c17f537d849cb5dc557ff0	EthSlurp Tip Jar Sender Sender		TrueBlocks.io			false	false	false
 40-Exchanges	0x4ff7fa493559c40abd6d157a0bfc35df68d8d0ac	UniSwap Contract for Wrapped CryptoKitties?		TrueBlocks.io			false	false	false
 34-Humanity DAO	0x4ff9829080f7643d28d5914b893f73163519ba4e	NikeCsjl		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x4ffb1a40b7ab0b9837a03ebebe2bf400ea392edc	VokenPanel		Etherscan			false	false	false
@@ -3992,6 +4047,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x5200efce873e811d740f5fcd209f04fd582b1aa5	orhnaydin		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x52049f8b5403f5d4bff58c97790fde42a7b07191	yCurveZapSwap		Etherscan			false	false	false
 76-Verified	0x5211febe5d129dfa871e004c39652e8254a73ef8	LegacyMakerOracleAdapter		Etherscan			false	false	false
+30-Contracts	0x521550e569bc80f1b4957c4f3fd3d677d9ca31f1	Nuo Kyber Connector		0xTracker			false	false	false
 76-Verified	0x521659ddae7188ac1972a8c9c9d7ffb8e37cdfb3	Dcdc		Etherscan			false	false	false
 34-Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner		TrueBlocks.io			false	false	false
 76-Verified	0x521a2ac7b33b09fa21a1ad7c040f4e1b5912c1d0	ZTokens_ERC20		Etherscan			false	false	false
@@ -4007,6 +4063,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x52590e6f7cc7d9620c7376cc926f0fa6617d2957	FEE		Etherscan			false	false	false
 76-Verified	0x525a4259435682ab0d4bb6c8f0cdee25f5b6cd26	MCDDebtAdapter		Etherscan			false	false	false
 34-Humanity DAO	0x5261026ba0bab0ea61e0f150aa53ae5e67e32bdf	AlexTiley1		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x5265bde27f57e738be6c1f6ab3544e82cdc92a8f	Veridex Staking Pool		0xTracker			false	false	false
 34-Humanity DAO	0x5270f251012eef27d30d5c7f7dba431c836e256e	ZiackeChen aya08167856		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Contracts	0x527621278422fff45a66f7086baeac770cf12b69	Grant 127 Planet A		GitCoin Website			false	false	false
 76-Verified	0x5276761e4c476f63d5d61f030c3ae53c55fd97cf	DCEP		Etherscan			false	false	false
@@ -4060,6 +4117,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Contracts	0x532e757e5d29023c5f3683b192378d15750dfa99	Grant 113 Gitcoin Moderation Tools		GitCoin Website			false	false	false
 81-Other	0x53325828eddecdc4378acb9d2d116ba6b38bd35a	dEthereumlotterynet		Etherscan.io			false	false	false
 76-Verified	0x5332c89a571454d6eea126dfe35c3ec57d7ecb64	FZC		Etherscan			false	false	false
+30-Contracts	0x533344cfdf2a3e911e2cf4c6f5ed08e791f5355f	Uniswap Bridge		0xTracker			false	false	false
 76-Verified	0x5333ba239c59f9c855dfd382e694158ba133e609	TokenExpress		Etherscan			false	false	false
 76-Verified	0x5339ca2b8148c5803236d8592a98411c4ae881f8	PaidFantastic12Factory		Etherscan			false	false	false
 76-Verified	0x533da53d2cf270056b8427d1a5812ffe2cdca2db	Blocklock		Etherscan			false	false	false
@@ -4088,6 +4146,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x539efe69bcdd21a83efd9122571a64cc25e0282b	Ethereum Blue	BLUE	On Chain	8	BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.	false	false	false
 76-Verified	0x53a0c2a56d7e21afb8e967b380dfeab7befad1cf	CYPHToken		Etherscan			false	false	false
 34-Humanity DAO	0x53ab04bad3f1c1855fc945e0a510f139daf9482c	xiyangyang2		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x53bba5c7872bfc4935cb4eee63c1ba9bfc68212a	Arbitrage Bot		0xTracker			false	false	false
 81-Other	0x53d284357ec70ce289d6d64134dfac8e511c8a3d	Kraken_HugeWhale100M		Slock.it Slack			false	false	false
 76-Verified	0x53d428716900eae876ad1d7e4535e796b5faeda2	ZeroFeeXchange		Etherscan			false	false	false
 76-Verified	0x53d5d15edbdc9a80384a22d4e7b9e734d39798e2	FiatTokenProxy		Etherscan			false	false	false
@@ -4119,6 +4178,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Contracts	0x545a09f0348dd3632809c13ab3b062c7f8542c8d	Dragon Quest Extra Curricular		https://kickback.events/event/[{ADDRESS}]			false	false	false
 76-Verified	0x5463ba63ba23e62e666354aaeb85a838afeba010	FairWin		Etherscan			false	false	false
 76-Verified	0x54687127f52199457730500c2e6975188b218393	XOXY		Etherscan			false	false	false
+30-Contracts	0x5468a1dc173652ee28d249c271fa9933144746b1	0x Forwarder 2.0		0xTracker			false	false	false
 76-Verified	0x5477dea2bc822e700b8ff36a88baa498996bc088	DssProxyActionsAdv		Etherscan			false	false	false
 76-Verified	0x547f1508a2a1ab0cb84dce4b3e09beb560bb44cb	ConnectCompound		Etherscan			false	false	false
 76-Verified	0x548ac0ec13b132f3b58bd8afd83ebd2e225eb1a6	RequestERC20		Etherscan			false	false	false
@@ -4139,6 +4199,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x54e46cc89588318e3964ca2c1be94db9d5ca3dfb	AWX		Etherscan			false	false	false
 32-Kickback:Friends	0x54e9a1aa8bc314ed3109c5915d2dc388b1d594ba	kronosapiens		https://kickback.events/			false	false	false
 34-Humanity DAO	0x54f252f92d58bd5c3a31c40b71cab59b8bc85cd4	jonnyaustintx		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x54f424ef9c1583e89e87116d88918cd37c38c264	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x54f44ea3d2e7aa0ac089c4d8f7c93c27844057bf	Store		Etherscan			false	false	false
 76-Verified	0x54f56401204f1b6c1091fe181ee78f35f0f21f05	ECOToken		Etherscan			false	false	false
 76-Verified	0x54ffec767aa14814c7e531369f1b5a85cd10672f	AIRDROP		Etherscan			false	false	false
@@ -4171,6 +4232,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x55897de6b738c212fd38cf82f07f2c76675c7e61	ConnectPool		Etherscan			false	false	false
 76-Verified	0x558e2c7e086c679c744cb41b02beaf4ba163ced3	MethodRegistry		Etherscan			false	false	false
 50-Tokens:ERC20	0x558ec3152e2eb2174905cd19aea4e34a23de9ad6	Bread Token	BRD	On Chain	18	BRD is the simple and secure bitcoin wallet.	false	false	false
+30-Contracts	0x5591360f8c7640fea5771c9682d6b5ecb776e1f8	DEX Forwarder Bridge		0xTracker			false	false	false
 76-Verified	0x55a31c8779dfe9218677d9f5fb9aba7d35f7e652	StandardToken		Etherscan			false	false	false
 34-Humanity DAO	0x55a5f913ae82c43f1d63f338a304a0d1af0f3ac0	joshuahjohnson		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x55b4d03bf175f7f9c7281b6a5e84ce7dabee2f45	IRSLogic		Etherscan			false	false	false
@@ -4185,6 +4247,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x55e3cb30ff2568c9f43c41c6b84cacced04e7c3f	yCRV		Etherscan			false	false	false
 32-Kickback:Friends	0x55e401f6b552dba8b955907b2e9ed99b157253ba	adoadoado		https://kickback.events/			false	false	false
 76-Verified	0x55ec371b3168b701797c2c5779ba717c5e7f85a5	orfeed		Etherscan			false	false	false
+30-Contracts	0x55f0298be70587a50d07f6dd8763cc96a8b4f9b1	Prycto Staking Pool		0xTracker			false	false	false
 76-Verified	0x55f0cf5fa07873f0a6e4f93100bfc32fe51d222a	ConnectAuth		Etherscan			false	false	false
 76-Verified	0x55f2623e8f15231a811c57761559872bae4cc960	E20Incentive		Etherscan			false	false	false
 76-Verified	0x55f287e77274deb12c798c039da92dd653b025ab	IOCrypto		Etherscan			false	false	false
@@ -4335,6 +4398,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x59054bc54de14036741ba7fa4dcd4eff7df432e5	PLANEMO		Etherscan			false	false	false
 50-Tokens:ERC20	0x59061b6f26bb4a9ce5828a19d35cfd5a4b80f056	Legends	LGD	On Chain	8	Las Vegas entertainment re-imagined.	false	false	false
 32-Kickback:Friends	0x59148f32ed5093c9a844cfe1a8da6d4b4206c5a2	piotr		https://kickback.events/			false	false	false
+30-Contracts	0x591e9f22e2e925a5febbbf9da7e7a632e877fe5c	Arbitrage Bot		0xTracker			false	false	false
 81-Other	0x59225aa6cc4e9ffc9fda31f38a62f8a6656ba5eb	profitsFromBitnationDebitCard_id204_cnt1_3mo		Ether Camp			false	false	false
 76-Verified	0x592349f7dedb2b75f9d4f194d4b7c16d82e507dc	Governor		Etherscan			false	false	false
 32-Kickback:Friends	0x5928675ad8f2a5ec995d4787829892cb6df4a65b	daniels		https://kickback.events/			false	false	false
@@ -4519,6 +4583,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x5c7b52bdb09d9889159573aa98c06d325feab6d3	FFCToken		Etherscan			false	false	false
 76-Verified	0x5c7ec304a60ed545518085bb4aba156e8a7596f6	BlockbidLiquidity		Etherscan			false	false	false
 81-Other:DAO Related	0x5c8536898fbb74fc7445814902fd08422eac56d0	DAO_id253_cnt33_2mo		Ether Camp			false	false	false
+30-Contracts	0x5c87915f26b5414e9748300caa7a67f5f0c1b989	DEX Whale		0xTracker			false	false	false
 32-Kickback:Friends	0x5c8ab7aa7b133408fae41b01a1faab88a98ca441	shin8		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x5c91c5fd6851f9ed55dacb5d7eae87d9549b8d82	michel		https://kickback.events/			false	false	false
 76-Verified	0x5c99759f77bc7e16fcc2ae107fef9bd8b8762bc5	lexToken		Etherscan			false	false	false
@@ -4539,8 +4604,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x5cf501e64786444e025c5b24025f98399538ea5d	YottaCoin		Etherscan			false	false	false
 76-Verified	0x5cfafcbbad0e6c0363a7689b605ddff5ee3691fa	TownToken		Etherscan			false	false	false
 76-Verified	0x5d0360c3940f2f2b54ebc381e3c04ab207191335	yTokenProxy		Etherscan			false	false	false
-76-Verified	0x5d05ea343c7a13cee09b14e56fcbe985c25521b7	SplitSwap		Etherscan			false	false	false
+76-Verified	0x5d05ea343c7a13cee09b14e56fcbe985c25521b7	InstaDapp		0xTracker			false	false	false
 76-Verified	0x5d0be1e7ca540b007d89bbe0f56f2fa6a60342ea	PMT		Etherscan			false	false	false
+30-Contracts	0x5d154c145db2ca90b8ab5e8fe3e716afa4ab7ff0	Kyber Uniswap Reserve		0xTracker			false	false	false
 76-Verified	0x5d18fe86bf42a3b2ddaebdf7fd8bc0578eab71f7	OrchidListVerifier		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x5d28fe1e9f895464aab52287d85ebff32b351674	danibelle		Gitcoin Website			false	false	false
 81-Other:DAO Related	0x5d2b2e6fcbe3b11d26b525e085ff818dae332479	DAO_id332_cnt28_19da		Ether Camp			false	false	false
@@ -4550,6 +4616,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x5d3e3e707d87f06d806961a5f8553b1b52b9de73	Contributions		Etherscan			false	false	false
 50-Tokens:ERC20	0x5d48f293baed247a2d0189058ba37aa238bd4725	NeuroChain Clausius	NCC	On Chain	18	Implementing AI Into the Heart of the Blockchain	false	false	false
 50-Tokens:ERC20	0x5d4abc77b8405ad177d8ac6682d584ecbfd46cec	Primas Token	PST	On Chain	18	A content publishing platform.	false	false	false
+30-Contracts	0x5d4b4d9f5274f72d7d4308597d0ea95b97b094cf	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0x5d4bb541eed49d0290730b4ab332aa46bd27d888	Aggregator		Etherscan			false	false	false
 50-Tokens:ERC20	0x5d4d57cd06fa7fe99e26fdc481b468f77f05073c	Netkoin	NTK	On Chain	18	Location Based Advertising On The Blockchain.	false	false	false
 31-Gitcoin Grants:Contracts	0x5d509f653d7e4914af9da434bf25c53cd122763d	Grant 041 Yeeth deaneigenmann		GitCoin Website			false	false	false
@@ -4792,11 +4859,13 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x6185f5de8bea6dfe6ac0faeaf2095d400a2dc7b5	CheckReserveSplit		Etherscan			false	false	false
 50-Tokens:ERC20	0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6	QASH	QASH	On Chain	6	We envision QASH to be the preferred payment token for financial services, like the Bitcoin for financial services. As more financial institutions, fintech startups and partners adopt QASH as a method of payment, the utility of QASH will scale, fueling the Fintech revolution.	false	false	false
 76-Verified	0x6190a479cfafcb1637f5485366bcbce418a68a4d	Decimals		Etherscan			false	false	false
+30-Contracts	0x61935cbdd02287b511119ddb11aeb42f1593b7ef	0x Exchange V3.0		0xTracker			false	false	false
 76-Verified	0x619f9ed8c330803bcbaac0218d8e617cba1d5172	FlasToken		Etherscan			false	false	false
 76-Verified	0x619ff65f38474989959c707b2144ebd2cbe58d1c	TIMEOUTTOKEN		Etherscan			false	false	false
 76-Verified	0x61a1c1bb52137c49677c4d9b3124d11887076d68	LOTTO9		Etherscan			false	false	false
 76-Verified	0x61ab1d42f0981dbb7069831e239266e8861878ba	GOLD		Etherscan			false	false	false
 81-Other	0x61b3df2e9e9fd968131f1e88f0a0eb5bd765464d	Early_Partners_011		Ether Camp			false	false	true
+30-Contracts	0x61b9898c9b60a159fc91ae8026563cd226b7a0c1	Deversifi		0xTracker			false	false	false
 76-Verified	0x61c39598fcc50b77ff8220ab660325c8214d8fb4	PictosisCrowdsale		Etherscan			false	false	false
 76-Verified	0x61c5e975e2a9e2cbf8af14dc40b5dcc1b27c0267	P2WSH		Etherscan			false	false	false
 76-Verified	0x61c6fd8379a4538ed4e660224b381d5224c9e317	StandardToken		Etherscan			false	false	false
@@ -4819,6 +4888,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x622cd54deb2bb7a051515192417109bcf3fe098f	IPC	IPC	On Chain	8		false	false	false
 50-Tokens:ERC20	0x622dffcc4e83c64ba959530a5a5580687a57581b	CUBE	AUTO	On Chain	18	CUBE is an autonomous car security platform backed by blockchain technology.	false	false	false
 76-Verified	0x623328ac086a5003cc9d2e79fa363967fe1965b0	Lotto		Etherscan			false	false	false
+30-Contracts	0x623520377f092c1c70bd57d17ae9ede6a288412c	Totle Primary		0xTracker			false	false	false
 31-Gitcoin Grants:Core	0x6239ff1040e412491557a7a02b2cbcc5ae85dc8f	Kudos Sender		Etherscan			false	false	false
 76-Verified	0x623fa39f0047702042ef61d58e41e933e3c6d635	Get1001Voken2		Etherscan			false	false	false
 76-Verified	0x6240b28c67a0492ecb5264d0326c01495d1ab6d1	Oracle		Etherscan			false	false	false
@@ -4883,7 +4953,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x637b2dde8bafe1813ef04a67c34425f8efabcad8	KeyRingGenericDeployerHelperStaging		Etherscan			false	false	false
 76-Verified	0x637eabb2d9e934af3bbb792f71ae2ae02de2b98c	RebornDollar		Etherscan			false	false	false
 76-Verified	0x638155f4bd8f85d401da32498d8866ee39a150b8	Jurasaur		Etherscan			false	false	false
-34-Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve		TrueBlocks.io			false	false	false
+34-Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve		0xTracker			false	false	false
 76-Verified	0x6384e3cbdf165250b191cac2fd8ffe3b718d34f4	ExorionToken		Etherscan			false	false	false
 34-Humanity DAO	0x638b609c4ce3c7d73a4a9273caecb4e687a901ab	lobelb		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x63902021a436f506e1518bff94cdc9d5a52d39ad	CHANEL		Etherscan			false	false	false
@@ -4968,6 +5038,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x64f65a21f8a20347ae3d5ef11798af061b8dbb22	ERC721Proxy		Etherscan			false	false	false
 90-DevCon2:Individual	0x64fa6ff3a7ad922d91876706dc62c53b933cf970	Bernd Lapp		DevCon2 Token Contract			false	false	false
 76-Verified	0x64fe692be4b42f4ac9d4617ab824e088350c11c2	Oracle		Etherscan			false	false	false
+30-Contracts	0x650858987c1c9dede58db385c50649668e817887	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x65129f15fc0bfd901ce99c71147a93256fa094e6	LiquidityPool		Etherscan			false	false	false
 76-Verified	0x65167e381388bc803aa2f22cd99d093068e98007	Dynasty		Etherscan			false	false	false
 76-Verified	0x651c40d3a6e032048104040bb45d0cdcebc71a51	BaiSuiChainToken		Etherscan			false	false	false
@@ -4995,6 +5066,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x65770b5283117639760bea3f867b69b3697a91dd	Vyper_contract		Etherscan			false	false	false
 34-Humanity DAO	0x657b12ff38729fb7202191eeff5a2c82c0c17c42	Tomibold		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x65836f41a2867071c5016529f9a63533b6b07775	Zeropool		Etherscan			false	false	false
+30-Contracts	0x65897adcba42dcca5dd162c647b1cc3e31238490	Kyber DEX Contract		0xTracker			false	false	false
 76-Verified	0x659046522c5c246a34a7eb17a814ca648436644a	WrappedCF		Etherscan			false	false	false
 76-Verified	0x6595b8fd9c920c81500dca94e53cdc712513fb1f	AdminUpgradeabilityProxy		Etherscan			false	false	false
 76-Verified	0x659d82b4f4c23c40feff2e3d65e4e1c7a38e20fd	FlashETH		Etherscan			false	false	false
@@ -5004,6 +5076,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x65b50ee078c4b9643d8e75647b6629b74622d148	MOTC		Etherscan			false	false	false
 76-Verified	0x65b81c19ab7b084f31adf0915b6baaa6130c6d26	Signatures		Etherscan			false	false	false
 50-Tokens:ERC20	0x65be44c747988fbf606207698c944df4442efe19	Finally Usable Crypto Karma	FUCK	On Chain	4		false	false	false
+30-Contracts	0x65bf64ff5f51272f729bdcd7acfb00677ced86cd	Kyber DEX Contract		0xTracker			false	false	false
 32-Kickback:Friends	0x65c1d220e067b9339e7d136c74e88365b57aeb53	dougmolina		https://kickback.events/			false	false	false
 76-Verified	0x65c79fcb50ca1594b025960e539ed7a9a6d434a3	Spotter		Etherscan			false	false	false
 76-Verified	0x65c9008aa5dbc0e978f6b083acbd04d9273eb0b3	FlopStarter		Etherscan			false	false	false
@@ -5152,10 +5225,12 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x691c25c461dafc47792b6e4d674fbb637bca1c6f	iBlockchainBankAndTrustToken		Etherscan			false	false	false
 34-Humanity DAO	0x692951ab71105c7f1355d5655f987f412082c992	alexbodes		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x693aa8ead81d2f88a45e870fa7e25f84ca93ca4d	UnderlyingTokenValuatorImplV2		Etherscan			false	false	false
+30-Contracts	0x693c188e40f760ecf00d2946ef45260b84fbc43e	Arbitrage Bot		0xTracker			false	false	false
 32-Kickback:Contracts	0x6941bd02a7662f1c2d7bb2daf578328e385dda66	Aragon Dream DAO Party: DAICO Edition		https://kickback.events/event/[{ADDRESS}]			false	false	false
 76-Verified	0x6941df79ac5729c36debf73d0ae4f816c3759ac1	DssSpell		Etherscan			false	false	false
 76-Verified	0x6943a218d58135793f1fe619414ed476c37ad65a	BridgeValidators		Etherscan			false	false	false
 34-Humanity DAO	0x6954d0255cfed71d55ad8b371b4170b8bf7709dc	midnight426		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x6958f5e95332d93d21af0d7b9ca85b8212fee0a5	0x Forwarder 3.0		0xTracker			false	false	false
 76-Verified	0x69606be5674da265c0d11477dced7fcfeedc468b	BlockbirdToken		Etherscan			false	false	false
 76-Verified	0x69640f28b6fe4ae4674efdbe21aa15d048bb914b	weeWhoo		Etherscan			false	false	false
 34-Humanity DAO	0x696600d88559ac1c0e84de6208f3c568af9e6a48	peaceandwhisky		https://www.humanitydao.org/humans			false	false	false
@@ -5193,6 +5268,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x6a06499ceee3ea86f394568874b5bdf6e9e26074	Martin Holst Swende		DevCon2 Token Contract			false	false	false
 76-Verified	0x6a0740b8cbf6adaeebc8615980f984b94ddbc631	BokGi		Etherscan			false	false	false
 80-Malicious	0x6a0a0fc761c612c340a0e98d33b37a75e5268472	Possibly Malicious 0x6a0		TrueBlocks.io			false	false	false
+30-Contracts	0x6a0c50788e462f322959a2458687096994d66316	Arbitrage Bot		0xTracker			false	false	false
 50-Tokens:ERC20	0x6a27348483d59150ae76ef4c0f3622a78b0ca698	MetaGraphChain	BKBT	On Chain	18		false	false	false
 76-Verified	0x6a2b7922b172dd03eed0721dce827ff88e6e9818	TagMembership		Etherscan			false	false	false
 76-Verified	0x6a2f3068734a9b2272a644ce2e701588f9a28b83	TPRToken		Etherscan			false	false	false
@@ -5234,6 +5310,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x6af205a160b36e98f4005108797202015ce4ffd9	STARK_Friendly_Hash_Challenge_Poseidon_S128e		Etherscan			false	false	false
 76-Verified	0x6af373caa40ee53a1736e482e4998c106fd47fe1	GreenChipMain		Etherscan			false	false	false
 76-Verified	0x6af6c791c869dfa65f8a2fa042fa47d1535bef25	ConnectDydx		Etherscan			false	false	false
+30-Contracts	0x6af9ec649821c2213dc488c36e3e3e999c3d7934	Tokenlon		0xTracker			false	false	false
 76-Verified	0x6b00f3543e5c8848aa35c6e7645771d31cb0f292	ERC20		Etherscan			false	false	false
 32-Kickback:Friends	0x6b0ab1cc4a199d47882bd816e8fba9146381406f	adriamb		https://kickback.events/			false	false	false
 30-Contracts	0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb	One of the Other DAOs		TrueBlocks.io			false	false	false
@@ -5349,7 +5426,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x6db5757a3aaa80903a779507c53d6de981277aa8	DharmaDaiPrototype1		Etherscan			false	false	false
 76-Verified	0x6db92e635ba5d2834fff3db03b6be80d8aa28d5a	TokenBaseAsset		Etherscan			false	false	false
 60-Airdrops	0x6db9e4991f0a66d589f904b4d235779864432a9e	TRX Airdrop Sender		TrueBlocks.io			false	false	false
-76-Verified	0x6dc7950423ada9f56fb2c93a23edb787f1e29088	CurveBridge		Etherscan			false	false	false
+76-Verified	0x6dc7950423ada9f56fb2c93a23edb787f1e29088	Curve Bridge		0xTracker			false	false	false
 76-Verified	0x6dcc6577650bbf5b70e9eee7cfd1364410867206	AuthereumEnsManager		Etherscan			false	false	false
 76-Verified	0x6dcdce5853cfbcbe4e3eb15c9ab2277983387cd9	Revolution		Etherscan			false	false	false
 50-Tokens:ERC20	0x6dd4e4aad29a40edd6a409b9c1625186c9855b4d	GENE TOKEN PARKGENE	GENE	On Chain	8		false	false	false
@@ -5386,6 +5463,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x6ec8a24cabdc339a06a172f8223ea557055adaa5	Genaro X	GNX	On Chain	9	The Genaro Network is the first Turing-complete public blockchain combining peer-to-peer storage with a sustainable consensus mechanism. Genaro's mixed consensus uses SPoR and PoS, ensuring stronger performance and security.	false	false	false
 76-Verified	0x6eccca96d6a238aae183440beeff39d9ba81054c	newsToken		Etherscan			false	false	false
 76-Verified	0x6edb679e04ce7d8246e905a7cf2c0be3df0034c1	CompoundSaverProxy		Etherscan			false	false	false
+30-Contracts	0x6edbb4ed53551d5b6b2d853077c653a8a581c5f3	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x6eeb68b2c7a918f36b78e2db80dcf279236ddfb8	MkrAuthority		Etherscan			false	false	false
 76-Verified	0x6eefae076aa3a4f83cecde690672d5735f169ace	XcertCreateProxy		Etherscan			false	false	false
 34-Humanity DAO	0x6ef3042430ed92fe0cbbc45cdabd0766c71b9533	sxc0215		https://www.humanitydao.org/humans			false	false	false
@@ -5427,6 +5505,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x6fbb138ac2e9f780826ed10cc05211d9506d8ad9	MarketFactory		Etherscan			false	false	false
 76-Verified	0x6fbd1b59f204bb098a58f54e720440d0ca1229d8	KarlBenzContract		Etherscan			false	false	false
 76-Verified	0x6fbf4e57ec93cdd33c74762f7d99694228a68cd2	Blank		Etherscan			false	false	false
+30-Contracts	0x6fbfa42bc2f8c6ce9076a924a5e1ea8c0f3647ca	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0x6fcf1f24e39a436e850af22468e04bc0c0ae05e9	FronrunGame		Etherscan			false	false	false
 81-Other	0x6fd93c524553e05b3a1ac9291bde505d37252dfd	EtherAuction_id87_cnt28_5mo		Ether Camp			false	false	false
 76-Verified	0x6fe2b5f6798c9d5d6aebe1335bbf03080acee7dc	TokenMakerOrg		Etherscan			false	false	false
@@ -5471,6 +5550,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x70619ec7f90365efe96c09558655e3393654140a	DecentralizedNewsletterChain		Etherscan			false	false	false
 50-Tokens:ERC20	0x7064aab39a0fcf7221c3396719d0917a65e35515	Cpollo	CPLO	On Chain	18		false	false	false
 76-Verified	0x70673ff7f6829bfd11c5fa67b70757e8cf51fc60	UniswapTradeExample		Etherscan			false	false	false
+30-Contracts	0x706abce058db29eb36578c463cf295f180a1fe9c	Kyber DEX Contract		0xTracker			false	false	false
 76-Verified	0x706c1b83cce2292f5dce762e33d05c4d708c5bd0	ERC20Distributor		Etherscan			false	false	false
 81-Other	0x706dded765c012b7f532c60c1d08563ba5e9f587	Mpo		Etherscan.io			false	false	false
 76-Verified	0x706e829f4779b1ba3b4431a0198edc76ac2e646f	Tes		Etherscan			false	false	false
@@ -5554,6 +5634,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x722e70f69e7bfaa4eab94198b54c3d208323f495	BET		Etherscan			false	false	false
 50-Tokens:ERC20	0x722f2f3eac7e9597c73a593f7cf3de33fbfc3308	CoinUs	CNUS	On Chain	18	CoinUs is a integrated business platform with focus on individual's value and experience to provide Human-to-Blockchain Interface.	false	false	false
 76-Verified	0x722f97a435278b7383a1e3c47f41773bebf3232c	UCROWDME		Etherscan			false	false	false
+30-Contracts	0x72338b82800400f5488eca2b5a37270ba3b7a111	Paraswap		0xTracker			false	false	false
 34-Humanity DAO	0x7238fcab4e3698c5707a2d7217312c8bfc20db40	m8swezey		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x723b5ef3ce4137e46027e41cc84d905dcb6a12a9	TokenWhitelist		Etherscan			false	false	false
 50-Tokens:ERC20	0x72430a612adc007c50e3b6946dbb1bb0fd3101d1	Thingschain	TIC	On Chain	8	Platform for IoT devices based on blockchain technology. It uses a multilayered architecture which provides a solution to the issues faced by current blockchains like lack of scalability and low transaction throughput rate.	false	false	false
@@ -5597,6 +5678,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x7327e44e045a7b1b17fc429aa441b65a8f31b543	LoanContractDispatcher		Etherscan			false	false	false
 81-Other	0x73299b09acf67d3b279142975a9a99932996b931	Security_id289_cnt10_2mo		Ether Camp			false	false	false
 76-Verified	0x73386e25f5bbd74b43fa4429487d834725e3cd7f	ETHERAUK		Etherscan			false	false	false
+30-Contracts	0x733dd905346b757f7c9bccb09f92e798d87f16a1	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x733fa571c2db987dbdb7767fabf8392300f456d6	EthToDaiTradeHelperV4		Etherscan			false	false	false
 76-Verified	0x73468010efda36a42662f000fce2c2a4ef175097	TokenERC20		Etherscan			false	false	false
 76-Verified	0x734bdfc240f03df761ff012fa78eb2e2e07515e9	PROTtoken		Etherscan			false	false	false
@@ -5658,7 +5740,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x74541f1a546db1c4e1fe40c69e4184ed5f19a15b	CooMeCohHash		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x7454df5d0758d4e7a538c3acf4841fa9137f0f74	Refunder		Etherscan			false	false	false
 76-Verified	0x7458fd786b2fe8cd801c0381f88b61c5071a006f	LOAPROTOCOL		Etherscan			false	false	false
+30-Contracts	0x745daa146934b27e3f0b6bff1a6e36b9b90fb131	DEX.AG		0xTracker			false	false	false
 76-Verified	0x746a05f9a3ec7ccebf4376857de2ef7f93cc1c35	ArtoryRecordStamper		Etherscan			false	false	false
+30-Contracts	0x74758acfce059f503a7e6b0fc2c8737600f9f2c4	Totle Transfer Proxy		0xTracker			false	false	false
 76-Verified	0x747d3780e8a78e644e20b2d1d4df51c42814b34e	BitcoinProtocol		Etherscan			false	false	false
 76-Verified	0x7482917bbc812e5bdae97b969571d5ac3dcc7d62	qubunToken		Etherscan			false	false	false
 81-Other	0x748defc02aa6221ae4db129bbe7e6a97537a6f45	Lottery		Etherscan.io			false	false	false
@@ -5746,6 +5830,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x763ae93d72c7575cf9df1013e9fe2c08b96d6034	BitXCoin		Etherscan			false	false	false
 76-Verified	0x76416a4d5190d071bfed309861527431304aa14f	OsmMom		Etherscan			false	false	false
 76-Verified	0x76464327a9d1c84a9d98cc4ba1f8159fe0dcb264	PartnerRegistry		Etherscan			false	false	false
+30-Contracts	0x76481caa104b5f6bccb540dae4cefaf1c398ebea	0x Forwarder 2.1		0xTracker			false	false	false
 76-Verified	0x76493884cd23510d77e7f1391071197f9dbd040f	BondedECDSAKeep		Etherscan			false	false	false
 76-Verified	0x764a5b7399d552a029d6c8e4a2a71bb5e9c82bd6	_WrappedUSDT		Etherscan			false	false	false
 50-Tokens:ERC20	0x7654915a1b82d6d2d0afc37c52af556ea8983c7e	Feed	IFT	On Chain	18	We are building the world's first NEXT-GEN CRYPTOCURRENCY SOCIAL NETWORK.	false	false	false
@@ -5807,6 +5892,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x777defe54a17c2a2534e05961e38556f93c56a35	BanqAudit		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x778549eb292ac98a96a05e122967f22efa003707	jeff-emmett		Gitcoin Website			false	false	false
 34-Humanity DAO	0x778b58830837be301afd7801567866bd068ef04b	barneydebnam		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x778fdaf34bb5993d69968f541152451241fab7e3	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x7791cf9a85072698e9b805eb8156ec1e9c3fc724	Funds		Etherscan			false	false	false
 81-Other:DAO Related	0x779543a0491a837ca36ce8c635d6154e3c4911a6	DAO_id254_cnt28_2mo		Ether Camp			false	false	false
 76-Verified	0x7796ebcd047c923c880e8da6731d3dff48e50d7f	ERC20Token		Etherscan			false	false	false
@@ -5815,10 +5901,12 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x779e2e680fe3cc3144d3b1411a9c204072b26506	VCTAToken		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x779e782b556e38063e0390cf10a25f63d05cabdc	Grant 260 Voyager Podcast		GitCoin Website			false	false	false
 76-Verified	0x77a0597a6ed93f1f47a34b523ebef58931505585	InstaMakerCompBridge		Etherscan			false	false	false
+30-Contracts	0x77b26c9f9b87668b66db65dce7cc2b392ff59966	Totle Kyber Wrapper		0xTracker			false	false	false
 76-Verified	0x77b68899b99b686f415d074278a9a16b336085a0	DSValue		Etherscan			false	false	false
 76-Verified	0x77b71a9b0a047a075a905863993f0b455dab00e1	ConvertPortal		Etherscan			false	false	false
 76-Verified	0x77bb57d44953a03fe91e6b45862635741817fe98	ERC20Token		Etherscan			false	false	false
 76-Verified	0x77bcf90ffa34e4b0624e8257d58c97a4d3dab299	flashIt		Etherscan			false	false	false
+30-Contracts	0x77c31eba23043b9a72d13470f3a3a311344d7438	Chai Bridge		0xTracker			false	false	false
 76-Verified	0x77d77840552db13fdfe3327bbefa7a004c8ef054	Trader		Etherscan			false	false	false
 34-Humanity DAO	0x77e3630dec288c9a477bc430c44d8507068a63d1	@mpetrunic		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x77e3cbb74f338da27c619d06a58c92080a91b103	FZC		Etherscan			false	false	false
@@ -5897,7 +5985,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x791df1883e00f3163a8606a5595f946392923a82	OTToken		Etherscan			false	false	false
 34-Humanity DAO	0x79222147fabe23e786f1bd7f61a4a58164ca7515	ciprianimacovei		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x792a229b8d6e48fb42dc6914bb181ce8a6b5a317	ReduxToken		Etherscan			false	false	false
-91-Friends	0x793ea9692ada1900fbd0b80fffec6e431fe8b391	DAO Deployer		TrueBlocks.io			false	false	false
+30-Contracts	0x793ea9692ada1900fbd0b80fffec6e431fe8b391	Dao Deployer		OnChain			false	false	false
+30-Contracts	0x793ebbe21607e4f04788f89c7a9b97320773ec59	Oasis Proxy		0xTracker			false	false	false
 76-Verified	0x793f389cc1f7d42fa1f1bba68d16a1e00067cb04	Adventureth		Etherscan			false	false	false
 76-Verified	0x79408dad989e5c993db6a8dc7bdedbaa46f039e3	GlobalRobotMedicalChain		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x7944fc7bd79b25e6ffe24921d88a1f36f22be843	Commons Stack Sender sponnet		Gitcoin Website			false	false	false
@@ -5945,8 +6034,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x7a222da5383bd38e3cba987a19f03d576b4cb21f	ERC20Token		Etherscan			false	false	false
 76-Verified	0x7a284cfdf03d3bbf023c733875ffa780860ca00a	NordicEnergyRegistry		Etherscan			false	false	false
 32-Kickback:Friends	0x7a33615d12a12f58b25c653dc5e44188d44f6898	freeslugs		https://kickback.events/			false	false	false
+30-Contracts	0x7a3370075a54b187d7bd5dcebf0ff2b5552d4f7d	Kyber Reserve		0xTracker			false	false	false
 76-Verified	0x7a35fe1e97823f78736ef60b8053bff68fd7deb4	Hasanah		Etherscan			false	false	false
 81-Other:Consensys	0x7a3d7a4434058709f18337dff02f90235760a405	StandardTokenInterface		Consensys			false	false	false
+33-Set Prototcol	0x7a417f16a5b101e85edb2743388e8afd3696be62	Set: Social Trading Manager V2		Etherscan			false	false	false
 50-Tokens:ERC20	0x7a41e0517a5eca4fdbc7fbeba4d4c47b9ff6dc63	Zeus Shield Coin	ZSC	On Chain	18	Both blockchain and AI are adopted and integrated in the Zeusshield insurance system. Such integration leads to a green insurance ecosystem in terms of a business-to-customer based peer-to-peer p2p insurance market platform. The platform is open to both the insurer and insured units.	false	false	false
 34-Humanity DAO	0x7a44d904e5372f64db51436fcdf4024a8144c383	ryankung		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x7a477ddd6d34a920b3dcee1b3624e265bc37540f	AggregatorProxy		Etherscan			false	false	false
@@ -5971,6 +6062,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x7a9bcac66d17ead029bc27f3112b89ce019ad6b2	XDELTA		Etherscan			false	false	false
 90-DevCon2:Individual	0x7aa09142176ef9a18ab242aa9c51991d705e05e0	Peter Szilygyi		DevCon2 Token Contract			false	false	false
 32-Kickback:Friends	0x7aa29624d7c38c86e9cbe5b3a5bec26091015bb9	chaser		https://kickback.events/			false	false	false
+30-Contracts	0x7aa29d3158bc446fabd3196f54c01f86321eae32	Arbitrage Bot		0xTracker			false	false	false
 32-Kickback:Friends	0x7aa336b79d61cb5f3aa9a45468bfb55da52a040f	hen		https://kickback.events/			false	false	false
 76-Verified	0x7ab2a7ed1a0c58dea84de880b4f1710229137211	IdleMcdBridge		Etherscan			false	false	false
 76-Verified	0x7ab7b4f302b57410949a6c7be2929fe1f3efa952	MultiSigWallet		Etherscan			false	false	false
@@ -6227,6 +6319,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x800a5f6c1dd7c844baeef03b6821a60c4cbab088	TokenOfResources		Etherscan			false	false	false
 76-Verified	0x800eca21614da02df076981bca9c664dbe19089a	ActionsGateway		Etherscan			false	false	false
 76-Verified	0x8017d006f9cc2831249bfec6b2c4c10c327c8636	MCDFlashLoanTaker		Etherscan			false	false	false
+30-Contracts	0x8018280076d7fa2caa1147e441352e8a89e1ddbe	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x8018d7e183e4f50a1cdb68083ac308c56f3fe4e4	Ev5Game		Etherscan			false	false	false
 76-Verified	0x8033646e311bc101a1ccf4b2fa76663884e42c33	TokenERC20		Etherscan			false	false	false
 76-Verified	0x804e26c4eff0bb196b805bdfb5b29ab828cf0b1f	WhaleCoin		Etherscan			false	false	false
@@ -6443,6 +6536,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x855b26bc8ebabcdbefe82ee5e9d40d20a1a4c11f	beniaminmincu		https://kickback.events/			false	false	false
 76-Verified	0x855e01eb4fa0c8f54d58d1b793a05079d5f39c9b	SatoshiOne		Etherscan			false	false	false
 76-Verified	0x85609afe45ee16e52acb33b8ad103531fc959647	ERC20TokenAdapter		Etherscan			false	false	false
+33-Set Protocol	0x856c4388c56c2a613c60507a4701af627157fed6	Set: ETH Trending Alpha ST Set II		ETAS			false	false	false
 76-Verified	0x856d154656930060f9999848690d1c06c7c5efd1	StandaloneERC721		Etherscan			false	false	false
 34-Humanity DAO	0x856f681a5762b478d7d7a593b8aa270a1e110a5e	_LounLee		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x85705c152b90a636ffa84b00736c2d27f982fdb9	rednblue		Etherscan			false	false	false
@@ -6463,6 +6557,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x85c15b2deb0a905ea02f01826a8b675ae941eee0	LexSecurityToken		Etherscan			false	false	false
 81-Other	0x85c1b0dc9e3443e06e5f1b09844631378825bb14	EthlanceUser		http://ethlance.com/#/about			false	false	false
 76-Verified	0x85c5b89993d7a03057928de781cd61b44466f17a	LockDrop		Etherscan			false	false	false
+30-Contracts	0x85c5c26dc2af5546341fc1988b9d178148b4838b	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x85c7cd541296637e4d3bfdd26de544256ce5eaa3	PremiumFeedPrices		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x85cab7143ff3c01b93e88f5b017692374bb939c2	Grant 223 Ethereum Magicians Magician's Registration		GitCoin Website TrueBlocks.io			false	false	false
 50-Tokens:ERC20	0x85e076361cc813a908ff672f9bad1541474402b2	Telcoin	TEL	On Chain	2	A cryptocurrency distributed by your mobile operator and accepted everywhere.	false	false	false
@@ -6475,6 +6570,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x860706aa2f8c3e6bc93553770c5c24a9e7419d2b	TST		Etherscan			false	false	false
 76-Verified	0x86097c2bfd566cd07470a59da3ba9df8df77cfd1	KriosToken		Etherscan			false	false	false
 76-Verified	0x860a8c64cbc7f9aac11428ef8df989f5770cda60	SEC		Etherscan			false	false	false
+30-Contracts	0x860bd2dba9cd475a61e6d1b45e16c365f6d78f66	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x860dd1ac5085e62fc0b75024917b13e1230df1fb	HCE		Etherscan			false	false	false
 76-Verified	0x86149c67e57c749d0a12e6d6c2bf1b616619bb29	BNY		Etherscan			false	false	false
 76-Verified	0x8615ba28d7d66aef9069119b5f27653ef05eb574	FrommCar		Etherscan			false	false	false
@@ -6526,6 +6622,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x8702b8d7a1eefec7e54636e26a9323dc96a8dc25	Campaign X		TrueBlocks.io			false	false	false
 76-Verified	0x870e6cc2c82c29e055b6c7f44e53274e93b7dfeb	LivenCoin		Etherscan			false	false	false
 81-Other	0x870fe80e76dae4a4c12690dec52456ab13176202	Shinysquirrels		Etherscan.io			false	false	false
+30-Contracts	0x871299bed3ea54577a3e3a43136f7fbb5e377114	dYdX Bridge		0xTracker			false	false	false
 50-Tokens:ERC20	0x8713d26637cf49e1b6b4a7ce57106aabc9325343	CNN Token	CNN	On Chain	18	Blockchain-based Content Ecosystem	false	false	false
 50-Tokens:ERC20	0x8716fc5da009d3a208f0178b637a50f4ef42400f	UltrainGas	UGAS	On Chain	18		false	false	false
 76-Verified	0x871e6ba1a81dd52c7eeebd6f37c5cefe11207b90	Retainer		Etherscan			false	false	false
@@ -6616,6 +6713,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x88fcfbc22c6d3dbaa25af478c578978339bde77a	FundYourselfNow Token	FYN	On Chain	18	FundYourselfNow is a simple platform to allow project creators/promoters to raise funds for their projects using cryptocurrencies without the need of technical knowledge.	false	false	false
 76-Verified	0x8905ff67286639c5d4414267731f3e0e850b6b46	CompImport		Etherscan			false	false	false
 34-Humanity DAO	0x8913b99d5efd9e391ade59168230f6425813d90a	twoirtter		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x891f5a171f865031b0f3eb9723bb8f68c901c9fe	DeFi Saver Oasis Wrapper		0xTracker			false	false	false
 50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns	🦄	Ethereum.org		Ethereum tip jar unicorn tokens	false	false	false
 76-Verified	0x8920ab172362e42fcf576e17432359de1b1e463d	ConstantPriceOracle		Etherscan			false	false	false
 34-Humanity DAO	0x8920db855bb0b6aad1ee17d28c03b8c895803060	sy201253		https://www.humanitydao.org/humans			false	false	false
@@ -6649,6 +6747,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x89a9004bbf7498915276d361f3d46cb4469b0c1a	DATA Airdrop Sender		TrueBlocks.io			false	false	false
 76-Verified	0x89b3635bd2bad145c6f92e82c9e83f06d5654984	SavingsLogger		Etherscan			false	false	false
 76-Verified	0x89b4d891848b81fb093fb606e44bdb1bb4cbd602	PublicRange		Etherscan			false	false	false
+30-Contracts	0x89b5925a310b22e3e51cf9e2b3405a8c9b680835	dYdX Oasis Wrapper		0xTracker			false	false	false
 76-Verified	0x89b6dda81ed2ebb5dad7d4cc3f870a7c00b4e641	CaptureTheFlag		Etherscan			false	false	false
 81-Other	0x89c2352cb600df56fe4bfb5882caadef3e96213f	Twoandahalfponzi		Etherscan.io			false	false	false
 50-Tokens:ERC20	0x89c6c856a6db3e46107163d0cda7a7ff211bd655	Darico Ecosystem Coin	DEC	On Chain	18	Darico‚Äö√Ñ√¥s complete solution lets you monitor, trade, invest and spend your cryptocurrencies all from one integrated ecosystem.	false	false	false
@@ -6896,6 +6995,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 75-EarlyActors	0x8f22398f1567cddaba1b6bb1973e62b4992d5c9c	Miner_0041_178		OnChain			false	false	false
 34-Humanity DAO	0x8f242eea01d82852cc9db9c64db449f232786011	wladston		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x8f301566f312be10c8d0083ce2e94e7382dcd3bb	InstaVaultCompBridge		Etherscan			false	false	false
+30-Contracts	0x8f337bd3b7f2b05d9a8dc8ac518584e833424893	DeFi Saver Kyber Wrapper		0xTracker			false	false	false
 50-Tokens:ERC20	0x8f3470a7388c05ee4e7af3d01d8c722b0ff52374	Veritaseum	VERI	On Chain	18	Veritaseum builds blockchain-based, peer-to-peer capital markets as software on a global scale.	false	false	false
 34-Humanity DAO	0x8f384a9d3a471f5068dead79a9913d551d996d20	guyunxiang		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x8f4f846f2eb9b7d124b7ceb37f103146ffd1931b	BYBToken		Etherscan			false	false	false
@@ -7009,6 +7109,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x91886fd7683fac3d926cdae7f20156aaedd0b33d	GiftOfCompound		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x9188df10a49c1bfd4a098efeefd231be137dcec2	Grant 115 Codefund Development		GitCoin Website			false	false	false
 50-Tokens:ERC20	0x9195e00402abe385f2d00a32af40b271f2e87925	ETHEERA	ETA	On Chain	18	Real estate for the blockchain	false	false	false
+30-Contracts	0x91a502c678605fbce581eae053319747482276b9	Kyber DEX Contract		0xTracker			false	false	false
 34-Humanity DAO	0x91a824cef939467ee919f93440690bcf99e17c9f	imsatoshi3		https://www.humanitydao.org/humans			false	false	false
 81-Other	0x91a8baaed012ea2e63803b593d0d0c2aab4c5b0a	Early_Partners_020		Ether Camp			false	false	true
 76-Verified	0x91b02834daae8046bccd2c6e02580300cf838a65	ShowEth2DAI		Etherscan			false	false	false
@@ -7034,6 +7135,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x91ee990363fbb6aca7497632af8790efc238872f	Foundation_id202_cnt1_3mo		Ether Camp			false	false	false
 76-Verified	0x91ef6ac5c32b915f2f814ad20535097e83b181e0	UniswapConverter		Etherscan			false	false	false
 76-Verified	0x91f173b60c0e199d94df2bbc90fd7234cbee70c7	iDAIZapSwap		Etherscan			false	false	false
+30-Contracts	0x91f3935ed7a4ee8d15023c5df26895b26ae98015	Totle Airswap Wrapper		0xTracker			false	false	false
 76-Verified	0x91f52e90c41ff3dc3ce890610f8acd7d1301d8d2	AssetSwap		Etherscan			false	false	false
 76-Verified	0x91f5f9c36b093907b0f99d1dbcf41aaf1db28916	_0x		Etherscan			false	false	false
 76-Verified	0x91ffe7f15452049cf2f40c3457ab4ca5cbfa427a	ERC20Token		Etherscan			false	false	false
@@ -7069,6 +7171,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x929bbccdaa014585666d1497afb2d8d7c9da38e5	WildcardSteward_v0		Etherscan			false	false	false
 80-Malicious	0x92a4406a0bcc70bb92b9c1f2d457dca08ae60627	Possibly Malicious 0x92a		TrueBlocks.io			false	false	false
 50-Tokens:ERC20	0x92a5b04d0ed5d94d7a193d1d334d3d16996f4e13	Eristica TOKEN	ERT	On Chain	18	Take a Challenge. Film your Proof. Win Cryptocurrency.	false	false	false
+30-Contracts	0x92ab1f32771e67172a00f1e1a78286355b0cdc80	Totle Bancor Wrapper		0xTracker			false	false	false
 76-Verified	0x92abb02369d1adc7916876112021dd3f894e4d47	FoGuanCoin		Etherscan			false	false	false
 76-Verified	0x92b8562d3369427368aed9087c424ce0cea1a030	RyangCoin		Etherscan			false	false	false
 34-Humanity DAO	0x92c107f369710c625c7574e88a21dfb305263dd2	0xstark		https://www.humanitydao.org/humans			false	false	false
@@ -7096,8 +7199,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x9319d16ffad46b880904a9f001bef9e98986b846	CasinoCoin		Etherscan			false	false	false
 33-Set Protocol:Libraries	0x931a809658b677390c80a443415d16f4fcd37d1e	Rebalancing Helper Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false
 76-Verified	0x931ad0628aa11791c26ff4d41ce23e40c31c5e4e	Pegasus		Etherscan			false	false	false
+30-Contracts	0x932348df588923ba3f1fd50593b22c4e2a287919	DEX.AG		0xTracker			false	false	false
 34-Humanity DAO	0x93248a9edc7641153bbd3b9f52b49a2a2cced707	movingimp		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x932773ae4b661029704e731722cf8129e1b32494	MCDAwarePool		Etherscan			false	false	false
+30-Contracts	0x9328c82a7c96b171689972fd0292cf6ccca4c6bb	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x9328f2fb3e85a4d24adc2f68f82737183e85691d	CurveReserveTradeHelperV2		Etherscan			false	false	false
 76-Verified	0x932faada714585cb63a2f488e1e226ef9b4ceae9	Exchange		Etherscan			false	false	false
 76-Verified	0x933326d0e0a31c9ad9d6709e59282dddebe2e8e4	Token		Etherscan			false	false	false
@@ -7199,6 +7304,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x953ef149ca90fa1e3518c56178cba0346d8047bf	nowherelessnow		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x954b5de09a55e59755acbda29e1eb74a45d30175	FluzFluz	FLUZ	On Chain	18		false	false	false
 50-Tokens	0x954b890704693af242613edef1b603825afcd708	Cardstack Token	CARD	Etherscan.io		The experience layer of the decentralized internet.	false	false	false
+30-Contracts	0x9550050d102ff42a2a683a9fa23b8f3fb2b378c8	Nuo Uniswap Connector		0xTracker			false	false	false
 76-Verified	0x9550abdf341e8e47a50bb00105db717648b21b02	FUNNYTOKEN		Etherscan			false	false	false
 30-Contracts:dAppNode	0x955271c5e77d7bddcece0e0c8d48470a699b372f	dAddNode Package 013		TrueBlocks.io			false	false	false
 76-Verified	0x9557a956202dfea21b910afb96ac4d2ff7783cfa	CryptoholicAcademyDonationToken		Etherscan			false	false	false
@@ -7272,6 +7378,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x96e8737891530c89c3fa7b848ce35b54b400f6c3	Marco Giglio		DevCon2 Token Contract			false	false	false
 76-Verified	0x96f0b742daa1216961f4caf846fea5af60733aeb	CrowdSale		Etherscan			false	false	false
 76-Verified	0x96f4c85e7830c755981c12fb7c702ef580047b2a	PainthereumContract		Etherscan			false	false	false
+30-Contracts	0x96fe94c07ee88fc2a4b3e978d875202fd113e654	Arbitrage Bot		0xTracker			false	false	false
 75-EarlyActors	0x970a90087889561eee7432daa7be584df9e67f75	Miner_0061_95		OnChain			false	false	false
 31-Gitcoin Grants:Contracts	0x970cc8c95c614a7335c1487eb2e16848983d5fe6	GitCoin Subscription Sender		Etherscan			false	false	false
 50-Tokens:ERC20	0x970e035e2a013cf4becd67e300d65bc32a56d826	Bodhi Ethereum	BOE	On Chain	8	Bodhi aims to build a credible, autonomous, and global decentralized prediction market platform.	false	false	false
@@ -7309,6 +7416,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x979cee879bbea69c050a3cb158b97f402524e4b3	EthToDaiTradeHelperV1		Etherscan			false	false	false
 32-Kickback:Friends	0x979db95461652299c34e15df09441b8dfc4edf7a	tworec		https://kickback.events/			false	false	false
 76-Verified	0x979eae462fea018d72afb7b1cb4a254768a062dd	BlagaDaru		Etherscan			false	false	false
+30-Contracts	0x979ff11dcbf3ac66a4d15a7b3a5b306ccbbef4e9	1inch Exchange		0xTracker			false	false	false
 76-Verified	0x97a294680b9a0cf78b1b64ed626a3a4b61bdbf8d	HBITCrowdSale		Etherscan			false	false	false
 34-Humanity DAO	0x97ae2c1ba8a514d7f2c668005a07b2666613cdfb	enutothemoon		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x97ae5bb1b2cf5c6b45a7725b75796c95e78d2a8c	ZeroExExchangeWrapper		Etherscan			false	false	false
@@ -7376,7 +7484,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x98fcf1b11dcc224048564853b7b5602b1082fc5f	EinfachverdienenToken		Etherscan			false	false	false
 76-Verified	0x99156e443ce89b47fd51fa3cc5fb2132407e37fb	TokenERC20		Etherscan			false	false	false
 80-Malicious	0x991bdd03b0581cb0a2d46ffe0d21855ff83bdeef	Possibly Malicious 0x991		TrueBlocks.io			false	false	false
-76-Verified	0x991c745401d5b5e469b8c3e2cb02c748f08754f1	Eth2DaiBridge		Etherscan			false	false	false
+76-Verified	0x991c745401d5b5e469b8c3e2cb02c748f08754f1	Oasis Bridge		0xTracker			false	false	false
 76-Verified	0x9921810c710e7c3f7a7c6831e30929f19537a545	Voting		Etherscan			false	false	false
 90-DevCon2:Individual	0x992fe0e566215770146b5480adaf026bcf655308	David Burela		DevCon2 Token Contract			false	false	false
 32-Kickback:Friends	0x993577354553a0d36da31b3af01775c8a856f72b	dh		https://kickback.events/			false	false	false
@@ -7457,13 +7565,14 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x9ab165d795019b6d8b3e971dda91071421305e5a	Aurora	AOA	On Chain	18	Aurora Chain offers intelligent application isolation and enables multi-chain parallel expansion to create an extremely high TPS with security maintain.	false	false	false
 76-Verified	0x9ab3ae47965ab3553075e8f86afc3fdfd705202f	DssSpell		Etherscan			false	false	false
 76-Verified	0x9ab994054db1f001e8662a83a36e77bc27486f7a	AssetManagerEscrow		Etherscan			false	false	false
+30-Contracts	0x9abe2715d2d99246269b8e17e9d1b620e9bf6558	DeFi Saver Oasis Wrapper		0xTracker			false	false	false
 76-Verified	0x9ac4883b0226fb37fa362dbd76564c539c4f0ee6	ReferStorage		Etherscan			false	false	false
 76-Verified	0x9aca16066c85f12f36cddb3898f3e14d0bdf76c8	ERC20Token		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x9ace976f2f06f2d2815a93f1866011007171fdb2	Scott Moore ceresstation		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Friends	0x9ad1fb1b520684757db823f24f2e113bc04ded3c	kryptobillah		Gitcoin Website			false	false	false
 76-Verified	0x9ad2018bdbc21db14457542ee26cbbf0565f8687	YSM		Etherscan			false	false	false
 76-Verified	0x9ae438e08eb7aa18a7b68d253745042b0c9b9813	SKYBEYOND		Etherscan			false	false	false
-34-Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		TrueBlocks.io			false	false	false
+34-Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		0xTracker			false	false	false
 30-Contracts	0x9ae98746eb8a0aeee5ff2b6b15875313a986f103	Parity ProofOfSMS		From Tomasz Drwiega via Gitter			false	false	false
 76-Verified	0x9aefb238916877a30ba001b30be2c74c0b3b0e12	APRWithPoolOracle		Etherscan			false	false	false
 34-Humanity DAO	0x9af481276b075e036bc23e887a8bd275e69ef74c	conlan		https://www.humanitydao.org/humans			false	false	false
@@ -7486,11 +7595,12 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x9b37508b5f859682382d8cb6467a5c7fc5d02e9c	CrowdFundDAO_id51_cnt5_5mo		Ether Camp			false	false	false
 76-Verified	0x9b393a12fb9dffd4a49fe5a27d88893a230ce853	Factory		Etherscan			false	false	false
 50-Tokens:ERC20	0x9b3e946e1a8ea0112b147af4e6e020752f2446bc	Puregold Token	PGT	On Chain	18		false	false	false
-76-Verified	0x9b3eb3b22dc2c29e878d7766276a86a8395fb56d	KyberNetworkWrapper		Etherscan			false	false	false
+76-Verified	0x9b3eb3b22dc2c29e878d7766276a86a8395fb56d	Set Protocol Kyber Wrapper		0xTracker			false	false	false
 76-Verified	0x9b43f92fdc8d5981f64c90623174695c4668b41c	Swaps		Etherscan			false	false	false
 50-Tokens:ERC20	0x9b4e2b4b13d125238aa0480dd42b4f6fc71b37cc	MT Token	MT	On Chain	18		false	false	false
 34-Humanity DAO	0x9b520fa2e47e024aadb2bad83cf9a50ded982583	janlukas_rinker		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0x9b570346084ab19db55f31d892ba7dab8a98c3c2	YomerToken		Etherscan			false	false	false
+30-Contracts	0x9b57672d596b513d284976d565f3acb326041db0	1inch Exchange		0xTracker			false	false	false
 50-Tokens:ERC20	0x9b68bfae21df5a510931a262cecf63f41338f264	Decent.Bet Token	DBET	On Chain	18	An open-source blockchain peer-to-peer gaming platform where anyone with an idea can build a game, a predictive market, or a casino room and share in the revenue.	false	false	false
 50-Tokens:ERC20	0x9b70740e708a083c6ff38df52297020f5dfaa5ee	Daneel	DAN	On Chain	10		false	false	false
 60-Airdrops	0x9b737eca2f0c7b5364702e9d4a932677a0bb2ea9	RZM Airdrop Sender		TrueBlocks.io			false	false	false
@@ -7501,6 +7611,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x9b9647431632af44be02ddd22477ed94d14aacaa	KOKContract		Etherscan			false	false	false
 76-Verified	0x9b97bb0bf1f65afb024a9d4fdf6037bd12ec3d40	EtherWin		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0x9b984d5a03980d8dc0a24506c968465424c81dbe	Grant 024 Prysm By Prysmatic Labs		GitCoin Website			false	false	false
+30-Contracts	0x9ba6c9d09db964771cb4d526188f6af81e9bcf9e	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0x9bb157357895f07e59c239f4c8e9729d83249854	Airdrop		Etherscan			false	false	false
 76-Verified	0x9bb48d5f633dbc9bcc6d1fd62b4e36606a104c6d	GasDiscountDeployer		Etherscan			false	false	false
 76-Verified	0x9bba20127678611e4e01e620ceee0024a76c386c	Loans		Etherscan			false	false	false
@@ -7518,6 +7629,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x9c0141df73ea0d004eecea3332354f13dcb3d086	CPTFP Airdrop		TrueBlocks.io			false	false	false
 76-Verified	0x9c05dc7c7f6332cbc16ce1e196ff6928f3fce5bf	Platform		Etherscan			false	false	false
 76-Verified	0x9c0ccb765d3f5035f8b5dd30fe375d5f4997d8e4	SmartWalletRevertReasonHelperV2		Etherscan			false	false	false
+30-Contracts	0x9c119a139b9edcdb65b534c5c36d15d88bda8f42	Totle 0x Wrapper		0xTracker			false	false	false
 81-Other:DAO Related	0x9c15b54878ba618f494b38f0ae7443db6af648ba	DAO_id263_cnt8_2mo		Ether Camp			false	false	false
 76-Verified	0x9c186a6c1566372270beb87b78feb0a179a80a1f	MECToken		Etherscan			false	false	false
 76-Verified	0x9c1b8fe12f78debeacbe45e1272828b92683f179	WrapperFactory		Etherscan			false	false	false
@@ -7613,6 +7725,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x9e64b47bbdb9c1f7b599f11987b84c416c0c4110	jamiis		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x9e6b2b11542f2bc52f3029077ace37e8fd838d7f	Hacken	HKN	On Chain	8	Global Tokenized Business with Operating Cybersecurity Products.	false	false	false
 76-Verified	0x9e6dcb5c5a3f17f7400cd63ae6bec0c74e65687c	InstaCompoundResolver		Etherscan			false	false	false
+30-Contracts	0x9e70a86700c85ea8d5f90f35d70e5c3a5d98d488	DEX.AG		0xTracker			false	false	false
 50-Tokens:ERC20	0x9e77d5a1251b6f7d456722a6eac6d2d5980bd891	BRAT RED	BRAT	On Chain	8	BROTHER token BRAT is a charity and aid token.	false	false	false
 50-Tokens:ERC20	0x9e88613418cf03dca54d6a2cf6ad934a78c7a17a	Swarm Fund Token	SWM	On Chain	18	Aims to be the Blockchain for Private Equity.	false	false	false
 76-Verified	0x9e8a7fe32d0a9498df565939e67edc55d53404d7	Staking		Etherscan			false	false	false
@@ -7653,6 +7766,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious	0x9f58ef5d703973ba98dfa7a9bdecabecf13a0ec3	Possibly Malicious 0x9f5		TrueBlocks.io			false	false	false
 76-Verified	0x9f5a3d70d62379328c9440f19c097f1341b77093	TEAToken		Etherscan			false	false	false
 76-Verified	0x9f5b1fa6ec33513b8a9f22cea0acdc9c3b2835b2	NiftyBuilderInstance		Etherscan			false	false	false
+30-Contracts	0x9f6aef5abe4f5963f3c0919814f0e691a1d6de6d	DUST Staking Pool		0xTracker			false	false	false
 76-Verified	0x9f75b45694286de1d82f55d5e9e178f351e47b8a	SinnerSchrader		Etherscan			false	false	false
 32-Kickback:Friends	0x9f82f196f718cd6c1fc9b9f6657d8e6ff8bc3a54	mm319		https://kickback.events/			false	false	false
 30-Contracts:dAppNode	0x9f85ae5aefe4a3eff39d9a44212aae21dd15079a	dAppNode Package Manager		TrueBlocks.io			false	false	false
@@ -7703,6 +7817,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xa0b9838d0b0c3255fc9d568abbb35cbcd2db87e1	ATUToken		Etherscan			false	false	false
 76-Verified	0xa0ba8f31c503e78414ffcd9eb44e54e0a01cd6f0	SGAWalletsTradingLimiter		Etherscan			false	false	false
 76-Verified	0xa0c15a8cee997af72907b1f11c29a1817743c0f2	JPMeijiTetsubin		Etherscan			false	false	false
+30-Contracts	0xa0c39f6d8de3707a513bb1e8fa55f73d0cf5d18c	Totle Compound Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0xa0ca69a35c77ab43f39e3439539a098a948552c6	dineshraju		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xa0cb77779acde6f668265c791c7123845f11e72f	F_Fever		Etherscan			false	false	false
 76-Verified	0xa0cb9cec97d16b5e85ea621f5f9921bf55f8f4a1	oracleInfo		Etherscan			false	false	false
@@ -7735,6 +7850,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xa143fd004b3c26f8faedeb9224ec03585e63d041	DharmaSpreadRegistryPrototypeStaging		Etherscan			false	false	false
 76-Verified	0xa145eca55ae0e39d7c228ed7a962424a97ac74cb	ExchangePortal		Etherscan			false	false	false
 35-Pool Together	0xa145f5436741d9675f84a357249c4b90fae4b77e	Pool Creator		Etherscan			false	false	false
+30-Contracts	0xa14857e8930acd9a882d33ec20559beb5479c8a6	0x Coordinator		0xTracker			false	false	false
 76-Verified	0xa151e5aecaad2c56319254e0df12768af72db284	SEADigitalStableToken		Etherscan			false	false	false
 81-Other	0xa15c784319fa96d3e36cfe97fbadd89ec704a8dc	Inherently Tradable		o0ragman0o Reddit			false	false	false
 50-Tokens:ERC20	0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3	Pundi X Token	NPXS	On Chain	18		false	false	false
@@ -7778,6 +7894,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xa259e6bcade86c770cb5214c789ee107662831a6	Crazyearning		Etherscan.io			false	false	false
 76-Verified	0xa25ad02862756680ee8ae7aa9ccc37d3d3f75a4c	Loans		Etherscan			false	false	false
 76-Verified	0xa2609b2b43ac0f5ebe27deb944d2a399c201e3da	yUSDC		Etherscan			false	false	false
+30-Contracts	0xa26d16a21805b14b2977555ffdea34e5e6fc43ba	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0xa27dfe1966942c77ef0ab57be72f0c792902c34f	RecoverableWallet		Etherscan			false	false	false
 76-Verified	0xa27f1c03ff60fa52827ef562ee7fdca3e97e23e1	StorageUnit		Etherscan			false	false	false
 76-Verified	0xa292832acf0b0226e378e216a982fa966eaa7ebc	MCDSaverProxy		Etherscan			false	false	false
@@ -7830,6 +7947,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xa3a551e9987253b13af5097e8748b0ae8e8b9afa	FixedPoint		Etherscan			false	false	false
 76-Verified	0xa3a5d48921cdc1deb48cb0528ddfab94d4ac6a6e	OXO		Etherscan			false	false	false
 76-Verified	0xa3aa18a40d673d11556519cc59a3c0b5052372eb	lexDAOetherEscrow		Etherscan			false	false	false
+30-Contracts	0xa3ac9844514b96bb502627ca9dceb57c4be289e3	0x Forwarder 3.0		0xTracker			false	false	false
 76-Verified	0xa3b69e77840ea3e655eba3822539d498bea72156	ERC20Minter		Etherscan			false	false	false
 32-Kickback:Contracts	0xa3b8f889c29fc6e23748d9baca8f7ab01f864471	ETHLDN Keynote: 3Box PUBLC		https://kickback.events/event/[{ADDRESS}]			false	false	false
 76-Verified	0xa3bac15614d4e0e3b3a746b4591cbb2c26907cac	FiduciaToken		Etherscan			false	false	false
@@ -7871,6 +7989,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xa4a528a926491994f974d823453e2bb0d525fc24	makoto		DevCon2 Token Contract			false	false	false
 76-Verified	0xa4b2d141bfe3f08e653bd6334f55c1296e3c8f0c	DharmaReserveManagerV1		Etherscan			false	false	false
 32-Kickback:Contracts	0xa4b3761b771a57650fca058be5a5733bb3f87d00	Ethereans in Paris		https://kickback.events/event/[{ADDRESS}]			false	false	false
+30-Contracts	0xa4bca645f9cb9e6f9ad8c56d90a65b07c2f4e1dd	InstaDapp		0xTracker			false	false	false
 34-Humanity DAO	0xa4c35978a5a54772af18feffdb1586ff96d97cad	etrisotoko777		https://www.humanitydao.org/humans			false	false	false
 81-Other	0xa4c7c71c815f32281677831664b48c7e62f3b626	Steemit Wallet		SteemIt Website			false	false	false
 76-Verified	0xa4ca8d3ebf889cffc6b9d360b9c2cd3e0493b5a6	HBTCToken		Etherscan			false	false	false
@@ -7904,15 +8023,18 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xa522c32b3d512f6ad3c1420dfaafab213469db97	klchan		https://kickback.events/			false	false	false
 34-Humanity DAO	0xa527c323f2cb7704e84cfea27d595e6e0e51d5eb	hemabangniuwan		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xa52db128b8983429cfec2cf28c20041ff6256a23	Techan		Etherscan			false	false	false
+30-Contracts	0xa540fb50288cc31639305b1675c70763c334953b	DEX.AG		0xTracker			false	false	false
 34-Humanity DAO	0xa548a329601a6d348b9bfcbf4229a2c6fbdec022	big4bro		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xa54a929c8ba94edffb344a90ba9073aced8e1af1	protolambda		https://kickback.events/			false	false	false
 76-Verified	0xa54c786813f0261dd1ed3f928d78f4b063079a19	TokenERC20		Etherscan			false	false	false
 76-Verified	0xa54d59b5741502edb88cf245af007c678f7750de	SnowDCoin		Etherscan			false	false	false
+30-Contracts	0xa54da2581dd4828e4aa00638aab835119500a284	Arbitrage Bot		0xTracker			false	false	false
 50-Tokens:ERC20	0xa54ddc7b3cce7fc8b1e3fa0256d0db80d2c10970	NEVERDIE	NDC	On Chain	18	NEVERDIE Studios aims to use the value of the NEVERDIE Coin to make virtual reality fulfill its potential.	false	false	false
 76-Verified	0xa55523eed98ba64ff7673b22963df34e3a0305fe	DelegateFactory		Etherscan			false	false	false
 32-Kickback:Friends	0xa559f26d51b3511d1eb905203be846bd60ddfa1f	ichris		https://kickback.events/			false	false	false
 32-Kickback:Friends	0xa574c53d63550e535c8b78f0e2a33bbe3c56ef2b	cj		https://kickback.events/			false	false	false
 76-Verified	0xa5763bf433f2f154b798b924fb2f6c54137b3522	ASCToken		Etherscan			false	false	false
+30-Contracts	0xa57bd00134b2850b2a1c55860c9e9ea100fdd6cf	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xa581dc3c1f96b694265f26b979a7a956b1538137	CompoundFeeTransactionManager		Etherscan			false	false	false
 76-Verified	0xa58afd3fd408c4d7a802462079f1a8aed3e08d35	DharmaSmartWalletFactoryV1Prototype		Etherscan			false	false	false
 76-Verified	0xa58c4ba113580e59d81241e35d0f7aa20d5d09eb	Trader		Etherscan			false	false	false
@@ -8157,6 +8279,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xaae10c1223df062e2df6982a80621977fa8b2d34	Dice		Etherscan.io			false	false	false
 76-Verified	0xaae28e9eefb23bbbcb6cd70518f2eb8bd33940d7	PhotochainMarketplace		Etherscan			false	false	false
 76-Verified	0xaae564be11bb83821acf74dbefae5cc2ac435911	FASTPAYTOKEN		Etherscan			false	false	false
+30-Contracts	0xaae7ba823679889b12f71d1f18beecbc69e62237	CDP Saver		0xTracker			false	false	false
 50-Tokens:ERC20	0xaae81c0194d6459f320b70ca0cedf88e11a242ce	WeToken	WT	On Chain	18		false	false	false
 34-Humanity DAO	0xaaf1fc6560091a02bffb6542f1afbba54ce7b0a0	SkrrEosFans		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xaaf37055188feee4869de63464937e683d61b2a1	UChain Token	UCN	On Chain	18	The Next Generation Distributed Smart Network Blockchain for the Sharing Economy	false	false	false
@@ -8165,6 +8288,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xab0cae983e07c0614a06d08b43e00814365cceea	SSITToken		Etherscan			false	false	false
 76-Verified	0xab14d3ce3f733cacb76ec2abe7d2fcb00c99f3d5	End		Etherscan			false	false	false
 76-Verified	0xab2fbc97bbcd0af4f7c5bbc0aa95933255acb784	FASTPAY		Etherscan			false	false	false
+30-Contracts	0xab33e884ec8fed4f5867246e4300228f3d666561	dYdX Oasis Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0xab3627317c43d394eb171170f818153b976d28a3	ilan_katin		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0xab384167b6e9b007f075e62979bfb4c05fea63f5	Squid		DevCon2 Token Contract			false	false	false
 76-Verified	0xab388aca9be5ab0ed0e57f2e3bb45b7cbe732474	CrypsterToken		Etherscan			false	false	false
@@ -8236,6 +8360,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xac9bb427953ac7fddc562adca86cf42d988047fd	SCATTER		Etherscan			false	false	false
 50-Tokens:ERC20	0xac9ce326e95f51b5005e9fe1dd8085a01f18450c	VeriSafe	VSF	On Chain	18		false	false	false
 34-Humanity DAO	0xac9e6fa8ad5214f365e99ee96227598ea1e4b20c	protocollayer		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0xac9f29960734adbc7be20bcccb1b632bd5ec6c11	Arbitrage Bot		0xTracker			false	false	false
 30-Contracts:dAppNode	0xaca39566a6a46abfa57b2f6d08dd322d62c00f68	dAddNode Package 015		TrueBlocks.io			false	false	false
 76-Verified	0xacb53386b1c8015ae9352c8482d10c0d4a03c38a	CMIDToken		Etherscan			false	false	false
 76-Verified	0xacc3414633b7d7bfc7ebf94dbf6d9d6be2554f0c	CashQuestBot		Etherscan			false	false	false
@@ -8398,6 +8523,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xaf695c52c886c62e3dc5503202cc35b1edca9a1b	SimpleRestrictedFDTFactory		Etherscan			false	false	false
 76-Verified	0xaf76f1949400a296121cc26c499f50d83d051410	VokenPublicSalePanel		Etherscan			false	false	false
 50-Tokens:ERC20	0xaf8a215e81faea7c180ce22b72483525121813bd	Engine Token	EGCC	On Chain	18		false	false	false
+30-Contracts	0xaf8ae6955d07776ab690e565ba6fbc79b8de3a5d	Deversifi		0xTracker			false	false	false
 34-Humanity DAO	0xaf8d418c90ed09f54dcdbd7a7c9571df98fbe7ff	StepanVetrovec		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Contracts	0xafaba30769374ea0f971300de79c62bf94b464d5	Grant 170 Pisa Financially Accountable Responder		GitCoin Website			false	false	false
 76-Verified	0xafb0ac5b170b25ce254e49691bb48707098cf757	ZrxAdapter		Etherscan			false	false	false
@@ -8405,7 +8531,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xafb4d9ad87a5bf41218a02175ecbf281359bce16	AppleToken		Etherscan			false	false	false
 76-Verified	0xafb5b6e1aae202857d95356709c0a4e74c5f48c6	InstaSave		Etherscan			false	false	false
 50-Tokens:ERC20	0xafbec4d65bc7b116d85107fd05d912491029bf46	ARBITRAGE	ARB	On Chain	18		false	false	false
-76-Verified	0xafbf0d08269a7eee8d587121f3b0616c8cef5077	KyberNetwork		Etherscan			false	false	false
+76-Verified	0xafbf0d08269a7eee8d587121f3b0616c8cef5077	Kyber DEX Contract		0xTracker			false	false	false
 50-Tokens:ERC20	0xafc39788c51f0c1ff7b55317f3e70299e521fff6	eBitcoinCash	eBCH	On Chain	8	Cryptocurrency Trading Platform	false	false	false
 81-Other	0xafcb0ca8f05c5374a4d11f4197fc25f51a76813d	AuctionMaster_id119_cnt36_5mo		Ether Camp			false	false	false
 34-Humanity DAO	0xafcd2e62763da345eff435344fcc041625bbf88d	neinna		https://www.humanitydao.org/humans			false	false	false
@@ -8455,6 +8581,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xb0ccc5e4284a35b19bc7d572400a719d41c727c3	ERC20DepositPoolFactory		Etherscan			false	false	false
 76-Verified	0xb0d04041ba705468c98ef089eba804186984afe0	MT5Token		Etherscan			false	false	false
 34-Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve		TrueBlocks.io			false	false	false
+30-Contracts	0xb0dc61047847732a013ce27341228228a38655a0	Uniswap Bridge		0xTracker			false	false	false
 76-Verified	0xb0e85d5497e47d6318ea9ab167360806fff40840	KiteFly		Etherscan			false	false	false
 76-Verified	0xb0ee877305613ebc98fedaed2788a9a6168cdc87	lexTokenFactory		Etherscan			false	false	false
 81-Other	0xb0f94af0cfccc76113bb5ba2c2d89d56221b18a5	Coinlock		Etherscan.io			false	false	false
@@ -8522,6 +8649,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xb268c1f78ebb9bae865b3456291e8433c22ef743	ITerraERC20		Etherscan			false	false	false
 76-Verified	0xb27174c6b468ce285eec3bdb4d03351c24def5dd	DaiSwap		Etherscan			false	false	false
 81-Other:DAO Curators	0xb274363d5971b60b6aca27d6f030355e9aa2cf23	Viktor Tron		DAO_Curator			false	false	false
+30-Contracts	0xb27732feae161e1f42cfcd2b716bbf7f987fb984	1inch Exchange		0xTracker			false	false	false
 76-Verified	0xb27f1db0a7e473304a5a06e54bdf035f671400c0	Exchange		Etherscan			false	false	false
 76-Verified	0xb2840dfc364fbe44ce5022168521f9745285e5a3	AYC		Etherscan			false	false	false
 90-DevCon2:Individual	0xb2a0d02fd0694ee78679e9e5738bf4cb898be0e0	julienbrg		DevCon2 Token Contract			false	false	false
@@ -8583,6 +8711,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343	Commons Stack Sender lorelei1		Gitcoin Website			false	false	false
 76-Verified	0xb3e7a25368fe0cbc65f638454733cde721d86f72	ERC20Burnable		Etherscan			false	false	false
 90-DevCon2:Individual	0xb3ee92115eda643511324b1b886edb9216fa69ad	Joseph Lubin		DevCon2 Token Contract			false	false	false
+30-Contracts	0xb3fa5ba98fdb56e493c4c362920289a42948294e	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xb406ad2bff8eb1a272c6c4b19d14e180d1201d8b	TokensDecimalsView		Etherscan			false	false	false
 34-Humanity DAO	0xb41a46aad577fa22f51762e0eace6118d88c882d	come		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xb41f09a973a85c7f497c10b00a939de667b55a78	KNOW	KNOW	On Chain	10		false	false	false
@@ -8729,6 +8858,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xb72b4b94d1ed3cc382d5beeefe3d03dd55ad8229	MetadataPooledCDAIFactory		Etherscan			false	false	false
 76-Verified	0xb72f97612d9b62038015c1c4d38e987947573a9e	TemplateCrowdsale		Etherscan			false	false	false
 76-Verified	0xb733cbdfa406b2bab67ac2b9f245a11986250b79	ProofOfPerformance		Etherscan			false	false	false
+30-Contracts	0xb734d82dcc42e0ba1b4a5ed6f0ca28a288fd5291	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0xb736ba66aad83adb2322d1f199bfa32b3962f13c	ERC20		Etherscan			false	false	false
 76-Verified	0xb74a2d5a709af071b37ee4fc3c9b4398ee0dc4a7	ERC721Metadata		Etherscan			false	false	false
 32-Kickback:Friends	0xb7544b0f817862721488d899b9d2b92570904c3d	nomadish		https://kickback.events/			false	false	false
@@ -8823,6 +8953,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xb950ce63a8006a74336dc91a7ee09d5d63c42be4	BcashToken		Etherscan			false	false	false
 76-Verified	0xb95870208936b6bbcc82133f2c9a535131e14b35	RMCP		Etherscan			false	false	false
 76-Verified	0xb958a0668d4a242ca48e21c1e806232dc4a285ad	Hourglass		Etherscan			false	false	false
+30-Contracts	0xb958a8f59ac6145851729f73c7a6968311d8b633	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xb95be375f53f377935d0e88ec832dd05e590f269	Token		Etherscan			false	false	false
 81-Other	0xb9661b6b060601b83b6bb6fa323e466580ebe71e	HelloSystem_id121_cnt3_5mo		Ether Camp			false	false	false
 76-Verified	0xb96b35827398e2402cd9b3c602ae1c024aa10476	LDC		Etherscan			false	false	false
@@ -8881,6 +9012,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xba44d802692d760b97c1fdff51d54bbbc55fdff8	InstaDydx		Etherscan			false	false	false
 76-Verified	0xba4870a03cd31526fc6f704b4dfd93601c0a0585	ETOTokenTerms		Etherscan			false	false	false
 76-Verified	0xba4f0ae2ac0945def9ced6df4abb32b37e3b0943	ChaFund		Etherscan			false	false	false
+30-Contracts	0xba4f44e774158408e2dc6c5cb65bc995f0a89180	VolleyFire Staking Pool		0xTracker			false	false	false
 76-Verified	0xba4fb1df1d816edb279883a3571f8896b07db3e9	sendEther		Etherscan			false	false	false
 32-Kickback:Friends	0xba527d8301178a03a6993ab5a08cab06b975d5ae	davidcostello		https://kickback.events/			false	false	false
 76-Verified	0xba556f09a49764a757c42f384116de7125900d70	Vyper_contract		Etherscan			false	false	false
@@ -8893,6 +9025,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xba6ae38c696148944b5211e5a63ecef34d63a63f	UniswapDapp		Etherscan			false	false	false
 76-Verified	0xba6db13aeae3607d400ddffd675aa4e88ecc9a69	SENSOToken		Etherscan			false	false	false
 76-Verified	0xba77007e5745f7e6f80f78904c7628e30909f828	Coinosis		Etherscan			false	false	false
+30-Contracts	0xba782e9fbac2c7bfc1ce409b3909099b6ed61f80	Rigo Staking Pool		0xTracker			false	false	false
 76-Verified	0xba785777de1f6d3706753842a12940c53994abaa	GBanknote		Etherscan			false	false	false
 76-Verified	0xba7c422e484b2cae9ac959c0f5f91cc1729a5a25	ERC20toUniPoolZapV1_General		Etherscan			false	false	false
 60-Airdrops	0xba85ffe69f46549481dc987bd6347ae80dfaed9b	WLM Airdrop Sender		TrueBlocks.io			false	false	false
@@ -9091,6 +9224,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xbe13b07351fa9e22d0c37a304b6d69787fbb0f21	Reward		Etherscan			false	false	false
 76-Verified	0xbe14536f8285e33d04203db65b61e4d1fe24f881	ERC20Token		Etherscan			false	false	false
 81-Other	0xbe181da06d93867af0a3ffadcebe345ec35dae4e	Piggybank		Etherscan.io			false	false	false
+30-Contracts	0xbe1b7af62ebbfdde3b9f18daa9689c43e33dab56	Totle EtherDelta Wrapper		0xTracker			false	false	false
 76-Verified	0xbe215409c0a58559e304a14dbfba831aa4bdf1c4	UniSwap_ETH_CDAIZap		Etherscan			false	false	false
 76-Verified	0xbe286431454714f511008713973d3b053a2d38f3	DSPause		Etherscan			false	false	false
 76-Verified	0xbe376a8f8c4f2c9395acb5bc48c85142c1069bae	DAIPointsToken		Etherscan			false	false	false
@@ -9175,6 +9309,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xbfadac08e7e94e3a5162371bc68b17731048d90b	Escrow		Etherscan			false	false	false
 32-Kickback:Friends	0xbfb2ef75397d8608b71c6c5bb9aaecb592db97eb	jak		https://kickback.events/			false	false	false
 76-Verified	0xbfb635e8c6689ac3874ad9a60fab1c29270f1710	StopLimitOrders		Etherscan			false	false	false
+30-Contracts	0xbfc22e3b81bddc185eb7c50765a9f445589a12ae	1inch Exchange		0xTracker			false	false	false
 81-Other	0xbfc903d65b727484887b962ac5575b0f48b596d3	Contract_id129_cnt2_4mo		Ether Camp			false	false	false
 60-Airdrops	0xbfcaaff509940ac5ddd4fdb654d0a651c5b87298	Invite Airdrop Sender		TrueBlocks.io			false	false	false
 60-Airdrops	0xbfd0fb15e6c04b396ea12f5bb9ba803e29b282be	LPT Airdrop		TrueBlocks.io			false	false	false
@@ -9218,6 +9353,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xc08e07007e2c58910881918754f6084546fad511	Xin Xu		DevCon2 Token Contract			false	false	false
 76-Verified	0xc08edf13be9b9cc584c5da8004ce7e6be63c1316	OwnedUpgradeabilityProxy		Etherscan			false	false	false
 76-Verified	0xc09315c63f477ba1e15120d2b3a43f109eea9787	POSH		Etherscan			false	false	false
+30-Contracts	0xc095976bd18181f28626c5d48372debd7a8ce8d4	Totle Uniswap Wrapper		0xTracker			false	false	false
 76-Verified	0xc099567a3f3cb3975b6d9b4c9ff6a1e342c14c63	AsureCrowdsale		Etherscan			false	false	false
 81-Other	0xc09963a395a22a24d9517d981bf6ec7dc31dfa89	DynamicToken_id316_cnt2_1mo		Ether Camp			false	false	false
 30-Contracts	0xc0a1f89bbcaddab4b736e786b6b16c67bc92ed35	White Hat Group Token Controller		TrueBlocks.io			false	false	false
@@ -9292,7 +9428,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xc21abe09935ae3d0b5e3128b193afa8034985a95	enormousrage		https://kickback.events/			false	false	false
 76-Verified	0xc21cceeaca4e0bac97809ca67c41d387b3d7a85f	PaypolitanToken		Etherscan			false	false	false
 76-Verified	0xc21d01516be04c43fb23c9ec7ea983a63dce92b8	KarlBenzContract		Etherscan			false	false	false
-76-Verified	0xc231a724886c8e68d5def6456bc861184cbc291a	ZeroXConnector		Etherscan			false	false	false
+76-Verified	0xc231a724886c8e68d5def6456bc861184cbc291a	bZx Fulcrum		0xTracker			false	false	false
 76-Verified	0xc2321f2fa1a28f0553d4f400e92c49159376faa6	gglcointoken		Etherscan			false	false	false
 76-Verified	0xc234efe85f6f31c47485659e8deb21b0885118c5	DepositRegistry		Etherscan			false	false	false
 76-Verified	0xc242834ef4d3a90bcf2ef002bd129eca2d660d34	Token		Etherscan			false	false	false
@@ -9745,6 +9881,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xcc98bdc61f62f09167670399110074d2eca72bdc	Shaykevin		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xcc9a528e7bd49e6c2e985c00eac8d03bee0321ce	nicmm		https://kickback.events/			false	false	false
 76-Verified	0xcc9be87dd9846eb659b7fa1f9364f4bbb4142202	CardERC20WrapperFactory		Etherscan			false	false	false
+30-Contracts	0xccad17ba7d5014ab87c3931fe3fe1eadd69ed266	Totle Oasis Wrapper		0xTracker			false	false	false
 50-Tokens:ERC20	0xccbf21ba6ef00802ab06637896b799f7101f54a2	Bubo	BUBO	On Chain	18		false	false	false
 76-Verified	0xccc6ff196b7f10bfe499b827aae868fb030d18f0	TitaniumToken		Etherscan			false	false	false
 30-Contracts:dAppNode	0xcccbee234112c5ea3370fb707875a8b1cf6b0fcf	dAddNode Package 017		TrueBlocks.io			false	false	false
@@ -9809,6 +9946,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xce4adf50ef78e245ff3d594f8610bf420fb18847	Kenahan_		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xce4f357ada9067bbe2b85f53e07d58d4a96ec16d	DropETH		Etherscan			false	false	false
 50-Tokens:ERC20	0xce53a179047ebed80261689367c093c90a94cc08	EDT	EDT	On Chain	8		false	false	false
+30-Contracts	0xce5702e94ad38c061e44a4a049cc29261f992846	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xce5b23f11c486be7f8be4fac3b4ee6372d7ee91e	BitsForAI		Etherscan			false	false	false
 50-Tokens	0xce5c603c78d047ef43032e96b5b785324f753a4f	E4ROW Token	E4ROW	Etherscan.io		The E4ROW project's mission is to aggressively expand the universe of Ether users by bringing Ether-based apps to the global online/mobile gaming markets.	false	false	false
 76-Verified	0xce703f1e5beb125590b75e7b83fc583a0180ea30	TelomereToken		Etherscan			false	false	false
@@ -9834,6 +9972,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xced0b78dd06edfa8dcabff3782d7e159d39d71f4	ReplayProtection_id324_cnt5_24da		Ether Camp			false	false	false
 50-Tokens:ERC20	0xced4e93198734ddaff8492d525bd258d49eb388e	Eidoo Token	EDO	On Chain	18	Aims to be a Fast, easy, and not only a Multicurrency Wallet and Hybrid Exchange.	false	false	false
 60-Airdrops	0xced608aa29bb92185d9b6340adcbfa263dae075b	Dao Issued Cert Airdrop Sender		Etherscan			false	false	false
+30-Contracts	0xceda8318522d348f1d1aca48b24629b8fbf09020	Set Rebalancer		0xTracker			false	false	false
 76-Verified	0xcee79a911d77bb4adc9d7c7a21c8c6e879528c5f	SGNWalletsTradingLimiter		Etherscan			false	false	false
 81-Other:Individual	0xcee96fd34ec793b05ee5b232b0110eac0cc3327e	Taylor Gerring		DAO_Curator			false	false	false
 76-Verified	0xcef03be27b4a43f2e0f08c01a9cf8d3b75efdf26	DharmaAccountRecoveryManager		Etherscan			false	false	false
@@ -9843,6 +9982,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xcf0abd8d0e2e33ed181368a1911cecbcb2f849b3	FASTPAYCOIN		Etherscan			false	false	false
 76-Verified	0xcf10c82eb03ceab0b6d146d87f36e3ff4e44ce39	ForgePathCatalogCombined		Etherscan			false	false	false
 76-Verified	0xcf1254b0d56797afd87df37974a5b9191ed8c238	Staking		Etherscan			false	false	false
+30-Contracts	0xcf1394c5e2e879969fdb1f464ce1487147863dcb	Kyber Oasis Reserve		0xTracker			false	false	false
 32-Kickback:Friends	0xcf2a7d5b25de5a8a12ed39613f5907fb875196fb	brenrand		https://kickback.events/			false	false	false
 76-Verified	0xcf2ac678cd2179a7ae25616d4601d21350fcb888	flashIt		Etherscan			false	false	false
 76-Verified	0xcf2d7bb46dc2fb67574ad6959b684ec5b7924c61	OrangeVenice		Etherscan			false	false	false
@@ -9956,6 +10096,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xd1ec22df6bb8004e6eaf6b893855a290f4e5ba3f	_johnwhelan		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xd1f89108ba9525a11beaf8bdc5058b4946a6c501	ERC20Utilities		Etherscan			false	false	false
 90-DevCon2:Individual	0xd1f90291acb1525027fa36c8958d7fe71aeb6ed0	Griff Green		DevCon2 Token Contract			false	false	false
+30-Contracts	0xd2045edc40199019e221d71c0913343f7908d0d5	Paradex		0xTracker			false	false	false
 76-Verified	0xd210f2ef448c02e7e826c7cce714c41fe3fec285	DebitCoinToken		Etherscan			false	false	false
 76-Verified	0xd216153c06e857cd7f72665e0af1d7d82172f494	RelayHub		Etherscan			false	false	false
 76-Verified	0xd219e1cad8cde8c46f2d923ace35a8e5b729a683	DedgeCompoundManager		Etherscan			false	false	false
@@ -10022,6 +10163,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xd39773381a3cc8831e9c1993e73ee6379f1d82a1	WhitelistedAggregatorProxy		Etherscan			false	false	false
 76-Verified	0xd39b0676a4f1f44812fdc21db778dc32b59b9280	Token		Etherscan			false	false	false
 81-Other	0xd39fe1cffd8f070429169b416b7e07f486d553cf	Store		Etherscan.io			false	false	false
+30-Contracts	0xd3a2a7329e8530ba691ab5d2c213c9fad2244aa6	Arbitrage Bot		0xTracker			false	false	false
 34-Humanity DAO	0xd3bd21d0b0ff09e07957e37e75625edc3316bb24	bwwjason		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xd3c00772b24d997a812249ca637a921e81357701	WILD Token	WILD	On Chain	18	Wild Crypto is a website where you can play games of chance.	false	false	false
 32-Kickback:Friends	0xd3c2ebe309672ed8a24f2a8d13c4a34f7516eeb5	cob_alt		https://kickback.events/			false	false	false
@@ -10063,7 +10205,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xd45a6ff854f441040295a94b13347d07c036596d	BitoToken		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0xd465484af946ab1f29ffad0c6971c5fd58b7ab7d	Grant 058 Ironbelly		GitCoin Website			false	false	false
 76-Verified	0xd4666f08a40dfd0945cac5ab83ff04625a60664c	FactProviderRegistry		Etherscan			false	false	false
-76-Verified	0xd4690a51044db77d91d7aa8f7a3a5ad5da331af0	Broker		Etherscan			false	false	false
+76-Verified	0xd4690a51044db77d91d7aa8f7a3a5ad5da331af0	0x Broker		0xTracker			false	false	false
 76-Verified	0xd46a8cb0d6db18d16423a215ac5da73d08b629ea	MindsyncRewardPool		Etherscan			false	false	false
 50-Tokens	0xd46ba6d942050d489dbd938a2c909a5d5039a161	Ampleforth	AMPL	defipulse.com	9		false	false	false
 76-Verified	0xd46c446e93b318582702d23bc87c685d31ce0cb4	BlacklistMigratable		Etherscan			false	false	false
@@ -10334,6 +10476,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xda54ffddc97d7fbb7c239dca2e832031d1b68b20	multiSend		Etherscan			false	false	false
 34-ENS	0xda5c1cb1f005a69df23f21ee546cd937f4605f10	ENS: Related 2		Etherscan			false	false	false
 76-Verified	0xda63a8f9b33e3c927e8ce66606913be1821f67de	YunJiaMiToken		Etherscan			false	false	false
+33-Set Prototcol	0xda6786379ff88729264d31d472fa917f5e561443	Set: Rebalancing Set Issuance Module V2		Etherscan			false	false	false
 76-Verified	0xda6afc535eaf38c3d8488e7b2d68508c05b18228	LoanContractDispatcher		Etherscan			false	false	false
 50-Tokens:ERC20	0xda6cb58a0d0c01610a29c5a65c303e13e885887c	cVToken	cV	On Chain	18	Decentralized Car History Registry Built on Blockchain	false	false	false
 76-Verified	0xda6f4aac602b729eb90294ee2ba744ce051b130c	ChronoBankPlatformRouter		Etherscan			false	false	false
@@ -10426,6 +10569,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xdc45fc8ee0bbd96de4f8c561e81099e8be08ed63	disruptbanksy		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xdc586a8baf475ef066ade10ec239479ae1fe302d	BidProxy		Etherscan			false	false	false
 76-Verified	0xdc5e466dbac64cc43a8d75971e37b82b00b34763	CompImport		Etherscan			false	false	false
+30-Contracts	0xdc6c91b569c98f9f6f74d90f9beff99fdaf4248b	Tokenlon		0xTracker			false	false	false
 76-Verified	0xdc6ee74a18994cad3876a078b6fa4920fd9c507d	BondingManager		Etherscan			false	false	false
 34-Humanity DAO	0xdc71e82e1150263ad3a9b184249eeea36f4b3a80	Rsk_token		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0xdc784458e2516a9d0531509f784dcf21983a60d7	TanXu		DevCon2 Token Contract			false	false	false
@@ -10544,6 +10688,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xdefdccaa8177f54eb5aeaab28cbedc21a47e8bf0	Loans		Etherscan			false	false	false
 50-Tokens	0xdf0960778c6e6597f197ed9a25f12f5d971da86c	Vials of Goo	GOO	defipulse.com	12		false	false	false
 76-Verified	0xdf09efbefc94d360e1d232ad5b2d8ed66c6a9642	yCurveZapOutV4		Etherscan			false	false	false
+30-Contracts	0xdf145332d6ac527c35879245b5a4ffd0ea6c897b	Totle EtherDelta Wrapper		0xTracker			false	false	false
 76-Verified	0xdf1e18df5767384dab716cb3faec129c0bf46a40	FactoryFactFinder		Etherscan			false	false	false
 81-Other:Consensys	0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb	Probable_Exchange, oloniex's DAO Wallet		Consensys, Slack Nation			false	false	false
 34-Humanity DAO	0xdf290293c4a4d6ebe38fd7085d7721041f927e0a	mzargham		https://www.humanitydao.org/humans			false	false	false
@@ -10586,6 +10731,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xdfe0fb1be2a52cdbf8fb962d5701d7fd0902db9f	Flapper		Etherscan			false	false	false
 76-Verified	0xdfe8c869aaa1ec14c968ed87ffc8f7f8323a2c10	UniswapTradeExample		Etherscan			false	false	false
 76-Verified	0xdfeb7df5ecf1e909459d111f611490c9b925a5a7	Simbcoin		Etherscan			false	false	false
+30-Contracts	0xdff2aa5689fcbc7f479d8c84ac857563798436dd	1inch Exchange		0xTracker			false	false	false
 76-Verified	0xdff2bf8ab0428a2c3e788d7bb187f8f4756919c7	BryCoin		Etherscan			false	false	false
 76-Verified	0xdff329030357ce6a8844d774302266f9f69f90e6	IEther		Etherscan			false	false	false
 76-Verified	0xdff36f2dab92f36b54a728ffe475c590d32772e1	Token		Etherscan			false	false	false
@@ -10749,7 +10895,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xe32c5673b152571e57976bf3a75068917da2da9c	cryptohustler11		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xe331837d787614d7875220cd5f3191f4c3e685ac	LOVEToken		Etherscan			false	false	false
 76-Verified	0xe331fccbcc6e797beda31bc6d60d961955588a6b	LV		Etherscan			false	false	false
+30-Contracts	0xe335bdd1fb0ee30f9a9a434f18f8b118dec32df7	Curve Bridge		0xTracker			false	false	false
 90-DevCon2:Individual	0xe33695f8c7c73ea161272a7d3be795e129dc3596	nick savers		DevCon2 Token Contract			false	false	false
+30-Contracts	0xe3379a1956f4a79f39eb2e87bb441419e167538e	Oasis Bridge		0xTracker			false	false	false
 76-Verified	0xe3385df5b47687405a02fc24322dedb7df381852	UniSwap_ETH_SNXZap		Etherscan			false	false	false
 76-Verified	0xe33c7f40fae091f0b9232c8c9ddb86b9576de818	AAAABC		Etherscan			false	false	false
 76-Verified	0xe345d333d403931626bbef1f153d9bce3613a89e	BuddhaCoin		Etherscan			false	false	false
@@ -10827,6 +10975,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xe4bbdf7b3d127af95e4bf577e7828346b7849cf4	Nissenization		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xe4c154be0b17359527a25e6ab45b7ce86c8795c7	digitalNotary		Etherscan			false	false	false
 81-Other	0xe4c1c33ed635263c61bf61db751b8a74ee3af0e4	Wealthshare		Etherscan.io			false	false	false
+30-Contracts	0xe4c577bdec9ce0f6c54f2f82aed5b1913b71ae2f	1inch Exchange		0xTracker			false	false	false
 76-Verified	0xe4c90eb66cb884e7c1ed1e85ac0989f418c456c9	DMEX_Oracle		Etherscan			false	false	false
 50-Tokens:ERC20	0xe4c94d45f7aef7018a5d66f44af780ec6023378e	proxyCC	CC	On Chain		Crypto currency	false	false	false
 32-Kickback:Contracts	0xe4c9f925be053998ca48b20d9b94fe92336b8cff	EthLondon 100		https://kickback.events/event/[{ADDRESS}]			false	false	false
@@ -10911,6 +11060,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xe69dedee1633e0c824580ad533a8139efda4bbc8	CryptoShares		Etherscan			false	false	false
 75-EarlyActors	0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca	Miner_0012_462		OnChain			false	false	false
 76-Verified	0xe6b119bffd221e4f8fd3e81d0eee6cc0e49d16d5	LockTokens		Etherscan			false	false	false
+30-Contracts	0xe6b4c185e286905cf34b53527f0338bffb9759d0	Totle Ethex Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0xe6c8382ec2cb73f04ce10c982a4b337a19f63a31	cicnos1		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xe6d0f4082dd103888228a60287e8ca9ae9516d7c	Theo		Etherscan			false	false	false
 34-Humanity DAO	0xe6d301e769f012c8dffa16d4d00a7a66ed173398	stiobhart		https://www.humanitydao.org/humans			false	false	false
@@ -11039,6 +11189,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xe973610705d594bc0a512e645797c7c84aec6668	BebTreasure		Etherscan			false	false	false
 76-Verified	0xe9737a94eabf50d4e252d7ab68e006639ea73e0d	AccountLogic		Etherscan			false	false	false
 76-Verified	0xe974ebe06b3cfa49c8fdad47ef538d26c3d391cd	ERC20Migrator		Etherscan			false	false	false
+30-Contracts	0xe97ea901d034ba2e018155264f77c417ce7717f9	Oasis Bridge		0xTracker			false	false	false
 76-Verified	0xe9805fd40ce7f0dacb58cfeec357c19187731f71	BecazCrowdsale		Etherscan			false	false	false
 76-Verified	0xe98888ac4dac2f50e19cfba6c9d5b7d0ab6066fa	PloutoWealthManagement		Etherscan			false	false	false
 76-Verified	0xe989ed188ce705b6f6aeb40ddbb9acbac2d4622f	CYPHRtoken		Etherscan			false	false	false
@@ -11202,6 +11353,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xecf1624e155b022d36602b384402dff439d4d6af	IPCMToken		Etherscan			false	false	false
 76-Verified	0xed00c639260005410e91ce6382fd039843d683db	STARK_Friendly_Hash_Challenge_MiMC_45		Etherscan			false	false	false
 76-Verified	0xed03415e5705c5abbf8e94c491b715df526cad55	yCurveZapOut		Etherscan			false	false	false
+30-Contracts	0xed068fddb12646a90395e39fd2676d5ab6193eba	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xed06e6ee245512fca03531e1c71e1353a08edb89	HOWToken		Etherscan			false	false	false
 76-Verified	0xed0849bf46cfb9845a2d900a0a4e593f2dd3673c	SGAToken		Etherscan			false	false	false
 76-Verified	0xed0bc23028d733655ec4021a474d48497b510289	ConnectCurve		Etherscan			false	false	false
@@ -11264,6 +11416,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xee681cd9ed937700e859da167676e2c730d037db	AkaProxy		Etherscan			false	false	false
 76-Verified	0xee6a3cd161bbda18300c03ed1a7b33544c5dfc3c	NightlightToken		Etherscan			false	false	false
 50-Tokens:ERC20	0xee74110fb5a1007b06282e0de5d73a61bf41d9cd	BHPCash	BHPC	On Chain	18	Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.	false	false	false
+30-Contracts	0xee7f212545b3c388f8fd176f83bdff85f3dcea7d	1inch Exchange		0xTracker			false	false	false
 76-Verified	0xee7f3942a646bc9fb16d3ca4662478d96fc1d127	HadsofFortune		Etherscan			false	false	false
 81-Other	0xee9147dd0307e4a663d0f756549d47d6f8bd356b	Dice		Etherscan.io			false	false	false
 76-Verified	0xee9cc3cb70e68841f2c0fce43111214012dbea21	TransactionManager		Etherscan			false	false	false
@@ -11488,6 +11641,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xf333392fa58adddaad1d779c063b9c3dc7756917	LegacyMakerOracleAdapter		Etherscan			false	false	false
 50-Tokens:ERC20	0xf333b2ace992ac2bbd8798bf57bc65a06184afba	SND Token 1.0	SND	On Chain			false	false	false
 34-Humanity DAO	0xf34282dd9a5fa70269554194a2912fb7e1376c2f	vindberg		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0xf342f3a80fdc9b48713d58fe97e17f5cc764ee62	Kyber Bridge		0xTracker			false	false	false
 34-Humanity DAO	0xf34d76c44160bb58b7f01dcb2517d73bece761c9	grg350		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xf354e2712ca8ee3869db26e57f6494fd21752bb2	shankeraditya		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0xf3586684107ce0859c44aa2b2e0fb8cd8731a15a	KaratBank Coin	KBC	On Chain	7		false	false	false
@@ -11720,6 +11874,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xf7f189082878846c11a94ddac51c41afc7a7c772	ericwchung		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xf7fb07e46a54a0878105c6271b753948e715a962	deacix		https://kickback.events/			false	false	false
 76-Verified	0xf7fb78db67f232b4540b23c07e698ba756257694	TokenERC20		Etherscan			false	false	false
+30-Contracts	0xf809e07870dca762b9536d61a4fbef1a17178092	dYdX Matcher		0xTracker			false	false	false
 76-Verified	0xf80d589b3dbe130c270a69f1a69d050f268786df	DamToken		Etherscan			false	false	false
 34-Humanity DAO	0xf815ea4ad7181acfb43d14ce6abd0b72a1e820d1	beachbabyjasp		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Contracts	0xf81bd4e58dfc91cea1b2179b8c097ebf5114d01b	EthLondon Kleros		https://kickback.events/event/[{ADDRESS}]			false	false	false
@@ -11746,6 +11901,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xf84df2db2c87dd650641f8904af71ebfc3dde0ea	YouLive Coin	UC	On Chain	18		false	false	false
 32-Kickback:Friends	0xf8536ca7a25cbf70df754fa310079ada4c6114c2	pabloruiz55		https://kickback.events/			false	false	false
 76-Verified	0xf85b68d18dc127921485aebe4a67e02f08035696	FightingBaby		Etherscan			false	false	false
+30-Contracts	0xf85baccc3e7fd4b6a49818fc46503bb51539d554	dYdX Oasis Wrapper		0xTracker			false	false	false
 50-Tokens:ERC20	0xf85feea2fdd81d51177f6b8f35f0e6734ce45f5f	CyberMiles Token	CMT	On Chain	18	Empowering the Decentralization of Online Marketplaces.	false	false	false
 76-Verified	0xf867418bd399e9751c1467977cb0fd05aaf344ff	CompImport		Etherscan			false	false	false
 76-Verified	0xf86c697616f6d715dfaa5febe4e2218578f82ce8	HALE		Etherscan			false	false	false
@@ -11783,6 +11939,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xf9262f3ffff92e6d8e4a3b59acb4dfccae160878	RequestForForgiveness		Etherscan			false	false	false
 75-EarlyActors	0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13	Miner_0002_4407		OnChain			false	false	false
 76-Verified	0xf92a7ee407a52ef4163cadd4706d99deba53d16e	DECK		Etherscan			false	false	false
+30-Contracts	0xf92c1ad75005e6436b4ee84e88cb23ed8a290988	Paraswap		0xTracker			false	false	false
 76-Verified	0xf938c9a22c6fc9e6b81b24b68db94b92dc4a7976	Frinkcoin		Etherscan			false	false	false
 81-Other	0xf93ca51746ce6e1cc2485c534eebe71ae987a7ad	Kardashian		Etherscan.io			false	false	false
 34-Humanity DAO	0xf947d76358258a2dc26bed8930c12a45f1906d52	johneddiedwards		https://www.humanitydao.org/humans			false	false	false
@@ -11873,6 +12030,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xfb1eb8c12e04f050cb724031122905e39316b25e	AdamShao		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xfb25f165253ca56e2d9ab8785ab26d86d790c758	OrchidLogger		Etherscan			false	false	false
 76-Verified	0xfb26d7096225b2a8e41c8d0ef14c1f1c51f6933e	SPAS157Coin		Etherscan			false	false	false
+30-Contracts	0xfb2e4c813451a441f26530642fc83bf14d3141cf	Totle Partner Registry		0xTracker			false	false	false
 50-Tokens:ERC20	0xfb2f26f266fb2805a387230f2aa0a331b4d96fba	DADI	DADI	On Chain	18	A new era of cloud computing services, powered by blockchain technology.	false	false	false
 80-Malicious	0xfb34db0651ab62d73a237fcf1aa1057ceb1f6229	Possibly Malicious 0xfb3		TrueBlocks.io			false	false	false
 34-Humanity DAO	0xfb38e6973c2d6b33ca0d8d2d10107fa13def920a	artiya4u		https://www.humanitydao.org/humans			false	false	false
@@ -11890,6 +12048,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xfb86852ec41a6220eabe1bcb1e4b606e46eb2dd9	ServiceProvider_UniSwap_Zap		Etherscan			false	false	false
 50-Tokens:ERC20	0xfb8bf095ebcdad57d2e37573a505e7d3bafdd3cc	DIPNET	DPN	On Chain	8		false	false	false
 90-DevCon2:Individual	0xfb91daf5d73ffc905cf441e43b9f3e111086dd40	seafood		DevCon2 Token Contract			false	false	false
+30-Contracts	0xfb9284715e9b0d08153caa34c35bfaed76edc31f	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xfb9e9a1db616e97afcb92fb9665e019159b6bbd3	IEther		Etherscan			false	false	false
 76-Verified	0xfba43a685a86cd5884379e9a1ac611d956cda9cc	ProofOfExistence		Etherscan			false	false	false
 76-Verified	0xfba5423fa69240c7fc46d87a8806777319e78839	EgorasTreasury		Etherscan			false	false	false
@@ -11942,6 +12101,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xfcb2b80a6fa111f61e7a1165a031221db6a8ea5d	Etherlly		Etherscan			false	false	false
 30-Contracts:dAppNode	0xfcb2c44e61031ae29e5c54a700fb6b4fb430da4c	dAddNode Package 022		TrueBlocks.io			false	false	false
 76-Verified	0xfcc86d3cd6e3b81ceeb64bfe7dbd98d399a39b49	MainToken		Etherscan			false	false	false
+30-Contracts	0xfcd18a06128e00059cfe14e8da12b9c4d833b65b	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xfcd4bffd7b76092c59fb9791ff3f9b5405d4010a	FundAndDistributeFactory		Etherscan			false	false	false
 31-Gitcoin Grants:Contracts	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 044 Chainid Network		GitCoin Website			false	false	false
 76-Verified	0xfce2ab740a854b808706c700b5b426705aa88fbf	CompImport		Etherscan			false	false	false
@@ -12073,6 +12233,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3	rhyslindmark		https://kickback.events/			false	false	false
 76-Verified	0xff97c79d207fc3d7a51531d0fa93581cf8e0105d	CompoundSaverProxy		Etherscan			false	false	false
 32-Kickback:Friends	0xff9e5c77edf2a26bfd6f60dc4937e5baa1727378	karolinkas		https://kickback.events/			false	false	false
+30-Contracts	0xffa7370a03c2a91f5b1847a90750489d05f52fa9	Arbitrage Bot		0xTracker			false	false	false
 76-Verified	0xffa8b9cdb3b5d97c43191975f2f8111b164ef32a	EightyTwentyPortfolio		Etherscan			false	false	false
 50-Tokens:ERC20	0xffa93aacf49297d51e211817452839052fdfb961	Distributed Credit Chain	DCC	On Chain	18	Distributed banking public blockchain with a goal to establish a decentralized ecosystem for financial service providers around the world.	false	false	false
 76-Verified	0xffa9817f20ab5742ad016e094b42716cdd4fcb90	SYNCContract		Etherscan			false	false	false

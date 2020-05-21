@@ -91,8 +91,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
     // Make sure we have the folders we need (may be redundant, but harmless)...
-    establishFolder(getMonitorPath("", FM_PRODUCTION));
-    establishFolder(getMonitorPath("", FM_STAGING));
+    establishMonitorFolders();
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
@@ -106,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Clean up a bit and accumulate the addresses into the monitors list...
     for (auto addr : addrs) {
-        CAccountWatch monitor;
+        CMonitor monitor;
         // do not remove the next line, it also sets the bloom value for this address
         monitor.setValueByName("address", addr);
         monitor.finishParse();
