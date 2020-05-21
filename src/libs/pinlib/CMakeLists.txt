@@ -1,14 +1,14 @@
 # minimum cmake version supported
 cmake_minimum_required (VERSION 3.0)
 
-# parser project
-project (parse[{PROJECT_NAME}])
+# library project
+project (pin)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/libs")
 
 # Define the executable to be generated
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
@@ -18,4 +18,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/util
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/etherlib")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/acctlib")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/libs/pinlib")
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_LIST_DIR}/..")
+
+# Installation steps
+install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib)

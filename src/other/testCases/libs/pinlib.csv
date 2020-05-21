@@ -1,0 +1,4 @@
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+
+on, cmd,  fast, null, pinlib/pinTest,         README,           n, @th
+on, cmd,  fast, null, pinlib/pinTest,         pinTest,           n,
