@@ -3,7 +3,7 @@ ethNames tip
 tags	address	name	symbol	decimals
 76-Verified	0x05b837ea9a4f3a56f883d5991c6c9ca32c49403e	HintoTips
 76-Verified	0x09afd24acc170c16f4ff64bdf2a4818c515440e8	ExpiringMultiPartyLib
-31-Gitcoin Grants:Contracts	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity
+31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity
 76-Verified	0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad	Tip
 76-Verified	0x4b702fc17fc11859aeb8eb0d3bd876a6a4bff910	BancorMultiPrice
 20-Friends	0x4ff1c812ebccc16487c17f537d849cb5dc557ff0	EthSlurp Tip Jar Sender Sender

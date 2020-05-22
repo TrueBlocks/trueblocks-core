@@ -191,7 +191,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "31-Gitcoin Grants:Contracts",
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
     "name": "Grant 083 Poa Network Community Management Grant For Adj",
     "symbol": "",
@@ -596,7 +596,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "31-Gitcoin Grants:Contracts",
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
     "name": "Grant 048 Uniswap",
     "symbol": "",
@@ -1082,7 +1082,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "31-Gitcoin Grants:Contracts",
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 Antiprosynth Twitter Account Activity",
     "symbol": "",
@@ -1100,7 +1100,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "31-Gitcoin Grants:Contracts",
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
     "name": "Grant 120 Nori",
     "symbol": "",
@@ -1370,7 +1370,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "31-Gitcoin Grants:Contracts",
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
     "name": "Grant 212 Thx Open Protocol For Online Rewards",
     "symbol": "",

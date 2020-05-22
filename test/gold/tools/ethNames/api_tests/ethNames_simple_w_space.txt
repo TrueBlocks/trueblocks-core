@@ -3,12 +3,12 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
 76-Verified	0x09b1d1a3331bb8b9edfb1a4fbda4ca81fc40a902	BIDPlayNetwork
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT		18
-31-Gitcoin Grants:Contracts	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 Poa Network Community Management Grant For Adj
+31-Gitcoin Grants:Grant	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 Poa Network Community Management Grant For Adj
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT		18
 50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN		6
 50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK		18
 30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	BountiesNetwork
-31-Gitcoin Grants:Contracts	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 026 Peepeth Social Network For A Better World
+31-Gitcoin Grants:Grant	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 026 Peepeth Social Network For A Better World
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU		18
 33-Set Protocol:Wrapers	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper
 50-Tokens:ERC20	0x4162178b78d6985480a308b2190ee5517460406d	Colu Local Network	CLN		18
@@ -26,7 +26,7 @@ tags	address	name	symbol	decimals
 76-Verified	0x625b428079330ee2a17c56f55f67126014551396	MokaNetwork
 34-Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve
 40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ
-31-Gitcoin Grants:Contracts	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 049 Blockchain Education Network
+31-Gitcoin Grants:Grant	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 049 Blockchain Education Network
 76-Verified	0x679131f591b4f369acb8cd8c51e68596806c3916	TrustlinesNetworkToken
 76-Verified	0x6f9afee7645ed0f115f39a64346e7cb2cd17b26f	LibraNetwork
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18
@@ -56,7 +56,7 @@ tags	address	name	symbol	decimals
 50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX
 50-Tokens	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18
 34-Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List
-31-Gitcoin Grants:Contracts	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 037 Connext Network
+31-Gitcoin Grants:Grant	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 037 Connext Network
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR		18
 50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET		18
 50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD		18
@@ -76,7 +76,7 @@ tags	address	name	symbol	decimals
 76-Verified	0xf1efcac8adf7f9499d007d24615a69c5c045f421	SwipeNetwork
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN		18
 34-Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper
-31-Gitcoin Grants:Contracts	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 044 Chainid Network
+31-Gitcoin Grants:Grant	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 044 Chainid Network
 50-Tokens:ERC20	0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network Token	PAL		18
 50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET		8
 50-Tokens:ERC20	0xff5c25d2f40b47c4a37f989de933e26562ef0ac0	Kora Network Token	KNT		16

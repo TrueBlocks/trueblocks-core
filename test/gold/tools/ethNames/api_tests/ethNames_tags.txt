@@ -19,13 +19,13 @@
       "tags": "30-Contracts:dAppNode"
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts"
-    },
-    {
       "tags": "31-Gitcoin Grants:Core"
     },
     {
       "tags": "31-Gitcoin Grants:Friends"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant"
     },
     {
       "tags": "33-Set Protocol"

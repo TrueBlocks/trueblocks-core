@@ -1144,7 +1144,7 @@
       "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain."
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
       "name": "Grant 143 Dappnode",
       "symbol": "",
@@ -1171,7 +1171,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
       "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
       "symbol": "",
@@ -1360,7 +1360,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
       "name": "Grant 190 Groundhog",
       "symbol": "",
@@ -1792,7 +1792,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
       "name": "Grant 031 Grantops",
       "symbol": "",

@@ -121,10 +121,10 @@
 76-Verified	0x00c0443f42932d9efe27e64409b21d2e48928d66	JarvisExchange
 90-DevCon2:Individual	0x00c4734f88e8da8e24bf9085d60bb34690957ee1	will
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC		18
-31-Gitcoin Grants:Contracts	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 143 Dappnode
+31-Gitcoin Grants:Grant	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 143 Dappnode
 60-Airdrops	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Amber Airdrop Token
 76-Verified	0x00dd005247b300f700cfdff89c00e2acc94c7b00	DharmaKeyRingFactoryV1
-31-Gitcoin Grants:Contracts	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 Grant 086 Gitcoin Sustainability Fund
+31-Gitcoin Grants:Grant	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 Grant 086 Gitcoin Sustainability Fund
 76-Verified	0x00e07c2c78695418d84485eee1ed293a3867d9c3	InstaIndex
 60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Airdrop Sender
 60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Airdrop Sender
@@ -145,7 +145,7 @@
 76-Verified	0x016607654bc80d184730df0669b7b4b77e746397	MainToken
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO		8
 76-Verified	0x0174a4c115f214cd42a6b90a16b97da36441c4e6	Token_ERC20
-31-Gitcoin Grants:Contracts	0x017946fc126d57e7823e68c647c24f28e5dc9988	Grant 190 Groundhog
+31-Gitcoin Grants:Grant	0x017946fc126d57e7823e68c647c24f28e5dc9988	Grant 190 Groundhog
 76-Verified	0x017ab1b56a25930f58ca7a2e0fd4024cae89c7fe	GHS
 76-Verified	0x017b584acfd16d767541ae9e80cdc702f4527b0b	ASYAGRO
 75-EarlyActors	0x0193d941b50d91be6567c7ee1c0fe7af498b4137	Miner_0015_427
@@ -193,7 +193,7 @@
 76-Verified	0x02c9e4174e9d23bb7619c83ef5f771fcb1e6fdb8	Sai2Dai
 76-Verified	0x02d4149a9c230700393cf9b24e0bc452add63159	ERC20SalaryFactory
 50-Tokens:ERC20	0x02e3083a51e8632e571fbd6a62ac396c10c653ba	EplusCoin	EPLUS		8
-31-Gitcoin Grants:Contracts	0x02eb002d88051c03ef312f63bbf3e38aada0b902	Grant 031 Grantops
+31-Gitcoin Grants:Grant	0x02eb002d88051c03ef312f63bbf3e38aada0b902	Grant 031 Grantops
 76-Verified	0x02eefd8fd2debc75c52ef1479e56caeaa049ecc7	InitializableAdminUpgradeabilityProxy
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG		18
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE		18

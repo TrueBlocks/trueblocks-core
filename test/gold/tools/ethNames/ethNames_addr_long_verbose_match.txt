@@ -7,12 +7,12 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On Chain
 50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On Chain
 76-Verified	0xb631b4babb19429789e1e4fd15a405296fd15ce0	Trader				Etherscan
-31-Gitcoin Grants:Contracts	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 228 Buidhub Eventflow mdcoon				Gitcoin Website
+31-Gitcoin Grants:Grant	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 228 Buidhub Eventflow mdcoon				Gitcoin Website
 76-Verified	0xb6362de9605d6c31860600bc448fae8bb3d3bf13	HotToken				Etherscan
 50-Tokens:ERC20	0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Monaco	MCO		8	On Chain
 76-Verified	0xb64a2aff94aae51b779b1f99d0377614e56bcb4b	LendingPoolParametersProvider				Etherscan
 50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8	On Chain
-31-Gitcoin Grants:Contracts	0xb6568dc090302196ec8edf56d99c3484cee94e6a	Grant 207 Stablepay				GitCoin Website
+31-Gitcoin Grants:Grant	0xb6568dc090302196ec8edf56d99c3484cee94e6a	Grant 207 Stablepay				GitCoin Website
 76-Verified	0xb65f0f632081285b600498cc43b58032d418b10a	JORDAN				Etherscan
 76-Verified	0xb6733d021b561f711f0490c7021500332d6d33b8	GESC				Etherscan
 60-Airdrops	0xb679afd97bcbc7448c1b327795c3ef226b39f0e9	WLM Airdrop				TrueBlocks.io

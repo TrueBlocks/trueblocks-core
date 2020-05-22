@@ -3,7 +3,7 @@ ethNames tip --expand
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
 76-Verified	0x05b837ea9a4f3a56f883d5991c6c9ca32c49403e	HintoTips		Etherscan			false	false	false
 76-Verified	0x09afd24acc170c16f4ff64bdf2a4818c515440e8	ExpiringMultiPartyLib		Etherscan			false	false	false
-31-Gitcoin Grants:Contracts	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity		GitCoin Website			false	false	false
+31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity		GitCoin Website			false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On Chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On Chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false
 50-Tokens:ERC20	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	On Chain	4	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	false	false	false

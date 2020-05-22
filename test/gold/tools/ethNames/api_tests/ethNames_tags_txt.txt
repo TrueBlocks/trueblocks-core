@@ -5,9 +5,9 @@ tags
 30-Contracts:Giveth
 30-Contracts:Moloch
 30-Contracts:dAppNode
-31-Gitcoin Grants:Contracts
 31-Gitcoin Grants:Core
 31-Gitcoin Grants:Friends
+31-Gitcoin Grants:Grant
 33-Set Protocol
 33-Set Protocol:Core
 33-Set Protocol:Core Caller

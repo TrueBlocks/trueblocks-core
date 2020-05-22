@@ -27,4 +27,4 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
 76-Verified	0xcbe79ceca09092648995b2ccdf91ca5ecd1edec9	InverseToken
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18
-31-Gitcoin Grants:Contracts	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 275 Walletconnect 2 pedrouid
+31-Gitcoin Grants:Grant	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 275 Walletconnect 2 pedrouid

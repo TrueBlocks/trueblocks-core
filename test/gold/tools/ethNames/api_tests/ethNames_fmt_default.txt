@@ -26,7 +26,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Contracts",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
