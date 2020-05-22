@@ -69,6 +69,8 @@ class COptions : public COptionsBase {
     blknum_t freshen_max;
     bool deltas;
     bool emitter;
+    blknum_t first_record;
+    blknum_t max_records;
     // END_CODE_DECLARE
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)

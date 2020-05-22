@@ -13,6 +13,7 @@
 #include "basetypes.h"
 #include "biglib.h"
 #include "sfarchive.h"
+#include "filenames.h"
 
 namespace qblocks {
 
@@ -227,12 +228,13 @@ CArchive& operator>>(CArchive& archive, CIntArray& array) {
 }
 
 //----------------------------------------------------------------------
-bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data) {
+bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void* data) {
     if (!func)
         return false;
 
+    CFilename filename(filenameIn);
     CArchive archive(READING_ARCHIVE);
-    if (archive.Lock(filename, modeReadOnly, LOCK_NOWAIT)) {
+    if (archive.Lock(filename.getFullPath(), modeReadOnly, LOCK_NOWAIT)) {
         bool done = false;
         while (!done) {
             char buffer[4096];

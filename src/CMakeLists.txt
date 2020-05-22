@@ -5,6 +5,16 @@
 cmake_minimum_required (VERSION 3.0)
 
 # ----------------------------------------------------------------------------------------
+# C++11 required
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 11)
+elseif (CMAKE_CXX_STANDARD LESS 11)
+    message(WARNING "CMAKE_CXX_STANDARD has been set to '${CMAKE_CXX_STANDARD}' which is lower than the minimum required standard (c++11).")
+endif ()
+message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ----------------------------------------------------------------------------------------
 # Define default installation PATH
 if(NOT WIN32)
     set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
@@ -56,6 +66,7 @@ endif()
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
 set (BASE_LIBS acct ether util pin ${CURL_LIBRARIES})
+# set (BASE_LIBS acct ether util pin sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
@@ -64,6 +75,13 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
      "${CMAKE_SOURCE_DIR}/libs/acctlib"
      "${CMAKE_SOURCE_DIR}/libs/pinlib")
+
+# set (BASE_INCLUDE 
+#      "${CMAKE_SOURCE_DIR}/libs/utillib"
+#      "${CMAKE_SOURCE_DIR}/libs/etherlib"
+#      "${CMAKE_SOURCE_DIR}/libs/acctlib"
+#      "${CMAKE_SOURCE_DIR}/libs/pinlib"
+#      "${CMAKE_SOURCE_DIR}/libs/sqlite3lib")
 
 # ----------------------------------------------------------------------------------------
 # Enable testing

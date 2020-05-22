@@ -34,6 +34,8 @@ static const COption params[] = {
     COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+    COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to display"),
+    COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of records to display"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -129,6 +131,14 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmBlockNum("end", end, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
+            if (!confirmBlockNum("first_record", first_record, arg, latest))
+                return false;
+
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
+            if (!confirmBlockNum("max_records", max_records, arg, latest))
                 return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -338,6 +348,8 @@ void COptions::Init(void) {
     freshen_max = 5000;
     deltas = false;
     emitter = false;
+    first_record = 0;
+    max_records = NOPOS;
     // END_CODE_INIT
 
     nExported = 0;
@@ -395,7 +407,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 
         // Add to the apps which may be non-empty
         apps.reserve(apps.size() + nRecords);
-        for (size_t i = 0; i < nRecords; i++) {
+        for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
             if (buffer[i].blk == 0)
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
