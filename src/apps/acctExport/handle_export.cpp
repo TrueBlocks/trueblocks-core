@@ -168,8 +168,8 @@ bool COptions::exportData(void) {
                 HIDE_FIELD(CFunction, "message");
                 static size_t cnt = 0;
                 if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
-                    LOG_INFO(className, ": ", i, " of ", items.size(), " (", trans.blockNumber, ".",
-                             trans.transactionIndex, ")      ", "\r");
+                    LOG_INFO(className, ": ", i, " of ", nRead, " (", trans.blockNumber, ".", trans.transactionIndex,
+                             ")      ", "\r");
             }
         }
     }

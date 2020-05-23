@@ -1,5 +1,5 @@
-acctExport argc: 7 [1:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [2:--receipts] [3:--fmt] [4:csv] [5:--end] [6:1430970] 
-acctExport 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --receipts --fmt csv --end 1430970 
+acctExport argc: 7 [1:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [2:--receipts] [3:--fmt] [4:csv] [5:--max_records] [6:38] 
+acctExport 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --receipts --fmt csv --max_records 38 
 "blocknumber","transactionindex","hash","gasused","status","iserror"
 "1428757","0","0xe9ebfecc2fa10100db51a4408d18193b3ac504584b51a4e55bdef1318f0a30f9","3711215","null","0"
 "1429038","9","0xc96b0f95a1e7e8c07cd488a05f20f9e8d4003fe8eea0ec7f7f4bf199af3198e1","91206","null","0"
@@ -37,5 +37,7 @@ TIME ~ CLOCK - <INFO>  : CReceipt: 21 of 58781 (1430929.1)      "1430929","2",
 TIME ~ CLOCK - <INFO>  : CReceipt: 32 of 58781 (1430961.1)      "1430966","2","0x7a5e12a915335fcdb3e64087709802d70ceef8e01eefaba79517e3295dbaa105","74027","null","0"
 "1430967","2","0x9f64b82383ac2dd45a4dafc40875a6919e924152ea225f1b3d58636c25e5003c","74027","null","0"
 "1430968","0","0x837cef1cdbd9aa245b2dbac4afc38d6dda2965f1a4ef4f8868965d93605fcd94","46206","null","0"
+"1430977","0","0x548ad5de19b9b11efa0bc846cd02093045ddf5773571809179ef0863373395c5","74027","null","0"
+"1430977","6","0x72e7eb67c4b65641e2c028a67c76e5a44611037c11bdd3f0a6d94f73ad6ae340","44027","null","0"
 
-TIME ~ CLOCK - <INFO>  : exported 36 receipts from 58781 transactions                                                       
+TIME ~ CLOCK - <INFO>  : exported 38 receipts from 58781 transactions                                                       
