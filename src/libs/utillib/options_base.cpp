@@ -549,6 +549,7 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     is_positional = (opts & OPT_POSITIONAL);
     is_hidden = (opts & OPT_HIDDEN);
     is_optional = !(opts & OPT_REQUIRED);
+    is_skip = (opts == OPT_SKIP);
 
     type = t;
     permitted = t;
@@ -612,7 +613,7 @@ string_q COptionsBase::options(void) const {
         if (pParams[i].is_positional) {
             positional += (" " + pParams[i].longName);
 
-        } else if (pParams[i].is_hidden) {
+        } else if (pParams[i].is_hidden || pParams[i].is_skip) {
             // invisible option
 
         } else if (!pParams[i].shortName.empty()) {
@@ -726,7 +727,7 @@ string_q COptionsBase::descriptions(void) const {
         string_q lName = substitute(pParams[i].longName, "addrs2", "addrs");
         string_q descr = trim(pParams[i].description);
         bool isPositional = pParams[i].is_positional;
-        if (!pParams[i].is_hidden && !sName.empty()) {
+        if (!pParams[i].is_hidden && !pParams[i].is_skip && !sName.empty()) {
             bool isReq = !pParams[i].is_optional;
             sName = (isPositional ? "" : sName);
             lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
@@ -744,7 +745,7 @@ string_q COptionsBase::descriptions(void) const {
             string_q lName = pParams[i].longName;
             string_q descr = trim(pParams[i].description);
             bool isPositional = pParams[i].is_positional;
-            if (pParams[i].is_hidden && !sName.empty()) {
+            if (pParams[i].is_hidden && !pParams[i].is_skip && !sName.empty()) {
                 bool isReq = !pParams[i].is_optional;
                 lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                 lName = substitute(lName, "@-", "");

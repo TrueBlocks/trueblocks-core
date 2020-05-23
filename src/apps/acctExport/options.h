@@ -88,6 +88,7 @@ class COptions : public COptionsBase {
     uint32_t* ts_array;
     size_t ts_cnt;
     blknum_t latestBlock;
+    size_t nRead;
 
     COptions(void);
     ~COptions(void);

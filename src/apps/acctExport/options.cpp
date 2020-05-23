@@ -32,10 +32,10 @@ static const COption params[] = {
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to display"),
-    COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of records to display"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),
+    COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),
+    COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the maximum number of records to process before reporting"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -126,11 +126,11 @@ bool COptions::parseArguments(string_q& command) {
             emitter = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmBlockNum("start", start, arg, latest))
+            if (!confirmUint("start", start, arg))
                 return false;
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmBlockNum("end", end, arg, latest))
+            if (!confirmUint("end", end, arg))
                 return false;
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
@@ -353,6 +353,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     nExported = 0;
+    nRead = 0;
     scanRange.second = getLatestBlock_cache_ripe();
     items.clear();
 
@@ -392,6 +393,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
+    nRead += nRecords;
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {

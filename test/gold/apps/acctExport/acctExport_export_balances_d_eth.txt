@@ -4,4 +4,4 @@ blocknumber	address	ether	etherdiff
 0	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	+4200.000000000000000000
 202249	0x001d14804b399c6ef80e64576f657660804fec0b	0.074679320489077336	-4199.925320679510922664
 1501459	0x001d14804b399c6ef80e64576f657660804fec0b	0.000000000000000000	-0.074679320489077336
-TIME ~ CLOCK - <INFO>  : exported 3 balances from 3 transactions                                                       
+TIME ~ CLOCK - <INFO>  : exported 3 balances from 6 transactions                                                       

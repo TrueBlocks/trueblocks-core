@@ -130,6 +130,10 @@ bool COptions::handle_options(void) {
                                                 << endl;
                             }
 
+                        } else if (option.option_kind == "skipN") {
+                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
+                            auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+
                         } else if (option.option_kind == "positional") {
                             ostringstream pos_stream;
                             if (option.data_type == "list<addr>") {

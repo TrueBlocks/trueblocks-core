@@ -386,6 +386,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_TOGGLE");
                     else if (com->option_kind == "flag")
                         ret += ("|OPT_FLAG");
+                    else if (startsWith(com->option_kind, "skip"))
+                        ret += ("|OPT_SKIP");
                     else if (com->option_kind == "positional")
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_kind == "note")

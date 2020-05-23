@@ -29,10 +29,10 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10390,apps,export,acctExport,freshen_max,F,5000,false,false,false,false,header,flag,<blknum>,maximum number of records to process for --freshen option
 10400,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
 10430,apps,export,acctExport,emitter,M,,false,false,true,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
-10440,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-10450,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-10453,apps,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to display
-10457,apps,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the number of records to display
+10440,apps,export,acctExport,start,S,,false,false,false,false,local,skipN,<blknum>,first block to process (inclusive)
+10450,apps,export,acctExport,end,E,,false,false,false,false,local,skipN,<blknum>,last block to process (inclusive)
+10453,apps,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
+10457,apps,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
 10460,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10470,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 10480,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.

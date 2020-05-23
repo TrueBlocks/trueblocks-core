@@ -54,7 +54,7 @@ int main(int argc, const char* argv[]) {
 
     if (!options.freshen)
         LOG_INFO("exported ", options.nExported, " ",
-                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.items.size(),
+                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.nRead,
                  " transactions", string_q(55, ' '));
 
     acctlib_cleanup();

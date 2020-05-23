@@ -40,6 +40,7 @@
 #define OPT_SWITCH OPT_FLAG
 #define OPT_TOGGLE OPT_SWITCH
 #define OPT_HIDDEN (1 << 17)
+#define OPT_SKIP (OPT_HIDDEN | (1 << 18))
 
 typedef map<size_t, qblocks::string_q> CErrorStringMap;
 #define ERR_NOERROR 0
@@ -166,6 +167,7 @@ class COption {
     bool is_hidden;
     bool is_positional;
     bool is_optional;
+    bool is_skip;
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
 };
 

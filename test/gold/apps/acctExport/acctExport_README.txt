@@ -30,10 +30,8 @@ acctExport -th
 | -f | --freshen | freshen but do not print the exported data |
 | -F | --freshen_max <num> | maximum number of records to process for --freshen option |
 | -D | --deltas | for --balances option only, export only changes in balances |
-| -S | --start <num> | first block to process (inclusive) |
-| -E | --end <num> | last block to process (inclusive) |
-| -c | --first_record <num> | the first record to display |
-| -e | --max_records <num> | the number of records to display |
+| -c | --first_record <num> | the first record to process |
+| -e | --max_records <num> | the maximum number of records to process before reporting |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
