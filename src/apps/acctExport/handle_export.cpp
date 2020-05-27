@@ -151,6 +151,17 @@ bool COptions::exportData(void) {
                         }
 
                     } else {
+                        if (accounting) {
+                            static CReconciliationNumeric lastStatement;
+                            blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
+                            CReconciliationNumeric nums;
+                            nums.blockNum = trans.blockNumber;
+                            CStringArray corrections;
+                            nums.reconcile(corrections, lastStatement, relativeTo, next, &trans);
+                            trans.statement = CIncomeStatement(nums);
+                            lastStatement = nums;
+                        }
+
                         toNameExistsMap[trans.to]++;
                         fromNameExistsMap[trans.from]++;
                         // we only articulate the transaction if we're JSON
@@ -168,8 +179,8 @@ bool COptions::exportData(void) {
                 HIDE_FIELD(CFunction, "message");
                 static size_t cnt = 0;
                 if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
-                    LOG_INFO(className, ": ", i, " of ", nRead, " (", trans.blockNumber, ".", trans.transactionIndex,
-                             ")      ", "\r");
+                    LOG_INFO(className, ": ", i, " of ", nRead, " max ", max_records, " (", trans.blockNumber, ".",
+                             trans.transactionIndex, ")      ", "\r");
             }
         }
     }

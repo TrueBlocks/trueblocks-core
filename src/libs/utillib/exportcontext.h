@@ -14,6 +14,7 @@
 #include "basetypes.h"
 #include "runtimeclass.h"
 #include "sfos.h"
+#include "conversions.h"
 
 namespace qblocks {
 

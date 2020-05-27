@@ -23,6 +23,18 @@ bool COptions::handle_export(void) {
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 
+    if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {
+        ostringstream os;
+        os << "acctExport " << tool_flags;
+        for (auto a : addrs) {
+            os << " " << a;
+        }
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
+        EXIT_NOMSG(true);
+    }
+
     CMonitorArray fa;
     for (auto a : addrs) {
         CMonitor m;

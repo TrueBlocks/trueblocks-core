@@ -128,13 +128,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             }
 
         } else if ((fld.is_flags & IS_OBJECT)) {
-            fieldGetObj += STR_GETOBJ_CODE_FIELD;
+            string_q str = STR_GETOBJ_CODE_FIELD;
             if (!(fld.is_flags & IS_ARRAY)) {
-                replace(fieldGetObj, " && index < [{FIELD}].size()", "");
-                replace(fieldGetObj, "[index]", "");
+                replace(str, " && index < [{FIELD}].size()", "");
+                replace(str, "[index]", "");
             }
-            replace(fieldGetObj, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
-            replaceAll(fieldGetObj, "[{FIELD}]", fld.name);
+            replace(str, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
+            replaceAll(str, "[{FIELD}]", fld.name);
+            fieldGetObj += str;
         }
 
         replace(setFmt, "[{DEFB}]", fld.str_default.empty() ? "false" : fld.str_default);

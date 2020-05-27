@@ -605,6 +605,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x11e52c75998fe2e7928b191bfc5b25937ca16741",
+    "name": "Grant 678 EthAddress Stats Utility Dashboard",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/678/ethaddress-stats-utility-dashboard",
+    "decimals": 0,
+    "description": "https://ethstats.info"
+  },
+  {
     "tags": "76-Verified",
     "address": "0x11eba93a0a852fd34002f5411e1663cf864edb8b",
     "name": "Morality",
@@ -657,6 +666,15 @@ ethNames 0x1 --fmt api
     "source": "OnChain",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x1222d0ded67a533b3163397fd917bc8ac6f96b7a",
+    "name": "Grant 655 Alternative income for poor families in Brazil",
+    "symbol": "",
+    "source": "",
+    "decimals": 0,
+    "description": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil"
   },
   {
     "tags": "76-Verified",
@@ -758,6 +776,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
+    "name": "Grant 723 EtherDNA",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/723/etherdna",
+    "decimals": 0,
+    "description": "https://etherdna.github.io/app/"
+  },
+  {
     "tags": "90-DevCon2:Individual",
     "address": "0x1267895780369b48a02781eb08d353e426e5f256",
     "name": "nagydani",
@@ -810,6 +837,15 @@ ethNames 0x1 --fmt api
     "source": "Etherscan",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x127c6839dee7c737767c9f62d13996e27854505d",
+    "name": "Grant 419 Project Maple Cryptographic Currency Redefined.",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/419/project-maple-cryptographic-currency-redefined",
+    "decimals": 0,
+    "description": "https://github.com/alialiwa2005/Maple"
   },
   {
     "tags": "76-Verified",
@@ -914,6 +950,15 @@ ethNames 0x1 --fmt api
     "tags": "76-Verified",
     "address": "0x12ce7ea7359cb28dfd600430b4e2b411eba5bd40",
     "name": "SaverExchange",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
+    "name": "Tornado.Cash: 0.1 ETH",
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,
@@ -1163,6 +1208,24 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x1388961fbc1df252749b91a2a73c4b0d7377841f",
+    "name": "Grant 530 0xEarth",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/530/0xearth",
+    "decimals": 0,
+    "description": "https://0xearth.github.io/"
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
+    "name": "MCH: Hero Gateway 1",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
     "name": "Musiconomi",
@@ -1197,6 +1260,15 @@ ethNames 0x1 --fmt api
     "source": "On Chain",
     "decimals": 18,
     "description": "Professional Karate Sports Organization"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x139e7746745fbf42ca485845881697f9621b4b27",
+    "name": "Grant 575 GetLogin.Eth",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/575/getlogineth",
+    "decimals": 0,
+    "description": "https://github.com/GetLoginEth/"
   },
   {
     "tags": "76-Verified",
@@ -1577,6 +1649,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x147c06f559f742cc9ef2ea5e628f381bccdce2ba",
+    "name": "Grant 364 React Native support for IPFS",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/364/react-native-support-for-ipfs",
+    "decimals": 0,
+    "description": "https://github.com/openworklabs/react-native-ipfs-http-client/"
+  },
+  {
     "tags": "76-Verified",
     "address": "0x147f9ed33db23b5b27b1ace29e12b42e512c1853",
     "name": "OrderbookReserve",
@@ -1726,87 +1807,6 @@ ethNames 0x1 --fmt api
     "name": "TRX Airdrop",
     "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x14eee554dd47e1812d4de1b450bc47ea3ca6565d",
-    "name": "EthGame",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "33-Set Protocol:Factories",
-    "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
-    "name": "Set Token Factory",
-    "symbol": "",
-    "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x14f37b574242d366558db61f3335289a5035c506",
-    "name": "HackerGold",
-    "symbol": "HKG",
-    "source": "On Chain",
-    "decimals": 3,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x14f56841bbe75b7f7765196b67ea3e8ad190c164",
-    "name": "Okextokencoin",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x14fe6ec757bdd28745e75767581a6efedefe184c",
-    "name": "LEOToken",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x15055424b064d8206e4a43f4f447daf68f43218c",
-    "name": "TokenERC20",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x150b1c50c0a37c58117d9be0bedccc4417301f93",
-    "name": "Gateway",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x150c7856bea3b6cdcac0013dc3d6fa50fffaa35d",
-    "name": "FissionPool",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "90-DevCon2:Individual",
-    "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
-    "name": "Stephen King",
-    "symbol": "",
-    "source": "DevCon2 Token Contract",
     "decimals": 0,
     "description": ""
   }], "types": [

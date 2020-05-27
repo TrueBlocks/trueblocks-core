@@ -135,6 +135,13 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
                 return receipt.Format();
             }
             break;
+        case 's':
+            if (fieldName % "statement") {
+                if (statement == CIncomeStatement())
+                    return "{}";
+                return statement.Format();
+            }
+            break;
         case 't':
             if (fieldName % "transactionIndex") {
                 return uint_2_Str(transactionIndex);
@@ -193,6 +200,14 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         string_q f = fieldName;
         replaceAll(f, s, "");
         f = articulatedTx.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("statement")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = statement.getValueByName(f);
         return f;
     }
 
@@ -329,6 +344,11 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return receipt.parseJson3(fieldValue);
             }
             break;
+        case 's':
+            if (fieldName % "statement") {
+                return statement.parseJson3(fieldValue);
+            }
+            break;
         case 't':
             if (fieldName % "transactionIndex") {
                 transactionIndex = str_2_Uint(fieldValue);
@@ -403,6 +423,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     // archive >> compressedTx;
     // archive >> finalized;
     // archive >> traces;
+    // archive >> statement;
     finishParse();
     return true;
 }
@@ -433,6 +454,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     // archive << compressedTx;
     // archive << finalized;
     // archive << traces;
+    // archive << statement;
 
     return true;
 }
@@ -492,6 +514,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "finalized");
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CTransaction, "traces");
+    ADD_FIELD(CTransaction, "statement", T_OBJECT, ++fieldNum);
+    HIDE_FIELD(CTransaction, "statement");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -577,8 +601,14 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
             case 'c':
                 if (fieldIn % "contractAddress")
                     return addr_2_Str(tra->receipt.contractAddress);
-                if (fieldIn % "compressedTx")
-                    return tra->articulatedTx.compressed();
+                if (fieldIn % "compressedTx") {
+                    string_q ret = tra->articulatedTx.compressed();
+                    if (ret.empty()) {
+                        extern string_q compressInput(const string_q& input);
+                        ret = compressInput(tra->input);
+                    }
+                    return ret;
+                }
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -743,6 +773,8 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         return &articulatedTx;
     if (fieldName % "traces" && index < traces.size())
         return &traces[index];
+    if (fieldName % "statement")
+        return &statement;
     return NULL;
 }
 
@@ -795,6 +827,22 @@ bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
     to = addr;
     value = amount;
     return true;
+}
+
+//-------------------------------------------------------------------------
+string_q compressInput(const string_q& inputIn) {
+    string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
+    string_q name = input.substr(0, 10);
+    replace(input, name, "");
+    string_q ret = name + " ( ";
+    while (!input.empty()) {
+        string_q chunk = input.substr(0, 364);
+        replace(input, chunk, "");
+        ret += ("stub: " + chunk + ", ");
+    }
+    ret = trim(trim(ret, ' '), ',');
+    ret += " )";
+    return ret;
 }
 // EXISTING_CODE
 }  // namespace qblocks

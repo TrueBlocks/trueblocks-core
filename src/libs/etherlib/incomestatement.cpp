@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "incomestatement.h"
+#include "etherlib.h"
 
 namespace qblocks {
 
@@ -70,32 +71,68 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "begBal") {
-                return bni_2_Str(begBal);
+        case 'a':
+            if (fieldName % "asset") {
+                return asset;
             }
+            break;
+        case 'b':
             if (fieldName % "blockNum") {
                 return uint_2_Str(blockNum);
+            }
+            if (fieldName % "begBal") {
+                return begBal;
+            }
+            if (fieldName % "begBalDiff") {
+                return begBalDiff;
             }
             break;
         case 'e':
             if (fieldName % "endBal") {
-                return bni_2_Str(endBal);
+                return endBal;
             }
-            break;
-        case 'g':
-            if (fieldName % "gasCostInWei") {
-                return bni_2_Str(gasCostInWei);
+            if (fieldName % "endBalCalc") {
+                return endBalCalc;
+            }
+            if (fieldName % "endBalDiff") {
+                return endBalDiff;
             }
             break;
         case 'i':
             if (fieldName % "inflow") {
-                return bni_2_Str(inflow);
+                return inflow;
+            }
+            if (fieldName % "intInflow") {
+                return intInflow;
+            }
+            if (fieldName % "intOutflow") {
+                return intOutflow;
             }
             break;
         case 'o':
             if (fieldName % "outflow") {
-                return bni_2_Str(outflow);
+                return outflow;
+            }
+            break;
+        case 'r':
+            if (fieldName % "reconciliationType") {
+                return reconciliationType;
+            }
+            if (fieldName % "reconciled") {
+                return bool_2_Str(reconciled);
+            }
+            break;
+        case 's':
+            if (fieldName % "suicideInflow") {
+                return suicideInflow;
+            }
+            if (fieldName % "suicideOutflow") {
+                return suicideOutflow;
+            }
+            break;
+        case 'w':
+            if (fieldName % "weiGasCost") {
+                return weiGasCost;
             }
             break;
         default:
@@ -118,37 +155,83 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "begBal") {
-                begBal = str_2_Wei(fieldValue);
+        case 'a':
+            if (fieldName % "asset") {
+                asset = fieldValue;
                 return true;
             }
+            break;
+        case 'b':
             if (fieldName % "blockNum") {
                 blockNum = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "begBal") {
+                begBal = fieldValue;
+                return true;
+            }
+            if (fieldName % "begBalDiff") {
+                begBalDiff = fieldValue;
                 return true;
             }
             break;
         case 'e':
             if (fieldName % "endBal") {
-                endBal = str_2_Wei(fieldValue);
+                endBal = fieldValue;
                 return true;
             }
-            break;
-        case 'g':
-            if (fieldName % "gasCostInWei") {
-                gasCostInWei = str_2_Wei(fieldValue);
+            if (fieldName % "endBalCalc") {
+                endBalCalc = fieldValue;
+                return true;
+            }
+            if (fieldName % "endBalDiff") {
+                endBalDiff = fieldValue;
                 return true;
             }
             break;
         case 'i':
             if (fieldName % "inflow") {
-                inflow = str_2_Wei(fieldValue);
+                inflow = fieldValue;
+                return true;
+            }
+            if (fieldName % "intInflow") {
+                intInflow = fieldValue;
+                return true;
+            }
+            if (fieldName % "intOutflow") {
+                intOutflow = fieldValue;
                 return true;
             }
             break;
         case 'o':
             if (fieldName % "outflow") {
-                outflow = str_2_Wei(fieldValue);
+                outflow = fieldValue;
+                return true;
+            }
+            break;
+        case 'r':
+            if (fieldName % "reconciliationType") {
+                reconciliationType = fieldValue;
+                return true;
+            }
+            if (fieldName % "reconciled") {
+                reconciled = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "suicideInflow") {
+                suicideInflow = fieldValue;
+                return true;
+            }
+            if (fieldName % "suicideOutflow") {
+                suicideOutflow = fieldValue;
+                return true;
+            }
+            break;
+        case 'w':
+            if (fieldName % "weiGasCost") {
+                weiGasCost = fieldValue;
                 return true;
             }
             break;
@@ -177,12 +260,22 @@ bool CIncomeStatement::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive >> blockNum;
+    archive >> asset;
     archive >> begBal;
+    archive >> begBalDiff;
     archive >> inflow;
     archive >> outflow;
-    archive >> gasCostInWei;
+    archive >> intInflow;
+    archive >> intOutflow;
+    archive >> suicideInflow;
+    archive >> suicideOutflow;
+    archive >> weiGasCost;
     archive >> endBal;
-    archive >> blockNum;
+    archive >> endBalCalc;
+    archive >> endBalDiff;
+    archive >> reconciliationType;
+    archive >> reconciled;
     finishParse();
     return true;
 }
@@ -194,12 +287,22 @@ bool CIncomeStatement::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    archive << blockNum;
+    archive << asset;
     archive << begBal;
+    archive << begBalDiff;
     archive << inflow;
     archive << outflow;
-    archive << gasCostInWei;
+    archive << intInflow;
+    archive << intOutflow;
+    archive << suicideInflow;
+    archive << suicideOutflow;
+    archive << weiGasCost;
     archive << endBal;
-    archive << blockNum;
+    archive << endBalCalc;
+    archive << endBalDiff;
+    archive << reconciliationType;
+    archive << reconciled;
 
     return true;
 }
@@ -236,12 +339,22 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "begBal", T_INT256, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "inflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "outflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "gasCostInWei", T_INT256, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "asset", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "begBal", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "begBalDiff", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "inflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "outflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "intInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "intOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "suicideInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "suicideOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "weiGasCost", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "endBal", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "endBalCalc", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "endBalDiff", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "reconciliationType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "reconciled", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIncomeStatement, "schema");
@@ -301,25 +414,28 @@ CArchive& operator>>(CArchive& archive, CIncomeStatement& inc) {
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIncomeStatement& item) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
-        uint64_t width = 22;
-        if (item.begBal == item.endBal && item.begBal == -1) {
-            os << padCenter("begBal", width) << "   " << padCenter("inFlow", width) << "   "
-               << padCenter("outFlow", width) << "   " << padCenter("gasCost", width) << "   "
-               << padCenter("endBal", width);
-        } else {
-            os << (item.begBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.begBal)), width) << bBlack
-               << "   ";
-            os << (item.inflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.inflow)), width) << bBlack
-               << "   ";
-            os << (item.outflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.outflow)), width) << bBlack
-               << "   ";
-            os << (item.gasCostInWei > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.gasCostInWei)), width)
-               << cOff << "   ";
-            os << (item.endBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.endBal)), width);
-        }
-        { return os; }
-    }
+    //    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
+    //        uint64_t width = 22;
+    //        if (item.begBal == item.endBal && item.begBal == -1) {
+    //            os << padCenter("begBal", width) << "   " << padCenter("inFlow", width) << "   "
+    //               << padCenter("outFlow", width) << "   " << padCenter("gasCost", width) << "   "
+    //               << padCenter("endBal", width);
+    //        } else {
+    //            os << (item.begBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.begBal)), width) <<
+    //            bBlack
+    //               << "   ";
+    //            os << (item.inflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.inflow)), width) <<
+    //            bBlack
+    //               << "   ";
+    //            os << (item.outflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.outflow)), width) <<
+    //            bBlack
+    //               << "   ";
+    //            os << (item.weiGasCost > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.weiGasCost)), width)
+    //               << cOff << "   ";
+    //            os << (item.endBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.endBal)), width);
+    //        }
+    //        { return os; }
+    //    }
     // EXISTING_CODE
 
     item.Format(os, "", nullptr);
@@ -333,5 +449,53 @@ const char* STR_DISPLAY_INCOMESTATEMENT = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
+inline string_q bni_2_Ether(const bigint_t& num) {
+    if (num == 0)
+        return "-";
+    string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(num)));
+    CStringArray parts;
+    explode(parts, ret, '.');
+    ret = parts[0] + ".";
+    if (parts.size() == 1)
+        return ret + "0000000";
+    if (parts[1].length() >= 7)
+        return ret + parts[1].substr(0, 7);
+    return ret + parts[1] + string_q(7 - parts[1].length(), '0');
+}
+
+//---------------------------------------------------------------------------
+CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
+    blockNum = nums.blockNum;
+    if (expContext().asEther) {
+        begBal = bni_2_Ether(nums.begBal);
+        begBalDiff = nums.begBalDiff >= 0 ? bni_2_Ether(nums.begBalDiff) : "-" + bni_2_Ether(nums.begBalDiff * -1);
+        inflow = bni_2_Ether(nums.inflow);
+        outflow = bni_2_Ether(nums.outflow);
+        intInflow = bni_2_Ether(nums.intInflow);
+        intOutflow = bni_2_Ether(nums.intOutflow);
+        suicideInflow = bni_2_Ether(nums.suicideInflow);
+        suicideOutflow = bni_2_Ether(nums.suicideOutflow);
+        weiGasCost = bni_2_Ether(nums.weiGasCost);
+        endBal = bni_2_Ether(nums.endBal);
+        endBalCalc = bni_2_Ether(nums.endBalCalc);
+        endBalDiff = nums.endBalDiff >= 0 ? bni_2_Ether(nums.endBalDiff) : "-" + bni_2_Ether(nums.endBalDiff * -1);
+    } else {
+        begBal = bni_2_Str(nums.begBal);
+        begBalDiff = bni_2_Str(nums.begBalDiff);
+        inflow = bni_2_Str(nums.inflow);
+        outflow = bni_2_Str(nums.outflow);
+        intInflow = bni_2_Str(nums.intInflow);
+        intOutflow = bni_2_Str(nums.intOutflow);
+        suicideInflow = bni_2_Str(nums.suicideInflow);
+        suicideOutflow = bni_2_Str(nums.suicideOutflow);
+        weiGasCost = bni_2_Str(nums.weiGasCost);
+        endBal = bni_2_Str(nums.endBal);
+        endBalCalc = bni_2_Str(nums.endBalCalc);
+        endBalDiff = bni_2_Str(nums.endBalDiff);
+    }
+    asset = nums.asset;
+    reconciliationType = nums.reconciliationType;
+    reconciled = nums.reconciled;
+}
 // EXISTING_CODE
 }  // namespace qblocks

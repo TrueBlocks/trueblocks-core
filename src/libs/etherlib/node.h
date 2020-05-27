@@ -187,6 +187,7 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
+extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 extern string_q doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
                           const CAbi& abi);
 

@@ -20,15 +20,18 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         options.className =
-            (options.appearances
-                 ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                 : (options.balances
-                        ? GETRUNTIME_CLASS(CEthState)->m_ClassName
-                        : (options.traces
-                               ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                               : (options.receipts ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                                                   : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                                   : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+            (options.count
+                 ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
+                 : options.appearances
+                       ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
+                       : (options.balances
+                              ? GETRUNTIME_CLASS(CEthState)->m_ClassName
+                              : (options.traces
+                                     ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                                     : (options.receipts
+                                            ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                                            : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                            : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
@@ -36,6 +39,9 @@ int main(int argc, const char* argv[]) {
         if (options.balances) {
             options.loadAllAppearances();  // allow the balance query to continue even with no appearances
             options.exportBalances();
+
+        } else if (options.count) {
+            options.exportCounts();
 
         } else {
             if (options.loadAllAppearances())

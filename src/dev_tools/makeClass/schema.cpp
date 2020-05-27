@@ -79,9 +79,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "cn") {
                 return cn;
             }
-            if (fieldName % "copyable") {
-                return bool_2_Str(copyable);
-            }
             break;
         case 'd':
             if (fieldName % "decimals") {
@@ -89,6 +86,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "domain") {
                 return bool_2_Str(domain);
+            }
+            if (fieldName % "detail") {
+                return bool_2_Str(detail);
             }
             break;
         case 'e':
@@ -192,10 +192,6 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 cn = fieldValue;
                 return true;
             }
-            if (fieldName % "copyable") {
-                copyable = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 'd':
             if (fieldName % "decimals") {
@@ -204,6 +200,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "domain") {
                 domain = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "detail") {
+                detail = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -332,7 +332,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> cn;
     archive >> domain;
     archive >> range;
-    archive >> copyable;
+    archive >> detail;
     archive >> searchable;
     archive >> sortable;
     archive >> underField;
@@ -364,7 +364,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << cn;
     archive << domain;
     archive << range;
-    archive << copyable;
+    archive << detail;
     archive << searchable;
     archive << sortable;
     archive << underField;
@@ -421,7 +421,7 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "domain", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
-    ADD_FIELD(CSchema, "copyable", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "detail", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "underField", T_TEXT, ++fieldNum);

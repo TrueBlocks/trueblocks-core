@@ -62,7 +62,7 @@ bool testDisplayStr(COptions& options) {
         es.storage = "0xTHIS_IS_BOGUS_STORAGE_DATA";
         monitor.stateHistory.push_back(es);
 
-        CIncomeStatement is;
+        CReconciliationNumeric is;
         is.inflow = str_2_Wei("2000000000000000000");
         monitor.statement = is;
 

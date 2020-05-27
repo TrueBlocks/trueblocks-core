@@ -70,6 +70,11 @@ string_q CSubpage::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "component") {
+                return component;
+            }
+            break;
         case 'e':
             if (fieldName % "extract") {
                 return extract;
@@ -122,6 +127,12 @@ bool CSubpage::setValueByName(const string_q& fieldNameIn, const string_q& field
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "component") {
+                component = fieldValue;
+                return true;
+            }
+            break;
         case 'e':
             if (fieldName % "extract") {
                 extract = fieldValue;
@@ -191,6 +202,7 @@ bool CSubpage::Serialize(CArchive& archive) {
     archive >> subpage;
     archive >> route;
     archive >> options;
+    archive >> component;
     archive >> extract;
     archive >> icon;
     finishParse();
@@ -208,6 +220,7 @@ bool CSubpage::SerializeC(CArchive& archive) const {
     archive << subpage;
     archive << route;
     archive << options;
+    archive << component;
     archive << extract;
     archive << icon;
 
@@ -250,6 +263,7 @@ void CSubpage::registerClass(void) {
     ADD_FIELD(CSubpage, "subpage", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "route", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "options", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "component", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "extract", T_TEXT, ++fieldNum);
     ADD_FIELD(CSubpage, "icon", T_TEXT, ++fieldNum);
 

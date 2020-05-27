@@ -16,6 +16,7 @@
  */
 #include <algorithm>
 #include "ethstate.h"
+#include "etherlib.h"
 
 namespace qblocks {
 

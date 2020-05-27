@@ -47,6 +47,15 @@
     },
     {
       "tags": "20-Friends",
+      "address": "0x4d0a14bb9c145b4b3694e29107dc4a62d0f25c92",
+      "name": "Old EthSlurp Tipper",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "20-Friends",
       "address": "0x4ff1c812ebccc16487c17f537d849cb5dc557ff0",
       "name": "EthSlurp Tip Jar Sender Sender",
       "symbol": "",
@@ -152,6 +161,15 @@
       "source": "Etherscan",
       "decimals": "0",
       "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
+      "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
+      "decimals": "0",
+      "description": "https://phishfort.com/protect"
     },
     {
       "tags": "76-Verified",

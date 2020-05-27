@@ -1,4 +1,5 @@
 tags	address	name	symbol	decimals	source
+31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma				https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp
 76-Verified	0x051096b73b227f63a0c8f863b436e9a74faf1bf8	CyberSecurityNetwork				Etherscan
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8	On Chain
 76-Verified	0x09b1d1a3331bb8b9edfb1a4fbda4ca81fc40a902	BIDPlayNetwork				Etherscan
@@ -15,6 +16,7 @@ tags	address	name	symbol	decimals	source
 76-Verified	0x41ad4093349c8a60de591a3c37dcd184558eaae3	BitcoinCompanyNetwork				Etherscan
 76-Verified	0x49d743dc7f0aafda02a736ecdcce174e9cae6261	LightningNetwork				Etherscan
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18	On Chain
+31-Gitcoin Grants:Grant	0x4c63f570590b7e145d5af265497aa23fa2bc0b8c	Grant 653 Gas Stations Network				https://gitcoin.co/grants/653/gas-stations-network
 76-Verified	0x4ddd5fc76fa654e15132c606c0d65d38056c4be9	HypersonicNetwork				Etherscan
 34-Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner				TrueBlocks.io
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related				Etherscan
@@ -41,17 +43,21 @@ tags	address	name	symbol	decimals	source
 50-Tokens	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18	defipulse.com
 33-Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy				https://github.com/SetProtocol/set-protocol-contracts
 50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN		18	On Chain
+31-Gitcoin Grants:Grant	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 681 FlowStake Activity Staking Blockchain Network				https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network
 50-Tokens	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18	defipulse.com
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18	On Chain
 76-Verified	0x98eb20888cdb3b98c2ff7c91a51235e3ae4085e6	TokenNetwork				Etherscan
 34-Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network				0xTracker
 76-Verified	0x9efcea67d20378039202e3b3615c1408ca6da4cb	MIXINetwork				Etherscan
+31-Gitcoin Grants:Grant	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 334 Interstate Network EVM optimistic rollup				https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18	On Chain
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT		18	On Chain
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT		18	On Chain
 34-Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve				TrueBlocks.io
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9	On Chain
+31-Gitcoin Grants:Grant	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 338 2key Network Labs				https://gitcoin.co/grants/338/2key-network-labs
 50-Tokens:ERC20	0xb55c5cac5014c662fdbf21a2c59cd45403c482fd	Clovers Network Token	CLV			Etherscan
+31-Gitcoin Grants:Grant	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 742 Crypto community ventures network				https://gitcoin.co/grants/742/crypto-community-ventures-network
 76-Verified	0xbf2389bcf81a343bc913ab3476612b1dc357cc52	MokaNetwork				Etherscan
 50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			Etherscan.io
 50-Tokens	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18	defipulse.com
@@ -73,6 +79,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xe7e4279b80d319ede2889855135a22021baf0907	ZeusNetwork	ZEUS		18	On Chain
 50-Tokens:ERC20	0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token	ZNT		18	On Chain
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO		18	On Chain
+31-Gitcoin Grants:Grant	0xec52a4336904f98adca74f87441fa966cf770db4	Grant 385 Locha Mesh: private txs censorshipresistant dApps and IPFS over a resilient longrange radio mesh network				https://gitcoin.co/grants/385/locha-mesh-private-txs-censorship-resistant-dapps
 76-Verified	0xf1efcac8adf7f9499d007d24615a69c5c045f421	SwipeNetwork				Etherscan
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN		18	On Chain
 34-Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper				Etherscan

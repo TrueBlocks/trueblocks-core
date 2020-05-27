@@ -2371,17 +2371,17 @@
         "name": "NewResolver",
         "inputs": [
           {
-            "name": "node",
+            "name": "_node",
             "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
           },
           {
-            "name": "resolver",
+            "name": "_resolver",
             "value": "0x1da022710df5002339274aadee8d58218e9d6ab5"
           }
         ],
         "outputs": []
       },
-      "compressedLog": "NewResolver ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )",
+      "compressedLog": "NewResolver ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )",
       "type": "mined"
     },
     {

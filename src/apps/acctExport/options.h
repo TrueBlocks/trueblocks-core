@@ -69,6 +69,7 @@ class COptions : public COptionsBase {
     blknum_t freshen_max;
     bool deltas;
     bool emitter;
+    bool count;
     blknum_t first_record;
     blknum_t max_records;
     // END_CODE_DECLARE
@@ -77,6 +78,7 @@ class COptions : public COptionsBase {
 
     CAbi abis;
     CMonitorArray monitors;
+    CMonitorCountArray counts;
     CAppearanceArray_base items;
     size_t nExported;
     string_q className;
@@ -89,6 +91,7 @@ class COptions : public COptionsBase {
     size_t ts_cnt;
     blknum_t latestBlock;
     size_t nRead;
+    address_t relativeTo;
 
     COptions(void);
     ~COptions(void);
@@ -100,5 +103,6 @@ class COptions : public COptionsBase {
     bool loadAllAppearances(void);
 
     bool exportData(void);
+    bool exportCounts(void);
     bool exportBalances(void);
 };

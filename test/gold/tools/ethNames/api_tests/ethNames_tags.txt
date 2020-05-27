@@ -19,6 +19,9 @@
       "tags": "30-Contracts:dAppNode"
     },
     {
+      "tags": "31-Gitcoin Grants:Contracts"
+    },
+    {
       "tags": "31-Gitcoin Grants:Core"
     },
     {
@@ -101,6 +104,9 @@
     },
     {
       "tags": "80-Prefund"
+    },
+    {
+      "tags": "81 Other"
     },
     {
       "tags": "81-Custom"

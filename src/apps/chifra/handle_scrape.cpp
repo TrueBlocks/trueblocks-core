@@ -148,7 +148,7 @@ bool COptions::handle_scrape(void) {
                 if (daemonMode) {
                     // Catch the monitors addresses up to the scraper if in --deamon mode
                     CMonitorArray monitors;
-                    forEveryFileInFolder(getMonitorPath(""), visitMonitor, &monitors);
+                    forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
                     freshen_internal(FM_PRODUCTION, monitors, "--silent", freshen_flags);
                     for (auto monitor : monitors) {

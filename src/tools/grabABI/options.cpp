@@ -89,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!sol.empty()) {
         if (!fileExists(sol + ".sol") && !fileExists(sol))
             return usage("Cannot find .sol file at '" + sol + "'. Quitting...");
-        convertFromSol(substitute(sol, ".col", ""));
+        convertFromSol(substitute(sol, ".sol", ""));
         cerr << sol << " coverted in current folder." << endl;
         return false;
     }

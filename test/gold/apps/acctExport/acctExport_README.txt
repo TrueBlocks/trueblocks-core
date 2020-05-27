@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-p|-r|-l|-t|-b|-n|-u|-C|-a|-i|-R|-M|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctExport [-p|-r|-l|-t|-b|-n|-u|-C|-a|-i|-R|-M|-U|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -22,6 +22,7 @@ acctExport -th
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |
 | -M | --emitter | available for --logs option only, export will only export if the address emitted the event |
+| -U | --count | only available for --appearances mode, if present return only the number of records |
 
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |

@@ -15,7 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "abilib.h"
 
 namespace qblocks {
 
@@ -23,47 +23,50 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CIncomeStatement : public CBaseNode {
+class CReconciliationNumeric : public CBaseNode {
   public:
+    blknum_t blockNum;
+    string_q asset;
     bigint_t begBal;
+    bigint_t begBalDiff;
     bigint_t inflow;
     bigint_t outflow;
-    bigint_t gasCostInWei;
+    bigint_t intInflow;
+    bigint_t intOutflow;
+    bigint_t suicideInflow;
+    bigint_t suicideOutflow;
+    bigint_t weiGasCost;
     bigint_t endBal;
-    blknum_t blockNum;
+    bigint_t endBalCalc;
+    bigint_t endBalDiff;
+    string_q reconciliationType;
+    bool reconciled;
 
   public:
-    CIncomeStatement(void);
-    CIncomeStatement(const CIncomeStatement& in);
-    virtual ~CIncomeStatement(void);
-    CIncomeStatement& operator=(const CIncomeStatement& in);
+    CReconciliationNumeric(void);
+    CReconciliationNumeric(const CReconciliationNumeric& re);
+    virtual ~CReconciliationNumeric(void);
+    CReconciliationNumeric& operator=(const CReconciliationNumeric& re);
 
-    DECLARE_NODE(CIncomeStatement);
+    DECLARE_NODE(CReconciliationNumeric);
 
     // EXISTING_CODE
-    bigint_t curBalance;
-    void operator+=(const CIncomeStatement& x);
-    bool balanced(void) const {
-        return ((curBalance - endBal) == 0);
-    }
-    bigint_t difference(void) const {
-        return (curBalance - endBal);
-    }
-    void correct(void) {
-        endBal = curBalance;
-    }
+    bool reconcile(const CStringArray& corrections, const CReconciliationNumeric& lastStatement,
+                   const address_t& forAddr, blknum_t nextBlock, const CTransaction* trans);
+    bool reconcileUsingTraces(const CReconciliationNumeric& lastStatement, const address_t& forAddr, blknum_t nextBlock,
+                              const CTransaction* trans);
     // EXISTING_CODE
-    bool operator==(const CIncomeStatement& item) const;
-    bool operator!=(const CIncomeStatement& item) const {
+    bool operator==(const CReconciliationNumeric& item) const;
+    bool operator!=(const CReconciliationNumeric& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2);
-    friend ostream& operator<<(ostream& os, const CIncomeStatement& item);
+    friend bool operator<(const CReconciliationNumeric& v1, const CReconciliationNumeric& v2);
+    friend ostream& operator<<(ostream& os, const CReconciliationNumeric& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CIncomeStatement& in);
+    void duplicate(const CReconciliationNumeric& re);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -71,76 +74,96 @@ class CIncomeStatement : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::CIncomeStatement(void) {
+inline CReconciliationNumeric::CReconciliationNumeric(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::CIncomeStatement(const CIncomeStatement& in) {
+inline CReconciliationNumeric::CReconciliationNumeric(const CReconciliationNumeric& re) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(in);
+    duplicate(re);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement::~CIncomeStatement(void) {
+inline CReconciliationNumeric::~CReconciliationNumeric(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::clear(void) {
+inline void CReconciliationNumeric::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::initialize(void) {
+inline void CReconciliationNumeric::initialize(void) {
     CBaseNode::initialize();
 
+    blockNum = 0;
+    asset = "";
     begBal = 0;
+    begBalDiff = 0;
     inflow = 0;
     outflow = 0;
-    gasCostInWei = 0;
+    intInflow = 0;
+    intOutflow = 0;
+    suicideInflow = 0;
+    suicideOutflow = 0;
+    weiGasCost = 0;
     endBal = 0;
-    blockNum = 0;
+    endBalCalc = 0;
+    endBalDiff = 0;
+    reconciliationType = "";
+    reconciled = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
+inline void CReconciliationNumeric::duplicate(const CReconciliationNumeric& re) {
     clear();
-    CBaseNode::duplicate(in);
+    CBaseNode::duplicate(re);
 
-    begBal = in.begBal;
-    inflow = in.inflow;
-    outflow = in.outflow;
-    gasCostInWei = in.gasCostInWei;
-    endBal = in.endBal;
-    blockNum = in.blockNum;
+    blockNum = re.blockNum;
+    asset = re.asset;
+    begBal = re.begBal;
+    begBalDiff = re.begBalDiff;
+    inflow = re.inflow;
+    outflow = re.outflow;
+    intInflow = re.intInflow;
+    intOutflow = re.intOutflow;
+    suicideInflow = re.suicideInflow;
+    suicideOutflow = re.suicideOutflow;
+    weiGasCost = re.weiGasCost;
+    endBal = re.endBal;
+    endBalCalc = re.endBalCalc;
+    endBalDiff = re.endBalDiff;
+    reconciliationType = re.reconciliationType;
+    reconciled = re.reconciled;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CIncomeStatement& CIncomeStatement::operator=(const CIncomeStatement& in) {
-    duplicate(in);
+inline CReconciliationNumeric& CReconciliationNumeric::operator=(const CReconciliationNumeric& re) {
+    duplicate(re);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CIncomeStatement::operator==(const CIncomeStatement& item) const {
+inline bool CReconciliationNumeric::operator==(const CReconciliationNumeric& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -148,7 +171,7 @@ inline bool CIncomeStatement::operator==(const CIncomeStatement& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
+inline bool operator<(const CReconciliationNumeric& v1, const CReconciliationNumeric& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -156,27 +179,18 @@ inline bool operator<(const CIncomeStatement& v1, const CIncomeStatement& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CIncomeStatement> CIncomeStatementArray;
-extern CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array);
-extern CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array);
+typedef vector<CReconciliationNumeric> CReconciliationNumericArray;
+extern CArchive& operator>>(CArchive& archive, CReconciliationNumericArray& array);
+extern CArchive& operator<<(CArchive& archive, const CReconciliationNumericArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc);
-extern CArchive& operator>>(CArchive& archive, CIncomeStatement& inc);
+extern CArchive& operator<<(CArchive& archive, const CReconciliationNumeric& rec);
+extern CArchive& operator>>(CArchive& archive, CReconciliationNumeric& rec);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_INCOMESTATEMENT;
+extern const char* STR_DISPLAY_RECONCILIATIONNUMERIC;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//------------------------------------------------------------
-inline void CIncomeStatement::operator+=(const CIncomeStatement& x) {
-    begBal += x.begBal;
-    inflow += x.inflow;
-    outflow += x.outflow;
-    gasCostInWei += x.gasCostInWei;
-    endBal += x.endBal;
-    blockNum = x.blockNum;
-}
 // EXISTING_CODE
 }  // namespace qblocks

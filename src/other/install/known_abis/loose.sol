@@ -1,4 +1,6 @@
 contract A {
+  function create(address[] _owners, uint256 _required) { }
+  function claim() { }
   function setCompleted(uint256 completed) { }
   function submitProposal(address applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details) { }
   function sponsorProposal(uint256 proposalId) { }

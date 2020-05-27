@@ -1,5 +1,31 @@
 [
   {
+    "name": "create",
+    "type": "function",
+    "signature": "create(address[],uint256)",
+    "encoding": "0xf8f73808",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_owners",
+        "is_array": true
+      },
+      {
+        "type": "uint256",
+        "name": "_required"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "claim",
+    "type": "function",
+    "signature": "claim()",
+    "encoding": "0x4e71d92d",
+    "inputs": [],
+    "outputs": []
+  },
+  {
     "name": "setCompleted",
     "type": "function",
     "signature": "setCompleted(uint256)",

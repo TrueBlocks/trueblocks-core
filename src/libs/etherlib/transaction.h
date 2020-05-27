@@ -18,6 +18,8 @@
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
+#include "incomestatement.h"
+#include "ethstate.h"
 
 namespace qblocks {
 
@@ -50,6 +52,7 @@ class CTransaction : public CBaseNode {
     string_q compressedTx;
     bool finalized;
     CTraceArray traces;
+    CIncomeStatement statement;
 
   public:
     CTransaction(void);
@@ -140,6 +143,7 @@ inline void CTransaction::initialize(void) {
     compressedTx = "";
     finalized = false;
     traces.clear();
+    statement = CIncomeStatement();
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -170,6 +174,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     compressedTx = tr.compressedTx;
     finalized = tr.finalized;
     traces = tr.traces;
+    statement = tr.statement;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

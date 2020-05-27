@@ -481,6 +481,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x00bbb33024f0b9d6ac0df6d158c498c291bfb298",
+      "decimals": "0"
+    },
+    {
       "address": "0x00c0443f42932d9efe27e64409b21d2e48928d66",
       "decimals": "0"
     },
@@ -521,6 +525,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
+      "decimals": "0"
+    },
+    {
       "address": "0x0100e29a8c08fbe5180ffa9190a5487f0f3f50f8",
       "decimals": "0"
     },
@@ -530,6 +538,10 @@
     },
     {
       "address": "0x010d14d36c3ea6570d240ae3ac9d660398f7c48e",
+      "decimals": "0"
+    },
+    {
+      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
       "decimals": "0"
     },
     {
@@ -562,6 +574,10 @@
     },
     {
       "address": "0x0158d521bb6da3afa7600c4cf436a4f526421d66",
+      "decimals": "0"
+    },
+    {
+      "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
       "decimals": "0"
     },
     {
@@ -638,6 +654,10 @@
     },
     {
       "address": "0x01eee9f6dad971da52f3d0400431692b29573da3",
+      "decimals": "0"
+    },
+    {
+      "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
       "decimals": "0"
     },
     {
@@ -777,32 +797,12 @@
       "decimals": "0"
     },
     {
+      "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
+      "decimals": "0"
+    },
+    {
       "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
       "decimals": 8
-    },
-    {
-      "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
-      "decimals": "0"
-    },
-    {
-      "address": "0x02eefd8fd2debc75c52ef1479e56caeaa049ecc7",
-      "decimals": "0"
-    },
-    {
-      "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577",
-      "decimals": 18
-    },
-    {
-      "address": "0x02f61fd266da6e8b102d4121f5ce7b992640cf98",
-      "decimals": 18
-    },
-    {
-      "address": "0x0300ce31fa12c56333622d16d9c85444d42c8ba7",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0301db8ddf7e441b0fb4d2b4d198d852df47ccf7",
-      "decimals": "0"
     }
   ],
   "types": [

@@ -307,6 +307,15 @@
       "output_names": ""
     },
     {
+      "name": "getMemberProposalVote",
+      "type": "function",
+      "signature": "getMemberProposalVote(address,uint256)",
+      "encoding": "0x044a0ca8",
+      "address": "0x0",
+      "input_names": "memberAddress,proposalIndex,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "_createPermissions",
       "type": "function",
       "signature": "_createPermissions(ACL,address[],address,bytes32,address)",
@@ -523,6 +532,15 @@
       "output_names": ""
     },
     {
+      "name": "Submit",
+      "type": "event",
+      "signature": "Submit(uint256)",
+      "encoding": "0x08324b3d745b914e3abd4ffbfead91e3b78391a98c173202129215ab933adfbe",
+      "address": "0x0",
+      "input_names": "proposalId,",
+      "output_names": ""
+    },
+    {
       "name": "callback",
       "type": "function",
       "signature": "callback()",
@@ -539,6 +557,15 @@
       "address": "0x0",
       "input_names": "_operator,_from,_to,_id,_value,_data,",
       "output_names": ""
+    },
+    {
+      "name": "getCurrentPeriod",
+      "type": "function",
+      "signature": "getCurrentPeriod()",
+      "encoding": "0x086146d2",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "NewCloneToken",
@@ -775,6 +802,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "withdrawBalance",
+      "type": "function",
+      "signature": "withdrawBalance(address,uint256)",
+      "encoding": "0x0cf20cc9",
+      "address": "0x0",
+      "input_names": "token,amount,",
+      "output_names": ""
+    },
+    {
       "name": "AddShare",
       "type": "event",
       "signature": "AddShare(address,uint256,uint256)",
@@ -811,12 +847,39 @@
       "output_names": ""
     },
     {
+      "name": "fairShare",
+      "type": "function",
+      "signature": "fairShare(uint256,uint256,uint256)",
+      "encoding": "0x0d922c8a",
+      "address": "0x0",
+      "input_names": "balance,shares,totalShares,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "unsafeSubtractFromBalance",
+      "type": "function",
+      "signature": "unsafeSubtractFromBalance(address,address,uint256)",
+      "encoding": "0x0e0910b0",
+      "address": "0x0",
+      "input_names": "user,token,amount,",
+      "output_names": ""
+    },
+    {
       "name": "withdrawModule",
       "type": "function",
       "signature": "withdrawModule(address,address,address,uint256)",
       "encoding": "0x0e1fd334",
       "address": "0x0",
       "input_names": "_from,_to,_token,_quantity,",
+      "output_names": ""
+    },
+    {
+      "name": "ProcessGuildKickProposal",
+      "type": "event",
+      "signature": "ProcessGuildKickProposal(uint256,uint256,bool)",
+      "encoding": "0x0e347d00d3e9e6cdff9e6c09092c9ff1bd448f9b3dfb7091b30939ec5e7a3c73",
+      "address": "0x0",
+      "input_names": "proposalIndex,proposalId,didPass,",
       "output_names": ""
     },
     {
@@ -955,6 +1018,15 @@
       "output_names": ""
     },
     {
+      "name": "getMolochCount",
+      "type": "function",
+      "signature": "getMolochCount()",
+      "encoding": "0x0fe204bd",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "MolochCount,"
+    },
+    {
       "name": "divScalarByExpTruncate",
       "type": "function",
       "signature": "divScalarByExpTruncate(uint256,Exp)",
@@ -978,7 +1050,7 @@
       "signature": "_approve(address,address,uint256)",
       "encoding": "0x104e81ff",
       "address": "0x0",
-      "input_names": "owner,spender,amount,",
+      "input_names": "owner,spender,value,",
       "output_names": ""
     },
     {
@@ -1007,6 +1079,15 @@
       "address": "0x0",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "submitGuildKickProposal",
+      "type": "function",
+      "signature": "submitGuildKickProposal(address,string)",
+      "encoding": "0x115b2d18",
+      "address": "0x0",
+      "input_names": "memberToKick,details,",
+      "output_names": "proposalId,"
     },
     {
       "name": "registerRelay",
@@ -1105,6 +1186,15 @@
       "encoding": "0x12a3bbe3",
       "address": "0x0",
       "input_names": "_tokens,_owner,_quantities,",
+      "output_names": ""
+    },
+    {
+      "name": "unsafeInternalTransfer",
+      "type": "function",
+      "signature": "unsafeInternalTransfer(address,address,address,uint256)",
+      "encoding": "0x12cec7f0",
+      "address": "0x0",
+      "input_names": "from,to,token,amount,",
       "output_names": ""
     },
     {
@@ -1268,6 +1358,15 @@
       "address": "0x0",
       "input_names": "_entity,_app,_role,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "ragequit",
+      "type": "function",
+      "signature": "ragequit(uint256,uint256)",
+      "encoding": "0x15eb349e",
+      "address": "0x0",
+      "input_names": "sharesToBurn,lootToBurn,",
+      "output_names": ""
     },
     {
       "name": "ProxyDeposit",
@@ -1918,6 +2017,15 @@
       "output_names": ""
     },
     {
+      "name": "ProcessWhitelistProposal",
+      "type": "event",
+      "signature": "ProcessWhitelistProposal(uint256,uint256,bool)",
+      "encoding": "0x2094fc13d2ecb0acd6861e82bd006c7e5ab6f312ec0c6cdfe3d1a01ee54d885a",
+      "address": "0x0",
+      "input_names": "proposalIndex,proposalId,didPass,",
+      "output_names": ""
+    },
+    {
       "name": "contains",
       "type": "function",
       "signature": "contains(UintToAddressMap,uint256)",
@@ -2296,6 +2404,15 @@
       "output_names": ""
     },
     {
+      "name": "updateDelegateKey",
+      "type": "function",
+      "signature": "updateDelegateKey(address)",
+      "encoding": "0x2582bf2a",
+      "address": "0x0",
+      "input_names": "newDelegateKey,",
+      "output_names": ""
+    },
+    {
       "name": "_createTokenManagerPermissions",
       "type": "function",
       "signature": "_createTokenManagerPermissions(ACL,TokenManager,address,address)",
@@ -2528,6 +2645,15 @@
       "address": "0x0",
       "input_names": "who,where,what,how,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "SponsorProposal",
+      "type": "event",
+      "signature": "SponsorProposal(address,address,uint256,uint256,uint256)",
+      "encoding": "0x2a383a979381335e3eb401ac01dd8083e024ff0256bf5338456ffc0063390bbd",
+      "address": "0x0",
+      "input_names": "delegateKey,memberAddress,proposalId,proposalIndex,startingPeriod,",
+      "output_names": ""
     },
     {
       "name": "staticAllowance",
@@ -2949,7 +3075,7 @@
       "signature": "_transfer(address,address,uint256)",
       "encoding": "0x30e0789e",
       "address": "0x0",
-      "input_names": "sender,recipient,amount,",
+      "input_names": "from,to,value,",
       "output_names": ""
     },
     {
@@ -3266,6 +3392,15 @@
       "address": "0x0",
       "input_names": "_from,_to,_amount,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "processWhitelistProposal",
+      "type": "function",
+      "signature": "processWhitelistProposal(uint256)",
+      "encoding": "0x3793ab3c",
+      "address": "0x0",
+      "input_names": "proposalIndex,",
+      "output_names": ""
     },
     {
       "name": "calculateTotalWithdrawableAmount",
@@ -3889,6 +4024,15 @@
       "output_names": ""
     },
     {
+      "name": "withdrawBalances",
+      "type": "function",
+      "signature": "withdrawBalances(address[],uint256[],bool)",
+      "encoding": "0x4482394b",
+      "address": "0x0",
+      "input_names": "tokens,amounts,max,",
+      "output_names": ""
+    },
+    {
       "name": "_getSig",
       "type": "function",
       "signature": "_getSig(bytes)",
@@ -4492,6 +4636,15 @@
       "output_names": ""
     },
     {
+      "name": "claim",
+      "type": "function",
+      "signature": "claim()",
+      "encoding": "0x4e71d92d",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "balanceOfAt",
       "type": "function",
       "signature": "balanceOfAt(address,uint256)",
@@ -4571,6 +4724,15 @@
       "address": "0x0",
       "input_names": "acceptEther,",
       "output_names": ""
+    },
+    {
+      "name": "_didPass",
+      "type": "function",
+      "signature": "_didPass(uint256)",
+      "encoding": "0x502d145f",
+      "address": "0x0",
+      "input_names": "proposalIndex,",
+      "output_names": "didPass,"
     },
     {
       "name": "RevokedOperator",
@@ -4942,6 +5104,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "summonMoloch",
+      "type": "function",
+      "signature": "summonMoloch(address,address[],uint256,uint256,uint256,uint256,uint256,uint256)",
+      "encoding": "0x56c40ab5",
+      "address": "0x0",
+      "input_names": "_summoner,_approvedTokens,_periodDuration,_votingPeriodLength,_gracePeriodLength,_proposalDeposit,_dilutionBound,_processingReward,",
+      "output_names": ""
+    },
+    {
       "name": "newInstance",
       "type": "function",
       "signature": "newInstance(string,address[],uint64[3],uint64,bool,uint256[4])",
@@ -5191,6 +5362,15 @@
       "encoding": "0x5990ca08",
       "address": "0x0",
       "input_names": "_burnAddress,_incrementAddress,_set,_quantity,",
+      "output_names": ""
+    },
+    {
+      "name": "collectTokens",
+      "type": "function",
+      "signature": "collectTokens(address)",
+      "encoding": "0x59999b41",
+      "address": "0x0",
+      "input_names": "token,",
       "output_names": ""
     },
     {
@@ -5455,6 +5635,15 @@
       "output_names": "ret_0,ret_1,"
     },
     {
+      "name": "Summoned",
+      "type": "event",
+      "signature": "Summoned(address,address)",
+      "encoding": "0x5d117058594e38d35f98a79b5e9cbcd9fa0597fad786e2826bc4f290a0f5d4a7",
+      "address": "0x0",
+      "input_names": "M,_summoner,",
+      "output_names": ""
+    },
+    {
       "name": "_createAgentPermissions",
       "type": "function",
       "signature": "_createAgentPermissions(ACL,Agent,address,address)",
@@ -5617,6 +5806,15 @@
       "output_names": "denominationToken,priceFeed,rateExpiryTime,employeeManager,"
     },
     {
+      "name": "_validateProposalForProcessing",
+      "type": "function",
+      "signature": "_validateProposalForProcessing(uint256)",
+      "encoding": "0x60218e17",
+      "address": "0x0",
+      "input_names": "proposalIndex,",
+      "output_names": ""
+    },
+    {
       "name": "ManagerChanged",
       "type": "event",
       "signature": "ManagerChanged(address,address)",
@@ -5685,7 +5883,7 @@
       "signature": "_burn(address,uint256)",
       "encoding": "0x6161eb18",
       "address": "0x0",
-      "input_names": "account,amount,",
+      "input_names": "account,value,",
       "output_names": ""
     },
     {
@@ -6067,6 +6265,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "unsafeAddToBalance",
+      "type": "function",
+      "signature": "unsafeAddToBalance(address,address,uint256)",
+      "encoding": "0x68695957",
+      "address": "0x0",
+      "input_names": "user,token,amount,",
+      "output_names": ""
+    },
+    {
       "name": "_beforeTokenTransfer",
       "type": "function",
       "signature": "_beforeTokenTransfer(address,address,address,uint256)",
@@ -6279,7 +6486,7 @@
       "signature": "max(uint256,uint256)",
       "encoding": "0x6d5433e6",
       "address": "0x0",
-      "input_names": "a,b,",
+      "input_names": "x,y,",
       "output_names": "ret_0,"
     },
     {
@@ -6607,6 +6814,15 @@
       "output_names": "salaryId,"
     },
     {
+      "name": "getUserTokenBalance",
+      "type": "function",
+      "signature": "getUserTokenBalance(address,address)",
+      "encoding": "0x73f8fd4b",
+      "address": "0x0",
+      "input_names": "user,token,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "voteOptions",
       "type": "function",
       "signature": "voteOptions(uint256,uint256[],uint256[])",
@@ -6658,6 +6874,15 @@
       "encoding": "0x7531c7a6",
       "address": "0x0",
       "input_names": "_token,_supportRequiredPct,_minAcceptQuorumPct,_voteTime,",
+      "output_names": ""
+    },
+    {
+      "name": "_returnDeposit",
+      "type": "function",
+      "signature": "_returnDeposit(address)",
+      "encoding": "0x756c562a",
+      "address": "0x0",
+      "input_names": "sponsor,",
       "output_names": ""
     },
     {
@@ -6814,6 +7039,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "_submitProposal",
+      "type": "function",
+      "signature": "_submitProposal(address,uint256,uint256,uint256,address,uint256,address,string,bool[6])",
+      "encoding": "0x7851750b",
+      "address": "0x0",
+      "input_names": "applicant,sharesRequested,lootRequested,tributeOffered,tributeToken,paymentRequested,paymentToken,details,flags,",
+      "output_names": ""
+    },
+    {
       "name": "union",
       "type": "function",
       "signature": "union(address[],address[])",
@@ -6821,6 +7055,15 @@
       "address": "0x0",
       "input_names": "A,B,",
       "output_names": "memory,"
+    },
+    {
+      "name": "getTokenCount",
+      "type": "function",
+      "signature": "getTokenCount()",
+      "encoding": "0x78a89567",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "mintFungible",
@@ -6848,6 +7091,15 @@
       "address": "0x0",
       "input_names": "_h,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "getProposalQueueLength",
+      "type": "function",
+      "signature": "getProposalQueueLength()",
+      "encoding": "0x797daf70",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "ret_0,"
     },
     {
       "name": "burnFrom",
@@ -7126,6 +7378,15 @@
       "encoding": "0x8030e83b04d87bef53480e26263266d6ca66863aa8506aca6f2559d18aa1cb67",
       "address": "0x0",
       "input_names": "id,",
+      "output_names": ""
+    },
+    {
+      "name": "SubmitVote",
+      "type": "event",
+      "signature": "SubmitVote(uint256,uint256,address,address,uint8)",
+      "encoding": "0x804f03797630bf8b8a46b9371608abbf7d78a20df720e477bab641957ca68a20",
+      "address": "0x0",
+      "input_names": "proposalId,proposalIndex,delegateKey,memberAddress,uintVote,",
       "output_names": ""
     },
     {
@@ -7469,6 +7730,15 @@
       "address": "0x0",
       "input_names": "_tokenFlow,",
       "output_names": "memory,memory,memory,"
+    },
+    {
+      "name": "ProcessProposal",
+      "type": "event",
+      "signature": "ProcessProposal(uint256,uint256,bool)",
+      "encoding": "0x86f74240ecee9e4230d26ff92e17fee978460d9c0f78f5c88b2864c9e7a49427",
+      "address": "0x0",
+      "input_names": "proposalIndex,proposalId,didPass,",
+      "output_names": ""
     },
     {
       "name": "revocable",
@@ -8110,6 +8380,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "TokensCollected",
+      "type": "event",
+      "signature": "TokensCollected(address,uint256)",
+      "encoding": "0x9381e53ffdc9733a6783a6f8665be3f89c231bb81a6771996ed553b4e75c0fe3",
+      "address": "0x0",
+      "input_names": "token,amountToCollect,",
+      "output_names": ""
+    },
+    {
       "name": "InterfaceImplementerSet",
       "type": "event",
       "signature": "InterfaceImplementerSet(address,bytes32,address)",
@@ -8117,6 +8396,15 @@
       "address": "0x0",
       "input_names": "addr,interfaceHash,implementer,",
       "output_names": ""
+    },
+    {
+      "name": "hasVotingPeriodExpired",
+      "type": "function",
+      "signature": "hasVotingPeriodExpired(uint256)",
+      "encoding": "0x9425a476",
+      "address": "0x0",
+      "input_names": "startingPeriod,",
+      "output_names": "ret_0,"
     },
     {
       "name": "divExp",
@@ -8539,6 +8827,15 @@
       "encoding": "0x9b03a211",
       "address": "0x0",
       "input_names": "destination,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "Withdraw",
+      "type": "event",
+      "signature": "Withdraw(address,address,uint256)",
+      "encoding": "0x9b1bfa7fa9ee420a16e124f794c35ac9f90472acc99140eb2f6447c714cad8eb",
+      "address": "0x0",
+      "input_names": "memberAddress,token,amount,",
       "output_names": ""
     },
     {
@@ -9001,6 +9298,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "canRagequit",
+      "type": "function",
+      "signature": "canRagequit(uint256)",
+      "encoding": "0xa3dc3800",
+      "address": "0x0",
+      "input_names": "highestIndexYesVote,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "receive",
       "type": "function",
       "signature": "receive()",
@@ -9154,6 +9460,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "_ragequit",
+      "type": "function",
+      "signature": "_ragequit(address,uint256,uint256)",
+      "encoding": "0xa72c01ba",
+      "address": "0x0",
+      "input_names": "memberAddress,sharesToBurn,lootToBurn,",
+      "output_names": ""
+    },
+    {
       "name": "isCompoundingStream",
       "type": "function",
       "signature": "isCompoundingStream(uint256)",
@@ -9161,6 +9476,15 @@
       "address": "0x0",
       "input_names": "streamId,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "SubmitProposal",
+      "type": "event",
+      "signature": "SubmitProposal(address,uint256,uint256,uint256,address,uint256,address,string,bool[6],uint256,address,address)",
+      "encoding": "0xa763e0f5e4f4e33a3397b4ba22677c9b6fd2075ed6504596333006ff2f3e3874",
+      "address": "0x0",
+      "input_names": "applicant,sharesRequested,lootRequested,tributeOffered,tributeToken,paymentRequested,paymentToken,details,flags,proposalId,delegateKey,memberAddress,",
+      "output_names": ""
     },
     {
       "name": "totalERC20Contracts",
@@ -9908,6 +10232,15 @@
       "address": "0x0",
       "input_names": "_newLimit,",
       "output_names": ""
+    },
+    {
+      "name": "getProposalFlags",
+      "type": "function",
+      "signature": "getProposalFlags(uint256)",
+      "encoding": "0xb2643aab",
+      "address": "0x0",
+      "input_names": "proposalId,",
+      "output_names": "memory,"
     },
     {
       "name": "setStorageAddress",
@@ -10684,6 +11017,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "CancelProposal",
+      "type": "event",
+      "signature": "CancelProposal(uint256,address)",
+      "encoding": "0xc215fed6680bb02d323dc3f8b8f85241572607538426059c9232601bd293c3be",
+      "address": "0x0",
+      "input_names": "proposalId,applicantAddress,",
+      "output_names": ""
+    },
+    {
       "name": "Execute",
       "type": "event",
       "signature": "Execute(address,address,uint256,bytes)",
@@ -11062,6 +11404,15 @@
       "output_names": ""
     },
     {
+      "name": "SummonComplete",
+      "type": "event",
+      "signature": "SummonComplete(address,address[],uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+      "encoding": "0xc9943dac607a408ce079996205c3b771a7e464a5cf3859bc3315813f965e9240",
+      "address": "0x0",
+      "input_names": "summoner,tokens,summoningTime,periodDuration,votingPeriodLength,gracePeriodLength,proposalDeposit,dilutionBound,processingReward,",
+      "output_names": ""
+    },
+    {
       "name": "validateCallerIsModule",
       "type": "function",
       "signature": "validateCallerIsModule()",
@@ -11149,6 +11500,15 @@
       "encoding": "0xcaaa3ada",
       "address": "0x0",
       "input_names": "_from,_to,_tokens,_quantities,",
+      "output_names": ""
+    },
+    {
+      "name": "Ragequit",
+      "type": "event",
+      "signature": "Ragequit(address,uint256,uint256)",
+      "encoding": "0xcad1a1c68982832d9abc314de8a1e5d5e8c81b0588961e360766736d10c3be1a",
+      "address": "0x0",
+      "input_names": "memberAddress,sharesToBurn,lootToBurn,",
       "output_names": ""
     },
     {
@@ -12223,6 +12583,15 @@
       "output_names": ""
     },
     {
+      "name": "UpdateDelegateKey",
+      "type": "event",
+      "signature": "UpdateDelegateKey(address,address)",
+      "encoding": "0xde7b64a369e10562cc2e71f0f1f944eaf144b75fead6ecb51fac9c4dd6934885",
+      "address": "0x0",
+      "input_names": "memberAddress,newDelegateKey,",
+      "output_names": ""
+    },
+    {
       "name": "_grantCreatePaymentPermission",
       "type": "function",
       "signature": "_grantCreatePaymentPermission(ACL,Finance,address)",
@@ -12304,6 +12673,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "ragekick",
+      "type": "function",
+      "signature": "ragekick(address)",
+      "encoding": "0xdfdd369e",
+      "address": "0x0",
+      "input_names": "memberToKick,",
+      "output_names": ""
+    },
+    {
       "name": "postRelayedCall",
       "type": "function",
       "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -12328,6 +12706,15 @@
       "encoding": "0xe0a1fdad",
       "address": "0x0",
       "input_names": "pos,",
+      "output_names": ""
+    },
+    {
+      "name": "cancelProposal",
+      "type": "function",
+      "signature": "cancelProposal(uint256)",
+      "encoding": "0xe0a8f6f5",
+      "address": "0x0",
+      "input_names": "proposalId,",
       "output_names": ""
     },
     {
@@ -12383,6 +12770,15 @@
       "address": "0x0",
       "input_names": "a,b,c,",
       "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "processGuildKickProposal",
+      "type": "function",
+      "signature": "processGuildKickProposal(uint256)",
+      "encoding": "0xe1a0e3fa",
+      "address": "0x0",
+      "input_names": "proposalIndex,",
+      "output_names": ""
     },
     {
       "name": "Confirmation",
@@ -12644,6 +13040,15 @@
       "address": "0x0",
       "input_names": "a,scalar,",
       "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "processProposal",
+      "type": "function",
+      "signature": "processProposal(uint256)",
+      "encoding": "0xe63bc62d",
+      "address": "0x0",
+      "input_names": "proposalIndex,",
+      "output_names": ""
     },
     {
       "name": "saleAuction",
@@ -13654,6 +14059,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "create",
+      "type": "function",
+      "signature": "create(address[],uint256)",
+      "encoding": "0xf8f73808",
+      "address": "0x0",
+      "input_names": "_owners,_required,",
+      "output_names": ""
+    },
+    {
       "name": "ClaimedTokens",
       "type": "event",
       "signature": "ClaimedTokens(address,address,uint256)",
@@ -13778,6 +14192,15 @@
       "address": "0x0",
       "input_names": "_appId,",
       "output_names": "base,"
+    },
+    {
+      "name": "_withdrawBalance",
+      "type": "function",
+      "signature": "_withdrawBalance(address,uint256)",
+      "encoding": "0xfad674d9",
+      "address": "0x0",
+      "input_names": "token,amount,",
+      "output_names": ""
     },
     {
       "name": "revokeOperator",
@@ -13976,6 +14399,15 @@
       "address": "0x0",
       "input_names": "salaryId,amount,",
       "output_names": ""
+    },
+    {
+      "name": "submitWhitelistProposal",
+      "type": "function",
+      "signature": "submitWhitelistProposal(address,string)",
+      "encoding": "0xfeb7ea1d",
+      "address": "0x0",
+      "input_names": "tokenToWhitelist,details,",
+      "output_names": "proposalId,"
     },
     {
       "name": "startAuctionsAndBid",

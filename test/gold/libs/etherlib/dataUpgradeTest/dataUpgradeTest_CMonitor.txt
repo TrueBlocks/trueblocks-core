@@ -21,12 +21,20 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "statement": {
+    "blockNum": 0,
     "begBal": 0,
+    "begBalDiff": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCostInWei": 0,
+    "intInflow": 0,
+    "intOutflow": 0,
+    "suicideInflow": 0,
+    "suicideOutflow": 0,
+    "weiGasCost": 0,
     "endBal": 0,
-    "blockNum": 0
+    "endBalCalc": 0,
+    "endBalDiff": 0,
+    "reconciled": false
   },
   "stateHistory": [],
   "curBalance": 0,
@@ -82,12 +90,20 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "statement": {
+    "blockNum": 0,
     "begBal": 0,
+    "begBalDiff": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCostInWei": 0,
+    "intInflow": 0,
+    "intOutflow": 0,
+    "suicideInflow": 0,
+    "suicideOutflow": 0,
+    "weiGasCost": 0,
     "endBal": 0,
-    "blockNum": 0
+    "endBalCalc": 0,
+    "endBalDiff": 0,
+    "reconciled": false
   },
   "stateHistory": [],
   "curBalance": 0,

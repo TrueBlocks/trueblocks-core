@@ -12,6 +12,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR		8
 76-Verified	0xcb5e10e93a4281de367e3d301ad8761488cff609	MCDSaverFlashLoan
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6
+31-Gitcoin Grants:Friends	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	jlwaugh
 76-Verified	0xcb6488162b3cc821f543b0a5b2e96fc255e5d599	yCurveZapSwapV4
 76-Verified	0xcb70062628c43e422ee40048b02dd1d01b1d6edb	LoanContract
 76-Verified	0xcb704d9505fbbf61478f06741c75f34ea84ec85c	InstaDydxResolver

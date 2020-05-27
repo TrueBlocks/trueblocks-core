@@ -20,52 +20,36 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef enum {
-    ST_NONE = 0,
-    ST_BALANCE = (1 << 1),
-    ST_NONCE = (1 << 2),
-    ST_CODE = (1 << 3),
-    ST_STORAGE = (1 << 4),
-    ST_DEPLOYED = (1 << 5),
-    ST_ACCTTYPE = (1 << 6),
-    ST_SOME = (ST_BALANCE | ST_NONCE | ST_CODE | ST_ACCTTYPE),
-    ST_ALL = (ST_BALANCE | ST_NONCE | ST_CODE | ST_STORAGE | ST_DEPLOYED | ST_ACCTTYPE)
-} ethstate_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CEthState : public CBaseNode {
+class CMonitorCount : public CBaseNode {
   public:
-    blknum_t blockNumber;
-    wei_t balance;
-    uint64_t nonce;
-    string_q code;
-    string_q storage;
     address_t address;
-    blknum_t deployed;
-    string_q accttype;
+    uint64_t nRecords;
+    uint64_t fileSize;
 
   public:
-    CEthState(void);
-    CEthState(const CEthState& et);
-    virtual ~CEthState(void);
-    CEthState& operator=(const CEthState& et);
+    CMonitorCount(void);
+    CMonitorCount(const CMonitorCount& mo);
+    virtual ~CMonitorCount(void);
+    CMonitorCount& operator=(const CMonitorCount& mo);
 
-    DECLARE_NODE(CEthState);
+    DECLARE_NODE(CMonitorCount);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CEthState& item) const;
-    bool operator!=(const CEthState& item) const {
+    bool operator==(const CMonitorCount& item) const;
+    bool operator!=(const CMonitorCount& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CEthState& v1, const CEthState& v2);
-    friend ostream& operator<<(ostream& os, const CEthState& item);
+    friend bool operator<(const CMonitorCount& v1, const CMonitorCount& v2);
+    friend ostream& operator<<(ostream& os, const CMonitorCount& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CEthState& et);
+    void duplicate(const CMonitorCount& mo);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -73,112 +57,93 @@ class CEthState : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CEthState::CEthState(void) {
+inline CMonitorCount::CMonitorCount(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEthState::CEthState(const CEthState& et) {
+inline CMonitorCount::CMonitorCount(const CMonitorCount& mo) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(et);
+    duplicate(mo);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CEthState::~CEthState(void) {
+inline CMonitorCount::~CMonitorCount(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEthState::clear(void) {
+inline void CMonitorCount::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEthState::initialize(void) {
+inline void CMonitorCount::initialize(void) {
     CBaseNode::initialize();
 
-    blockNumber = 0;
-    balance = 0;
-    nonce = 0;
-    code = "";
-    storage = "";
     address = "";
-    deployed = 0;
-    accttype = "";
+    nRecords = 0;
+    fileSize = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEthState::duplicate(const CEthState& et) {
+inline void CMonitorCount::duplicate(const CMonitorCount& mo) {
     clear();
-    CBaseNode::duplicate(et);
+    CBaseNode::duplicate(mo);
 
-    blockNumber = et.blockNumber;
-    balance = et.balance;
-    nonce = et.nonce;
-    code = et.code;
-    storage = et.storage;
-    address = et.address;
-    deployed = et.deployed;
-    accttype = et.accttype;
+    address = mo.address;
+    nRecords = mo.nRecords;
+    fileSize = mo.fileSize;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEthState& CEthState::operator=(const CEthState& et) {
-    duplicate(et);
+inline CMonitorCount& CMonitorCount::operator=(const CMonitorCount& mo) {
+    duplicate(mo);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CEthState::operator==(const CEthState& item) const {
+inline bool CMonitorCount::operator==(const CMonitorCount& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Equality operator as defined in class definition
-    return blockNumber == item.blockNumber;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CEthState& v1, const CEthState& v2) {
+inline bool operator<(const CMonitorCount& v1, const CMonitorCount& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.blockNumber < v2.blockNumber;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CEthState> CEthStateArray;
-extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
-extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
+typedef vector<CMonitorCount> CMonitorCountArray;
+extern CArchive& operator>>(CArchive& archive, CMonitorCountArray& array);
+extern CArchive& operator<<(CArchive& archive, const CMonitorCountArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ETHSTATE;
+extern const char* STR_DISPLAY_MONITORCOUNT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef map<address_t, CEthState> CEthStateMap;  // NOLINT
-//-------------------------------------------------------------------------
-extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
-extern bool isContractAt(const address_t& addr, blknum_t blockNum);
-extern string_q getCodeAt(const address_t& addr, blknum_t blockNum);
-extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t blockNum);
-extern uint64_t getNonceAt(const address_t& addr, blknum_t num);
-extern blknum_t getDeployBlock(const address_t& addr);
-extern bool nodeHasBalances(bool showErrors);
 // EXISTING_CODE
 }  // namespace qblocks

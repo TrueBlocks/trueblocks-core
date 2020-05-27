@@ -1082,6 +1082,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "20-Friends",
+    "address": "0x00bbb33024f0b9d6ac0df6d158c498c291bfb298",
+    "name": "Probably gniden",
+    "symbol": "",
+    "source": "OnChain",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "76-Verified",
     "address": "0x00c0443f42932d9efe27e64409b21d2e48928d66",
     "name": "JarvisExchange",
@@ -1172,6 +1181,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
+    "name": "Grant 624 Nescience Software Portfolio Rebalancing Direct Indexing",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
+    "decimals": 0,
+    "description": "https://nescience.io"
+  },
+  {
     "tags": "76-Verified",
     "address": "0x0100e29a8c08fbe5180ffa9190a5487f0f3f50f8",
     "name": "WEBVUA",
@@ -1197,6 +1215,15 @@ ethNames --fmt json
     "source": "Etherscan",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+    "name": "Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp",
+    "decimals": 0,
+    "description": "https://tokamak.network/"
   },
   {
     "tags": "30-Contracts",
@@ -1269,6 +1296,15 @@ ethNames --fmt json
     "source": "Etherscan",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
+    "name": "Grant 627 Veridex",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/627/veridex",
+    "decimals": 0,
+    "description": "https://dex.verisafe.io/"
   },
   {
     "tags": "76-Verified",
@@ -1440,6 +1476,15 @@ ethNames --fmt json
     "source": "Etherscan",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
+    "name": "Grant 602 RealityLearn: Teaching the world about blockchain",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/602/realitylearn",
+    "decimals": 0,
+    "description": "https://www.tks.life/profile/rishab.chakraborty"
   },
   {
     "tags": "76-Verified",
@@ -1748,66 +1793,21 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Friends",
+    "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
+    "name": "adamstallard",
+    "symbol": "",
+    "source": "Gitcoin Website",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
     "name": "EplusCoin",
     "symbol": "EPLUS",
     "source": "On Chain",
     "decimals": 8,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
-    "name": "Grant 031 Grantops",
-    "symbol": "",
-    "source": "GitCoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x02eefd8fd2debc75c52ef1479e56caeaa049ecc7",
-    "name": "InitializableAdminUpgradeabilityProxy",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x02f2d4a04e6e01ace88bd2cd632875543b2ef577",
-    "name": "PKG Token",
-    "symbol": "PKG",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x02f61fd266da6e8b102d4121f5ce7b992640cf98",
-    "name": "LikeCoin",
-    "symbol": "LIKE",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x0300ce31fa12c56333622d16d9c85444d42c8ba7",
-    "name": "BURNYTOKEN",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "76-Verified",
-    "address": "0x0301db8ddf7e441b0fb4d2b4d198d852df47ccf7",
-    "name": "BancorConverter",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
     "description": ""
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }

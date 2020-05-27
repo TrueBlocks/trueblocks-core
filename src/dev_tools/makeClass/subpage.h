@@ -29,6 +29,7 @@ class CSubpage : public CBaseNode {
     string_q subpage;
     string_q route;
     string_q options;
+    string_q component;
     string_q extract;
     string_q icon;
 
@@ -98,6 +99,7 @@ inline void CSubpage::initialize(void) {
     subpage = "";
     route = "";
     options = "";
+    component = "";
     extract = "";
     icon = "";
 
@@ -115,6 +117,7 @@ inline void CSubpage::duplicate(const CSubpage& su) {
     subpage = su.subpage;
     route = su.route;
     options = su.options;
+    component = su.component;
     extract = su.extract;
     icon = su.icon;
 

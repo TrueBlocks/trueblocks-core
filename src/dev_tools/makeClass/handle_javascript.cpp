@@ -426,7 +426,9 @@ bool COptions::handle_generate_js_menus(void) {
                 if (!sub.isSeparator && !page.noPage) {
                     pageStream << "  '" << page.longName << "/"
                                << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route)
-                               << "': { component: <" << page.properName << " /> }," << endl;
+                               << "': { component: "
+                               << (sub.component.empty() ? ("<" + page.properName + " />") : sub.component) << " },"
+                               << endl;
                 }
 
                 if (sub.isSeparator)
@@ -611,7 +613,7 @@ bool COptions::handle_generate_js_schemas(void) {
                 }
                 if (!page.recordIcons.empty()) {
                     CSchema schema;
-                    string_q line = "Icons,icons,icons";
+                    string_q line = "Icons,icons,icons,true";
                     schema.parseCSV(fields, line);
                     schemas.push_back(schema);
                 }

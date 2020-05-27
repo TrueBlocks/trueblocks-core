@@ -64,6 +64,9 @@ void etherlib_init(QUITHANDLER qh) {
     CFunction::registerClass();
     CParameter::registerClass();
 
+    CIncomeStatement::registerClass();
+    CReconciliationNumeric::registerClass();
+    CEthState::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();

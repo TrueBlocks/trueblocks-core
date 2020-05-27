@@ -21,7 +21,7 @@
           "status": null
         },
         "articulatedTx": {},
-        "compressedTx": "",
+        "compressedTx": "0x ( )",
         "traces": [],
         "gasCost": 0,
         "etherGasCost": 0,

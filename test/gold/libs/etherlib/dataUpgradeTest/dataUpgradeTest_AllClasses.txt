@@ -227,12 +227,20 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "statement": {
+    "blockNum": 0,
     "begBal": 0,
+    "begBalDiff": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCostInWei": 0,
+    "intInflow": 0,
+    "intOutflow": 0,
+    "suicideInflow": 0,
+    "suicideOutflow": 0,
+    "weiGasCost": 0,
     "endBal": 0,
-    "blockNum": 0
+    "endBalCalc": 0,
+    "endBalDiff": 0,
+    "reconciled": false
   },
   "stateHistory": [],
   "curBalance": 0,
@@ -292,12 +300,20 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "statement": {
+    "blockNum": 0,
     "begBal": 0,
+    "begBalDiff": 0,
     "inflow": 0,
     "outflow": 0,
-    "gasCostInWei": 0,
+    "intInflow": 0,
+    "intOutflow": 0,
+    "suicideInflow": 0,
+    "suicideOutflow": 0,
+    "weiGasCost": 0,
     "endBal": 0,
-    "blockNum": 0
+    "endBalCalc": 0,
+    "endBalDiff": 0,
+    "reconciled": false
   },
   "stateHistory": [],
   "curBalance": 0,
@@ -420,19 +436,25 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-begBal              	1005	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-inflow              	1006	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-outflow             	1007	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-gasCostInWei        	1008	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-endBal              	1009	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-blockNum            	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+asset               	1006	0	131122	T_TEXT TS_STRING
+begBal              	1007	0	131122	T_TEXT TS_STRING
+begBalDiff          	1008	0	131122	T_TEXT TS_STRING
+inflow              	1009	0	131122	T_TEXT TS_STRING
+outflow             	1010	0	131122	T_TEXT TS_STRING
+intInflow           	1011	0	131122	T_TEXT TS_STRING
+intOutflow          	1012	0	131122	T_TEXT TS_STRING
+suicideInflow       	1013	0	131122	T_TEXT TS_STRING
+suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
+weiGasCost          	1015	0	131122	T_TEXT TS_STRING
+endBal              	1016	0	131122	T_TEXT TS_STRING
+endBalCalc          	1017	0	131122	T_TEXT TS_STRING
+endBalDiff          	1018	0	131122	T_TEXT TS_STRING
+reconciliationType  	1019	0	131122	T_TEXT TS_STRING
+reconciled          	1020	0	65556	T_BOOL TS_NUMERAL
 {
-  "begBal": 0,
-  "inflow": 0,
-  "outflow": 0,
-  "gasCostInWei": 0,
-  "endBal": 0,
-  "blockNum": 0
+  "blockNum": 0,
+  "reconciled": false
 }
 
 --------------------------------------------------------------------------------
@@ -442,12 +464,22 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-begBal              	1005	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-inflow              	1006	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-outflow             	1007	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-gasCostInWei        	1008	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-endBal              	1009	1	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-blockNum            	1010	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+blockNum            	1005	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+asset               	1006	1	131122	T_TEXT TS_STRING
+begBal              	1007	1	131122	T_TEXT TS_STRING
+begBalDiff          	1008	1	131122	T_TEXT TS_STRING
+inflow              	1009	1	131122	T_TEXT TS_STRING
+outflow             	1010	1	131122	T_TEXT TS_STRING
+intInflow           	1011	1	131122	T_TEXT TS_STRING
+intOutflow          	1012	1	131122	T_TEXT TS_STRING
+suicideInflow       	1013	1	131122	T_TEXT TS_STRING
+suicideOutflow      	1014	1	131122	T_TEXT TS_STRING
+weiGasCost          	1015	1	131122	T_TEXT TS_STRING
+endBal              	1016	1	131122	T_TEXT TS_STRING
+endBalCalc          	1017	1	131122	T_TEXT TS_STRING
+endBalDiff          	1018	1	131122	T_TEXT TS_STRING
+reconciliationType  	1019	1	131122	T_TEXT TS_STRING
+reconciled          	1020	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -458,23 +490,29 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-begBal              	1005	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-inflow              	1006	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-outflow             	1007	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-gasCostInWei        	1008	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-endBal              	1009	0	4259888	T_INT256 TS_NUMERAL TS_BIGNUM
-blockNum            	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+asset               	1006	0	131122	T_TEXT TS_STRING
+begBal              	1007	0	131122	T_TEXT TS_STRING
+begBalDiff          	1008	0	131122	T_TEXT TS_STRING
+inflow              	1009	0	131122	T_TEXT TS_STRING
+outflow             	1010	0	131122	T_TEXT TS_STRING
+intInflow           	1011	0	131122	T_TEXT TS_STRING
+intOutflow          	1012	0	131122	T_TEXT TS_STRING
+suicideInflow       	1013	0	131122	T_TEXT TS_STRING
+suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
+weiGasCost          	1015	0	131122	T_TEXT TS_STRING
+endBal              	1016	0	131122	T_TEXT TS_STRING
+endBalCalc          	1017	0	131122	T_TEXT TS_STRING
+endBalDiff          	1018	0	131122	T_TEXT TS_STRING
+reconciliationType  	1019	0	131122	T_TEXT TS_STRING
+reconciled          	1020	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
   "deleted": false,
   "showing": true,
   "cname": "IncomeStatement",
-  "begBal": 0,
-  "inflow": 0,
-  "outflow": 0,
-  "gasCostInWei": 0,
-  "endBal": 0,
-  "blockNum": 0
+  "blockNum": 0,
+  "reconciled": false
 }
 
 --------------------------------------------------------------------------------
@@ -992,19 +1030,20 @@ articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
 finalized           	1022	1	65556	T_BOOL TS_NUMERAL
 traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1027	1	131122	T_TEXT TS_STRING
-events              	1028	1	131122	T_TEXT TS_STRING
-price               	1029	1	131122	T_TEXT TS_STRING
-gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1031	1	262149	T_DATE TS_DATE
-datesh              	1032	1	262149	T_DATE TS_DATE
-time                	1033	1	262149	T_DATE TS_DATE
-age                 	1034	1	262149	T_DATE TS_DATE
-ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1036	1	131122	T_TEXT TS_STRING
+statement           	1024	1	1048651	T_OBJECT TS_OBJECT
+confirmations       	1025	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1028	1	131122	T_TEXT TS_STRING
+events              	1029	1	131122	T_TEXT TS_STRING
+price               	1030	1	131122	T_TEXT TS_STRING
+gasUsed             	1031	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1032	1	262149	T_DATE TS_DATE
+datesh              	1033	1	262149	T_DATE TS_DATE
+time                	1034	1	262149	T_DATE TS_DATE
+age                 	1035	1	262149	T_DATE TS_DATE
+ether               	1036	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1037	1	131122	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1058,19 +1097,20 @@ articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	1	131122	T_TEXT TS_STRING
 finalized           	1022	1	65556	T_BOOL TS_NUMERAL
 traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1027	1	131122	T_TEXT TS_STRING
-events              	1028	1	131122	T_TEXT TS_STRING
-price               	1029	1	131122	T_TEXT TS_STRING
-gasUsed             	1030	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1031	1	262149	T_DATE TS_DATE
-datesh              	1032	1	262149	T_DATE TS_DATE
-time                	1033	1	262149	T_DATE TS_DATE
-age                 	1034	1	262149	T_DATE TS_DATE
-ether               	1035	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1036	1	131122	T_TEXT TS_STRING
+statement           	1024	1	1048651	T_OBJECT TS_OBJECT
+confirmations       	1025	1	65561	T_NUMBER TS_NUMERAL
+gasCost             	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1028	1	131122	T_TEXT TS_STRING
+events              	1029	1	131122	T_TEXT TS_STRING
+price               	1030	1	131122	T_TEXT TS_STRING
+gasUsed             	1031	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1032	1	262149	T_DATE TS_DATE
+datesh              	1033	1	262149	T_DATE TS_DATE
+time                	1034	1	262149	T_DATE TS_DATE
+age                 	1035	1	262149	T_DATE TS_DATE
+ether               	1036	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1037	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -1100,19 +1140,20 @@ articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
 compressedTx        	1021	0	131122	T_TEXT TS_STRING
 finalized           	1022	0	65556	T_BOOL TS_NUMERAL
 traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-confirmations       	1024	0	65561	T_NUMBER TS_NUMERAL
-gasCost             	1025	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1027	0	131122	T_TEXT TS_STRING
-events              	1028	0	131122	T_TEXT TS_STRING
-price               	1029	0	131122	T_TEXT TS_STRING
-gasUsed             	1030	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1031	0	262149	T_DATE TS_DATE
-datesh              	1032	0	262149	T_DATE TS_DATE
-time                	1033	0	262149	T_DATE TS_DATE
-age                 	1034	0	262149	T_DATE TS_DATE
-ether               	1035	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1036	0	131122	T_TEXT TS_STRING
+statement           	1024	0	1048651	T_OBJECT TS_OBJECT
+confirmations       	1025	0	65561	T_NUMBER TS_NUMERAL
+gasCost             	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1027	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1028	0	131122	T_TEXT TS_STRING
+events              	1029	0	131122	T_TEXT TS_STRING
+price               	1030	0	131122	T_TEXT TS_STRING
+gasUsed             	1031	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1032	0	262149	T_DATE TS_DATE
+datesh              	1033	0	262149	T_DATE TS_DATE
+time                	1034	0	262149	T_DATE TS_DATE
+age                 	1035	0	262149	T_DATE TS_DATE
+ether               	1036	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1037	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
   "deleted": false,
@@ -1143,7 +1184,16 @@ encoding            	1036	0	131122	T_TEXT TS_STRING
     "status": null
   },
   "articulatedTx": {},
+  "compressedTx": "0x ( )",
   "traces": [],
+  "statement": {
+    "schema": 7000,
+    "deleted": false,
+    "showing": true,
+    "cname": "IncomeStatement",
+    "blockNum": 0,
+    "reconciled": false
+  },
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,
   "price": "1.400000000000000000",

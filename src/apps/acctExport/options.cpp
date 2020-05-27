@@ -32,6 +32,7 @@ static const COption params[] = {
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
+    COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),
     COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),
@@ -124,6 +125,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-M" || arg == "--emitter") {
             emitter = true;
+
+        } else if (arg == "-U" || arg == "--count") {
+            count = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmUint("start", start, arg))
@@ -221,103 +225,130 @@ bool COptions::parseArguments(string_q& command) {
     if (deltas && !balances)
         EXIT_USAGE("--deltas option is only available with --balances. Quitting...");
 
-    // show certain fields and hide others
-    // SEP4("default field hiding: " + defHide);
-    manageFields(defHide, false);
-    // SEP4("default field showing: " + defShow);
-    string_q show =
-        defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars|CTrace:traceAddress" : "");
-    manageFields(show, true);
+    if (count) {
+        if (receipts || logs || traces || balances || emitter || deltas)
+            EXIT_USAGE("--count option is only available with --appearances option. Quitting...");
+        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        string_q format =
+            getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
+        expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
+        expContext().fmtMap["header"] = isNoHeader ? "" : cleanFmt(format);
+        for (auto monitor : monitors) {
+            CMonitorCount monCount;
+            monCount.address = monitor.address;
+            monCount.fileSize = fileSize(getMonitorPath(monitor.address));
+            monCount.nRecords = monCount.fileSize / sizeof(CAppearance_base);
+            counts.push_back(monCount);
+        }
 
-    // Load as many ABI files as we have
-    if (!appearances && !balances) {
-        abis.loadAbiKnown();
-        if (all_abis)
-            abis.loadAbisMonitors();
+    } else {
+        // show certain fields and hide others
+        // SEP4("default field hiding: " + defHide);
+        manageFields(defHide, false);
+        // SEP4("default field showing: " + defShow);
+        string_q show =
+            defShow +
+            (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars|CTrace:traceAddress" : "");
+        manageFields(show, true);
+
+        // Load as many ABI files as we have
+        if (!appearances && !balances) {
+            abis.loadAbiKnown();
+            if (all_abis)
+                abis.loadAbisMonitors();
+        }
+
+        // Try to articulate the monitored addresses
+        for (size_t i = 0; i < monitors.size(); i++) {
+            CMonitor* monitor = &monitors[i];
+            // abis.loadAbiByAddress(monitor->address);
+            if (isContractAt(monitor->address, latestBlock))
+                loadAbiAndCache(abis, monitor->address, false, errors);
+            // abis.loadAbiKnown();
+        }
+
+        if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
+            string_q format;
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
+            expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
+
+            if (format.empty())
+                EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
+            if (!contains(toLower(format), "trace"))
+                HIDE_FIELD(CTransaction, "traces");
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
+            expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
+            expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
+            expContext().fmtMap["trace_fmt"] = cleanFmt(format);
+
+            // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for
+            // future reference.
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
+            expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
+            if (expContext().asEther) {
+                format = substitute(format, "{BALANCE}", "{ETHER}");
+                format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
+                format = substitute(format, "{DIFF}", "{ETHERDIFF}");
+            }
+            if (expContext().asDollars) {
+                format = substitute(format, "{BALANCE}", "{DOLLARS}");
+                format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
+                format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
+            }
+            expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format);
+
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
+            if (expContext().asEther) {
+                format = substitute(format, "{BALANCE}", "{ETHER}");
+                format = substitute(format, "{DIFF}", "{ETHERDIFF}");
+            }
+            if (expContext().asDollars) {
+                format = substitute(format, "{BALANCE}", "{DOLLARS}");
+                format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
+            }
+            expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format);
+        }
+
+        expContext().fmtMap["header"] = "";
+        if (!isNoHeader) {
+            if (traces) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
+            } else if (receipts) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
+            } else if (logs) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
+            } else if (appearances) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
+            } else if (balances) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"]);
+                if (deltas)
+                    expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"]);
+                SHOW_FIELD(CBalanceRecord, "address");
+                SHOW_FIELD(CBalanceDelta, "address");
+            } else {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
+            }
+        }
+
+        if (freshen)
+            expContext().exportFmt = NONE1;
     }
 
-    // Try to articulate the monitored addresses
-    for (size_t i = 0; i < monitors.size(); i++) {
-        CMonitor* monitor = &monitors[i];
-        // abis.loadAbiByAddress(monitor->address);
-        if (isContractAt(monitor->address, latestBlock))
-            loadAbiAndCache(abis, monitor->address, false, errors);
-        // abis.loadAbiKnown();
+    if (accounting) {
+        if (addrs.size() != 1)
+            EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
+        relativeTo = addrs[0];
+        // manageFields("CTransaction:input,receipt,articulatedTx,hash", false);
+        manageFields("CTransaction:statement", true);
     }
-
-    if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
-        string_q format;
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
-        expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
-
-        if (format.empty())
-            EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
-        if (!contains(toLower(format), "trace"))
-            HIDE_FIELD(CTransaction, "traces");
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
-        expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
-        expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
-        expContext().fmtMap["trace_fmt"] = cleanFmt(format);
-
-        // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for future
-        // reference.
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
-        expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
-        if (expContext().asEther) {
-            format = substitute(format, "{BALANCE}", "{ETHER}");
-            format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
-            format = substitute(format, "{DIFF}", "{ETHERDIFF}");
-        }
-        if (expContext().asDollars) {
-            format = substitute(format, "{BALANCE}", "{DOLLARS}");
-            format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
-            format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
-        }
-        expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format);
-
-        format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
-        if (expContext().asEther) {
-            format = substitute(format, "{BALANCE}", "{ETHER}");
-            format = substitute(format, "{DIFF}", "{ETHERDIFF}");
-        }
-        if (expContext().asDollars) {
-            format = substitute(format, "{BALANCE}", "{DOLLARS}");
-            format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
-        }
-        expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format);
-    }
-
-    expContext().fmtMap["header"] = "";
-    if (!isNoHeader) {
-        if (traces) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
-        } else if (receipts) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
-        } else if (logs) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
-        } else if (appearances) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
-        } else if (balances) {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"]);
-            if (deltas)
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"]);
-            SHOW_FIELD(CBalanceRecord, "address");
-            SHOW_FIELD(CBalanceDelta, "address");
-        } else {
-            expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
-        }
-    }
-
-    if (freshen)
-        expContext().exportFmt = NONE1;
 
     EXIT_NOMSG(true);
 }
@@ -348,6 +379,7 @@ void COptions::Init(void) {
     freshen_max = 5000;
     deltas = false;
     emitter = false;
+    count = false;
     first_record = 0;
     max_records = NOPOS;
     // END_CODE_INIT
@@ -356,6 +388,8 @@ void COptions::Init(void) {
     nRead = 0;
     scanRange.second = getLatestBlock_cache_ripe();
     items.clear();
+    monitors.clear();
+    counts.clear();
 
     minArgs = 0;
 }

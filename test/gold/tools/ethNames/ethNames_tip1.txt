@@ -6,6 +6,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity
 76-Verified	0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad	Tip
 76-Verified	0x4b702fc17fc11859aeb8eb0d3bd876a6a4bff910	BancorMultiPrice
+20-Friends	0x4d0a14bb9c145b4b3694e29107dc4a62d0f25c92	Old EthSlurp Tipper
 20-Friends	0x4ff1c812ebccc16487c17f537d849cb5dc557ff0	EthSlurp Tip Jar Sender Sender
 91-Friends	0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner
 76-Verified	0x57917da61304f309694993c18bbc0f15e5507a6a	MultiPlanetValue
@@ -18,6 +19,7 @@ tags	address	name	symbol	decimals
 76-Verified	0x9ec022f82c5004a2fd71ce354ea2e57baf6b81ab	_TippProtocolToken
 76-Verified	0xa15cc53c0bf65df796916111479e7224eec7db72	tipscoin
 76-Verified	0xad218d31d19ef8681ba35095f597917cd040f759	tipscoin
+31-Gitcoin Grants:Grant	0xbc2138f76db98af69c8c9d5c365263dca32f5e63	Grant 379 AntiPhishing Browser Plugin PhishFort Protect
 76-Verified	0xc1d89236ed82c2edf997e09c8c2314bec254cb57	UniswapMultiPrice
 76-Verified	0xc25a0b9681abf6f090aed71a8c08fb564b41dab6	MultipleArbitrableTokenTransaction
 76-Verified	0xc541110f4da8303f56657bc2ff0575118b7e6434	_TippProtocolCoin

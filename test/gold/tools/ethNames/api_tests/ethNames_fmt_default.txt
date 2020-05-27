@@ -62,6 +62,18 @@
     },
     {
       "deleted": false,
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
+      "name": "Grant 522 Deploying a community currency UBI with 10k+ Kenyans",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/522/end-to-end-blockchain-ubi-with-10000-kenians-in-2",
+      "decimals": "0",
+      "description": "https://multiply.charity/",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
       "name": "Silent Notary Token",
@@ -115,6 +127,18 @@
       "name": "BancorMultiPrice",
       "symbol": "",
       "source": "Etherscan",
+      "decimals": "0",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "20-Friends",
+      "address": "0x4d0a14bb9c145b4b3694e29107dc4a62d0f25c92",
+      "name": "Old EthSlurp Tipper",
+      "symbol": "",
+      "source": "OnChain",
       "decimals": "0",
       "description": "",
       "is_custom": false,
@@ -297,6 +321,18 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Native multichain system in the world that supports Ethereum Virtual Machine EVM, which consists of one main chain and multiple derived chains.",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
+      "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
+      "decimals": "0",
+      "description": "https://phishfort.com/protect",
       "is_custom": false,
       "is_prefund": false
     },

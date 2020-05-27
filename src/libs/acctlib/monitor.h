@@ -17,7 +17,7 @@
  */
 #include "etherlib.h"
 #include "transaction.h"
-#include "incomestatement.h"
+#include "reconciliationnumeric.h"
 #include "ethstate.h"
 
 namespace qblocks {
@@ -30,7 +30,7 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 class CMonitor : public CAccountName {
   public:
     CAbi abi_spec;
-    CIncomeStatement statement;
+    CReconciliationNumeric statement;
     CEthStateArray stateHistory;
     wei_t curBalance;
     bool enabled;
@@ -149,7 +149,7 @@ inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
     abi_spec = CAbi();
-    statement = CIncomeStatement();
+    statement = CReconciliationNumeric();
     stateHistory.clear();
     curBalance = 0;
     enabled = true;
