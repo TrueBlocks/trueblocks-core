@@ -422,7 +422,7 @@ blknum_t CMonitor::nextBlockAsPerMonitor(void) const {
 
     // Contracts can receive ether prior to being deployed (counter-factually). By default, we ignore
     // this and start our scan at the deploy block. EOAs return NOPOS as deploy block.
-    if (false) {  // getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
         blknum_t deployed = getDeployBlock(address);
         return (deployed == NOPOS ? 0 : deployed);
     }

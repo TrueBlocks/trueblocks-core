@@ -25,7 +25,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceAction : public CBaseNode {
   public:
-    address_t address;
+    address_t selfDestructed;
     wei_t balance;
     string_q callType;
     address_t from;
@@ -98,7 +98,7 @@ inline void CTraceAction::clear(void) {
 inline void CTraceAction::initialize(void) {
     CBaseNode::initialize();
 
-    address = "";
+    selfDestructed = "";
     balance = 0;
     callType = "";
     from = "";
@@ -118,7 +118,7 @@ inline void CTraceAction::duplicate(const CTraceAction& tr) {
     clear();
     CBaseNode::duplicate(tr);
 
-    address = tr.address;
+    selfDestructed = tr.selfDestructed;
     balance = tr.balance;
     callType = tr.callType;
     from = tr.from;
@@ -146,7 +146,7 @@ inline bool CTraceAction::operator==(const CTraceAction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((address == item.address) && (balance == item.balance) && (callType == item.callType) &&
+    return ((selfDestructed == item.selfDestructed) && (balance == item.balance) && (callType == item.callType) &&
             (from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&
             (refundAddress == item.refundAddress) && (to == item.to) && (value == item.value));
 }

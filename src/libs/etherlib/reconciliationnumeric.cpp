@@ -571,17 +571,17 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
     outflow = inflow = 0;  // we will store it in the internal values
     loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
     for (auto trace : trans->traces) {
-        bool isSuicide = trace.action.address != "";
+        bool isSuicide = trace.action.selfDestructed != "";
         if (isSuicide) {
-            if (trace.action.address == accountingFor) {
+            if (trace.action.refundAddress == accountingFor) {
                 // receives suicided ether
-                suicideOutflow += trace.action.balance;
+                suicideInflow += trace.action.balance;
             }
 
             // do not collapse. It may be both
-            if (trace.action.address == trace.action.to) {
+            if (trace.action.selfDestructed == accountingFor) {
                 // the smart contract that is being killed and thereby loses the eth
-                suicideInflow += trace.action.balance;
+                suicideOutflow += trace.action.balance;
             }
 
         } else {

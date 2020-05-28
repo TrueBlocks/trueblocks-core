@@ -25,7 +25,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CTraceResult : public CBaseNode {
   public:
-    address_t address;
+    address_t newContract;
     string_q code;
     gas_t gasUsed;
     string_q output;
@@ -92,7 +92,7 @@ inline void CTraceResult::clear(void) {
 inline void CTraceResult::initialize(void) {
     CBaseNode::initialize();
 
-    address = "";
+    newContract = "";
     code = "";
     gasUsed = 0;
     output = "";
@@ -106,7 +106,7 @@ inline void CTraceResult::duplicate(const CTraceResult& tr) {
     clear();
     CBaseNode::duplicate(tr);
 
-    address = tr.address;
+    newContract = tr.newContract;
     code = tr.code;
     gasUsed = tr.gasUsed;
     output = tr.output;
@@ -128,7 +128,8 @@ inline bool CTraceResult::operator==(const CTraceResult& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((address == item.address) && (code == item.code) && (gasUsed == item.gasUsed) && (output == item.output));
+    return ((newContract == item.newContract) && (code == item.code) && (gasUsed == item.gasUsed) &&
+            (output == item.output));
 }
 
 //-------------------------------------------------------------------------

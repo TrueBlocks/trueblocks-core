@@ -71,11 +71,6 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                return addr_2_Str(address);
-            }
-            break;
         case 'c':
             if (fieldName % "code") {
                 return code;
@@ -84,6 +79,11 @@ string_q CTraceResult::getValueByName(const string_q& fieldName) const {
         case 'g':
             if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
+            }
+            break;
+        case 'n':
+            if (fieldName % "newContract") {
+                return addr_2_Str(newContract);
             }
             break;
         case 'o':
@@ -108,15 +108,11 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName == "address")
+        fieldName = "newContract";
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                address = str_2_Addr(fieldValue);
-                return true;
-            }
-            break;
         case 'c':
             if (fieldName % "code") {
                 code = fieldValue;
@@ -126,6 +122,12 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'g':
             if (fieldName % "gasUsed") {
                 gasUsed = str_2_Gas(fieldValue);
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "newContract") {
+                newContract = str_2_Addr(fieldValue);
                 return true;
             }
             break;
@@ -160,7 +162,7 @@ bool CTraceResult::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> address;
+    archive >> newContract;
     archive >> code;
     archive >> gasUsed;
     archive >> output;
@@ -175,7 +177,7 @@ bool CTraceResult::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << address;
+    archive << newContract;
     archive << code;
     archive << gasUsed;
     archive << output;
@@ -215,7 +217,7 @@ void CTraceResult::registerClass(void) {
     ADD_FIELD(CTraceResult, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceResult, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceResult, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceResult, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceResult, "newContract", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceResult, "code", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceResult, "output", T_TEXT, ++fieldNum);

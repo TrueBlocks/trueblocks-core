@@ -97,8 +97,8 @@ bool visitTransaction(CTransaction& trans, void* data) {
         }
         manageFields("CFunction:message", !trace.articulatedTrace.message.empty());
 
-        bool isSuicide = trace.action.address != "";
-        bool isCreation = trace.result.address != "";
+        bool isSuicide = trace.action.selfDestructed != "";
+        bool isCreation = trace.result.newContract != "";
 
         // do not colapse
         if (isCreation) {
@@ -118,11 +118,11 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
 //--------------------------------------------------------------
 bool displayAsCreation(COptions* opt, const CTrace& trace) {
-    if (trace.result.address == "")
+    if (trace.result.newContract == "")
         return false;
     CTrace copy = trace;
     copy.action.from = "0x0";
-    copy.action.to = trace.result.address;
+    copy.action.to = trace.result.newContract;
     copy.action.callType = "creation";
     copy.action.value = trace.action.value;
     if (copy.traceAddress.size() == 0)
@@ -138,7 +138,7 @@ bool displayAsSuicide(COptions* opt, const CTrace& trace) {
     if (trace.action.refundAddress == "")
         return false;
     CTrace copy = trace;
-    copy.action.from = trace.action.address;
+    copy.action.from = trace.action.selfDestructed;
     copy.action.to = trace.action.refundAddress;
     copy.action.callType = "suicide";
     copy.action.value = trace.action.balance;

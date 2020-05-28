@@ -347,7 +347,7 @@ bool COptions::parseArguments(string_q& command) {
             EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
         relativeTo = addrs[0];
         // manageFields("CTransaction:input,receipt,articulatedTx,hash", false);
-        manageFields("CTransaction:statement", true);
+        manageFields("CTransaction:statements", true);
     }
 
     EXIT_NOMSG(true);

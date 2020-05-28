@@ -71,11 +71,6 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                return addr_2_Str(address);
-            }
-            break;
         case 'b':
             if (fieldName % "balance") {
                 return wei_2_Str(balance);
@@ -109,6 +104,11 @@ string_q CTraceAction::getValueByName(const string_q& fieldName) const {
                 return addr_2_Str(refundAddress);
             }
             break;
+        case 's':
+            if (fieldName % "selfDestructed") {
+                return addr_2_Str(selfDestructed);
+            }
+            break;
         case 't':
             if (fieldName % "to") {
                 return addr_2_Str(to);
@@ -136,15 +136,11 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName == "address")
+        fieldName = "selfDestructed";
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "address") {
-                address = str_2_Addr(fieldValue);
-                return true;
-            }
-            break;
         case 'b':
             if (fieldName % "balance") {
                 balance = str_2_Wei(fieldValue);
@@ -185,6 +181,12 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 's':
+            if (fieldName % "selfDestructed") {
+                selfDestructed = str_2_Addr(fieldValue);
+                return true;
+            }
+            break;
         case 't':
             if (fieldName % "to") {
                 to = str_2_Addr(fieldValue);
@@ -222,7 +224,7 @@ bool CTraceAction::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> address;
+    archive >> selfDestructed;
     archive >> balance;
     archive >> callType;
     archive >> from;
@@ -243,7 +245,7 @@ bool CTraceAction::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << address;
+    archive << selfDestructed;
     archive << balance;
     archive << callType;
     archive << from;
@@ -289,7 +291,7 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceAction, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceAction, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "selfDestructed", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "from", T_ADDRESS, ++fieldNum);

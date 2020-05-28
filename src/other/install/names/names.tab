@@ -2056,7 +2056,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x27785351924abff1895cbfd6622b93692e5d7537	Proxy		Etherscan			false	false	false
 76-Verified	0x277aee1ecba0034d24b9dfac5c866ff696fec087	CommunityOracle		Etherscan			false	false	false
 32-Kickback:Friends	0x277e4b7f5dab01c8e4389b930d3bd1c9690ce1e8	gnidan		https://kickback.events/			false	false	false
-81 Other	0x2785dc55279632de2691e21d0a92d6019d88b953	VIU Airdrop Sender		Etherscan			false	false	false
+81-Other	0x2785dc55279632de2691e21d0a92d6019d88b953	VIU Airdrop Sender		Etherscan			false	false	false
 76-Verified	0x278aed3758d56c1c301849d438b482501da2caf0	HashStorage3		Etherscan			false	false	false
 32-Kickback:Friends	0x27903282ff2d6c3033fa57d4f39d641ade882825	jules00		https://kickback.events/			false	false	false
 76-Verified	0x27b2caef5ee2495cd632b481c6822e209be224b7	TokenSale		Etherscan			false	false	false
@@ -5455,7 +5455,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb	One of the Other DAOs		TrueBlocks.io			false	false	false
 76-Verified	0x6b0fa0f07a2269b13a42c354ce94920d5e283ff4	Agent		Etherscan			false	false	false
 76-Verified	0x6b136b14282f31728a6fc4982bafab53be732fff	ResultCoin		Etherscan			false	false	false
-76-Verified	0x6b175474e89094c44da98b954eedeac495271d0f	Dai		Etherscan			false	false	false
+30-Contracts	0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin		Etherscan			false	false	false
 50-Tokens:ERC20	0x6b193e107a773967bd821bcf8218f3548cfa2503	Posscoin	POSS	On Chain	18	Posscoin is an innovative payment network and a new kind of money.	false	false	false
 76-Verified	0x6b1e2396a53d620f604852abe1cc989dbd0b2b20	SafeMath		Etherscan			false	false	false
 76-Verified	0x6b2a9d9500645d51c5b1d87fc95ab56f429902e7	POOL		Etherscan			false	false	false

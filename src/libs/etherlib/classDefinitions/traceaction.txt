@@ -1,7 +1,7 @@
 [settings]
 class = CTraceAction
-fields = address address|wei balance|string callType|address from|gas gas|string init|string input|address refundAddress|address to|wei value
+fields = address selfDestructed|wei balance|string callType|address from|gas gas|string init|string input|address refundAddress|address to|wei value
 includes = abilib.h
 cpp_includes = trace.h
 serializable = true
-equals = ((address == item.address) && (balance == item.balance) && (callType == item.callType) &&|(from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&|(refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))
+equals = ((selfDestructed == item.selfDestructed) && (balance == item.balance) && (callType == item.callType) &&|(from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&|(refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))

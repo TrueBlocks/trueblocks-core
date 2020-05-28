@@ -48,11 +48,11 @@ class CTransaction : public CBaseNode {
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
+    CIncomeStatementArray statements;
     CFunction articulatedTx;
     string_q compressedTx;
     bool finalized;
     CTraceArray traces;
-    CIncomeStatement statement;
 
   public:
     CTransaction(void);
@@ -139,11 +139,11 @@ inline void CTransaction::initialize(void) {
     isError = 0;
     isInternal = 0;
     receipt = CReceipt();
+    statements.clear();
     articulatedTx = CFunction();
     compressedTx = "";
     finalized = false;
     traces.clear();
-    statement = CIncomeStatement();
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -170,11 +170,11 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isError = tr.isError;
     isInternal = tr.isInternal;
     receipt = tr.receipt;
+    statements = tr.statements;
     articulatedTx = tr.articulatedTx;
     compressedTx = tr.compressedTx;
     finalized = tr.finalized;
     traces = tr.traces;
-    statement = tr.statement;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

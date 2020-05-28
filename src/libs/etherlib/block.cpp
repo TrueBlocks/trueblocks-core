@@ -606,9 +606,9 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy,
             return false;
         if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.refundAddress, trID + "refundAddr"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.address, trID + "creation"))
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.action.selfDestructed, trID + "self-destruct"))
             return false;
-        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.result.address, trID + "self-destruct"))
+        if (!foundOne(funcy, data, item.bn, item.tx, traceID + 10, trace.result.newContract, trID + "self-destruct"))
             return false;
         string_q inpt = extract(trace.action.input, 10);
         if (!inpt.empty())

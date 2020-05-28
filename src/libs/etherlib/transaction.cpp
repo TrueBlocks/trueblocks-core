@@ -136,10 +136,18 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "statement") {
-                if (statement == CIncomeStatement())
-                    return "{}";
-                return statement.Format();
+            if (fieldName % "statements" || fieldName % "statementsCnt") {
+                size_t cnt = statements.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += statements[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
         case 't':
@@ -200,14 +208,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         string_q f = fieldName;
         replaceAll(f, s, "");
         f = articulatedTx.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("statement")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = statement.getValueByName(f);
         return f;
     }
 
@@ -345,8 +345,14 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 's':
-            if (fieldName % "statement") {
-                return statement.parseJson3(fieldValue);
+            if (fieldName % "statements") {
+                CIncomeStatement item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    statements.push_back(item);
+                    item = CIncomeStatement();  // reset
+                }
+                return true;
             }
             break;
         case 't':
@@ -419,11 +425,11 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isError;
     archive >> isInternal;
     archive >> receipt;
+    // archive >> statements;
     // archive >> articulatedTx;
     // archive >> compressedTx;
     // archive >> finalized;
     // archive >> traces;
-    // archive >> statement;
     finishParse();
     return true;
 }
@@ -450,11 +456,11 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isError;
     archive << isInternal;
     archive << receipt;
+    // archive << statements;
     // archive << articulatedTx;
     // archive << compressedTx;
     // archive << finalized;
     // archive << traces;
-    // archive << statement;
 
     return true;
 }
@@ -506,6 +512,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTransaction, "statements");
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     HIDE_FIELD(CTransaction, "articulatedTx");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);
@@ -514,8 +522,6 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "finalized");
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
     HIDE_FIELD(CTransaction, "traces");
-    ADD_FIELD(CTransaction, "statement", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CTransaction, "statement");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -769,12 +775,12 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "receipt")
         return &receipt;
+    if (fieldName % "statements" && index < statements.size())
+        return &statements[index];
     if (fieldName % "articulatedTx")
         return &articulatedTx;
     if (fieldName % "traces" && index < traces.size())
         return &traces[index];
-    if (fieldName % "statement")
-        return &statement;
     return NULL;
 }
 

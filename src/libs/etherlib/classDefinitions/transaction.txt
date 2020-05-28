@@ -1,6 +1,25 @@
 [settings]
 class = CTransaction
-fields = hash hash|hash blockHash|blknum blockNumber|blknum transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string compressedTx (nowrite)|sbool finalized (nowrite)|CTraceArray traces (nowrite)|CIncomeStatement statement (nowrite)
+fields = hash hash|\
+        hash blockHash|\
+        blknum blockNumber|\
+        blknum transactionIndex|\
+        uint64 nonce|\
+        timestamp timestamp|\
+        address from|\
+        address to|\
+        wei value|\
+        gas gas|\
+        gas gasPrice|\
+        string input|\
+        uint64 isError|\
+        uint64 isInternal|\
+        CReceipt receipt|\
+        CIncomeStatementArray statements (nowrite)|\
+        CFunction articulatedTx (nowrite)|\
+        string compressedTx (nowrite)|\
+        sbool finalized (nowrite)|\
+        CTraceArray traces (nowrite)
 backfields1 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)|CTraceArray traces (nowrite)
 backfields2 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|string input|uint64 isError|uint64 isInternal|CReceipt receipt|CFunction articulatedTx (nowrite)|string extra_data (nowrite)|bool finalized (nowrite)
 backfields3 = hash hash|hash blockHash|blknum blockNumber|uint64 transactionIndex|uint64 nonce|timestamp timestamp|address from|address to|wei value|gas gas|gas gasPrice|wei cumulativeGasUsed|string input|uint64 isError|uint64 isInternalTx|CReceipt receipt
