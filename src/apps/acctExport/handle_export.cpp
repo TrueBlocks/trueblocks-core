@@ -9,7 +9,6 @@
 bool COptions::exportData(void) {
     ENTER("exportData");
 
-    blknum_t lastExportedBlock = 0;
     bool shouldDisplay = !freshen;
     bool isJson =
         (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
@@ -17,45 +16,6 @@ bool COptions::exportData(void) {
     if (isJson && shouldDisplay)
         cout << "[";
 
-#ifdef CACHED_TXS
-    uint64_t readCount = 0;
-    string_q fn = getMonitorPath(relativeTo + ".txs.bin");
-    if (isApiMode() && accounting && fileExists(fn)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> readCount;
-            bool first = true;
-            for (uint32_t i = 0 ; i < readCount ; i++) {
-                CTransaction trans;
-                archive >> trans;
-                archive >> trans.statements;
-                scanRange.first = trans.blockNumber + 1;
-                lastExportedBlock = trans.blockNumber;
-                toNameExistsMap[trans.to]++;
-                fromNameExistsMap[trans.from]++;
-                // we only articulate the transaction if we're JSON
-                if (isJson && articulate)
-                    abis.articulateTransaction(&trans);
-                if (!first)
-                    cout << ",";
-                cout << trans << endl;
-                first = false;
-            }
-            archive.Release();
-        }
-    }
-
-    bool exists = fileExists(fn);
-    CArchive archive(WRITING_ARCHIVE);
-    archive.Lock(fn, exists ? modeWriteAppend : modeWriteCreate, LOCK_WAIT);
-    uint64_t nWritten = readCount;
-    if (!exists) {
-        archive.Seek(0, SEEK_SET);
-        archive << nWritten; // save some space
-        archive.flush();
-    }
-#endif
-    
     bool first = true;
     for (size_t i = 0;
          i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
@@ -200,14 +160,6 @@ bool COptions::exportData(void) {
                             nums.reconcile(corrections, lastStatement, relativeTo, next, &trans);
                             CIncomeStatement st(nums);
                             trans.statements.push_back(st);
-#ifdef CACHED_TXS
-                            if (archive.isOpen()) {
-                                archive << trans;
-                                archive << trans.statements;
-                                archive.flush();
-                                nWritten++;
-                            }
-#endif
                             lastStatement = nums;
                         }
 
@@ -221,38 +173,17 @@ bool COptions::exportData(void) {
                         nExported++;
                         if (shouldDisplay)
                             cout << trans.Format() << endl;
-                        lastExportedBlock = trans.blockNumber;
                         first = false;
                     }
                 }
 
-#ifdef CACHED_TXS
-                if (nWritten != readCount)
-#endif
-                {
-                    HIDE_FIELD(CFunction, "message");
-                    static size_t cnt = 0;
-                    if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
-                        LOG_INFO(className, ": ", i, " of ", nRead, " max ", max_records, " (", trans.blockNumber, ".",
-                                 trans.transactionIndex, ")      ", "\r");
-                }
+                HIDE_FIELD(CFunction, "message");
+                if (!(i % 3))
+                    LOG_INFO("Exporting ", i, " of ", nRead, " records max ", max_records, "          \r");
             }
         }
     }
 
-#ifdef CACHED_TXS
-    archive.Release();
-    if (nWritten != readCount) {
-        bool exists2 = fileExists(fn);
-        if (archive.Lock(fn, exists2 ? modeReadWrite : modeWriteCreate, LOCK_WAIT)) {
-            archive.Seek(0, SEEK_SET);
-            archive << nWritten; // save some space
-            archive.flush();
-            archive.Release();
-        }
-    }
-#endif
-    
     if (!isTestMode() && shouldDisplay)
         LOG_INFO(string_q(120, ' '), "\r");
 

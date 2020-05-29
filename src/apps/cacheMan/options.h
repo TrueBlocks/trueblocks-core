@@ -18,8 +18,6 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
-    bool list;
-    bool no_fix;
     // END_CODE_DECLARE
 
     CMonitorArray monitors;

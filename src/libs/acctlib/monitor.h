@@ -221,11 +221,12 @@ extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q getMonitorPath(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorLast(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorExpt(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorBals(const string_q& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorDels(const string_q& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorBals(const address_t& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION);
+extern string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern void cleanMonitors(const CAddressArray& addrs);
 extern void cleanMonitor(const address_t& addr);
 extern void establishTestMonitors(void);

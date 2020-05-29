@@ -103,6 +103,7 @@ class COptions : public COptionsBase {
     bool loadAllAppearances(void);
 
     bool exportData(void);
+    bool exportAccounting(void);
     bool exportCounts(void);
     bool exportBalances(void);
 };

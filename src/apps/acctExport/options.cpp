@@ -345,7 +345,12 @@ bool COptions::parseArguments(string_q& command) {
     if (accounting) {
         if (addrs.size() != 1)
             EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
+        if (freshen)
+            EXIT_USAGE("Do not use the --accounting option with --freshen. Quitting...");
+        if (appearances || logs || traces || balances)
+            EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
         relativeTo = addrs[0];
+        articulate = true;
         // manageFields("CTransaction:input,receipt,articulatedTx,hash", false);
         manageFields("CTransaction:statements", true);
     }

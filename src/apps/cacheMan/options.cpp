@@ -14,8 +14,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to process"),
-    COption("list", "l", "", OPT_SWITCH, "list the transactions in the cache (not listing is the default)"),
-    COption("no_fix", "n", "", OPT_SWITCH, "do not fix the cache (fixing is the default behaviour)"),
     COption("", "", "", OPT_DESCRIPTION, "Show the contents of an account cache and/or fix it by removing duplicate records."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -37,12 +35,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-l" || arg == "--list") {
-            list = true;
-
-        } else if (arg == "-n" || arg == "--no_fix") {
-            no_fix = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -84,8 +76,6 @@ void COptions::Init(void) {
     getNamedAccount(unused, "0x0");
 
     // BEG_CODE_INIT
-    list = false;
-    no_fix = false;
     // END_CODE_INIT
 
     monitors.clear();

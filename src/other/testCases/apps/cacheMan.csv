@@ -1,27 +1,27 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd, fast, null, apps/cacheMan, CLEANUP,         n, CLEANUP
+#on, cmd, fast, null, apps/c acheMan, CLEANUP,         n, CLEANUP
 
-on, cmd, fast, null, apps/cacheMan, README,          n, @th
-on, cmd, fast, null, apps/cacheMan, help,            n, @h
-on, cmd, fast, null, apps/cacheMan, help_long,       n, help
+#on, cmd, fast, null, apps/c acheMan, README,          n, @th
+#on, cmd, fast, null, apps/c acheMan, help,            n, @h
+#on, cmd, fast, null, apps/c acheMan, help_long,       n, help
 
-on, cmd, fast, null, apps/cacheMan, no_params,       n,
-on, cmd, fast, null, apps/cacheMan, invalid_param_1, n, junk
-on, cmd, fast, null, apps/cacheMan, noFile,          n, stats
+#on, cmd, fast, null, apps/c acheMan, no_params,       n,
+#on, cmd, fast, null, apps/c acheMan, invalid_param_1, n, junk
+#on, cmd, fast, null, apps/c acheMan, noFile,          n, stats
 
-on, cmd, fast, null, apps/cacheMan, list_0x9,        n, addrs = 0x9876543210987654321098765432109876543210 & list & no_fix & fmt = txt
-on, cmd, fast, null, apps/cacheMan, fix_0x9,         n, addrs = 0x9876543210987654321098765432109876543210 & verbose & fmt = txt
+#on, cmd, fast, null, apps/c acheMan, list_0x9,        n, addrs = 0x9876543210987654321098765432109876543210 & list & no_fix & fmt = txt
+#on, cmd, fast, null, apps/c acheMan, fix_0x9,         n, addrs = 0x9876543210987654321098765432109876543210 & verbose & fmt = txt
 
-on, cmd, fast, null, apps/cacheMan, list_0x5,        n, addrs = 0x5555533333555553333355555333335555533333 & list & no_fix & fmt = txt & no_header
-on, cmd, fast, null, apps/cacheMan, fix_0x5,         n, addrs = 0x5555533333555553333355555333335555533333 & list & verbose
+#on, cmd, fast, null, apps/c acheMan, list_0x5,        n, addrs = 0x5555533333555553333355555333335555533333 & list & no_fix & fmt = txt & no_header
+#on, cmd, fast, null, apps/c acheMan, fix_0x5,         n, addrs = 0x5555533333555553333355555333335555533333 & list & verbose
 
-on, cmd, slow, null, apps/cacheMan, list_x01,        n, addrs = 0x1111122222111112222211111222221111122222 & list & no_fix & verbose
-on, cmd, slow, null, apps/cacheMan, fix_x01,         n, addrs = 0x1111122222111112222211111222221111122222 & list & verbose
-on, cmd, slow, null, apps/cacheMan, txt_x01,         n, fmt = txt & addrs = 0x1111122222111112222211111222221111122222 & list 
-on, cmd, slow, null, apps/cacheMan, csv_x01,         n, fmt = csv & addrs = 0x1111122222111112222211111222221111122222 & list 
-on, cmd, slow, null, apps/cacheMan, json_x01,        n, fmt = json & addrs = 0x1111122222111112222211111222221111122222 & list 
+#on, cmd, slow, null, apps/c acheMan, list_x01,        n, addrs = 0x1111122222111112222211111222221111122222 & list & no_fix & verbose
+#on, cmd, slow, null, apps/c acheMan, fix_x01,         n, addrs = 0x1111122222111112222211111222221111122222 & list & verbose
+#on, cmd, slow, null, apps/c acheMan, txt_x01,         n, fmt = txt & addrs = 0x1111122222111112222211111222221111122222 & list 
+#on, cmd, slow, null, apps/c acheMan, csv_x01,         n, fmt = csv & addrs = 0x1111122222111112222211111222221111122222 & list 
+#on, cmd, slow, null, apps/c acheMan, json_x01,        n, fmt = json & addrs = 0x1111122222111112222211111222221111122222 & list 
 
-on, cmd, fast, null, apps/cacheMan, combined,        n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & no_fix & fmt = txt
-on, cmd, fast, null, apps/cacheMan, combined_fixed,  n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & fmt = txt
+#on, cmd, fast, null, apps/c acheMan, combined,        n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & no_fix & fmt = txt
+#on, cmd, fast, null, apps/c acheMan, combined_fixed,  n, addrs = 0x5555533333555553333355555333335555533333 0x9876543210987654321098765432109876543210 0x1111122222111112222211111222221111122222 & list & fmt = txt
 
-#on, cmd, fast, null, apps/cacheMan, rm_0x9,          n, RMFILE -f ./0x*.*
+#on, cmd, fast, null, apps/c acheMan, rm_0x9,          n, RMFILE -f ./0x*.*

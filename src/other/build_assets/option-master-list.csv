@@ -75,8 +75,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
 
 11360,apps,,cacheMan,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to process
-11365,apps,,cacheMan,list,l,,false,false,true,true,header,switch,<boolean>,list the transactions in the cache (not listing is the default)
-11370,apps,,cacheMan,no_fix,n,false,false,false,true,true,header,switch,<boolean>,do not fix the cache (fixing is the default behaviour)
 11620,apps,,cacheMan,,,,false,false,true,false,--,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
 11660,dev_tools,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files

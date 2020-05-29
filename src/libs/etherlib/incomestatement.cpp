@@ -451,7 +451,7 @@ const char* STR_DISPLAY_INCOMESTATEMENT = "";
 //---------------------------------------------------------------------------
 inline string_q bni_2_Ether(const bigint_t& num) {
     if (num == 0)
-        return "-";
+        return "";
     string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(num)));
     CStringArray parts;
     explode(parts, ret, '.');

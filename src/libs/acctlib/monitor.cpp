@@ -443,6 +443,7 @@ bool CMonitor::isLocked(string_q& msg) const {
     checkLock(getMonitorExpt(address), "last export");
     checkLock(getMonitorBals(address), "last export");
     checkLock(getMonitorDels(address), "marker");
+    checkLock(getMonitorCach(address), "cache");
     return false;
 }
 
@@ -485,7 +486,7 @@ void CMonitor::moveToProduction(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorPath(const string_q& addr, freshen_e mode) {
+string_q getMonitorPath(const address_t& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isAddress(addr))  // empty for example
         return getCachePath(base + addr);
@@ -493,7 +494,7 @@ string_q getMonitorPath(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorLast(const string_q& addr, freshen_e mode) {
+string_q getMonitorLast(const address_t& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
@@ -503,7 +504,7 @@ string_q getMonitorLast(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorExpt(const string_q& addr, freshen_e mode) {
+string_q getMonitorExpt(const address_t& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
@@ -513,7 +514,7 @@ string_q getMonitorExpt(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorBals(const string_q& addr, freshen_e mode) {
+string_q getMonitorBals(const address_t& addr, freshen_e mode) {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
@@ -523,17 +524,29 @@ string_q getMonitorBals(const string_q& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorDels(const string_q& addr, freshen_e mode) {
+string_q getMonitorDels(const address_t& addr, freshen_e mode) {
     return getMonitorPath(addr) + ".deleted";
 }
 
 //---------------------------------------------------------------------------
+string_q getMonitorCach(const address_t& addr, freshen_e mode) {
+    return getMonitorPath(addr + ".txs.bin");
+}
+
+//---------------------------------------------------------------------------
+void removeFile(const string_q& fn) {
+    ::remove(fn.c_str());
+    ::remove((fn + ".lck").c_str());
+}
+
+//---------------------------------------------------------------------------
 void cleanMonitor(const address_t& addr) {
-    ::remove(getMonitorPath(addr).c_str());
-    ::remove(getMonitorLast(addr).c_str());
-    ::remove(getMonitorExpt(addr).c_str());
-    ::remove(getMonitorBals(addr).c_str());
-    ::remove(getMonitorDels(addr).c_str());
+    removeFile(getMonitorPath(addr));
+    removeFile(getMonitorLast(addr));
+    removeFile(getMonitorExpt(addr));
+    removeFile(getMonitorBals(addr));
+    removeFile(getMonitorDels(addr));
+    removeFile(getMonitorCach(addr));
 }
 
 //---------------------------------------------------------------------------
@@ -627,6 +640,8 @@ bool CMonitor::exists(void) const {
     if (fileExists(getMonitorBals(address)))
         return true;
     if (fileExists(getMonitorDels(address)))
+        return true;
+    if (fileExists(getMonitorCach(address)))
         return true;
     return false;
 }

@@ -44,17 +44,24 @@ int main(int argc, const char* argv[]) {
             options.exportCounts();
 
         } else {
-            if (options.loadAllAppearances())
-                options.exportData();
+            if (options.loadAllAppearances()) {
+                if (false) {  // options.accounting) {
+                    options.exportAccounting();
+                } else {
+                    options.exportData();
+                }
+            }
         }
 
         if (options.isRedirected()) {
             once = true;
             cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+
         } else {
             once = false;
         }
     }
+
     if (!options.isRedirected())
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
