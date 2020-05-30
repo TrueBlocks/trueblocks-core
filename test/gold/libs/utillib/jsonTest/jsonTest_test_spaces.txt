@@ -10,7 +10,7 @@ tests/spaces.json
   "transactionIndex": 0,
   "type": "call",
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0x1a0c7f10fd38b07d6b48926139455a209512e960",
@@ -21,7 +21,7 @@ tests/spaces.json
     "value": 0
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 29323,
     "output": "0x0000000  000000  00000  00000  0000000000000000001"
   }

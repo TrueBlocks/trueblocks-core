@@ -238,7 +238,9 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         string_q nibble = extract(nibbles, 0, 2);
         nibbles = extract(nibbles, 2);
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
-        if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
+        if (ch == '\\') {
+            cleaned += "\\\\";  // we are only exporting printable characters, so escape any escapes
+        } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
             cleaned += ch;
         } else if (ch == 0x19) {
             // do nothing

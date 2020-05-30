@@ -2281,21 +2281,21 @@
               "name": "NewOwner",
               "inputs": [
                 {
-                  "name": "_node",
+                  "name": "node",
                   "value": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86"
                 },
                 {
-                  "name": "_label",
+                  "name": "label",
                   "value": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
                 },
                 {
-                  "name": "_owner",
+                  "name": "owner",
                   "value": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
                 }
               ],
               "outputs": []
             },
-            "compressedLog": "NewOwner ( _node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, _label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, _owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
+            "compressedLog": "NewOwner ( node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )"
           },
           {
             "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -2477,7 +2477,7 @@
           },
           "compressedTrace": "newTokenAndInstance ( _tokenName: Commons Stack Org Membership, _tokenSymbol: CSOM, _id: commonsstackorg, _members: [0x7944fc7bd79b25e6ffe24921d88a1f36f22be843], _votingSettings: [500000000000000000, 150000000000000000, 86400], _financePeriod: 0, _useAgentAsVault: false )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x7944fc7bd79b25e6ffe24921d88a1f36f22be843",
@@ -2488,7 +2488,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 6591951,
             "output": "0x"
           }
@@ -2533,7 +2533,7 @@
           },
           "compressedTrace": "createCloneToken ( _parentToken: 0x0000000000000000000000000000000000000000, _snapshotBlock: 0, _tokenName: Commons Stack Org Membership, _decimalUnits: 0, _tokenSymbol: CSOM, _transfersEnabled: true )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
@@ -2544,7 +2544,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 1675523,
             "output": "0x00000000000000000000000004d702ebd0a77503b154865fe3e8da97255b931b"
           }
@@ -2555,7 +2555,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "",
             "from": "0x909d05f384d0663ed4be59863815ab43b4f347ec",
@@ -2566,7 +2566,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
+            "newContract": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
             "gasUsed": 1632938,
             "output": ""
           }
@@ -2586,7 +2586,7 @@
           },
           "compressedTrace": "changeController ( _newController: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x909d05f384d0663ed4be59863815ab43b4f347ec",
@@ -2597,7 +2597,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 5744,
             "output": "0x"
           }
@@ -2622,7 +2622,7 @@
           },
           "compressedTrace": "newDAO ( _root: 0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x67430642c0c3b5e6538049b9e9ee719f2a4bee7c",
@@ -2633,7 +2633,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 1527681,
             "output": "0x000000000000000000000000d6878c9974359cbb67e8583e7a6cafb0fa20a286"
           }
@@ -2644,7 +2644,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -2655,7 +2655,7 @@
             "value": 0
           },
           "result": {
-            "address": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
+            "newContract": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
             "gasUsed": 202990,
             "output": ""
           }
@@ -2666,7 +2666,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -2677,7 +2677,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 453658,
             "output": "0x"
           }
@@ -2701,7 +2701,7 @@
           },
           "compressedTrace": "initialize ( _baseAcl: 0x81f7564e413586f1f99fde55740ac52b43ca99c9, _permissionsCreator: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -2712,7 +2712,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 451421,
             "output": "0x"
           }
@@ -2723,7 +2723,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -2734,7 +2734,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
+            "newContract": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
             "gasUsed": 252907,
             "output": ""
           }
@@ -2763,7 +2763,7 @@
           },
           "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -2774,7 +2774,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -2803,7 +2803,7 @@
           },
           "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -2814,7 +2814,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -2834,7 +2834,7 @@
           },
           "compressedTrace": "initialize ( permissionsCreator: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -2845,7 +2845,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 75189,
             "output": "0x"
           }
@@ -2874,7 +2874,7 @@
           },
           "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -2885,7 +2885,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -2914,7 +2914,7 @@
           },
           "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -2925,7 +2925,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -2945,7 +2945,7 @@
           },
           "compressedTrace": "initialize ( permissionsCreator: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -2956,7 +2956,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 67815,
             "output": "0x"
           }
@@ -2969,14 +2969,14 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "ret_0",
-                "value": ""
+                "name": "val_0",
+                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               }
             ]
           },
           "compressedTrace": "acl ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -2987,7 +2987,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3268,
             "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
           }
@@ -3000,14 +3000,14 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "ret_0",
-                "value": ""
+                "name": "val_0",
+                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               }
             ]
           },
           "compressedTrace": "acl ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3018,7 +3018,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 1037,
             "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
           }
@@ -3038,7 +3038,7 @@
           },
           "compressedTrace": "CREATE_PERMISSIONS_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -3049,7 +3049,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 7756,
             "output": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
           }
@@ -3061,24 +3061,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3089,7 +3089,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3101,24 +3101,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3129,7 +3129,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3149,7 +3149,7 @@
           },
           "compressedTrace": "CREATE_PERMISSIONS_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3160,7 +3160,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 382,
             "output": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
           }
@@ -3180,7 +3180,7 @@
           },
           "compressedTrace": "APP_MANAGER_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -3191,7 +3191,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2701,
             "output": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
           }
@@ -3211,7 +3211,7 @@
           },
           "compressedTrace": "APP_MANAGER_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3222,7 +3222,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 470,
             "output": "0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0"
           }
@@ -3250,7 +3250,7 @@
           },
           "compressedTrace": "grantPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _role: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -3261,7 +3261,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 31883,
             "output": "0x"
           }
@@ -3273,24 +3273,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3301,7 +3301,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3313,24 +3313,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3341,7 +3341,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3369,7 +3369,7 @@
           },
           "compressedTrace": "grantPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _role: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3380,7 +3380,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 24497,
             "output": "0x"
           }
@@ -3412,7 +3412,7 @@
           },
           "compressedTrace": "createPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _role: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _manager: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -3423,7 +3423,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 73219,
             "output": "0x"
           }
@@ -3435,24 +3435,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3463,7 +3463,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3475,24 +3475,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3503,7 +3503,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3535,7 +3535,7 @@
           },
           "compressedTrace": "createPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _role: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _manager: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3546,7 +3546,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 65827,
             "output": "0x"
           }
@@ -3558,32 +3558,32 @@
             "name": "hasPermission",
             "inputs": [
               {
-                "name": "_who",
+                "name": "who",
                 "value": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
               },
               {
-                "name": "_where",
+                "name": "where",
                 "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               },
               {
-                "name": "_what",
+                "name": "what",
                 "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
               },
               {
-                "name": "_how",
+                "name": "how",
                 "value": "0x"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "true"
               }
             ]
           },
-          "compressedTrace": "hasPermission ( _who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+          "compressedTrace": "hasPermission ( who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3594,7 +3594,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 15336,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -3606,32 +3606,32 @@
             "name": "hasPermission",
             "inputs": [
               {
-                "name": "_who",
+                "name": "who",
                 "value": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
               },
               {
-                "name": "_where",
+                "name": "where",
                 "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               },
               {
-                "name": "_what",
+                "name": "what",
                 "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
               },
               {
-                "name": "_how",
+                "name": "how",
                 "value": "0x"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "true"
               }
             ]
           },
-          "compressedTrace": "hasPermission ( _who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+          "compressedTrace": "hasPermission ( who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3642,7 +3642,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 13075,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -3654,32 +3654,32 @@
             "name": "hasPermission",
             "inputs": [
               {
-                "name": "_who",
+                "name": "who",
                 "value": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
               },
               {
-                "name": "_where",
+                "name": "where",
                 "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               },
               {
-                "name": "_what",
+                "name": "what",
                 "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
               },
               {
-                "name": "_how",
+                "name": "how",
                 "value": "0x"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "true"
               }
             ]
           },
-          "compressedTrace": "hasPermission ( _who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+          "compressedTrace": "hasPermission ( who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3690,7 +3690,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 9772,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -3702,24 +3702,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3730,7 +3730,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3742,24 +3742,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3770,7 +3770,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -3782,32 +3782,32 @@
             "name": "hasPermission",
             "inputs": [
               {
-                "name": "_who",
+                "name": "who",
                 "value": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031"
               },
               {
-                "name": "_where",
+                "name": "where",
                 "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               },
               {
-                "name": "_what",
+                "name": "what",
                 "value": "0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a"
               },
               {
-                "name": "_how",
+                "name": "how",
                 "value": "0x"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "true"
               }
             ]
           },
-          "compressedTrace": "hasPermission ( _who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, _where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, _what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, _how: 0x )",
+          "compressedTrace": "hasPermission ( who: 0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -3818,7 +3818,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2368,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -3843,7 +3843,7 @@
           },
           "compressedTrace": "newEVMScriptRegistry ( _dao: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xb9da44c051c6cc9e04b7e0f95e95d69c6a6d8031",
@@ -3854,7 +3854,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 578418,
             "output": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
           }
@@ -3891,7 +3891,7 @@
           },
           "compressedTrace": "newPinnedAppInstance ( _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61, _appBase: 0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb, _initializePayload: 0x8129fc1c, _setDefault: true )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
@@ -3902,7 +3902,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 397026,
             "output": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
           }
@@ -3939,7 +3939,7 @@
           },
           "compressedTrace": "newPinnedAppInstance ( _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61, _appBase: 0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb, _initializePayload: 0x8129fc1c, _setDefault: true )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3950,7 +3950,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 394759,
             "output": "0x000000000000000000000000fc3528ff08d19b02b5b97bd231eda8eaf1c27b51"
           }
@@ -3987,7 +3987,7 @@
           },
           "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -3998,7 +3998,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 9796,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -4010,24 +4010,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4038,7 +4038,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4050,24 +4050,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4078,7 +4078,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4115,7 +4115,7 @@
           },
           "compressedTrace": "hasPermission ( _who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, _what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, _how: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0fddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4126,7 +4126,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2380,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -4137,7 +4137,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4148,7 +4148,7 @@
             "value": 0
           },
           "result": {
-            "address": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
+            "newContract": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
             "gasUsed": 287235,
             "output": ""
           }
@@ -4160,24 +4160,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
@@ -4188,7 +4188,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
           }
@@ -4200,24 +4200,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4228,7 +4228,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
           }
@@ -4243,7 +4243,7 @@
           },
           "compressedTrace": "initialize ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
@@ -4254,7 +4254,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 41095,
             "output": "0x"
           }
@@ -4266,24 +4266,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
@@ -4294,7 +4294,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
           }
@@ -4306,24 +4306,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4334,7 +4334,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x000000000000000000000000bf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
           }
@@ -4371,7 +4371,7 @@
           },
           "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4382,7 +4382,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 9796,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -4394,24 +4394,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4422,7 +4422,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4434,24 +4434,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4462,7 +4462,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4499,7 +4499,7 @@
           },
           "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286, what: 0xb6d92708f3d4817afc106147d969e229ced5c46e65e0a5002a0d391287762bd0, how: 0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fbddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4510,7 +4510,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2380,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -4523,14 +4523,14 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "ret_0",
-                "value": ""
+                "name": "val_0",
+                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               }
             ]
           },
           "compressedTrace": "acl ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
@@ -4541,7 +4541,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3268,
             "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
           }
@@ -4554,14 +4554,14 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "ret_0",
-                "value": ""
+                "name": "val_0",
+                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
               }
             ]
           },
           "compressedTrace": "acl ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4572,7 +4572,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 1037,
             "output": "0x00000000000000000000000045fa853e10cfaad535c6984a39d32aab49ed682b"
           }
@@ -4592,7 +4592,7 @@
           },
           "compressedTrace": "REGISTRY_ADD_EXECUTOR_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
@@ -4603,7 +4603,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2505,
             "output": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
           }
@@ -4623,7 +4623,7 @@
           },
           "compressedTrace": "REGISTRY_ADD_EXECUTOR_ROLE ( )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51",
@@ -4634,7 +4634,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 228,
             "output": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2"
           }
@@ -4666,7 +4666,7 @@
           },
           "compressedTrace": "createPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _role: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _manager: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xcafa04538aa18ec7ce451bd0e55874c75b80657f",
@@ -4677,7 +4677,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 73219,
             "output": "0x"
           }
@@ -4689,24 +4689,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4717,7 +4717,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3163,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4729,24 +4729,24 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "_namespace",
+                "name": "namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "_appId",
+                "name": "appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "val_0",
+                "name": "ret_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286",
@@ -4757,7 +4757,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 920,
             "output": "0x00000000000000000000000081f7564e413586f1f99fde55740ac52b43ca99c9"
           }
@@ -4789,7 +4789,7 @@
           },
           "compressedTrace": "createPermission ( _entity: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, _app: 0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51, _role: 0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2, _manager: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "delegatecall",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4800,7 +4800,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 65827,
             "output": "0x"
           }
@@ -4837,7 +4837,7 @@
           },
           "compressedTrace": "hasPermission ( who: 0xcafa04538aa18ec7ce451bd0e55874c75b80657f, where: 0x45fa853e10cfaad535c6984a39d32aab49ed682b, what: 0x0b719b33c83b8e5d300c521cb8b54ae9bd933996a14bef8c2f4e0285d2d2400a, how: 0x )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x45fa853e10cfaad535c6984a39d32aab49ed682b",
@@ -4848,7 +4848,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 15336,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }

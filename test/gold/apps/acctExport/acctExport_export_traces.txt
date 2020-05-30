@@ -1,11 +1,11 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--traces] [3:--fmt] [4:api] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 001506480 
 {"data": [
-[{
+[TIME ~ CLOCK - <INFO>  : Exporting 0 of 3 records max 18446744073709551615          {
   "type": "call",
   "articulatedTrace": {},
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -16,7 +16,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 0
     "value": 4199900000000000000000
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 0,
     "output": "0x"
   }
@@ -25,7 +25,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 0
   "type": "call",
   "articulatedTrace": {},
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -36,7 +36,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 0
     "value": 74259320489077336
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 0,
     "output": "0x"
   }

@@ -22,11 +22,11 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
 isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-compressedTx        	1021	1	131122	T_TEXT TS_STRING
-finalized           	1022	1	65556	T_BOOL TS_NUMERAL
-traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-statement           	1024	1	1048651	T_OBJECT TS_OBJECT
+statements          	1020	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedTx       	1021	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1022	1	131122	T_TEXT TS_STRING
+finalized           	1023	1	65556	T_BOOL TS_NUMERAL
+traces              	1024	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1025	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 etherGasCost        	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
@@ -84,11 +84,11 @@ input               	1016	1	131122	T_TEXT TS_STRING
 isError             	1017	1	65563	T_UNUMBER TS_NUMERAL
 isInternal          	1018	1	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	1	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	1	1048651	T_OBJECT TS_OBJECT
-compressedTx        	1021	1	131122	T_TEXT TS_STRING
-finalized           	1022	1	65556	T_BOOL TS_NUMERAL
-traces              	1023	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-statement           	1024	1	1048651	T_OBJECT TS_OBJECT
+statements          	1020	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedTx       	1021	1	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1022	1	131122	T_TEXT TS_STRING
+finalized           	1023	1	65556	T_BOOL TS_NUMERAL
+traces              	1024	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1025	1	65561	T_NUMBER TS_NUMERAL
 gasCost             	1026	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 etherGasCost        	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
@@ -127,11 +127,11 @@ input               	1016	0	131122	T_TEXT TS_STRING
 isError             	1017	0	65563	T_UNUMBER TS_NUMERAL
 isInternal          	1018	0	65563	T_UNUMBER TS_NUMERAL
 receipt             	1019	0	1048651	T_OBJECT TS_OBJECT
-articulatedTx       	1020	0	1048651	T_OBJECT TS_OBJECT
-compressedTx        	1021	0	131122	T_TEXT TS_STRING
-finalized           	1022	0	65556	T_BOOL TS_NUMERAL
-traces              	1023	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-statement           	1024	0	1048651	T_OBJECT TS_OBJECT
+statements          	1020	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+articulatedTx       	1021	0	1048651	T_OBJECT TS_OBJECT
+compressedTx        	1022	0	131122	T_TEXT TS_STRING
+finalized           	1023	0	65556	T_BOOL TS_NUMERAL
+traces              	1024	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 confirmations       	1025	0	65561	T_NUMBER TS_NUMERAL
 gasCost             	1026	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 etherGasCost        	1027	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
@@ -169,13 +169,10 @@ encoding            	1037	0	131122	T_TEXT TS_STRING
     "logs": [],
     "status": null
   },
+  "statements": [],
   "articulatedTx": {},
   "compressedTx": "0x ( )",
   "traces": [],
-  "statement": {
-    "blockNum": 0,
-    "reconciled": false
-  },
   "gasCost": 0,
   "etherGasCost": 0.000000000000000000,
   "price": "1.400000000000000000",

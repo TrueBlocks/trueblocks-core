@@ -34,7 +34,6 @@ tags
 76-Verified
 80-Malicious
 80-Prefund
-81 Other
 81-Custom
 81-Other
 81-Other:DAO Whales

@@ -76,7 +76,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x63d509f7152769ddf162ed048b83719fe1e31080",
@@ -87,7 +87,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 937473,
             "output": "0x"
           }
@@ -98,7 +98,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -109,7 +109,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
           }
@@ -120,7 +120,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -131,7 +131,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
           }
@@ -142,7 +142,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -153,7 +153,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
           }
@@ -164,7 +164,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -175,7 +175,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
+            "newContract": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
             "gasUsed": 717949,
             "output": ""
           }
@@ -186,7 +186,7 @@
           "articulatedTrace": {},
           "compressedTrace": "",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -197,7 +197,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 0,
             "output": ""
           }
@@ -222,7 +222,7 @@
           },
           "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -233,7 +233,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 2845,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
@@ -258,7 +258,7 @@
           },
           "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
@@ -269,7 +269,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 727,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
@@ -294,7 +294,7 @@
           },
           "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -305,7 +305,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3155,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
           }
@@ -330,7 +330,7 @@
           },
           "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
@@ -341,7 +341,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 1037,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
           }
@@ -366,7 +366,7 @@
           },
           "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -377,7 +377,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 3155,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
           }

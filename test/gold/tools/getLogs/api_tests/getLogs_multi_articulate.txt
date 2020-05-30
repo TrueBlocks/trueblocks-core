@@ -2342,21 +2342,21 @@
         "name": "NewOwner",
         "inputs": [
           {
-            "name": "_node",
+            "name": "node",
             "value": "0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86"
           },
           {
-            "name": "_label",
+            "name": "label",
             "value": "0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47"
           },
           {
-            "name": "_owner",
+            "name": "owner",
             "value": "0x546aa2eae2514494eeadb7bbb35243348983c59d"
           }
         ],
         "outputs": []
       },
-      "compressedLog": "NewOwner ( _node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, _label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, _owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )",
+      "compressedLog": "NewOwner ( node: 0x7e74a86b6e146964fb965db04dc2590516da77f720bb6759337bf5632415fd86, label: 0xbf8cbce81dacd189b51a821cb6949b7a2afd50bcbcf94147f69a24db2bf2ba47, owner: 0x546aa2eae2514494eeadb7bbb35243348983c59d )",
       "type": "mined"
     },
     {

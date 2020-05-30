@@ -7,7 +7,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
+selfDestructed      	1005	0	131127	T_ADDRESS TS_STRING
 balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 callType            	1007	0	131122	T_TEXT TS_STRING
 from                	1008	0	131127	T_ADDRESS TS_STRING
@@ -19,7 +19,7 @@ to                  	1013	0	131127	T_ADDRESS TS_STRING
 value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "address": "0x0",
+  "selfDestructed": "0x0",
   "balance": 0,
   "from": "0x0",
   "gas": 0,
@@ -35,7 +35,7 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	1	131127	T_ADDRESS TS_STRING
+selfDestructed      	1005	1	131127	T_ADDRESS TS_STRING
 balance             	1006	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 callType            	1007	1	131122	T_TEXT TS_STRING
 from                	1008	1	131127	T_ADDRESS TS_STRING
@@ -56,7 +56,7 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
+selfDestructed      	1005	0	131127	T_ADDRESS TS_STRING
 balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
 callType            	1007	0	131122	T_TEXT TS_STRING
 from                	1008	0	131127	T_ADDRESS TS_STRING
@@ -72,7 +72,7 @@ ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
   "deleted": false,
   "showing": true,
   "cname": "TraceAction",
-  "address": "0x0",
+  "selfDestructed": "0x0",
   "balance": 0,
   "from": "0x0",
   "gas": 0,

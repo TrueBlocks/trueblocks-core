@@ -10,7 +10,7 @@ tests/traces.json
   "transactionIndex": 193,
   "type": "call",
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0xcb6fffa7041e469d3041ae94347a2a44fd5c9022",
@@ -21,7 +21,7 @@ tests/traces.json
     "value": 312018000000000000
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 0,
     "output": "0x"
   }

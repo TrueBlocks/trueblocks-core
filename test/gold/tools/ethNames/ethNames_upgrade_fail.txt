@@ -1226,6 +1226,15 @@ ethNames --fmt json
     "description": "https://tokamak.network/"
   },
   {
+    "tags": "34-ENS",
+    "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
+    "name": "Old ENS Registrar",
+    "symbol": "",
+    "source": "Trueblocks.io",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x0122676358aee287246b2a84377c8ab664d013cb",
     "name": "dYdX 0x Wrapper",
@@ -1799,15 +1808,6 @@ ethNames --fmt json
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
-    "name": "EplusCoin",
-    "symbol": "EPLUS",
-    "source": "On Chain",
-    "decimals": 8,
     "description": ""
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }

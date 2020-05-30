@@ -11,7 +11,7 @@ getTrace --verbose --file:cmd_file --fmt api
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -23,7 +23,7 @@ getTrace --verbose --file:cmd_file --fmt api
       "value": 233602441535478432
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 0,
       "output": "0x"
@@ -38,7 +38,7 @@ getTrace --verbose --file:cmd_file --fmt api
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -50,7 +50,7 @@ getTrace --verbose --file:cmd_file --fmt api
       "value": 233602441535478432
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 0,
       "output": "0x"
@@ -65,7 +65,7 @@ getTrace --verbose --file:cmd_file --fmt api
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": "0x0",
       "callType": "call",
       "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
@@ -77,7 +77,7 @@ getTrace --verbose --file:cmd_file --fmt api
       "value": "0x2e056847f291e60"
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": "0x0",
       "output": "0x"

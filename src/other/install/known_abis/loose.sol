@@ -1,4 +1,7 @@
 contract A {
+  function batchTransfer(address _tokenAddr ,address[] _holders ,uint256[] _amts)
+  function killBounty(uint256 _bountyID) { }
+  function MultiTransfer(address _tokenAddr, address[] _holders, uint256[] _amts)
   function multisend(address[] _holders ,uint256[] _amts) { }
   function registerUsers(address[] users) { }
   function multimint(address[] _holders, uint256[] _amt) { }

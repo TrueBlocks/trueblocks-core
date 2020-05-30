@@ -90,7 +90,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
         },
         "compressedTrace": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )",
         "action": {
-          "address": "0x0",
+          "selfDestructed": "0x0",
           "balance": 0,
           "callType": "call",
           "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
@@ -101,7 +101,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
           "value": 0
         },
         "result": {
-          "address": "0x0",
+          "newContract": "0x0",
           "gasUsed": 2991,
           "output": "0x"
         }

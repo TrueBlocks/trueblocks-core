@@ -132,7 +132,7 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
         },
         "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
         "action": {
-          "address": "0x0",
+          "selfDestructed": "0x0",
           "balance": 0,
           "callType": "call",
           "from": "0xd503d263de9092232d28492d60c5a956ad754a83",
@@ -143,7 +143,7 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
           "value": 607298625296748300
         },
         "result": {
-          "address": "0x0",
+          "newContract": "0x0",
           "gasUsed": 214359,
           "output": "0x"
         }

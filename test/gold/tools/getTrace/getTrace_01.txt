@@ -11,7 +11,7 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
     "type": "call",
     "error": "Bad jump destination",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": "0x0",
       "callType": "call",
       "from": "0x5335e5d8069fc2326354b97802bfde48d56ca2e2",
@@ -23,7 +23,7 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
       "value": "0x0"
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": "0x0",
       "output": ""
@@ -38,7 +38,7 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": "0x0",
       "callType": "call",
       "from": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
@@ -50,7 +50,7 @@ getTrace 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0c
       "value": "0xde0d112743632b0"
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": "0x0",
       "output": "0x"

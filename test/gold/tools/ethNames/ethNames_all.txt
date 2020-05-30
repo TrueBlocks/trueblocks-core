@@ -141,6 +141,7 @@ tags	address	name	symbol	decimals
 76-Verified	0x010c282118aa76174ce5952572ba715cf60a0c9b	VINX
 76-Verified	0x010d14d36c3ea6570d240ae3ac9d660398f7c48e	CenfuraToken
 31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma
+34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper
 76-Verified	0x0122db5fba163b123ebc047d735437c6a6677e6f	InProfitToken
 76-Verified	0x0123a7dae08fb4d3e88a34511a3e230eda83c941	FlashTokenFactory
@@ -201,4 +202,3 @@ tags	address	name	symbol	decimals
 76-Verified	0x02b46985d243001b3de2ee0b68793016c9ca6843	TokenERC20
 76-Verified	0x02b4958be94033c98314db1aa2f031da60e4498e	AaveRate
 76-Verified	0x02ba9b528425f9de08f961b88a10b03be8b8b998	MASQ
-50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18

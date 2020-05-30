@@ -11,7 +11,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x012077b1528ff43035ae2511725771b9c23578e9",
@@ -23,7 +23,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
       "value": 2000000000000000000
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 48838,
       "output": "0x"
@@ -38,7 +38,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
@@ -50,7 +50,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
       "value": 0
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 28693,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -65,7 +65,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
@@ -77,7 +77,7 @@ getTrace 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fm
       "value": 2000000000000000000
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 0,
       "output": "0x"

@@ -10,7 +10,7 @@
       "type": "call",
       "error": "",
       "action": {
-        "address": "0x0",
+        "selfDestructed": "0x0",
         "balance": 0,
         "callType": "call",
         "from": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
@@ -22,7 +22,7 @@
         "value": 31337
       },
       "result": {
-        "address": "0x0",
+        "newContract": "0x0",
         "code": "",
         "gasUsed": 0,
         "output": "0x"

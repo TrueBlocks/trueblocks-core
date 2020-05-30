@@ -10,7 +10,7 @@
       "type": "call",
       "error": "",
       "action": {
-        "address": "0x0",
+        "selfDestructed": "0x0",
         "balance": "0x0",
         "callType": "call",
         "from": "0x012077b1528ff43035ae2511725771b9c23578e9",
@@ -22,7 +22,7 @@
         "value": "0x1bc16d674ec80000"
       },
       "result": {
-        "address": "0x0",
+        "newContract": "0x0",
         "code": "",
         "gasUsed": "0xbec6",
         "output": "0x"
@@ -38,7 +38,7 @@
       "type": "call",
       "error": "",
       "action": {
-        "address": "0x0",
+        "selfDestructed": "0x0",
         "balance": "0x0",
         "callType": "call",
         "from": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
@@ -50,7 +50,7 @@
         "value": "0x0"
       },
       "result": {
-        "address": "0x0",
+        "newContract": "0x0",
         "code": "",
         "gasUsed": "0x7015",
         "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -66,7 +66,7 @@
       "type": "call",
       "error": "",
       "action": {
-        "address": "0x0",
+        "selfDestructed": "0x0",
         "balance": "0x0",
         "callType": "call",
         "from": "0x4e86721a4e00d7167c11d9cfd2480403bb630378",
@@ -78,7 +78,7 @@
         "value": "0x1bc16d674ec80000"
       },
       "result": {
-        "address": "0x0",
+        "newContract": "0x0",
         "code": "",
         "gasUsed": "0x0",
         "output": "0x"

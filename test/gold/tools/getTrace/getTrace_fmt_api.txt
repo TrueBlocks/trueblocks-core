@@ -11,7 +11,7 @@ getTrace 2222222.0 2332332.0 --fmt api
     "type": "call",
     "error": "Bad jump destination",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x02fcf30912b6fe2b6452ee19721c6068fe4c7b61",
@@ -23,7 +23,7 @@ getTrace 2222222.0 2332332.0 --fmt api
       "value": 0
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 0,
       "output": ""
@@ -38,7 +38,7 @@ getTrace 2222222.0 2332332.0 --fmt api
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0xdb89587bb407b576134ff297d1848ea6d9066812",
@@ -50,7 +50,7 @@ getTrace 2222222.0 2332332.0 --fmt api
       "value": 0
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 13042,
       "output": "0x"

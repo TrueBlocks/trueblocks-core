@@ -106,9 +106,6 @@
       "tags": "80-Prefund"
     },
     {
-      "tags": "81 Other"
-    },
-    {
       "tags": "81-Custom"
     },
     {

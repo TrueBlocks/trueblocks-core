@@ -20,6 +20,7 @@ echo "SOURCE: " $SOURCE
 echo "DECIMALS: " $DECIMALS
 echo "SYMBOL: " $SYMBOL
 echo "DESCR: " $DESCR
+echo 'calling chifra names --editCmd add '$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS
 
 # tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund
 chifra names --editCmd add "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS" >/dev/null

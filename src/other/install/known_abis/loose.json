@@ -1,10 +1,37 @@
 [
   {
-    "name": "multisend",
+    "name": "batchTransfer",
     "type": "function",
-    "signature": "multisend(address[],uint256[])",
-    "encoding": "0xaad41a41",
+    "signature": "batchTransfer(address,address[],uint256[])",
+    "encoding": "0x1239ec8c",
     "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddr"
+      },
+      {
+        "type": "address[]",
+        "name": "_holders",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amts",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "MultiTransfer",
+    "type": "function",
+    "signature": "MultiTransfer(address,address[],uint256[])",
+    "encoding": "0x241a2305",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddr"
+      },
       {
         "type": "address[]",
         "name": "_holders",

@@ -608,6 +608,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "contractAddress")
                     return addr_2_Str(tra->receipt.contractAddress);
                 if (fieldIn % "compressedTx") {
+                    if (!tra->articulatedTx.message.empty())
+                        return "message:" + tra->articulatedTx.message;
                     string_q ret = tra->articulatedTx.compressed();
                     if (ret.empty()) {
                         extern string_q compressInput(const string_q& input);

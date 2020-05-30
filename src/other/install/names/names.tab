@@ -160,7 +160,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x010c282118aa76174ce5952572ba715cf60a0c9b	VINX		Etherscan			false	false	false
 76-Verified	0x010d14d36c3ea6570d240ae3ac9d660398f7c48e	CenfuraToken		Etherscan			false	false	false
 31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma		https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp		https://tokamak.network/	false	false	false
-81-Other:ENS Related	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar		ENS Gitter Channel			false	false	false
+34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar		Trueblocks.io			false	false	false
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper		0xTracker			false	false	false
 76-Verified	0x0122db5fba163b123ebc047d735437c6a6677e6f	InProfitToken		Etherscan			false	false	false
 76-Verified	0x0123a7dae08fb4d3e88a34511a3e230eda83c941	FlashTokenFactory		Etherscan			false	false	false

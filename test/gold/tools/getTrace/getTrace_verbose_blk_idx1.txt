@@ -11,7 +11,7 @@ getTrace 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x64014a5817e05a205bca161a6763e945659b50b0",
@@ -23,7 +23,7 @@ getTrace 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --
       "value": 306329900000000000
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 0,
       "output": "0x"

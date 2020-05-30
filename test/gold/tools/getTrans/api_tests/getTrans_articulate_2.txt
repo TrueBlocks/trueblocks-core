@@ -156,7 +156,7 @@
           },
           "compressedTrace": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
@@ -167,7 +167,7 @@
             "value": 1e+16
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 503153,
             "output": "0x"
           }
@@ -192,7 +192,7 @@
           },
           "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -203,7 +203,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
           }
@@ -228,7 +228,7 @@
           },
           "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )",
           "action": {
-            "address": "0x0",
+            "selfDestructed": "0x0",
             "balance": 0,
             "callType": "call",
             "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -239,7 +239,7 @@
             "value": 0
           },
           "result": {
-            "address": "0x0",
+            "newContract": "0x0",
             "gasUsed": 432,
             "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
           }

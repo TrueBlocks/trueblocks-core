@@ -1225,6 +1225,14 @@
       "output_names": "ret_0,ret_1,ret_2,"
     },
     {
+      "name": "batchTransfer",
+      "type": "function",
+      "signature": "batchTransfer(address,address[],uint256[])",
+      "encoding": "0x1239ec8c",
+      "input_names": "_tokenAddr,_holders,_amts,",
+      "output_names": ""
+    },
+    {
       "name": "interfaceImplementer",
       "type": "function",
       "signature": "interfaceImplementer(bytes32,bytes4)",
@@ -1334,6 +1342,14 @@
       "signature": "setSiringAuctionAddress(address)",
       "encoding": "0x14001f4c",
       "input_names": "_address,",
+      "output_names": ""
+    },
+    {
+      "name": "multimint",
+      "type": "function",
+      "signature": "multimint(address[],uint256[])",
+      "encoding": "0x14004ef3",
+      "input_names": "_holders,_amt,",
       "output_names": ""
     },
     {
@@ -2230,6 +2246,14 @@
       "signature": "_mintTokens(ACL,TokenManager,address[],uint256[])",
       "encoding": "0x24029249",
       "input_names": "_acl,_tokenManager,_holders,_stakes,",
+      "output_names": ""
+    },
+    {
+      "name": "MultiTransfer",
+      "type": "function",
+      "signature": "MultiTransfer(address,address[],uint256[])",
+      "encoding": "0x241a2305",
+      "input_names": "_tokenAddr,_holders,_amts,",
       "output_names": ""
     },
     {
@@ -11782,6 +11806,14 @@
       "signature": "setInterface(bytes32,bytes4,address)",
       "encoding": "0xe59d895d",
       "input_names": "node,interfaceID,implementer,",
+      "output_names": ""
+    },
+    {
+      "name": "registerUsers",
+      "type": "function",
+      "signature": "registerUsers(address[])",
+      "encoding": "0xe5e9a9bb",
+      "input_names": "users,",
       "output_names": ""
     },
     {

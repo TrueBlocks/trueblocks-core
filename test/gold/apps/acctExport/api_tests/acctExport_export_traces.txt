@@ -6,7 +6,7 @@
   "articulatedTrace": {},
   "compressedTrace": "",
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -17,7 +17,7 @@
     "value": 4199900000000000000000
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 0,
     "output": "0x"
   }
@@ -29,7 +29,7 @@
   "articulatedTrace": {},
   "compressedTrace": "",
   "action": {
-    "address": "0x0",
+    "selfDestructed": "0x0",
     "balance": 0,
     "callType": "call",
     "from": "0x001d14804b399c6ef80e64576f657660804fec0b",
@@ -40,7 +40,7 @@
     "value": 74259320489077336
   },
   "result": {
-    "address": "0x0",
+    "newContract": "0x0",
     "gasUsed": 0,
     "output": "0x"
   }

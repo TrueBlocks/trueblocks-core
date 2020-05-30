@@ -38,5 +38,5 @@ ethNames -th
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
 - For `editCmd` add or update, use `terms` TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.
-- Name file: `~/.quickBlocks/names/names.tab` (1434655)
+- Name file: `~/.quickBlocks/names/names.tab` (1434648)
 

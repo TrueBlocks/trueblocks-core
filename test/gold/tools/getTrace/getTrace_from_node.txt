@@ -11,7 +11,7 @@ getTrace 4000000.5 --fmt json
     "type": "call",
     "error": "",
     "action": {
-      "address": "0x0",
+      "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x40584168524a928ae43b4e83893f963e467e9d73",
@@ -23,7 +23,7 @@ getTrace 4000000.5 --fmt json
       "value": 0
     },
     "result": {
-      "address": "0x0",
+      "newContract": "0x0",
       "code": "",
       "gasUsed": 29552,
       "output": "0x"
