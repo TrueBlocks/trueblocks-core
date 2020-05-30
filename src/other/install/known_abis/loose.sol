@@ -1,4 +1,7 @@
 contract A {
+  function multisend(address[] _holders ,uint256[] _amts) { }
+  function registerUsers(address[] users) { }
+  function multimint(address[] _holders, uint256[] _amt) { }
   function create(address[] _owners, uint256 _required) { }
   function claim() { }
   function setCompleted(uint256 completed) { }

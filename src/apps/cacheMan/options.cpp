@@ -50,19 +50,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (addrs.size() == 0)
-        return usage("You must provide at least one filename. Quitting...");
+        return usage("You must provide at least one address. Quitting...");
 
     for (auto addr : addrs) {
         CMonitor monitor(addr, addr);
         monitors.push_back(monitor);
     }
-
-    // Display formatting
-    string_q format = "[{BN}]\t[{TX}]";
-    configureDisplay("cacheMan", "CAppearance", format);
-    HIDE_FIELD(CAppearance, "tc");
-    HIDE_FIELD(CAppearance, "addr");
-    HIDE_FIELD(CAppearance, "reason");
 
     return true;
 }
@@ -70,10 +63,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT);
-    // Since we need prefunds, let's load the names library here
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
 
     // BEG_CODE_INIT
     // END_CODE_INIT

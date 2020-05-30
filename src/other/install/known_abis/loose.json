@@ -1,5 +1,57 @@
 [
   {
+    "name": "multisend",
+    "type": "function",
+    "signature": "multisend(address[],uint256[])",
+    "encoding": "0xaad41a41",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_holders",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amts",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "registerUsers",
+    "type": "function",
+    "signature": "registerUsers(address[])",
+    "encoding": "0xe5e9a9bb",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "users",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multimint",
+    "type": "function",
+    "signature": "multimint(address[],uint256[])",
+    "encoding": "0x14004ef3",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "_holders",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amt",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "create",
     "type": "function",
     "signature": "create(address[],uint256)",
