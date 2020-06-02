@@ -449,18 +449,14 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         }
 
         // Add to the apps which may be non-empty
-//        verbose = 5;
-//        LOG4("first_record: ", first_record, " nRecords: ", max_records, " stop: ", (first_record + max_records), " nRecords: ", nRecords);
         apps.reserve(apps.size() + nRecords);
         for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
             if (buffer[i].blk == 0)
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
                 blkRewardMap[buffer[i].blk] = addr;
-//            LOG4("pushing: ", buffer[i].blk, ", ", buffer[i].txid);
             apps.push_back(buffer[i]);
         }
-//        verbose = 0;
 
         delete[] buffer;
 

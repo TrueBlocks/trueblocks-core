@@ -9,7 +9,6 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportAccounting(void) {
-    //verbose = 5;
     ENTER("exportAccounting");
 
     ASSERT(isApiMode());
@@ -32,7 +31,6 @@ bool COptions::exportAccounting(void) {
     string_q fn = getMonitorCach(accountForAddr);
     bool exists = fileExists(fn);
     if (exists && fileSize(fn) > 0) {
-        //LOG4("Loading data from binary cache");
         // If the cache already exists, we read it into memory...
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
