@@ -30,7 +30,7 @@ tags
 50-Tokens:ERC721
 60-Airdrops
 70-Vendors
-75-EarlyActors
+75-Early Actors
 76-Verified
 80-Malicious
 80-Prefund

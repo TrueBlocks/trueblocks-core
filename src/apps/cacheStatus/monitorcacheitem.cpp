@@ -75,6 +75,11 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str(deleted);
             }
             break;
+        case 's':
+            if (fieldName % "sizeInBytes2") {
+                return uint_2_Str(sizeInBytes2);
+            }
+            break;
         case 't':
             if (fieldName % "type") {
                 return type;
@@ -106,6 +111,12 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
         case 'd':
             if (fieldName % "deleted") {
                 deleted = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes2") {
+                sizeInBytes2 = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -142,6 +153,7 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> type;
     archive >> deleted;
+    archive >> sizeInBytes2;
     finishParse();
     return true;
 }
@@ -155,6 +167,7 @@ bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << type;
     archive << deleted;
+    archive << sizeInBytes2;
 
     return true;
 }
@@ -195,6 +208,7 @@ void CMonitorCacheItem::registerClass(void) {
     ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "sizeInBytes2", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CMonitorCacheItem, "schema");
@@ -258,6 +272,7 @@ const char* STR_DISPLAY_MONITORCACHEITEM =
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"
     "[{SIZEINBYTES}]\t"
+    "[{SIZEINBYTES2}]\t"
     "[{CURETHER}]";
 
 //---------------------------------------------------------------------------

@@ -37,9 +37,10 @@ class CSchema : public CBaseNode {
     bool isPill;
     string_q align;
     string_q cn;
-    bool domain;
-    bool range;
+    bool download;
+    string_q chart;
     bool detail;
+    bool hide_empty;
     bool searchable;
     bool sortable;
     string_q underField;
@@ -121,9 +122,10 @@ inline void CSchema::initialize(void) {
     isPill = false;
     align = "";
     cn = "";
-    domain = false;
-    range = false;
+    download = false;
+    chart = "";
     detail = false;
+    hide_empty = false;
     searchable = false;
     sortable = false;
     underField = "";
@@ -152,9 +154,10 @@ inline void CSchema::duplicate(const CSchema& sc) {
     isPill = sc.isPill;
     align = sc.align;
     cn = sc.cn;
-    domain = sc.domain;
-    range = sc.range;
+    download = sc.download;
+    chart = sc.chart;
     detail = sc.detail;
+    hide_empty = sc.hide_empty;
     searchable = sc.searchable;
     sortable = sc.sortable;
     underField = sc.underField;

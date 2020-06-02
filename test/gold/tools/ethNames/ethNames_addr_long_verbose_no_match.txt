@@ -4,4 +4,5 @@ tags	address	name	symbol	decimals	source
 76-Verified	0xcb160654f6fdd82800b6137ce4023c818c4c0d96	Transfers				Etherscan
 76-Verified	0xcb17e569890783e2a6a069e1d6b8ec48c56d4986	LockTokens				Etherscan
 76-Verified	0xcb182bcfbc6e3b71dc11ca7e5a3273842ae71421	KHToken				Etherscan
+31-Gitcoin Grants:Friends	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	ntomaino				Gitcoin Website
 76-Verified	0xcb1dd82a6518e4db8a3404bcc04a97def0eb4df4	AccountLevels				Etherscan

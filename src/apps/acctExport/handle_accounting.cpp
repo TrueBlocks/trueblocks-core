@@ -9,10 +9,16 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportAccounting(void) {
+    //verbose = 5;
     ENTER("exportAccounting");
+
     ASSERT(isApiMode());
     ASSERT(!freshen && !appearances && !logs && !receipts && !traces && !balances && articulate);
     ASSERT(expContext().exportFmt == API1);
+    ASSERT(monitors.size() == 1);
+
+    if (items.size() == 0)
+        EXIT_FAIL("Nothing to export. Quitting...");
 
     CReconciliationNumeric lastStatement;
     lastStatement.blockNum = NOPOS;
@@ -20,50 +26,83 @@ bool COptions::exportAccounting(void) {
     bool first = true;
     cout << "[";
 
-    uint64_t readCount = 0;
-    string_q fn = getMonitorCach(relativeTo);
-    if (isApiMode() && accounting && fileExists(fn)) {
+    nCacheItemsRead = 0;
+    nExported = 0;
+
+    string_q fn = getMonitorCach(accountForAddr);
+    bool exists = fileExists(fn);
+    if (exists && fileSize(fn) > 0) {
+        //LOG4("Loading data from binary cache");
+        // If the cache already exists, we read it into memory...
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> readCount;
+            archive >> nCacheItemsRead;
             archive >> lastStatement.blockNum;
-            for (uint32_t i = 0; i < readCount; i++) {
+            for (blknum_t i = 0; i < nCacheItemsRead ; i++) {
+                // Read in the data...
                 CTransaction trans;
                 archive >> trans;
                 archive >> trans.statements;
                 archive >> trans.traces;
+
+                // We've read in block 'n', so we can start at 'n + 1'...
                 scanRange.first = trans.blockNumber + 1;
-                toNameExistsMap[trans.to]++;
+                // Remember which addresses we've seen...
                 fromNameExistsMap[trans.from]++;
-                // we only articulate the transaction if we're JSON
-                if (articulate)
+                toNameExistsMap[trans.to]++;
+
+                if (inRange(i, first_record, (first_record + max_records - 1))) {
+
+                    // Display the transaction...
                     abis.articulateTransaction(&trans);
-                if (!first)
-                    cout << ",";
-                cout << trans << endl;
-                first = false;
+                    if (!first)
+                        cout << ", ";
+                    cout << trans.Format() << endl;
+                    first = false;
+                    nExported++;
+                    LOG_INFO("Reading ", (i + 1), " of ", nAppearancesRead, " records (max ", max_records, ").          \r");
+                    //LOG4("trans ", trans.hash);
+
+                }
             }
             archive.Release();
+
+        } else if (exists) {
+            EXIT_FAIL("Could not open file " + fn + " or file size is zero. Quitting...");
+
         }
     }
 
-    bool exists = fileExists(fn);
+    // At this point, either the file was empty or we've displayed all transactions in the file. Remember this...
+    nCacheItemsWritten = nCacheItemsRead;
+
+    // We open the file in preparation for writing any new transactions...
     CArchive archive(WRITING_ARCHIVE);
-    archive.Lock(fn, exists ? modeWriteAppend : modeWriteCreate, LOCK_WAIT);
-    uint64_t nWritten = readCount;
+    if (!archive.Lock(fn, exists ? modeReadWrite : modeWriteCreate, LOCK_NOWAIT))
+        EXIT_FAIL("Could not open file " + fn + ". Quitting...");
+
     if (!exists) {
+        // If the file did not yet exist, we need to save some space of the counts, so write those and flush...
         archive.Seek(0, SEEK_SET);
-        archive << nWritten;  // save some space
+        archive << nCacheItemsWritten;  // may be zero
         archive << lastStatement.blockNum;
         archive.flush();
+
     } else {
-        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(relativeTo, lastStatement.blockNum);
+        // Otherwise go to the end of the file.
+        archive.Seek(0, SEEK_END);
+        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(accountForAddr, lastStatement.blockNum);
     }
 
-    for (size_t i = 0;
-         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
+    for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk <= scanRange.second; i++) {
+
         const CAppearance_base* item = &items[i];
-        if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
+        bool include = inRange((blknum_t)item->blk, scanRange.first, scanRange.second);
+        bool dClude = nCacheItemsWritten < max_records;
+        bool tClude = items[i].blk < ts_cnt;
+
+        if (include && dClude && tClude) {
+
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;
             CTransaction trans;
@@ -72,221 +111,63 @@ bool COptions::exportAccounting(void) {
                 address_t addr = prefundAddrMap[item->txid];
                 trans.transactionIndex = item->txid;
                 trans.loadAsPrefund(addr, prefundWeiMap[addr]);
+
             } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
                 trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+
             } else {
                 getTransaction(trans, item->blk, item->txid);
                 getFullReceipt(&trans, true);
             }
+
             trans.pBlock = &block;
             trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
+
             blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
+
             CReconciliationNumeric nums;
             nums.blockNum = trans.blockNumber;
             CStringArray corrections;
-            nums.reconcile(corrections, lastStatement, relativeTo, next, &trans);
+            nums.reconcile(corrections, lastStatement, accountForAddr, next, &trans);
+            lastStatement = nums;
             CIncomeStatement st(nums);
             trans.statements.push_back(st);
-            if (archive.isOpen()) {
-                archive << trans;
-                archive << trans.statements;
-                archive << trans.traces;
-                archive.flush();
-                nWritten++;
-            }
-            lastStatement = nums;
-            toNameExistsMap[trans.to]++;
+
             fromNameExistsMap[trans.from]++;
+            toNameExistsMap[trans.to]++;
+
             abis.articulateTransaction(&trans);
+
+            archive << trans;
+            archive << trans.statements;
+            archive << trans.traces;
+            archive.flush();
+            nCacheItemsWritten++;
+
             if (!first)
                 cout << ", ";
-            nExported++;
             cout << trans.Format() << endl;
             first = false;
+            nExported++;
+            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nAppearancesRead, " records (max ", max_records, ").          \r");
+            //LOG4("trans ", trans.hash);
         }
     }
 
+    if (nCacheItemsWritten != nCacheItemsRead) {
+        monitors[0].writeLastExport(lastStatement.blockNum);
+        archive.Seek(0, SEEK_SET);
+        archive << nCacheItemsWritten;  // save some space
+        archive << lastStatement.blockNum;
+        archive.Seek(0, SEEK_END);
+        archive.flush();
+    }
     archive.Release();
-    if (nWritten != readCount) {
-        bool exists2 = fileExists(fn);
-        if (archive.Lock(fn, exists2 ? modeReadWrite : modeWriteCreate, LOCK_WAIT)) {
-            archive.Seek(0, SEEK_SET);
-            archive << nWritten;  // save some space
-            archive << lastStatement.blockNum;
-            archive.flush();
-            archive.Release();
-        }
-    }
-
-    if (!isTestMode())
-        LOG_INFO(string_q(120, ' '), "\r");
 
     cout << "]" << endl;
 
-    addr_name_map_t fromAndToMap;
-    for (auto addr : fromNameExistsMap)
-        fromAndToMap[addr.first] = 1L;
-    for (auto addr : toNameExistsMap)
-        if (fromAndToMap[addr.first] == 1L)
-            fromAndToMap[addr.first] = 2L;
+    reportOnNeighbors();
 
-    CNameStatsArray fromAndToUnnamed;
-    CNameStatsArray fromAndToNamed;
-    for (auto addr : fromAndToMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(fromAndToNamed.begin(), fromAndToNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedFromAndTo\": {";
-        for (auto stats : fromAndToNamed) {
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedFromAndTo\": {";
-        bool frst = true;
-        for (auto stats : fromAndToUnnamed) {
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    CNameStatsArray fromUnnamed;
-    CNameStatsArray fromNamed;
-    for (auto addr : fromNameExistsMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(fromNamed.begin(), fromNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedFrom\": {";
-        for (auto stats : fromNamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(fromUnnamed.begin(), fromUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedFrom\": {";
-        bool frst = true;
-        for (auto stats : fromUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    CNameStatsArray toUnnamed;
-    CNameStatsArray toNamed;
-    for (auto addr : toNameExistsMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (isZeroAddr(acct.address)) {
-            acct.tags = "Contract Creation";
-            acct.name = "Contract Creation";
-        }
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(toNamed.begin(), toNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedTo\": {";
-        for (auto stats : toNamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(toUnnamed.begin(), toUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedTo\": {";
-        bool frst = true;
-        for (auto stats : toUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    for (auto monitor : monitors)
-        if (items.size() > 0)
-            monitor.writeLastExport(items[items.size() - 1].blk);
-
+    LOG_INFO(string_q(120, ' '), "\r");
     EXIT_NOMSG(true);
 }

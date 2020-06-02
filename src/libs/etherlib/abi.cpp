@@ -591,5 +591,13 @@ void snagSignatures(string_q& str) {
     str[pos] = '\0';
     str.resize(pos);
 }
+
+//-----------------------------------------------------------------------
+string_q getAbiPath(const address_t& addr) {
+    string_q base = "abis/";
+    if (!isAddress(addr))  // empty for example
+        return getCachePath(base + addr);
+    return getCachePath(base + addr + ".json");
+}
 // EXISTING_CODE
 }  // namespace qblocks

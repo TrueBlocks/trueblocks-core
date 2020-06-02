@@ -79,13 +79,16 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "cn") {
                 return cn;
             }
+            if (fieldName % "chart") {
+                return chart;
+            }
             break;
         case 'd':
             if (fieldName % "decimals") {
                 return uint_2_Str(decimals);
             }
-            if (fieldName % "domain") {
-                return bool_2_Str(domain);
+            if (fieldName % "download") {
+                return bool_2_Str(download);
             }
             if (fieldName % "detail") {
                 return bool_2_Str(detail);
@@ -104,6 +107,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
         case 'h':
             if (fieldName % "hidden") {
                 return bool_2_Str(hidden);
+            }
+            if (fieldName % "hide_empty") {
+                return bool_2_Str(hide_empty);
             }
             break;
         case 'i':
@@ -128,11 +134,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "onValidate") {
                 return onValidate;
-            }
-            break;
-        case 'r':
-            if (fieldName % "range") {
-                return bool_2_Str(range);
             }
             break;
         case 's':
@@ -192,14 +193,18 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 cn = fieldValue;
                 return true;
             }
+            if (fieldName % "chart") {
+                chart = fieldValue;
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "decimals") {
                 decimals = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "domain") {
-                domain = str_2_Bool(fieldValue);
+            if (fieldName % "download") {
+                download = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "detail") {
@@ -222,6 +227,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 'h':
             if (fieldName % "hidden") {
                 hidden = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "hide_empty") {
+                hide_empty = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -252,12 +261,6 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "onValidate") {
                 onValidate = fieldValue;
-                return true;
-            }
-            break;
-        case 'r':
-            if (fieldName % "range") {
-                range = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -330,9 +333,10 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> isPill;
     archive >> align;
     archive >> cn;
-    archive >> domain;
-    archive >> range;
+    archive >> download;
+    archive >> chart;
     archive >> detail;
+    archive >> hide_empty;
     archive >> searchable;
     archive >> sortable;
     archive >> underField;
@@ -362,9 +366,10 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << isPill;
     archive << align;
     archive << cn;
-    archive << domain;
-    archive << range;
+    archive << download;
+    archive << chart;
     archive << detail;
+    archive << hide_empty;
     archive << searchable;
     archive << sortable;
     archive << underField;
@@ -419,9 +424,10 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "isPill", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "align", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSchema, "domain", T_BOOL, ++fieldNum);
-    ADD_FIELD(CSchema, "range", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "download", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "chart", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "detail", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "hide_empty", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "underField", T_TEXT, ++fieldNum);

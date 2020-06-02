@@ -61,6 +61,7 @@ class CMonitor : public CAccountName {
     bool openCacheFile1(void);
     blknum_t nextBlockAsPerMonitor(void) const;
     bool isLocked(string_q& msg) const;
+    bool clearLocks(void);
     void moveToProduction(void);
     bool loadMonitor(CAppearanceArray& items);
     uint64_t getRecordCount(void) const;

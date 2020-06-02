@@ -188,5 +188,6 @@ extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const s
 extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
 extern void removeDuplicateEncodings(CAbiArray& abis);
 extern bool sol_2_Abi(CAbi& abi, const string_q& addr);
+extern string_q getAbiPath(const address_t& addr);
 // EXISTING_CODE
 }  // namespace qblocks

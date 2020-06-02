@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
 
         } else {
             if (options.loadAllAppearances()) {
-                if (false) {  // options.accounting) {
+                if (options.accounting) {
                     options.exportAccounting();
                 } else {
                     options.exportData();
@@ -65,10 +65,10 @@ int main(int argc, const char* argv[]) {
     if (!options.isRedirected())
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!options.freshen)
+    if (!options.freshen && !options.count)
         LOG_INFO("exported ", options.nExported, " ",
-                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.nRead,
-                 " transactions", string_q(55, ' '));
+                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "),
+                 options.nAppearancesRead, " transactions", string_q(55, ' '));
 
     acctlib_cleanup();
     return 0;

@@ -90,8 +90,12 @@ class COptions : public COptionsBase {
     uint32_t* ts_array;
     size_t ts_cnt;
     blknum_t latestBlock;
-    size_t nRead;
-    address_t relativeTo;
+
+    address_t accountForAddr;
+
+    uint64_t nAppearancesRead;
+    uint64_t nCacheItemsRead;
+    uint64_t nCacheItemsWritten;
 
     COptions(void);
     ~COptions(void);
@@ -106,4 +110,6 @@ class COptions : public COptionsBase {
     bool exportAccounting(void);
     bool exportCounts(void);
     bool exportBalances(void);
+
+    bool reportOnNeighbors(void);
 };

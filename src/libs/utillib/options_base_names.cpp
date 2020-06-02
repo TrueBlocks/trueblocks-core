@@ -267,6 +267,19 @@ bool loadNames(COptionsBase& options) {
 using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
 
 //-----------------------------------------------------------------------
+bool COptionsBase::forEveryNamedAccount(NAMEFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    for (auto namedAccount : namedAccounts) {
+        if (!(*func)(namedAccount, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
 bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames(*this))
         return false;

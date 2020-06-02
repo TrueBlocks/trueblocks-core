@@ -6,6 +6,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
 76-Verified	0x09b1d1a3331bb8b9edfb1a4fbda4ca81fc40a902	BIDPlayNetwork
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT		18
+31-Gitcoin Grants:Friends	0x0e7b52b895e3322ef341004dc6cb5c63e1d9b1c5	pyrodotnetwork
 31-Gitcoin Grants:Grant	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 083 Poa Network Community Management Grant For Adj
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT		18
 50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN		6

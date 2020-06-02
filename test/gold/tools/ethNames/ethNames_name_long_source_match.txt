@@ -120,6 +120,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0174a4c115f214cd42a6b90a16b97da36441c4e6	Token_ERC20		Etherscan			false	false	false
 76-Verified	0x017ab1b56a25930f58ca7a2e0fd4024cae89c7fe	GHS		Etherscan			false	false	false
 76-Verified	0x017b584acfd16d767541ae9e80cdc702f4527b0b	ASYAGRO		Etherscan			false	false	false
+31-Gitcoin Grants:Friends	0x01a24c6a87ee7a19d54c98ffae76755f24fdf637	ethergration		Gitcoin Website			false	false	false
 76-Verified	0x01a42015e7ebc94b90c1c8746860876debb2f229	GiftOfCompound		Etherscan			false	false	false
 76-Verified	0x01a727550b58171c1e00ee10d7eb9da3337e59a8	PXB		Etherscan			false	false	false
 76-Verified	0x01a90c5a0753b554eee3b5889afce40d85c1e81d	RequestForForgiveness		Etherscan			false	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0x0488f94c063abff57d9fb8edba343f2e9aeeea1d	Funds		Etherscan			false	false	false
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On Chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false
 76-Verified	0x049e4d10c1b7280cfed5b0d990e39f9c54529a32	DssSpell		Etherscan			false	false	false
-76-Verified	0x04a2045f76e890a6430b5fa66ab2b3bac59ce51c	lexCHAI		Etherscan			false	false	false

@@ -47,6 +47,12 @@ typedef map<size_t, qblocks::string_q> CErrorStringMap;
 
 //-----------------------------------------------------------------------------
 namespace qblocks {
+
+typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
+typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
+typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
+typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
+
 class COption;
 class COptionsBase {
   public:
@@ -92,7 +98,6 @@ class COptionsBase {
     bool standardOptions(string_q& cmdLine);
 
     // supporting special block names
-    typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
     static CNameValueArray specials;
     static void loadSpecials(void);
     static bool findSpecial(CNameValue& pair, const string_q& arg);
@@ -102,6 +107,7 @@ class COptionsBase {
     CAccountNameArray namedAccounts;
     bool getNamedAccount(CAccountName& acct, const string_q& addr);
     string_q findNameByAddress(const string_q& addr);
+    bool forEveryNamedAccount(NAMEFUNC func, void* data);
 
     // enabling options
     bool isEnabled(uint32_t q) const;
@@ -186,8 +192,6 @@ extern string_q configPathRelative(const string_q& part);
 class CToml;
 extern const CToml* getGlobalConfig(const string_q& name = "");
 
-typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
-typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 class COptionsBlockList {
   public:
     CBlockNumArray numList;

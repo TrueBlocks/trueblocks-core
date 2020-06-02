@@ -1431,6 +1431,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Friends",
+    "address": "0x01a24c6a87ee7a19d54c98ffae76755f24fdf637",
+    "name": "ethergration",
+    "symbol": "",
+    "source": "Gitcoin Website",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "76-Verified",
     "address": "0x01a42015e7ebc94b90c1c8746860876debb2f229",
     "name": "GiftOfCompound",
@@ -2394,18 +2406,6 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "76-Verified",
     "address": "0x049e4d10c1b7280cfed5b0d990e39f9c54529a32",
     "name": "DssSpell",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": "",
-    "is_custom": false,
-    "is_prefund": false
-  },
-  {
-    "deleted": false,
-    "tags": "76-Verified",
-    "address": "0x04a2045f76e890a6430b5fa66ab2b3bac59ce51c",
-    "name": "lexCHAI",
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,

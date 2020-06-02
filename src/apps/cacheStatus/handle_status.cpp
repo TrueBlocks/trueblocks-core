@@ -353,6 +353,8 @@ bool noteMonitor(const string_q& path, void* data) {
             }
             mdi.nAppearances = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
+            string_q fn = substitute(path, ".acct.bin", ".txs.bin");
+            mdi.sizeInBytes2 = fileSize(fn);
         } else {
             mdi.firstAppearance = NOPOS;
             mdi.latestAppearance = NOPOS;

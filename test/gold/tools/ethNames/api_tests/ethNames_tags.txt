@@ -94,7 +94,7 @@
       "tags": "70-Vendors"
     },
     {
-      "tags": "75-EarlyActors"
+      "tags": "75-Early Actors"
     },
     {
       "tags": "76-Verified"

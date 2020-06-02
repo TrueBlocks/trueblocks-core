@@ -29,6 +29,7 @@ class CMonitorCacheItem : public CAccountName {
   public:
     string_q type;
     bool deleted;
+    uint64_t sizeInBytes2;
 
   public:
     CMonitorCacheItem(void);
@@ -93,6 +94,7 @@ inline void CMonitorCacheItem::initialize(void) {
 
     type = "";
     deleted = false;
+    sizeInBytes2 = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -105,6 +107,7 @@ inline void CMonitorCacheItem::duplicate(const CMonitorCacheItem& mo) {
 
     type = mo.type;
     deleted = mo.deleted;
+    sizeInBytes2 = mo.sizeInBytes2;
 
     // EXISTING_CODE
     // EXISTING_CODE
