@@ -1,5 +1,13 @@
 [
   {
+    "name": "request",
+    "type": "function",
+    "signature": "request()",
+    "encoding": "0x338cdca1",
+    "inputs": [],
+    "outputs": []
+  },
+  {
     "name": "batchTransfer",
     "type": "function",
     "signature": "batchTransfer(address,address[],uint256[])",
@@ -23,6 +31,19 @@
     "outputs": []
   },
   {
+    "name": "killBounty",
+    "type": "function",
+    "signature": "killBounty(uint256)",
+    "encoding": "0x16b57509",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_bountyID"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "MultiTransfer",
     "type": "function",
     "signature": "MultiTransfer(address,address[],uint256[])",
@@ -32,6 +53,25 @@
         "type": "address",
         "name": "_tokenAddr"
       },
+      {
+        "type": "address[]",
+        "name": "_holders",
+        "is_array": true
+      },
+      {
+        "type": "uint256[]",
+        "name": "_amts",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "multisend",
+    "type": "function",
+    "signature": "multisend(address[],uint256[])",
+    "encoding": "0xaad41a41",
+    "inputs": [
       {
         "type": "address[]",
         "name": "_holders",
