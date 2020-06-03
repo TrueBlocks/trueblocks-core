@@ -1,8 +1,11 @@
 ### Instructions
 
-After unzipping the data files, using the same techniques as are used by the Solidity compiler to build 4-byte codes out of canonical function signatures, cross multiply a list of the 100,000 most commonly-used English words (provided in the file `function_names.csv`) with 680 argument lists (provided in the file `function_signatures.csv`) searching for the given 4-byte code by applying keccak256 to each resulting function signature.
+After unzipping the data files found in this folder and using the same techniques as are used by the Solidity compiler to build 4-byte codes out of canonical function signatures, cross multiply a list of the 100,000 most commonly-used English words (provided in the file `function_names.csv`) with 680 argument lists (provided in the file `function_signatures.csv`) searching for the given 4-byte code by applying keccak256 to each resulting function signature.
 
-The delivered code should be written in 'Go', should be able to parse a simple command line that includes one or more four byte codes (each starting with `0x`) and deliver matches to the `standard output`, while delivering progress to `standard err`.
+The delivered code should be
+  - written in 'Go',
+  - should be able to parse a simple command line that includes one or more four byte codes (each starting with `0x`), and
+  - deliver matches to the `standard output`, while delivering progress to `standard err`.
 
 The search should be done in parallel and be as fast as possible. Use of Go channels is preferred.
 
