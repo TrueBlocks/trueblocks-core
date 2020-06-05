@@ -33,6 +33,7 @@ bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef)
 
     page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
     page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
+    page.defaultTable = toml.getConfigStr("settings", "defaultTable", "DataTable");
     page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
     page.defaultSearch = toml.getConfigStr("settings", "defaultSearch", page.defaultSort);
     page.defaultTags = toml.getConfigStr("settings", "defaultTags", STR_DEFAULT_TAGS);
@@ -366,6 +367,7 @@ bool COptions::handle_generate_js_menus(void) {
             replaceAll(contents, "[{DEFAULT_TAGS}]", page.defaultTags);
             replaceAll(contents, "[{DATAURL}]", page.dataUrl);
             replaceAll(contents, "[{DATAQUERY}]", page.dataQuery);
+            replaceAll(contents, "[{DEFAULT_TABLE}]", page.defaultTable);
             replaceAll(contents, "[{CMDURL}]",
                        page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
             replaceAll(contents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
@@ -731,7 +733,7 @@ const char* STR_DELETE_CMDS =
     "            statusDispatch(LOADING);\n"
     "            sendServerCommand(cmdUrl, cmdQuery).then((theData) => {\n"
     "              // the command worked, but now we need to reload the data\n"
-    "              refresh[{PROPER}]Data(dataUrl, dataQuery, dispatch);\n"
+    "              refresh[{PROPER}]Data(dataQuery, dispatch, mocked);\n"
     "              statusDispatch(NOT_LOADING);\n"
     "            });\n"
     "          }\n"

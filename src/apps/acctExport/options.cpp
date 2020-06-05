@@ -390,7 +390,8 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     nExported = 0;
-    nAppearancesRead = 0;
+    nProcessing = 0;
+    nTransactions12 = 0;
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
     scanRange.second = getLatestBlock_cache_ripe();
@@ -434,7 +435,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
-    nAppearancesRead += nRecords;
+    nTransactions12 += nRecords;
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
@@ -510,7 +511,7 @@ bool COptions::loadAllAppearances(void) {
             }
         }
     }
-    nAppearancesRead = items.size();
+    nProcessing = items.size();
 
 //    verbose = 5;
 //    for (auto i : items) {

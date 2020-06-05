@@ -240,6 +240,8 @@ bool toPrintable(const string_q& inHex, string_q& result) {
         char ch = (char)hex_2_Ascii(nibble[0], nibble[1]);  // NOLINT
         if (ch == '\\') {
             cleaned += "\\\\";  // we are only exporting printable characters, so escape any escapes
+        } else if (ch == '\"') {
+            cleaned += "\\\"";  // we are only exporting printable characters, so escape any quotes
         } else if (isalpha(ch) || isdigit(ch) || ispunct(ch) || isblank(ch)) {
             cleaned += ch;
         } else if (ch == 0x19) {

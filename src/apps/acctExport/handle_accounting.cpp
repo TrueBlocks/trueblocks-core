@@ -49,7 +49,8 @@ bool COptions::exportAccounting(void) {
                 fromNameExistsMap[trans.from]++;
                 toNameExistsMap[trans.to]++;
 
-                if (inRange(i, first_record, (first_record + max_records - 1))) {
+                // If we have the file, ignore this range test and just deliver the entire file
+                if (true) { //inRange(i, first_record, (first_record + max_records - 1))) {
 
                     // Display the transaction...
                     abis.articulateTransaction(&trans);
@@ -58,7 +59,7 @@ bool COptions::exportAccounting(void) {
                     cout << trans.Format() << endl;
                     first = false;
                     nExported++;
-                    LOG_INFO("Reading ", (i + 1), " of ", nAppearancesRead, " records (max ", max_records, ").          \r");
+                    LOG_INFO("Reading ", (i + 1), " of ", nTransactions12, " cache records (max ", nProcessing, ").          \r");
                     //LOG4("trans ", trans.hash);
 
                 }
@@ -147,7 +148,7 @@ bool COptions::exportAccounting(void) {
             cout << trans.Format() << endl;
             first = false;
             nExported++;
-            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nAppearancesRead, " records (max ", max_records, ").          \r");
+            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions12, " records (max ", nProcessing, ").          \r");
             //LOG4("trans ", trans.hash);
         }
     }

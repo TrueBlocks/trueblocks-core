@@ -63,7 +63,7 @@ class CMonitor : public CAccountName {
     bool isLocked(string_q& msg) const;
     bool clearLocks(void);
     void moveToProduction(void);
-    bool loadMonitor(CAppearanceArray& items);
+    bool loadAndSort(CAppearanceArray& items);
     uint64_t getRecordCount(void) const;
     bool exists(void) const;
     blknum_t getLastVisitedBlock(void) const;

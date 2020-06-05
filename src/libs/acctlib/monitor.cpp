@@ -598,13 +598,13 @@ void cleanMonitorStage(void) {
 }
 
 //-----------------------------------------------------------------------
-bool CMonitor::loadMonitor(CAppearanceArray& items) {
-    ENTER("loadMonitor");
+bool CMonitor::loadAndSort(CAppearanceArray& items) {
+    ENTER("loadAndSort");
 
     string_q fn = getMonitorPath(address);
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     if (!nRecords)
-        EXIT_MSG("No records found for address '" + address + "'.", true);
+        EXIT_FAIL("No records found for address '" + address + "'. Quitting...");
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {

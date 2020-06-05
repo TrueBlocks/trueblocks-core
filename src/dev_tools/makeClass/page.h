@@ -33,6 +33,7 @@ class CPage : public CBaseNode {
     bool noPage;
     string_q dest_path;
     string_q recordIcons;
+    string_q defaultTable;
     string_q defaultSearch;
     string_q defaultSort;
     string_q defaultTags;
@@ -112,6 +113,7 @@ inline void CPage::initialize(void) {
     noPage = false;
     dest_path = "";
     recordIcons = "";
+    defaultTable = "";
     defaultSearch = "";
     defaultSort = "";
     defaultTags = "";
@@ -137,6 +139,7 @@ inline void CPage::duplicate(const CPage& pa) {
     noPage = pa.noPage;
     dest_path = pa.dest_path;
     recordIcons = pa.recordIcons;
+    defaultTable = pa.defaultTable;
     defaultSearch = pa.defaultSearch;
     defaultSort = pa.defaultSort;
     defaultTags = pa.defaultTags;

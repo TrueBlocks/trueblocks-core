@@ -1,5 +1,42 @@
 [
   {
+    "name": "doit",
+    "type": "function",
+    "signature": "doit()",
+    "encoding": "0x4d536fe3",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "register",
+    "type": "function",
+    "signature": "register(bytes32,string,address,address,address)",
+    "encoding": "0x4254b155",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "label"
+      },
+      {
+        "type": "string",
+        "name": "subdomain"
+      },
+      {
+        "type": "address",
+        "name": "subdomainOwner"
+      },
+      {
+        "type": "address",
+        "name": "resolver"
+      },
+      {
+        "type": "address",
+        "name": "referrer"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "request",
     "type": "function",
     "signature": "request()",

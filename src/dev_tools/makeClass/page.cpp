@@ -79,6 +79,9 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
             if (fieldName % "dest_path") {
                 return dest_path;
             }
+            if (fieldName % "defaultTable") {
+                return defaultTable;
+            }
             if (fieldName % "defaultSearch") {
                 return defaultSearch;
             }
@@ -170,6 +173,10 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
         case 'd':
             if (fieldName % "dest_path") {
                 dest_path = fieldValue;
+                return true;
+            }
+            if (fieldName % "defaultTable") {
+                defaultTable = fieldValue;
                 return true;
             }
             if (fieldName % "defaultSearch") {
@@ -274,6 +281,7 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> noPage;
     archive >> dest_path;
     archive >> recordIcons;
+    archive >> defaultTable;
     archive >> defaultSearch;
     archive >> defaultSort;
     archive >> defaultTags;
@@ -300,6 +308,7 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << noPage;
     archive << dest_path;
     archive << recordIcons;
+    archive << defaultTable;
     archive << defaultSearch;
     archive << defaultSort;
     archive << defaultTags;
@@ -351,6 +360,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "noPage", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "recordIcons", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "defaultTable", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultSearch", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultSort", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultTags", T_TEXT, ++fieldNum);

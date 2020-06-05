@@ -48,6 +48,7 @@ bool COptions::handle_export(void) {
     size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
+        os << "cacheMan " << addr << " >&2 && ";
         os << "acctExport " << addr << " " << tool_flags;
         CStringArray cmds;
         explode(cmds, os.str(), ';');

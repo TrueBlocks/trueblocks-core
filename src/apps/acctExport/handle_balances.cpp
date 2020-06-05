@@ -103,7 +103,7 @@ bool COptions::exportBalances(void) {
                 } else {
                     static size_t cnt = 0;
                     if (!(++cnt % 11) || isRedirected() || (freshen && !(cnt % 3)))
-                        LOG_INFO("Balance: ", i, " of ", nAppearancesRead, " (", rec.blockNumber, ")      ", "\r");
+                        LOG_INFO("Balance: ", i, " of ", nTransactions12, " (", rec.blockNumber, ")      ", "\r");
                 }
             }
         }

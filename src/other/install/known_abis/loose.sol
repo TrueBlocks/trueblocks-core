@@ -1,4 +1,6 @@
 contract A {
+  function doit() { }
+  function register(bytes32 label, string subdomain, address subdomainOwner, address resolver, address referrer) { }
   function request() { }
   function batchTransfer(address _tokenAddr, address[] _holders ,uint256[] _amts) { }
   function killBounty(uint256 _bountyID) { }

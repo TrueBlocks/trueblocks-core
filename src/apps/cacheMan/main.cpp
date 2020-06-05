@@ -6,6 +6,12 @@
 #include "options.h"
 
 //-------------------------------------------------------------------------
+extern const char* STR_MSG_OKAY;
+extern const char* STR_MSG_REPAIRED;
+extern const char* STR_MSG_INTERRUPT;
+extern const char* STR_MSG_READERROR;
+
+//-------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
 
@@ -21,11 +27,8 @@ int main(int argc, const char* argv[]) {
 
         for (auto monitor : options.monitors) {
             CAppearanceArray items;
-            if (!monitor.loadMonitor(items)) {
+            if (!monitor.loadAndSort(items)) {
                 LOG_INFO("Could not load monitor for address ", monitor.address);
-
-            } else if (items.size() == 0) {
-                LOG_INFO("No transactions in cache for address ", monitor.address);
 
             } else {
                 LOG_INFO("Processing cache for address ", monitor.address);
@@ -34,7 +37,7 @@ int main(int argc, const char* argv[]) {
                     if (shouldQuit())
                         break;
 
-                    // Assumes a sorted array
+                    // Assumes sorted array
                     bool isDup = fixed.size() > 0 && (fixed.back().bn == item.bn && fixed.back().tx == item.tx);
                     if (isDup) {
                         LOG_INFO("Dup removed: ", item.bn, ".", item.tx);
@@ -43,30 +46,32 @@ int main(int argc, const char* argv[]) {
                     }
                 }
 
-                const char* STR_MSG_OKAY = "Cache for address [{ADDRESS}] okay to block [{BLOCK}]";
-                const char* STR_MSG_REPAIRED = "Cache for address [{ADDRESS}] repaired to block [{BLOCK}]";
-                const char* STR_MSG_INTERRUPT = "Repair of cache for address [{ADDRESS}] interrupted.";
-                const char* STR_MSG_READERROR = "Could not open cache for address [{ADDRESS}].";
+                // lastVisited stores the last checked block for this address (so we can start on the next
+                // block. This may be much later than the last block with a transaction of interest.
+                blknum_t lastVisited = monitor.getLastVisitedBlock();
 
-                // We may have visited blocks for this address that do not contain txs of interest, so don't lost that
                 string_q msg = STR_MSG_REPAIRED;
-                blknum_t currentLastBlock = monitor.getLastVisitedBlock();
                 if (fixed.size() == items.size()) {
                     msg = STR_MSG_OKAY;
-                    if (currentLastBlock < fixed.back().bn) {
-                        monitor.writeLastBlock(fixed.back().bn);
-                        currentLastBlock = fixed.back().bn;
+                    if (lastVisited < fixed.back().bn) {
+                        // Update the last visited block if later than we think it is (probably won't ever happen)
+                        lastVisited = fixed.back().bn;
+                        monitor.writeLastBlock(lastVisited);
                     }
 
                 } else {
-                    string_q fn = getMonitorPath(monitor.address, FM_STAGING);  // do this in staging in case user quits
+                    // We need to repair the file. Do this in staging in case user quits on us...
+                    monitor.fm_mode = FM_STAGING;
+                    string_q fn = getMonitorPath(monitor.address, FM_STAGING);
                     CArchive txCache(WRITING_ARCHIVE);
                     if (!txCache.Lock(fn, modeWriteCreate, LOCK_NOWAIT)) {
                         msg = STR_MSG_READERROR;
 
                     } else {
-                        for (auto item : fixed) {
-                            txCache << uint32_t(item.bn) << uint32_t(item.tx);
+                        for (auto fix : fixed) {
+                            lockSection(true);
+                            txCache << uint32_t(fix.bn) << uint32_t(fix.tx);
+                            lockSection(false);
                             if (shouldQuit()) {
                                 msg = STR_MSG_INTERRUPT;
                                 continue;
@@ -77,13 +82,15 @@ int main(int argc, const char* argv[]) {
 
                     if (msg == STR_MSG_REPAIRED) {
                         monitor.moveToProduction();
-                        if (currentLastBlock < fixed.back().bn) {
-                            monitor.writeLastBlock(fixed.back().bn);
-                            currentLastBlock = fixed.back().bn;
+                        if (lastVisited < fixed.back().bn) {
+                            // If we're repaird the file, to be cautious, we start the next search at the
+                            // latest block in the file.
+                            lastVisited = fixed.back().bn;
+                            monitor.writeLastBlock(lastVisited);
                         }
                     }
                 }
-                msg = substitute(msg, "[{BLOCK}]", uint_2_Str(currentLastBlock));
+                msg = substitute(msg, "[{BLOCK}]", uint_2_Str(lastVisited));
                 msg = monitor.Format(msg);
                 LOG_INFO(msg);
             }
@@ -94,3 +101,9 @@ int main(int argc, const char* argv[]) {
 
     return 0;
 }
+
+//-------------------------------------------------------------------------
+const char* STR_MSG_OKAY = "Cache for address [{ADDRESS}] okay to block [{BLOCK}]";
+const char* STR_MSG_REPAIRED = "Cache for address [{ADDRESS}] repaired to block [{BLOCK}]";
+const char* STR_MSG_INTERRUPT = "Repair of cache for address [{ADDRESS}] interrupted.";
+const char* STR_MSG_READERROR = "Could not open cache for address [{ADDRESS}].";
