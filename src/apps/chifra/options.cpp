@@ -219,7 +219,7 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
         string_q path = configPath("mockData/" + origMode + ".json");
-        LOG_INFO("Locking for mock data at: ", path, " found?: ", fileExists(path));
+        LOG_INFO("Looking for mock data at: ", path, " found?: ", fileExists(path));
         if (fileExists(path)) {
             if (origMode == "export") {
                 for (size_t i = 0; i < 100; i++) {

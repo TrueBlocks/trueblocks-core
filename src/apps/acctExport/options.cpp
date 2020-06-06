@@ -391,7 +391,7 @@ void COptions::Init(void) {
 
     nExported = 0;
     nProcessing = 0;
-    nTransactions12 = 0;
+    nTransactions = 0;
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
     scanRange.second = getLatestBlock_cache_ripe();
@@ -435,7 +435,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);
-    nTransactions12 += nRecords;
+    nTransactions += nRecords;
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
@@ -512,12 +512,6 @@ bool COptions::loadAllAppearances(void) {
         }
     }
     nProcessing = items.size();
-
-//    verbose = 5;
-//    for (auto i : items) {
-//        LOG4("item: ", i.blk, " ", i.txid);
-//    }
-//    verbose = 0;
 
     // Make sure the timestamps column is at least as up to date as this monitor
     if (items.size()) {

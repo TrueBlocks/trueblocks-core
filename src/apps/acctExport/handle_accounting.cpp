@@ -36,7 +36,7 @@ bool COptions::exportAccounting(void) {
         if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
             archive >> nCacheItemsRead;
             archive >> lastStatement.blockNum;
-            for (blknum_t i = 0; i < nCacheItemsRead ; i++) {
+            for (blknum_t i = 0; i < nCacheItemsRead; i++) {
                 // Read in the data...
                 CTransaction trans;
                 archive >> trans;
@@ -50,7 +50,7 @@ bool COptions::exportAccounting(void) {
                 toNameExistsMap[trans.to]++;
 
                 // If we have the file, ignore this range test and just deliver the entire file
-                if (true) { //inRange(i, first_record, (first_record + max_records - 1))) {
+                if (true) {  // inRange(i, first_record, (first_record + max_records - 1))) {
 
                     // Display the transaction...
                     abis.articulateTransaction(&trans);
@@ -59,16 +59,15 @@ bool COptions::exportAccounting(void) {
                     cout << trans.Format() << endl;
                     first = false;
                     nExported++;
-                    LOG_INFO("Reading ", (i + 1), " of ", nTransactions12, " cache records (max ", nProcessing, ").          \r");
-                    //LOG4("trans ", trans.hash);
-
+                    LOG_INFO("Reading ", (i + 1), " of ", nTransactions, " cache records (max ", nProcessing,
+                             ").          \r");
+                    // LOG4("trans ", trans.hash);
                 }
             }
             archive.Release();
 
         } else if (exists) {
             EXIT_FAIL("Could not open file " + fn + " or file size is zero. Quitting...");
-
         }
     }
 
@@ -94,14 +93,12 @@ bool COptions::exportAccounting(void) {
     }
 
     for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk <= scanRange.second; i++) {
-
         const CAppearance_base* item = &items[i];
         bool include = inRange((blknum_t)item->blk, scanRange.first, scanRange.second);
         bool dClude = nCacheItemsWritten < max_records;
         bool tClude = items[i].blk < ts_cnt;
 
         if (include && dClude && tClude) {
-
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;
             CTransaction trans;
@@ -148,8 +145,9 @@ bool COptions::exportAccounting(void) {
             cout << trans.Format() << endl;
             first = false;
             nExported++;
-            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions12, " records (max ", nProcessing, ").          \r");
-            //LOG4("trans ", trans.hash);
+            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
+                     ").          \r");
+            // LOG4("trans ", trans.hash);
         }
     }
 

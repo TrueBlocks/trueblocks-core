@@ -67,8 +67,8 @@ int main(int argc, const char* argv[]) {
 
     if (!options.freshen && !options.count)
         LOG_INFO("exported ", options.nExported, " ",
-                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "),
-                 options.nTransactions12, " transactions", string_q(55, ' '));
+                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.nTransactions,
+                 " transactions", string_q(55, ' '));
 
     acctlib_cleanup();
     return 0;

@@ -130,7 +130,8 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
         account.address = addr;
         account.is_prefund = true;
         account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-        account.name = account.name.empty() ? "Prefund_" + padNum4(cnt) : account.name;
+        string_q prefundName = "Prefund_" + padNum4(cnt);
+        account.name = account.name.empty() ? prefundName : account.name + "(" + prefundName + ")";
         account.source = account.source.empty() ? "Genesis" : account.source;
         theMap[account.address] = account;
         cnt++;

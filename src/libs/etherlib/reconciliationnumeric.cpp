@@ -468,7 +468,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
     endBalCalc = begBal + inflow + intInflow + suicideInflow - outflow - intOutflow - suicideOutflow - weiGasCost;
 
     // Check to see if there are any mismatches...
-    begBalDiff = begBal - lastStatement.endBal;
+    begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     endBalDiff = endBal - endBalCalc;
 
     // ...if not, we're reconciled, so we can return...
@@ -511,7 +511,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
         begBal = getBalanceAt(accountingFor, blockNum == 0 ? 0 : blockNum - 1);
-        begBalDiff = begBal - lastStatement.endBal;
+        begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
         endBalCalc = begBal + inflow + intInflow + suicideInflow - outflow - intOutflow - suicideOutflow - weiGasCost;
@@ -529,6 +529,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         // after the start of the block. We have to use the previously calculated ending balance as the
         // beginning balance for this transaction. Note: diff will be zero in every case.
         begBal = lastStatement.endBalCalc;
+        ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
@@ -548,6 +549,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         // make use of the calculated balances and make a note of the fact that we've done this...We have to use
         // calculated values
         begBal = lastStatement.endBalCalc;
+        ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         endBalCalc = begBal + inflow + intInflow + suicideInflow - outflow - intOutflow - suicideOutflow - weiGasCost;
@@ -599,7 +601,7 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
 
     endBalCalc = begBal + inflow + intInflow + suicideInflow - outflow - intOutflow - suicideOutflow - weiGasCost;
     endBalDiff = endBal - endBalCalc;
-    begBalDiff = begBal - lastStatement.endBal;
+    begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
     return reconciled;
 }

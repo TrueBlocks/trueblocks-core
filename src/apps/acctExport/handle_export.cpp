@@ -184,7 +184,7 @@ bool COptions::exportData(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!(i % 3))
-                    LOG_INFO("Exporting ", i, " of ", nTransactions12, " records (max ", nProcessing, "          \r");
+                    LOG_INFO("Exporting ", i, " of ", nTransactions, " records (max ", nProcessing, "          \r");
             }
         }
     }

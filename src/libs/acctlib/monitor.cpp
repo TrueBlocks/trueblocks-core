@@ -431,12 +431,12 @@ blknum_t CMonitor::nextBlockAsPerMonitor(void) const {
 
 //--------------------------------------------------------------------------------
 bool CMonitor::clearLocks(void) {
-    ::remove((getMonitorPath(address)+".lck").c_str());
-    ::remove((getMonitorLast(address)+".lck").c_str());
-    ::remove((getMonitorExpt(address)+".lck").c_str());
-    ::remove((getMonitorBals(address)+".lck").c_str());
-    ::remove((getMonitorDels(address)+".lck").c_str());
-    ::remove((getMonitorCach(address)+".lck").c_str());
+    ::remove((getMonitorPath(address) + ".lck").c_str());
+    ::remove((getMonitorLast(address) + ".lck").c_str());
+    ::remove((getMonitorExpt(address) + ".lck").c_str());
+    ::remove((getMonitorBals(address) + ".lck").c_str());
+    ::remove((getMonitorDels(address) + ".lck").c_str());
+    ::remove((getMonitorCach(address) + ".lck").c_str());
     return true;
 }
 

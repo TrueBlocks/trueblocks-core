@@ -94,7 +94,7 @@ class COptions : public COptionsBase {
     address_t accountForAddr;
 
     uint64_t nProcessing;
-    uint64_t nTransactions12;
+    uint64_t nTransactions;
     uint64_t nCacheItemsRead;
     uint64_t nCacheItemsWritten;
 

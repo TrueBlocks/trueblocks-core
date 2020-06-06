@@ -363,23 +363,23 @@ bool COptions::handle_generate_js_menus(void) {
                 CToml t("./classDefinitions/" + parts[0] + ".toml");
                 page.dataQuery = t.getConfigStr("settings", "query_" + parts[1], "");
             }
-            string_q contents = asciiFileToString(templateFile);
-            replaceAll(contents, "[{DEFAULT_TAGS}]", page.defaultTags);
-            replaceAll(contents, "[{DATAURL}]", page.dataUrl);
-            replaceAll(contents, "[{DATAQUERY}]", page.dataQuery);
-            replaceAll(contents, "[{DEFAULT_TABLE}]", page.defaultTable);
-            replaceAll(contents, "[{CMDURL}]",
+            string_q templateContents = asciiFileToString(templateFile);
+            replaceAll(templateContents, "[{DEFAULT_TAGS}]", page.defaultTags);
+            replaceAll(templateContents, "[{DATAURL}]", page.dataUrl);
+            replaceAll(templateContents, "[{DATAQUERY}]", page.dataQuery);
+            replaceAll(templateContents, "[{DEFAULT_TABLE}]", page.defaultTable);
+            replaceAll(templateContents, "[{CMDURL}]",
                        page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
-            replaceAll(contents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
-            replaceAll(contents, "[{LONG}]", page.longName);
-            replaceAll(contents, "[{PROPER}]", page.properName);
+            replaceAll(templateContents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
+            replaceAll(templateContents, "[{LONG}]", page.longName);
+            replaceAll(templateContents, "[{PROPER}]", page.properName);
             string_q singular = page.properName;
             replaceReverse(singular, "s", "");
-            replaceAll(contents, "[{SINGULAR}]", singular);
+            replaceAll(templateContents, "[{SINGULAR}]", singular);
 
             // returns true or false depending on if it WOULD HAVE written the file. If 'test'
             // is true, it doesn't actually write the file
-            bool wouldHaveWritten = writeTheCode(codewrite_t(codeFile, contents, nspace, 2, test, false, force));
+            bool wouldHaveWritten = writeTheCode(codewrite_t(codeFile, templateContents, nspace, 2, test, false, force));
             if (wouldHaveWritten) {
                 if (test) {
                     cerr << "File '" << codeFile << "' changed but was not written because of testing." << endl;
@@ -472,40 +472,40 @@ bool COptions::handle_generate_js_menus(void) {
 
     {
         string_q indexFile = "./pages/index.jsx";
-        string_q contents = asciiFileToString(indexFile);
-        string_q orig = contents;
-        doReplace(contents, "imports", importStream.str(), "  ");
-        doReplace(contents, "pages", pageStream.str(), "  ");
-        doReplace(contents, "menus", menuStream.str(), "  ");
-        if (orig != contents) {
+        string_q indexContents = asciiFileToString(indexFile);
+        string_q orig = indexContents;
+        doReplace(indexContents, "imports", importStream.str(), "  ");
+        doReplace(indexContents, "pages", pageStream.str(), "  ");
+        doReplace(indexContents, "menus", menuStream.str(), "  ");
+        if (orig != indexContents) {
             LOG_INFO("Writing: ", cTeal, indexFile, cOff);
-            stringToAsciiFile(indexFile, contents);
+            stringToAsciiFile(indexFile, indexContents);
         }
     }
 
     {
         string_q appFile = "./App.jsx";
-        string_q contents = asciiFileToString(appFile);
-        string_q orig = contents;
-        doReplace(contents, "imports", appImportsStream.str(), "");
-        doReplace(contents, "reducers", appReducersStream.str(), "  ");
-        doReplace(contents, "state", appStateStream.str(), "    ");
-        doReplace(contents, "defaults", appDefaultStream.str(), "  ");
-        if (orig != contents) {
+        string_q appContents = asciiFileToString(appFile);
+        string_q orig = appContents;
+        doReplace(appContents, "imports", appImportsStream.str(), "");
+        doReplace(appContents, "reducers", appReducersStream.str(), "  ");
+        doReplace(appContents, "state", appStateStream.str(), "    ");
+        doReplace(appContents, "defaults", appDefaultStream.str(), "  ");
+        if (orig != appContents) {
             LOG_INFO("Writing: ", cTeal, appFile, cOff);
-            stringToAsciiFile(appFile, contents);
+            stringToAsciiFile(appFile, appContents);
         }
     }
 
     {
         string_q systemFile = "./pages/Settings/SettingsSchemas.jsx";
-        string_q contents = asciiFileToString(systemFile);
-        string_q orig = contents;
-        doReplace(contents, "all-schemas", allSchemasStream.str(), "    ");
-        doReplace(contents, "use-schemas", useSchemasStream.str(), "    ");
-        if (orig != contents) {
+        string_q systemContents = asciiFileToString(systemFile);
+        string_q orig = systemContents;
+        doReplace(systemContents, "all-schemas", allSchemasStream.str(), "    ");
+        doReplace(systemContents, "use-schemas", useSchemasStream.str(), "    ");
+        if (orig != systemContents) {
             LOG_INFO("Writing: ", cTeal, systemFile, cOff);
-            stringToAsciiFile(systemFile, contents);
+            stringToAsciiFile(systemFile, systemContents);
         }
     }
 
@@ -586,22 +586,28 @@ bool COptions::handle_generate_js_schemas(void) {
             page = pp;
         }
         if (page.longName != "separator") {
-            string_q codeFile = "./pages/" + page.properName + "/" + page.properName +
+            string_q codeSource = "./pages/" + page.properName + "/" + page.properName +
                                 (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
             if (page.longName == "menu")
-                codeFile = "./pages/index.jsx";
-            string_q contents = asciiFileToString(codeFile);
-            string_q orig = contents;
-            if (contains(contents, "auto-generate")) {
+                codeSource = "./pages/index.jsx";
+            string_q codeContents = asciiFileToString(codeSource);
+            string_q orig = codeContents;
+
+            string_q schemaSource = "./pages/" + page.properName + "/" + page.properName +
+                (parts.size() > 1 ? toProper(parts[1]) : "") + "Schema.jsx";
+            string_q schemaContents = asciiFileToString(schemaSource);
+            string_q origSchema = schemaContents;
+
+            if (contains(codeContents, "auto-generate")) {
                 ostringstream schemaStream;
                 cerr << "\tProcessing " << page.longName << (parts.size() > 1 ? "-" + parts[1] : "") << "..."
                      << "\r";
-                string_q schemaFile =
+                string_q schemaCSV =
                     "./classDefinitions/schemas/" + page.longName + (parts.size() > 1 ? "-" + parts[1] : "") + ".csv";
-                string_q data = asciiFileToString(schemaFile);
+                string_q schemaData = asciiFileToString(schemaCSV);
                 CSchemaArray schemas;
                 CStringArray lines;
-                explode(lines, data, '\n');
+                explode(lines, schemaData, '\n');
 
                 CStringArray fields;
                 for (auto line : lines) {
@@ -650,7 +656,11 @@ bool COptions::handle_generate_js_schemas(void) {
                     first = false;
                 }
                 schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
-                doReplace(contents, "schema", schemaStream.str(), "");
+                doReplace(schemaContents, "schema", schemaStream.str(), "");
+                if (origSchema != schemaContents) {
+                    LOG_INFO("Writing: ", cTeal, schemaSource, cOff);
+                    stringToAsciiFile(schemaSource, schemaContents);
+                }
 
                 ostringstream dataStream;
 
@@ -691,10 +701,10 @@ bool COptions::handle_generate_js_schemas(void) {
                     dataStream << "];" << endl;
                 }
 
-                doReplace(contents, "page-settings", dataStream.str(), "");
-                if (orig != contents) {
-                    LOG_INFO("Writing: ", cTeal, codeFile, cOff);
-                    stringToAsciiFile(codeFile, contents);
+                doReplace(codeContents, "page-settings", dataStream.str(), "");
+                if (orig != codeContents) {
+                    LOG_INFO("Writing: ", cTeal, codeSource, cOff);
+                    stringToAsciiFile(codeSource, codeContents);
                 }
             }
         }
