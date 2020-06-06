@@ -1,11 +1,5 @@
-cacheMan argc: 5 [1:--fmt] [2:json] [3:0x1111122222111112222211111222221111122222] [4:--list] 
-cacheMan --fmt json 0x1111122222111112222211111222221111122222 --list 
-{ "data": [
-TIME ~ CLOCK - <INFO>  : Processing cache for address 0x1111122222111112222211111222221111122222
-  {
-    "bn": 4957876,
-    "tx": 8
-  }TIME ~ CLOCK - <INFO>  : Cache for address 0x1111122222111112222211111222221111122222 okay to block 5000149
-], "types": [
-{ "type": "CAppearance", "fields": [{ "name": "bn", "type": "blocknum" }, { "name": "tx", "type": "blocknum" }] }
-] }
+cacheMan argc: 4 [1:--fmt] [2:json] [3:0x1111122222111112222211111222221111122222] 
+cacheMan --fmt json 0x1111122222111112222211111222221111122222 
+TIME ~ CLOCK - <INFO>  : Listing cache: ${CACHE}/monitors/0x1111122222111112222211111222221111122222.acct.bin
+[{ "bn": 4957876,"tx_id": 8}
+]

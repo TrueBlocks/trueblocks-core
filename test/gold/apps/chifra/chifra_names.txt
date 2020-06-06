@@ -101,7 +101,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	On Chain	18	Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points.	false	false	false
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT	On Chain	18	Sell and buy crypto assets around the world for local payment methods.	false	false	false
 50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL Italian Lira	ITL	On Chain	8		false	false	false
-50-Tokens:ERC20	0x1234567461d3f8db7496581774bd869c83d51c93	BitClave	CAT	On Chain	18	BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required.	false	false	false
 50-Tokens:ERC20	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO Token	LGO	On Chain	8	Exchange with decentralized ledgers	false	false	false
 50-Tokens:ERC20	0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	On Chain	8	Trading crypto-currency terminal for two exchanges simultaneously.	false	false	false
 50-Tokens:ERC20	0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	Substratum	SUB	On Chain	2		false	false	false
@@ -204,3 +203,4 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On Chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false
 50-Tokens:ERC20	0x2567c677473d110d75a8360c35309e63b1d52429	ShareX	SEXC	On Chain	8		false	false	false
 50-Tokens:ERC20	0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3	LML	LML	On Chain	18		false	false	false
+50-Tokens:ERC20	0x2604fa406be957e542beb89e6754fcde6815e83f	Playkey Token	PKT	On Chain	18	Decentralized Cloud Gaming Platform.	false	false	false

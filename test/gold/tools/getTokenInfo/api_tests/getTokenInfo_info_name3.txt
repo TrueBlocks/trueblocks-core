@@ -3,7 +3,7 @@
     {
       "blockNumber": 4001001,
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken"
+      "name": "OMG Token Airdrop"
     },
     {
       "blockNumber": 4001001,

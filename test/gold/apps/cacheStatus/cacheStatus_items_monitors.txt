@@ -18,6 +18,7 @@ cacheStatus --details monitors
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
+          "sizeInBytes2": 0,
           "tags": "",
           "address": "---address---",
           "name": "",

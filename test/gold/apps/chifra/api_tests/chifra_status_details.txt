@@ -336,6 +336,7 @@
             {
               "type": "CMonitorCacheItem",
               "deleted": false,
+              "sizeInBytes2": 0,
               "tags": "",
               "address": "---address---",
               "name": "",
@@ -565,6 +566,10 @@
         {
           "name": "deleted",
           "type": "bool"
+        },
+        {
+          "name": "sizeInBytes2",
+          "type": "unumber"
         },
         {
           "name": "tags",

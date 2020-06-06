@@ -803,13 +803,13 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "60-Airdrops",
     "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
-    "name": "BitClave",
-    "symbol": "CAT",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "BlockCAT lets anyone create, manage, and deploy smart contracts on the Ethereum blockchain with just a few clicks. No programming required."
+    "name": "BitClave Airdrop",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
   },
   {
     "tags": "76-Verified",

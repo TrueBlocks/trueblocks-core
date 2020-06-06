@@ -1477,6 +1477,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "killBounty",
+      "type": "function",
+      "signature": "killBounty(uint256)",
+      "encoding": "0x16b57509",
+      "address": "0x0",
+      "input_names": "_bountyID,",
+      "output_names": ""
+    },
+    {
       "name": "rebalanceInterval",
       "type": "function",
       "signature": "rebalanceInterval()",
@@ -3223,6 +3232,15 @@
       "output_names": ""
     },
     {
+      "name": "request",
+      "type": "function",
+      "signature": "request()",
+      "encoding": "0x338cdca1",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "ControllerRemoved",
       "type": "event",
       "signature": "ControllerRemoved(address)",
@@ -3943,6 +3961,15 @@
       "output_names": "out,"
     },
     {
+      "name": "register",
+      "type": "function",
+      "signature": "register(bytes32,string,address,address,address)",
+      "encoding": "0x4254b155",
+      "address": "0x0",
+      "input_names": "label,subdomain,subdomainOwner,resolver,referrer,",
+      "output_names": ""
+    },
+    {
       "name": "safeTransferFrom",
       "type": "function",
       "signature": "safeTransferFrom(address,address,uint256)",
@@ -4561,6 +4588,15 @@
       "encoding": "0x4d509eaf411f241400f13f5abf136c29e58fc43af0f27f87a1c1c9767795d03f",
       "address": "0x0",
       "input_names": "addr,index,",
+      "output_names": ""
+    },
+    {
+      "name": "doit",
+      "type": "function",
+      "signature": "doit()",
+      "encoding": "0x4d536fe3",
+      "address": "0x0",
+      "input_names": "",
       "output_names": ""
     },
     {
@@ -9763,6 +9799,15 @@
       "encoding": "0xaacaaf88",
       "address": "0x0",
       "input_names": "_wallet,_data,_nonce,_signatures,_gasPrice,_gasLimit,",
+      "output_names": ""
+    },
+    {
+      "name": "multisend",
+      "type": "function",
+      "signature": "multisend(address[],uint256[])",
+      "encoding": "0xaad41a41",
+      "address": "0x0",
+      "input_names": "_holders,_amts,",
       "output_names": ""
     },
     {

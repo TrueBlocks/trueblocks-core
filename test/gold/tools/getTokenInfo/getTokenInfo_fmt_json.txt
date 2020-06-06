@@ -6,7 +6,7 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
     "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "balance": 0,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMGToken",
+    "name": "OMG Token Airdrop",
     "symbol": "OMG",
     "decimals": 18
   }], "types": [

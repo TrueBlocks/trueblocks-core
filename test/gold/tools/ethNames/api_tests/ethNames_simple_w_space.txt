@@ -9,7 +9,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT		18
 50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN		6
 50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK		18
-30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	BountiesNetwork
+30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	Bounties Network
 31-Gitcoin Grants:Grant	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 026 Peepeth Social Network For A Better World
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU		18
 33-Set Protocol:Wrapers	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper

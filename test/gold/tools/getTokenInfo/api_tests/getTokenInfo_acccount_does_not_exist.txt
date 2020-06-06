@@ -4,7 +4,7 @@
     "holder": "0x5e44c3e467a49c9ca0296a9f130fc43304000000",
     "balance": 0,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMGToken",
+    "name": "OMG Token Airdrop",
     "symbol": "OMG",
     "decimals": 18
   }], "types": [

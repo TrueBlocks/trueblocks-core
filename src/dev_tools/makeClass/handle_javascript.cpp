@@ -379,7 +379,8 @@ bool COptions::handle_generate_js_menus(void) {
 
             // returns true or false depending on if it WOULD HAVE written the file. If 'test'
             // is true, it doesn't actually write the file
-            bool wouldHaveWritten = writeTheCode(codewrite_t(codeFile, templateContents, nspace, 2, test, false, force));
+            bool wouldHaveWritten =
+                writeTheCode(codewrite_t(codeFile, templateContents, nspace, 2, test, false, force));
             if (wouldHaveWritten) {
                 if (test) {
                     cerr << "File '" << codeFile << "' changed but was not written because of testing." << endl;
@@ -587,14 +588,14 @@ bool COptions::handle_generate_js_schemas(void) {
         }
         if (page.longName != "separator") {
             string_q codeSource = "./pages/" + page.properName + "/" + page.properName +
-                                (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
+                                  (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
             if (page.longName == "menu")
                 codeSource = "./pages/index.jsx";
             string_q codeContents = asciiFileToString(codeSource);
             string_q orig = codeContents;
 
             string_q schemaSource = "./pages/" + page.properName + "/" + page.properName +
-                (parts.size() > 1 ? toProper(parts[1]) : "") + "Schema.jsx";
+                                    (parts.size() > 1 ? toProper(parts[1]) : "") + "Schema.jsx";
             string_q schemaContents = asciiFileToString(schemaSource);
             string_q origSchema = schemaContents;
 

@@ -2,16 +2,30 @@ cacheMan argc: 2 [1:-th]
 cacheMan -th 
 #### Usage
 
-`Usage:`    cacheMan [-l|-n|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Show the contents of an account cache and/or fix it by removing duplicate records.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | addrs | one or more addresses to process (required) |
-| -l | --list | list the transactions in the cache (not listing is the default) |
-| -n | --no_fix | do not fix the cache (fixing is the default behaviour) |
+|  | files | path(s) of files to check, merge, fix or display (default=display) (required) |
+| -c | --check | check for duplicates and other problems in the cache |
+| -d | --data | in 'list' mode, render results as data (i.e export mode) |
+| -s | --sort | sort the list of transactions and re-write (precludes other modes, other than --dedup) |
+| -f | --fix | remove duplicates from the cache (if any) |
+| -l | --list | list the contents of the cache (the default if no other option) |
+| -i | --import | import transactions if import.txt file exists in current folder |
+| -r | --remove | remove transactions if remove.txt file exists in current folder |
+| -u | --truncate <num> | truncate the cache at block :n (keeps block 'n' and before, implies --fix) |
+| -m | --merge | merge two or more caches into a single cache |
+
+#### Hidden options (shown during testing only)
+| -k | --skip <num> | skip value for testing |
+| -S | --start <num> | first block to process (inclusive) |
+| -E | --end <num> | last block to process (inclusive) |
+#### Hidden options (shown during testing only)
+
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

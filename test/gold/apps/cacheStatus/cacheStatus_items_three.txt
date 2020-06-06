@@ -18,6 +18,7 @@ cacheStatus --details abis caches monitors --types slurps
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
+          "sizeInBytes2": 0,
           "tags": "",
           "address": "---address---",
           "name": "",

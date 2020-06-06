@@ -4,7 +4,7 @@
     "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
     "balance": 0,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMGToken",
+    "name": "OMG Token Airdrop",
     "symbol": "OMG",
     "decimals": 18
   },
@@ -13,7 +13,7 @@
     "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
     "balance": 4088288264252975075913,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMGToken",
+    "name": "OMG Token Airdrop",
     "symbol": "OMG",
     "decimals": 18
   }], "types": [

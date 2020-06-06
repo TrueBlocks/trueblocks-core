@@ -338,6 +338,7 @@ cacheStatus all --details --start 1400000 --end 2000000
         {
           "type": "CMonitorCacheItem",
           "deleted": false,
+          "sizeInBytes2": 0,
           "tags": "",
           "address": "---address---",
           "name": "",

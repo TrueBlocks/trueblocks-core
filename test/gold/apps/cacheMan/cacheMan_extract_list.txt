@@ -1,16 +1,22 @@
-cacheMan argc: 3 [1:-l] [2:--extract] 
-cacheMan -l --extract 
+cacheMan argc: 4 [1:-l] [2:--extract] [3:--data] 
+cacheMan -l --extract --data 
 
   Invalid option: --extract
 
-  Usage:    cacheMan [-c|-f|-l|-v|-h] <file> [file...]  
+  Usage:    cacheMan [-c|-d|-s|-f|-l|-i|-r|-u|-m|-v|-h] <file> [file...]  
   Purpose:  Show the contents of an account cache and/or fix it by removing duplicate records.
 
   Where:  
-	files                 path(s) of files to check, fix or display (default=display) (required)
+	files                 path(s) of files to check, merge, fix or display (default=display) (required)
 	-c  (--check)         check for duplicates and other problems in the cache
+	-d  (--data)          in 'list' mode, render results as data (i.e export mode)
+	-s  (--sort)          sort the list of transactions and re-write (precludes other modes, other than --dedup)
 	-f  (--fix)           remove duplicates from the cache (if any)
 	-l  (--list)          list the contents of the cache (the default if no other option)
+	-i  (--import)        import transactions if import.txt file exists in current folder
+	-r  (--remove)        remove transactions if remove.txt file exists in current folder
+	-u  (--truncate <num>)truncate the cache at block :n (keeps block 'n' and before, implies --fix)
+	-m  (--merge)         merge two or more caches into a single cache
 
 #### Hidden options (shown during testing only)
 	-k  (--skip <num>)    skip value for testing

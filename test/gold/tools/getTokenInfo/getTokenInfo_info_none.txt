@@ -3,7 +3,7 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
 { "data": [
   {
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-    "name": "OMGToken"
+    "name": "OMG Token Airdrop"
   },
   {
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
