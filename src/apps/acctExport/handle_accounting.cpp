@@ -28,12 +28,16 @@ bool COptions::exportAccounting(void) {
     nCacheItemsRead = 0;
     nExported = 0;
 
-    string_q fn = getMonitorCach(accountForAddr);
-    bool exists = fileExists(fn);
-    if (exists && fileSize(fn) > 0) {
+    string_q readFilename = getMonitorCach(accountForAddr);
+    bool readFileExists = fileExists(readFilename);
+
+    LOG8(string_q(120,'+'));
+    LOG8("readFile: ", readFilename, " (", fileSize(readFilename), ") readFileExists: ", readFileExists);
+
+    if (readFileExists && fileSize(readFilename) > 0) {
         // If the cache already exists, we read it into memory...
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(readFilename, modeReadOnly, LOCK_WAIT)) {
             archive >> nCacheItemsRead;
             archive >> lastStatement.blockNum;
             for (blknum_t i = 0; i < nCacheItemsRead; i++) {
@@ -66,24 +70,33 @@ bool COptions::exportAccounting(void) {
             }
             archive.Release();
 
-        } else if (exists) {
-            EXIT_FAIL("Could not open file " + fn + " or file size is zero. Quitting...");
+        } else if (readFileExists) {
+            EXIT_FAIL("Could not open file " + readFilename + " or file size is zero. Quitting...");
         }
     }
 
     // At this point, either the file was empty or we've displayed all transactions in the file. Remember this...
     nCacheItemsWritten = nCacheItemsRead;
 
-    // We open the file in preparation for writing any new transactions...
-    CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(fn, exists ? modeReadWrite : modeWriteCreate, LOCK_NOWAIT))
-        EXIT_FAIL("Could not open file " + fn + ". Quitting...");
+    // We open the file in staging to protect it from interruption...
+    LOG8(string_q(120,'-'));
 
-    if (!exists) {
+    string_q stagingFilename = getMonitorCach(accountForAddr);
+    bool stagingFileExists = false;
+    if (readFileExists) {
+        copyFile(readFilename, stagingFilename);
+        stagingFileExists = fileExists(stagingFilename);
+    }
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(stagingFilename, stagingFileExists ? modeReadWrite : modeWriteCreate, LOCK_WAIT))
+        EXIT_FAIL("Could not open file " + stagingFilename + ". Quitting...");
+
+    if (!stagingFileExists) {
         // If the file did not yet exist, we need to save some space of the counts, so write those and flush...
         lockSection(true);
         archive.Seek(0, SEEK_SET);
-        archive << nCacheItemsWritten;  // may be zero
+        archive << 0;  // set it to zero until we can get it right
         archive << lastStatement.blockNum;
         archive.flush();
         lockSection(false);
@@ -93,6 +106,8 @@ bool COptions::exportAccounting(void) {
         archive.Seek(0, SEEK_END);
         lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(accountForAddr, lastStatement.blockNum);
     }
+
+    LOG8(string_q(120,'='));
 
     for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk <= scanRange.second; i++) {
         const CAppearance_base* item = &items[i];
@@ -142,24 +157,35 @@ bool COptions::exportAccounting(void) {
             archive << trans;
             archive << trans.statements;
             archive << trans.traces;
-            archive.flush();
             archive.Seek(0, SEEK_SET);
             archive << nCacheItemsWritten;
             archive << lastStatement.blockNum;
             archive.Seek(0, SEEK_END);
+            archive.flush();
             monitors[0].writeLastExport(lastStatement.blockNum);
             lockSection(false);
+            LOG8("wrote: ", trans.blockNumber, ".", trans.transactionIndex, ": ", nCacheItemsWritten);
 
             if (!first)
                 cout << ", ";
             cout << trans.Format() << endl;
             first = false;
             nExported++;
-            LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
-                     ").          \r");
+            //LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
+            //         ").          \r");
         }
     }
     archive.Release();
+    if (nCacheItemsWritten > nCacheItemsRead) {
+        // If we wrote anything, copy the file to production
+        lockSection(true);
+        string_q prodFilename = getMonitorCach(accountForAddr);
+        if (fileExists(stagingFilename))
+            moveFile(stagingFilename, prodFilename);
+        lockSection(false);
+    }
+
+    LOG8(string_q(120,'@'));
 
     cout << "]" << endl;
 

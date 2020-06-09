@@ -45,8 +45,7 @@ bool COptions::handle_generate_js_pages(void) {
         if (page.longName != "separator") {
             string_q codeSource = "./pages/" + page.properName + "/" + page.properName +
                                   (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
-            cerr << "\tProcessing " << page.longName << "..."
-                 << "\r";
+            cerr << "\tProcessing " << page.longName << "...\r";
             string_q templateFile = "./classDefinitions/templates/page-template.jsx";
             if (parts[0] == "explorer") {
                 templateFile = "./classDefinitions/templates/page-explorer-template.jsx";
@@ -71,23 +70,23 @@ bool COptions::handle_generate_js_pages(void) {
             replaceAll(templateContents, "[{PROPER}]", page.properName);
             replaceAll(templateContents, "[{SINGULAR}]", page.singular);
 
-            CStringArray imports;
-            explode(imports, page.imports, '|');
+            CStringArray importArray;
+            explode(importArray, page.imports, '|');
 
-            string_q frag = imports[0].empty() || imports[0] == "none" ? "" : (imports[0] + " ");
+            string_q frag = importArray[0].empty() || importArray[0] == "none" ? "" : (importArray[0] + " ");
             replaceAll(templateContents, "[{FRAGMENT}]", frag);
 
-            string_q tables = imports[1].empty() || imports[1] == "none" ? "DataTable, PageCaddie" : imports[1];
+            string_q tables = importArray[1].empty() || importArray[1] == "none" ? "DataTable, PageCaddie" : importArray[1];
             replaceAll(templateContents, "[{TABLE_IMPORT}]", tables);
 
             string_q utils =
-                imports[2].empty() || imports[2] == "none"
+                importArray[2].empty() || importArray[2] == "none"
                     ? "getServerData, sendServerCommand, sortArray, sortStrings, handleClick, navigate, replaceRecord"
-                    : imports[2];
+                    : importArray[2];
             replaceAll(templateContents, "[{UTILS_IMPORT}]", utils);
 
             string_q status_store =
-                imports[3].empty() || imports[3] == "none" ? "useStatus, LOADING, NOT_LOADING" : imports[3];
+                importArray[3].empty() || importArray[3] == "none" ? "useStatus, LOADING, NOT_LOADING" : importArray[3];
             replaceAll(templateContents, "[{STATUS_STORE_IMPORT}]", status_store);
 
             ostringstream dataStream;

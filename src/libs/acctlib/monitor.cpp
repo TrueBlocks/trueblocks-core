@@ -452,7 +452,7 @@ bool CMonitor::isLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
     checkLock(getMonitorExpt(address), "last export");
-    checkLock(getMonitorBals(address), "last export");
+    checkLock(getMonitorBals(address), "balances");
     checkLock(getMonitorDels(address), "marker");
     checkLock(getMonitorCach(address), "cache");
     return false;
@@ -485,6 +485,7 @@ void CMonitor::moveToProduction(void) {
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
         doMoveFile(getMonitorExpt(address, FM_STAGING), getMonitorExpt(address));
         doMoveFile(getMonitorBals(address, FM_STAGING), getMonitorBals(address));
+        doMoveFile(getMonitorCach(address, FM_STAGING), getMonitorCach(address));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
@@ -492,6 +493,7 @@ void CMonitor::moveToProduction(void) {
         ::remove(getMonitorLast(address, FM_STAGING).c_str());
         ::remove(getMonitorExpt(address, FM_STAGING).c_str());
         ::remove(getMonitorBals(address, FM_STAGING).c_str());
+        ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
     lockSection(false);
 }
