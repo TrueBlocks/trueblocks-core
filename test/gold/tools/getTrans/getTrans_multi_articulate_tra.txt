@@ -1,13 +1,14 @@
 getTrans argc: 6 [1:0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f] [2:--articulate] [3:--fmt] [4:json] [5:--trace] 
 getTrans 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f --articulate --fmt json --trace 
 { "data": [
-TIME ~ CLOCK - <WARNG> : Unknown type: Kernel in decodeTheData
 TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
 TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
-TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
-TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
-TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
-TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
+TIME ~ CLOCK - <WARNG> : Unknown type: ERCProxy in decodeTheData
 TIME ~ CLOCK - <WARNG> : Unknown type: IEVMScriptRegistry in decodeTheData
 TIME ~ CLOCK - <WARNG> : Unknown type: IEVMScriptRegistry in decodeTheData
 TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
@@ -2249,16 +2250,16 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
             "name": "NewResolver",
             "inputs": [
               {
-                "name": "node",
+                "name": "_node",
                 "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
               },
               {
-                "name": "resolver",
+                "name": "_resolver",
                 "value": "0x1da022710df5002339274aadee8d58218e9d6ab5"
               }
             ]
           },
-          "compressedLog": "NewResolver ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
+          "compressedLog": "NewResolver ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
         },
         {
           "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
@@ -2295,16 +2296,16 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
             "name": "Transfer",
             "inputs": [
               {
-                "name": "node",
+                "name": "_node",
                 "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
               },
               {
-                "name": "owner",
+                "name": "_owner",
                 "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
               }
             ]
           },
-          "compressedLog": "Transfer ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
+          "compressedLog": "Transfer ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
         },
         {
           "address": "0x546aa2eae2514494eeadb7bbb35243348983c59d",
@@ -2548,8 +2549,8 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           ],
           "outputs": [
             {
-              "name": "ret_0",
-              "value": ""
+              "name": "val_0",
+              "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
             }
           ]
         },
@@ -2991,22 +2992,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3031,22 +3032,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3202,22 +3203,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3242,22 +3243,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3362,22 +3363,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3402,22 +3403,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3628,22 +3629,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -3668,22 +3669,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4191,22 +4192,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4231,22 +4232,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4319,22 +4320,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4359,22 +4360,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4448,8 +4449,8 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "inputs": [],
           "outputs": [
             {
-              "name": "ret_0",
-              "value": ""
+              "name": "val_0",
+              "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
             }
           ]
         },
@@ -4479,8 +4480,8 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "inputs": [],
           "outputs": [
             {
-              "name": "ret_0",
-              "value": ""
+              "name": "val_0",
+              "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
             }
           ]
         },
@@ -4613,22 +4614,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -4653,22 +4654,22 @@ TIME ~ CLOCK - <WARNG> : Unknown type: IACL in decodeTheData
           "name": "getApp",
           "inputs": [
             {
-              "name": "_namespace",
+              "name": "namespace",
               "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
             },
             {
-              "name": "_appId",
+              "name": "appId",
               "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
             }
           ]
         },
-        "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+        "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,

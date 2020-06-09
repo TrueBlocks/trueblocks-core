@@ -59,9 +59,9 @@ bool COptions::exportAccounting(void) {
                     cout << trans.Format() << endl;
                     first = false;
                     nExported++;
-                    LOG_INFO("Reading ", (i + 1), " of ", nTransactions, " cache records (max ", nProcessing,
-                             ").          \r");
-                    // LOG4("trans ", trans.hash);
+                    if (!isTestMode())
+                        LOG_INFO("Reading ", (i + 1), " of ", nTransactions, " cache records (max ", nProcessing,
+                                 ").          \r");
                 }
             }
             archive.Release();
@@ -81,10 +81,12 @@ bool COptions::exportAccounting(void) {
 
     if (!exists) {
         // If the file did not yet exist, we need to save some space of the counts, so write those and flush...
+        lockSection(true);
         archive.Seek(0, SEEK_SET);
         archive << nCacheItemsWritten;  // may be zero
         archive << lastStatement.blockNum;
         archive.flush();
+        lockSection(false);
 
     } else {
         // Otherwise go to the end of the file.
@@ -134,11 +136,19 @@ bool COptions::exportAccounting(void) {
 
             abis.articulateTransaction(&trans);
 
+            nCacheItemsWritten++;
+
+            lockSection(true);
             archive << trans;
             archive << trans.statements;
             archive << trans.traces;
             archive.flush();
-            nCacheItemsWritten++;
+            archive.Seek(0, SEEK_SET);
+            archive << nCacheItemsWritten;
+            archive << lastStatement.blockNum;
+            archive.Seek(0, SEEK_END);
+            monitors[0].writeLastExport(lastStatement.blockNum);
+            lockSection(false);
 
             if (!first)
                 cout << ", ";
@@ -147,17 +157,7 @@ bool COptions::exportAccounting(void) {
             nExported++;
             LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
                      ").          \r");
-            // LOG4("trans ", trans.hash);
         }
-    }
-
-    if (nCacheItemsWritten != nCacheItemsRead) {
-        monitors[0].writeLastExport(lastStatement.blockNum);
-        archive.Seek(0, SEEK_SET);
-        archive << nCacheItemsWritten;  // save some space
-        archive << lastStatement.blockNum;
-        archive.Seek(0, SEEK_END);
-        archive.flush();
     }
     archive.Release();
 

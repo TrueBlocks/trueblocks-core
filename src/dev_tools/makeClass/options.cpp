@@ -257,6 +257,7 @@ COptions::COptions(void) : classFile("") {
     CPage::registerClass();
     CSubpage::registerClass();
     CSkin::registerClass();
+    CSchema::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -272,6 +273,9 @@ bool listClasses(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", listClasses, data);
 
     } else {
+        if (contains(path, "apps.toml"))
+            return true;
+
         bool isDef = contains(path, "classDefinitions/");
         bool isTxt = contains(path, ".txt");
         bool isToml = contains(path, ".toml");

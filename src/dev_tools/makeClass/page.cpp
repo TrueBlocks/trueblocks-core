@@ -98,6 +98,11 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
                 return dataQuery;
             }
             break;
+        case 'i':
+            if (fieldName % "imports") {
+                return imports;
+            }
+            break;
         case 'l':
             if (fieldName % "longName") {
                 return longName;
@@ -121,6 +126,9 @@ string_q CPage::getValueByName(const string_q& fieldName) const {
         case 's':
             if (fieldName % "sevenName") {
                 return sevenName;
+            }
+            if (fieldName % "singular") {
+                return singular;
             }
             if (fieldName % "schema") {
                 return schema;
@@ -200,6 +208,12 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             break;
+        case 'i':
+            if (fieldName % "imports") {
+                imports = fieldValue;
+                return true;
+            }
+            break;
         case 'l':
             if (fieldName % "longName") {
                 longName = fieldValue;
@@ -227,6 +241,10 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
         case 's':
             if (fieldName % "sevenName") {
                 sevenName = fieldValue;
+                return true;
+            }
+            if (fieldName % "singular") {
+                singular = fieldValue;
                 return true;
             }
             if (fieldName % "schema") {
@@ -278,9 +296,11 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> properName;
     archive >> twoName;
     archive >> sevenName;
+    archive >> singular;
     archive >> noPage;
     archive >> dest_path;
     archive >> recordIcons;
+    archive >> imports;
     archive >> defaultTable;
     archive >> defaultSearch;
     archive >> defaultSort;
@@ -305,9 +325,11 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << properName;
     archive << twoName;
     archive << sevenName;
+    archive << singular;
     archive << noPage;
     archive << dest_path;
     archive << recordIcons;
+    archive << imports;
     archive << defaultTable;
     archive << defaultSearch;
     archive << defaultSort;
@@ -357,9 +379,11 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "properName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "twoName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "sevenName", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "singular", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "noPage", T_BOOL, ++fieldNum);
     ADD_FIELD(CPage, "dest_path", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "recordIcons", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPage, "imports", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultTable", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultSearch", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "defaultSort", T_TEXT, ++fieldNum);

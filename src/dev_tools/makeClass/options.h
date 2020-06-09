@@ -80,12 +80,11 @@ class COptions : public COptionsBase {
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
     bool handle_export_js(void);
 
-    bool handle_generate_js(CToml& toml, const CClassDefinition& classDef);
-    bool handle_generate_js_file(const CPage& def, const string_q& folder, const string_q& source);
+    bool handle_initialize_js(CToml& toml, const CClassDefinition& classDef);
     bool handle_generate_js_menus(void);
     bool handle_generate_js_help(void);
     bool handle_generate_js_skins(void);
-    bool handle_generate_js_schemas(void);
+    bool handle_generate_js_pages(void);
 
     bool check_option(const CCommandOption& option);
     bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
@@ -144,3 +143,8 @@ extern const char* STR_PTRWRITEFMT;
 extern const char* STR_WRITEFMT;
 extern const char* STR_UNKOWNTYPE;
 extern const char* STR_CHILD_OBJS;
+extern const char* STR_DELETE_CMDS;
+extern const char* STR_DEFAULT_TAGS;
+
+//------------------------------------------------------------------------------------------------------------
+void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);

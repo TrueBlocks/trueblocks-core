@@ -1,7 +1,7 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--traces] [3:--fmt] [4:api] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --traces --fmt api --end 001506480 
 {"data": [
-[TIME ~ CLOCK - <INFO>  : Exporting 0 of 3 records (max 3          {
+[TIME ~ CLOCK - <INFO>  : Exporting 0 of 3 records (max 3)          {
   "type": "call",
   "articulatedTrace": {},
   "action": {

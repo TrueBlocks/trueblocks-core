@@ -24,9 +24,9 @@
               "latestTs": 1484835514,
               "filename": "/--index-path--/002998252-003025310.bin",
               "indexSizeBytes": 5163708,
-              "index_hash": "QmUT...a15T",
+              "index_hash": "QmZh...4y9C",
               "bloomSizeBytes": 131080,
-              "bloom_hash": "QmYV...w5DU"
+              "bloom_hash": "QmRw...EDdv"
             },
             {
               "type": "CIndexCacheItem",
@@ -38,9 +38,9 @@
               "latestTs": 1485212476,
               "filename": "/--index-path--/003025311-003051651.bin",
               "indexSizeBytes": 5123720,
-              "index_hash": "QmQP...8MbE",
+              "index_hash": "QmUV...HmaF",
               "bloomSizeBytes": 131080,
-              "bloom_hash": "QmXC...so5H"
+              "bloom_hash": "QmUP...LRry"
             },
             {
               "type": "CIndexCacheItem",
@@ -52,9 +52,9 @@
               "latestTs": 1485563875,
               "filename": "/--index-path--/003051652-003076199.bin",
               "indexSizeBytes": 5101672,
-              "index_hash": "QmWH...kXwJ",
+              "index_hash": "QmRZ...Av2u",
               "bloomSizeBytes": 131080,
-              "bloom_hash": "QmSA...raoy"
+              "bloom_hash": "Qmb7...YWTg"
             },
             {
               "type": "CIndexCacheItem",
@@ -66,9 +66,9 @@
               "latestTs": 1485953000,
               "filename": "/--index-path--/003076200-003103319.bin",
               "indexSizeBytes": 5106904,
-              "index_hash": "QmPK...KuSU",
+              "index_hash": "QmfB...ZoUs",
               "bloomSizeBytes": 131080,
-              "bloom_hash": "QmQX...M9eV"
+              "bloom_hash": "QmPq...fjX5"
             }
           ],
           "type": "CIndexCache",

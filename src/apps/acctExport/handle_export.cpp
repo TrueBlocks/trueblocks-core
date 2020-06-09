@@ -169,8 +169,10 @@ bool COptions::exportData(void) {
                         fromNameExistsMap[trans.from]++;
                         // we only articulate the transaction if we're JSON
                         if (articulate) {
-                            if (toNameExistsMap[trans.to] == 1 || fileExists(getAbiPath(trans.to)))
-                                loadAbiAndCache(abis, trans.to, false, errors);
+                            if (toNameExistsMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
+                                CStringArray unused;
+                                loadAbiAndCache(abis, trans.to, false, unused);
+                            }
                             abis.articulateTransaction(&trans);
                         }
                         if (isJson && shouldDisplay && !first)
@@ -184,7 +186,7 @@ bool COptions::exportData(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!(i % 3))
-                    LOG_INFO("Exporting ", i, " of ", nTransactions, " records (max ", nProcessing, "          \r");
+                    LOG_INFO("Exporting ", i, " of ", nTransactions, " records (max ", nProcessing, ")          \r");
             }
         }
     }

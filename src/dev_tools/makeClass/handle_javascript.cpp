@@ -13,304 +13,279 @@
 #include "utillib.h"
 #include "options.h"
 
-extern bool visitField(const CFieldData& field, void* data);
-extern const char* STR_DELETE_CMDS;
-extern const char* STR_DEFAULT_TAGS;
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_js(CToml& toml, const CClassDefinition& classDef) {
-    CPage page;
-    page.longName = classDef.base_lower;
-    page.properName = classDef.base_proper;
-    page.twoName = toLower(page.longName.substr(0, 2));
-    page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-    page.noPage = toml.getConfigBool("settings", "noPage", false);
-    page.dataUrl = toml.getConfigStr("settings", "dataUrl", "");
-    page.dataQuery = toml.getConfigStr("settings", "dataQuery", "");
-    page.cmdUrl = toml.getConfigStr("settings", "cmdUrl", "");
-    if (page.cmdUrl.empty())
-        page.cmdUrl = page.dataUrl;
-
-    page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
-    page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
-    page.defaultTable = toml.getConfigStr("settings", "defaultTable", "DataTable");
-    page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
-    page.defaultSearch = toml.getConfigStr("settings", "defaultSearch", page.defaultSort);
-    page.defaultTags = toml.getConfigStr("settings", "defaultTags", STR_DEFAULT_TAGS);
-    string_q rec = substitute("," + toml.getConfigStr("settings", "recordIcons", "") + ",", ",,", "");
-    replace(rec, "editing,", "header-Add,Delete/Undelete,Edit/Remove,");
-    replace(rec, "viewing,", "ExternalLink,");
-    replace(rec, "view,", "View/None,");
-    replace(rec, "follow,", "AddMonitor/None/View,");
-    replace(rec, "exporting,", "footer-CSV,footer-TXT,");
-    replace(rec, "importing,", "footer-Import,");
-    page.recordIcons = trim(rec, ',');
-
-    CStringArray reserved = {"in"};
-    for (auto r : reserved)
-        if (page.twoName == r)
-            page.twoName = toLower(page.longName.substr(0, 3));
-
-    CSubpage item;
-    string_q subpages = toml.getConfigJson("subpages", "list", "");
-    while (item.parseJson3(subpages)) {
-        replaceAll(item.options, "_EQ_", "=");
-        replaceAll(item.extract, "_0", "[0]");
-        page.subpages.push_back(item);
-        item = CSubpage();
-    }
-
-    if (page.longName != "separator") {
-        establishFolder(page.dest_path);
-        string_q cssFile = page.dest_path + page.properName + ".css";
-        if (!fileExists(cssFile))
-            stringToAsciiFile(cssFile, "/* add custom css code for the " + page.properName + " compnent here. */\n");
-    }
-
-    pageMap[page.longName] = page;
-
-    return false;
-}
-
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_export_js(void) {
     for (auto classDef : classDefs) {
-        if (classDef.short_fn != "app") {
-            CBaseNode* item = createObjectOfType(classDef.short_fn);
-            if (item) {
-                CRuntimeClass* pClass = item->getRuntimeClass();
-                pClass->forEveryField(visitField, &cout);
-            } else {
-                CToml toml("");
-                toml.readFile(classDef.input_path);
-                handle_generate(toml, classDef, nspace, true);
-            }
-        }
+        CToml toml("");
+        toml.readFile(classDef.input_path);
+        classDef = CClassDefinition(toml);
+        handle_initialize_js(toml, classDef);
     }
 
+    handle_generate_js_pages();
     handle_generate_js_menus();
-    handle_generate_js_schemas();
     handle_generate_js_help();
-    //    handle_generate_js_skins();
+    handle_generate_js_skins();
 
     return false;  // we're done processing
 }
 
-/*
- //---------------------------------------------------------------------------------------------------
- bool COptions::handle_generate_js_skins(void) {
- string_q dataFile = "../../skins/skins.csv";
- CStringArray lines;
- asciiFileToLines(dataFile, lines);
- CStringArray fields;
- CSkinArray skins;
- for (auto line : lines) {
- if (fields.empty()) {
- explode(fields, line, ',');
- } else {
- CSkin skin;
- skin.parseCSV(fields, line);
- skins.push_back(skin);
- }
- }
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_pages(void) {
+    CToml toml("./classDefinitions/app.toml");
 
- for (auto skin : skins) {
- ostringstream os;
- os << skin.Format(STR_SKIN_EXPORT) << endl;
- string_q thisFile = substitute(dataFile, "skins.csv", skin.name + ".jsx");
- string_q orig = asciiFileToString(thisFile);
- if (os.str() != orig) {
- stringToAsciiFile(thisFile, os.str());
- cerr << "Wrote " << thisFile << endl;
- }
- }
+    cerr << cYellow << "\nGenerating Pages..." << cOff << endl;
+    CStringArray sourceStrs;
+    string_q sourceList = toml.getConfigStr("settings", "from_source", "");
+    explode(sourceStrs, sourceList, '|');
+    for (auto sourceStr : sourceStrs) {
+        CStringArray parts;
+        explode(parts, sourceStr, '-');
+        CPage page = pageMap[parts[0]];
+        if (page.longName != "separator") {
+            string_q codeSource = "./pages/" + page.properName + "/" + page.properName +
+                                  (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
+            cerr << "\tProcessing " << page.longName << "..."
+                 << "\r";
+            string_q templateFile = "./classDefinitions/templates/page-template.jsx";
+            if (parts[0] == "explorer") {
+                templateFile = "./classDefinitions/templates/page-explorer-template.jsx";
+                page.longName = parts[1];
+                page.properName = toProper(parts[1]);
+                page.singular = page.properName;
+                replaceReverse(page.singular, "s", "");
+                CToml t("./classDefinitions/" + parts[0] + ".toml");
+                page.dataQuery = t.getConfigStr("settings", "query_" + parts[1], "");
+            }
 
- return true;
- }
+            string_q templateContents = asciiFileToString(templateFile);
+            replaceAll(templateContents, "[{DEFAULT_TAGS}]", page.defaultTags);
+            replaceAll(templateContents, "[{DATAURL}]", page.dataUrl);
+            replaceAll(templateContents, "[{DATAQUERY}]", page.dataQuery);
+            replaceAll(templateContents, "[{DEFAULT_TABLE}]", page.defaultTable);
+            replaceAll(templateContents, "[{CMDURL}]",
+                       page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
+            replaceAll(templateContents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
+            replaceAll(templateContents, "[{DISPATCH}]", page.cmdUrl == "none" ? "" : "dispatch, ");
+            replaceAll(templateContents, "[{LONG}]", page.longName);
+            replaceAll(templateContents, "[{PROPER}]", page.properName);
+            replaceAll(templateContents, "[{SINGULAR}]", page.singular);
 
- //---------------------------------------------------------------------------------------------------
- const char* STR_SKIN_EXPORT =
- "const [{NAME}] = {\n"
- "  colorBgPrimary: '[{bgPrimary}]',\n"
- "  colorBgSecondary: '[{bgSecondary}]',\n"
- "  colorTextPrimary: '[{textPrimary}]',\n"
- "  colorBorderPrimary: '[{borderPrimary}]',\n"
- "\n"
- "  colorTableBgPrimary: '[{tableBgPrimary}]',\n"
- "  colorTableBgSecondary: '[{tableBgSecondary}]',\n"
- "  colorTableTextPrimary: '[{tableTextPrimary}]',\n"
- "  colorTableBorderPrimary: '[{tableBorderPrimary}]',\n"
- "\n"
- "  colorBgHover: '[{bgHover}]',\n"
- "  colorTextHover: '[{textHover}]'\n"
- "};\n"
- "\n"
- "export default [{NAME}];\n";
+            CStringArray imports;
+            explode(imports, page.imports, '|');
 
- //---------------------------------------------------------------------------------------------------
- bool COptions::handle_generate_js_file(const CPage& page, const string_q& folder, const string_q& source) {
- string_q destFile = folder + substitute(source, "blank-", "");
- string_q sourceFile = "./" + source;
- string_q code = asciiFileToString(sourceFile);
- replaceAll(code, "[{ ", "[{");  // remove weird editor spacing
- replaceAll(code, " }]", "}]");  // remove weird editor spacing
+            string_q frag = imports[0].empty() || imports[0] == "none" ? "" : (imports[0] + " ");
+            replaceAll(templateContents, "[{FRAGMENT}]", frag);
 
- uint32_t cnt = 0;
- ostringstream commands, menu_items, text_imports, text_code;
- map<string, string> extractMap;
- for (auto item : page.subpages) {
- replaceAll(code, "[{SUBPAGE}]", item.subpage);
- replaceAll(code, "[{QUERY_URL}]", item.route);
- replaceAll(code, "[{QUERY_OPTS}]", item.options);
- replaceAll(code, "[{QUERY_EXTRACT}]", item.extract);
- if (!menu_items.str().empty())
- menu_items << ",";
- menu_items << endl;
- if (!item.isSeparator) {
- menu_items << "    { ";
- menu_items << "subpage: '" << substitute(toLower(item.subpage), "_", " ") << "'";
- menu_items << ", route: '" << item.route << "'";
- menu_items << ", query: " << page.twoName << "." << toUpper(item.subpage);
- menu_items << (item.icon.empty() ? "" : (", icon: '" + item.icon + "'"));
- menu_items << " }";
- cnt++;
- string_q curVal = extractMap[item.extract];
- extractMap[item.extract] = (toUpper(item.subpage) + "|" + curVal);
- if (!commands.str().empty())
- commands << endl;
- commands << "export const " << toUpper(item.subpage) << " = '" << item.options << "';";
- if (item.route.empty()) {
- if (text_imports.str() != "")
- text_imports << endl;
- text_imports << substitute(STR_TEXT_IMPORTS, "[{SUBPAGE}]", item.subpage);
- if (text_code.str() != "")
- text_code << endl;
- text_code << substitute(substitute(STR_TEXT_CODE, "[{SUBPAGE}]", item.subpage), "[{SP_UPPER}]",
- toUpper(item.subpage));
- }
- } else {
- menu_items << "    { subpage: 'separator' }";
- }
- }
- if (cnt == 0) {
- } else {
- while (cnt < 7) {
- if (!menu_items.str().empty())
- menu_items << "," << endl;
- menu_items << "    { subpage: '" << page.twoName << "-" << padNum4(cnt) << "' }";
- cnt++;
- }
- menu_items << endl;
- }
- if (contains(code, "[{COMMANDS}]")) {
- replaceAll(code, "[{COMMANDS}];", commands.str());
- if (cnt == 0) {
- while (endsWith(code, "\n"))
- replaceReverse(code, "\n", "");
- }
- }
- replaceAll(code, "[{MENU_ITEMS}]", menu_items.str());
- replaceAll(code, "items: [  ],", "items: [],");
+            string_q tables = imports[1].empty() || imports[1] == "none" ? "DataTable, PageCaddie" : imports[1];
+            replaceAll(templateContents, "[{TABLE_IMPORT}]", tables);
 
- replaceAll(code, "[{TEXT_ACTIONS}]", (page.has_text ? STR_TEXT_ACTIONS : ""));
- replaceAll(code, "[{TEXT_IMPORTS}]", (page.has_text ? text_imports.str() : ""));
- string_q tc = text_code.str();
- replace(tc, "} else ", "");  // remove one
- replaceAll(code, "[{TEXT_CODE}]", (page.has_text ? trim(tc) + "\n    }" : ""));
+            string_q utils =
+                imports[2].empty() || imports[2] == "none"
+                    ? "getServerData, sendServerCommand, sortArray, sortStrings, handleClick, navigate, replaceRecord"
+                    : imports[2];
+            replaceAll(templateContents, "[{UTILS_IMPORT}]", utils);
 
- uint32_t count = 0;
- ostringstream reducers;
- for (auto e : extractMap) {
- string_q extract = e.first;
- CStringArray cmds;
- explode(cmds, e.second, '|');
- for (auto c : cmds) {
- reducers << "    case " << page.twoName << "." << c << ":" << endl;
- }
- string_q s = substitute(STR_EXTRACT_CASE, "_EXTRACT_", e.first);
- if (page.longName != "digests" && page.longName != "settings")
- s = substitute(s, "types[0].fields", "types[" + uint_2_Str(count++) + "].fields");
- reducers << s;
- }
- replaceAll(code, "[{REDUCERS}]", reducers.str());
+            string_q status_store =
+                imports[3].empty() || imports[3] == "none" ? "useStatus, LOADING, NOT_LOADING" : imports[3];
+            replaceAll(templateContents, "[{STATUS_STORE_IMPORT}]", status_store);
 
- string_q thing = "";  // page.subpage;
- replaceAll(code, "[{STATE_FIELDS_2}]", nextTokenClear(thing, ':') + ": value");
+            ostringstream dataStream;
+            bool first = true;
 
- if (page.menuType == "DashMenu") {
- replaceAll(code, "[{MENU_TYPE}]", page.menuType);
- replaceAll(code, "[{MENU_CLICK}]", "changePage={this.changePage}");
- replaceAll(code, "[{MENU_FILE}]", "dash-menu");
- replaceAll(code, "[{MENU_COMMENT}]", "");
- }
+            if (!page.recordIcons.empty()) {
+                CStringArray icons;
+                explode(icons, page.recordIcons, ',');
+                dataStream << "const recordIconList = [" << endl;
+                for (auto icon : icons)
+                    dataStream << "  '" << icon << "'," << endl;
+                dataStream << "  //\n];" << endl;
+            }
 
- CStringArray lines;
- explode(lines, code, '\n', false);
- code = "";
- for (auto line : lines) {
- bool include = true;
- if (page.no_dash && contains(line, "[{NO_DASH}]"))
- include = false;
- if (page.no_error && contains(line, "[{NO_ERROR}]"))
- include = false;
- if (page.no_data && contains(line, "[{NO_DATA}]"))
- include = false;
- if (!page.dat_table && contains(line, "[{NO_DT}]"))
- include = false;
- if (!page.obj_table && contains(line, "[{NO_OBJ}]"))
- include = false;
- if (!page.has_text && contains(line, "[{NO_TEXT}]"))
- include = false;
- if (contains(line, "[{MENU_"))
- include = false;
- if (include)
- code += (line + '\n');
- }
- replaceAll(code, "[{NO_DASH}]", "");
- replaceAll(code, "[{NO_ERROR}]", "");
- replaceAll(code, "[{NO_DATA}]", "");
- replaceAll(code, "[{NO_DT}]", "");
- replaceAll(code, "[{NO_OBJ}]", "");
- replaceAll(code, "[{NO_TEXT}]", "");
+            if (!page.defaultSort.empty()) {
+                CStringArray sorts;
+                explode(sorts, page.defaultSort, ',');
+                dataStream << "const defaultSort = [";
+                first = true;
+                for (auto sort : sorts) {
+                    if (!first)
+                        dataStream << ", ";
+                    dataStream << "'" << sort << "'";
+                    first = false;
+                }
+                dataStream << "];" << endl;
+            }
 
- replaceAll(code, "[{CONNECT}]", page.polling ? STR_EXPORT_2 : STR_EXPORT_1);
- replaceAll(code, "[{LONG}]", page.longName);
- replaceAll(code, "[{SEVEN}]", page.sevenName);
- replaceAll(code, "[{TWO}]", page.twoName);
- replaceAll(code, "[{PROPER}]", page.properName);
- replaceAll(code, "[{COLOR}]", page.color);
- replaceAll(code, "[{POLLING}]", page.polling ? STR_POLLING : "");
- replaceAll(code, STR_EMPTY_INNER, STR_EMPTY_INNER_COLLAPSE);
- if (contains(destFile, "inner")) {
- string_q orig = asciiFileToString(destFile);
- if (!contains(substitute(orig, ", { Fragment }", ""), "Fragment"))
- replace(code, ", { Fragment }", "");
- }
+            if (!page.defaultSearch.empty()) {
+                CStringArray searches;
+                explode(searches, page.defaultSearch, ',');
+                dataStream << "const defaultSearch = [";
+                first = true;
+                for (auto search : searches) {
+                    if (!first)
+                        dataStream << ", ";
+                    dataStream << "'" << search << "'";
+                    first = false;
+                }
+                dataStream << "];" << endl;
+            }
 
- // returns true or false depending on if it WOULD HAVE written the file. If 'test'
- // is true, it doesn't actually write the file
- bool wouldHaveWritten = writeTheCode(codewrite_t(destFile, code, nspace, 2, test, false, force));
- if (wouldHaveWritten) {
- if (test) {
- cerr << "File '" << destFile << "' changed but was not written because of testing." << endl;
- } else {
- counter.nProcessed++;
- }
- }
- return false;
- }
- */
+            doReplace(templateContents, "page-settings", dataStream.str(), "");
+
+            // returns true or false depending on if it WOULD HAVE written the file. If 'test'
+            // is true, it doesn't actually write the file
+            bool wouldHaveWritten =
+                writeTheCode(codewrite_t(codeSource, templateContents, nspace, 2, test, false, force));
+            if (wouldHaveWritten) {
+                if (test) {
+                    cerr << "File '" << codeSource << "' changed but was not written because of testing." << endl;
+                } else {
+                    counter.nProcessed++;
+                }
+            }
+        }
+    }
+
+    cerr << cYellow << "\nGenerating Schemas..." << cOff << endl;
+
+    CStringArray schemaStrs;
+    string_q schemaList = toml.getConfigStr("settings", "schemas", "");
+    explode(schemaStrs, schemaList, '|');
+    for (auto schemasStr : schemaStrs) {
+        CStringArray parts;
+        explode(parts, schemasStr, '-');
+        CPage page = pageMap[parts[0]];
+        if (page.longName != "separator") {
+            string_q schemaSource = "./pages/" + page.properName + "/" + page.properName +
+                                    (parts.size() > 1 ? toProper(parts[1]) : "") + "Schema.jsx";
+
+            if (!fileExists(schemaSource)) {
+                string_q emptySchema = "./classDefinitions/templates/emptySchema.jsx";
+                string_q source = asciiFileToString(emptySchema);
+                stringToAsciiFile(schemaSource, source);
+            }
+
+            string_q schemaContents = asciiFileToString(schemaSource);
+            string_q origSchema = schemaContents;
+
+            if (contains(schemaContents, "auto-generate")) {
+                ostringstream schemaStream;
+                cerr << "\tProcessing " << schemaSource << "...\r";
+                string_q schemaCSV =
+                    "./classDefinitions/schemas/" + page.longName + (parts.size() > 1 ? "-" + parts[1] : "") + ".csv";
+                string_q schemaData = asciiFileToString(schemaCSV);
+                CSchemaArray schemas;
+                CStringArray lines;
+                explode(lines, schemaData, '\n');
+
+                CStringArray fields;
+                for (auto line : lines) {
+                    if (fields.empty())
+                        explode(fields, line, ',');
+                    else {
+                        CSchema schema;
+                        schema.parseCSV(fields, line);
+                        schemas.push_back(schema);
+                    }
+                }
+                if (!page.recordIcons.empty()) {
+                    CSchema schema;
+                    string_q line = "Icons,icons,icons,true";
+                    schema.parseCSV(fields, line);
+                    schemas.push_back(schema);
+                }
+                schemaStream << "export const " << (parts.size() > 1 ? parts[1] : page.longName) << "Schema = [";
+                bool first = true;
+                for (auto schema : schemas) {
+                    if (!first)
+                        schemaStream << ",";
+                    schemaStream << endl << "  ";
+                    expContext().quoteKeys = false;
+                    expContext().endingCommas = true;
+                    ostringstream os;
+                    expContext().lev++;
+                    schema.doExport(os);
+                    expContext().lev--;
+                    string_q str = os.str();
+                    replaceAll(str, "\"", "'");
+                    replaceAll(str, "'getFieldValue'", "getFieldValue");
+                    replaceAll(str, "'useFieldValue'", "useFieldValue");
+                    if (contains(str, "onValidate:")) {
+                        replaceAll(str, "'validateUserInput'", "validateUserInput");
+                        replaceAll(str, "_C_", ",");
+                    }
+                    if (contains(str, "function:")) {
+                        replaceAll(str, "function: '(record)", "function: (record)");
+                        replaceAll(str, "\\n}'", "\\n}");
+                        replaceAll(str, "\\n", "\n    ");
+                        replaceAll(str, "\\t", "  ");
+                        replaceAll(str, "_C_", ",");
+                    }
+                    schemaStream << str;
+                    first = false;
+                }
+                schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
+
+                doReplace(schemaContents, "schema", schemaStream.str(), "");
+                if (origSchema != schemaContents) {
+                    LOG_INFO("Writing Schema: ", cTeal, schemaSource, cOff);
+                    stringToAsciiFile(schemaSource, schemaContents);
+                }
+            }
+        }
+    }
+
+    return true;
+}
 
 //---------------------------------------------------------------------------------------------------
-bool visitField(const CFieldData& field, void* data) {
-    ostream* pOs = reinterpret_cast<ostream*>(data);
-    *pOs << "<Row ";
-    *pOs << "name=\"" << field.getName() << "\" ";
-    *pOs << "type=\"string\" ";
-    *pOs << "value={item." << field.getName() << "} ";
-    *pOs << "display={item." << field.getName() << "} ";
-    *pOs << "route=\"\" ";
-    *pOs << "/>" << endl;
+bool visitHelpFile(const string& path, void* data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", visitHelpFile, data);
+    } else {
+        CStringArray* array = (CStringArray*)data;
+        array->push_back(path);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_help(void) {
+    cerr << endl << cYellow << "Checking help files..." << cOff << endl;
+
+    string_q helpFolder = "./api/help";
+    CStringArray files;
+    forEveryFileInFolder(helpFolder, visitHelpFile, &files);
+    string_q str = "|";
+    CStringArray tomls;
+    for (auto file : files) {
+        str += (file + "|");
+        string_q f = substitute(substitute(file, helpFolder, ""), ".md", "");
+        replace(f, "/", "");
+        if (countOf(f, '/') == 0)
+            tomls.push_back(f);
+    }
+    str = substitute(substitute(str, helpFolder + "/", ""), ".md", "");
+
+    string_q out;
+    for (auto t : tomls) {
+        CPage page = pageMap[t];
+        for (auto sub : page.subpages) {
+            string_q route =
+                page.longName + "/" + (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route);
+            if (endsWith(route, "/"))
+                replaceReverse(route, "/", "");
+            if (!contains(str, "|" + route + "|") && !contains(route, "separator"))
+                out += (route + "|");
+            replace(str, "|" + route + "|", "|");
+        }
+    }
+    str = trim(str, '|');
+
+    cerr << "\tExtraneous files: " << (str.empty() ? "none" : (cRed + substitute(str, "|", ", ") + cOff)) << endl;
+    cerr << "\tMissing files: " << (out.empty() ? "none" : (cRed + substitute(out, "|", ", ") + cOff)) << endl;
+    cerr << endl;
+
     return true;
 }
 
@@ -332,66 +307,162 @@ void doReplace(string_q& str, const string_q& type, const string_q& rep, const s
 }
 
 //---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_js_menus(void) {
-    cerr << cYellow << "Generating Menus..." << cOff << endl;
+const char* STR_DELETE_CMDS =
+    ""
+    "        case 'delete':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=delete&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            dispatch(action);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
+    "              // we assume the delete worked, so we don't reload the data\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n"
+    "        case 'undelete':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=undelete&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            dispatch(action);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
+    "              // we assume the delete worked, so we don't reload the data\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n"
+    "        case 'remove':\n"
+    "          {\n"
+    "            const cmdQuery = 'editCmd=remove&terms=' + action.record_id + addendum(record, action.record_id);\n"
+    "            statusDispatch(LOADING);\n"
+    "            sendServerCommand(cmdUrl, cmdQuery).then((theData) => {\n"
+    "              // the command worked, but now we need to reload the data\n"
+    "              refresh[{PROPER}]Data(dataQuery, dispatch, mocked);\n"
+    "              statusDispatch(NOT_LOADING);\n"
+    "            });\n"
+    "          }\n"
+    "          break;\n";
 
-    CToml toml("./classDefinitions/app.toml");
-    string_q pageList = toml.getConfigStr("settings", "pages", "");
-    string_q sourceList = toml.getConfigStr("settings", "from_source", "");
+//---------------------------------------------------------------------------------------------------
+const char* STR_DEFAULT_TAGS =
+    "sortStrings([...new Set([{LONG}].data.map((item) => calcValue(item, { selector: 'tags', onDisplay: getFieldValue "
+    "})))], true)";
 
-    CStringArray sourceStrs;
-    explode(sourceStrs, sourceList, '|');
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_skins(void) {
+    return true;
+}
 
-    for (auto sourceStr : sourceStrs) {
-        CStringArray parts;
-        explode(parts, sourceStr, '-');
+/*
+string_q dataFile = "../../skins/skins.csv";
+CStringArray lines;
+asciiFileToLines(dataFile, lines);
+CStringArray fields;
+CSkinArray skins;
+for (auto line : lines) {
+if (fields.empty()) {
+explode(fields, line, ',');
+} else {
+CSkin skin;
+skin.parseCSV(fields, line);
+skins.push_back(skin);
+}
+}
 
-        CPage page = pageMap[parts[0]];
-        if (page.longName != "separator") {
-            string_q codeFile = "./pages/" + page.properName + "/" + page.properName +
-                                (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
+for (auto skin : skins) {
+ostringstream os;
+os << skin.Format(STR_SKIN_EXPORT) << endl;
+string_q thisFile = substitute(dataFile, "skins.csv", skin.name + ".jsx");
+string_q orig = asciiFileToString(thisFile);
+if (os.str() != orig) {
+stringToAsciiFile(thisFile, os.str());
+cerr << "Wrote " << thisFile << endl;
+}
+}
 
-            cerr << "\tProcessing " << page.longName << "..."
-                 << "\r";
-            string_q templateFile = "./classDefinitions/templates/page-template.jsx";
-            if (parts[0] == "explorer") {
-                templateFile = "./classDefinitions/templates/page-explorer-template.jsx";
-                page.longName = parts[1];
-                page.properName = toProper(parts[1]);
-                page.twoName = toLower(page.longName.substr(0, 2));
-                page.sevenName = padRight(page.longName.substr(0, 7), 7, '_');
-                CToml t("./classDefinitions/" + parts[0] + ".toml");
-                page.dataQuery = t.getConfigStr("settings", "query_" + parts[1], "");
-            }
-            string_q templateContents = asciiFileToString(templateFile);
-            replaceAll(templateContents, "[{DEFAULT_TAGS}]", page.defaultTags);
-            replaceAll(templateContents, "[{DATAURL}]", page.dataUrl);
-            replaceAll(templateContents, "[{DATAQUERY}]", page.dataQuery);
-            replaceAll(templateContents, "[{DEFAULT_TABLE}]", page.defaultTable);
-            replaceAll(templateContents, "[{CMDURL}]",
-                       page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
-            replaceAll(templateContents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
-            replaceAll(templateContents, "[{LONG}]", page.longName);
-            replaceAll(templateContents, "[{PROPER}]", page.properName);
-            string_q singular = page.properName;
-            replaceReverse(singular, "s", "");
-            replaceAll(templateContents, "[{SINGULAR}]", singular);
+return true;
+}
 
-            // returns true or false depending on if it WOULD HAVE written the file. If 'test'
-            // is true, it doesn't actually write the file
-            bool wouldHaveWritten =
-                writeTheCode(codewrite_t(codeFile, templateContents, nspace, 2, test, false, force));
-            if (wouldHaveWritten) {
-                if (test) {
-                    cerr << "File '" << codeFile << "' changed but was not written because of testing." << endl;
-                } else {
-                    counter.nProcessed++;
-                }
-            }
-        }
+//---------------------------------------------------------------------------------------------------
+const char* STR_SKIN_EXPORT =
+"const [{NAME}] = {\n"
+"  colorBgPrimary: '[{bgPrimary}]',\n"
+"  colorBgSecondary: '[{bgSecondary}]',\n"
+"  colorTextPrimary: '[{textPrimary}]',\n"
+"  colorBorderPrimary: '[{borderPrimary}]',\n"
+"\n"
+"  colorTableBgPrimary: '[{tableBgPrimary}]',\n"
+"  colorTableBgSecondary: '[{tableBgSecondary}]',\n"
+"  colorTableTextPrimary: '[{tableTextPrimary}]',\n"
+"  colorTableBorderPrimary: '[{tableBorderPrimary}]',\n"
+"\n"
+"  colorBgHover: '[{bgHover}]',\n"
+"  colorTextHover: '[{textHover}]'\n"
+"};\n"
+"\n"
+"export default [{NAME}];\n";
+
+*/
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_initialize_js(CToml& toml, const CClassDefinition& classDef) {
+    CPage page;
+    page.longName = classDef.base_lower;
+    page.properName = classDef.base_proper;
+    page.singular = page.properName;
+    page.noPage = toml.getConfigBool("settings", "noPage", false);
+    page.dataUrl = toml.getConfigStr("settings", "dataUrl", "");
+    page.dataQuery = toml.getConfigStr("settings", "dataQuery", "");
+    page.cmdUrl = toml.getConfigStr("settings", "cmdUrl", "none");
+    page.imports = toml.getConfigStr("settings", "imports", "none|none|none|none|");
+    page.dest_path = toml.getConfigStr("settings", "dest_path", "./pages/") + page.properName + "/";
+    page.schema = toml.getConfigStr("settings", "schema", "./" + page.longName + ".csv");
+    page.defaultTable = toml.getConfigStr("settings", "defaultTable", "DataTable");
+    page.defaultSort = toml.getConfigStr("settings", "defaultSort", "");
+    page.defaultSearch = toml.getConfigStr("settings", "defaultSearch", page.defaultSort);
+    page.defaultTags = toml.getConfigStr("settings", "defaultTags", STR_DEFAULT_TAGS);
+    replaceReverse(page.singular, "s", "");
+
+    string_q recordIcons = substitute("," + toml.getConfigStr("settings", "recordIcons", "") + ",", ",,", "");
+    replace(recordIcons, "editing,", "header-Add,Delete/Undelete,Edit/Remove,");
+    replace(recordIcons, "viewing,", "ExternalLink,");
+    replace(recordIcons, "view,", "View/None,");
+    replace(recordIcons, "follow,", "AddMonitor/None/View,");
+    replace(recordIcons, "exporting,", "footer-CSV,footer-TXT,");
+    replace(recordIcons, "importing,", "footer-Import,");
+    page.recordIcons = trim(recordIcons, ',');
+
+    CSubpage item;
+    string_q subpages = toml.getConfigJson("subpages", "list", "");
+    while (item.parseJson3(subpages)) {
+        replaceAll(item.options, "_EQ_", "=");
+        replaceAll(item.extract, "_0", "[0]");
+        page.subpages.push_back(item);
+        item = CSubpage();
     }
 
+    pageMap[page.longName] = page;
+    if (page.longName.empty() || page.longName == "separator")
+        return false;
+
+    establishFolder(page.dest_path);
+    string_q cssFile = page.dest_path + page.properName + ".css";
+    if (!fileExists(cssFile)) {
+        string_q emptyCss = "./classDefinitions/templates/empty.css";
+        stringToAsciiFile(cssFile, substitute(asciiFileToString(emptyCss), "[{PROPER}]", page.properName));
+    }
+
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_generate_js_menus(void) {
+    cerr << cYellow << "Generating Menus...                                                          " << cOff << endl;
+
+    CToml toml("./classDefinitions/app.toml");
+
     CStringArray pagesStrs;
+    string_q pageList = toml.getConfigStr("settings", "pages", "");
     explode(pagesStrs, pageList, '|');
 
     ostringstream importStream;
@@ -512,244 +583,3 @@ bool COptions::handle_generate_js_menus(void) {
 
     return true;
 }
-
-//---------------------------------------------------------------------------------------------------
-bool visitHelpFile(const string& path, void* data) {
-    if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitHelpFile, data);
-    } else {
-        CStringArray* array = (CStringArray*)data;
-        array->push_back(path);
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_js_help(void) {
-    cout << endl << cYellow << "Checking help files..." << cOff << endl;
-
-    string_q helpFolder = "./api/help";
-    CStringArray files;
-    forEveryFileInFolder(helpFolder, visitHelpFile, &files);
-    string_q str = "|";
-    CStringArray tomls;
-    for (auto file : files) {
-        str += (file + "|");
-        string_q f = substitute(substitute(file, helpFolder, ""), ".md", "");
-        replace(f, "/", "");
-        if (countOf(f, '/') == 0)
-            tomls.push_back(f);
-    }
-    str = substitute(substitute(str, helpFolder + "/", ""), ".md", "");
-    // cout << "files: " << str << endl;
-
-    string_q out;
-    for (auto t : tomls) {
-        CPage page = pageMap[t];
-        for (auto sub : page.subpages) {
-            string_q route =
-                page.longName + "/" + (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route);
-            if (endsWith(route, "/"))
-                replaceReverse(route, "/", "");
-            if (!contains(str, "|" + route + "|") && !contains(route, "separator"))
-                out += (route + "|");
-            replace(str, "|" + route + "|", "|");
-        }
-    }
-    str = trim(str, '|');
-
-    cerr << "\tExtraneous files: " << (str.empty() ? "none" : (cRed + substitute(str, "|", ", ") + cOff)) << endl;
-    cerr << "\tMissing files: " << (out.empty() ? "none" : (cRed + substitute(out, "|", ", ") + cOff)) << endl;
-    cerr << endl;
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::handle_generate_js_schemas(void) {
-    CSchema::registerClass();
-    cerr << cYellow << "\nGenerating Schemas..." << cOff << endl;
-
-    CToml toml("./classDefinitions/app.toml");
-    string_q pageList = toml.getConfigStr("settings", "schemas", "");
-
-    CStringArray pagesStrs;
-    explode(pagesStrs, pageList, '|');
-
-    for (auto pageStr : pagesStrs) {
-        CStringArray parts;
-        explode(parts, pageStr, '-');
-        CPage page = pageMap[parts[0]];
-        if (parts[0] == "menu") {
-            CPage pp;
-            pp.properName = "Menu";
-            pp.longName = "menu";
-            page = pp;
-        }
-        if (page.longName != "separator") {
-            string_q codeSource = "./pages/" + page.properName + "/" + page.properName +
-                                  (parts.size() > 1 ? toProper(parts[1]) : "") + ".jsx";
-            if (page.longName == "menu")
-                codeSource = "./pages/index.jsx";
-            string_q codeContents = asciiFileToString(codeSource);
-            string_q orig = codeContents;
-
-            string_q schemaSource = "./pages/" + page.properName + "/" + page.properName +
-                                    (parts.size() > 1 ? toProper(parts[1]) : "") + "Schema.jsx";
-            string_q schemaContents = asciiFileToString(schemaSource);
-            string_q origSchema = schemaContents;
-
-            if (contains(codeContents, "auto-generate")) {
-                ostringstream schemaStream;
-                cerr << "\tProcessing " << page.longName << (parts.size() > 1 ? "-" + parts[1] : "") << "..."
-                     << "\r";
-                string_q schemaCSV =
-                    "./classDefinitions/schemas/" + page.longName + (parts.size() > 1 ? "-" + parts[1] : "") + ".csv";
-                string_q schemaData = asciiFileToString(schemaCSV);
-                CSchemaArray schemas;
-                CStringArray lines;
-                explode(lines, schemaData, '\n');
-
-                CStringArray fields;
-                for (auto line : lines) {
-                    if (fields.empty())
-                        explode(fields, line, ',');
-                    else {
-                        CSchema schema;
-                        schema.parseCSV(fields, line);
-                        schemas.push_back(schema);
-                    }
-                }
-                if (!page.recordIcons.empty()) {
-                    CSchema schema;
-                    string_q line = "Icons,icons,icons,true";
-                    schema.parseCSV(fields, line);
-                    schemas.push_back(schema);
-                }
-                schemaStream << "export const " << (parts.size() > 1 ? parts[1] : page.longName) << "Schema = [";
-                bool first = true;
-                for (auto schema : schemas) {
-                    if (!first)
-                        schemaStream << ",";
-                    schemaStream << endl << "  ";
-                    expContext().quoteKeys = false;
-                    expContext().endingCommas = true;
-                    ostringstream os;
-                    expContext().lev++;
-                    schema.doExport(os);
-                    expContext().lev--;
-                    string_q str = os.str();
-                    replaceAll(str, "\"", "'");
-                    replaceAll(str, "'getFieldValue'", "getFieldValue");
-                    replaceAll(str, "'useFieldValue'", "useFieldValue");
-                    if (contains(str, "onValidate:")) {
-                        replaceAll(str, "'validateUserInput'", "validateUserInput");
-                        replaceAll(str, "_C_", ",");
-                    }
-                    if (contains(str, "function:")) {
-                        replaceAll(str, "function: '(record)", "function: (record)");
-                        replaceAll(str, "\\n}'", "\\n}");
-                        replaceAll(str, "\\n", "\n    ");
-                        replaceAll(str, "\\t", "  ");
-                        replaceAll(str, "_C_", ",");
-                    }
-                    schemaStream << str;
-                    first = false;
-                }
-                schemaStream << (schemas.size() > 0 ? ",\n" : "") << "];" << endl;
-                doReplace(schemaContents, "schema", schemaStream.str(), "");
-                if (origSchema != schemaContents) {
-                    LOG_INFO("Writing: ", cTeal, schemaSource, cOff);
-                    stringToAsciiFile(schemaSource, schemaContents);
-                }
-
-                ostringstream dataStream;
-
-                if (!page.recordIcons.empty()) {
-                    CStringArray icons;
-                    explode(icons, page.recordIcons, ',');
-                    dataStream << "const recordIconList = [" << endl;
-                    for (auto icon : icons)
-                        dataStream << "  '" << icon << "'," << endl;
-                    dataStream << "  //\n];" << endl;
-                }
-
-                if (!page.defaultSort.empty()) {
-                    CStringArray sorts;
-                    explode(sorts, page.defaultSort, ',');
-                    dataStream << "const defaultSort = [";
-                    first = true;
-                    for (auto sort : sorts) {
-                        if (!first)
-                            dataStream << ", ";
-                        dataStream << "'" << sort << "'";
-                        first = false;
-                    }
-                    dataStream << "];" << endl;
-                }
-
-                if (!page.defaultSearch.empty()) {
-                    CStringArray searches;
-                    explode(searches, page.defaultSearch, ',');
-                    dataStream << "const defaultSearch = [";
-                    first = true;
-                    for (auto search : searches) {
-                        if (!first)
-                            dataStream << ", ";
-                        dataStream << "'" << search << "'";
-                        first = false;
-                    }
-                    dataStream << "];" << endl;
-                }
-
-                doReplace(codeContents, "page-settings", dataStream.str(), "");
-                if (orig != codeContents) {
-                    LOG_INFO("Writing: ", cTeal, codeSource, cOff);
-                    stringToAsciiFile(codeSource, codeContents);
-                }
-            }
-        }
-    }
-
-    return true;
-}
-
-const char* STR_DELETE_CMDS =
-    ""
-    "        case 'delete':\n"
-    "          {\n"
-    "            const cmdQuery = 'editCmd=delete&terms=' + action.record_id + addendum(record, action.record_id);\n"
-    "            statusDispatch(LOADING);\n"
-    "            dispatch(action);\n"
-    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
-    "              // we assume the delete worked, so we don't reload the data\n"
-    "              statusDispatch(NOT_LOADING);\n"
-    "            });\n"
-    "          }\n"
-    "          break;\n"
-    "        case 'undelete':\n"
-    "          {\n"
-    "            const cmdQuery = 'editCmd=undelete&terms=' + action.record_id + addendum(record, action.record_id);\n"
-    "            statusDispatch(LOADING);\n"
-    "            dispatch(action);\n"
-    "            sendServerCommand(cmdUrl, cmdQuery).then(() => {\n"
-    "              // we assume the delete worked, so we don't reload the data\n"
-    "              statusDispatch(NOT_LOADING);\n"
-    "            });\n"
-    "          }\n"
-    "          break;\n"
-    "        case 'remove':\n"
-    "          {\n"
-    "            const cmdQuery = 'editCmd=remove&terms=' + action.record_id + addendum(record, action.record_id);\n"
-    "            statusDispatch(LOADING);\n"
-    "            sendServerCommand(cmdUrl, cmdQuery).then((theData) => {\n"
-    "              // the command worked, but now we need to reload the data\n"
-    "              refresh[{PROPER}]Data(dataQuery, dispatch, mocked);\n"
-    "              statusDispatch(NOT_LOADING);\n"
-    "            });\n"
-    "          }\n"
-    "          break;\n";
-
-const char* STR_DEFAULT_TAGS =
-    "sortStrings([...new Set([{LONG}].data.map((item) => calcValue(item, { selector: 'tags', onDisplay: getFieldValue "
-    "})))], true)";

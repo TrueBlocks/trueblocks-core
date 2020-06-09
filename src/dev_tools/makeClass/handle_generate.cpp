@@ -209,10 +209,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     if (hasStrGetter)
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
 
-    //------------------------------------------------------------------------------------------------
-    if (asJs)
-        return handle_generate_js(toml, classDef);
-
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
     replace(headSource, "// clang-format off\n", "");

@@ -122,19 +122,21 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 if (found + 2 != type.size())
                     baseType += type.substr(found + 2);
 
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
-
-                CParameterArray tmp;
-                for (size_t i = 0; i < nItems; i++) {
-                    CParameter p;
-                    p.type = baseType;
-                    tmp.push_back(p);
+                if (readIndex < dataArray.size()) {
+                    uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
+                    if (dataStart < dataArray.size()) {
+                        uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+                        CParameterArray tmp;
+                        for (size_t i = 0; i < nItems; i++) {
+                            CParameter p;
+                            p.type = baseType;
+                            tmp.push_back(p);
+                        }
+                        size_t tPtr = dataStart + 1;
+                        decodeTheData(tmp, dataArray, tPtr);
+                        pPtr->value = "[" + params_2_Str(tmp) + "]";
+                    }
                 }
-
-                size_t tPtr = dataStart + 1;
-                decodeTheData(tmp, dataArray, tPtr);
-                pPtr->value = "[" + params_2_Str(tmp) + "]";
 
             } else if (type.find("]") != string::npos) {
                 // int tempPointer;
