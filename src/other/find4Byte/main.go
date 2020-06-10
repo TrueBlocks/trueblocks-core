@@ -1,0 +1,80 @@
+package main
+
+import (
+    "bufio"
+    "encoding/hex"
+    "fmt"
+    "github.com/ethereum/go-ethereum/crypto"
+    "github.com/mholt/archiver/v3"
+    "github.com/panjf2000/ants/v2"
+    "os"
+    "runtime"
+    "sync"
+)
+
+func main() {
+    // Get queries
+    search := os.Args[1:]
+
+    // Unpack archieve if not unpacked before
+    test, err := os.Open("function_names.csv")
+    if err != nil {
+        archiver.Unarchive("data.tar.gz", "./")
+    }
+    test.Close()
+
+    // Load files
+    fNames, _ := os.Open("function_names.csv")
+    fSigs, _ := os.Open("function_signtures.csv")
+    defer fNames.Close()
+    defer fSigs.Close()
+
+    signatures := []string{""}
+
+    // Load all signatures from file into signatures array
+    sSigs := bufio.NewScanner(fSigs)
+    sSigs.Split(bufio.ScanLines)
+    for sSigs.Scan() {
+        signatures = append(signatures, sSigs.Text())
+    }
+
+    // Create thread pool with number of concurrent threads equal to 'runtime.NumCPU()'
+    var wait sync.WaitGroup
+    p, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(canonical interface{}) {
+        // Calculate 4-byte form
+        res := "0x" + hex.EncodeToString(crypto.Keccak256([]byte(canonical.(string))))[:8]
+        // Go through queries and compare
+        for i := 0; i < len(search); i++ {
+            cur := search[i]
+            if res == cur {
+                fmt.Printf("Found: %s\t%s\n", res, canonical)
+                // If found, remove from search array
+                search = append(search[:i], search[i+1:]...)
+                i--
+            } else {
+                // \033[2K clears line, so output is human-readable
+                fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
+            }
+        }
+        wait.Done()
+    })
+
+    // Wait till all threads finished at the end of program
+    defer p.Release()
+    defer wait.Wait()
+
+    sNames := bufio.NewScanner(fNames)
+    sNames.Split(bufio.ScanLines)
+
+    // Brute force names and signatures pushing them to pool
+    for sNames.Scan() {
+        for _, sig := range signatures {
+            if len(search) == 0 {
+                fmt.Println("Finishing because all queries found")
+                return
+            }
+            wait.Add(1)
+            _ = p.Invoke(string(fmt.Sprintf("%s(%s)", sNames.Text(), sig)))
+        }
+    }
+}
