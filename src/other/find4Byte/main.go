@@ -2,6 +2,7 @@ package main
 
 import (
     "bufio"
+    "bytes"
     "encoding/hex"
     "fmt"
     "github.com/ethereum/go-ethereum/crypto"
@@ -13,8 +14,15 @@ import (
 )
 
 func main() {
-    // Get queries
-    search := os.Args[1:]
+    var search [][]byte
+    for _, i := range os.Args[1:] {
+        decoded, err := hex.DecodeString(i[2:])
+        if err != nil {
+            fmt.Printf("Couldn't parse argument %s\n", i)
+        } else {
+            search = append(search, decoded)
+        }
+    }
 
     // Unpack archieve if not unpacked before
     test, err := os.Open("function_names.csv")
@@ -42,15 +50,12 @@ func main() {
     var wait sync.WaitGroup
     p, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(canonical interface{}) {
         // Calculate 4-byte form
-        res := "0x" + hex.EncodeToString(crypto.Keccak256([]byte(canonical.(string))))[:8]
+        res := crypto.Keccak256([]byte(canonical.(string)))[:4]
         // Go through queries and compare
         for i := 0; i < len(search); i++ {
             cur := search[i]
-            if res == cur {
-                fmt.Printf("Found: %s\t%s\n", res, canonical)
-                // If found, remove from search array
-                search = append(search[:i], search[i+1:]...)
-                i--
+            if bytes.Equal(res, cur) {
+                fmt.Printf("Found: 0x%s\t%s\n", hex.EncodeToString(res), canonical)
             } else {
                 // \033[2K clears line, so output is human-readable
                 fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
@@ -69,10 +74,6 @@ func main() {
     // Brute force names and signatures pushing them to pool
     for sNames.Scan() {
         for _, sig := range signatures {
-            if len(search) == 0 {
-                fmt.Println("Finishing because all queries found")
-                return
-            }
             wait.Add(1)
             _ = p.Invoke(string(fmt.Sprintf("%s(%s)", sNames.Text(), sig)))
         }
