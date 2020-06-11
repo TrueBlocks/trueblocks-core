@@ -98,7 +98,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     establishFolder(getCachePath("tmp/"));
-    establishFolder(getCachePath("slurp/"));
+    establishFolder(getCachePath("slurps/"));
     establishFolder(getCachePath("blocks/"));
     establishFolder(getCachePath("txs/"));
     establishFolder(getCachePath("traces/"));
