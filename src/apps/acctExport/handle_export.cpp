@@ -9,8 +9,22 @@
 bool COptions::exportData(void) {
     ENTER("exportData");
 
-    if (accounting)
+    if (accounting) {
         articulate = true;
+        bool nodeHasBals = nodeHasBalances(false);
+        string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+        if (!nodeHasBals) {
+            string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+
+            // ...and the user has told us about another balance provider...
+            if (rpcProvider == balanceProvider || balanceProvider.empty())
+                EXIT_FAIL("The RPC server does not have historical state. Quitting...");
+
+            setRpcProvider(balanceProvider);
+            if (!nodeHasBalances(false))
+                return usage("balanceServer set but it does not have historical state. Quitting...");
+        }
+    }
     bool shouldDisplay = !freshen;
     bool isJson =
         (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
@@ -185,7 +199,7 @@ bool COptions::exportData(void) {
                 }
 
                 HIDE_FIELD(CFunction, "message");
-                if (!(i % 3))
+                if (isApiMode() || !(i % 3))
                     LOG_INFO("Exporting ", i, " of ", nTransactions, " records (max ", nProcessing, ")          \r");
             }
         }

@@ -452,15 +452,23 @@ const char* STR_DISPLAY_INCOMESTATEMENT = "";
 inline string_q bni_2_Ether(const bigint_t& num) {
     if (num == 0)
         return "";
-    string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(num)));
+
+    bigint_t n = num;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+
+    string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(n)));
     CStringArray parts;
     explode(parts, ret, '.');
     ret = parts[0] + ".";
     if (parts.size() == 1)
-        return ret + "0000000";
+        return (negative ? "-" : "") + ret + "0000000";
     if (parts[1].length() >= 7)
-        return ret + parts[1].substr(0, 7);
-    return ret + parts[1] + string_q(7 - parts[1].length(), '0');
+        return (negative ? "-" : "") + ret + parts[1].substr(0, 7);
+    return (negative ? "-" : "") + ret + parts[1] + string_q(7 - parts[1].length(), '0');
 }
 
 //---------------------------------------------------------------------------
