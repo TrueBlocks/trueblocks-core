@@ -218,18 +218,32 @@ bool COptions::parseArguments(string_q& command) {
                 origMode = "monitors";
             }
         }
+
         string_q path = configPath("mockData/" + origMode + ".json");
-        LOG_INFO("Looking for mock data at: ", path, " found?: ", fileExists(path));
         if (fileExists(path)) {
             if (origMode == "export") {
+                // simulate listing
                 for (size_t i = 0; i < 100; i++) {
-                    LOG_INFO(i, " of 100");
+                    LOG_INFO(i, " of 100\r");
                     usleep(30000);
                 }
-                LOG_INFO("Done");
+                CStringArray lines;
+                asciiFileToLines(path, lines);
+                size_t cnt = 0;
+                size_t record = 0;
+                size_t recordSize = lines.size() / 100;
+                for (auto line : lines) {
+                    cout << line << endl;
+                    if (!(++cnt % recordSize)) {
+                        LOG_INFO(record++, " of 100\r");
+                        usleep(10000);
+                    }
+                }
+                return false;
+            } else {
+                cout << asciiFileToString(path);
+                return false;
             }
-            cout << asciiFileToString(path);
-            return false;
         }
         tool_flags += " --mockData ";
         freshen_flags += " --mockData ";
