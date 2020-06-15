@@ -227,6 +227,7 @@ void COptions::Init(void) {
     optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
+    addrs.clear();
     by_acct = false;
     no_zero = false;
     // END_CODE_INIT
