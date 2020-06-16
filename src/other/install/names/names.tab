@@ -163,6 +163,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Contracts	0x0521a3f8554f8c2338c85c64ffb718d4fc0d1785	TokenRunners of Cryptopia Challenge		https://kickback.events/event/[{ADDRESS}]			false	false	false
 81-Other	0x05240da139d30034eaae15737610bfbe68b97910	Rouleth_Therouleth		Etherscan.io			false	false	false
 30-Contracts:dAppNode	0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4	dAddNode Package 001		TrueBlocks.io			false	false	false
+00-Active	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	Meriam's Wallet		OnChain			false	false	false
 32-Kickback:Friends	0x0549c3f578615e95f58e521a726269b6c1985dd5	edward		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET	On Chain	8	The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals.	false	false	false
 34-Humanity DAO	0x055bcf2c2bc965ac8eeae3f95922d65ee45d3366	martint		https://www.humanitydao.org/humans			false	false	false
@@ -2957,6 +2958,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x79ecdb8c66c6d9e6deb5ef361fb4c360a522f995	CrowdFund_id238_cnt5_2mo		Ether Camp			false	false	false
 50-Tokens:ERC20	0x7a07e1a0c2514d51132183ecfea2a880ec3b7648	IXE Token	IXE	On Chain	18	Educational project for children	false	false	false
 81-Other:Individual	0x7a0984e31a65fcdea119943f88858cfc3fe00da9	NiemannTipJar		https://medium.com/@chrisdotn/a-json-parser-for-solidity-9cc73b4b42			false	false	false
+30-Contracts	0x7a250d5630b4cf539739df2c5dacb4c659f2488d	Uniswap V2 Router 2		OnChain			false	false	false
 32-Kickback:Friends	0x7a33615d12a12f58b25c653dc5e44188d44f6898	freeslugs		https://kickback.events/			false	false	false
 30-Contracts	0x7a3370075a54b187d7bd5dcebf0ff2b5552d4f7d	Kyber Reserve		0xTracker			false	false	false
 81-Other:Consensys	0x7a3d7a4434058709f18337dff02f90235760a405	StandardTokenInterface		Consensys			false	false	false
@@ -3038,6 +3040,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x7d56485e026d5d3881f778e99969d2b1f90c50af	Protectthecastle		Etherscan.io			false	false	false
 32-Kickback:Friends	0x7d571b2942b8144ebfd22c5f608a391f0b9e43d3	awgneo		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x7d5edcd23daa3fb94317d32ae253ee1af08ba14d	Ethbet	EBET	On Chain	2	The decentralized, peer-to-peer, and provably-fair Ethereum-based dicing game without a house edge.	false	false	false
+31-Gitcoin Grants:Core	0x7d655c57f71464b6f83811c55d84009cd9f5221c	New Gitcoin Splitter		OnChain			false	false	false
 31-Gitcoin Grants:Friends	0x7d678b9218ac289e0c9f18c82f546c988bfe3022	critesjosh		Gitcoin Website			false	false	false
 32-Kickback:Friends	0x7d714a30b7f7f688dfa81f4f1d8bf605ccd083a7	domsteil		https://kickback.events/			false	false	false
 34-Humanity DAO	0x7d76de512c2865db78332c3bdc937af064ecd58a	fastfoodism		https://www.humanitydao.org/humans			false	false	false
@@ -3867,6 +3870,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xa1b93b469e32309da9916368f7c20565807c784b	cervoneluca		Gitcoin Website			false	false	false
 34-Humanity DAO	0xa1bd817e13ed6bb524ed491cff76c83afec773ac	akimqc		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0xa1d3c765e9a9655e8838bc4a9b16d5e6af024321	brendan_dharma		https://www.humanitydao.org/humans			false	false	false
+40-Exchanges	0xa1d907c8ce6ceb844205e371eb71a4ece307cc77	Coinbase 6		OnChain			false	false	false
 31-Gitcoin Grants:Friends	0xa1e2421a68f0208b75acb0014a69e89b1f7492ea	burningtree		Gitcoin Website			false	false	false
 75-Early Actors	0xa1e4380a3b1f749673e270229993ee55f35663b4	First Sender		OnChain			false	false	true
 31-Gitcoin Grants:Friends	0xa1e8153d5eb68e5b7cd5262be22fc6f13a3f1a8e	jbaylina		Gitcoin Website			false	false	false
