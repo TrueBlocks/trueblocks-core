@@ -11263,7 +11263,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xd6aa415a9209093014759e81d7ba024d861abf4f	EYEXContract		Etherscan			false	false	false
 76-Verified	0xd6ad7a6750a7593e092a9b218d66c0a814a3436e	yUSDC		Etherscan			false	false	false
 32-Kickback:Friends	0xd6b6c1d686d67a3cda450d31fc9d4463f7a1bfac	cahlan		https://kickback.events/			false	false	false
-91-Friends	0xd6c067af8fa9c364daf50beb31b2837c2e539f35	BitCoinAcctnt		Etherscan			true	false	false
+91-Friends	0xd6c067af8fa9c364daf50beb31b2837c2e539f35	BitCoinAcctnt		Etherscan			false	false	false
 34-Humanity DAO	0xd6c0e7c9c328e2b09f9d8baac65e2dcd6d9ef8ee	DavidRyan386		https://www.humanitydao.org/humans			false	false	false
 76-Verified	0xd6c54a4fe044a8c20763fd06c6a2e346c9767414	Trader		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0xd6d16b110ea9173d7ceb6cfe8ca4060749a75f5c	charlieknoll		Gitcoin Website			false	false	false
@@ -12437,6 +12437,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 76-Verified	0xed0bc23028d733655ec4021a474d48497b510289	ConnectCurve		Etherscan			false	false	false
 81-Other	0xed0cab3924d9ecbb681991cb66b559e51e3d0f38	rbarnes user		idiotic post to slack exposing his account			false	false	false
 76-Verified	0xed140b118fad7292874ff5493dc9e033ed73c8e6	RecoverableWalletFactory		Etherscan			false	false	false
+40-Exchanges	0xed16764c64bd2595bf1a170b4a336f195dde9218	Coinbase 5		OnChain			false	false	false
 81-Other	0xed181449a0a9df43a873df85c1d947e48d37027e	I Want Smokes		Weifund Website			false	false	false
 32-Kickback:Friends	0xed19abdc33e91c809376b742d48ed1d935d4faef	thealexpatin		https://kickback.events/			false	false	false
 31-Gitcoin Grants:Friends	0xed2c8015d25d14240261cc48bcac7cfdc758a615	poiraudvictor		Gitcoin Website			false	false	false
