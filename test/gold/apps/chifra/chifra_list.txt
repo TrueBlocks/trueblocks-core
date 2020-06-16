@@ -7,7 +7,7 @@ TIME ~ CLOCK - <INFO>  : Scan blocks ./000000000-000000000.binTIME ~ CLOCK - <
 TIME ~ CLOCK - <INFO>  : Skip blocks ./000000001-000208519.bincacheMan argc: 2 [1:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 cacheMan 0xfb744b951d094b310262c8f986c860df9ab1de65 
 TIME ~ CLOCK - <INFO>  : Processing cache for address 0xfb744b951d094b310262c8f986c860df9ab1de65
-TIME ~ CLOCK - <INFO>  : Cache for address 0xfb744b951d094b310262c8f986c860df9ab1de65 okay to block 208520
+TIME ~ CLOCK - <INFO>  : Cache for address 0xfb744b951d094b310262c8f986c860df9ab1de65 okay to block Block
 acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
 address	blocknumber	transactionindex

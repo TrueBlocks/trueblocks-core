@@ -34,7 +34,5 @@
 "80-Malicious"
 "80-Prefund"
 "81-Custom"
-"81-Other"
-"81-Other:DAO Whales"
 "90-DevCon2:Individual"
 "91-Friends"
