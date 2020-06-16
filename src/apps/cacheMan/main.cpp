@@ -53,6 +53,8 @@ int main(int argc, const char* argv[]) {
                 string_q msg = STR_MSG_REPAIRED;
                 if (fixed.size() == items.size()) {
                     msg = STR_MSG_OKAY;
+                    if (isTestMode())
+                        replace(msg, "[{BLOCK}]", "Block");
                     if (lastVisited < fixed.back().bn) {
                         // Update the last visited block if later than we think it is (probably won't ever happen)
                         lastVisited = fixed.back().bn;

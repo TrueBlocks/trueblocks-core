@@ -1,27 +1,10 @@
 makeClass argc: 3 [1:--js] [2:CBlock] 
 makeClass --js CBlock 
-<Row name="schema" type="string" value={item.schema} display={item.schema} route="" />
-<Row name="deleted" type="string" value={item.deleted} display={item.deleted} route="" />
-<Row name="showing" type="string" value={item.showing} display={item.showing} route="" />
-<Row name="cname" type="string" value={item.cname} display={item.cname} route="" />
-<Row name="gasLimit" type="string" value={item.gasLimit} display={item.gasLimit} route="" />
-<Row name="gasUsed" type="string" value={item.gasUsed} display={item.gasUsed} route="" />
-<Row name="hash" type="string" value={item.hash} display={item.hash} route="" />
-<Row name="blockNumber" type="string" value={item.blockNumber} display={item.blockNumber} route="" />
-<Row name="parentHash" type="string" value={item.parentHash} display={item.parentHash} route="" />
-<Row name="miner" type="string" value={item.miner} display={item.miner} route="" />
-<Row name="difficulty" type="string" value={item.difficulty} display={item.difficulty} route="" />
-<Row name="price" type="string" value={item.price} display={item.price} route="" />
-<Row name="finalized" type="string" value={item.finalized} display={item.finalized} route="" />
-<Row name="timestamp" type="string" value={item.timestamp} display={item.timestamp} route="" />
-<Row name="transactions" type="string" value={item.transactions} display={item.transactions} route="" />
-<Row name="name" type="string" value={item.name} display={item.name} route="" />
-<Row name="light" type="string" value={item.light} display={item.light} route="" />
-<Row name="date" type="string" value={item.date} display={item.date} route="" />
-<Row name="age" type="string" value={item.age} display={item.age} route="" />
-Generating Menus...
+
+Generating Pages...
 
 Generating Schemas...
+Generating Menus...                                                          
 
 Checking help files...
 	Extraneous files: none

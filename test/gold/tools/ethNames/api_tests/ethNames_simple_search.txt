@@ -8,15 +8,6 @@
       "source": "On Chain",
       "decimals": 8,
       "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data"
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0xff15b5f18889704cf4a05026858e299596c4793b",
-      "name": "DarkCountryBase",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
     }
   ],
   "types": [

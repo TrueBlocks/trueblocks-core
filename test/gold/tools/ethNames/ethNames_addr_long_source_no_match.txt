@@ -1,7 +1,3 @@
 ethNames argc: 6 [1:Ether] [2:1e17] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames Ether 1e17 --verbose --fmt txt 
-tags	address	name	symbol	decimals	source
-76-Verified	0x1bee615efe1e17e36a064a47c375b10ed2af5ef1	CompoundFlashSaverProxy				Etherscan
-76-Verified	0x2d5487420fbeb5ba74eadf51084d4f71e1733983	PublicLock				Etherscan
-76-Verified	0x4f7ae048e2ad7d41ce0a5dc1e21e17c05f273e02	STYLToken				Etherscan
-76-Verified	0xd6ef1e17773c6a9d514a1cbd2509d2f687d1e850	CurDEX				Etherscan
+No results

@@ -1,29 +1,11 @@
 {
   "data": [
     {
-      "tags": "76-Verified",
-      "address": "0x1000418478824d00513c55007b0036df00007ddd",
-      "name": "DharmaUpgradeMultisig",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10017ca37b1257ac0771e24652aa28c758e378eb",
       "name": "vkcrypto-sys",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x100468be212db1d42192965924b537f08567c520",
-      "name": "Funds",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -34,15 +16,6 @@
       "symbol": "TMTG",
       "source": "On Chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10096f63bae5de8b3c0fe597a2e33bac477361c8",
-      "name": "PremiumFeedPrices",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
       "description": ""
     },
     {
@@ -82,42 +55,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x101d8b63a081dfff2b1364864345b7f071b052ac",
-      "name": "NEST_NodeSave",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x101dfbd91120aae48fc6e8d007cfec5ac4953dbd",
-      "name": "yCurveZapSwapV4",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x101e5f986a855125cb4a98e37f1fb351f816d249",
-      "name": "GooglierPlatinum",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x103675510a219bd84ce91d1bcb82ca194d665a09",
-      "name": "TransferManager",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
       "name": "Genesis Vision Token",
@@ -127,60 +64,6 @@
       "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1041e9267f46193a2a0de511c4eac47da5201f43",
-      "name": "CompImport",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x104312cfa88b77304127f8033e4efa926ac5dacf",
-      "name": "tissueBeta",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1043bcef83f3575ac0b2360f6f20c2aa86fa4cf8",
-      "name": "DispenserAdapter",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1051a014e4b3f2bd08e5a7e52522f0f71628162b",
-      "name": "OGODSToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1056d0c770a7614cee6b2f1b3935866f3284ddf8",
-      "name": "CrowdsaleERC20",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10591b8e3e83cd9852172f022a5a70edfb66063d",
-      "name": "Exchange",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
       "name": "Aigang",
@@ -188,24 +71,6 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x106487258a798df4299bab5f540dfa3f8f20414b",
-      "name": "CVP",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1064ab99dfe2562449a5f54f71415327c2b1e95a",
-      "name": "Token",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -221,16 +86,7 @@
       "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
       "name": "Grant 083 Poa Network Community Management Grant For Adj",
       "symbol": "",
-      "source": "GitCoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10753aeb1cfe93b257fa422c940668bbf765daf3",
-      "name": "RecoverableWalletFactory",
-      "symbol": "",
-      "source": "Etherscan",
+      "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj-2",
       "decimals": "0",
       "description": ""
     },
@@ -244,15 +100,6 @@
       "description": "Decentralized credit scoring powered by Ethereum and IPFS."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x10819fae72282b9a594e34c647a7bc446ef4ad2e",
-      "name": "CryptoFun",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "75-Early Actors",
       "address": "0x108b54b7e3c09f8127cb8b28ffa3ad4001b32998",
       "name": "Miner_0086_64",
@@ -262,101 +109,11 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x108be4b0666eebcf327cca3d374a8a6a0e7ce5e0",
-      "name": "BCHPleaseDb",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x109971b69888c8be7bcc904573fe93e907e18541",
-      "name": "TTS",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10a285ea8b9e0ff92a2de4ecf961293a6999f7e6",
-      "name": "KyberPriceFeed",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10a468375862b96ef6b70b337ccd839f4b816c74",
-      "name": "CreateWin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10ba8c420e912bf07bedac03aa6908720db04e0c",
-      "name": "RaiseToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10bb949235858e52a717725802bf9bd8d665be21",
-      "name": "JEDToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10c4827cfb13218417d0eaa1f0ada9cdb436ca8f",
-      "name": "DharmaTransferFacilitatorV1Staging",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10c625ac956ce0e04f43b3f38319a22d7b1cdf6f",
-      "name": "Selfiechain",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10d1e0c359411f1f7af55a17add2891eacfbcd16",
       "name": "ethereumkev",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10d62d4d84c55d93d697097718dfbd929344ae57",
-      "name": "chaiBatch",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x10db9941e65da3b7fdb0cd05b1fd434cb8b18158",
-      "name": "Vyper_contract",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -379,47 +136,11 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x110101156e8f0743948b2a61afcf3994a8fb172e",
-      "name": "StickerPack",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1101c52fc25dc6d2691cec4b06569cef3c83933c",
-      "name": "OracleFactory",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x110211c254e5c8098ffad524312b1dd4bc6aa616",
       "name": "decentralistdan",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x110f1c8ce1f0b7977193eda2ba144dc45b0dd7aa",
-      "name": "ETH_Balancer_General_Zap_v1",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11105d1fbc4c8ad6f0280a0b52b8091232fb7363",
-      "name": "Blagada",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -451,15 +172,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x112157162bc4b655bbaf3a0b61423d205a3a5e58",
-      "name": "GRV",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
       "name": "Centrality Token",
@@ -469,110 +181,11 @@
       "description": "Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1125a7a5978614b4b1835029410d8d96a76cd5b6",
-      "name": "ERC20Chocolate",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11263b92661fa1fa96800139c9d6b510953a35eb",
-      "name": "SportValueCoin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1127451a020251e8165bf119ea6bab37e68ac9ea",
-      "name": "Coinerium",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "90-DevCon2:Individual",
       "address": "0x11378851299a15a849ad0057a834c23ef1b3d381",
       "name": "tandava",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x113962a048f5ad244d1d8d225a2a904b81dc85a0",
-      "name": "ChainlinkProxy",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1149cfc37d81304173cd2b203508ab1f6934b81b",
-      "name": "ASTOX",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x115c93b168020990f7b6d2f094a57fc5256b5bd1",
-      "name": "SaverExchange",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x115e29615d1c10c8ddf826e4faec64ef6c1e3357",
-      "name": "CapitalCoin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1173641d697e03d63d44f4b508ad8010c67b9a11",
-      "name": "ERC20",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1176087b46fd1c99f2bb24c40b4be89334566089",
-      "name": "SuperSaverZapV2",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11766786e8b1509256348a27e0b291bdda946810",
-      "name": "TokensView",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11828658b710a4bfa896779f8b43ec3c7e851a79",
-      "name": "SmartexUID",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -586,38 +199,11 @@
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1186d7dff910aa6c74bb9af71539c668133034ac",
-      "name": "DmmEtherFactory",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "90-DevCon2:Individual",
       "address": "0x1191be4dbfac983c9ce87e3411542d69d382f7d6",
       "name": "durandal",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1192ad89022711002e0e2f1528a0f139f596646d",
-      "name": "DozerPassV2",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x119a40a87f9237c2134036d378138fcf8fc38585",
-      "name": "PZSHToken",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -640,24 +226,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x11c4bb2d1e89945a37d723d7af4908ee7e08ce82",
-      "name": "ZeneKaPGHR13",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11cbb069aa7f8fbf00c62206d1239e11dc62624e",
-      "name": "TokenERC20",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
       "name": "formula0x",
@@ -667,20 +235,11 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x11d58130243604301a74394871709102a88ff655",
-      "name": "ConnectCurve",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
       "name": "Grant 048 Uniswap",
       "symbol": "",
-      "source": "GitCoin Website",
+      "source": "https://gitcoin.co/grants/48/uniswap",
       "decimals": "0",
       "description": ""
     },
@@ -694,47 +253,11 @@
       "description": "https://ethstats.info"
     },
     {
-      "tags": "76-Verified",
-      "address": "0x11eba93a0a852fd34002f5411e1663cf864edb8b",
-      "name": "Morality",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11eca524a2b6b2ca7015cf3ff0823fb988c322fa",
-      "name": "Token",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x11f77714eae329f57b07b55dc2c43b7f2b7f887c",
-      "name": "CHEEUR",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "30-Contracts",
       "address": "0x1200563cfaeb481e1f0542a246f0cefcde4c4753",
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12034f265c1dc4a0f638f55159ae184ea16a01eb",
-      "name": "PaymentQueue",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -779,16 +302,7 @@
       "address": "0x1222d0ded67a533b3163397fd917bc8ac6f96b7a",
       "name": "Grant 655 Alternative income for poor families in Brazil",
       "symbol": "",
-      "source": "",
-      "decimals": "0",
-      "description": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil"
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x122710229af5182ff6ca8f5577e9c03c08d1a44a",
-      "name": "CrowdsaleRaspberry",
-      "symbol": "",
-      "source": "Etherscan",
+      "source": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil",
       "decimals": "0",
       "description": ""
     },
@@ -805,15 +319,6 @@
       "tags": "60-Airdrops",
       "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
       "name": "BitClave Airdrop",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1235f3f2bb5f69bceb5425cdc83cb1163190d9bb",
-      "name": "ShuffleRaffle_v2",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
@@ -847,15 +352,6 @@
       "description": "Exchange with decentralized ledgers"
     },
     {
-      "tags": "76-Verified",
-      "address": "0x124553d7c12d21304744e55a316531c4e0568851",
-      "name": "MiningBitcoinToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
       "name": "ArbitrageCT",
@@ -879,15 +375,6 @@
       "name": "Possibly Malicious 0x124",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1250d1f474c802524f130031c2072add53aab696",
-      "name": "Hashimotochain",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -919,24 +406,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x126824f51191256db86b49c0886ddcdf0d32744a",
-      "name": "ERC20Vanilla",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12691baf9094d2af161ba48ab5f024779b70456b",
-      "name": "DoubleExponentInterestSetter",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
       "name": "TrakInvest Token",
@@ -946,24 +415,6 @@
       "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1277009197f59600285d4e319700000000d94e73",
-      "name": "DharmaUpgradeMultisig",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x127b47d30d293afe05f3e17e4966ed4109d4bb30",
-      "name": "DssSpell",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x127c6839dee7c737767c9f62d13996e27854505d",
       "name": "Grant 419 Project Maple Cryptographic Currency Redefined.",
@@ -971,33 +422,6 @@
       "source": "https://gitcoin.co/grants/419/project-maple-cryptographic-currency-redefined",
       "decimals": "0",
       "description": "https://github.com/alialiwa2005/Maple"
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12824271339304d3a9f7e096e62a2a7e73b4a7e7",
-      "name": "StickerMarket",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1283542f01c6e28e3554662985f82dc69bb492bd",
-      "name": "aNonEventManagement",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1285fdbf7719723e263332423a445c139ee489ff",
-      "name": "FZC",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
     },
     {
       "tags": "33-Set Protocol:Wrapers",
@@ -1014,15 +438,6 @@
       "name": "daaab",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12a7e9e733480483ac5269212347934371d1a568",
-      "name": "Aggregator",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1063,33 +478,6 @@
       "description": "Broker-less financial trading platform."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x12b7b9d1461f4aa1e713911ecba47a6d04327af6",
-      "name": "standardTokenFactoryMaker",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12bac8c392f5a2ec82f3c2799289a1a7515d8f02",
-      "name": "SMASH",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12ce7ea7359cb28dfd600430b4e2b411eba5bd40",
-      "name": "SaverExchange",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x12d062b19a2df1920eb9fc28bd6e9a7e936de4c2",
       "name": "vince0656",
@@ -1102,15 +490,6 @@
       "tags": "30-Contracts",
       "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
       "name": "Tornado.Cash: 0.1 ETH",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12dace5707185d19325d16e3a7a651d3207c354f",
-      "name": "NKCL",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
@@ -1135,42 +514,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x12e4c875157c002e6a3385d14a1620e4f3703fc9",
-      "name": "SimpleRestrictedFDT",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12ef4d13ab43ba4de1be7cc8385c6e9242aa42c0",
-      "name": "KauriStaking",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12f208476f64de6e6f933e55069ba9596d818e08",
-      "name": "Staking",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x12f8551a516085e4cef5e2451d54ede7d24983cc",
-      "name": "CompoundBasicProxy",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
       "name": "Cofoundit",
@@ -1189,15 +532,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x13110480c3c83ad103159ca239d82feb7a9b1a45",
-      "name": "MAIUSD",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
       "name": "MoneyToken",
@@ -1207,92 +541,11 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1314561c116feadb3a2e3e9e5a9fe0b7d8b5d2aa",
-      "name": "FLC",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x131bea5c6679b9df528de29ba9b8f91ced3919af",
-      "name": "CompoundSubscriptions",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x131f983da6fabf20869f5ace3516a23f28b46204",
-      "name": "Blacklist",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x132030497cbc19d10cb2690ecf9690803519b5de",
-      "name": "AugustusSwapper",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13240b97c40d7e306cedf3adc9cb057cec74c361",
-      "name": "UniSwap_ETH_MKRZap",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x132a04f3f6196b499a7ed512c15e002d5dcefa9a",
-      "name": "Forwarder",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x132fcf76ce9d616c2f05b5efbd44acb2157edb3f",
-      "name": "StaticConnectMaker",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1337a824f3131c718b7a336e18cadb4ba0fafffc",
-      "name": "Safe_1_1_1_Factory",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
-      "source": "GitCoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x133dbfdf74f565838a2f9413fb53761a19f06adf",
-      "name": "HashedTimeLockContract",
-      "symbol": "",
-      "source": "Etherscan",
+      "source": "",
       "decimals": "0",
       "description": ""
     },
@@ -1301,61 +554,7 @@
       "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
       "name": "Grant 120 Nori",
       "symbol": "",
-      "source": "GitCoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x135c573503f70dc290b1d60fe2e7f7eb114febd6",
-      "name": "BinaryArbitrableProxy",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13699f2d9ef79b2bb884f7aa4f9852a7821c026a",
-      "name": "LZDCrowdsale",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1377f48d483de65fcdb5d2ff0b6c9ebe0526a1f7",
-      "name": "VokenOffer",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x137a2417edb173e43ccc246dc76dfeb5281005cc",
-      "name": "MetadataStore",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x137f49df0d2ee351543fd72f306d5c31def73911",
-      "name": "TokenERC20",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13821c0129fb9e2cc16de2660783ff4e4861e92d",
-      "name": "SmartWalletRevertReasonHelperV1",
-      "symbol": "",
-      "source": "Etherscan",
+      "source": "https://gitcoin.co/grants/120/nori",
       "decimals": "0",
       "description": ""
     },
@@ -1387,24 +586,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x138dd6d5d403628fc1d2db31bf832ef298f56cdf",
-      "name": "ChainBot4000",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x139a2102336b62ef29d7208ba771c35583188a8b",
-      "name": "GiftOfCompoundRegistry",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
       "name": "BoutsPro",
@@ -1421,15 +602,6 @@
       "source": "https://gitcoin.co/grants/575/getlogineth",
       "decimals": "0",
       "description": "https://github.com/GetLoginEth/"
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13a399fe6c5b38b247e1477016f5fc7c3f6b3ccb",
-      "name": "GozePayToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
     },
     {
       "tags": "31-Gitcoin Grants:Friends",
@@ -1450,42 +622,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x13b54e8271b3e45ce71d8f4fc73ea936873a34fc",
-      "name": "Curvepool",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13b5ccb409a48e15368bf21716dc1f29906b92fd",
-      "name": "standardToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13b7d2bf5e1a72938facf660e0d0b270b0e1fe16",
-      "name": "TheToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13bb68047fcca765e70e116efebf651ae16b1848",
-      "name": "ERC20",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
       "name": "PHI Token",
@@ -1493,24 +629,6 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13cf6d36d4754bec83ddd76be123ff8b96f28264",
-      "name": "lockFunds",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13d71cfc90a83cd1cc0e59675c3f4b90d4162a8b",
-      "name": "SwipeToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1558,60 +676,6 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x13f37d9ae81b682425a8f80c44d36a87af834c61",
-      "name": "punkDetails",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13f6daa69a85d072ee9302ca37533a4db2c354e8",
-      "name": "GratitudeDispenser",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13fba4cbacd7ce05c50fa0960904c357908f512d",
-      "name": "Airdropper",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x13fbbea6f440c2fa56ff8f90ff984118a2df0500",
-      "name": "ETHGIVER",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1405ca0c8a3b5196a6a3365e971bfd9a8ada500c",
-      "name": "Minter",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1407596cf00c5afd7ef06210ea8937e923f98372",
-      "name": "BlockonomiToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "50-Tokens",
       "address": "0x14094949152eddbfcd073717200da82fed8dc960",
       "name": "Fulcrum iSAI",
@@ -1625,7 +689,7 @@
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
       "name": "Grant 212 Thx Open Protocol For Online Rewards",
       "symbol": "",
-      "source": "GitCoin Website",
+      "source": "https://gitcoin.co/grants/212/thx-open-protocol-for-online-rewards",
       "decimals": "0",
       "description": ""
     },
@@ -1639,54 +703,9 @@
       "description": "A decentralized cryptocurrency-concentrated content payment community."
     },
     {
-      "tags": "76-Verified",
-      "address": "0x141234fd0042d83aa03ef72f0208a6ce36103ae9",
-      "name": "Woocoin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x14156ae5a89eead93fb4f2117637fdd2634c9cf5",
-      "name": "AppProxyPinned",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x141cfff411445c7519cced09d414de222b385a82",
-      "name": "Origin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
       "tags": "35-Pool Together",
       "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
       "name": "Pool Together Sender",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x143bc913c564ccf8be0e312a11ec0374005d0544",
-      "name": "ETHDrop",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x143e685dd51d467d77663a3be119217185d81b99",
-      "name": "CommunityBankCoin",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
@@ -1698,60 +717,6 @@
       "name": "parrachia",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x144cc6eb227ab439effcfa4eb19704ec41065af6",
-      "name": "TokensView",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1457ef45c753e2675a409537250b66b3d0cadbad",
-      "name": "AGT",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1458a13c925e385921585fc6dbba4e7d71bd1ea4",
-      "name": "SNC",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x145cf8d35b2ed2259c5500e6d364286c1b220ca5",
-      "name": "TDeployer",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x145f9bbd9f1ca0923e81e05c2ac04fda2310d774",
-      "name": "VACCToken",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "76-Verified",
-      "address": "0x1460771b713e8e58e350f9d82f7b83acb6b2e75f",
-      "name": "OptionsExchange",
-      "symbol": "",
-      "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
@@ -1774,40 +739,1075 @@
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x146626bb8dca77cc882b2b183025f16c1207aa6c",
-      "name": "BBB",
+      "tags": "50-Tokens:ERC20",
+      "address": "0x146d8d942048ad517479c9bab1788712af180fde",
+      "name": "Mobile Integrated Blockchain",
+      "symbol": "MIB",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x147454510acc3856bc5d1727715c2efff526de5d",
+      "name": "scofield",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x147c06f559f742cc9ef2ea5e628f381bccdce2ba",
+      "name": "Grant 364 React Native support for IPFS",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/364/react-native-support-for-ipfs",
+      "decimals": "0",
+      "description": "https://github.com/openworklabs/react-native-ipfs-http-client/"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x14869c6bf40bbc73e45821f7c28fd792151b3f9a",
+      "name": "igorline",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "91-Friends",
+      "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
+      "name": "Jin's Wallet",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
+      "name": "Bethereum",
+      "symbol": "BETHER",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414",
+      "name": "birdeea",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x14e25eea7034c4dfc909bacac866e930a0576c75",
+      "name": "TRX Airdrop",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "33-Set Protocol:Factories",
+      "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
+      "name": "Set Token Factory",
+      "symbol": "",
+      "source": "https://github.com/SetProtocol/set-protocol-contracts",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x14f37b574242d366558db61f3335289a5035c506",
+      "name": "HackerGold",
+      "symbol": "HKG",
+      "source": "On Chain",
+      "decimals": 3,
+      "description": ""
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
+      "name": "Stephen King",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x151202c9c18e495656f372281f493eb7698961d5",
+      "name": "DEBITUM",
+      "symbol": "DEB",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
+      "name": "d2friend",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
+      "name": "XOVBank",
+      "symbol": "XOV",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
+      "name": "VisionX",
+      "symbol": "VNX",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "80-Malicious",
+      "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
+      "name": "Possibly Malicious 0x157",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "36-Compound",
+      "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
+      "name": "Compound: cREP",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x146645fbc468ad34464240cd494e4f4cd84a120b",
-      "name": "CoinRepublik",
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1584225583e707e2b1d61270a6aa249d57db9f9a",
+      "name": "steven-audet",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x15847a5a44aa0551f655d28d716d247df84d002b",
+      "name": "Arbitrage Bot",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x158d6727b17aaba726d7318ac7dca5edf8faf6f8",
+      "name": "Grant 475 CryptoGift",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/475/cryptogift",
+      "decimals": "0",
+      "description": "https://vittominacori.github.io/cryptogift/"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1591b9056822c273252fcea32963223650db18e1",
+      "name": "Grant 220 Cryptorado",
+      "symbol": "",
+      "source": "",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
+      "name": "evanswd",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
+      "name": "Alpha Coin",
+      "symbol": "APC",
+      "source": "On Chain",
+      "decimals": 6,
+      "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x15c9fcba332848781fe82ef1f8d3768672a32a72",
+      "name": "cowboychicken",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
+      "name": "anTok Airdrop",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
+      "name": "Grant 211 Trust Graphic Novel anneconnelly",
+      "symbol": "",
+      "source": "",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
+      "name": "eREAL",
+      "symbol": "eREAL",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
+      "name": "Qubitica",
+      "symbol": "QBIT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "A distributed blockchain enterprise."
+    },
+    {
+      "tags": "80-Malicious",
+      "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
+      "name": "Possibly Malicious 0x160",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
+      "name": "Jury.Online Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x16385dfcc9139ffb357746780b64a605b4cb46f0",
+      "name": "Grant 377 NEWFORKDELTA",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/377/newforkdelta-2",
+      "decimals": "0",
+      "description": "https://newforkdelta.github.io/"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x164f867d49e5cffe24b7ba6e2acc4a81504bd4c9",
+      "name": "trendos",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x165107ce980edff38065261326354c3d6cd809e6",
+      "name": "Grant 709 Adoption and dissemination of Ethereum Technology",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology",
+      "decimals": "0",
+      "description": "https://blockchaincounselor.blogspot.com/"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x165cc5f47cdb55bad3282b6543cbbf6542e06cdc",
+      "name": "bowensanders",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
+      "name": "RHOC",
+      "symbol": "RHOC",
+      "source": "On Chain",
+      "decimals": 8,
+      "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x16893e10b99a59afd2c60331e0b49241d4d4d7cc",
+      "name": "Simon de la Rouviere",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x16990619b3ee302d82a0f6f8b9c6bd204b058be5",
+      "name": "followthechain",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x16b942c119d3e34ff8f801cf68ec6aa26f1dc494",
+      "name": "matslats",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x16c1e5baf21b9fa4bc9f2c374e4dc19fab5ac5dc",
+      "name": "APOT",
+      "symbol": "APOT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
+      "name": "United Traders Token",
+      "symbol": "UTT",
+      "source": "On Chain",
+      "decimals": 8,
+      "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
+      "name": "OwnData",
+      "symbol": "OWN",
+      "source": "On Chain",
+      "decimals": 8,
+      "description": "Owndata is a crypto marketplace for data sellers and buyers."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1715fe4beb202cfb8a76a91c6c0677dc3fbefcb4",
+      "name": "darrenzal",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1719c7dc8216ce67f96171e1a817195ae075d78d",
+      "name": "Grant 428 Solexplorer Gitcoin Community Manager",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/428/solexplorer-gitcoin-community-manager",
+      "decimals": "0",
+      "description": "https://gitcoin.co/solexplorer"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x171d750d42d661b62c277a6b486adb82348c3eca",
+      "name": "Omnitude Token",
+      "symbol": "ECOM",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Omnitude is a middleware layer allowing eCommerce businesses to adopt blockchain quickly and efficiently, without needing to replace current systems."
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x17405148473e521b62cbcf8ebd929e8a30c4d3aa",
+      "name": "Dao Issued Cert Airdrop",
+      "symbol": "DIC",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
+      "name": "Numeraire",
+      "symbol": "NMR",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "The stock market is inefficient with respect to new developments in machine learning ‚Äö√Ñ√Æ only a fraction of the world's data scientists have access to its data. Numerai is changing this."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
+      "name": "CoinDash Token",
+      "symbol": "CDT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x17a7ad6a2850f58f7344ae27e53eb44f81f9655c",
+      "name": "RZM Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482",
+      "name": "Insight Chain",
+      "symbol": "INB",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64",
+      "name": "Freyr Coin",
+      "symbol": "FREC",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Blockchain-based collectibles data authentication platform"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x17f8afb63dfcdcc90ebe6e84f060cc306a98257d",
+      "name": "Nebula AI Token",
+      "symbol": "NBAI",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
+      "name": "FLiK",
+      "symbol": "FLIK",
+      "source": "On Chain",
+      "decimals": 14,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x1814222fa8c8c1c1bf380e3bbfbd9de8657da476",
+      "name": "1inch Exchange",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
+      "name": "1820 Registry",
+      "symbol": "REG",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1829aa045e21e0d59580024a951db48096e01782",
+      "name": "FuzeX Token",
+      "symbol": "FXT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x182ebf4c80b28efc45ad992ecbb9f730e31e8c7f",
+      "name": "LPT Airdrop",
+      "symbol": "LPT",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x18393570148df516f664ef624d6ed9e808f109fb",
+      "name": "safetyth1rd",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
+      "name": "Oyster Pearl",
+      "symbol": "PRL",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x185196c8c5dd5729f22315203e09e33c3f7d7680",
+      "name": "androolloyd",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
+      "name": "Grant 133 Abridged",
+      "symbol": "",
+      "source": "",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x1857ae37ba3005113f9809b0e19a2a6563ee0d3b",
+      "name": "Arbitrage Bot",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x187c4b0e3819017a5cf07af81a4e2b16166aabc6",
+      "name": "ICOCalendar.Today",
+      "symbol": "ICT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
+      "name": "SNGX Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x18ac920241e0f5699448379e63069724d9d8a603",
+      "name": "Grant 544 CultureStake",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/544/culturestake",
+      "decimals": "0",
+      "description": "https://www.furtherfield.org/culturestake-2/"
+    },
+    {
+      "tags": "33-Set Protocol:Other",
+      "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
+      "name": "Payable Exchange Issue",
+      "symbol": "",
+      "source": "https://github.com/SetProtocol/set-protocol-contracts",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f",
+      "name": "mjcronin",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x190473b3071946df65306989972706a4c006a561",
+      "name": "chainlinkgod",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x19076bd01e86fa3d76334e27d4b8e6789688a42d",
+      "name": "Gnosis Auction",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x190a2409fc6434483d4c2cab804e75e3bc5ebfa6",
+      "name": "0xyobo",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "91-Friends",
+      "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
+      "name": "POAP Token Sender",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x1468279ed9ec554e836a954897ebddc4e366a10f",
-      "name": "TetherToken",
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1955c2b76b1cf245795950e75eb176080879da50",
+      "name": "yippee-ki-yay",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
     {
-      "tags": "76-Verified",
-      "address": "0x146b3f3133858737db3c22d0102e950641012f08",
-      "name": "Description",
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
+      "name": "BitDegree Token",
+      "symbol": "BDG",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
+      "name": "nDEX",
+      "symbol": "NDX",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
+    },
+    {
+      "tags": "50-Tokens",
+      "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
+      "name": "Augur Token",
+      "symbol": "REP",
+      "source": "Etherscan.io",
+      "decimals": "0",
+      "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
+    },
+    {
+      "tags": "80-Malicious",
+      "address": "0x1992764a6fd30ad0ad6ec665b3483838acb02fba",
+      "name": "Possibly Malicious 0x199",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "TrueBlocks.io",
       "decimals": "0",
       "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x19a2f57f30206f7343ee5928c32bae3f2bfacbcd",
+      "name": "CGCX Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens",
+      "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
+      "name": "Hacker Gold",
+      "symbol": "HKG",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "75-Early Actors",
+      "address": "0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e",
+      "name": "Miner_0064_93",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c",
+      "name": "Carats Token",
+      "symbol": "CARAT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x19fa61309158e138b685646247f58a3ce9f18145",
+      "name": "Grant 311 echonomics",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/311/echonomics",
+      "decimals": "0",
+      "description": "https://twitter.com/Maverickal_"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1a0f2ab46ec630f9fd638029027b552afa64b94c",
+      "name": "Aston X",
+      "symbol": "ATX",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Document Distribution Platform"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1a207beefc754735871ceeb4c506686f044b1c41",
+      "name": "4-1-3-x",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7",
+      "name": "ECHAT TOKEN",
+      "symbol": "ECHT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "80-Malicious",
+      "address": "0x1a2a44a10624bea74988d877e770d56a14a258b4",
+      "name": "Possibly Malicious 0x1a2",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7",
+      "name": "PRASM",
+      "symbol": "PSM",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "AI-Based Decentralized Bioinformatic Network"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1a6e64a15cb07639eb27471e422a947085c2f4fc",
+      "name": "jordancason",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
+      "name": "AppCoins",
+      "symbol": "APPC",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem."
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x1a808e137ca97712b97b0c50a046e53b7e58bedc",
+      "name": "LPT Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
+      "name": "minereum",
+      "symbol": "MNE",
+      "source": "On Chain",
+      "decimals": 8,
+      "description": "Self-mining smart contract."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
+      "name": "Grant 150 Ethereum Egift Cards",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/150/ethereum-egift-cards",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1ab1cc4a40c1a609c18342c5ae0b91c2e0720e98",
+      "name": "nagydaaniel",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:dAppNode",
+      "address": "0x1abf8d63ac29be2a8c3411901b3bee6fadca2dc4",
+      "name": "dAddNode Package 005",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1b22c32cd936cb97c28c5690a0695a82abf688e6",
+      "name": "MyWish Token",
+      "symbol": "WISH",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Aims to provide a service for funds management in case of different life events, in safe and convenient way."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1b5b127f535103f079fef9fd51b6a63da7efda67",
+      "name": "antoineboul",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x1b5c6e1e7981a186fc54bfa343bab295027ac351",
+      "name": "Simon Janin",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "90-DevCon2:Individual",
+      "address": "0x1b63142628311395ceafeea5667e7c9026c862ca",
+      "name": "Taylor Gerring",
+      "symbol": "",
+      "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
+      "name": "TopChainCoin",
+      "symbol": "TOPC",
+      "source": "On Chain",
+      "decimals": 6,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1b6eed8f16a4f3e84c91e058be7c10c4585014b8",
+      "name": "veryotaku",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "75-Early Actors",
+      "address": "0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c",
+      "name": "Miner_0006_1133",
+      "symbol": "",
+      "source": "OnChain",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1b713927312669f4891215a7b252e5674cf50796",
+      "name": "thomas-waite",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
+      "name": "ViteToken",
+      "symbol": "VITE",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "High-performance Decentralized Application Platform"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1b957dc4aefeed3b4a2351a6a6d5cbfbba0cecfa",
+      "name": "HOQU Token",
+      "symbol": "HQX",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1b9743f556d65e757c4c650b4555baf354cb8bd3",
+      "name": "EthBits ETBS Token",
+      "symbol": "ETBS",
+      "source": "On Chain",
+      "decimals": 12,
+      "description": "ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1bb48a26b8f39eb58ca90375ce78b3d50fc9a3fd",
+      "name": "fulviamorales",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1bc4230d996286ffd1dd4dc649aad47fa08cadc4",
+      "name": "evgenyboxer",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1bcbc54166f6ba149934870b60506199b6c9db6d",
+      "name": "ROC",
+      "symbol": "ROC",
+      "source": "On Chain",
+      "decimals": 10,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20",
+      "name": "ro5s",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "60-Airdrops",
+      "address": "0x1c19839c88c0cdb4d0b10208833101d75454d7c1",
+      "name": "EMO Airdrop Sender",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1c277bd41a276f87d3e92bccd50c7364aa2ffc69",
+      "name": "fubuloubu",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1c4481750daa5ff521a2a7490d9981ed46465dbd",
+      "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
+      "symbol": "BCPT",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "Democratizing the creation of credit through permanently recorded debts and obligations."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1c4b7d0e1885bd7667af3378e0c538f74e712006",
+      "name": "IOGToken",
+      "symbol": "IOG",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff",
+      "name": "Soniq Token",
+      "symbol": "SONIQ",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1c6640089c6af02e11f04f0ee44b2cc6ef924057",
+      "name": "ecruz01",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7",
+      "name": "TEAM",
+      "symbol": "TEAM",
+      "source": "On Chain",
+      "decimals": 4,
+      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1c83501478f1320977047008496dacbd60bb15ef",
+      "name": "DigitexFutures",
+      "symbol": "DGTX",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends",
+      "address": "0x1c8fe2ef3f3aa3448db5367d6bf4f1e0fcd36ae5",
+      "name": "richardjameslopez",
+      "symbol": "",
+      "source": "Gitcoin Website",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
+      "name": "ThoreCoin",
+      "symbol": "THR",
+      "source": "On Chain",
+      "decimals": 4,
+      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1cc1c78bcfa5e872cceba516ef821e30a280a9bb",
+      "name": "Grant 286 One Million Developers Community Fund",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/286/one-million-developers-community-fund",
+      "decimals": "0",
+      "description": "https://github.com/OneMillionDevs"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672",
+      "name": "Faceter Token",
+      "symbol": "FACE",
+      "source": "On Chain",
+      "decimals": 18,
+      "description": "A computer vision surveillance technology powered by fog network of miners."
     }
   ],
   "types": [

@@ -97,9 +97,6 @@
       "tags": "75-Early Actors"
     },
     {
-      "tags": "76-Verified"
-    },
-    {
       "tags": "80-Malicious"
     },
     {

@@ -31,7 +31,7 @@ bool COptions::exportAccounting(void) {
     string_q readFilename = getMonitorCach(accountForAddr);
     bool readFileExists = fileExists(readFilename);
 
-    LOG8(string_q(120,'+'));
+    LOG8(string_q(120, '+'));
     LOG8("readFile: ", readFilename, " (", fileSize(readFilename), ") readFileExists: ", readFileExists);
 
     if (readFileExists && fileSize(readFilename) > 0) {
@@ -79,7 +79,7 @@ bool COptions::exportAccounting(void) {
     nCacheItemsWritten = nCacheItemsRead;
 
     // We open the file in staging to protect it from interruption...
-    LOG8(string_q(120,'-'));
+    LOG8(string_q(120, '-'));
 
     string_q stagingFilename = getMonitorCach(accountForAddr);
     bool stagingFileExists = false;
@@ -107,7 +107,7 @@ bool COptions::exportAccounting(void) {
         lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(accountForAddr, lastStatement.blockNum);
     }
 
-    LOG8(string_q(120,'='));
+    LOG8(string_q(120, '='));
 
     for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk <= scanRange.second; i++) {
         const CAppearance_base* item = &items[i];
@@ -171,7 +171,7 @@ bool COptions::exportAccounting(void) {
             cout << trans.Format() << endl;
             first = false;
             nExported++;
-            //LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
+            // LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
             //         ").          \r");
         }
     }
@@ -185,7 +185,7 @@ bool COptions::exportAccounting(void) {
         lockSection(false);
     }
 
-    LOG8(string_q(120,'@'));
+    LOG8(string_q(120, '@'));
 
     cout << "]" << endl;
 

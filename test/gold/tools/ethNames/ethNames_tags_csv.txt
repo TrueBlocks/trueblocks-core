@@ -33,7 +33,6 @@ ethNames --tags --fmt csv
 "60-Airdrops"
 "70-Vendors"
 "75-Early Actors"
-"76-Verified"
 "80-Malicious"
 "80-Prefund"
 "81-Custom"

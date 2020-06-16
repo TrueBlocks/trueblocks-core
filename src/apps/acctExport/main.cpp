@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
 
         } else {
             if (options.loadAllAppearances()) {
-                if (false) { //options.accounting) {
+                if (false) {  // options.accounting) {
                     options.exportAccounting();
                 } else {
                     options.exportData();

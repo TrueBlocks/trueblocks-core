@@ -1,8 +1,4 @@
 ethNames argc: 4 [1:0xCB1] [2:--fmt] [3:txt] 
 ethNames 0xCB1 --fmt txt 
 tags	address	name	symbol	decimals
-76-Verified	0xcb160654f6fdd82800b6137ce4023c818c4c0d96	Transfers
-76-Verified	0xcb17e569890783e2a6a069e1d6b8ec48c56d4986	LockTokens
-76-Verified	0xcb182bcfbc6e3b71dc11ca7e5a3273842ae71421	KHToken
 31-Gitcoin Grants:Friends	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	ntomaino
-76-Verified	0xcb1dd82a6518e4db8a3404bcc04a97def0eb4df4	AccountLevels

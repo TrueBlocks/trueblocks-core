@@ -1,22 +1,6 @@
 {"data": [
   {
-    "address": "0x05b837ea9a4f3a56f883d5991c6c9ca32c49403e",
-    "decimals": "0"
-  },
-  {
-    "address": "0x09afd24acc170c16f4ff64bdf2a4818c515440e8",
-    "decimals": "0"
-  },
-  {
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
-    "decimals": "0"
-  },
-  {
-    "address": "0x2c55f6284caee41d3bcc33305cc54d5e0bfb0bad",
-    "decimals": "0"
-  },
-  {
-    "address": "0x4b702fc17fc11859aeb8eb0d3bd876a6a4bff910",
     "decimals": "0"
   },
   {
@@ -32,15 +16,7 @@
     "decimals": "0"
   },
   {
-    "address": "0x57917da61304f309694993c18bbc0f15e5507a6a",
-    "decimals": "0"
-  },
-  {
     "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-    "decimals": "0"
-  },
-  {
-    "address": "0x740623d2c797b7d8d1ecb98e9b4afcf99ec31e14",
     "decimals": "0"
   },
   {
@@ -48,55 +24,7 @@
     "decimals": "0"
   },
   {
-    "address": "0x7f1cd65679d73eb98fcebe8b61c13d3d68605717",
-    "decimals": "0"
-  },
-  {
-    "address": "0x94be924c9f2a99dbc0da1c6105ca8b8eee5d3228",
-    "decimals": "0"
-  },
-  {
-    "address": "0x9a4d5ec269fd4a4714915b3bc1f3a37034010cea",
-    "decimals": "0"
-  },
-  {
-    "address": "0x9ec022f82c5004a2fd71ce354ea2e57baf6b81ab",
-    "decimals": "0"
-  },
-  {
-    "address": "0xa15cc53c0bf65df796916111479e7224eec7db72",
-    "decimals": "0"
-  },
-  {
-    "address": "0xad218d31d19ef8681ba35095f597917cd040f759",
-    "decimals": "0"
-  },
-  {
     "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
-    "decimals": "0"
-  },
-  {
-    "address": "0xc1d89236ed82c2edf997e09c8c2314bec254cb57",
-    "decimals": "0"
-  },
-  {
-    "address": "0xc25a0b9681abf6f090aed71a8c08fb564b41dab6",
-    "decimals": "0"
-  },
-  {
-    "address": "0xc541110f4da8303f56657bc2ff0575118b7e6434",
-    "decimals": "0"
-  },
-  {
-    "address": "0xdebb91ab3e473025bb8ce278c02361a3c4f13124",
-    "decimals": "0"
-  },
-  {
-    "address": "0xe0388fa2fa04557a82616386ec0e7cf59883ae35",
-    "decimals": "0"
-  },
-  {
-    "address": "0xebd93e64936fbba77bef3d13ad4f2c26d07a11a8",
     "decimals": "0"
   },
   {

@@ -2309,17 +2309,17 @@
               "name": "NewResolver",
               "inputs": [
                 {
-                  "name": "_node",
+                  "name": "node",
                   "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
                 },
                 {
-                  "name": "_resolver",
+                  "name": "resolver",
                   "value": "0x1da022710df5002339274aadee8d58218e9d6ab5"
                 }
               ],
               "outputs": []
             },
-            "compressedLog": "NewResolver ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
+            "compressedLog": "NewResolver ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, resolver: 0x1da022710df5002339274aadee8d58218e9d6ab5 )"
           },
           {
             "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
@@ -2357,17 +2357,17 @@
               "name": "Transfer",
               "inputs": [
                 {
-                  "name": "_node",
+                  "name": "node",
                   "value": "0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4"
                 },
                 {
-                  "name": "_owner",
+                  "name": "owner",
                   "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
                 }
               ],
               "outputs": []
             },
-            "compressedLog": "Transfer ( _node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, _owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
+            "compressedLog": "Transfer ( node: 0x8a3ffac7047ec6c043f4aa3d4fc1dba809a4062dafc889c9dec23af3666c37a4, owner: 0xd6878c9974359cbb67e8583e7a6cafb0fa20a286 )"
           },
           {
             "address": "0x546aa2eae2514494eeadb7bbb35243348983c59d",
@@ -2615,8 +2615,8 @@
             ],
             "outputs": [
               {
-                "name": "val_0",
-                "value": "0xd6878c9974359cbb67e8583e7a6cafb0fa20a286"
+                "name": "ret_0",
+                "value": ""
               }
             ]
           },
@@ -3061,22 +3061,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3101,22 +3101,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3273,22 +3273,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3313,22 +3313,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3435,22 +3435,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3475,22 +3475,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3702,22 +3702,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -3742,22 +3742,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4266,22 +4266,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4306,22 +4306,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0xbf1ce0bc4edaad8e576b3b55e19c4c15cf6999eb"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61 )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4394,22 +4394,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4434,22 +4434,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4523,8 +4523,8 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "val_0",
-                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+                "name": "ret_0",
+                "value": ""
               }
             ]
           },
@@ -4554,8 +4554,8 @@
             "inputs": [],
             "outputs": [
               {
-                "name": "val_0",
-                "value": "0x45fa853e10cfaad535c6984a39d32aab49ed682b"
+                "name": "ret_0",
+                "value": ""
               }
             ]
           },
@@ -4689,22 +4689,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -4729,22 +4729,22 @@
             "name": "getApp",
             "inputs": [
               {
-                "name": "namespace",
+                "name": "_namespace",
                 "value": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f"
               },
               {
-                "name": "appId",
+                "name": "_appId",
                 "value": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a"
               }
             ],
             "outputs": [
               {
-                "name": "ret_0",
+                "name": "val_0",
                 "value": "0x81f7564e413586f1f99fde55740ac52b43ca99c9"
               }
             ]
           },
-          "compressedTrace": "getApp ( namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
+          "compressedTrace": "getApp ( _namespace: 0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f, _appId: 0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,

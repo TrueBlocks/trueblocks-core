@@ -76,7 +76,8 @@ bool COptions::handle_generate_js_pages(void) {
             string_q frag = importArray[0].empty() || importArray[0] == "none" ? "" : (importArray[0] + " ");
             replaceAll(templateContents, "[{FRAGMENT}]", frag);
 
-            string_q tables = importArray[1].empty() || importArray[1] == "none" ? "DataTable, PageCaddie" : importArray[1];
+            string_q tables =
+                importArray[1].empty() || importArray[1] == "none" ? "DataTable, PageCaddie" : importArray[1];
             replaceAll(templateContents, "[{TABLE_IMPORT}]", tables);
 
             string_q utils =

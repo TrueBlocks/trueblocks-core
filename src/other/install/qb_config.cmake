@@ -47,6 +47,12 @@ message(STATUS "Copying names file to ${DEST_PATH}/names")
 file(COPY "${SOURCE_PATH}/names/names.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
+# Always copy the verified.txt file (this one is ours, so we can overwrite)
+#---------------------------------------------------------------
+message(STATUS "Copying verified file to ${DEST_PATH}/names")
+file(COPY "${SOURCE_PATH}/names/verified.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
 # Copy the prefunds even if it already exists (this one is ours - it never changes)
 #---------------------------------------------------------------
 message(STATUS "Copying prefunds file to ${DEST_PATH}/names")

@@ -3,5 +3,3 @@ ethNames cbCC Ether --verbose --fmt txt
 tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM		18	On Chain
 31-Gitcoin Grants:Core	0x6239ff1040e412491557a7a02b2cbcc5ae85dc8f	Kudos Sender				Etherscan
-76-Verified	0x8538fcbccba7f5303d2c679fa5d7a629a8c9bf4a	CreateCall				Etherscan
-76-Verified	0xe331fccbcc6e797beda31bc6d60d961955588a6b	LV				Etherscan

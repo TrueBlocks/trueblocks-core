@@ -1,8 +1,3 @@
 ethNames argc: 6 [1:ETHER] [2:1e16] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames ETHER 1e16 --verbose --fmt txt 
-tags	address	name	symbol	decimals	source
-76-Verified	0x0cb2d90bd6183f5f9fe585ea1e321e16aeaa0486	PermissiveStakingPolicy				Etherscan
-76-Verified	0x11eba93a0a852fd34002f5411e1663cf864edb8b	Morality				Etherscan
-76-Verified	0x1adf9ba15cc8cdc65ff8461e161d74d95c9c4096	ERC20Token				Etherscan
-76-Verified	0x5dee86b9345a2b4631d087fac91e1609a1c9d9d7	FinancialContractsAdmin				Etherscan
-76-Verified	0xf58d3023f6b5894da1e161a29d91fac6d07db567	DecentralizedAutonomousTrust				Etherscan
+No results

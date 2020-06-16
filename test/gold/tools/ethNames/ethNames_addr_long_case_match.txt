@@ -1,40 +1,23 @@
 ethNames argc: 5 [1:0xcb] [2:--match_case] [3:--fmt] [4:txt] 
 ethNames 0xcb --match_case --fmt txt 
 tags	address	name	symbol	decimals
-76-Verified	0xcb098190de2e3dc0eeb125fbb0798081c4ef31da	USDAOToken
-76-Verified	0xcb160654f6fdd82800b6137ce4023c818c4c0d96	Transfers
-76-Verified	0xcb17e569890783e2a6a069e1d6b8ec48c56d4986	LockTokens
-76-Verified	0xcb182bcfbc6e3b71dc11ca7e5a3273842ae71421	KHToken
 31-Gitcoin Grants:Friends	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	ntomaino
-76-Verified	0xcb1dd82a6518e4db8a3404bcc04a97def0eb4df4	AccountLevels
-76-Verified	0xcb20b0c259370327789ff08ef304ffdc5b8b72e2	SquareQueue_ico
 31-Gitcoin Grants:Friends	0xcb23fbe30de52338156849c89fdea31a50c23a77	milkyklim
 31-Gitcoin Grants:Friends	0xcb42ac441fcade3935243ea118701f39aa004486	axia-callum
 31-Gitcoin Grants:Friends	0xcb44c69d1380b03404e7ca29db033fa987f2d0c5	shane-mkt
 31-Gitcoin Grants:Friends	0xcb46219ba114245c3a18761e4f7891f9c4bef8c0	lsankar4033
 90-DevCon2:Individual	0xcb4baa0344065655da9e7d2dde781e5efa25995e	Jordi Baylina
-76-Verified	0xcb51a79c82ee07e6868ad5bd66deb2270d1de238	SAMPLE
 50-Tokens:ERC20	0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR		8
 31-Gitcoin Grants:Friends	0xcb5c0d33d92e4910daa24825db8af9b64e17c33c	exhumans
-76-Verified	0xcb5e10e93a4281de367e3d301ad8761488cff609	MCDSaverFlashLoan
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6
 31-Gitcoin Grants:Friends	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	jlwaugh
-76-Verified	0xcb6488162b3cc821f543b0a5b2e96fc255e5d599	yCurveZapSwapV4
-76-Verified	0xcb70062628c43e422ee40048b02dd1d01b1d6edb	LoanContract
-76-Verified	0xcb704d9505fbbf61478f06741c75f34ea84ec85c	InstaDydxResolver
 91-Friends	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
-76-Verified	0xcb84a257742caf235591c42dca8cf66b470b79bc	DigitalAssetFactory
 90-DevCon2:Individual	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin
-76-Verified	0xcb8aceb763c28b949359167a5927e69e1694a4e9	leethSWAP
-76-Verified	0xcb90fc08d405b75f5242cfe8f8d0397de19d149c	PropertyFactory
 50-Tokens:ERC20	0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST		6
 50-Tokens:ERC20	0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM		8
 31-Gitcoin Grants:Friends	0xcba69d3fd92dc945284d007acd5f96be6b8dc4ab	bobanm
 90-DevCon2:Individual	0xcbb0ea707202861471450acc55fca2b62c45899a	Toby Wise
-76-Verified	0xcbbd7b876d692da719799ae3f4b36915f583ba2a	CRYPTO4YOU
 90-DevCon2:Individual	0xcbbf6758a9e032d68628a5294c6b340160410eb6	Hillmer Reyes
-76-Verified	0xcbcbed289f221439198921b9fa2b1f3ee4fe46a3	Ev5
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
-76-Verified	0xcbe79ceca09092648995b2ccdf91ca5ecd1edec9	InverseToken
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18
 31-Gitcoin Grants:Grant	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 275 Walletconnect 2 pedrouid

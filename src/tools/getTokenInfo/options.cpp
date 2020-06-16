@@ -227,10 +227,12 @@ void COptions::Init(void) {
     optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
-    addrs.clear();
     by_acct = false;
     no_zero = false;
     // END_CODE_INIT
+
+    // TODO(tjayrush): This should be inside of CODE_INIT as it's part of the auto-generated data
+    addrs.clear();
 
     tokens.clear();
     holders.clear();
