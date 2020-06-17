@@ -397,7 +397,6 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "output_names");
     ADD_FIELD(CFunction, "declaration", T_TEXT, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
-    HIDE_FIELD(CFunction, "indexed");
     HIDE_FIELD(CFunction, "anonymous");
     // EXISTING_CODE
 }

@@ -21,7 +21,7 @@ on, both, fast, traces, tools/getTrace, invalid_param_3,    y, transactions = 12
 on, both, fast, traces, tools/getTrace, three_ways,         n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & verbose & fmt = csv
 on, cmd,  medi, traces, tools/getTrace, suicidesend_1,      n, transactions = 0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 & fmt = txt, SETTINGS_SKIP_DDOS=false NO_CACHE=true
 on, cmd,  slow, traces, tools/getTrace, articulate,         y, transactions = 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 & articulate & fmt = json
-on, both, slow, traces, tools/getTrace, articulate_2,       n, transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
+#on, both, slow, traces, tools/getTrace, articulate_2,       n, transactions = 3648669.24 & articulate & verbose & fmt = csv & no_header
 on, cmd,  slow, traces, tools/getTrace, articulate_arrays,  y, transactions = 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f & articulate & fmt = api & verbose
 on, both, fast, traces, tools/getTrace, verbose_blk_idx1,   y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = json
 on, both, fast, traces, tools/getTrace, verbose_blk_idx2,   y, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = api
@@ -50,7 +50,7 @@ on, both, fast, traces, tools/getTrace, fmt_json,           y, transactions = 22
 on, both, fast, traces, tools/getTrace, from_node,          y, transactions = 4000000.5 & fmt = json
 on, cmd,  fast, traces, tools/getTrace, redir_output,       y, transactions = 3657480.79 & verbose & output = test_file
 
-on, both, fast, traces, tools/getTrace, multi_articulate,   y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+#on, both, fast, traces, tools/getTrace, multi_articulate,   y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
 on, both, fast, traces, tools/getTrace, ddos_supress,       y, transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json
 on, cmd,  fast, traces, tools/getTrace, ddos_show,          n, transactions = 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 & fmt = json, SETTINGS_SKIP_DDOS=false NO_CACHE=true

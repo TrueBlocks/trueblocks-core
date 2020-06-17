@@ -560,7 +560,6 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
-    HIDE_FIELD(CTransaction, "etherGasPrice");
     HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "isInternal");
     HIDE_FIELD(CTransaction, "date");

@@ -106,6 +106,12 @@
       "tags": "81-Custom"
     },
     {
+      "tags": "81-Other"
+    },
+    {
+      "tags": "81-Other:DAO Whales"
+    },
+    {
       "tags": "90-DevCon2:Individual"
     },
     {

@@ -34,7 +34,7 @@ on, both, fast, logs, tools/getLogs, from_node,           n, transactions = 4000
 on, both, slow, logs, tools/getLogs, prev_bug2_1,         y, transactions = 4279119.46 & fmt = api & parity
 on, both, medi, logs, tools/getLogs, prev_bug2_2,         n, transactions = 4279119.46 & raw
 
-on, both, fast, logs, tools/getLogs, multi_articulate    ,y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+#on, both, fast, logs, tools/getLogs, multi_articulate    ,y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
 on, both, medi, logs, tools/getLogs, star,                y, transactions = 1428993.* & fmt = api
 on, cmd,  fast, logs, tools/getLogs, redir_output,        y, transactions = 3657480.79 & output testing_file

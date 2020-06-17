@@ -422,6 +422,11 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             break;
         case TXT1:
         case CSV1:
+            if (isTestMode()) {
+                string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not-set>");
+                if (test != "<not-set>")
+                    cerr << "Custom [display]format field set to: " << test << endl;
+            }
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;

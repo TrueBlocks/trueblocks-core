@@ -521,7 +521,7 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
 
 //-----------------------------------------------------------------------
 void removeDuplicateEncodings(CAbiArray& abis) {
-    if (abis.size() == 0 || abis.size() == 1)
+    if (abis.size() < 2)
         return;
 
     size_t j = 0;
@@ -534,70 +534,214 @@ void removeDuplicateEncodings(CAbiArray& abis) {
     abis[j++] = abis[n - 1];
 }
 
-// TODO(tjayrush): This is terrible code
-extern void snagSignatures(string_q& str);
-//-----------------------------------------------------------------------
-bool sol_2_Abi(CAbi& abi, const string_q& addr) {
-    string_q solFile = addr + ".sol";
-    string_q contents = asciiFileToString(solFile);
-
-    // remove any unneeded characters (all comments, unused whitespace
-    simplifySolidity(contents);
-
-    // prepare the code for identifying the functions and events
-    replaceAll(contents, "function ", "~function ");
-    replaceAll(contents, "event ", "~event ");
-    // replaceAll(contents, "interface ", "contract ");
-    replaceAll(contents, " memory ", " ");
-    replaceAll(contents, " storage ", " ");
-    replaceAll(contents, " calldata ", " ");
-    cleanString(contents, true);
-
-    // preserve only characters between '~' and the next following ';' (removing both '~'
-    // and ';' and adding newline in place of the ';'
-    snagSignatures(contents);
-
-    CStringArray lines;
-    explode(lines, contents, '\n');
-    for (auto line : lines) {
-        replaceAll(line, "  ", " ");
-        CFunction func;
-        func.fromDefinition(line);
-        abi.interfaces.push_back(func);
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void snagSignatures(string_q& str) {
-    size_t pos = 0;
-    typedef enum { OUT, IN } StateThing;
-    StateThing state = OUT;
-    for (auto ch : str) {
-        switch (state) {
-            case OUT:
-                if (ch == '~')
-                    state = IN;
-                break;
-            case IN:
-                str[pos++] = ch;
-                if (ch == ';') {
-                    str[pos++] = '\n';
-                    state = OUT;
-                }
-                break;
-        }
-    }
-    str[pos] = '\0';
-    str.resize(pos);
-}
-
 //-----------------------------------------------------------------------
 string_q getAbiPath(const address_t& addr) {
     string_q base = "abis/";
     if (!isAddress(addr))  // empty for example
         return getCachePath(base + addr);
     return getCachePath(base + addr + ".json");
+}
+
+enum TOKENS {
+    COMMENT1 = (char)1,
+    COMMENT_END1 = (char)'\n',
+    COMMENT2 = (char)2,
+    COMMENT_END2 = (char)3,
+    FUNCTION_START = (char)5,
+    EVENT_START = (char)6,
+    STRUCT_START = (char)7,
+    MODIFIER_START = (char)8
+};
+enum State { OUT, IN_COMMENT1, IN_COMMENT2, IN_FUNCTION, IN_EVENT, IN_STRUCT, IN_MODIFIER };
+CStringArray removes = {"internal", "virtual", "view", "payable", "memory", "private", "external", "pure", "calldata"};
+
+//----------------------------------------------------------------
+string_q removeSolComments(const string_q& contents) {
+    ostringstream os;
+    State state = OUT;
+    char lastChar = 0;
+    for (auto ch : contents) {
+        switch (state) {
+            case IN_COMMENT1:
+                if (ch == COMMENT_END1) {
+                    if (!isspace(lastChar))
+                        os << ch;
+                    state = OUT;
+                } else {
+                    // do nothing
+                }
+                break;
+            case IN_COMMENT2:
+                if (ch == COMMENT_END2) {
+                    state = OUT;
+                } else {
+                    // do nothing
+                }
+                break;
+            case OUT:
+                if (ch == COMMENT1) {
+                    state = IN_COMMENT1;
+                } else if (ch == COMMENT2) {
+                    state = IN_COMMENT2;
+                } else {
+                    if (!isspace(ch) || !isspace(lastChar))
+                        os << ch;
+                }
+                break;
+            default:
+                break;
+        }
+        lastChar = ch;
+    }
+
+    return os.str();
+}
+
+//----------------------------------------------------------------
+string_q printOut(const CStringArray& lines, const string_q& type) {
+    ostringstream os;
+    for (auto line : lines) {
+        if (contains(line, type)) {
+            if (type == "struct")
+                replaceAll(line, ";", ",");
+            if (type == "function")
+                replaceAll(line, ";", " {}");
+            os << "\t" << line << endl;
+        }
+    }
+    return os.str();
+}
+
+//----------------------------------------------------------------
+bool sol_2_Abi(CAbi& abi, const string_q& addr) {
+    string_q solFile = addr + ".sol";
+    string_q contents = asciiFileToString(solFile);
+
+    replaceAll(contents, "/*", string_q(1, COMMENT2));
+    replaceAll(contents, "//", string_q(1, COMMENT1));
+    replaceAll(contents, "*/", string_q(1, COMMENT_END2));
+    replaceAll(contents, "pragma", string_q(1, COMMENT1));  // simply remove pragmas
+    replaceAll(contents, "constructor", "modifier");        // treat constructors like modifiers
+    replaceAll(contents, "function", string_q(1, FUNCTION_START));
+    replaceAll(contents, "struct", string_q(1, STRUCT_START));
+    replaceAll(contents, "event", string_q(1, EVENT_START));
+    replaceAll(contents, "modifier", string_q(1, MODIFIER_START));
+    for (auto rem : removes)
+        replaceAll(contents, rem, "");
+
+    contents = removeSolComments(contents);
+
+    size_t scopeCount = 0;
+
+    ostringstream os;
+    State state = OUT;
+    char lastChar = 0;
+    for (auto ch : contents) {
+        switch (state) {
+            case IN_MODIFIER:
+                if (ch == '{') {
+                    scopeCount++;
+                } else if (ch == '}') {
+                    scopeCount--;
+                    if (scopeCount == 0) {
+                        state = OUT;
+                    }
+                }
+                break;
+            case IN_EVENT:
+                if (ch == '\n') {
+                    // do nothing
+                } else if (ch == ';') {
+                    if (!isspace(ch) || !isspace(lastChar))
+                        os << ch;
+                    state = OUT;
+                } else {
+                    if (!isspace(ch) || !isspace(lastChar))
+                        os << ch;
+                }
+                break;
+            case IN_STRUCT:
+                if (ch == '\n') {
+                    // do nothing
+                } else if (ch == '{') {
+                    os << ch;
+                    scopeCount++;
+                } else if (ch == '}') {
+                    os << ch;
+                    scopeCount--;
+                    if (scopeCount == 0) {
+                        state = OUT;
+                    }
+                } else {
+                    if (!isspace(ch) || !isspace(lastChar))
+                        os << ch;
+                }
+                break;
+            case IN_FUNCTION:
+                if (ch == '\n') {
+                    // do nothing
+                } else if (ch == ';') {
+                    if (scopeCount == 0) {
+                        os << ch;
+                        state = OUT;
+                    }
+                } else if (ch == '{') {
+                    if (scopeCount == 0)
+                        os << ch;
+                    scopeCount++;
+                } else if (ch == '}') {
+                    scopeCount--;
+                    if (scopeCount == 0) {
+                        os << ch;
+                        state = OUT;
+                    }
+                } else {
+                    if (scopeCount == 0 && (!isspace(ch) || !isspace(lastChar)))
+                        os << ch;
+                }
+                break;
+            case OUT:
+                if (ch == EVENT_START) {
+                    os << "event";
+                    state = IN_EVENT;
+                } else if (ch == STRUCT_START) {
+                    os << "struct";
+                    scopeCount = 0;
+                    state = IN_STRUCT;
+                } else if (ch == FUNCTION_START) {
+                    os << "function";
+                    scopeCount = 0;
+                    state = IN_FUNCTION;
+                } else if (ch == MODIFIER_START) {
+                    scopeCount = 0;
+                    state = IN_MODIFIER;
+                } else {
+                    if (!isspace(ch) || !isspace(lastChar))
+                        os << ch;
+                }
+                break;
+            default:
+                break;
+        }
+        lastChar = ch;
+    }
+
+    contents = os.str();
+    replaceAll(contents, "\n\n", "\n");
+    replaceAll(contents, "\r", "");
+    replaceAll(contents, " )", ")");
+
+    CStringArray lines;
+    explode(lines, contents, '\n');
+    for (auto line : lines) {
+        if (contains(line, "function ") || contains(line, "event ")) {
+            CFunction func;
+            func.fromDefinition(line);
+            abi.interfaces.push_back(func);
+        }
+    }
+
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,0 +1,851 @@
+[
+
+
+    {
+    "name": "_msgSender",
+    "type": "function",
+    "signature": "_msgSender()",
+    "encoding": "0x119df25f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_msgData",
+    "type": "function",
+    "signature": "_msgData()",
+    "encoding": "0x8b49d47e",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "Paused",
+    "type": "event",
+    "signature": "Paused(address)",
+    "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Unpaused",
+    "type": "event",
+    "signature": "Unpaused(address)",
+    "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "paused",
+    "type": "function",
+    "signature": "paused()",
+    "encoding": "0x5c975abb",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "_pause",
+    "type": "function",
+    "signature": "_pause()",
+    "encoding": "0x320b2ad9",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_unpause",
+    "type": "function",
+    "signature": "_unpause()",
+    "encoding": "0xfc8234cb",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "owner",
+    "type": "function",
+    "signature": "owner()",
+    "encoding": "0x8da5cb5b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "renounceOwnership",
+    "type": "function",
+    "signature": "renounceOwnership()",
+    "encoding": "0x715018a6",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "newOwner"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "totalSupply",
+    "type": "function",
+    "signature": "totalSupply()",
+    "encoding": "0x18160ddd",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "balanceOf",
+    "type": "function",
+    "signature": "balanceOf(address)",
+    "encoding": "0x70a08231",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transfer",
+    "type": "function",
+    "signature": "transfer(address,uint256)",
+    "encoding": "0xa9059cbb",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "allowance",
+    "type": "function",
+    "signature": "allowance(address,address)",
+    "encoding": "0xdd62ed3e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "transferFrom",
+    "type": "function",
+    "signature": "transferFrom(address,address,uint256)",
+    "encoding": "0x23b872dd",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "sender"
+      },
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "Transfer",
+    "type": "event",
+    "signature": "Transfer(address,address,uint256)",
+    "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "from",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "to",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "Approval",
+    "type": "event",
+    "signature": "Approval(address,address,uint256)",
+    "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "owner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "spender",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "isContract",
+    "type": "function",
+    "signature": "isContract(address)",
+    "encoding": "0x16279055",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "sendValue",
+    "type": "function",
+    "signature": "sendValue(address,uint256)",
+    "encoding": "0x24a084df",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "add",
+    "type": "function",
+    "signature": "add(uint256,uint256)",
+    "encoding": "0x771602f7",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "sub",
+    "type": "function",
+    "signature": "sub(uint256,uint256)",
+    "encoding": "0xb67d77c5",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "sub",
+    "type": "function",
+    "signature": "sub(uint256,uint256,string)",
+    "encoding": "0xe31bdc0a",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      },
+      {
+        "type": "string",
+        "name": "errorMessage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mul",
+    "type": "function",
+    "signature": "mul(uint256,uint256)",
+    "encoding": "0xc8a4ac9c",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "div",
+    "type": "function",
+    "signature": "div(uint256,uint256)",
+    "encoding": "0xa391c15b",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "div",
+    "type": "function",
+    "signature": "div(uint256,uint256,string)",
+    "encoding": "0xb745d336",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      },
+      {
+        "type": "string",
+        "name": "errorMessage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mod",
+    "type": "function",
+    "signature": "mod(uint256,uint256)",
+    "encoding": "0xf43f523a",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "mod",
+    "type": "function",
+    "signature": "mod(uint256,uint256,string)",
+    "encoding": "0x71af23e8",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "a"
+      },
+      {
+        "type": "uint256",
+        "name": "b"
+      },
+      {
+        "type": "string",
+        "name": "errorMessage"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  }
+,
+
+    {
+    "name": "safeTransfer",
+    "type": "function",
+    "signature": "safeTransfer(IERC20,address,uint256)",
+    "encoding": "0xd0c407e1",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "safeTransferFrom",
+    "type": "function",
+    "signature": "safeTransferFrom(IERC20,address,address,uint256)",
+    "encoding": "0x5beae096",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "from"
+      },
+      {
+        "type": "address",
+        "name": "to"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "safeApprove",
+    "type": "function",
+    "signature": "safeApprove(IERC20,address,uint256)",
+    "encoding": "0xd6dcec8d",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "safeIncreaseAllowance",
+    "type": "function",
+    "signature": "safeIncreaseAllowance(IERC20,address,uint256)",
+    "encoding": "0x390cc046",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "safeDecreaseAllowance",
+    "type": "function",
+    "signature": "safeDecreaseAllowance(IERC20,address,uint256)",
+    "encoding": "0x5164ffed",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "address",
+        "name": "spender"
+      },
+      {
+        "type": "uint256",
+        "name": "value"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "_callOptionalReturn",
+    "type": "function",
+    "signature": "_callOptionalReturn(IERC20,bytes)",
+    "encoding": "0xbecc5a20",
+    "inputs": [
+      {
+        "type": "IERC20",
+        "name": "token"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "DonationSent",
+    "type": "event",
+    "signature": "DonationSent(address,uint256,address,address)",
+    "encoding": "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "dest"
+      },
+      {
+        "type": "address",
+        "name": "donor",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "TokenWithdrawn",
+    "type": "event",
+    "signature": "TokenWithdrawn(address,uint256,address)",
+    "encoding": "0xa0524ee0fd8662d6c046d199da2a6d3dc49445182cec055873a5bb9c2843c8e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "token",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "dest",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "donate",
+    "type": "function",
+    "signature": "donate(Donation[])",
+    "encoding": "0xe1acd927",
+    "inputs": [
+      {
+        "type": "Donation[]",
+        "name": "_donations",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawToken",
+    "type": "function",
+    "signature": "withdrawToken(address,address)",
+    "encoding": "0x3aeac4e1",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      },
+      {
+        "type": "address",
+        "name": "_dest"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "withdrawEther",
+    "type": "function",
+    "signature": "withdrawEther(address)",
+    "encoding": "0xaf933b57",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_dest"
+      }
+    ],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "pause",
+    "type": "function",
+    "signature": "pause()",
+    "encoding": "0x8456cb59",
+    "inputs": [],
+    "outputs": []
+  }
+,
+
+    {
+    "name": "unpause",
+    "type": "function",
+    "signature": "unpause()",
+    "encoding": "0x3f4ba83a",
+    "inputs": [],
+    "outputs": []
+  }
+
+]

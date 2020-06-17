@@ -31,7 +31,7 @@ on, both, fast, receipts, tools/getReceipt, bad_blkhash_msg_raw, y, transactions
 on, both, medi, receipts, tools/getReceipt, prev_bug2_1,         y, transactions = 4279119.46
 on, both, medi, receipts, tools/getReceipt, prev_bug2_2,         n, transactions = 4279119.46 & raw & fmt = txt
 
-on, both, fast, receipts, tools/getReceipt, multi_articulate,    y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
+#on, both, fast, receipts, tools/getReceipt, multi_articulate,    y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 
 on, both, fast, receipts, tools/getReceipt, star,                y, transactions = 1428993.* & fmt = api
 

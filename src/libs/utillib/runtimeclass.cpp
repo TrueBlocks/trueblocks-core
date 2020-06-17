@@ -13,6 +13,7 @@
 #include <algorithm>
 #include "basetypes.h"
 #include "runtimeclass.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -53,6 +54,8 @@ CFieldData* CRuntimeClass::findField(const string_q& fieldName) {
         if (fieldList[i].getName() % fieldName)
             return &fieldList[i];
     }
+    // if (fieldName != "schema")
+    //    LOG_WARN("Field not found: ", m_ClassName, "::", fieldName);
     return NULL;
 }
 
