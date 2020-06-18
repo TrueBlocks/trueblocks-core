@@ -522,7 +522,9 @@ static string_q elementaryName(const string_q& in) {
 bool CParameter::fromDefinition(const string_q& strIn) {
     string_q str = strIn;
     indexed = contains(str, "indexed");
-    str = trim(substitute(str, "indexed ", ""));  // should be of form 'type name'
+    str = substitute(str, "indexed ", "");
+    // str = substitute(str, "%", ",");
+    str = trim(str);  // should be of form 'type name'
     type = elementaryName(nextTokenClear(str, ' '));
     if (contains(type, '['))
         is_flags |= IS_ARRAY;

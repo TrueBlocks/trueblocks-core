@@ -109,9 +109,19 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
                 return intOutflow;
             }
             break;
+        case 'm':
+            if (fieldName % "miningInflow") {
+                return miningInflow;
+            }
+            break;
         case 'o':
             if (fieldName % "outflow") {
                 return outflow;
+            }
+            break;
+        case 'p':
+            if (fieldName % "prefundInflow") {
+                return prefundInflow;
             }
             break;
         case 'r':
@@ -203,9 +213,21 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
+        case 'm':
+            if (fieldName % "miningInflow") {
+                miningInflow = fieldValue;
+                return true;
+            }
+            break;
         case 'o':
             if (fieldName % "outflow") {
                 outflow = fieldValue;
+                return true;
+            }
+            break;
+        case 'p':
+            if (fieldName % "prefundInflow") {
+                prefundInflow = fieldValue;
                 return true;
             }
             break;
@@ -270,6 +292,8 @@ bool CIncomeStatement::Serialize(CArchive& archive) {
     archive >> intOutflow;
     archive >> suicideInflow;
     archive >> suicideOutflow;
+    archive >> miningInflow;
+    archive >> prefundInflow;
     archive >> weiGasCost;
     archive >> endBal;
     archive >> endBalCalc;
@@ -297,6 +321,8 @@ bool CIncomeStatement::SerializeC(CArchive& archive) const {
     archive << intOutflow;
     archive << suicideInflow;
     archive << suicideOutflow;
+    archive << miningInflow;
+    archive << prefundInflow;
     archive << weiGasCost;
     archive << endBal;
     archive << endBalCalc;
@@ -349,6 +375,8 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "intOutflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "suicideInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "suicideOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "miningInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "prefundInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "weiGasCost", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "endBal", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "endBalCalc", T_TEXT, ++fieldNum);
@@ -483,6 +511,8 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         intOutflow = bni_2_Ether(nums.intOutflow);
         suicideInflow = bni_2_Ether(nums.suicideInflow);
         suicideOutflow = bni_2_Ether(nums.suicideOutflow);
+        miningInflow = bni_2_Ether(nums.miningInflow);
+        prefundInflow = bni_2_Ether(nums.prefundInflow);
         weiGasCost = bni_2_Ether(nums.weiGasCost);
         endBal = bni_2_Ether(nums.endBal);
         endBalCalc = bni_2_Ether(nums.endBalCalc);
@@ -496,6 +526,8 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         intOutflow = bni_2_Str(nums.intOutflow);
         suicideInflow = bni_2_Str(nums.suicideInflow);
         suicideOutflow = bni_2_Str(nums.suicideOutflow);
+        miningInflow = bni_2_Str(nums.miningInflow);
+        prefundInflow = bni_2_Str(nums.prefundInflow);
         weiGasCost = bni_2_Str(nums.weiGasCost);
         endBal = bni_2_Str(nums.endBal);
         endBalCalc = bni_2_Str(nums.endBalCalc);

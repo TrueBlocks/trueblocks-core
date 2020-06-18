@@ -4,8 +4,8 @@ export HOME="/Users/jrush/.quickBlocks/known_abis"
 export SOURCE="../src/other/install/known_abis"
 
 pico $SOURCE/loose.sol
-cp -p $SOURCE/loose.sol ./0x22c1f6050e56d2876009903609a2cc3fef83b415.sol
-grabAbi --sol 0x22c1f6050e56d2876009903609a2cc3fef83b415 2>/dev/null
-cat ./0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq >$HOME/loose.json
-cat ./0x22c1f6050e56d2876009903609a2cc3fef83b415.json | jq >$SOURCE/loose.json
+cp -p $SOURCE/loose.sol ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.sol
+grabAbi --sol 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE 2>/dev/null
+cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$HOME/loose.json
+cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$SOURCE/loose.json
 echo "Function added and copied to install folder"

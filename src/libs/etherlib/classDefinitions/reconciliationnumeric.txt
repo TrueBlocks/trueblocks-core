@@ -11,6 +11,8 @@ fields = \
     int256 intOutflow|\
     int256 suicideInflow|\
     int256 suicideOutflow|\
+    int256 miningInflow|\
+    int256 prefundInflow|\
     int256 weiGasCost|\
     int256 endBal|\
     int256 endBalCalc|\

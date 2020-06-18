@@ -558,6 +558,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
     string_q ret = os.str().c_str();
     replaceAll(ret, " )", ")");
+    // replaceAll(ret, "tuple(", "(");
     return trim(ret);
 }
 
@@ -576,6 +577,7 @@ string_q CFunction::encodeItem(void) const {
         return "0x861731d5";
     if (!encoding.empty())  // optimization
         return encoding;
+    // string_q ret = keccak256(substitute(signature, "%", ","));
     string_q ret = keccak256(signature);
     return (type == "event" ? ret : extract(ret, 0, 10));
 }
@@ -585,11 +587,64 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
     if (lineIn.empty())
         return false;
 
-    uint64_t iCnt = 0, oCnt = 0;
-
+#define OLD_CODE
+#ifdef OLD_CODE
     string_q line = lineIn;
-    line = substitute(line, "(", "|");   // clean up
-    line = substitute(line, ")", "|");   // clean up
+#else
+    size_t scopeCount = 0;
+    ostringstream os;
+    ParseState state = OUT;
+    for (auto ch : lineIn) {
+        switch (state) {
+            case IN:
+                if (ch == '(') {
+                    scopeCount++;
+                    os << "+";
+                } else if (ch == ')') {
+                    if (scopeCount == 0) {
+                        state = OUT;
+                        os << ch;
+                    } else {
+                        scopeCount--;
+                        os << "`";
+                    }
+                } else {
+                    os << ch;
+                }
+                break;
+            case OUT:
+                if (ch == '(') {
+                    os << ch;
+                    state = IN;
+                } else {
+                    os << ch;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    string_q line = os.str();
+#endif
+    line = substitute(line, "(", "|");  // clean up
+    line = substitute(line, ")", "|");  // clean up
+#ifdef OLD_CODE
+#else
+    if (contains(line, '+')) {
+        replaceAll(line, "+", "-&");
+        replaceAll(line, "`", "*-");
+        CStringArray parts;
+        explode(parts, line, '-');
+        string_q str;
+        for (auto part : parts) {
+            if (contains(part, "&")) {
+                replaceAll(part, ",", "%");
+            }
+            str += substitute(substitute(part, "&", "tuple("), "*", ")");
+        }
+        line = str;
+    }
+#endif
     line = substitute(line, ", ", ",");  // clean up
     line = substitute(line, "\t", "");   // clean up
     while (contains(line, " ["))
@@ -600,6 +655,7 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
     this->type = trim(nextTokenClear(line, ' '));
     this->name = trim(nextTokenClear(line, '|'));
 
+    uint64_t iCnt = 0;
     string_q inputStr = trim(nextTokenClear(line, '|'));
     CStringArray inputArray;
     explode(inputArray, inputStr, ',');
@@ -608,9 +664,12 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
         param.fromDefinition(input);
         if (param.name.empty())
             param.name = "val_" + uint_2_Str(iCnt++);
+        if (isTestMode())
+            cout << param << endl;
         this->inputs.push_back(param);
     }
 
+    uint64_t oCnt = 0;
     CStringArray parts;
     explode(parts, line, '|');
     if (parts.size() > 1 && contains(parts[0], "returns")) {
@@ -626,6 +685,8 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
         }
     }
     finishParse();
+    if (isTestMode())
+        cout << *this << endl;
     return true;
 }
 

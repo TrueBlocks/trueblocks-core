@@ -236,6 +236,8 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "intOutflow": 0,
     "suicideInflow": 0,
     "suicideOutflow": 0,
+    "miningInflow": 0,
+    "prefundInflow": 0,
     "weiGasCost": 0,
     "endBal": 0,
     "endBalCalc": 0,
@@ -309,6 +311,8 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "intOutflow": 0,
     "suicideInflow": 0,
     "suicideOutflow": 0,
+    "miningInflow": 0,
+    "prefundInflow": 0,
     "weiGasCost": 0,
     "endBal": 0,
     "endBalCalc": 0,
@@ -446,12 +450,14 @@ intInflow           	1011	0	131122	T_TEXT TS_STRING
 intOutflow          	1012	0	131122	T_TEXT TS_STRING
 suicideInflow       	1013	0	131122	T_TEXT TS_STRING
 suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
-weiGasCost          	1015	0	131122	T_TEXT TS_STRING
-endBal              	1016	0	131122	T_TEXT TS_STRING
-endBalCalc          	1017	0	131122	T_TEXT TS_STRING
-endBalDiff          	1018	0	131122	T_TEXT TS_STRING
-reconciliationType  	1019	0	131122	T_TEXT TS_STRING
-reconciled          	1020	0	65556	T_BOOL TS_NUMERAL
+miningInflow        	1015	0	131122	T_TEXT TS_STRING
+prefundInflow       	1016	0	131122	T_TEXT TS_STRING
+weiGasCost          	1017	0	131122	T_TEXT TS_STRING
+endBal              	1018	0	131122	T_TEXT TS_STRING
+endBalCalc          	1019	0	131122	T_TEXT TS_STRING
+endBalDiff          	1020	0	131122	T_TEXT TS_STRING
+reconciliationType  	1021	0	131122	T_TEXT TS_STRING
+reconciled          	1022	0	65556	T_BOOL TS_NUMERAL
 {
   "blockNum": 0,
   "reconciled": false
@@ -474,12 +480,14 @@ intInflow           	1011	1	131122	T_TEXT TS_STRING
 intOutflow          	1012	1	131122	T_TEXT TS_STRING
 suicideInflow       	1013	1	131122	T_TEXT TS_STRING
 suicideOutflow      	1014	1	131122	T_TEXT TS_STRING
-weiGasCost          	1015	1	131122	T_TEXT TS_STRING
-endBal              	1016	1	131122	T_TEXT TS_STRING
-endBalCalc          	1017	1	131122	T_TEXT TS_STRING
-endBalDiff          	1018	1	131122	T_TEXT TS_STRING
-reconciliationType  	1019	1	131122	T_TEXT TS_STRING
-reconciled          	1020	1	65556	T_BOOL TS_NUMERAL
+miningInflow        	1015	1	131122	T_TEXT TS_STRING
+prefundInflow       	1016	1	131122	T_TEXT TS_STRING
+weiGasCost          	1017	1	131122	T_TEXT TS_STRING
+endBal              	1018	1	131122	T_TEXT TS_STRING
+endBalCalc          	1019	1	131122	T_TEXT TS_STRING
+endBalDiff          	1020	1	131122	T_TEXT TS_STRING
+reconciliationType  	1021	1	131122	T_TEXT TS_STRING
+reconciled          	1022	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -500,12 +508,14 @@ intInflow           	1011	0	131122	T_TEXT TS_STRING
 intOutflow          	1012	0	131122	T_TEXT TS_STRING
 suicideInflow       	1013	0	131122	T_TEXT TS_STRING
 suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
-weiGasCost          	1015	0	131122	T_TEXT TS_STRING
-endBal              	1016	0	131122	T_TEXT TS_STRING
-endBalCalc          	1017	0	131122	T_TEXT TS_STRING
-endBalDiff          	1018	0	131122	T_TEXT TS_STRING
-reconciliationType  	1019	0	131122	T_TEXT TS_STRING
-reconciled          	1020	0	65556	T_BOOL TS_NUMERAL
+miningInflow        	1015	0	131122	T_TEXT TS_STRING
+prefundInflow       	1016	0	131122	T_TEXT TS_STRING
+weiGasCost          	1017	0	131122	T_TEXT TS_STRING
+endBal              	1018	0	131122	T_TEXT TS_STRING
+endBalCalc          	1019	0	131122	T_TEXT TS_STRING
+endBalDiff          	1020	0	131122	T_TEXT TS_STRING
+reconciliationType  	1021	0	131122	T_TEXT TS_STRING
+reconciled          	1022	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
   "deleted": false,

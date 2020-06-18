@@ -383,6 +383,8 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
 
     string_q contents;
     asciiFileToString(fileName, contents);
+    if (isTestMode())
+        cout << "From file: " << contents << endl << "From file: " << endl;
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
         string_q addr = substitute(
@@ -542,23 +544,60 @@ string_q getAbiPath(const address_t& addr) {
     return getCachePath(base + addr + ".json");
 }
 
-enum TOKENS {
-    COMMENT1 = (char)1,
-    COMMENT_END1 = (char)'\n',
-    COMMENT2 = (char)2,
-    COMMENT_END2 = (char)3,
-    FUNCTION_START = (char)5,
-    EVENT_START = (char)6,
-    STRUCT_START = (char)7,
-    MODIFIER_START = (char)8
-};
-enum State { OUT, IN_COMMENT1, IN_COMMENT2, IN_FUNCTION, IN_EVENT, IN_STRUCT, IN_MODIFIER };
-CStringArray removes = {"internal", "virtual", "view", "payable", "memory", "private", "external", "pure", "calldata"};
+CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
+
+/*
+public
+private
+external
+internal
+pure
+view
+payable
+constant
+immutable
+anonymous
+indexed
+virtual
+override
+
+pragma
+import
+abstract
+
+contract
+interface
+library
+
+using
+modifier
+returns
+enum
+mapping
+
+struct
+function
+event
+
+memory
+storage
+calldata
+
+address
+bool
+string
+var
+int*
+uint*
+bytes*
+fixed*
+ufixed*
+*/
 
 //----------------------------------------------------------------
 string_q removeSolComments(const string_q& contents) {
     ostringstream os;
-    State state = OUT;
+    ParseState state = OUT;
     char lastChar = 0;
     for (auto ch : contents) {
         switch (state) {
@@ -598,21 +637,6 @@ string_q removeSolComments(const string_q& contents) {
 }
 
 //----------------------------------------------------------------
-string_q printOut(const CStringArray& lines, const string_q& type) {
-    ostringstream os;
-    for (auto line : lines) {
-        if (contains(line, type)) {
-            if (type == "struct")
-                replaceAll(line, ";", ",");
-            if (type == "function")
-                replaceAll(line, ";", " {}");
-            os << "\t" << line << endl;
-        }
-    }
-    return os.str();
-}
-
-//----------------------------------------------------------------
 bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
@@ -634,7 +658,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     size_t scopeCount = 0;
 
     ostringstream os;
-    State state = OUT;
+    ParseState state = OUT;
     char lastChar = 0;
     for (auto ch : contents) {
         switch (state) {

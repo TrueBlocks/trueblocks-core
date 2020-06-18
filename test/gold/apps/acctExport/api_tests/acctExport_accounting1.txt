@@ -24,7 +24,7 @@
           {
             "blockNum": 0,
             "asset": "ETH",
-            "begBal": "4200000000000000000000",
+            "begBal": "0",
             "begBalDiff": "0",
             "inflow": "0",
             "outflow": "0",
@@ -32,6 +32,8 @@
             "intOutflow": "0",
             "suicideInflow": "0",
             "suicideOutflow": "0",
+            "miningInflow": "0",
+            "prefundInflow": "4200000000000000000000",
             "weiGasCost": "0",
             "endBal": "4200000000000000000000",
             "endBalCalc": "4200000000000000000000",
@@ -85,6 +87,8 @@
             "intOutflow": "0",
             "suicideInflow": "0",
             "suicideOutflow": "0",
+            "miningInflow": "0",
+            "prefundInflow": "0",
             "weiGasCost": "25320679510922664",
             "endBal": "74679320489077336",
             "endBalCalc": "74679320489077336",
@@ -138,6 +142,8 @@
             "intOutflow": "0",
             "suicideInflow": "0",
             "suicideOutflow": "0",
+            "miningInflow": "0",
+            "prefundInflow": "0",
             "weiGasCost": "420000000000000",
             "endBal": "0",
             "endBalCalc": "0",
@@ -161,9 +167,6 @@
         "encoding": "0x"
       }
     ]
-  ],
-  "errors": [
-    "RPCerror(1): Invalid params: invalid length 1"
   ],
   "types": [
     {

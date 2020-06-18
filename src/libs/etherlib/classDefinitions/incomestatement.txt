@@ -11,6 +11,8 @@ fields = \
     string intOutflow|\
     string suicideInflow|\
     string suicideOutflow|\
+    string miningInflow|\
+    string prefundInflow|\
     string weiGasCost|\
     string endBal|\
     string endBalCalc|\

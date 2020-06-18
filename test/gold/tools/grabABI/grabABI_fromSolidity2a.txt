@@ -1,45 +1,19 @@
-grabABI argc: 2 [1:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
-grabABI 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
-encoding	type	name	signature	input_names	output_names
-0xbecc5a20	function	_callOptionalReturn	_callOptionalReturn(IERC20,bytes)	token,data,	,
-0x8b49d47e	function	_msgData	_msgData()		ret_0,,
-0x119df25f	function	_msgSender	_msgSender()		ret_0,,
-0x320b2ad9	function	_pause	_pause()		,
-0xfc8234cb	function	_unpause	_unpause()		,
-0x771602f7	function	add	add(uint256,uint256)	a,b,	ret_0,,
-0xdd62ed3e	function	allowance	allowance(address,address)	owner,spender,	ret_0,,
-0x095ea7b3	function	approve	approve(address,uint256)	spender,amount,	ret_0,,
-0x70a08231	function	balanceOf	balanceOf(address)	account,	ret_0,,
-0xa391c15b	function	div	div(uint256,uint256)	a,b,	ret_0,,
-0xb745d336	function	div	div(uint256,uint256,string)	a,b,errorMessage,	ret_0,,
-0xe1acd927	function	donate	donate(Donation[])	_donations,	,
-0x16279055	function	isContract	isContract(address)	account,	ret_0,,
-0x71af23e8	function	mod	mod(uint256,uint256,string)	a,b,errorMessage,	ret_0,,
-0xf43f523a	function	mod	mod(uint256,uint256)	a,b,	ret_0,,
-0xc8a4ac9c	function	mul	mul(uint256,uint256)	a,b,	ret_0,,
-0x8da5cb5b	function	owner	owner()		ret_0,,
-0x8456cb59	function	pause	pause()		,
-0x5c975abb	function	paused	paused()		ret_0,,
-0x715018a6	function	renounceOwnership	renounceOwnership()		,
-0xd6dcec8d	function	safeApprove	safeApprove(IERC20,address,uint256)	token,spender,value,	,
-0x5164ffed	function	safeDecreaseAllowance	safeDecreaseAllowance(IERC20,address,uint256)	token,spender,value,	,
-0x390cc046	function	safeIncreaseAllowance	safeIncreaseAllowance(IERC20,address,uint256)	token,spender,value,	,
-0xd0c407e1	function	safeTransfer	safeTransfer(IERC20,address,uint256)	token,to,value,	,
-0x5beae096	function	safeTransferFrom	safeTransferFrom(IERC20,address,address,uint256)	token,from,to,value,	,
-0x24a084df	function	sendValue	sendValue(address,uint256)	recipient,amount,	,
-0xb67d77c5	function	sub	sub(uint256,uint256)	a,b,	ret_0,,
-0xe31bdc0a	function	sub	sub(uint256,uint256,string)	a,b,errorMessage,	ret_0,,
-0x18160ddd	function	totalSupply	totalSupply()		ret_0,,
-0xa9059cbb	function	transfer	transfer(address,uint256)	recipient,amount,	ret_0,,
-0x23b872dd	function	transferFrom	transferFrom(address,address,uint256)	sender,recipient,amount,	ret_0,,
-0xf2fde38b	function	transferOwnership	transferOwnership(address)	newOwner,	,
-0x3f4ba83a	function	unpause	unpause()		,
-0xaf933b57	function	withdrawEther	withdrawEther(address)	_dest,	,
-0x3aeac4e1	function	withdrawToken	withdrawToken(address,address)	_tokenAddress,_dest,	,
-0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925	event	Approval	Approval(address,address,uint256)	owner,spender,value,	,
-0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98	event	DonationSent	DonationSent(address,uint256,address,address)	token,amount,dest,donor,	,
-0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0	event	OwnershipTransferred	OwnershipTransferred(address,address)	previousOwner,newOwner,	,
-0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258	event	Paused	Paused(address)	account,	,
-0xa0524ee0fd8662d6c046d199da2a6d3dc49445182cec055873a5bb9c2843c8e0	event	TokenWithdrawn	TokenWithdrawn(address,uint256,address)	token,amount,dest,	,
-0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef	event	Transfer	Transfer(address,address,uint256)	from,to,value,	,
-0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa	event	Unpaused	Unpaused(address)	account,	
+grabABI argc: 4 [1:0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee] [2:--fmt] [3:json] 
+grabABI 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee --fmt json 
+{ "data": [
+{
+  "name": "donate",
+  "type": "function",
+  "signature": "donate((address,uint256,address)[])",
+  "encoding": "0x9120491c",
+  "input_names": "donations,"
+},
+{
+  "name": "donate",
+  "type": "function",
+  "signature": "donate(Donation[])",
+  "encoding": "0xe1acd927",
+  "input_names": "donations,"
+}], "types": [
+{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
+] }

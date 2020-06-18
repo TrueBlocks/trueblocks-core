@@ -127,7 +127,8 @@ bool COptions::parseArguments(string_q& command) {
         parts |= SIG_DETAILS;
 
     for (auto a : addrs) {
-        if (!isContractAt(a, latest)) {
+        bool testing = isTestMode() && a == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+        if (!testing && !isContractAt(a, latest)) {
             cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
         } else {
             CAbi abi;

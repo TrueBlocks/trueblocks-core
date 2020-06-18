@@ -35,6 +35,8 @@ class CReconciliationNumeric : public CBaseNode {
     bigint_t intOutflow;
     bigint_t suicideInflow;
     bigint_t suicideOutflow;
+    bigint_t miningInflow;
+    bigint_t prefundInflow;
     bigint_t weiGasCost;
     bigint_t endBal;
     bigint_t endBalCalc;
@@ -117,6 +119,8 @@ inline void CReconciliationNumeric::initialize(void) {
     intOutflow = 0;
     suicideInflow = 0;
     suicideOutflow = 0;
+    miningInflow = 0;
+    prefundInflow = 0;
     weiGasCost = 0;
     endBal = 0;
     endBalCalc = 0;
@@ -143,6 +147,8 @@ inline void CReconciliationNumeric::duplicate(const CReconciliationNumeric& re) 
     intOutflow = re.intOutflow;
     suicideInflow = re.suicideInflow;
     suicideOutflow = re.suicideOutflow;
+    miningInflow = re.miningInflow;
+    prefundInflow = re.prefundInflow;
     weiGasCost = re.weiGasCost;
     endBal = re.endBal;
     endBalCalc = re.endBalCalc;
