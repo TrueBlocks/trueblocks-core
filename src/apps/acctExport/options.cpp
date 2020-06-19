@@ -316,6 +316,10 @@ bool COptions::parseArguments(string_q& command) {
             }
             expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format);
         }
+        HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CTransaction, "datesh");
+        HIDE_FIELD(CTransaction, "time");
+        HIDE_FIELD(CTransaction, "age");
 
         expContext().fmtMap["header"] = "";
         if (!isNoHeader) {
