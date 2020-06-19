@@ -9,8 +9,8 @@ fields = \
     string outflow|\
     string intInflow|\
     string intOutflow|\
-    string suicideInflow|\
-    string suicideOutflow|\
+    string selfDestructInflow|\
+    string selfDestructOutflow|\
     string miningInflow|\
     string prefundInflow|\
     string weiGasCost|\

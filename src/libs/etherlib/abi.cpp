@@ -383,8 +383,8 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
 
     string_q contents;
     asciiFileToString(fileName, contents);
-    if (isTestMode())
-        cout << "From file: " << contents << endl << "From file: " << endl;
+    // if (isTestMode())
+    //    cout << "From file: " << contents << endl << "From file: " << endl;
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
         string_q addr = substitute(

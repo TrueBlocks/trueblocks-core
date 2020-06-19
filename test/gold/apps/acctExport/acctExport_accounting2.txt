@@ -29,8 +29,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
       "outflow": "0",
       "intInflow": "0",
       "intOutflow": "0",
-      "suicideInflow": "0",
-      "suicideOutflow": "0",
+      "selfDestructInflow": "0",
+      "selfDestructOutflow": "0",
       "miningInflow": "5000000000000000000",
       "prefundInflow": "0",
       "weiGasCost": "0",
@@ -48,7 +48,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
   "date": "2015-07-30 15:26:28 UTC",
   "ether": 5.000000000000000000
 }
-, {
+TIME ~ CLOCK - <INFO>  : Exporting 0 of 255 records (max 5)          , {
   "hash": "0x927bf",
   "blockHash": "0x0",
   "blockNumber": 5,
@@ -76,8 +76,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
       "outflow": "0",
       "intInflow": "0",
       "intOutflow": "0",
-      "suicideInflow": "0",
-      "suicideOutflow": "0",
+      "selfDestructInflow": "0",
+      "selfDestructOutflow": "0",
       "miningInflow": "5000000000000000000",
       "prefundInflow": "0",
       "weiGasCost": "0",
@@ -123,8 +123,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
       "outflow": "0",
       "intInflow": "0",
       "intOutflow": "0",
-      "suicideInflow": "0",
-      "suicideOutflow": "0",
+      "selfDestructInflow": "0",
+      "selfDestructOutflow": "0",
       "miningInflow": "0",
       "prefundInflow": "0",
       "weiGasCost": "0",
@@ -186,8 +186,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
       "outflow": "0",
       "intInflow": "0",
       "intOutflow": "0",
-      "suicideInflow": "0",
-      "suicideOutflow": "0",
+      "selfDestructInflow": "0",
+      "selfDestructOutflow": "0",
       "miningInflow": "5000000000000000000",
       "prefundInflow": "0",
       "weiGasCost": "0",
@@ -205,7 +205,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
   "date": "2015-07-30 15:38:33 UTC",
   "ether": 5.000000000000000000
 }
-, {
+TIME ~ CLOCK - <INFO>  : Exporting 3 of 255 records (max 5)          , {
   "hash": "0x17a6afe",
   "blockHash": "0x0",
   "blockNumber": 247,
@@ -233,8 +233,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
       "outflow": "0",
       "intInflow": "0",
       "intOutflow": "0",
-      "suicideInflow": "0",
-      "suicideOutflow": "0",
+      "selfDestructInflow": "0",
+      "selfDestructOutflow": "0",
       "miningInflow": "0",
       "prefundInflow": "0",
       "weiGasCost": "0",
@@ -269,7 +269,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --articulate 
   "ether": 0.000000000000000000
 }
 ]
-TIME ~ CLOCK - <INFO>  :                                                                                                                         ], "types": [
+], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "statements", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFromAndTo": {}
 , "unNamedFromAndTo": {}, "namedFrom": {}

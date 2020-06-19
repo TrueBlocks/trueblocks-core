@@ -34,8 +34,8 @@ class CIncomeStatement : public CBaseNode {
     string_q outflow;
     string_q intInflow;
     string_q intOutflow;
-    string_q suicideInflow;
-    string_q suicideOutflow;
+    string_q selfDestructInflow;
+    string_q selfDestructOutflow;
     string_q miningInflow;
     string_q prefundInflow;
     string_q weiGasCost;
@@ -115,8 +115,8 @@ inline void CIncomeStatement::initialize(void) {
     outflow = "";
     intInflow = "";
     intOutflow = "";
-    suicideInflow = "";
-    suicideOutflow = "";
+    selfDestructInflow = "";
+    selfDestructOutflow = "";
     miningInflow = "";
     prefundInflow = "";
     weiGasCost = "";
@@ -143,8 +143,8 @@ inline void CIncomeStatement::duplicate(const CIncomeStatement& in) {
     outflow = in.outflow;
     intInflow = in.intInflow;
     intOutflow = in.intOutflow;
-    suicideInflow = in.suicideInflow;
-    suicideOutflow = in.suicideOutflow;
+    selfDestructInflow = in.selfDestructInflow;
+    selfDestructOutflow = in.selfDestructOutflow;
     miningInflow = in.miningInflow;
     prefundInflow = in.prefundInflow;
     weiGasCost = in.weiGasCost;

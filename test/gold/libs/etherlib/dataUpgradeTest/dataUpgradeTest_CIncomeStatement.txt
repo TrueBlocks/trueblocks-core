@@ -15,8 +15,8 @@ inflow              	1009	0	131122	T_TEXT TS_STRING
 outflow             	1010	0	131122	T_TEXT TS_STRING
 intInflow           	1011	0	131122	T_TEXT TS_STRING
 intOutflow          	1012	0	131122	T_TEXT TS_STRING
-suicideInflow       	1013	0	131122	T_TEXT TS_STRING
-suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
+selfDestructInflow  	1013	0	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1014	0	131122	T_TEXT TS_STRING
 miningInflow        	1015	0	131122	T_TEXT TS_STRING
 prefundInflow       	1016	0	131122	T_TEXT TS_STRING
 weiGasCost          	1017	0	131122	T_TEXT TS_STRING
@@ -45,8 +45,8 @@ inflow              	1009	1	131122	T_TEXT TS_STRING
 outflow             	1010	1	131122	T_TEXT TS_STRING
 intInflow           	1011	1	131122	T_TEXT TS_STRING
 intOutflow          	1012	1	131122	T_TEXT TS_STRING
-suicideInflow       	1013	1	131122	T_TEXT TS_STRING
-suicideOutflow      	1014	1	131122	T_TEXT TS_STRING
+selfDestructInflow  	1013	1	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1014	1	131122	T_TEXT TS_STRING
 miningInflow        	1015	1	131122	T_TEXT TS_STRING
 prefundInflow       	1016	1	131122	T_TEXT TS_STRING
 weiGasCost          	1017	1	131122	T_TEXT TS_STRING
@@ -73,8 +73,8 @@ inflow              	1009	0	131122	T_TEXT TS_STRING
 outflow             	1010	0	131122	T_TEXT TS_STRING
 intInflow           	1011	0	131122	T_TEXT TS_STRING
 intOutflow          	1012	0	131122	T_TEXT TS_STRING
-suicideInflow       	1013	0	131122	T_TEXT TS_STRING
-suicideOutflow      	1014	0	131122	T_TEXT TS_STRING
+selfDestructInflow  	1013	0	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1014	0	131122	T_TEXT TS_STRING
 miningInflow        	1015	0	131122	T_TEXT TS_STRING
 prefundInflow       	1016	0	131122	T_TEXT TS_STRING
 weiGasCost          	1017	0	131122	T_TEXT TS_STRING

@@ -2,6 +2,6 @@
 class = CSchema
 fields = string name|string selector|string type|bool hidden|uint64 width|\
             string function|bool editable|uint64 id|uint64 decimals|bool isPill|\
-            string align|string cn|bool download|string chart|bool detail|bool hide_empty|bool searchable|bool sortable|\
+            string align|string cn|bool download|string chart|uint32 detail|bool hide_empty|bool searchable|bool wide|\
             string underField|string onDisplay|string onAccept|string onValidate
 includes = etherlib.h

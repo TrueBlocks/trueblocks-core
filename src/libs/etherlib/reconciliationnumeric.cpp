@@ -133,11 +133,11 @@ string_q CReconciliationNumeric::getValueByName(const string_q& fieldName) const
             }
             break;
         case 's':
-            if (fieldName % "suicideInflow") {
-                return bni_2_Str(suicideInflow);
+            if (fieldName % "selfDestructInflow") {
+                return bni_2_Str(selfDestructInflow);
             }
-            if (fieldName % "suicideOutflow") {
-                return bni_2_Str(suicideOutflow);
+            if (fieldName % "selfDestructOutflow") {
+                return bni_2_Str(selfDestructOutflow);
             }
             break;
         case 'w':
@@ -242,12 +242,12 @@ bool CReconciliationNumeric::setValueByName(const string_q& fieldNameIn, const s
             }
             break;
         case 's':
-            if (fieldName % "suicideInflow") {
-                suicideInflow = str_2_Wei(fieldValue);
+            if (fieldName % "selfDestructInflow") {
+                selfDestructInflow = str_2_Wei(fieldValue);
                 return true;
             }
-            if (fieldName % "suicideOutflow") {
-                suicideOutflow = str_2_Wei(fieldValue);
+            if (fieldName % "selfDestructOutflow") {
+                selfDestructOutflow = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -290,8 +290,8 @@ bool CReconciliationNumeric::Serialize(CArchive& archive) {
     archive >> outflow;
     archive >> intInflow;
     archive >> intOutflow;
-    archive >> suicideInflow;
-    archive >> suicideOutflow;
+    archive >> selfDestructInflow;
+    archive >> selfDestructOutflow;
     archive >> miningInflow;
     archive >> prefundInflow;
     archive >> weiGasCost;
@@ -319,8 +319,8 @@ bool CReconciliationNumeric::SerializeC(CArchive& archive) const {
     archive << outflow;
     archive << intInflow;
     archive << intOutflow;
-    archive << suicideInflow;
-    archive << suicideOutflow;
+    archive << selfDestructInflow;
+    archive << selfDestructOutflow;
     archive << miningInflow;
     archive << prefundInflow;
     archive << weiGasCost;
@@ -373,8 +373,8 @@ void CReconciliationNumeric::registerClass(void) {
     ADD_FIELD(CReconciliationNumeric, "outflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliationNumeric, "intInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliationNumeric, "intOutflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "suicideInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "suicideOutflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliationNumeric, "selfDestructInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliationNumeric, "selfDestructOutflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliationNumeric, "miningInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliationNumeric, "prefundInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliationNumeric, "weiGasCost", T_INT256, ++fieldNum);
@@ -499,8 +499,8 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
     }
 
     // Calculate what we think the balances should be...
-    endBalCalc = begBal + inflow + intInflow + suicideInflow + miningInflow + prefundInflow - outflow - intOutflow -
-                 suicideOutflow - weiGasCost;
+    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
+                 intOutflow - selfDestructOutflow - weiGasCost;
 
     // Check to see if there are any mismatches...
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
@@ -549,8 +549,8 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + suicideInflow + miningInflow + prefundInflow - outflow - intOutflow -
-                     suicideOutflow - weiGasCost;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
+                     intOutflow - selfDestructOutflow - weiGasCost;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
         // available until the end of the block. The best we can do is temporarily assume the calculated balance
@@ -569,8 +569,8 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + suicideInflow + miningInflow + prefundInflow - outflow - intOutflow -
-                     suicideOutflow - weiGasCost;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
+                     intOutflow - selfDestructOutflow - weiGasCost;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
@@ -588,8 +588,8 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
-        endBalCalc = begBal + inflow + intInflow + suicideInflow + miningInflow + prefundInflow - outflow - intOutflow -
-                     suicideOutflow - weiGasCost;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
+                     intOutflow - selfDestructOutflow - weiGasCost;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc;
@@ -610,17 +610,17 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
     outflow = inflow = 0;  // we will store it in the internal values
     loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
     for (auto trace : trans->traces) {
-        bool isSuicide = trace.action.selfDestructed != "";
-        if (isSuicide) {
+        bool isSelfDestruct = trace.action.selfDestructed != "";
+        if (isSelfDestruct) {
             if (trace.action.refundAddress == accountingFor) {
-                // receives suicided ether
-                suicideInflow += trace.action.balance;
+                // receives self destructed ether
+                selfDestructInflow += trace.action.balance;
             }
 
             // do not collapse. It may be both
             if (trace.action.selfDestructed == accountingFor) {
                 // the smart contract that is being killed and thereby loses the eth
-                suicideOutflow += trace.action.balance;
+                selfDestructOutflow += trace.action.balance;
             }
 
         } else {
@@ -641,8 +641,8 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
         prefundInflow = trans->value;
     }
 
-    endBalCalc = begBal + inflow + intInflow + suicideInflow + miningInflow + prefundInflow - outflow - intOutflow -
-                 suicideOutflow - weiGasCost;
+    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
+                 intOutflow - selfDestructOutflow - weiGasCost;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);

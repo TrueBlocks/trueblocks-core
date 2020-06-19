@@ -39,10 +39,10 @@ class CSchema : public CBaseNode {
     string_q cn;
     bool download;
     string_q chart;
-    bool detail;
+    uint32_t detail;
     bool hide_empty;
     bool searchable;
-    bool sortable;
+    bool wide;
     string_q underField;
     string_q onDisplay;
     string_q onAccept;
@@ -124,10 +124,10 @@ inline void CSchema::initialize(void) {
     cn = "";
     download = false;
     chart = "";
-    detail = false;
+    detail = 0;
     hide_empty = false;
     searchable = false;
-    sortable = false;
+    wide = false;
     underField = "";
     onDisplay = "";
     onAccept = "";
@@ -159,7 +159,7 @@ inline void CSchema::duplicate(const CSchema& sc) {
     detail = sc.detail;
     hide_empty = sc.hide_empty;
     searchable = sc.searchable;
-    sortable = sc.sortable;
+    wide = sc.wide;
     underField = sc.underField;
     onDisplay = sc.onDisplay;
     onAccept = sc.onAccept;

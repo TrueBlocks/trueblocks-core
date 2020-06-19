@@ -91,7 +91,7 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str(download);
             }
             if (fieldName % "detail") {
-                return bool_2_Str(detail);
+                return uint_2_Str(detail);
             }
             break;
         case 'e':
@@ -143,9 +143,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             if (fieldName % "searchable") {
                 return bool_2_Str(searchable);
             }
-            if (fieldName % "sortable") {
-                return bool_2_Str(sortable);
-            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -160,6 +157,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
         case 'w':
             if (fieldName % "width") {
                 return uint_2_Str(width);
+            }
+            if (fieldName % "wide") {
+                return bool_2_Str(wide);
             }
             break;
         default:
@@ -208,7 +208,7 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             if (fieldName % "detail") {
-                detail = str_2_Bool(fieldValue);
+                detail = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -273,10 +273,6 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 searchable = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "sortable") {
-                sortable = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -293,6 +289,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 'w':
             if (fieldName % "width") {
                 width = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "wide") {
+                wide = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -338,7 +338,7 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> detail;
     archive >> hide_empty;
     archive >> searchable;
-    archive >> sortable;
+    archive >> wide;
     archive >> underField;
     archive >> onDisplay;
     archive >> onAccept;
@@ -371,7 +371,7 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << detail;
     archive << hide_empty;
     archive << searchable;
-    archive << sortable;
+    archive << wide;
     archive << underField;
     archive << onDisplay;
     archive << onAccept;
@@ -426,10 +426,10 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "download", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "chart", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSchema, "detail", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "detail", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "hide_empty", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
-    ADD_FIELD(CSchema, "sortable", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "wide", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "underField", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onAccept", T_TEXT, ++fieldNum);

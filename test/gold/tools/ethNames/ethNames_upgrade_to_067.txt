@@ -155,6 +155,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
+    "name": "GU: Shiny Legendary Pack",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x00158a74921620b39e5c3afe4dca79feb2c2c143",
     "name": "matko95",
@@ -440,6 +449,15 @@ ethNames --fmt json
     "symbol": "",
     "source": "On Chain",
     "decimals": 6,
+    "description": ""
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
+    "name": "GU: Rare Pack",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
     "description": ""
   },
   {
@@ -1532,6 +1550,15 @@ ethNames --fmt json
     "description": "Aims to be the blockchain solution for the global dental industry."
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
+    "name": "GU: Rare Pack Three",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
     "name": "Tierion Network Token",
@@ -1782,33 +1809,6 @@ ethNames --fmt json
     "source": "DevCon2 Token Contract",
     "decimals": 0,
     "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0b251d3ef239da882db1e9c2686b26b55915675c",
-    "name": "intelliz",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x0b25b46a70e7f9296c6d8bae9a84c887da5cb9ec",
-    "name": "Grant 474 Kudos quest quality management",
-    "symbol": "",
-    "source": "https://gitcoin.co/grants/474/baas-on-aws-gcp-azure-adoption-of-blockchain-for-e",
-    "decimals": 0,
-    "description": "https://github.com/sizzthehedgehog?tab=repositories"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0b4bdc478791897274652dc15ef5c135cae61e60",
-    "name": "DAEX Token",
-    "symbol": "DAX",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges."
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

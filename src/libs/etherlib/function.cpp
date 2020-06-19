@@ -664,8 +664,8 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
         param.fromDefinition(input);
         if (param.name.empty())
             param.name = "val_" + uint_2_Str(iCnt++);
-        if (isTestMode())
-            cout << param << endl;
+        // if (isTestMode())
+        //    cout << param << endl;
         this->inputs.push_back(param);
     }
 
@@ -685,8 +685,8 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
         }
     }
     finishParse();
-    if (isTestMode())
-        cout << *this << endl;
+    // if (isTestMode())
+    //    cout << *this << endl;
     return true;
 }
 

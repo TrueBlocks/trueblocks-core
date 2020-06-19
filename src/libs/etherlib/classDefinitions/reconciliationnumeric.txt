@@ -9,8 +9,8 @@ fields = \
     int256 outflow|\
     int256 intInflow|\
     int256 intOutflow|\
-    int256 suicideInflow|\
-    int256 suicideOutflow|\
+    int256 selfDestructInflow|\
+    int256 selfDestructOutflow|\
     int256 miningInflow|\
     int256 prefundInflow|\
     int256 weiGasCost|\

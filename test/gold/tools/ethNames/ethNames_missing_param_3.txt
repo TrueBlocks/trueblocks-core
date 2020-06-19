@@ -18,6 +18,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x00000b46508882a135b4933b82a07df8f24a0068	drknudy				Gitcoin Website
 50-Tokens	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD		18	defipulse.com
 50-Tokens	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD		18	defipulse.com
+30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack				Etherscan
 31-Gitcoin Grants:Friends	0x00158a74921620b39e5c3afe4dca79feb2c2c143	matko95				Gitcoin Website
 30-Contracts	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Hacker Gold Sender				TrueBlocks.io
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX		18	On Chain
@@ -50,6 +51,7 @@ tags	address	name	symbol	decimals	source
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper				0xTracker
 50-Tokens:ERC20	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos Token	PYN		18	On Chain
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS			6	On Chain
+30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack				Etherscan
 31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 627 Veridex				https://gitcoin.co/grants/627/veridex
 31-Gitcoin Grants:Friends	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	vgshenoy				Gitcoin Website
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18	On Chain
@@ -171,6 +173,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL		18	On Chain
 31-Gitcoin Grants:Grant	0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70	Grant 425 Turkish Cryptocurrency YouTuber and Researcher				https://gitcoin.co/grants/425/turkish-cryptocurrency-youtuber-and-researcher
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	DENT			Etherscan.io
+30-Contracts	0x08dbf4f942ba8cd7871c13addefdffef3e5a8035	GU: Rare Pack Three				Etherscan
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8	On Chain
 31-Gitcoin Grants:Friends	0x08fdc2ee954b3ce261b8cc7f65fdb02df168802e	c3rnst				Gitcoin Website
 34-ENS	0x0904dac3347ea47d208f3fd67402d039a3b99859	ENS: Wallet 1 nickdjohnson				Etherscan
@@ -199,6 +202,3 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x0b138ae771cdb4a567c1ed22da24bfdcf244ed00	kedhip				Gitcoin Website
 50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA		8	On Chain
 90-DevCon2:Individual	0x0b1fb677b07375b781b4551b2e265d05590fd62f	Cheyne				DevCon2 Token Contract
-31-Gitcoin Grants:Friends	0x0b251d3ef239da882db1e9c2686b26b55915675c	intelliz				Gitcoin Website
-31-Gitcoin Grants:Grant	0x0b25b46a70e7f9296c6d8bae9a84c887da5cb9ec	Grant 474 Kudos quest quality management				https://gitcoin.co/grants/474/baas-on-aws-gcp-azure-adoption-of-blockchain-for-e
-50-Tokens:ERC20	0x0b4bdc478791897274652dc15ef5c135cae61e60	DAEX Token	DAX		18	On Chain

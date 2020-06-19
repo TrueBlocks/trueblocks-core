@@ -133,11 +133,11 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "suicideInflow") {
-                return suicideInflow;
+            if (fieldName % "selfDestructInflow") {
+                return selfDestructInflow;
             }
-            if (fieldName % "suicideOutflow") {
-                return suicideOutflow;
+            if (fieldName % "selfDestructOutflow") {
+                return selfDestructOutflow;
             }
             break;
         case 'w':
@@ -242,12 +242,12 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 's':
-            if (fieldName % "suicideInflow") {
-                suicideInflow = fieldValue;
+            if (fieldName % "selfDestructInflow") {
+                selfDestructInflow = fieldValue;
                 return true;
             }
-            if (fieldName % "suicideOutflow") {
-                suicideOutflow = fieldValue;
+            if (fieldName % "selfDestructOutflow") {
+                selfDestructOutflow = fieldValue;
                 return true;
             }
             break;
@@ -290,8 +290,8 @@ bool CIncomeStatement::Serialize(CArchive& archive) {
     archive >> outflow;
     archive >> intInflow;
     archive >> intOutflow;
-    archive >> suicideInflow;
-    archive >> suicideOutflow;
+    archive >> selfDestructInflow;
+    archive >> selfDestructOutflow;
     archive >> miningInflow;
     archive >> prefundInflow;
     archive >> weiGasCost;
@@ -319,8 +319,8 @@ bool CIncomeStatement::SerializeC(CArchive& archive) const {
     archive << outflow;
     archive << intInflow;
     archive << intOutflow;
-    archive << suicideInflow;
-    archive << suicideOutflow;
+    archive << selfDestructInflow;
+    archive << selfDestructOutflow;
     archive << miningInflow;
     archive << prefundInflow;
     archive << weiGasCost;
@@ -373,8 +373,8 @@ void CIncomeStatement::registerClass(void) {
     ADD_FIELD(CIncomeStatement, "outflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "intInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "intOutflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "suicideInflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "suicideOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "selfDestructInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIncomeStatement, "selfDestructOutflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "miningInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "prefundInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CIncomeStatement, "weiGasCost", T_TEXT, ++fieldNum);
@@ -509,8 +509,8 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         outflow = bni_2_Ether(nums.outflow);
         intInflow = bni_2_Ether(nums.intInflow);
         intOutflow = bni_2_Ether(nums.intOutflow);
-        suicideInflow = bni_2_Ether(nums.suicideInflow);
-        suicideOutflow = bni_2_Ether(nums.suicideOutflow);
+        selfDestructInflow = bni_2_Ether(nums.selfDestructInflow);
+        selfDestructOutflow = bni_2_Ether(nums.selfDestructOutflow);
         miningInflow = bni_2_Ether(nums.miningInflow);
         prefundInflow = bni_2_Ether(nums.prefundInflow);
         weiGasCost = bni_2_Ether(nums.weiGasCost);
@@ -524,8 +524,8 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         outflow = bni_2_Str(nums.outflow);
         intInflow = bni_2_Str(nums.intInflow);
         intOutflow = bni_2_Str(nums.intOutflow);
-        suicideInflow = bni_2_Str(nums.suicideInflow);
-        suicideOutflow = bni_2_Str(nums.suicideOutflow);
+        selfDestructInflow = bni_2_Str(nums.selfDestructInflow);
+        selfDestructOutflow = bni_2_Str(nums.selfDestructOutflow);
         miningInflow = bni_2_Str(nums.miningInflow);
         prefundInflow = bni_2_Str(nums.prefundInflow);
         weiGasCost = bni_2_Str(nums.weiGasCost);
