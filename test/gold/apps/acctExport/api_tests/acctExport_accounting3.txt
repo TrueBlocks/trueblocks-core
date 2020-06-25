@@ -10834,7 +10834,7 @@
     "namedFrom": {
       "0xf503017d7baf7fbc0fff7492b751025c6a78179b": {
         "tags": "00-Active",
-        "name": "Name 0xf503017d",
+        "name": "TrueBlocks Wallet 0xf503",
         "count": 8
       },
       "0x00de4b13153673bcae2616b67bf822500d325fc3": {
@@ -10844,7 +10844,7 @@
       },
       "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": {
         "tags": "00-Active",
-        "name": "Name 0x054993ab",
+        "name": "Meriam Wallet",
         "count": 1
       },
       "0x0b16f058257f43db6ec84a7b3c77766cb808face": {
