@@ -4,9 +4,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10040,apps,list,acctScrape,finalized,f,true,false,false,false,false,local,toggle,<boolean>,toggle search of finalized folder ([{DEF}] by default)
 10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,toggle,<boolean>,toggle search of staging (not yet finalized) folder ([{DEF}] by default)
 10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,toggle,<boolean>,toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
-10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-10140,apps,list,acctScrape,silent,i,,false,false,false,false,local,switch,<boolean>,lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)
+10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
+10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or collection of addresses).
 10162,apps,list,acctScrape,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 
@@ -16,8 +15,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10230,apps,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
 10240,apps,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
 10250,apps,export,acctExport,balances,b,,false,false,true,true,header,switch,<boolean>,export balance history instead of transaction list
-10260,apps,export,acctExport,creations,n,,false,false,true,true,header,switch,<boolean>,export contract creations instead of transaction list
-10270,apps,export,acctExport,selfdestructs,u,,false,false,true,true,header,switch,<boolean>,export contract selfdestructs instead of transaction list
 10280,apps,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
 10310,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)

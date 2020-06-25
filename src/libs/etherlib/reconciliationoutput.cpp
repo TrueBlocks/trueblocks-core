@@ -15,27 +15,27 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "incomestatement.h"
+#include "reconciliationoutput.h"
 #include "etherlib.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CIncomeStatement, CBaseNode);
+IMPLEMENT_NODE(CReconciliationOutput, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextIncomestatementChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextReconciliationoutputChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextReconciliationoutputChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CReconciliationOutput::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["incomestatement_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["reconciliationoutput_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -45,13 +45,13 @@ void CIncomeStatement::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextIncomestatementChunk, this);
+        ctx << getNextChunk(fmt, nextReconciliationoutputChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextIncomestatementChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextReconciliationoutputChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CIncomeStatement*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CReconciliationOutput*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,9 +60,9 @@ string_q nextIncomestatementChunk(const string_q& fieldIn, const void* dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
+string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextIncomestatementChunk_custom(fieldName, this);
+    string_q ret = nextReconciliationoutputChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -96,6 +96,11 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "endBalDiff") {
                 return endBalDiff;
+            }
+            break;
+        case 'g':
+            if (fieldName % "gasCostOutflow") {
+                return gasCostOutflow;
             }
             break;
         case 'i':
@@ -140,11 +145,6 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
                 return selfDestructOutflow;
             }
             break;
-        case 'w':
-            if (fieldName % "weiGasCost") {
-                return weiGasCost;
-            }
-            break;
         default:
             break;
     }
@@ -157,7 +157,7 @@ string_q CIncomeStatement::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -196,6 +196,12 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
             }
             if (fieldName % "endBalDiff") {
                 endBalDiff = fieldValue;
+                return true;
+            }
+            break;
+        case 'g':
+            if (fieldName % "gasCostOutflow") {
+                gasCostOutflow = fieldValue;
                 return true;
             }
             break;
@@ -251,12 +257,6 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
-        case 'w':
-            if (fieldName % "weiGasCost") {
-                weiGasCost = fieldValue;
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -264,13 +264,13 @@ bool CIncomeStatement::setValueByName(const string_q& fieldNameIn, const string_
 }
 
 //---------------------------------------------------------------------------------------------------
-void CIncomeStatement::finishParse() {
+void CReconciliationOutput::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::Serialize(CArchive& archive) {
+bool CReconciliationOutput::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -294,7 +294,7 @@ bool CIncomeStatement::Serialize(CArchive& archive) {
     archive >> selfDestructOutflow;
     archive >> miningInflow;
     archive >> prefundInflow;
-    archive >> weiGasCost;
+    archive >> gasCostOutflow;
     archive >> endBal;
     archive >> endBalCalc;
     archive >> endBalDiff;
@@ -305,7 +305,7 @@ bool CIncomeStatement::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CIncomeStatement::SerializeC(CArchive& archive) const {
+bool CReconciliationOutput::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -323,7 +323,7 @@ bool CIncomeStatement::SerializeC(CArchive& archive) const {
     archive << selfDestructOutflow;
     archive << miningInflow;
     archive << prefundInflow;
-    archive << weiGasCost;
+    archive << gasCostOutflow;
     archive << endBal;
     archive << endBalCalc;
     archive << endBalDiff;
@@ -334,7 +334,7 @@ bool CIncomeStatement::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array) {
+CArchive& operator>>(CArchive& archive, CReconciliationOutputArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -346,7 +346,7 @@ CArchive& operator>>(CArchive& archive, CIncomeStatementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
+CArchive& operator<<(CArchive& archive, const CReconciliationOutputArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -355,58 +355,58 @@ CArchive& operator<<(CArchive& archive, const CIncomeStatementArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CIncomeStatement::registerClass(void) {
+void CReconciliationOutput::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CIncomeStatement, "schema"))
+    if (HAS_FIELD(CReconciliationOutput, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CIncomeStatement, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "blockNum", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "asset", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "begBal", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "begBalDiff", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "inflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "outflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "intInflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "intOutflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "selfDestructInflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "selfDestructOutflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "miningInflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "prefundInflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "weiGasCost", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBal", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBalCalc", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "endBalDiff", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "reconciliationType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIncomeStatement, "reconciled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "asset", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "begBal", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "begBalDiff", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "inflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "outflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "intInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "intOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "selfDestructInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "selfDestructOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "miningInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "prefundInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "gasCostOutflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "endBal", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "endBalCalc", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "endBalDiff", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "reconciliationType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "reconciled", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CIncomeStatement, "schema");
-    HIDE_FIELD(CIncomeStatement, "deleted");
-    HIDE_FIELD(CIncomeStatement, "showing");
-    HIDE_FIELD(CIncomeStatement, "cname");
+    HIDE_FIELD(CReconciliationOutput, "schema");
+    HIDE_FIELD(CReconciliationOutput, "deleted");
+    HIDE_FIELD(CReconciliationOutput, "showing");
+    HIDE_FIELD(CReconciliationOutput, "cname");
 
-    builtIns.push_back(_biCIncomeStatement);
+    builtIns.push_back(_biCReconciliationOutput);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CIncomeStatement* inc = reinterpret_cast<const CIncomeStatement*>(dataPtr);
-    if (inc) {
+string_q nextReconciliationoutputChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CReconciliationOutput* rec = reinterpret_cast<const CReconciliationOutput*>(dataPtr);
+    if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, inc);
+                    return nextBasenodeChunk(fieldIn, rec);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -420,7 +420,7 @@ string_q nextIncomestatementChunk_custom(const string_q& fieldIn, const void* da
 }
 
 //---------------------------------------------------------------------------
-bool CIncomeStatement::readBackLevel(CArchive& archive) {
+bool CReconciliationOutput::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -428,42 +428,20 @@ bool CIncomeStatement::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CIncomeStatement& inc) {
-    inc.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CReconciliationOutput& rec) {
+    rec.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CIncomeStatement& inc) {
-    inc.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CReconciliationOutput& rec) {
+    rec.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CIncomeStatement& item) {
+ostream& operator<<(ostream& os, const CReconciliationOutput& item) {
     // EXISTING_CODE
-    //    if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
-    //        uint64_t width = 22;
-    //        if (item.begBal == item.endBal && item.begBal == -1) {
-    //            os << padCenter("begBal", width) << "   " << padCenter("inFlow", width) << "   "
-    //               << padCenter("outFlow", width) << "   " << padCenter("gasCost", width) << "   "
-    //               << padCenter("endBal", width);
-    //        } else {
-    //            os << (item.begBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.begBal)), width) <<
-    //            bBlack
-    //               << "   ";
-    //            os << (item.inflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.inflow)), width) <<
-    //            bBlack
-    //               << "   ";
-    //            os << (item.outflow > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.outflow)), width) <<
-    //            bBlack
-    //               << "   ";
-    //            os << (item.weiGasCost > 0 ? cYellow : "") << padLeft(wei_2_Ether(bni_2_Str(item.weiGasCost)), width)
-    //               << cOff << "   ";
-    //            os << (item.endBal > 0 ? cGreen : bBlack) << padLeft(wei_2_Ether(bni_2_Str(item.endBal)), width);
-    //        }
-    //        { return os; }
-    //    }
     // EXISTING_CODE
 
     item.Format(os, "", nullptr);
@@ -472,7 +450,7 @@ ostream& operator<<(ostream& os, const CIncomeStatement& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_INCOMESTATEMENT = "";
+const char* STR_DISPLAY_RECONCILIATIONOUTPUT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -500,7 +478,7 @@ inline string_q bni_2_Ether(const bigint_t& num) {
 }
 
 //---------------------------------------------------------------------------
-CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
+CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
     blockNum = nums.blockNum;
     if (expContext().asEther) {
         begBal = bni_2_Ether(nums.begBal);
@@ -513,7 +491,7 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         selfDestructOutflow = bni_2_Ether(nums.selfDestructOutflow);
         miningInflow = bni_2_Ether(nums.miningInflow);
         prefundInflow = bni_2_Ether(nums.prefundInflow);
-        weiGasCost = bni_2_Ether(nums.weiGasCost);
+        gasCostOutflow = bni_2_Ether(nums.gasCostOutflow);
         endBal = bni_2_Ether(nums.endBal);
         endBalCalc = bni_2_Ether(nums.endBalCalc);
         endBalDiff = nums.endBalDiff >= 0 ? bni_2_Ether(nums.endBalDiff) : "-" + bni_2_Ether(nums.endBalDiff * -1);
@@ -528,7 +506,7 @@ CIncomeStatement::CIncomeStatement(const CReconciliationNumeric& nums) {
         selfDestructOutflow = bni_2_Str(nums.selfDestructOutflow);
         miningInflow = bni_2_Str(nums.miningInflow);
         prefundInflow = bni_2_Str(nums.prefundInflow);
-        weiGasCost = bni_2_Str(nums.weiGasCost);
+        gasCostOutflow = bni_2_Str(nums.gasCostOutflow);
         endBal = bni_2_Str(nums.endBal);
         endBalCalc = bni_2_Str(nums.endBalCalc);
         endBalDiff = bni_2_Str(nums.endBalDiff);

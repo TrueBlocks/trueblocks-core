@@ -1,12 +1,10 @@
 {
   "data": [
-    [
-      {
-        "address": "0xfb744b951d094b310262c8f986c860df9ab1de65",
-        "blockNumber": 0,
-        "transactionIndex": 8713
-      }
-    ]
+    {
+      "address": "0xfb744b951d094b310262c8f986c860df9ab1de65",
+      "blockNumber": 0,
+      "transactionIndex": 8713
+    }
   ],
   "types": [
     {
@@ -41,11 +39,21 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFromAndTo": {},
-    "unNamedFromAndTo": {},
-    "namedFrom": {},
-    "unNamedFrom": {},
-    "namedTo": {},
-    "unNamedTo": {}
+    "start": "0xdeadbeef",
+    "end": "0xdeadbeef",
+    "accountedFor": {
+      "stateHistory": [],
+      "curBalance": 0,
+      "enabled": true,
+      "tags": "80-Prefund",
+      "address": "0xfb744b951d094b310262c8f986c860df9ab1de65",
+      "name": "Prefund_8713",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": "",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": true
+    }
   }
 }

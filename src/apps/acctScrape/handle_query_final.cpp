@@ -24,13 +24,14 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
-        // If the user told us to start late, start late
+        // Note that the --start and --end options are ignored.
         if (!rangesIntersect(options->scanRange, options->fileRange))
             return !shouldQuit();
 
         if (isTestMode() && options->fileRange.second > 5000000)
             return !shouldQuit();
 
+        // LOG4("Scanning ", path);
         return options->visitBinaryFile(path, data) && !shouldQuit();
     }
 

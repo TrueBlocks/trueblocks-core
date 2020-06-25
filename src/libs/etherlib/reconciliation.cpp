@@ -15,27 +15,27 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "reconciliationnumeric.h"
+#include "reconciliation.h"
 #include "etherlib.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CReconciliationNumeric, CBaseNode);
+IMPLEMENT_NODE(CReconciliation, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextReconciliationnumericChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextReconciliationnumericChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextReconciliationChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CReconciliationNumeric::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CReconciliation::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["reconciliationnumeric_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["reconciliation_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -45,13 +45,13 @@ void CReconciliationNumeric::Format(ostream& ctx, const string_q& fmtIn, void* d
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextReconciliationnumericChunk, this);
+        ctx << getNextChunk(fmt, nextReconciliationChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextReconciliationnumericChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextReconciliationChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CReconciliationNumeric*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CReconciliation*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -60,9 +60,9 @@ string_q nextReconciliationnumericChunk(const string_q& fieldIn, const void* dat
 }
 
 //---------------------------------------------------------------------------
-string_q CReconciliationNumeric::getValueByName(const string_q& fieldName) const {
+string_q CReconciliation::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextReconciliationnumericChunk_custom(fieldName, this);
+    string_q ret = nextReconciliationChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -96,6 +96,11 @@ string_q CReconciliationNumeric::getValueByName(const string_q& fieldName) const
             }
             if (fieldName % "endBalDiff") {
                 return bni_2_Str(endBalDiff);
+            }
+            break;
+        case 'g':
+            if (fieldName % "gasCostOutflow") {
+                return bni_2_Str(gasCostOutflow);
             }
             break;
         case 'i':
@@ -140,11 +145,6 @@ string_q CReconciliationNumeric::getValueByName(const string_q& fieldName) const
                 return bni_2_Str(selfDestructOutflow);
             }
             break;
-        case 'w':
-            if (fieldName % "weiGasCost") {
-                return bni_2_Str(weiGasCost);
-            }
-            break;
         default:
             break;
     }
@@ -157,7 +157,7 @@ string_q CReconciliationNumeric::getValueByName(const string_q& fieldName) const
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReconciliationNumeric::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -196,6 +196,12 @@ bool CReconciliationNumeric::setValueByName(const string_q& fieldNameIn, const s
             }
             if (fieldName % "endBalDiff") {
                 endBalDiff = str_2_Wei(fieldValue);
+                return true;
+            }
+            break;
+        case 'g':
+            if (fieldName % "gasCostOutflow") {
+                gasCostOutflow = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -251,12 +257,6 @@ bool CReconciliationNumeric::setValueByName(const string_q& fieldNameIn, const s
                 return true;
             }
             break;
-        case 'w':
-            if (fieldName % "weiGasCost") {
-                weiGasCost = str_2_Wei(fieldValue);
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -264,13 +264,13 @@ bool CReconciliationNumeric::setValueByName(const string_q& fieldNameIn, const s
 }
 
 //---------------------------------------------------------------------------------------------------
-void CReconciliationNumeric::finishParse() {
+void CReconciliation::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReconciliationNumeric::Serialize(CArchive& archive) {
+bool CReconciliation::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -287,14 +287,14 @@ bool CReconciliationNumeric::Serialize(CArchive& archive) {
     archive >> begBal;
     archive >> begBalDiff;
     archive >> inflow;
-    archive >> outflow;
     archive >> intInflow;
-    archive >> intOutflow;
     archive >> selfDestructInflow;
-    archive >> selfDestructOutflow;
     archive >> miningInflow;
     archive >> prefundInflow;
-    archive >> weiGasCost;
+    archive >> outflow;
+    archive >> intOutflow;
+    archive >> selfDestructOutflow;
+    archive >> gasCostOutflow;
     archive >> endBal;
     archive >> endBalCalc;
     archive >> endBalDiff;
@@ -305,7 +305,7 @@ bool CReconciliationNumeric::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CReconciliationNumeric::SerializeC(CArchive& archive) const {
+bool CReconciliation::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -316,14 +316,14 @@ bool CReconciliationNumeric::SerializeC(CArchive& archive) const {
     archive << begBal;
     archive << begBalDiff;
     archive << inflow;
-    archive << outflow;
     archive << intInflow;
-    archive << intOutflow;
     archive << selfDestructInflow;
-    archive << selfDestructOutflow;
     archive << miningInflow;
     archive << prefundInflow;
-    archive << weiGasCost;
+    archive << outflow;
+    archive << intOutflow;
+    archive << selfDestructOutflow;
+    archive << gasCostOutflow;
     archive << endBal;
     archive << endBalCalc;
     archive << endBalDiff;
@@ -334,7 +334,7 @@ bool CReconciliationNumeric::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CReconciliationNumericArray& array) {
+CArchive& operator>>(CArchive& archive, CReconciliationArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -346,7 +346,7 @@ CArchive& operator>>(CArchive& archive, CReconciliationNumericArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CReconciliationNumericArray& array) {
+CArchive& operator<<(CArchive& archive, const CReconciliationArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -355,50 +355,50 @@ CArchive& operator<<(CArchive& archive, const CReconciliationNumericArray& array
 }
 
 //---------------------------------------------------------------------------
-void CReconciliationNumeric::registerClass(void) {
+void CReconciliation::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CReconciliationNumeric, "schema"))
+    if (HAS_FIELD(CReconciliation, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CReconciliationNumeric, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "blockNum", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "asset", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "begBal", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "begBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "inflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "outflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "intInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "intOutflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "selfDestructInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "selfDestructOutflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "miningInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "prefundInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "weiGasCost", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "endBal", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "endBalCalc", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "endBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "reconciliationType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationNumeric, "reconciled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliation, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CReconciliation, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliation, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliation, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliation, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "inflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "intInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "selfDestructInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "miningInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prefundInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "outflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "intOutflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "selfDestructOutflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "gasCostOutflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CReconciliationNumeric, "schema");
-    HIDE_FIELD(CReconciliationNumeric, "deleted");
-    HIDE_FIELD(CReconciliationNumeric, "showing");
-    HIDE_FIELD(CReconciliationNumeric, "cname");
+    HIDE_FIELD(CReconciliation, "schema");
+    HIDE_FIELD(CReconciliation, "deleted");
+    HIDE_FIELD(CReconciliation, "showing");
+    HIDE_FIELD(CReconciliation, "cname");
 
-    builtIns.push_back(_biCReconciliationNumeric);
+    builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextReconciliationnumericChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CReconciliationNumeric* rec = reinterpret_cast<const CReconciliationNumeric*>(dataPtr);
+string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CReconciliation* rec = reinterpret_cast<const CReconciliation*>(dataPtr);
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -420,7 +420,7 @@ string_q nextReconciliationnumericChunk_custom(const string_q& fieldIn, const vo
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliationNumeric::readBackLevel(CArchive& archive) {
+bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -428,19 +428,19 @@ bool CReconciliationNumeric::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CReconciliationNumeric& rec) {
+CArchive& operator<<(CArchive& archive, const CReconciliation& rec) {
     rec.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CReconciliationNumeric& rec) {
+CArchive& operator>>(CArchive& archive, CReconciliation& rec) {
     rec.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CReconciliationNumeric& item) {
+ostream& operator<<(ostream& os, const CReconciliation& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -450,18 +450,18 @@ ostream& operator<<(ostream& os, const CReconciliationNumeric& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RECONCILIATIONNUMERIC = "";
+const char* STR_DISPLAY_RECONCILIATION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CReconciliationNumeric& lastStatement,
-                                       const address_t& accountingFor, blknum_t nextBlock, const CTransaction* trans) {
+bool CReconciliation::reconcile(const CStringArray& corrections, const CReconciliation& lastStatement,
+                                const address_t& accountingFor, blknum_t nextBlock, const CTransaction* trans) {
     asset = "ETH";
 
     // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
     //
-    // Note: There are many complications with reconcilation. To start, we do a top level reconcilation
+    // Note: There are many complications with reconciliation. To start, we do a top level reconciliations
     // and if it works, we return...
 
     // Case 1: We try to reconcile from top line (i.e. transaction level) data...
@@ -470,7 +470,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
     // We need to account for both the case where the account is the sender...
     if (trans->from == accountingFor) {
         outflow = trans->isError ? 0 : trans->value;
-        weiGasCost = str_2_BigInt(trans->getValueByName("gasCost"));
+        gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
     // ... and/or the receiver...
@@ -500,7 +500,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
 
     // Calculate what we think the balances should be...
     endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                 intOutflow - selfDestructOutflow - weiGasCost;
+                 intOutflow - selfDestructOutflow - gasCostOutflow;
 
     // Check to see if there are any mismatches...
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
@@ -550,7 +550,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
 
         // We use the same "in-transaction" data to arrive at...
         endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - weiGasCost;
+                     intOutflow - selfDestructOutflow - gasCostOutflow;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
         // available until the end of the block. The best we can do is temporarily assume the calculated balance
@@ -570,7 +570,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
 
         // Again, we use the same "in-transaction" data to arrive at...
         endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - weiGasCost;
+                     intOutflow - selfDestructOutflow - gasCostOutflow;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
@@ -589,7 +589,7 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - weiGasCost;
+                     intOutflow - selfDestructOutflow - gasCostOutflow;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc;
@@ -604,9 +604,8 @@ bool CReconciliationNumeric::reconcile(const CStringArray& corrections, const CR
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& lastStatement,
-                                                  const address_t& accountingFor, blknum_t nextBlock,
-                                                  const CTransaction* trans) {
+bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, const address_t& accountingFor,
+                                           blknum_t nextBlock, const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
     loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
     for (auto trace : trans->traces) {
@@ -626,7 +625,7 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
         } else {
             if (trace.action.from == accountingFor) {
                 intOutflow += trans->isError ? 0 : trace.action.value;
-                // weiGasCost = str_2_BigInt(trans->getValueByName("gasCost"));
+                // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
             }
 
             // do not collapse. It may be both
@@ -642,10 +641,17 @@ bool CReconciliationNumeric::reconcileUsingTraces(const CReconciliationNumeric& 
     }
 
     endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                 intOutflow - selfDestructOutflow - weiGasCost;
+                 intOutflow - selfDestructOutflow - gasCostOutflow;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
+
+    // As crazy as this seems, we clear out the traces here.
+    // TODO(tjayrush): add an option to the function to allow preservation of the traces.
+    if (!reconciled) {
+        // remove the traces if we don't need them to balance
+        ((CTransaction*)trans)->traces.clear();
+    }
     return reconciled;
 }
 // EXISTING_CODE

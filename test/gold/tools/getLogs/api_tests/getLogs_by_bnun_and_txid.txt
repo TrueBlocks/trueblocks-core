@@ -2,13 +2,13 @@
   "data": [
     {
       "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
-      "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
       "logIndex": 4,
       "topics": [
         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
         "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
         "0x00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4"
       ],
+      "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
       "compressedLog": "",
       "type": "mined"
     }
@@ -22,16 +22,16 @@
           "type": "address"
         },
         {
-          "name": "data",
-          "type": "text"
-        },
-        {
           "name": "logIndex",
           "type": "blocknum"
         },
         {
           "name": "topics",
           "type": "object|ts_array"
+        },
+        {
+          "name": "data",
+          "type": "text"
         },
         {
           "name": "compressedLog",

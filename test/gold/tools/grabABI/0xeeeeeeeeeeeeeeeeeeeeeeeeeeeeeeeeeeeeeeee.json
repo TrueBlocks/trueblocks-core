@@ -20,16 +20,9 @@
     {
     "name": "donate",
     "type": "function",
-    "signature": "donate((address,uint256,address)[])",
-    "encoding": "0x9120491c",
-    "inputs": [
-      {
-        "type": "(address,uint256,address)[]",
-        "name": "donations",
-        "is_array": true,
-        "is_tuple": true
-      }
-    ],
+    "signature": "donate()",
+    "encoding": "0xed88c68e",
+    "inputs": [],
     "outputs": []
   }
 

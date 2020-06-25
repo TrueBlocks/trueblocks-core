@@ -377,13 +377,14 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
-            "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
             "logIndex": 0,
             "topics": [
               "0x8b0c34a52f9e28d78caaa7066cd047b398dae74941a208b77777420f492bd7e1",
               "0x000000000000000000000000db89587bb407b576134ff297d1848ea6d9066812",
               "0x0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2"
-            ]
+            ],
+            "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -498,11 +499,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 1,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -529,11 +531,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 2,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -560,11 +563,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 3,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -591,11 +595,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 4,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -622,11 +627,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 5,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null
@@ -653,11 +659,12 @@ getBlock 2222222 2332332 --fmt json
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "logIndex": 6,
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-            ]
+            ],
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+            "articulatedLog": {}
           }
         ],
         "status": null

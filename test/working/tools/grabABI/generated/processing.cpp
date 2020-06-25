@@ -56,7 +56,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
             txCache >> blockNum >> transID;
             if (blockNum != NOPOS && transID != NOPOS && blockNum >= startBlock) {
                 if (blockNum > lastBlock) {
-                    if (!closeIncomeStatement(block)) {
+                    if (!closeReconcilation(block)) {
                         cerr << "Quitting debugger.\r\n";
                         txCache.Release();
                         return false;  // return false since user hit 'quit' on debugger
@@ -77,7 +77,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
                         }
                     }
 
-                    if (!openIncomeStatement(block)) {
+                    if (!openReconcilation(block)) {
                         cerr << "Quitting debugger.\r\n";
                         txCache.Release();
                         return false;  // return false since user hit 'quit' on debugger
@@ -121,7 +121,7 @@ bool COptions::displayFromCache(uint64_t st artBlock) {
             cout << "]";
 
         // Ignore the return since we're done anway
-        closeIncomeStatement(block);
+        closeReconcilation(block);
         txCache.Release();
     }
     return true;

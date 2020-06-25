@@ -28,10 +28,10 @@ int main(int argc, const char* argv[]) {
         for (auto monitor : options.monitors) {
             CAppearanceArray items;
             if (!monitor.loadAndSort(items)) {
-                LOG_INFO("Could not load monitor for address ", monitor.address);
+                LOG4("Could not load monitor for address ", monitor.address);
 
             } else {
-                LOG_INFO("Processing cache for address ", monitor.address);
+                // LOG_INFO("Processing cache for address ", monitor.address);
                 CAppearanceArray fixed;
                 for (auto item : items) {
                     if (shouldQuit())
@@ -53,8 +53,6 @@ int main(int argc, const char* argv[]) {
                 string_q msg = STR_MSG_REPAIRED;
                 if (fixed.size() == items.size()) {
                     msg = STR_MSG_OKAY;
-                    if (isTestMode())
-                        replace(msg, "[{BLOCK}]", "Block");
                     if (lastVisited < fixed.back().bn) {
                         // Update the last visited block if later than we think it is (probably won't ever happen)
                         lastVisited = fixed.back().bn;
@@ -92,9 +90,10 @@ int main(int argc, const char* argv[]) {
                         }
                     }
                 }
-                msg = substitute(msg, "[{BLOCK}]", uint_2_Str(lastVisited));
+                msg = substitute(msg, "[{BLOCK}]", (isTestMode() ? "Block" : uint_2_Str(lastVisited)));
                 msg = monitor.Format(msg);
-                LOG_INFO(msg);
+                // TODO(tjayrush): Can we safely remove msg?
+                // LOG_INFO(msg);
             }
         }
     }

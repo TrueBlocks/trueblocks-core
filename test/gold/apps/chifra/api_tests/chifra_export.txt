@@ -20,17 +20,14 @@
           "logs": [],
           "status": null
         },
+        "traces": [],
         "articulatedTx": {},
         "compressedTx": "0x ( )",
-        "traces": [],
         "gasCost": 0,
         "etherGasCost": 0,
         "function": "",
         "gasUsed": 0,
         "date": "2015-07-30 15:26:00 UTC",
-        "datesh": "2015-07-30",
-        "time": "5:26:00 UTC",
-        "age": "100",
         "ether": 440,
         "encoding": ""
       }
@@ -93,16 +90,16 @@
           "type": "object"
         },
         {
+          "name": "traces",
+          "type": "object|ts_array"
+        },
+        {
           "name": "articulatedTx",
           "type": "object"
         },
         {
           "name": "compressedTx",
           "type": "text"
-        },
-        {
-          "name": "traces",
-          "type": "object|ts_array"
         },
         {
           "name": "gasCost",
@@ -122,18 +119,6 @@
         },
         {
           "name": "date",
-          "type": "date"
-        },
-        {
-          "name": "datesh",
-          "type": "date"
-        },
-        {
-          "name": "time",
-          "type": "date"
-        },
-        {
-          "name": "age",
           "type": "date"
         },
         {
@@ -166,6 +151,22 @@
         "count": 1
       }
     },
-    "unNamedTo": {}
+    "unNamedTo": {},
+    "start": "0xdeadbeef",
+    "end": "0xdeadbeef",
+    "accountedFor": {
+      "stateHistory": [],
+      "curBalance": 0,
+      "enabled": true,
+      "tags": "80-Prefund",
+      "address": "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed",
+      "name": "Prefund_8794",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": "",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": true
+    }
   }
 }

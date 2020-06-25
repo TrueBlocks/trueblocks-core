@@ -93,10 +93,10 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "statement") {
-                if (statement == CReconciliationNumeric())
+            if (fieldName % "summaryStatement") {
+                if (summaryStatement == CReconciliation())
                     return "{}";
-                return statement.Format();
+                return summaryStatement.Format();
             }
             if (fieldName % "stateHistory" || fieldName % "stateHistoryCnt") {
                 size_t cnt = stateHistory.size();
@@ -128,11 +128,11 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
         return f;
     }
 
-    s = toUpper(string_q("statement")) + "::";
+    s = toUpper(string_q("summaryStatement")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
         replaceAll(f, s, "");
-        f = statement.getValueByName(f);
+        f = summaryStatement.getValueByName(f);
         return f;
     }
 
@@ -146,12 +146,12 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "statement") {
+    if (fieldName % "summaryStatement") {
         string_q str = fieldValue;
-        return statement.parseJson3(str);
+        return summaryStatement.parseJson3(str);
     }
     if (fieldName % "balance") {
-        statement.endBal = statement.begBal = str_2_Wei(fieldValue);
+        summaryStatement.endBal = summaryStatement.begBal = str_2_Wei(fieldValue);
         return true;
     }
     if (fieldName % "address") {
@@ -188,8 +188,8 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
             }
             break;
         case 's':
-            if (fieldName % "statement") {
-                return statement.parseJson3(fieldValue);
+            if (fieldName % "summaryStatement") {
+                return summaryStatement.parseJson3(fieldValue);
             }
             if (fieldName % "stateHistory") {
                 CEthState item;
@@ -229,7 +229,7 @@ bool CMonitor::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> abi_spec;
-    archive >> statement;
+    archive >> summaryStatement;
     archive >> stateHistory;
     archive >> curBalance;
     archive >> enabled;
@@ -246,7 +246,7 @@ bool CMonitor::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << abi_spec;
-    archive << statement;
+    archive << summaryStatement;
     archive << stateHistory;
     archive << curBalance;
     archive << enabled;
@@ -290,7 +290,7 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMonitor, "abi_spec", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CMonitor, "statement", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CMonitor, "summaryStatement", T_OBJECT, ++fieldNum);
     ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CMonitor, "enabled", T_BOOL, ++fieldNum);
@@ -366,8 +366,8 @@ ostream& operator<<(ostream& os, const CMonitor& item) {
 const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "abi_spec")
         return &abi_spec;
-    if (fieldName % "statement")
-        return &statement;
+    if (fieldName % "summaryStatement")
+        return &summaryStatement;
     if (fieldName % "stateHistory" && index < stateHistory.size())
         return &stateHistory[index];
     return NULL;
@@ -434,7 +434,6 @@ bool CMonitor::clearLocks(void) {
     ::remove((getMonitorPath(address) + ".lck").c_str());
     ::remove((getMonitorLast(address) + ".lck").c_str());
     ::remove((getMonitorExpt(address) + ".lck").c_str());
-    ::remove((getMonitorBals(address) + ".lck").c_str());
     ::remove((getMonitorDels(address) + ".lck").c_str());
     ::remove((getMonitorCach(address) + ".lck").c_str());
     return true;
@@ -452,7 +451,6 @@ bool CMonitor::isLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
     checkLock(getMonitorExpt(address), "last export");
-    checkLock(getMonitorBals(address), "balances");
     checkLock(getMonitorDels(address), "marker");
     checkLock(getMonitorCach(address), "cache");
     return false;
@@ -484,7 +482,6 @@ void CMonitor::moveToProduction(void) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
         doMoveFile(getMonitorExpt(address, FM_STAGING), getMonitorExpt(address));
-        doMoveFile(getMonitorBals(address, FM_STAGING), getMonitorBals(address));
         doMoveFile(getMonitorCach(address, FM_STAGING), getMonitorCach(address));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
@@ -492,7 +489,6 @@ void CMonitor::moveToProduction(void) {
         ::remove(getMonitorPath(address, FM_STAGING).c_str());
         ::remove(getMonitorLast(address, FM_STAGING).c_str());
         ::remove(getMonitorExpt(address, FM_STAGING).c_str());
-        ::remove(getMonitorBals(address, FM_STAGING).c_str());
         ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
     lockSection(false);
@@ -527,16 +523,6 @@ string_q getMonitorExpt(const address_t& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorBals(const address_t& addr, freshen_e mode) {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".bals.bin");
-}
-
-//---------------------------------------------------------------------------
 string_q getMonitorDels(const address_t& addr, freshen_e mode) {
     return getMonitorPath(addr) + ".deleted";
 }
@@ -557,7 +543,6 @@ void cleanMonitor(const address_t& addr) {
     removeFile(getMonitorPath(addr));
     removeFile(getMonitorLast(addr));
     removeFile(getMonitorExpt(addr));
-    removeFile(getMonitorBals(addr));
     removeFile(getMonitorDels(addr));
     removeFile(getMonitorCach(addr));
 }
@@ -649,8 +634,6 @@ bool CMonitor::exists(void) const {
     if (fileExists(getMonitorLast(address)))
         return true;
     if (fileExists(getMonitorExpt(address)))
-        return true;
-    if (fileExists(getMonitorBals(address)))
         return true;
     if (fileExists(getMonitorDels(address)))
         return true;

@@ -55,11 +55,6 @@ cacheStatus --set_config
             "value": "--account name--",
             "type": "display_str"
           },
-          {
-            "name": "balancerecord",
-            "value": "--balance record--",
-            "type": "display_str"
-          },
           { "name": "block", "value": "--block--", "type": "display_str" },
           {
             "name": "ethstate",
@@ -209,7 +204,6 @@ indexPath = "/Users/what/.quickBlocks/cache/addr_index/"
   toml.setConfigStr("settings", "cachePath", "--new cache Path--/");
   toml.setConfigStr("settings", "indexPath", "--new index Path--/");
   toml.setConfigStr("display_strs", "accountName", "--account name--");
-  toml.setConfigStr("display_strs", "balancerecord", "--balance record--");
   toml.setConfigStr("display_strs", "block", "--block--");
   toml.setConfigStr("display_strs", "ethstate", "--eth state--");
   toml.setConfigStr("display_strs", "function", "--function--");
@@ -246,7 +240,6 @@ etherscan_key = "--new api_key--"
 
 [display_strs]
 accountName = "--account name--"
-balancerecord = "--balance record--"
 block = "--block--"
 ethstate = "--eth state--"
 function = "--function--"

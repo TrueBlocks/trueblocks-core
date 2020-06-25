@@ -12,16 +12,16 @@
           "type": "address"
         },
         {
-          "name": "data",
-          "type": "text"
-        },
-        {
           "name": "logIndex",
           "type": "blocknum"
         },
         {
           "name": "topics",
           "type": "object|ts_array"
+        },
+        {
+          "name": "data",
+          "type": "text"
         },
         {
           "name": "compressedLog",

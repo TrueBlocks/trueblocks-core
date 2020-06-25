@@ -62,9 +62,9 @@ bool testDisplayStr(COptions& options) {
         es.storage = "0xTHIS_IS_BOGUS_STORAGE_DATA";
         monitor.stateHistory.push_back(es);
 
-        CReconciliationNumeric is;
+        CReconciliation is;
         is.inflow = str_2_Wei("2000000000000000000");
-        monitor.statement = is;
+        monitor.summaryStatement = is;
 
         cout << monitor.Format("[{p:STATEMENT::INFLOW}]: [{STATEMENT::INFLOW}]") << endl;
         // TODO(tjayrush): To address elements of array it should look like this:

@@ -134,6 +134,19 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
                     return "{}";
                 return receipt.Format();
             }
+            if (fieldName % "reconciliations" || fieldName % "reconciliationsCnt") {
+                size_t cnt = reconciliations.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += reconciliations[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
             break;
         case 's':
             if (fieldName % "statements" || fieldName % "statementsCnt") {
@@ -343,14 +356,23 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             if (fieldName % "receipt") {
                 return receipt.parseJson3(fieldValue);
             }
+            if (fieldName % "reconciliations") {
+                CReconciliation item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    reconciliations.push_back(item);
+                    item = CReconciliation();  // reset
+                }
+                return true;
+            }
             break;
         case 's':
             if (fieldName % "statements") {
-                CIncomeStatement item;
+                CReconciliationOutput item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
                     statements.push_back(item);
-                    item = CIncomeStatement();  // reset
+                    item = CReconciliationOutput();  // reset
                 }
                 return true;
             }
@@ -425,11 +447,12 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> isError;
     archive >> isInternal;
     archive >> receipt;
-    // archive >> statements;
-    // archive >> articulatedTx;
+    archive >> traces;
+    archive >> articulatedTx;
+    archive >> reconciliations;
     // archive >> compressedTx;
+    // archive >> statements;
     // archive >> finalized;
-    // archive >> traces;
     finishParse();
     return true;
 }
@@ -456,11 +479,12 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << isError;
     archive << isInternal;
     archive << receipt;
-    // archive << statements;
-    // archive << articulatedTx;
+    archive << traces;
+    archive << articulatedTx;
+    archive << reconciliations;
     // archive << compressedTx;
+    // archive << statements;
     // archive << finalized;
-    // archive << traces;
 
     return true;
 }
@@ -512,16 +536,15 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CTransaction, "statements");
+    ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CTransaction, "articulatedTx");
+    ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);
     HIDE_FIELD(CTransaction, "compressedTx");
+    ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTransaction, "statements");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");
-    ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CTransaction, "traces");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTransaction, "schema");
@@ -567,6 +590,10 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "time");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
+    HIDE_FIELD(CTransaction, "statements");
+    HIDE_FIELD(CTransaction, "traces");
+    HIDE_FIELD(CTransaction, "articulatedTx");
+    HIDE_FIELD(CTransaction, "reconciliations");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
@@ -776,12 +803,14 @@ ostream& operator<<(ostream& os, const CTransaction& item) {
 const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "receipt")
         return &receipt;
-    if (fieldName % "statements" && index < statements.size())
-        return &statements[index];
-    if (fieldName % "articulatedTx")
-        return &articulatedTx;
     if (fieldName % "traces" && index < traces.size())
         return &traces[index];
+    if (fieldName % "articulatedTx")
+        return &articulatedTx;
+    if (fieldName % "reconciliations" && index < reconciliations.size())
+        return &reconciliations[index];
+    if (fieldName % "statements" && index < statements.size())
+        return &statements[index];
     return NULL;
 }
 

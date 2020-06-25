@@ -1,6 +1,7 @@
 [settings]
 class = CPriceQuote
-fields = timestamp timestamp|double close
+fields = timestamp timestamp|\
+        double close
 includes = abilib.h
 cpp_includes = pricesource.h
 display_str = timestamp, date, close

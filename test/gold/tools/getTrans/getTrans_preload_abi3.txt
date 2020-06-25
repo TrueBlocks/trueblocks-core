@@ -68,7 +68,7 @@ encoding	type	name	signature	input_names	output_names
 0xc620c23091c77c537ae2f7deb703ecdea8b2cb3df9053ac018b281ffa1a9cae4	event	TransferX	TransferX(address,address,uint256,string)	_from,_to,_value,_transferMetaData,	,
 0x915343c82f85b094d9cd849a66a07e32f510471c64a8d62cbd36f23148242b72	event	VerifyStatus	VerifyStatus(address,address,uint256,string)	_verifier,_account,_verifyDate,_verifyMetaData,	,
 0x37bf10b25ac7f114ebfb7b1d314deb36f7b89f2d9b3f155f61ea8a23af43339e	event	WithdrawPayment	WithdrawPayment(address,uint256)	_account,_payment,	,
-0xd9fdb088	constructor		(address,address,uint256,uint256,uint256,address)	_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,	,
+	constructor		(address,address,uint256,uint256,uint256,address)	_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,	,
 0x643f7cdd	function	DAOpaidOut	DAOpaidOut(address)	val_0,	val_0,,
 0x82bf6464	function	DAOrewardAccount	DAOrewardAccount()		val_0,,
 0x39d1f908	function	actualBalance	actualBalance()		_actualBalance,,

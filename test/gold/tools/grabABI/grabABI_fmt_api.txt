@@ -4,7 +4,6 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "type": "constructor",
   "signature": "(address,uint256,address)",
-  "encoding": "0x522f3752",
   "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,"
 },
 {

@@ -4,7 +4,7 @@ function assignment test...
 CEthStateArray				a->_val = extract(params, 0*64, 64);
 CBlockNumArray				a->_val = extract(params, 0*64, 64);
 CFunctionArray				a->_val = extract(params, 0*64, 64);
-CIncomeStatement				a->_val = extract(params, 0*64, 64);
+CReconciliationOutput				a->_val = extract(params, 0*64, 64);
 CLogEntryArray				a->_val = extract(params, 0*64, 64);
 CParameterArray				a->_val = extract(params, 0*64, 64);
 CPerson				a->_val = extract(params, 0*64, 64);

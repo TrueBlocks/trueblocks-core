@@ -4,7 +4,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(uint256,string,string,uint256)",
-      "encoding": "0x00c5681d",
+      "encoding": "",
       "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
       "input_names": "_initialSupply,_name,_symbol,_decimals,",
       "output_names": ""

@@ -11,6 +11,7 @@
 #include "etherlib.h"
 #include "acctlib.h"
 #include "displayapp.h"
+#include "monitorcount.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -59,8 +60,6 @@ class COptions : public COptionsBase {
     bool logs;
     bool traces;
     bool balances;
-    bool creations;
-    bool selfdestructs;
     bool accounting;
     bool articulate;
     bool skip_ddos;
@@ -80,18 +79,25 @@ class COptions : public COptionsBase {
     CMonitorArray monitors;
     CMonitorCountArray counts;
     CAppearanceArray_base items;
-    size_t nExported;
+    uint64_t nExported;
     string_q className;
     address_t hackAppAddr;
     uint_addr_map_t prefundAddrMap;
     uint_addr_map_t blkRewardMap;
-    addr_name_map_t toNameExistsMap;
-    addr_name_map_t fromNameExistsMap;
+
+    addr_name_map_t toAddrMap;
+    addr_name_map_t fromAddrMap;
+    addr_name_map_t emitterAddrMap;
+    addr_name_map_t toTraceAddrMap;
+    addr_name_map_t fromTraceAddrMap;
+
+    addr_name_map_t abiMap;
     uint32_t* ts_array;
     size_t ts_cnt;
     blknum_t latestBlock;
+    time_q oldestMonitor;
 
-    address_t accountForAddr;
+    address_t accountedFor;
 
     uint64_t nProcessing;
     uint64_t nTransactions;
@@ -108,9 +114,14 @@ class COptions : public COptionsBase {
     bool loadAllAppearances(void);
 
     bool exportData(void);
+    bool exportAppearances(void);
     bool exportAccounting(void);
     bool exportCounts(void);
-    bool exportBalances(void);
 
     bool reportOnNeighbors(void);
 };
+
+//--------------------------------------------------------------------------------
+inline string_q plural(const string_q& in) {
+    return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
+}

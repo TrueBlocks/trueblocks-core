@@ -19,13 +19,13 @@
         "logs": [
           {
             "address": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
             "logIndex": 0,
             "topics": [
               "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
               "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
               "0x0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc61021"
             ],
+            "data": "0x0000000000000000000000000000000000000000000000000000000005f5e100",
             "articulatedLog": {
               "name": "Transfer",
               "inputs": [
@@ -48,11 +48,11 @@
           },
           {
             "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
-            "data": "0x3235303066393565366139643833643938000000000000000000000000000000000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f280000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610216d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
             "logIndex": 1,
             "topics": [
               "0x0456067687d27fcf6d3db141acb08cedd0fa786fdc7d672a7ed802514669b2e0"
             ],
+            "data": "0x3235303066393565366139643833643938000000000000000000000000000000000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f280000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610216d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
             "articulatedLog": {
               "name": "",
               "inputs": [],
@@ -63,18 +63,10 @@
         ],
         "status": 1
       },
-      "articulatedTx": {
-        "name": "",
-        "inputs": [],
-        "outputs": []
-      },
-      "compressedTx": "0xa78caf19 ( stub: 000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000 )",
       "traces": [
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -90,13 +82,13 @@
             "newContract": "0x0",
             "gasUsed": 937473,
             "output": "0x"
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -112,13 +104,13 @@
             "newContract": "0x0",
             "gasUsed": 657,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -134,13 +126,13 @@
             "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -156,13 +148,13 @@
             "newContract": "0x0",
             "gasUsed": 768,
             "output": "0x000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28"
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "create",
           "error": "",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -178,13 +170,13 @@
             "newContract": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
             "gasUsed": 717949,
             "output": ""
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "call",
           "error": "Reverted",
-          "articulatedTrace": {},
-          "compressedTrace": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -200,27 +192,13 @@
             "newContract": "0x0",
             "gasUsed": 0,
             "output": ""
-          }
+          },
+          "articulatedTrace": {},
+          "compressedTrace": ""
         },
         {
           "type": "call",
           "error": "",
-          "articulatedTrace": {
-            "name": "balanceOf",
-            "inputs": [
-              {
-                "name": "_owner",
-                "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
-              }
-            ],
-            "outputs": [
-              {
-                "name": "balance",
-                "value": "0"
-              }
-            ]
-          },
-          "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -236,17 +214,13 @@
             "newContract": "0x0",
             "gasUsed": 2845,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
-          }
-        },
-        {
-          "type": "call",
-          "error": "",
+          },
           "articulatedTrace": {
             "name": "balanceOf",
             "inputs": [
               {
                 "name": "_owner",
-                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+                "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262"
               }
             ],
             "outputs": [
@@ -256,7 +230,11 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
+          "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )"
+        },
+        {
+          "type": "call",
+          "error": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -272,27 +250,27 @@
             "newContract": "0x0",
             "gasUsed": 727,
             "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
-          }
-        },
-        {
-          "type": "call",
-          "error": "",
+          },
           "articulatedTrace": {
             "name": "balanceOf",
             "inputs": [
               {
                 "name": "_owner",
-                "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
               }
             ],
             "outputs": [
               {
                 "name": "balance",
-                "value": "100000000"
+                "value": "0"
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
+          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+        },
+        {
+          "type": "call",
+          "error": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -308,47 +286,7 @@
             "newContract": "0x0",
             "gasUsed": 3155,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
-          }
-        },
-        {
-          "type": "call",
-          "error": "",
-          "articulatedTrace": {
-            "name": "balanceOf",
-            "inputs": [
-              {
-                "name": "_owner",
-                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
-              }
-            ],
-            "outputs": [
-              {
-                "name": "balance",
-                "value": "100000000"
-              }
-            ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )",
-          "action": {
-            "selfDestructed": "0x0",
-            "balance": 0,
-            "callType": "call",
-            "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "gas": 6972218,
-            "input": "0x70a08231000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
-            "refundAddress": "0x0",
-            "to": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-            "value": 0
-          },
-          "result": {
-            "newContract": "0x0",
-            "gasUsed": 1037,
-            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
-          }
-        },
-        {
-          "type": "call",
-          "error": "",
           "articulatedTrace": {
             "name": "balanceOf",
             "inputs": [
@@ -364,7 +302,47 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )",
+          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
+        },
+        {
+          "type": "call",
+          "error": "",
+          "action": {
+            "selfDestructed": "0x0",
+            "balance": 0,
+            "callType": "call",
+            "from": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
+            "gas": 6972218,
+            "input": "0x70a08231000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f28",
+            "refundAddress": "0x0",
+            "to": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
+            "value": 0
+          },
+          "result": {
+            "newContract": "0x0",
+            "gasUsed": 1037,
+            "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
+          },
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "balance",
+                "value": "100000000"
+              }
+            ]
+          },
+          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+        },
+        {
+          "type": "call",
+          "error": "",
           "action": {
             "selfDestructed": "0x0",
             "balance": 0,
@@ -380,9 +358,31 @@
             "newContract": "0x0",
             "gasUsed": 3155,
             "output": "0x0000000000000000000000000000000000000000000000000000000005f5e100"
-          }
+          },
+          "articulatedTrace": {
+            "name": "balanceOf",
+            "inputs": [
+              {
+                "name": "_owner",
+                "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "balance",
+                "value": "100000000"
+              }
+            ]
+          },
+          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
         }
       ],
+      "articulatedTx": {
+        "name": "",
+        "inputs": [],
+        "outputs": []
+      },
+      "compressedTx": "0xa78caf19 ( stub: 000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000 )",
       "gasCost": 19899285000000000,
       "gasUsed": 947585,
       "date": "2018-12-13 01:26:32 UTC",
@@ -449,16 +449,16 @@
           "type": "object"
         },
         {
+          "name": "traces",
+          "type": "object|ts_array"
+        },
+        {
           "name": "articulatedTx",
           "type": "object"
         },
         {
           "name": "compressedTx",
           "type": "text"
-        },
-        {
-          "name": "traces",
-          "type": "object|ts_array"
         },
         {
           "name": "gasCost",

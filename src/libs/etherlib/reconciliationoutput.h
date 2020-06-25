@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "abilib.h"
+#include "reconciliation.h"
 
 namespace qblocks {
 
@@ -23,52 +24,49 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CReconciliationNumeric : public CBaseNode {
+class CReconciliationOutput : public CBaseNode {
   public:
     blknum_t blockNum;
     string_q asset;
-    bigint_t begBal;
-    bigint_t begBalDiff;
-    bigint_t inflow;
-    bigint_t outflow;
-    bigint_t intInflow;
-    bigint_t intOutflow;
-    bigint_t selfDestructInflow;
-    bigint_t selfDestructOutflow;
-    bigint_t miningInflow;
-    bigint_t prefundInflow;
-    bigint_t weiGasCost;
-    bigint_t endBal;
-    bigint_t endBalCalc;
-    bigint_t endBalDiff;
+    string_q begBal;
+    string_q begBalDiff;
+    string_q inflow;
+    string_q outflow;
+    string_q intInflow;
+    string_q intOutflow;
+    string_q selfDestructInflow;
+    string_q selfDestructOutflow;
+    string_q miningInflow;
+    string_q prefundInflow;
+    string_q gasCostOutflow;
+    string_q endBal;
+    string_q endBalCalc;
+    string_q endBalDiff;
     string_q reconciliationType;
     bool reconciled;
 
   public:
-    CReconciliationNumeric(void);
-    CReconciliationNumeric(const CReconciliationNumeric& re);
-    virtual ~CReconciliationNumeric(void);
-    CReconciliationNumeric& operator=(const CReconciliationNumeric& re);
+    CReconciliationOutput(void);
+    CReconciliationOutput(const CReconciliationOutput& re);
+    virtual ~CReconciliationOutput(void);
+    CReconciliationOutput& operator=(const CReconciliationOutput& re);
 
-    DECLARE_NODE(CReconciliationNumeric);
+    DECLARE_NODE(CReconciliationOutput);
 
     // EXISTING_CODE
-    bool reconcile(const CStringArray& corrections, const CReconciliationNumeric& lastStatement,
-                   const address_t& forAddr, blknum_t nextBlock, const CTransaction* trans);
-    bool reconcileUsingTraces(const CReconciliationNumeric& lastStatement, const address_t& forAddr, blknum_t nextBlock,
-                              const CTransaction* trans);
+    explicit CReconciliationOutput(const CReconciliation& nums);
     // EXISTING_CODE
-    bool operator==(const CReconciliationNumeric& item) const;
-    bool operator!=(const CReconciliationNumeric& item) const {
+    bool operator==(const CReconciliationOutput& item) const;
+    bool operator!=(const CReconciliationOutput& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CReconciliationNumeric& v1, const CReconciliationNumeric& v2);
-    friend ostream& operator<<(ostream& os, const CReconciliationNumeric& item);
+    friend bool operator<(const CReconciliationOutput& v1, const CReconciliationOutput& v2);
+    friend ostream& operator<<(ostream& os, const CReconciliationOutput& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CReconciliationNumeric& re);
+    void duplicate(const CReconciliationOutput& re);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -76,14 +74,14 @@ class CReconciliationNumeric : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CReconciliationNumeric::CReconciliationNumeric(void) {
+inline CReconciliationOutput::CReconciliationOutput(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CReconciliationNumeric::CReconciliationNumeric(const CReconciliationNumeric& re) {
+inline CReconciliationOutput::CReconciliationOutput(const CReconciliationOutput& re) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(re);
@@ -93,38 +91,38 @@ inline CReconciliationNumeric::CReconciliationNumeric(const CReconciliationNumer
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CReconciliationNumeric::~CReconciliationNumeric(void) {
+inline CReconciliationOutput::~CReconciliationOutput(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReconciliationNumeric::clear(void) {
+inline void CReconciliationOutput::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CReconciliationNumeric::initialize(void) {
+inline void CReconciliationOutput::initialize(void) {
     CBaseNode::initialize();
 
     blockNum = 0;
     asset = "";
-    begBal = 0;
-    begBalDiff = 0;
-    inflow = 0;
-    outflow = 0;
-    intInflow = 0;
-    intOutflow = 0;
-    selfDestructInflow = 0;
-    selfDestructOutflow = 0;
-    miningInflow = 0;
-    prefundInflow = 0;
-    weiGasCost = 0;
-    endBal = 0;
-    endBalCalc = 0;
-    endBalDiff = 0;
+    begBal = "";
+    begBalDiff = "";
+    inflow = "";
+    outflow = "";
+    intInflow = "";
+    intOutflow = "";
+    selfDestructInflow = "";
+    selfDestructOutflow = "";
+    miningInflow = "";
+    prefundInflow = "";
+    gasCostOutflow = "";
+    endBal = "";
+    endBalCalc = "";
+    endBalDiff = "";
     reconciliationType = "";
     reconciled = false;
 
@@ -133,7 +131,7 @@ inline void CReconciliationNumeric::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CReconciliationNumeric::duplicate(const CReconciliationNumeric& re) {
+inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     clear();
     CBaseNode::duplicate(re);
 
@@ -149,7 +147,7 @@ inline void CReconciliationNumeric::duplicate(const CReconciliationNumeric& re) 
     selfDestructOutflow = re.selfDestructOutflow;
     miningInflow = re.miningInflow;
     prefundInflow = re.prefundInflow;
-    weiGasCost = re.weiGasCost;
+    gasCostOutflow = re.gasCostOutflow;
     endBal = re.endBal;
     endBalCalc = re.endBalCalc;
     endBalDiff = re.endBalDiff;
@@ -161,7 +159,7 @@ inline void CReconciliationNumeric::duplicate(const CReconciliationNumeric& re) 
 }
 
 //--------------------------------------------------------------------------
-inline CReconciliationNumeric& CReconciliationNumeric::operator=(const CReconciliationNumeric& re) {
+inline CReconciliationOutput& CReconciliationOutput::operator=(const CReconciliationOutput& re) {
     duplicate(re);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -169,7 +167,7 @@ inline CReconciliationNumeric& CReconciliationNumeric::operator=(const CReconcil
 }
 
 //-------------------------------------------------------------------------
-inline bool CReconciliationNumeric::operator==(const CReconciliationNumeric& item) const {
+inline bool CReconciliationOutput::operator==(const CReconciliationOutput& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -177,7 +175,7 @@ inline bool CReconciliationNumeric::operator==(const CReconciliationNumeric& ite
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CReconciliationNumeric& v1, const CReconciliationNumeric& v2) {
+inline bool operator<(const CReconciliationOutput& v1, const CReconciliationOutput& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -185,18 +183,19 @@ inline bool operator<(const CReconciliationNumeric& v1, const CReconciliationNum
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CReconciliationNumeric> CReconciliationNumericArray;
-extern CArchive& operator>>(CArchive& archive, CReconciliationNumericArray& array);
-extern CArchive& operator<<(CArchive& archive, const CReconciliationNumericArray& array);
+typedef vector<CReconciliationOutput> CReconciliationOutputArray;
+extern CArchive& operator>>(CArchive& archive, CReconciliationOutputArray& array);
+extern CArchive& operator<<(CArchive& archive, const CReconciliationOutputArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CReconciliationNumeric& rec);
-extern CArchive& operator>>(CArchive& archive, CReconciliationNumeric& rec);
+extern CArchive& operator<<(CArchive& archive, const CReconciliationOutput& rec);
+extern CArchive& operator>>(CArchive& archive, CReconciliationOutput& rec);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_RECONCILIATIONNUMERIC;
+extern const char* STR_DISPLAY_RECONCILIATIONOUTPUT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//------------------------------------------------------------
 // EXISTING_CODE
 }  // namespace qblocks

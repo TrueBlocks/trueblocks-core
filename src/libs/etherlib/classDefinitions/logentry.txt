@@ -1,6 +1,18 @@
 [settings]
 class = CLogEntry
-fields = address address|hash blockHash (nowrite-min)|blknum blockNumber (nowrite-min)|string data|blknum logIndex|sbool removed (nowrite)|CTopicArray topics|CFunction articulatedLog (nowrite)|string compressedLog (nowrite)|hash transactionHash (nowrite-min)|blknum transactionIndex (nowrite-min)|blknum transactionLogIndex (nowrite)|string type (nowrite)
+fields = address address|\
+        hash blockHash (nowrite-min)|\
+        blknum blockNumber (nowrite-min)|\
+        blknum logIndex|\
+        CTopicArray topics|\
+        string data|\
+        CFunction articulatedLog|\
+        string compressedLog (nowrite)|\
+        hash transactionHash (nowrite-min)|\
+        blknum transactionIndex (nowrite-min)|\
+        blknum transactionLogIndex (nowrite)|\
+        string type (nowrite)|\
+        sbool removed (nowrite)
 includes = abilib.h
 cpp_includes = etherlib.h
 scope = extern

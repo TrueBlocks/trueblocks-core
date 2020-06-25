@@ -20,7 +20,6 @@ etherscan_key = "--new api_key--"
 
 [display_strs]
 accountName = "--account name--"
-balancerecord = "--balance record--"
 block = "--block--"
 ethstate = "--eth state--"
 function = "--function--"

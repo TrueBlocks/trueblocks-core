@@ -6,11 +6,21 @@
       "logs": [
         {
           "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
-          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
           "logIndex": "0x3",
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-          ]
+          ],
+          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+          "articulatedLog": {
+            "name": "",
+            "type": "",
+            "constant": "false",
+            "payable": "false",
+            "signature": "",
+            "encoding": "",
+            "inputs": [],
+            "outputs": []
+          }
         }
       ],
       "status": null

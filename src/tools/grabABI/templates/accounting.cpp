@@ -12,7 +12,7 @@
 #include "main.h"
 
 //-----------------------------------------------------------------------
-bool COptions::openIncomeStatement(const CBlock& block) {
+bool COptions::openReconcilation(const CBlock& block) {
     if (!accounting_on)
         return true;
 
@@ -136,7 +136,7 @@ bool COptions::accountForIntTransaction(const CBlock& block, const CTransaction*
 }
 
 //-------------------------------------------------------------------------
-ostream& thing(ostream& os, const CIncomeStatement& item, uint64_t theWidth) {
+ostream& thing(ostream& os, const CReconciliationOutput& item, uint64_t theWidth) {
     if (sizeof(item) != 0) {  // do this to always go through here, but avoid a warning
         string_q spc = "  ";
         if (item.begBal == item.endBal && item.begBal == -1) {
@@ -164,7 +164,7 @@ ostream& thing(ostream& os, const CIncomeStatement& item, uint64_t theWidth) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::closeIncomeStatement(const CBlock& block) {
+bool COptions::closeReconcilation(const CBlock& block) {
     // If the user has not hit the escape key...
     if (!esc_hit) {
         // ...and is either not accounting or nothing worth reporting happened...
@@ -174,7 +174,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
         }
     }
 
-    CIncomeStatement total;
+    CReconciliationOutput total;
     for (size_t i = 0; i < w atches.size(); i++) {
         total += w atches[i].statement;
     }
@@ -182,7 +182,7 @@ bool COptions::closeIncomeStatement(const CBlock& block) {
     size_t nOutOfBal = 0;
     // TODO(tjayrush) This should be an option
     if (true) {  // total.inflow > 0 || (total.outflow + total.gasCostInWei) > 0) {
-        CIncomeStatement header;
+        CReconciliationOutput header;
         header.begBal = header.endBal = -1;
 
         cout << cOff << string_q(theWidth + 1, ' ') << cWhite << " Profit and Loss for block #" << block.blockNumber

@@ -4,14 +4,10 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity					false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On Chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On Chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false
-31-Gitcoin Grants:Grant	0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134	Grant 522 Deploying a community currency UBI with 10k+ Kenyans		https://gitcoin.co/grants/522/end-to-end-blockchain-ubi-with-10000-kenians-in-2		https://multiply.charity/	false	false	false
+31-Gitcoin Grants:Grant	0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134	Grant 853 Launching a web wallet for our 24 000+Kenyan local community currency economy		https://gitcoin.co/grants/853/launching-a-web-wallet-for-our-24000-kenyan-local		https://multiply.charity	false	false	false
 50-Tokens:ERC20	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	On Chain	4	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	false	false	false
 50-Tokens:ERC20	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	On Chain	6	SkinCoin is a multipurpose cryptocurrency for gaming industry.	false	false	false
 50-Tokens:ERC20	0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	On Chain	18	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.	false	false	false
-20-Friends	0x4d0a14bb9c145b4b3694e29107dc4a62d0f25c92	Old EthSlurp Tipper		OnChain			false	false	false
-20-Friends	0x4ff1c812ebccc16487c17f537d849cb5dc557ff0	EthSlurp Tip Jar Sender Sender		TrueBlocks.io			false	false	false
-91-Friends	0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner		TrueBlocks.io			false	false	false
-91-Friends	0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar		TrueBlocks.io			false	false	false
 90-DevCon2:Individual	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	My Ethereum Wallet Tip Jar Taylor Van Orden		Slack DevCon2 Token Contract			false	false	false
 50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns	🦄	Ethereum.org		Ethereum tip jar unicorn tokens	false	false	false
 50-Tokens:ERC20	0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e	ABX Token	ABX	On Chain	18	A blockchain powered trading platform that integrates crypto assets from multiple exchanges.	false	false	false

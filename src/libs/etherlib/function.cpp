@@ -573,10 +573,8 @@ bool CFunction::checkTypes(void) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::encodeItem(void) const {
-    if (encoding == "()")  // optimization
-        return "0x861731d5";
-    if (!encoding.empty())  // optimization
-        return encoding;
+    if (name == "")
+        return "";
     // string_q ret = keccak256(substitute(signature, "%", ","));
     string_q ret = keccak256(signature);
     return (type == "event" ? ret : extract(ret, 0, 10));

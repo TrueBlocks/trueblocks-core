@@ -1,4 +1,2 @@
 acctScrape argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:1] [4:--end] [5:2] 
 acctScrape 0x001d14804b399c6ef80e64576f657660804fec0b --start 1 --end 2 
-TIME ~ CLOCK - <INFO>  : Scraping 1 addresses.
-TIME ~ CLOCK - <INFO>  : Scan blocks ./000000001-000208519.binTIME ~ CLOCK - <INFO>  :     bloom file hit index file hits: 0x001d.. at ./000000001-000208519.bin

@@ -130,7 +130,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x00000b46508882a135b4933b82a07df8f24a0068",
-    "name": "drknudy",
+    "name": "Name 0x00000b46",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -166,7 +166,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x00158a74921620b39e5c3afe4dca79feb2c2c143",
-    "name": "matko95",
+    "name": "Name 0x00158a74",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -193,7 +193,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0029dc8d8ef8c287ad395732dbe5d5bf951da820",
-    "name": "krzkaczor",
+    "name": "Name 0x0029dc8d",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -202,7 +202,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x002c83ebc32d18ff4f74852565402cf7bde35ccc",
-    "name": "jameschong0740",
+    "name": "Name 0x002c83eb",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -229,7 +229,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0035fc5208ef989c28d47e552e92b0c507d2b318",
-    "name": "banteg",
+    "name": "Name 0x0035fc52",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -247,7 +247,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x003f6b20bfa4b5cab701960ecf73859cb3c095fc",
-    "name": "nocturnalsheet",
+    "name": "Name 0x003f6b20",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -265,7 +265,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x004efb233c8d26ccc063061bee54f0be9302e6ed",
-    "name": "peculiarity",
+    "name": "Name 0x004efb23",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -290,9 +290,27 @@ ethNames --fmt json
     "description": "Blockchain Prediction Markets Platform."
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+    "name": "Grant 845 Remote Developer Bootcamp",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
+    "decimals": 0,
+    "description": "https://github.com/blockvigil/bootcamp"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
+    "name": "Grant 779 DeFi LATAM",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/779/defi-latam",
+    "decimals": 0,
+    "description": "http://defilatam.com/"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x008b1ffe244bf31896c833bff4ad9009e7a0f4eb",
-    "name": "abertog",
+    "name": "Name 0x008b1ffe",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -310,7 +328,7 @@ ethNames --fmt json
   {
     "tags": "20-Friends",
     "address": "0x00bbb33024f0b9d6ac0df6d158c498c291bfb298",
-    "name": "Probably gniden",
+    "name": "Name 0x00bbb330",
     "symbol": "",
     "source": "OnChain",
     "decimals": 0,
@@ -337,7 +355,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9",
-    "name": "jasatgithub",
+    "name": "Name 0x00c50c2f",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -400,11 +418,20 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206",
-    "name": "marczeller",
+    "name": "Name 0x010afb85",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
+    "name": "Grant 790 Loft Radio",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/790/loft-radio",
+    "decimals": 0,
+    "description": "https://loft.radio/"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -472,7 +499,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
-    "name": "vgshenoy",
+    "name": "Name 0x015f9e50",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -526,7 +553,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x01a24c6a87ee7a19d54c98ffae76755f24fdf637",
-    "name": "ethergration",
+    "name": "Name 0x01a24c6a",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -544,7 +571,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x01e6fd0ae73d9194b19f9b376065577927a0d5f5",
-    "name": "mastacs",
+    "name": "Name 0x01e6fd0a",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -562,7 +589,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x01f7700c13707eee8349f9800e70a940168812e3",
-    "name": "antoinedmt",
+    "name": "Name 0x01f7700c",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -571,7 +598,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x01feb5003fbbd3cae8da33de679cf2e2d07102b3",
-    "name": "marvinnicholl",
+    "name": "Name 0x01feb500",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -607,7 +634,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0230c6dd5db1d3f871386a3ce1a5a836b2590044",
-    "name": "porobov",
+    "name": "Name 0x0230c6dd",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -641,9 +668,18 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
+    "name": "Grant 782 Ethereum Cat Herders Community Fund",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
+    "decimals": 0,
+    "description": "https://twitter.com/EthCatHerders"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
-    "name": "adamstallard",
+    "name": "Name 0x02d9cc72",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -652,7 +688,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x02dbd1aa375c7d00ecf1de198158ffa332110d47",
-    "name": "skyline-ch",
+    "name": "Name 0x02dbd1aa",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -769,7 +805,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
-    "name": "plur9",
+    "name": "Name 0x03b45f0f",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -778,7 +814,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x03b85b333c99ec60a6d540e4277d71d3a4c0975d",
-    "name": "maneeshrao",
+    "name": "Name 0x03b85b33",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -814,7 +850,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x03ea9f51913a2a40a2c37e70700102486acf6c40",
-    "name": "suma777",
+    "name": "Name 0x03ea9f51",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -823,7 +859,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x04373aac4df8be1696be816b97f4ad8bcd93beb7",
-    "name": "pranavramkumar",
+    "name": "Name 0x04373aac",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -837,6 +873,15 @@ ethNames --fmt json
     "source": "https://gitcoin.co/grants/608/signatory-client",
     "decimals": 0,
     "description": "https://vbstreetz.github.io/signatory-client/"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x0466e612137bca50e524f25ac9f7b6f826ee15b7",
+    "name": "Grant 900 1Hive Gardens",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/900/1hive-gardens-2",
+    "decimals": 0,
+    "description": "https://1hive.org"
   },
   {
     "tags": "60-Airdrops",
@@ -868,7 +913,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0492b9170ec01d91f3aa721ff8ada42dd33fbbb8",
-    "name": "paulrberg",
+    "name": "Name 0x0492b917",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -940,7 +985,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x051ac9d0442d5c689e6a301bebc82821f42fc93a",
-    "name": "birimbau",
+    "name": "Name 0x051ac9d0",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -967,7 +1012,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
-    "name": "pkwww",
+    "name": "Name 0x056fa250",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1021,7 +1066,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x058bdde93176f754be2c4361a99ed20869e106bc",
-    "name": "xander2lbv",
+    "name": "Name 0x058bdde9",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1048,7 +1093,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x05a1ff0a32bc24265bcb39499d0c5d9a6cb2011c",
-    "name": "willyogo",
+    "name": "Name 0x05a1ff0a",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1129,7 +1174,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x060a24a6c7a493d2bc58db7b03bece9e67d2bd53",
-    "name": "getty4170",
+    "name": "Name 0x060a24a6",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1165,7 +1210,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x064d3230f753d8c14e06cf491fe2f1a3d2ccd5dd",
-    "name": "folkaio",
+    "name": "Name 0x064d3230",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1210,7 +1255,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x06aeae3d12ced2ff04d0694ed50f940637a64196",
-    "name": "mfinestone",
+    "name": "Name 0x06aeae3d",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1219,7 +1264,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x06b1bf28c962363f212878bdf87417ebd0316220",
-    "name": "the-3d",
+    "name": "Name 0x06b1bf28",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1237,7 +1282,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x06c04508075c125cd65daf686177fee2a945e2d8",
-    "name": "klongrich",
+    "name": "Name 0x06c04508",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1255,7 +1300,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x06dbfdbfda84eabaea177760092dc22ab1d8f372",
-    "name": "samajammin",
+    "name": "Name 0x06dbfdbf",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1300,7 +1345,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x073c841e832b7cc2e75d0fb1f8a98dca355bf485",
-    "name": "gitcoingranterog",
+    "name": "Name 0x073c841e",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1426,7 +1471,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x07e405e6ec64b85206ad5aaf490a534394d7a65b",
-    "name": "hadlocna",
+    "name": "Name 0x07e405e6",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1444,7 +1489,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x07f66cde25828ddb3578b30c52a491db08c92d77",
-    "name": "rahulsris",
+    "name": "Name 0x07f66cde",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1471,7 +1516,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x083fc10ce7e97cafbae0fe332a9c4384c5f54e45",
-    "name": "k06a",
+    "name": "Name 0x083fc10c",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1507,7 +1552,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95",
-    "name": "vs77bb",
+    "name": "Name 0x087b33c9",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1516,7 +1561,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x088b1147aceaf35cc9be639f4e702268411c7405",
-    "name": "maitreyasreeram",
+    "name": "Name 0x088b1147",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1539,6 +1584,15 @@ ethNames --fmt json
     "source": "https://gitcoin.co/grants/425/turkish-cryptocurrency-youtuber-and-researcher",
     "decimals": 0,
     "description": "https://www.youtube.com/bitcoinkralicesi"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x08ceb8bba685ee708c9c4c65576837cbe19b9dea",
+    "name": "Grant 759 DeFi Arts Intelligencer",
+    "symbol": "",
+    "source": "https://gitcoin.co/grants/759/defi-arts-intelligencer",
+    "decimals": 0,
+    "description": "https://artsdefi.substack.com/"
   },
   {
     "tags": "50-Tokens",
@@ -1570,7 +1624,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x08fdc2ee954b3ce261b8cc7f65fdb02df168802e",
-    "name": "c3rnst",
+    "name": "Name 0x08fdc2ee",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1588,7 +1642,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x09328efb1093120b9d07c005f201cd743cb01708",
-    "name": "ankita89s",
+    "name": "Name 0x09328efb",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1606,7 +1660,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0951ff0835302929d6c0162b3d2495a85e38ec3a",
-    "name": "mounibec",
+    "name": "Name 0x0951ff08",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1615,7 +1669,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0957e08cdbbc0e99ad1b2874a88af2133b5a4d42",
-    "name": "pitersky",
+    "name": "Name 0x0957e08c",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1624,7 +1678,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x095c005552b751bdcdc577bfc5722ebb1d94a4f9",
-    "name": "zoe-archer",
+    "name": "Name 0x095c0055",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1651,7 +1705,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0982a0bf061f3cec2a004b4d2c802f479099c971",
-    "name": "martin1209",
+    "name": "Name 0x0982a0bf",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1669,7 +1723,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x09dcabf773a87ff1b1b9885576938f0dcc1075db",
-    "name": "dekz",
+    "name": "Name 0x09dcabf7",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1705,7 +1759,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0a5a187ba205aae2ac85b154585347c0ffeedcd4",
-    "name": "pinkiebell",
+    "name": "Name 0x0a5a187b",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1723,7 +1777,7 @@ ethNames --fmt json
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0a82e6ef40cfcca9d5f651292194aa1c7fb2f9f4",
-    "name": "the-3d",
+    "name": "Name 0x0a82e6ef",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,
@@ -1755,60 +1809,6 @@ ethNames --fmt json
     "source": "On Chain",
     "decimals": 8,
     "description": "Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0af44e2784637218dd1d32a322d44e603a8f0c6a",
-    "name": "MatryxToken",
-    "symbol": "MTX",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset."
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x0aff31f693aa4bc0d54a8e89e5763836d0c17ad6",
-    "name": "HEALP Airdrop Sender",
-    "symbol": "",
-    "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0affa06e7fbe5bc9a764c979aa66e8256a631f02",
-    "name": "Polybius Token",
-    "symbol": "PLBT",
-    "source": "On Chain",
-    "decimals": 6,
-    "description": "Private banking platform"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0b138ae771cdb4a567c1ed22da24bfdcf244ed00",
-    "name": "kedhip",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3",
-    "name": "Etheriya",
-    "symbol": "RIYA",
-    "source": "On Chain",
-    "decimals": 8,
-    "description": "AN Ethereum Token Backed Micro Macro Freelance Marketplace."
-  },
-  {
-    "tags": "90-DevCon2:Individual",
-    "address": "0x0b1fb677b07375b781b4551b2e265d05590fd62f",
-    "name": "Cheyne",
-    "symbol": "",
-    "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

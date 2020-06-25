@@ -4,7 +4,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address[],uint256,uint256)",
-      "encoding": "0xaf8342fe",
+      "encoding": "",
       "input_names": "_owners,_required,_daylimit,",
       "output_names": ""
     },

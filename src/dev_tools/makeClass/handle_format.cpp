@@ -59,6 +59,7 @@ bool formatFiles(const string_q& path, void* data) {
                 return true;
 
             string_q fullPath = substitute(path, "./", getCWD());
+            establishFolder(getCachePath("tmp/"));
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
             string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
             // clang-format off

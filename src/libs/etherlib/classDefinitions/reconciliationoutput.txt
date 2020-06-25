@@ -1,0 +1,23 @@
+[settings]
+class = CReconciliationOutput
+fields = blknum blockNum|\
+        string asset|\
+        string begBal|\
+        string begBalDiff|\
+        string inflow|\
+        string outflow|\
+        string intInflow|\
+        string intOutflow|\
+        string selfDestructInflow|\
+        string selfDestructOutflow|\
+        string miningInflow|\
+        string prefundInflow|\
+        string gasCostOutflow|\
+        string endBal|\
+        string endBalCalc|\
+        string endBalDiff|\
+        string reconciliationType|\
+        bool reconciled
+includes = abilib.h|reconciliation.h
+cpp_includes = etherlib.h
+serializable = true

@@ -72,15 +72,15 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "articulatedTrace") {
-                if (articulatedTrace == CFunction())
-                    return "{}";
-                return articulatedTrace.Format();
-            }
             if (fieldName % "action") {
                 if (action == CTraceAction())
                     return "{}";
                 return action.Format();
+            }
+            if (fieldName % "articulatedTrace") {
+                if (articulatedTrace == CFunction())
+                    return "{}";
+                return articulatedTrace.Format();
             }
             break;
         case 'b':
@@ -146,14 +146,6 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
-    s = toUpper(string_q("articulatedTrace")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTrace.getValueByName(f);
-        return f;
-    }
-
     s = toUpper(string_q("action")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -167,6 +159,14 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
         string_q f = fieldName;
         replaceAll(f, s, "");
         f = result.getValueByName(f);
+        return f;
+    }
+
+    s = toUpper(string_q("articulatedTrace")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = articulatedTrace.getValueByName(f);
         return f;
     }
 
@@ -189,11 +189,11 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "articulatedTrace") {
-                return articulatedTrace.parseJson3(fieldValue);
-            }
             if (fieldName % "action") {
                 return action.parseJson3(fieldValue);
+            }
+            if (fieldName % "articulatedTrace") {
+                return articulatedTrace.parseJson3(fieldValue);
             }
             break;
         case 'b':
@@ -283,10 +283,10 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> transactionIndex;
     archive >> type;
     archive >> error;
-    // archive >> articulatedTrace;
-    // archive >> compressedTrace;
     archive >> action;
     archive >> result;
+    archive >> articulatedTrace;
+    // archive >> compressedTrace;
     finishParse();
     return true;
 }
@@ -306,10 +306,10 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << transactionIndex;
     archive << type;
     archive << error;
-    // archive << articulatedTrace;
-    // archive << compressedTrace;
     archive << action;
     archive << result;
+    archive << articulatedTrace;
+    // archive << compressedTrace;
 
     return true;
 }
@@ -354,12 +354,11 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CTrace, "articulatedTrace");
-    ADD_FIELD(CTrace, "compressedTrace", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CTrace, "compressedTrace");
     ADD_FIELD(CTrace, "action", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTrace, "compressedTrace", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CTrace, "compressedTrace");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTrace, "schema");
@@ -372,6 +371,7 @@ void CTrace::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CTrace, "date");
+    HIDE_FIELD(CTrace, "articulatedTrace");
     CFieldData* f = GETRUNTIME_CLASS(CTrace)->findField("traceAddress");
     if (f)
         f->setType(T_TEXT);
@@ -384,6 +384,14 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (tra) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "articulatedTrace") {
+                    if (tra->articulatedTrace == CFunction())
+                        return "{}";
+                    string_q str = tra->articulatedTrace.Format();
+                    return (str.empty() ? "{}" : str);
+                }
+                break;
             case 'c':
                 if (fieldIn % "compressedTrace")
                     return tra->articulatedTrace.compressed();
@@ -461,12 +469,12 @@ ostream& operator<<(ostream& os, const CTrace& item) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "articulatedTrace")
-        return &articulatedTrace;
     if (fieldName % "action")
         return &action;
     if (fieldName % "result")
         return &result;
+    if (fieldName % "articulatedTrace")
+        return &articulatedTrace;
     return NULL;
 }
 

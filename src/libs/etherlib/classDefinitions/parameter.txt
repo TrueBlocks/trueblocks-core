@@ -1,5 +1,11 @@
 [settings]
 class = CParameter
-fields = string type|string name|string str_default|string value|sbool indexed|sbool no_write|uint64 is_flags=IS_ENABLED
+fields = string type|\
+        string name|\
+        string str_default|\
+        string value|\
+        sbool indexed|\
+        sbool no_write|\
+        uint64 is_flags=IS_ENABLED
 includes = utillib.h
 display_str = type, name, str_default, value, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal

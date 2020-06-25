@@ -4,6 +4,22 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
   {
     "type": "call",
     "error": "Bad jump destination",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+      "gas": 2975272,
+      "input": "0x23b872dd000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174",
+      "refundAddress": "0x0",
+      "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 0,
+      "output": ""
+    },
     "articulatedTrace": {
       "name": "transferFrom",
       "inputs": [
@@ -27,36 +43,10 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )",
-    "action": {
-      "selfDestructed": "0x0",
-      "balance": 0,
-      "callType": "call",
-      "from": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
-      "gas": 2975272,
-      "input": "0x23b872dd000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174",
-      "refundAddress": "0x0",
-      "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "value": 0
-    },
-    "result": {
-      "newContract": "0x0",
-      "gasUsed": 0,
-      "output": ""
-    }
+    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )"
   },  {
     "type": "call",
     "error": "",
-    "articulatedTrace": {
-      "name": "cancelExistingRequest",
-      "inputs": [
-        {
-          "name": "_key",
-          "value": "1"
-        }
-      ]
-    },
-    "compressedTrace": "cancelExistingRequest ( _key: 1 )",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -72,24 +62,20 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "newContract": "0x0",
       "gasUsed": 57054,
       "output": "0x"
-    }
-  },  {
-    "type": "call",
-    "error": "",
+    },
     "articulatedTrace": {
-      "name": "split",
+      "name": "cancelExistingRequest",
       "inputs": [
         {
-          "name": "targetFork",
-          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
-        },
-        {
-          "name": "targetNoFork",
-          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+          "name": "_key",
+          "value": "1"
         }
       ]
     },
-    "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )",
+    "compressedTrace": "cancelExistingRequest ( _key: 1 )"
+  },  {
+    "type": "call",
+    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -105,21 +91,24 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "newContract": "0x0",
       "gasUsed": 7473,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-    }
-  },  {
-    "type": "call",
-    "error": "",
+    },
     "articulatedTrace": {
-      "name": "forked",
-      "inputs": [],
-      "outputs": [
+      "name": "split",
+      "inputs": [
         {
-          "name": "val_0",
-          "value": "true"
+          "name": "targetFork",
+          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+        },
+        {
+          "name": "targetNoFork",
+          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
         }
       ]
     },
-    "compressedTrace": "forked ( )",
+    "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
+  },  {
+    "type": "call",
+    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -135,16 +124,21 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "newContract": "0x0",
       "gasUsed": 197,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
-    }
+    },
+    "articulatedTrace": {
+      "name": "forked",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "val_0",
+          "value": "true"
+        }
+      ]
+    },
+    "compressedTrace": "forked ( )"
   },  {
     "type": "call",
     "error": "",
-    "articulatedTrace": {
-      "name": "",
-      "inputs": [],
-      "outputs": []
-    },
-    "compressedTrace": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -160,7 +154,13 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    }
+    },
+    "articulatedTrace": {
+      "name": "",
+      "inputs": [],
+      "outputs": []
+    },
+    "compressedTrace": ""
   }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
+{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
 ] }

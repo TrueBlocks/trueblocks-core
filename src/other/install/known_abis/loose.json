@@ -1,5 +1,30 @@
 [
   {
+    "name": "changeMembership",
+    "type": "function",
+    "signature": "changeMembership(address,uint256,bool,string)",
+    "encoding": "0x824dbc9a",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "member"
+      },
+      {
+        "type": "uint256",
+        "name": "amt"
+      },
+      {
+        "type": "bool",
+        "name": "val_0"
+      },
+      {
+        "type": "string",
+        "name": "name"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "donate",
     "type": "function",
     "signature": "donate((address,uint256,address)[])",

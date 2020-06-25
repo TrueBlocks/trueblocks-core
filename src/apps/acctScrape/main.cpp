@@ -32,8 +32,10 @@ int main(int argc, const char* argv[]) {
         if (options.visitTypes & VIS_UNRIPE)
             forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, &options);
 
-        for (auto monitor : options.monitors)
+        for (auto monitor : options.monitors) {
             monitor.moveToProduction();
+            LOG4(monitor.address, " freshened to ", monitor.nextBlockAsPerMonitor());
+        }
     }
 
     acctlib_cleanup();

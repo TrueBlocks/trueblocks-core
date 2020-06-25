@@ -1,2 +1,1 @@
 blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog
-

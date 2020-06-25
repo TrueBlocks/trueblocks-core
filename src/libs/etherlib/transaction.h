@@ -18,7 +18,8 @@
 #include "abilib.h"
 #include "receipt.h"
 #include "trace.h"
-#include "incomestatement.h"
+#include "reconciliation.h"
+#include "reconciliationoutput.h"
 #include "ethstate.h"
 
 namespace qblocks {
@@ -48,11 +49,12 @@ class CTransaction : public CBaseNode {
     uint64_t isError;
     uint64_t isInternal;
     CReceipt receipt;
-    CIncomeStatementArray statements;
-    CFunction articulatedTx;
-    string_q compressedTx;
-    bool finalized;
     CTraceArray traces;
+    CFunction articulatedTx;
+    CReconciliationArray reconciliations;
+    string_q compressedTx;
+    CReconciliationOutputArray statements;
+    bool finalized;
 
   public:
     CTransaction(void);
@@ -139,11 +141,12 @@ inline void CTransaction::initialize(void) {
     isError = 0;
     isInternal = 0;
     receipt = CReceipt();
-    statements.clear();
-    articulatedTx = CFunction();
-    compressedTx = "";
-    finalized = false;
     traces.clear();
+    articulatedTx = CFunction();
+    reconciliations.clear();
+    compressedTx = "";
+    statements.clear();
+    finalized = false;
 
     // EXISTING_CODE
     pBlock = NULL;
@@ -170,11 +173,12 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     isError = tr.isError;
     isInternal = tr.isInternal;
     receipt = tr.receipt;
-    statements = tr.statements;
-    articulatedTx = tr.articulatedTx;
-    compressedTx = tr.compressedTx;
-    finalized = tr.finalized;
     traces = tr.traces;
+    articulatedTx = tr.articulatedTx;
+    reconciliations = tr.reconciliations;
+    compressedTx = tr.compressedTx;
+    statements = tr.statements;
+    finalized = tr.finalized;
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it

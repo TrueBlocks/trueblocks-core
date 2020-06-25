@@ -76,10 +76,10 @@ class COptions : public COptionsBase {
     COptions(void);
     ~COptions(void);
 
-    bool openIncomeStatement(const CBlock& block);
+    bool openReconcilation(const CBlock& block);
     bool accountForExtTransaction(const CBlock& block, const CTransaction* trans);
     bool accountForIntTransaction(const CBlock& block, const CTransaction* trans, const CTrace* trace);
-    bool closeIncomeStatement(const CBlock& block);
+    bool closeReconcilation(const CBlock& block);
     bool enterDebugger(const CBlock& block);
     bool displayFromCache(uint64_t startBlock);
 

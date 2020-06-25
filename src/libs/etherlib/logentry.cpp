@@ -251,14 +251,14 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
-    archive >> data;
     archive >> logIndex;
-    // archive >> removed;
     archive >> topics;
-    // archive >> articulatedLog;
+    archive >> data;
+    archive >> articulatedLog;
     // archive >> compressedLog;
     // archive >> transactionLogIndex;
     // archive >> type;
+    // archive >> removed;
     finishParse();
     return true;
 }
@@ -271,14 +271,14 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
-    archive << data;
     archive << logIndex;
-    // archive << removed;
     archive << topics;
-    // archive << articulatedLog;
+    archive << data;
+    archive << articulatedLog;
     // archive << compressedLog;
     // archive << transactionLogIndex;
     // archive << type;
+    // archive << removed;
 
     return true;
 }
@@ -320,13 +320,10 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "blockHash");
     ADD_FIELD(CLogEntry, "blockNumber", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "blockNumber");
-    ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "removed");
     ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
-    HIDE_FIELD(CLogEntry, "articulatedLog");
     ADD_FIELD(CLogEntry, "compressedLog", T_TEXT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
@@ -337,6 +334,8 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "transactionLogIndex");
     ADD_FIELD(CLogEntry, "type", T_TEXT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "type");
+    ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "removed");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogEntry, "schema");

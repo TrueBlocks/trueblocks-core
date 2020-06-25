@@ -1,1 +1,5 @@
-{ "errors": [ "acctExport - --count option is only available with --appearances option. Quitting..." ] }
+{
+  "errors": [
+    "acctExport - --count option is only available with --appearances option. Quitting..."
+  ]
+}

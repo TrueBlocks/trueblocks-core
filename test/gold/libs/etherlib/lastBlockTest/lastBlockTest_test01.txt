@@ -47,7 +47,6 @@ Found 109 (109) files
 ../dataUpgradeTest/dataUpgradeTest_CApiSpec.txt
 ../dataUpgradeTest/dataUpgradeTest_CBlock.txt
 ../dataUpgradeTest/dataUpgradeTest_CFunction.txt
-../dataUpgradeTest/dataUpgradeTest_CIncomeStatement.txt
 ../dataUpgradeTest/dataUpgradeTest_CLogEntry.txt
 ../dataUpgradeTest/dataUpgradeTest_CMonitor.txt
 ../dataUpgradeTest/dataUpgradeTest_CNewBlock.txt
@@ -56,6 +55,7 @@ Found 109 (109) files
 ../dataUpgradeTest/dataUpgradeTest_CPriceQuote.txt
 ../dataUpgradeTest/dataUpgradeTest_CRPCResult.txt
 ../dataUpgradeTest/dataUpgradeTest_CReceipt.txt
+../dataUpgradeTest/dataUpgradeTest_CReconciliationOutput.txt
 ../dataUpgradeTest/dataUpgradeTest_CTrace.txt
 ../dataUpgradeTest/dataUpgradeTest_CTraceAction.txt
 ../dataUpgradeTest/dataUpgradeTest_CTraceResult.txt

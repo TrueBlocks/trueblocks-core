@@ -13,10 +13,11 @@ bool COptions::exportCounts(void) {
         (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 
     bool first = true;
-    for (auto aCount : counts) {
-        if (isJson && !first)
-            cout << ", ";
-        cout << aCount.Format() << endl;
+    for (auto cnt : counts) {
+        if (shouldQuit())
+            break;
+        cout << ((isJson && !first) ? ", " : "");
+        cout << cnt.Format() << endl;
         first = false;
     }
 

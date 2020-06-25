@@ -12,11 +12,21 @@ getReceipt 1428993.* --fmt api
     "logs": [
       {
         "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",
-        "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
         "logIndex": 0,
         "topics": [
           "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c"
-        ]
+        ],
+        "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
+        "articulatedLog": {
+          "name": "",
+          "type": "",
+          "constant": 0,
+          "payable": 0,
+          "signature": "",
+          "encoding": "",
+          "inputs": [],
+          "outputs": []
+        }
       }
     ],
     "status": null
@@ -31,13 +41,23 @@ getReceipt 1428993.* --fmt api
     "logs": [
       {
         "address": "0xf80ae7bfe8a3ab43e8b2c7aece33f5fbed4927df",
-        "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
         "logIndex": 1,
         "topics": [
           "0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15",
           "0x0000000000000000000000002a65aca4d5fc5b5c859090a6c34d164135398226",
           "0x0000000000000000000000000000000000000000000000000000000000000058"
-        ]
+        ],
+        "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
+        "articulatedLog": {
+          "name": "",
+          "type": "",
+          "constant": 0,
+          "payable": 0,
+          "signature": "",
+          "encoding": "",
+          "inputs": [],
+          "outputs": []
+        }
       }
     ],
     "status": null

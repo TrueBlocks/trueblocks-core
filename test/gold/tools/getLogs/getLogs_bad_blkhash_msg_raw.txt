@@ -5,5 +5,5 @@ getLogs 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0
 ], "errors": [
 "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."
 ], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "data", "type": "text" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
+{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
 ] }

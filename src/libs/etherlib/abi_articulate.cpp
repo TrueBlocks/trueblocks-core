@@ -67,6 +67,7 @@ bool parseTransferEvent(CLogEntry* p) {
         transDef = new CFunction;
         transDef->name = "Transfer";
         transDef->type = "event";
+        transDef->encoding = transferTopic;
         transDef->inputs.push_back(CParameter("_from", "address"));
         transDef->inputs.push_back(CParameter("_to", "address"));
         transDef->inputs.push_back(CParameter("_amount", "uint256"));

@@ -17,9 +17,8 @@ static const COption params[] = {
     COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),  // NOLINT
     COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),  // NOLINT
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("silent", "i", "", OPT_HIDDEN | OPT_SWITCH, "lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)"),  // NOLINT
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or collection of addresses)."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -39,7 +38,6 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-    bool silent = false;
     // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
@@ -69,9 +67,6 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
 
-        } else if (arg == "-i" || arg == "--silent") {
-            silent = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -86,10 +81,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // We need at least one address to scrape...
-    if (addrs.size() == 0)
-        EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
-
     // Make sure we have the folders we need (may be redundant, but harmless)...
     establishMonitorFolders();
     establishFolder(indexFolder_finalized);
@@ -103,62 +94,41 @@ bool COptions::parseArguments(string_q& command) {
     if (staging)
         visitTypes |= VIS_STAGING;
 
-    // Clean up a bit and accumulate the addresses into the monitors list...
+    // Where will we start?
+    blknum_t nextBlockToVisit = NOPOS;
+
+    // We need at least one address to scrape...
+    if (addrs.size() == 0)
+        EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
+
+    // Accumulate the addresses into the monitors list and decide where we should start
     for (auto addr : addrs) {
         CMonitor monitor;
-        // do not remove the next line, it also sets the bloom value for this address
-        monitor.setValueByName("address", addr);
+        monitor.setValueByName("address", addr);  // do not remove, this also sets the bloom value for the address
         monitor.finishParse();
+        string_q msg;
+        if (monitor.isLocked(msg))  // If locked, we fail
+            EXIT_USAGE(msg);
+        nextBlockToVisit = min(nextBlockToVisit, monitor.nextBlockAsPerMonitor());
         monitors.push_back(monitor);
     }
-    if (!silent)
-        LOG_INFO("Scraping ", monitors.size(), " addresses.");
 
-    //    if (isNoHeader)
-    //        expContext().fmtMap["header"] = "";
-
-    // Scan the monitors to see if any are locked (fail if so)...
-    for (auto monitor : monitors) {
-        string_q msg;
-        if (monitor.isLocked(msg))
-            EXIT_USAGE(msg);
-    }
-
-    //
-    // Find the earliest block we need to start scanning at
-    //   For each monitor...
-    //     if we've not seen this address before...
-    //       next_block = is_contract ? deploy_block : 0
-    //     else
-    //       next_block = last visited block + 1
-    blknum_t nextBlockToVisit = NOPOS;
-    for (auto monitor : monitors)
-        nextBlockToVisit = min(nextBlockToVisit, monitor.nextBlockAsPerMonitor());
-
+    // Last block depends on scrape type or user input --end (with appropriate check)
     blknum_t lastBlockToVisit =
         (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk;
 
-    // Where we would start by ourselves
+    // Mark the range...
     scanRange = make_pair(nextBlockToVisit, lastBlockToVisit);
 
-    // TODO(tjayrush): Should this be protected from bad user input?
-    // Has the user told us where to start and stop?
-    scanRange.first = (start == NOPOS ? scanRange.first : start);
-    scanRange.second = (end == NOPOS ? scanRange.second : end);
+    // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
+    if (latest < scanRange.first) {
+        LOG4("Chain is behind the monitor.");
+        EXIT_NOMSG(false);
+    }
 
-    if ((contains(command, "--start") || contains(command, "--end")) && start != NOPOS)
-        if (scanRange.first >= scanRange.second)
-            EXIT_USAGE("'start' option must be strictly less than 'end' option. Quitting...");
-
-    if (scanRange.first >= scanRange.second && latest > scanRange.first) {  // nothing to do?
-        if (!silent) {
-            for (auto monitor : monitors) {
-                ostringstream os;
-                string_q acctType = (isContractAt(monitor.address, latest) ? "contract" : "address");
-                os << "Monitor for " << acctType << " '" << monitor.address << "' is caught up to indexer.";
-                LOG_INFO(os.str());
-            }
-        }
+    // If there's nothing to scrape, quit silently...
+    if (scanRange.first >= scanRange.second) {
+        LOG4("Account scraper is up to date.");
         EXIT_NOMSG(false);
     }
 

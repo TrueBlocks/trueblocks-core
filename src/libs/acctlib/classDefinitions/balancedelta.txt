@@ -1,6 +1,0 @@
-[settings]
-class = CBalanceDelta
-fields = blknum blockNumber|address address (nowrite)|wei balance|int256 diff
-includes = etherlib.h
-serializable = true
-display_str = blockNumber, address, balance, diff

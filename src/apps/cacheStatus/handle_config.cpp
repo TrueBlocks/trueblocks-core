@@ -74,8 +74,6 @@ bool COptions::handle_config_get(ostream& os) {
         cnt = 0;
         values2.push_back(isTestMode() ? "--account Name--"
                                        : cc->getConfigStr(g2.section, "", STR_DISPLAY_ACCOUNTNAME));
-        values2.push_back(isTestMode() ? "--balance record--"
-                                       : cc->getConfigStr(g2.section, "", STR_DISPLAY_BALANCERECORD));
         values2.push_back(isTestMode() ? "--block--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_BLOCK));
         values2.push_back(isTestMode() ? "--eth state--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_ETHSTATE));
         values2.push_back(isTestMode() ? "--function--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_FUNCTION));
@@ -89,8 +87,6 @@ bool COptions::handle_config_get(ostream& os) {
         extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(
             CConfigItem("accountName", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
-        items2.push_back(
-            CConfigItem("balancerecord", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         items2.push_back(CConfigItem("block", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         items2.push_back(
             CConfigItem("ethstate", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
@@ -370,11 +366,6 @@ const char* STR_TEST_DATA =
     "          {\n"
     "            \"name\": \"accountName\",\n"
     "            \"value\": \"--account name--\",\n"
-    "            \"type\": \"display_str\"\n"
-    "          },\n"
-    "          {\n"
-    "            \"name\": \"balancerecord\",\n"
-    "            \"value\": \"--balance record--\",\n"
     "            \"type\": \"display_str\"\n"
     "          },\n"
     "          { \"name\": \"block\", \"value\": \"--block--\", \"type\": \"display_str\" },\n"

@@ -42,13 +42,13 @@ bool COptions::handle_export(void) {
         m.cntBefore = m.cntAfter = m.getRecordCount();
         fa.push_back(m);
     }
-    if (!freshen_internal(FM_PRODUCTION, fa, "--silent", freshen_flags))
+    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
         EXIT_FAIL("'chifra export' freshen_internal returned false");
 
     size_t cnt = 0;
     for (auto addr : addrs) {
         ostringstream os;
-        os << "cacheMan " << addr << " >&2 && ";
+        os << "cacheMan " << addr << " >&2 ; ";
         os << "acctExport " << addr << " " << tool_flags;
         CStringArray cmds;
         explode(cmds, os.str(), ';');

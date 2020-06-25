@@ -1,17 +1,10 @@
 {
-  "errors": [
-    "acctScrape - 'start' option must be strictly less than 'end' option. Quitting..."
-  ]
-}
-{
   "data": [
-    [
-      {
-        "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
-        "blockNumber": 0,
-        "transactionIndex": 2
-      }
-    ]
+    {
+      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "blockNumber": 0,
+      "transactionIndex": 2
+    }
   ],
   "types": [
     {
@@ -46,11 +39,21 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFromAndTo": {},
-    "unNamedFromAndTo": {},
-    "namedFrom": {},
-    "unNamedFrom": {},
-    "namedTo": {},
-    "unNamedTo": {}
+    "start": "0xdeadbeef",
+    "end": "0xdeadbeef",
+    "accountedFor": {
+      "stateHistory": [],
+      "curBalance": 0,
+      "enabled": true,
+      "tags": "80-Prefund",
+      "address": "0x001d14804b399c6ef80e64576f657660804fec0b",
+      "name": "Prefund_0002",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": "",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": true
+    }
   }
 }

@@ -45,10 +45,10 @@ class CTrace : public CBaseNode {
     blknum_t transactionIndex;
     string_q type;
     string_q error;
-    CFunction articulatedTrace;
-    string_q compressedTrace;
     CTraceAction action;
     CTraceResult result;
+    CFunction articulatedTrace;
+    string_q compressedTrace;
 
   public:
     CTrace(void);
@@ -127,10 +127,10 @@ inline void CTrace::initialize(void) {
     transactionIndex = 0;
     type = "";
     error = "";
-    articulatedTrace = CFunction();
-    compressedTrace = "";
     action = CTraceAction();
     result = CTraceResult();
+    articulatedTrace = CFunction();
+    compressedTrace = "";
 
     // EXISTING_CODE
     pTrans = NULL;
@@ -150,10 +150,10 @@ inline void CTrace::duplicate(const CTrace& tr) {
     transactionIndex = tr.transactionIndex;
     type = tr.type;
     error = tr.error;
-    articulatedTrace = tr.articulatedTrace;
-    compressedTrace = tr.compressedTrace;
     action = tr.action;
     result = tr.result;
+    articulatedTrace = tr.articulatedTrace;
+    compressedTrace = tr.compressedTrace;
 
     // EXISTING_CODE
     pTrans = tr.pTrans;  // no deep copy, we don't own it

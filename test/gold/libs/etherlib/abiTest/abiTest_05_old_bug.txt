@@ -7,7 +7,6 @@ ABI of test1.json
 {
   "type": "constructor",
   "signature": "(address,address,uint256,uint256,uint256,address)",
-  "encoding": "0xd9fdb088",
   "inputs": [
     {
       "type": "address",
@@ -1143,7 +1142,6 @@ ABI of test2.json
 {
   "type": "constructor",
   "signature": "(address,bytes32,uint256)",
-  "encoding": "0x98ba8a57",
   "inputs": [
     {
       "type": "address",

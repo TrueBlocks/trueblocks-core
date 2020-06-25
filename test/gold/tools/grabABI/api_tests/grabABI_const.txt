@@ -4,7 +4,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,address,uint256,uint256,uint256,address)",
-      "encoding": "0xd9fdb088",
+      "encoding": "",
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "input_names": "_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,",
       "output_names": ""

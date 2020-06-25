@@ -64,8 +64,8 @@ void etherlib_init(QUITHANDLER qh) {
     CFunction::registerClass();
     CParameter::registerClass();
 
-    CIncomeStatement::registerClass();
-    CReconciliationNumeric::registerClass();
+    CReconciliationOutput::registerClass();
+    CReconciliation::registerClass();
     CEthState::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
@@ -1113,36 +1113,40 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
 
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
-    if (!errStrs.str().empty())
-        os << ", \"errors\": [\n" << errStrs.str() << "\n]";
 
-    if (!isText && expContext().types.size() > 0) {
-        ostringstream typeStrs;
-        first = true;
-        for (auto type : expContext().types) {
-            if (!first)
-                typeStrs << ", ";
-            typeStrs << "{ \"type\": \"" << type.first << "\", \"fields\": [";
-            const CRuntimeClass* pClass = type.second;
-            bool fy = true;
-            while (pClass) {
-                for (auto field : pClass->fieldList) {
-                    if (!field.isHidden()) {
-                        if (!fy)
-                            typeStrs << ", ";
-                        string_q t = toLower(fieldTypeName(field.getType()));
-                        t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
-                        typeStrs << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
-                        fy = false;
+    bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
+    if (showSchemas) {
+        if (!errStrs.str().empty())
+            os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+
+        if (!isText && expContext().types.size() > 0) {
+            ostringstream typeStrs;
+            first = true;
+            for (auto type : expContext().types) {
+                if (!first)
+                    typeStrs << ", ";
+                typeStrs << "{ \"type\": \"" << type.first << "\", \"fields\": [";
+                const CRuntimeClass* pClass = type.second;
+                bool fy = true;
+                while (pClass) {
+                    for (auto field : pClass->fieldList) {
+                        if (!field.isHidden()) {
+                            if (!fy)
+                                typeStrs << ", ";
+                            string_q t = toLower(fieldTypeName(field.getType()));
+                            t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
+                            typeStrs << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
+                            fy = false;
+                        }
                     }
+                    string_q parent = pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "";
+                    pClass = (parent == "CBaseClass" ? NULL : pClass->m_BaseClass);
                 }
-                string_q parent = pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "";
-                pClass = (parent == "CBaseClass" ? NULL : pClass->m_BaseClass);
+                typeStrs << "] }";
+                first = false;
             }
-            typeStrs << "] }";
-            first = false;
+            os << ", \"types\": [\n" << typeStrs.str() << "\n]";
         }
-        os << ", \"types\": [\n" << typeStrs.str() << "\n]";
     }
 
     if (fmt == JSON1)
@@ -1154,11 +1158,16 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;
     os << ", \"meta\": {";
-    os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
-    os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
-    os << "\"staging\": " << dispNumOrHex(staging) << ",";
-    os << "\"finalized\": " << dispNumOrHex(finalized) << ",";
-    os << "\"client\": " << dispNumOrHex(client);
+    os << "\"unripe\": " << dispNumOrHex(unripe);
+    os << ","
+       << "\"ripe\": " << dispNumOrHex(ripe);
+    os << ","
+       << "\"staging\": " << dispNumOrHex(staging);
+    os << ","
+       << "\"finalized\": " << dispNumOrHex(finalized);
+    if (showSchemas)
+        os << ","
+           << "\"client\": " << dispNumOrHex(client);
     if (!extra.empty())
         os << extra;
     os << " }";

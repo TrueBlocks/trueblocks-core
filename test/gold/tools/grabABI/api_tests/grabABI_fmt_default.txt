@@ -4,7 +4,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,uint256,address)",
-      "encoding": "0x522f3752",
+      "encoding": "",
       "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,",
       "output_names": ""
     },

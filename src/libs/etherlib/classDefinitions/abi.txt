@@ -1,6 +1,7 @@
 [settings]
 class = CAbi
-fields = address address|CFunctionArray interfaces
+fields = address address|\
+        CFunctionArray interfaces
 includes = function.h|parameter.h
 cpp_includes = node.h
 serializable = true

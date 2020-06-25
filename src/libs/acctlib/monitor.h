@@ -17,7 +17,7 @@
  */
 #include "etherlib.h"
 #include "transaction.h"
-#include "reconciliationnumeric.h"
+#include "reconciliation.h"
 #include "ethstate.h"
 
 namespace qblocks {
@@ -30,7 +30,7 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 class CMonitor : public CAccountName {
   public:
     CAbi abi_spec;
-    CReconciliationNumeric statement;
+    CReconciliation summaryStatement;
     CEthStateArray stateHistory;
     wei_t curBalance;
     bool enabled;
@@ -150,7 +150,7 @@ inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
     abi_spec = CAbi();
-    statement = CReconciliationNumeric();
+    summaryStatement = CReconciliation();
     stateHistory.clear();
     curBalance = 0;
     enabled = true;
@@ -172,7 +172,7 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     CAccountName::duplicate(mo);
 
     abi_spec = mo.abi_spec;
-    statement = mo.statement;
+    summaryStatement = mo.summaryStatement;
     stateHistory = mo.stateHistory;
     curBalance = mo.curBalance;
     enabled = mo.enabled;
@@ -225,7 +225,6 @@ extern const char* STR_DISPLAY_MONITOR;
 extern string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorBals(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern void cleanMonitors(const CAddressArray& addrs);

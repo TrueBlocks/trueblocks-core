@@ -49,7 +49,7 @@
 }
 
         //-----------------------------------------------------------------------
-        const string_q func_ = "0xd9fdb088";
+        const string_q func_ = "";
 const string_q func_DAOpaidOut = "0x643f7cdd";
 const string_q func_DAOrewardAccount = "0x82bf6464";
 const string_q func_actualBalance = "0x39d1f908";
@@ -109,7 +109,7 @@ const string_q func_vote = "0xc9d27afe";
 
                 if (encoding == func_) {
             // constructor(address _curator, address _daoCreator, uint256 _proposalDeposit, uint256 _minTokensToCreate, uint256 _closingTime, address _privateCreation)
-            // 0xd9fdb088
+            // 
             CConstructor *a = new CConstructor;
             a->CTransaction::operator=(*p);
             a->_curator = str_2_Addr(extract(params, 0*64, 64));

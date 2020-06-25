@@ -12,7 +12,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "monitor.h"
-#include "monitorcount.h"
 #include "treeroot.h"
 #include "acctlib.h"
 #include "branch.h"
@@ -22,8 +21,6 @@
 #include "apispec.h"
 #include "indexing.h"
 #include "ethstate.h"
-#include "balancerecord.h"
-#include "balancedelta.h"
 #include "ens.h"
 
 extern void acctlib_init(QUITHANDLER qh);

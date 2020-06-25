@@ -152,7 +152,7 @@ bool test_old_bug(void) {
 }
 
 string_q data =
-    "CEthStateArray|CBlockNumArray|CFunctionArray|CIncomeStatement|CLogEntryArray|CParameterArray|"
+    "CEthStateArray|CBlockNumArray|CFunctionArray|CReconciliationOutput|CLogEntryArray|CParameterArray|"
     "CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
     // note - we leave 'CTreeNode *' here to show it gets fixed - should use 'CTreeNode* ' instead
     "uint8|CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|"

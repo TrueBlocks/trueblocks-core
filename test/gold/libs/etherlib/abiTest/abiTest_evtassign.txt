@@ -4,7 +4,7 @@ event assignment test...
 CEthStateArray				a->_val = "0x" + extract(data, 0*64, 64);
 CBlockNumArray				a->_val = "0x" + extract(data, 0*64, 64);
 CFunctionArray				a->_val = "0x" + extract(data, 0*64, 64);
-CIncomeStatement				a->_val = "0x" + extract(data, 0*64, 64);
+CReconciliationOutput				a->_val = "0x" + extract(data, 0*64, 64);
 CLogEntryArray				a->_val = "0x" + extract(data, 0*64, 64);
 CParameterArray				a->_val = "0x" + extract(data, 0*64, 64);
 CPerson				a->_val = "0x" + extract(data, 0*64, 64);

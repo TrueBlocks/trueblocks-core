@@ -1,6 +1,13 @@
 [settings]
 class = CEthState
-fields = blknum blockNumber|wei balance|uint64 nonce (nowrite)|string code (nowrite)|string storage (nowrite)|address address (nowrite)|blknum deployed (nowrite)|string accttype (nowrite)
+fields = blknum blockNumber|\
+        wei balance|\
+        uint64 nonce (nowrite)|\
+        string code (nowrite)|\
+        string storage (nowrite)|\
+        address address (nowrite)|\
+        blknum deployed (nowrite)|\
+        string accttype (nowrite)
 includes = abilib.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber

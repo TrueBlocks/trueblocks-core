@@ -1,7 +1,7 @@
 grabABI argc: 2 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] 
 grabABI 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 
 encoding	type	name	signature	input_names	output_names
-0xfc5b9379	constructor		(address,address,uint256,string,uint8,string,bool)	_tokenFactory,_parentToken,_parentSnapShotBlock,_tokenName,_decimalUnits,_tokenSymbol,_transfersEnabled,	,
+	constructor		(address,address,uint256,string,uint8,string,bool)	_tokenFactory,_parentToken,_parentSnapShotBlock,_tokenName,_decimalUnits,_tokenSymbol,_transfersEnabled,	,
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_amount,	success,,
 0xcae9ca51	function	approveAndCall	approveAndCall(address,uint256,bytes)	_spender,_amount,_extraData,	success,,

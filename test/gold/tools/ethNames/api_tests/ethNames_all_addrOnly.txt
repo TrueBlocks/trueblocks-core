@@ -145,6 +145,14 @@
       "decimals": 18
     },
     {
+      "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
+      "decimals": "0"
+    },
+    {
       "address": "0x008b1ffe244bf31896c833bff4ad9009e7a0f4eb",
       "decimals": "0"
     },
@@ -194,6 +202,10 @@
     },
     {
       "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
       "decimals": "0"
     },
     {
@@ -301,6 +313,10 @@
       "decimals": 18
     },
     {
+      "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
+      "decimals": "0"
+    },
+    {
       "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
       "decimals": "0"
     },
@@ -386,6 +402,10 @@
     },
     {
       "address": "0x04607ca1048f490578f233a8b1354778defdd178",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0466e612137bca50e524f25ac9f7b6f826ee15b7",
       "decimals": "0"
     },
     {
@@ -701,6 +721,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x08ceb8bba685ee708c9c4c65576837cbe19b9dea",
+      "decimals": "0"
+    },
+    {
       "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
       "decimals": "0"
     },
@@ -779,30 +803,6 @@
     {
       "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
       "decimals": 18
-    },
-    {
-      "address": "0x0a82e6ef40cfcca9d5f651292194aa1c7fb2f9f4",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0aa8ae2485e31c024201bdf77bfa25021bc10c5b",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0abdace70d3790235af448c88547603b945604ea",
-      "decimals": 18
-    },
-    {
-      "address": "0x0aef06dcccc531e581f0440059e6ffcc206039ee",
-      "decimals": 8
-    },
-    {
-      "address": "0x0af44e2784637218dd1d32a322d44e603a8f0c6a",
-      "decimals": 18
-    },
-    {
-      "address": "0x0aff31f693aa4bc0d54a8e89e5763836d0c17ad6",
-      "decimals": "0"
     }
   ],
   "types": [

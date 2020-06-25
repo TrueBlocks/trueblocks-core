@@ -1,7 +1,2 @@
 chifra argc: 7 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--editCmd] [4:remove] [5:--verbose] [6:10] 
 chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 --editCmd remove --verbose 10 
-TIME ~ CLOCK - : 4-----Enter(chifra,parseArguments): 
-TIME ~ CLOCK - : 4-----Exit(chifra,parseArguments): 
-TIME ~ CLOCK - : 4-----Enter(chifra,handle_rm): 
-TIME ~ CLOCK - : 4-----Exit(chifra,handle_rm): 
-TIME ~ CLOCK - : 4-----Exit(chifra,chifra): 

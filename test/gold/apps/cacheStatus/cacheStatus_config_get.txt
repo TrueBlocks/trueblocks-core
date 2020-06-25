@@ -77,13 +77,6 @@ cacheStatus --get_config
               "read_only": false
             },
             {
-              "name": "balancerecord",
-              "value": "--balance record--",
-              "type": "display string",
-              "required": false,
-              "read_only": false
-            },
-            {
               "name": "block",
               "value": "--block--",
               "type": "display string",

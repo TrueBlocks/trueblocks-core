@@ -1,6 +1,9 @@
 [settings]
 class = CTraceResult
-fields = address newContract|string code|gas gasUsed|string output
+fields = address newContract|\
+        string code|\
+        gas gasUsed|\
+        string output
 includes = abilib.h
 cpp_includes = trace.h
 serializable = true

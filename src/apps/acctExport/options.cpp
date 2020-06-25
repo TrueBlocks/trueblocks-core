@@ -19,8 +19,6 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
-    COption("creations", "n", "", OPT_SWITCH, "export contract creations instead of transaction list"),
-    COption("selfdestructs", "u", "", OPT_SWITCH, "export contract selfdestructs instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
@@ -84,12 +82,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-b" || arg == "--balances") {
             balances = true;
-
-        } else if (arg == "-n" || arg == "--creations") {
-            creations = true;
-
-        } else if (arg == "-u" || arg == "--selfdestructs") {
-            selfdestructs = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
@@ -210,8 +202,8 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTransaction, "traces");
 
-    if ((appearances + receipts + logs + traces + balances) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, traces, or balances. Quitting...");
+    if ((appearances + receipts + logs + traces) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, or traces. Quitting...");
 
     if (emitter && !logs)
         EXIT_USAGE("The emitter option is only available when exporting logs. Quitting...");
@@ -222,11 +214,8 @@ bool COptions::parseArguments(string_q& command) {
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
-    if (deltas && !balances)
-        EXIT_USAGE("--deltas option is only available with --balances. Quitting...");
-
     if (count) {
-        if (receipts || logs || traces || balances || emitter || deltas)
+        if (receipts || logs || traces || emitter)
             EXIT_USAGE("--count option is only available with --appearances option. Quitting...");
         bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
@@ -244,7 +233,8 @@ bool COptions::parseArguments(string_q& command) {
     } else {
         // show certain fields and hide others
         // SEP4("default field hiding: " + defHide);
-        manageFields(defHide, false);
+        string_q hide = substitute(defHide, "|CLogEntry: data, topics", "");
+        manageFields(hide, false);
         // SEP4("default field showing: " + defShow);
         string_q show =
             defShow +
@@ -252,7 +242,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(show, true);
 
         // Load as many ABI files as we have
-        if (!appearances && !balances) {
+        if (!appearances) {
             abis.loadAbiKnown();
             if (all_abis)
                 abis.loadAbisMonitors();
@@ -291,30 +281,6 @@ bool COptions::parseArguments(string_q& command) {
             // future reference.
             format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
             expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCERECORD);
-            if (expContext().asEther) {
-                format = substitute(format, "{BALANCE}", "{ETHER}");
-                format = substitute(format, "{PRIORBALANCE}", "{ETHERPRIOR}");
-                format = substitute(format, "{DIFF}", "{ETHERDIFF}");
-            }
-            if (expContext().asDollars) {
-                format = substitute(format, "{BALANCE}", "{DOLLARS}");
-                format = substitute(format, "{PRIORBALANCE}", "{DOLLARSPRIOR}");
-                format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
-            }
-            expContext().fmtMap["balancerecord_fmt"] = cleanFmt(format);
-
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "balance", STR_DISPLAY_BALANCEDELTA);
-            if (expContext().asEther) {
-                format = substitute(format, "{BALANCE}", "{ETHER}");
-                format = substitute(format, "{DIFF}", "{ETHERDIFF}");
-            }
-            if (expContext().asDollars) {
-                format = substitute(format, "{BALANCE}", "{DOLLARS}");
-                format = substitute(format, "{DIFF}", "{DOLLARSDIFF}");
-            }
-            expContext().fmtMap["balancedelta_fmt"] = cleanFmt(format);
         }
         HIDE_FIELD(CParameter, "str_default");
         HIDE_FIELD(CTransaction, "datesh");
@@ -331,12 +297,6 @@ bool COptions::parseArguments(string_q& command) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
-            } else if (balances) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancerecord_fmt"]);
-                if (deltas)
-                    expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["balancedelta_fmt"]);
-                SHOW_FIELD(CBalanceRecord, "address");
-                SHOW_FIELD(CBalanceDelta, "address");
             } else {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
             }
@@ -344,19 +304,29 @@ bool COptions::parseArguments(string_q& command) {
 
         if (freshen)
             expContext().exportFmt = NONE1;
-    }
 
-    if (accounting) {
-        if (addrs.size() != 1)
-            EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
-        if (freshen)
-            EXIT_USAGE("Do not use the --accounting option with --freshen. Quitting...");
-        if (appearances || logs || traces || balances)
-            EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
-        accountForAddr = addrs[0];
-        articulate = true;
-        // manageFields("CTransaction:input,receipt,articulatedTx,hash", false);
-        manageFields("CTransaction:statements", true);
+        if (accounting) {
+            if (addrs.size() != 1)
+                EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
+            if (freshen)
+                EXIT_USAGE("Do not use the --accounting option with --freshen. Quitting...");
+            if (appearances || logs || traces)
+                EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
+            accountedFor = addrs[0];
+            articulate = true;
+            manageFields("CTransaction:statements", true);
+            manageFields("CTransaction:reconciliations", false);
+            bool nodeHasBals = nodeHasBalances(false);
+            string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+            if (!nodeHasBals) {
+                string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
+                if (rpcProvider == balanceProvider || balanceProvider.empty())
+                    EXIT_FAIL("The RPC server does not have historical state. Quitting...");
+                setRpcProvider(balanceProvider);
+                if (!nodeHasBalances(false))
+                    EXIT_USAGE("balanceServer set but it does not have historical state. Quitting...");
+            }
+        }
     }
 
     EXIT_NOMSG(true);
@@ -370,16 +340,12 @@ void COptions::Init(void) {
     CAccountName unused;
     getNamedAccount(unused, "0x0");
 
-    monitors.clear();
-
     // BEG_CODE_INIT
     appearances = false;
     receipts = false;
     logs = false;
     traces = false;
     balances = false;
-    creations = false;
-    selfdestructs = false;
     accounting = false;
     articulate = false;
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
@@ -399,9 +365,19 @@ void COptions::Init(void) {
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
     scanRange.second = getLatestBlock_cache_ripe();
-    items.clear();
+
     monitors.clear();
     counts.clear();
+    items.clear();
+
+    // We don't clear these because they are part of meta data
+    // prefundAddrMap.clear();
+    // blkRewardMap.clear();
+    // toNameExistsMap.clear();
+    // fromNameExistsMap.clear();
+    // abiMap.clear();
+
+    oldestMonitor = latestDate;
 
     minArgs = 0;
 }
@@ -412,7 +388,10 @@ COptions::COptions(void) {
     ts_array = NULL;
     ts_cnt = 0;
     Init();
+
+    CMonitorCount::registerClass();
     CDisplayApp::registerClass();
+
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
@@ -475,6 +454,9 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 //-----------------------------------------------------------------------
 bool COptions::loadAllAppearances(void) {
     ENTER("loadAllAppearances");
+
+    if (count)
+        return true;
 
     CAppearanceArray_base tmp;
     for (auto monitor : monitors) {
@@ -570,10 +552,12 @@ string_q report_cache(int opt) {
 
 //-----------------------------------------------------------------------
 bool COptions::reportOnNeighbors(void) {
+    bool testMode = isTestMode();
+
     addr_name_map_t fromAndToMap;
-    for (auto addr : fromNameExistsMap)
+    for (auto addr : fromAddrMap)
         fromAndToMap[addr.first] = 1L;
-    for (auto addr : toNameExistsMap)
+    for (auto addr : toAddrMap)
         if (fromAndToMap[addr.first] == 1L)
             fromAndToMap[addr.first] = 2L;
 
@@ -598,6 +582,8 @@ bool COptions::reportOnNeighbors(void) {
         bool frst = true;
         os << ", \"namedFromAndTo\": {";
         for (auto stats : fromAndToNamed) {
+            if (testMode && contains(stats.tags, "Friends"))
+                stats.name = "Name " + stats.address.substr(0, 10);
             if (fromAndToMap[stats.address] == 2) {
                 if (!frst)
                     os << ",";
@@ -629,7 +615,7 @@ bool COptions::reportOnNeighbors(void) {
 
     CNameStatsArray fromUnnamed;
     CNameStatsArray fromNamed;
-    for (auto addr : fromNameExistsMap) {
+    for (auto addr : fromAddrMap) {
         CAccountName acct;
         acct.address = addr.first;
         getNamedAccount(acct, addr.first);
@@ -648,6 +634,8 @@ bool COptions::reportOnNeighbors(void) {
         bool frst = true;
         os << ", \"namedFrom\": {";
         for (auto stats : fromNamed) {
+            if (testMode && contains(stats.tags, "Friends"))
+                stats.name = "Name " + stats.address.substr(0, 10);
             if (fromAndToMap[stats.address] != 2) {
                 if (!frst)
                     os << ",";
@@ -679,7 +667,7 @@ bool COptions::reportOnNeighbors(void) {
 
     CNameStatsArray toUnnamed;
     CNameStatsArray toNamed;
-    for (auto addr : toNameExistsMap) {
+    for (auto addr : toAddrMap) {
         CAccountName acct;
         acct.address = addr.first;
         getNamedAccount(acct, addr.first);
@@ -702,6 +690,8 @@ bool COptions::reportOnNeighbors(void) {
         bool frst = true;
         os << ", \"namedTo\": {";
         for (auto stats : toNamed) {
+            if (testMode && contains(stats.tags, "Friends"))
+                stats.name = "Name " + stats.address.substr(0, 10);
             if (fromAndToMap[stats.address] != 2) {
                 if (!frst)
                     os << ",";

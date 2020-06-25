@@ -154,6 +154,7 @@ COptions::COptions(void) {
     HIDE_FIELD(CTransaction, "toContract");
     HIDE_FIELD(CTransaction, "receipt");
     HIDE_FIELD(CTransaction, "traces");
+    HIDE_FIELD(CTransaction, "articulatedTx");
 
     // BEG_CODE_NOTES
     // clang-format off

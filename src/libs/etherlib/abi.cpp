@@ -297,14 +297,12 @@ const char* STR_DISPLAY_ABI =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//---------------------------------------------------------------------------
-bool visitBuiltin(const qblocks::string_q& path, void* data) {
-    if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
-        return true;
-    CAbi* abi = (CAbi*)data;  // NOLINT
-    if (!abi->loadAbiFromFile(path, true))
-        return false;
-    return true;
+//-----------------------------------------------------------------------
+string_q getAbiPath(const address_t& addrOrName) {
+    string_q base = "abis/";
+    if (isAddress(addrOrName))
+        return getCachePath(base + addrOrName + ".json");
+    return getCachePath(base + addrOrName);
 }
 
 //---------------------------------------------------------------------------
@@ -318,11 +316,11 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAndCacheAbiFolder(const string_q& path, const string_q& name) {
-    string_q binPath = path + name + ".bin";
-    fileInfo info = getNewestFileInFolder(path);
-    if (info.fileName == binPath && fileExists(binPath)) {
-        // cerr << "Reading " << name << " abis from cache" << endl;
+bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath) {
+    fileInfo info = getNewestFileInFolder(sourcePath);
+    bool cacheIsFresh = fileExists(binPath) && fileLastModifyDate(binPath) > info.fileTime;
+
+    if (cacheIsFresh) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
             archive >> *this;
@@ -331,7 +329,8 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& path, const string_q& name) {
         }
     }
 
-    if (!forEveryFileInFolder(path + "*", visitABI, this))
+    LOG_INFO("Freshinging abi cache for path: ", sourcePath);
+    if (!forEveryFileInFolder(sourcePath + "*", visitABI, this))
         return false;
 
     sort(interfaces.begin(), interfaces.end());
@@ -348,12 +347,12 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& path, const string_q& name) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiKnown(void) {
-    return loadAndCacheAbiFolder(configPath("known_abis/"), "known");
+    return loadAndCacheAbiFolder(configPath("known_abis/"), getAbiPath("known.bin"));
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisMonitors(void) {
-    return loadAndCacheAbiFolder(getCachePath("abis/"), "monitored");
+    return loadAndCacheAbiFolder(getCachePath("abis/"), getAbiPath("monitored.bin"));
 }
 
 //---------------------------------------------------------------------------
@@ -428,7 +427,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         verbose = 10;
 
     string_q results;
-    string_q fileName = getCachePath("abis/" + addr + ".json");
+    string_q fileName = getAbiPath(addr);
 
     string_q localFile("./" + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
@@ -438,8 +437,6 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
 
     string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
-        if (!isTestMode())
-            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "cache"), "\r");
         asciiFileToString(fileName, results);
 
     } else {
@@ -534,14 +531,6 @@ void removeDuplicateEncodings(CAbiArray& abis) {
         }
     }
     abis[j++] = abis[n - 1];
-}
-
-//-----------------------------------------------------------------------
-string_q getAbiPath(const address_t& addr) {
-    string_q base = "abis/";
-    if (!isAddress(addr))  // empty for example
-        return getCachePath(base + addr);
-    return getCachePath(base + addr + ".json");
 }
 
 CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};

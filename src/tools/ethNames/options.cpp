@@ -510,11 +510,14 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     fmt = STR_DISPLAY_ACCOUNTNAME;
     ostringstream dataStream2;
     string_q fieldStr = toLower(substitute(substitute(fmt, "[{", ""), "}]", ""));
+    string_q testMode = getEnvStr("TEST_MODE");
+    setenv("TEST_MODE", "false", true);
     dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
         if (!contains(name.name, "Prefund_"))  // if the user has customized a prefund, save it as a custom as well
             dataStream2 << name.Format(fmt) << endl;
     }
+    setenv("TEST_MODE", testMode.c_str(), true);
 
     string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
     stringToAsciiFile(dest, dataStream2.str());

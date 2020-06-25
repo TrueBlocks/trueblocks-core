@@ -266,7 +266,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool listClasses(const string_q& path, void* data) {
-    if (contains(path, "/test/"))
+    if (contains(path, "/test/") || contains(path, "/build/"))
         return true;
 
     if (endsWith(path, "/")) {

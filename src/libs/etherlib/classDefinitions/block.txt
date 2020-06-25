@@ -1,8 +1,18 @@
 [settings]
 class = CBlock
-fields = gas gasLimit|gas gasUsed|hash hash|blknum blockNumber|hash parentHash|address miner|uint64 difficulty|double price|bool finalized|timestamp timestamp|CTransactionArray transactions|string name (nowrite)|sbool light (nowrite)
-backfields1 = gas gasLimit|gas gasUsed|hash hash|blknum blockNumber|hash parentHash|address miner|uint64 difficulty|double price|timestamp timestamp|CTransactionArray transactions
-backfields2 = gas gasLimit|gas gasUsed|hash hash|bloom logsBloom|blknum blockNumber|hash parentHash|timestamp timestamp|CTransactionArray transactions
+fields = gas gasLimit|\
+        gas gasUsed|\
+        hash hash|\
+        blknum blockNumber|\
+        hash parentHash|\
+        address miner|\
+        uint64 difficulty|\
+        double price|\
+        bool finalized|\
+        timestamp timestamp|\
+        CTransactionArray transactions|\
+        string name (nowrite)|\
+        sbool light (nowrite)
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 scope = extern

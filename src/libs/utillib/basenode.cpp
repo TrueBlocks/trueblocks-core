@@ -620,7 +620,7 @@ void CBaseNode::doExport(ostream& os) const {
                         os << endl;
                         os << indent() << doKey(name);
                         if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") &&
-                            !val.empty())
+                            !val.empty() && (field.m_fieldType != T_BOOL))
                             val = str_2_Hex(val);
                         bool quote = (!isNum || expContext().quoteNums) && val != "null";
                         if (isApiMode() && val.empty())

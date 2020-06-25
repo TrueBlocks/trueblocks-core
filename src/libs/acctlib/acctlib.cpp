@@ -18,10 +18,7 @@ void acctlib_init(QUITHANDLER qh) {
     etherlib_init(qh);
 
     CMonitor::registerClass();
-    CMonitorCount::registerClass();
     CApiSpec::registerClass();
-    CBalanceRecord::registerClass();
-    CBalanceDelta::registerClass();
 
     CTreeRoot::registerClass();
     CTreeNode::registerClass();

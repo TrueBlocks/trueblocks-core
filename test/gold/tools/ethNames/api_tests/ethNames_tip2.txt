@@ -4,22 +4,6 @@
     "decimals": "0"
   },
   {
-    "address": "0x4d0a14bb9c145b4b3694e29107dc4a62d0f25c92",
-    "decimals": "0"
-  },
-  {
-    "address": "0x4ff1c812ebccc16487c17f537d849cb5dc557ff0",
-    "decimals": "0"
-  },
-  {
-    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
-    "decimals": "0"
-  },
-  {
-    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-    "decimals": "0"
-  },
-  {
     "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
     "decimals": "0"
   },

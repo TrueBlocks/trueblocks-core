@@ -20,12 +20,12 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
       "logs": [
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
-          "data": "0x00000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "logIndex": 0,
           "topics": [
             "0xc62f8b1313b549bc5c94efe776ee0559a8f88efdb3db504331857fc163553c71",
             "0x000000000000000000000000d503d263de9092232d28492d60c5a956ad754a83"
           ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "articulatedLog": {
             "name": "AcceptRequest",
             "inputs": [
@@ -55,12 +55,12 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
         },
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
-          "data": "0x00000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "logIndex": 1,
           "topics": [
             "0xc62f8b1313b549bc5c94efe776ee0559a8f88efdb3db504331857fc163553c71",
             "0x000000000000000000000000d503d263de9092232d28492d60c5a956ad754a83"
           ],
+          "data": "0x00000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "articulatedLog": {
             "name": "AcceptRequest",
             "inputs": [
@@ -91,6 +91,46 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
       ],
       "status": 1
     },
+    "traces": [
+      {
+        "type": "call",
+        "error": "",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0xd503d263de9092232d28492d60c5a956ad754a83",
+          "gas": 974952,
+          "input": "0x9775fc80000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000",
+          "refundAddress": "0x0",
+          "to": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+          "value": 607298625296748300
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 214359,
+          "output": "0x"
+        },
+        "articulatedTrace": {
+          "name": "acceptTheseAskRequestsAndBUY",
+          "inputs": [
+            {
+              "name": "_keys",
+              "value": "[6, 5]"
+            },
+            {
+              "name": "_tokenAmounts",
+              "value": "[25000000000000000000, 25000000000000000000]"
+            },
+            {
+              "name": "_dollarPrices",
+              "value": "[2000000000000000000, 2000000000000000000]"
+            }
+          ]
+        },
+        "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
+      }
+    ],
     "articulatedTx": {
       "name": "acceptTheseAskRequestsAndBUY",
       "inputs": [
@@ -109,50 +149,10 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
       ]
     },
     "compressedTx": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
-    "traces": [
-      {
-        "type": "call",
-        "error": "",
-        "articulatedTrace": {
-          "name": "acceptTheseAskRequestsAndBUY",
-          "inputs": [
-            {
-              "name": "_keys",
-              "value": "[6, 5]"
-            },
-            {
-              "name": "_tokenAmounts",
-              "value": "[25000000000000000000, 25000000000000000000]"
-            },
-            {
-              "name": "_dollarPrices",
-              "value": "[2000000000000000000, 2000000000000000000]"
-            }
-          ]
-        },
-        "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
-        "action": {
-          "selfDestructed": "0x0",
-          "balance": 0,
-          "callType": "call",
-          "from": "0xd503d263de9092232d28492d60c5a956ad754a83",
-          "gas": 974952,
-          "input": "0x9775fc80000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000",
-          "refundAddress": "0x0",
-          "to": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
-          "value": 607298625296748300
-        },
-        "result": {
-          "newContract": "0x0",
-          "gasUsed": 214359,
-          "output": "0x"
-        }
-      }
-    ],
     "gasCost": 10470350000000000,
     "gasUsed": 209407,
     "date": "2018-11-16 00:10:08 UTC",
     "ether": 0.607298625296748300
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

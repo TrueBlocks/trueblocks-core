@@ -1,7 +1,7 @@
 grabABI argc: 2 [1:0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5] 
 grabABI 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5 
 encoding	type	name	signature	input_names	output_names
-0x45fd0674	constructor		(address)	_token,	,
+	constructor		(address)	_token,	,
 0x523aee69	function	changeTokenContract	changeTokenContract(address)	_newToken,	,
 0x76671808	function	currentEpoch	currentEpoch()		val_0,,
 0x36bc32a2	function	expectedPayout	expectedPayout(address)	_tokenHolder,	val_0,,

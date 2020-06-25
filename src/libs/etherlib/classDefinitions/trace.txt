@@ -1,7 +1,17 @@
 [settings]
 class = CTrace
-fields = hash blockHash|blknum blockNumber|uint64 subtraces|CStringArray traceAddress|hash transactionHash|blknum transactionIndex|string type|string error|CFunction articulatedTrace (nowrite)|string compressedTrace (nowrite)|CTraceAction action|CTraceResult result
-backfields2 = hash blockHash|blknum blockNumber|uint64 subtraces|CStringArray traceAddress|hash transactionHash|uint64 transactionPosition|string type|string error|CFunction articulatedTrace (nowrite)|string compressedTrace (nowrite)|CTraceAction action|CTraceResult result
+fields = hash blockHash|\
+        blknum blockNumber|\
+        uint64 subtraces|\
+        CStringArray traceAddress|\
+        hash transactionHash|\
+        blknum transactionIndex|\
+        string type|\
+        string error|\
+        CTraceAction action|\
+        CTraceResult result|\
+        CFunction articulatedTrace|\
+        string compressedTrace (nowrite)
 includes = abilib.h|traceaction.h|traceresult.h
 cpp_includes = transaction.h
 display_str = blockNumber, transactionIndex, traceAddress, action::callType, error, action::from, action::to, action::value, action::ether, action::gas, result::gasUsed, action::input, compressedTrace, result::output

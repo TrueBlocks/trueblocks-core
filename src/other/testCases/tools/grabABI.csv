@@ -26,8 +26,8 @@ on, both, fast, abi, tools/grabABI, known_bug2,            y, addrs = 0xef638b43
 on, both, fast, abi, tools/grabABI, known_bug2_raw,        y, addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & raw & fmt = json
 
 on, cmd,  fast, abi, tools/grabABI, fromSolidity,          y, sol & addrs = 0x2234567812345678123456781234567812345678
-on, cmd,  fast, abi, tools/grabABI, fromSolidity2,         y, sol & addrs = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-on, cmd,  fast, abi, tools/grabABI, fromSolidity2a,        y, addrs = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee & fmt = json
+#on, cmd,  fast, abi, tools/grabABI, fromSolidity2,         y, sol & addrs = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+#on, cmd,  fast, abi, tools/grabABI, fromSolidity2a,        y, addrs = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee & fmt = json
 
 on, both, fast, abi, tools/grabABI, fmt_default,           y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
 on, both, fast, abi, tools/grabABI, fmt_txt,               n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt

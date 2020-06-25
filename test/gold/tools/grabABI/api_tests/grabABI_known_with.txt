@@ -4,7 +4,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(uint256,uint256,int256,address)",
-      "encoding": "0x1e354742",
+      "encoding": "",
       "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,congressLeader,",
       "output_names": ""
     },
@@ -1820,7 +1820,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,address)",
-      "encoding": "0x1c26cc85",
+      "encoding": "",
       "input_names": "ensAddr,resolverAddr,",
       "output_names": ""
     },
@@ -3884,7 +3884,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address)",
-      "encoding": "0x45fd0674",
+      "encoding": "",
       "input_names": "_ens,",
       "output_names": ""
     },
@@ -4036,7 +4036,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,bytes32,address)",
-      "encoding": "0x4900e002",
+      "encoding": "",
       "input_names": "_ens,_node,_resolver,",
       "output_names": ""
     },
@@ -4220,7 +4220,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(string,string)",
-      "encoding": "0x4c4a77d9",
+      "encoding": "",
       "input_names": "_contractName,_founderName,",
       "output_names": ""
     },
@@ -4932,7 +4932,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,address,bytes32,uint256)",
-      "encoding": "0x58e5fa4e",
+      "encoding": "",
       "input_names": "_ens,_previousRegistrar,_baseNode,_transferPeriodEnds,",
       "output_names": ""
     },
@@ -6937,6 +6937,14 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "changeMembership",
+      "type": "function",
+      "signature": "changeMembership(address,uint256,bool,string)",
+      "encoding": "0x824dbc9a",
+      "input_names": "member,amt,val_0,name,",
+      "output_names": ""
+    },
+    {
       "name": "generateTokens",
       "type": "function",
       "signature": "generateTokens(address,uint256)",
@@ -7092,7 +7100,7 @@
       "name": "",
       "type": "function",
       "signature": "()",
-      "encoding": "0x861731d5",
+      "encoding": "",
       "input_names": "",
       "output_names": ""
     },
@@ -7596,7 +7604,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,address,uint256,uint256)",
-      "encoding": "0x916415e1",
+      "encoding": "",
       "input_names": "_base,_prices,_minCommitmentAge,_maxCommitmentAge,",
       "output_names": ""
     },
@@ -7980,7 +7988,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address,bytes32,uint256)",
-      "encoding": "0x98ba8a57",
+      "encoding": "",
       "input_names": "_ens,_rootNode,_startDate,",
       "output_names": ""
     },
@@ -9196,7 +9204,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address[],uint256,uint256)",
-      "encoding": "0xaf8342fe",
+      "encoding": "",
       "input_names": "_owners,_required,_daylimit,",
       "output_names": ""
     },
@@ -11740,7 +11748,7 @@
       "name": "from the proxy admin",
       "type": "",
       "signature": "from the proxy admin(;)",
-      "encoding": "0xe368f052",
+      "encoding": "0x6ec0b74e",
       "input_names": "val_0,",
       "output_names": ""
     },
@@ -12833,6 +12841,14 @@
       "output_names": "data,"
     },
     {
+      "name": "donate",
+      "type": "function",
+      "signature": "donate((address)",
+      "encoding": "0xf9e8e6e9",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
       "name": "isTokenAllowed",
       "type": "function",
       "signature": "isTokenAllowed(address)",
@@ -12956,7 +12972,7 @@
       "name": "",
       "type": "constructor",
       "signature": "(address[],uint256)",
-      "encoding": "0xfcd52c14",
+      "encoding": "",
       "input_names": "_owners,_required,",
       "output_names": ""
     },

@@ -20,13 +20,13 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
       "logs": [
         {
           "address": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
-          "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
           "logIndex": 36,
           "topics": [
             "0xc48d99ca63a72003d5e809e08e7b6638ac06349daeddd2c9466b9c276a7ce67b",
             "0x000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27",
             "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
           ],
+          "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
           "articulatedLog": {
             "name": "DataDumped",
             "inputs": [
@@ -49,6 +49,46 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
       ],
       "status": null
     },
+    "traces": [
+      {
+        "type": "call",
+        "error": "",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
+          "gas": 9700,
+          "input": "0x2a7781cc000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564",
+          "refundAddress": "0x0",
+          "to": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
+          "value": 0
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 2991,
+          "output": "0x"
+        },
+        "articulatedTrace": {
+          "name": "postData",
+          "inputs": [
+            {
+              "name": "recipient",
+              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27"
+            },
+            {
+              "name": "topic",
+              "value": "This is the string that represents the type of data being posted"
+            },
+            {
+              "name": "data",
+              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353"
+            }
+          ]
+        },
+        "compressedTrace": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )"
+      }
+    ],
     "articulatedTx": {
       "name": "postData",
       "inputs": [
@@ -67,50 +107,10 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
       ]
     },
     "compressedTx": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )",
-    "traces": [
-      {
-        "type": "call",
-        "error": "",
-        "articulatedTrace": {
-          "name": "postData",
-          "inputs": [
-            {
-              "name": "recipient",
-              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27"
-            },
-            {
-              "name": "topic",
-              "value": "This is the string that represents the type of data being posted"
-            },
-            {
-              "name": "data",
-              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353"
-            }
-          ]
-        },
-        "compressedTrace": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )",
-        "action": {
-          "selfDestructed": "0x0",
-          "balance": 0,
-          "callType": "call",
-          "from": "0x00a3819199113fc6a6e6ba1298afde7377e2009b",
-          "gas": 9700,
-          "input": "0x2a7781cc000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564",
-          "refundAddress": "0x0",
-          "to": "0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373",
-          "value": 0
-        },
-        "result": {
-          "newContract": "0x0",
-          "gasUsed": 2991,
-          "output": "0x"
-        }
-      }
-    ],
     "gasCost": 73459170000000,
     "gasUsed": 33543,
     "date": "2017-05-12 01:17:33 UTC",
     "ether": 0.000000000000000000
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

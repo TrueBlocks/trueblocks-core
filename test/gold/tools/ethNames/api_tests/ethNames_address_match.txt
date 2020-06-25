@@ -3,7 +3,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10017ca37b1257ac0771e24652aa28c758e378eb",
-      "name": "vkcrypto-sys",
+      "name": "Name 0x10017ca3",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -21,7 +21,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x100d88d9ca05b8159b2ecc6aeaad93c3742fa193",
-      "name": "zoe-archer",
+      "name": "Name 0x100d88d9",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -30,7 +30,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
-      "name": "chainlinkp",
+      "name": "Name 0x1013b52a",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -48,7 +48,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1015f376319b48c16078339534fb9d83f75bf15c",
-      "name": "blockchainld",
+      "name": "Name 0x1015f376",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -111,7 +111,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10d1e0c359411f1f7af55a17add2891eacfbcd16",
-      "name": "ethereumkev",
+      "name": "Name 0x10d1e0c3",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -120,7 +120,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10f5d45854e038071485ac9e402308cf80d2d2fe",
-      "name": "timbeiko",
+      "name": "Name 0x10f5d458",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -138,7 +138,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x110211c254e5c8098ffad524312b1dd4bc6aa616",
-      "name": "decentralistdan",
+      "name": "Name 0x110211c2",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -210,7 +210,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x11a11bcf63c332ab909608c7db245b553a194e9c",
-      "name": "twishmay",
+      "name": "Name 0x11a11bcf",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -219,7 +219,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x11b6a5fe2906f3354145613db0d99ceb51f604c9",
-      "name": "matteoleibowitz",
+      "name": "Name 0x11b6a5fe",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -228,7 +228,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
-      "name": "formula0x",
+      "name": "Name 0x11d0395f",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -264,7 +264,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1206ec7abf2c3d22051f6ebb249f065fc6436149",
-      "name": "nikoline",
+      "name": "Name 0x1206ec7a",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -273,7 +273,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1216bc366cfd938d24f89e2a079539f4d66062fb",
-      "name": "phoebepoon",
+      "name": "Name 0x1216bc36",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -291,7 +291,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x121851911b1d17b133c77801ab26fccd7e7c5053",
-      "name": "tammieseo",
+      "name": "Name 0x12185191",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -327,7 +327,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1236203510b93409ae6a0f26d0f97798c9398e1b",
-      "name": "anaandria",
+      "name": "Name 0x12362035",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -381,7 +381,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1256e7992564ab22e332532472c916bd8d1e1ca7",
-      "name": "vandigital",
+      "name": "Name 0x1256e799",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -435,7 +435,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
-      "name": "daaab",
+      "name": "Name 0x12a0e25e",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -480,7 +480,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x12d062b19a2df1920eb9fc28bd6e9a7e936de4c2",
-      "name": "vince0656",
+      "name": "Name 0x12d062b1",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -507,7 +507,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x12e41855befd2fafe1b3fb15381fdf2c89f726a2",
-      "name": "papa6669",
+      "name": "Name 0x12e41855",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -606,7 +606,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x13a634d9a418d6db35f7ede7a59f909cd17f1c4d",
-      "name": "nemethg",
+      "name": "Name 0x13a634d9",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -615,7 +615,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x13ae506eadf0a43488ad3463270b4cf804e97bfd",
-      "name": "saurabh",
+      "name": "Name 0x13ae506e",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -642,7 +642,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x13ebd3443fa5575f0eb173e323d8419f7452cfb1",
-      "name": "abcoathup",
+      "name": "Name 0x13ebd344",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -714,7 +714,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x144c4e5027b69f7798b2b162d924bcae5c149f15",
-      "name": "parrachia",
+      "name": "Name 0x144c4e50",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -732,7 +732,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1464d4e3c815de3028572b850c6c34dfc57e9320",
-      "name": "mariapaulafn",
+      "name": "Name 0x1464d4e3",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -768,7 +768,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x14869c6bf40bbc73e45821f7c28fd792151b3f9a",
-      "name": "igorline",
+      "name": "Name 0x14869c6b",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -777,7 +777,7 @@
     {
       "tags": "91-Friends",
       "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
-      "name": "Jin's Wallet",
+      "name": "Name 0x14920045",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": "0",
@@ -795,7 +795,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414",
-      "name": "birdeea",
+      "name": "Name 0x14d5c73c",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -894,7 +894,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1584225583e707e2b1d61270a6aa249d57db9f9a",
-      "name": "steven-audet",
+      "name": "Name 0x15842255",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -930,7 +930,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
-      "name": "evanswd",
+      "name": "Name 0x15ad5da7",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -948,7 +948,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x15c9fcba332848781fe82ef1f8d3768672a32a72",
-      "name": "cowboychicken",
+      "name": "Name 0x15c9fcba",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1018,9 +1018,18 @@
       "description": "https://newforkdelta.github.io/"
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x163cc449cdf9d1ba22e9b81f0f9c9f01c2ab76a1",
+      "name": "Grant 895 Help with studies",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/895/help-with-studies",
+      "decimals": "0",
+      "description": "https://www.udemy.com/"
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x164f867d49e5cffe24b7ba6e2acc4a81504bd4c9",
-      "name": "trendos",
+      "name": "Name 0x164f867d",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1038,7 +1047,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x165cc5f47cdb55bad3282b6543cbbf6542e06cdc",
-      "name": "bowensanders",
+      "name": "Name 0x165cc5f4",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1065,16 +1074,25 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x16990619b3ee302d82a0f6f8b9c6bd204b058be5",
-      "name": "followthechain",
+      "name": "Name 0x16990619",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x16a59020e5054da726a4d6d0d465758eb0b49e7c",
+      "name": "Grant 862 The Movement DAO",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/862/the-movement-dao",
+      "decimals": "0",
+      "description": "https://movementdao.io/"
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x16b942c119d3e34ff8f801cf68ec6aa26f1dc494",
-      "name": "matslats",
+      "name": "Name 0x16b942c1",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1110,7 +1128,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1715fe4beb202cfb8a76a91c6c0677dc3fbefcb4",
-      "name": "darrenzal",
+      "name": "Name 0x1715fe4b",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1245,7 +1263,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x18393570148df516f664ef624d6ed9e808f109fb",
-      "name": "safetyth1rd",
+      "name": "Name 0x18393570",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1263,7 +1281,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x185196c8c5dd5729f22315203e09e33c3f7d7680",
-      "name": "androolloyd",
+      "name": "Name 0x185196c8",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1326,7 +1344,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f",
-      "name": "mjcronin",
+      "name": "Name 0x18d7e5bb",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1335,7 +1353,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x190473b3071946df65306989972706a4c006a561",
-      "name": "chainlinkgod",
+      "name": "Name 0x190473b3",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1353,7 +1371,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x190a2409fc6434483d4c2cab804e75e3bc5ebfa6",
-      "name": "0xyobo",
+      "name": "Name 0x190a2409",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1362,7 +1380,7 @@
     {
       "tags": "91-Friends",
       "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-      "name": "POAP Token Sender",
+      "name": "Name 0x19116738",
       "symbol": "",
       "source": "Etherscan",
       "decimals": "0",
@@ -1371,7 +1389,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1955c2b76b1cf245795950e75eb176080879da50",
-      "name": "yippee-ki-yay",
+      "name": "Name 0x1955c2b7",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1394,6 +1412,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x197553ddfdb7b9c3c4216e2914456788bfd59c86",
+      "name": "Grant 844 Solidity Visualizer Extension",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/844/solidity-visualizer-extension",
+      "decimals": "0",
+      "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
     },
     {
       "tags": "50-Tokens",
@@ -1470,7 +1497,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1a207beefc754735871ceeb4c506686f044b1c41",
-      "name": "4-1-3-x",
+      "name": "Name 0x1a207bee",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1506,7 +1533,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1a6e64a15cb07639eb27471e422a947085c2f4fc",
-      "name": "jordancason",
+      "name": "Name 0x1a6e64a1",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1551,7 +1578,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1ab1cc4a40c1a609c18342c5ae0b91c2e0720e98",
-      "name": "nagydaaniel",
+      "name": "Name 0x1ab1cc4a",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1578,7 +1605,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1b5b127f535103f079fef9fd51b6a63da7efda67",
-      "name": "antoineboul",
+      "name": "Name 0x1b5b127f",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1614,7 +1641,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1b6eed8f16a4f3e84c91e058be7c10c4585014b8",
-      "name": "veryotaku",
+      "name": "Name 0x1b6eed8f",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1632,7 +1659,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1b713927312669f4891215a7b252e5674cf50796",
-      "name": "thomas-waite",
+      "name": "Name 0x1b713927",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1668,7 +1695,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1bb48a26b8f39eb58ca90375ce78b3d50fc9a3fd",
-      "name": "fulviamorales",
+      "name": "Name 0x1bb48a26",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1677,7 +1704,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1bc4230d996286ffd1dd4dc649aad47fa08cadc4",
-      "name": "evgenyboxer",
+      "name": "Name 0x1bc4230d",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1695,7 +1722,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20",
-      "name": "ro5s",
+      "name": "Name 0x1c0aa8cc",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1713,7 +1740,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1c277bd41a276f87d3e92bccd50c7364aa2ffc69",
-      "name": "fubuloubu",
+      "name": "Name 0x1c277bd4",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1749,7 +1776,7 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1c6640089c6af02e11f04f0ee44b2cc6ef924057",
-      "name": "ecruz01",
+      "name": "Name 0x1c664008",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
@@ -1776,38 +1803,11 @@
     {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1c8fe2ef3f3aa3448db5367d6bf4f1e0fcd36ae5",
-      "name": "richardjameslopez",
+      "name": "Name 0x1c8fe2ef",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
       "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
-      "name": "ThoreCoin",
-      "symbol": "THR",
-      "source": "On Chain",
-      "decimals": 4,
-      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x1cc1c78bcfa5e872cceba516ef821e30a280a9bb",
-      "name": "Grant 286 One Million Developers Community Fund",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/286/one-million-developers-community-fund",
-      "decimals": "0",
-      "description": "https://github.com/OneMillionDevs"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672",
-      "name": "Faceter Token",
-      "symbol": "FACE",
-      "source": "On Chain",
-      "decimals": 18,
-      "description": "A computer vision surveillance technology powered by fog network of miners."
     }
   ],
   "types": [

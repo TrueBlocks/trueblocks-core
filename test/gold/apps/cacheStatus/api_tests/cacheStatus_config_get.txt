@@ -77,14 +77,6 @@
               "read_only": false
             },
             {
-              "name": "balancerecord",
-              "value": "--balance record--",
-              "type": "display string",
-              "tip": "",
-              "required": false,
-              "read_only": false
-            },
-            {
               "name": "block",
               "value": "--block--",
               "type": "display string",

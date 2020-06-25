@@ -150,7 +150,7 @@ bool COptions::handle_scrape(void) {
                     CMonitorArray monitors;
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
-                    freshen_internal(FM_PRODUCTION, monitors, "--silent", freshen_flags);
+                    freshen_internal(FM_PRODUCTION, monitors, "", freshen_flags);
                     for (auto monitor : monitors) {
                         if (monitor.cntBefore != monitor.cntAfter) {
                             ostringstream os1;

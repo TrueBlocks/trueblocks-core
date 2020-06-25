@@ -59,11 +59,6 @@ cacheStatus --set_config
             "value": "--account name--",
             "type": "display_str"
           },
-          {
-            "name": "balancerecord",
-            "value": "--balance record--",
-            "type": "display_str"
-          },
           { "name": "block", "value": "--block--", "type": "display_str" },
           {
             "name": "ethstate",
@@ -199,7 +194,6 @@ current = "0.7.0-alpha"
   toml.setConfigStr("settings", "cachePath", "--new cache Path--/");
   toml.setConfigStr("settings", "indexPath", "--new index Path--/");
   toml.setConfigStr("display_strs", "accountName", "--account name--");
-  toml.setConfigStr("display_strs", "balancerecord", "--balance record--");
   toml.setConfigStr("display_strs", "block", "--block--");
   toml.setConfigStr("display_strs", "ethstate", "--eth state--");
   toml.setConfigStr("display_strs", "function", "--function--");

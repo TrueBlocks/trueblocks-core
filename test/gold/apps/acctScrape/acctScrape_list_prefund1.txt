@@ -1,27 +1,2 @@
 acctScrape argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:0] [4:--end] [5:0] 
 acctScrape 0x001d14804b399c6ef80e64576f657660804fec0b --start 0 --end 0 
-TIME ~ CLOCK - <INFO>  : Scraping 1 addresses.
-TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments): 
-
-  'start' option must be strictly less than 'end' option. Quitting...
-
-  Usage:    acctScrape [-v|-h] <address> [address...]  
-  Purpose:  Index transactions for a given Ethereum address (or collection of addresses).
-
-  Where:  
-	addrs                 one or more Ethereum addresses (required)
-
-#### Hidden options (shown during testing only)
-	-f  (--finalized)     toggle search of finalized folder ('on' by default)
-	-s  (--staging)       toggle search of staging (not yet finalized) folder ('off' by default)
-	-u  (--unripe)        toggle search of unripe (neither staged nor finalized) folder ('off' by default)
-	-S  (--start <num>)   first block to process (inclusive)
-	-E  (--end <num>)     last block to process (inclusive)
-	-i  (--silent)        lighten the reporting on progress (for use with --daemon switch to `chifra scrape`)
-#### Hidden options (shown during testing only)
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks

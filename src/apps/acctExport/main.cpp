@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern string_q plural(const string_q& in);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
@@ -24,57 +23,56 @@ int main(int argc, const char* argv[]) {
                  ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
                  : options.appearances
                        ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                       : (options.balances
-                              ? GETRUNTIME_CLASS(CEthState)->m_ClassName
-                              : (options.traces
-                                     ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                                     : (options.receipts
-                                            ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                                            : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                            : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+                       : (options.traces
+                              ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                              : (options.receipts ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                                                  : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                                  : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        if (options.balances) {
-            options.loadAllAppearances();  // allow the balance query to continue even with no appearances
-            options.exportBalances();
+        if (options.loadAllAppearances()) {
+            if (options.count) {
+                options.exportCounts();
 
-        } else if (options.count) {
-            options.exportCounts();
+            } else if (options.appearances) {
+                options.exportAppearances();
 
-        } else {
-            if (options.loadAllAppearances()) {
-                if (false) {  // options.accounting) {
-                    options.exportAccounting();
-                } else {
-                    options.exportData();
-                }
+            } else if (options.accounting) {
+                options.exportAccounting();
+
+            } else {
+                options.exportData();
             }
         }
 
-        if (options.isRedirected()) {
-            once = true;
-            cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
-
-        } else {
-            once = false;
-        }
+        once = false;
     }
 
-    if (!options.isRedirected())
-        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+    ostringstream os;
+    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
+    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
+    if (!options.count && options.monitors.size() == 1) {
+        options.getNamedAccount(options.monitors[0], options.monitors[0].address);
+        HIDE_FIELD(CMonitor, "summaryStatement");
+        if (options.monitors[0].abi_spec.interfaces.size() == 0) {
+            HIDE_FIELD(CMonitor, "abi_spec");
+        }
+        os << ", \"accountedFor\": " << options.monitors[0] << endl;
+    }
+    expContext().fmtMap["meta"] += os.str();
 
-    if (!options.freshen && !options.count)
-        LOG_INFO("exported ", options.nExported, " ",
-                 (!options.className.empty() ? (plural(options.className) + " from ") : "of "), options.nTransactions,
-                 " transactions", string_q(55, ' '));
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+
+    if (!isTestMode() && !options.freshen && !options.count) {
+        ostringstream oss;
+        oss << "exported " << padNum6T(options.nExported) << " ";
+        oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
+        oss << padNum6T(options.nTransactions) << " transactions for address " << options.monitors[0].address;
+        LOG_INFO(oss.str());
+    }
 
     acctlib_cleanup();
     return 0;
-}
-
-//--------------------------------------------------------------------------------
-string_q plural(const string_q& in) {
-    return substitute(substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs"), "ethstates", "balances");
 }

@@ -20,12 +20,12 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
       "logs": [
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 4,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
             "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c"
           ],
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
             "inputs": [
@@ -43,12 +43,12 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 5,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
             "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc"
           ],
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
             "inputs": [
@@ -66,12 +66,12 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "logIndex": 6,
           "topics": [
             "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
             "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573"
           ],
+          "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
             "inputs": [
@@ -89,13 +89,13 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
         },
         {
           "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-          "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
           "logIndex": 7,
           "topics": [
             "0xb556ff269c1b6714f432c36431e2041d28436a73b6c3f19c021827bbdc6bfc29",
             "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
             "0x000000000000000000000000d1220a0cf47c7b9be7a2e6ba89f429762e7b9adb"
           ],
+          "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
           "articulatedLog": {
             "name": "NewBid",
             "inputs": [
@@ -118,38 +118,10 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
       ],
       "status": null
     },
-    "articulatedTx": {
-      "name": "startAuctionsAndBid",
-      "inputs": [
-        {
-          "name": "hashes",
-          "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
-        },
-        {
-          "name": "sealedBid",
-          "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
-        }
-      ]
-    },
-    "compressedTx": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )",
     "traces": [
       {
         "type": "call",
         "error": "",
-        "articulatedTrace": {
-          "name": "startAuctionsAndBid",
-          "inputs": [
-            {
-              "name": "hashes",
-              "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
-            },
-            {
-              "name": "sealedBid",
-              "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
-            }
-          ]
-        },
-        "compressedTrace": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -165,27 +137,25 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "newContract": "0x0",
           "gasUsed": 503153,
           "output": "0x"
-        }
+        },
+        "articulatedTrace": {
+          "name": "startAuctionsAndBid",
+          "inputs": [
+            {
+              "name": "hashes",
+              "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
+            },
+            {
+              "name": "sealedBid",
+              "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+            }
+          ]
+        },
+        "compressedTrace": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )"
       },
       {
         "type": "call",
         "error": "",
-        "articulatedTrace": {
-          "name": "owner",
-          "inputs": [
-            {
-              "name": "node",
-              "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "val_0",
-              "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
-            }
-          ]
-        },
-        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -201,11 +171,7 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "newContract": "0x0",
           "gasUsed": 432,
           "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
-        }
-      },
-      {
-        "type": "call",
-        "error": "",
+        },
         "articulatedTrace": {
           "name": "owner",
           "inputs": [
@@ -221,7 +187,11 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
             }
           ]
         },
-        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )",
+        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+      },
+      {
+        "type": "call",
+        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -237,13 +207,43 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "newContract": "0x0",
           "gasUsed": 432,
           "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
-        }
+        },
+        "articulatedTrace": {
+          "name": "owner",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "val_0",
+              "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
+          ]
+        },
+        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
       }
     ],
+    "articulatedTx": {
+      "name": "startAuctionsAndBid",
+      "inputs": [
+        {
+          "name": "hashes",
+          "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]"
+        },
+        {
+          "name": "sealedBid",
+          "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+        }
+      ]
+    },
+    "compressedTx": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )",
     "gasCost": 10849501969331551,
     "gasUsed": 533321,
     "date": "2017-05-04 11:27:22 UTC",
     "ether": 0.010000000000000000
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "traces", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ] }

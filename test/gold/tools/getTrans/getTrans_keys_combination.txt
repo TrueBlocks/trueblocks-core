@@ -21,19 +21,39 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
       "logs": [
         {
           "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
-          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
           "logIndex": 59,
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-          ]
+          ],
+          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+          "articulatedLog": {
+            "name": "",
+            "type": "",
+            "constant": 0,
+            "payable": 0,
+            "signature": "",
+            "encoding": "",
+            "inputs": [],
+            "outputs": []
+          }
         },
         {
           "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
-          "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
           "logIndex": 60,
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-          ]
+          ],
+          "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+          "articulatedLog": {
+            "name": "",
+            "type": "",
+            "constant": 0,
+            "payable": 0,
+            "signature": "",
+            "encoding": "",
+            "inputs": [],
+            "outputs": []
+          }
         }
       ],
       "status": null
@@ -59,13 +79,23 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
       "logs": [
         {
           "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
-          "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
           "logIndex": 4,
           "topics": [
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
             "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
             "0x00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4"
-          ]
+          ],
+          "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
+          "articulatedLog": {
+            "name": "",
+            "type": "",
+            "constant": 0,
+            "payable": 0,
+            "signature": "",
+            "encoding": "",
+            "inputs": [],
+            "outputs": []
+          }
         }
       ],
       "status": null
@@ -91,11 +121,21 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
       "logs": [
         {
           "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
-          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
           "logIndex": 3,
           "topics": [
             "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
-          ]
+          ],
+          "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
+          "articulatedLog": {
+            "name": "",
+            "type": "",
+            "constant": 0,
+            "payable": 0,
+            "signature": "",
+            "encoding": "",
+            "inputs": [],
+            "outputs": []
+          }
         }
       ],
       "status": null

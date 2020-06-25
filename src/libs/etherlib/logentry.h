@@ -27,14 +27,14 @@ class CReceipt;
 class CLogEntry : public CBaseNode {
   public:
     address_t address;
-    string_q data;
     blknum_t logIndex;
-    bool removed;
     CTopicArray topics;
+    string_q data;
     CFunction articulatedLog;
     string_q compressedLog;
     blknum_t transactionLogIndex;
     string_q type;
+    bool removed;
 
   public:
     CLogEntry(void);
@@ -102,14 +102,14 @@ inline void CLogEntry::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
-    data = "";
     logIndex = 0;
-    removed = false;
     topics.clear();
+    data = "";
     articulatedLog = CFunction();
     compressedLog = "";
     transactionLogIndex = 0;
     type = "";
+    removed = false;
 
     // EXISTING_CODE
     pReceipt = NULL;
@@ -122,14 +122,14 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     CBaseNode::duplicate(lo);
 
     address = lo.address;
-    data = lo.data;
     logIndex = lo.logIndex;
-    removed = lo.removed;
     topics = lo.topics;
+    data = lo.data;
     articulatedLog = lo.articulatedLog;
     compressedLog = lo.compressedLog;
     transactionLogIndex = lo.transactionLogIndex;
     type = lo.type;
+    removed = lo.removed;
 
     // EXISTING_CODE
     // no deep copy because it's const
