@@ -241,7 +241,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFromAndTo": {}
 , "unNamedFromAndTo": {}, "namedFrom": {}
 , "unNamedFrom": {"0xBlockReward": 3,"0xUncleReward": 2}, "namedTo": {}
-, "unNamedTo": {"0x05a56e2d52c817161883f50c441c3228cfe54d9f": 5}, "start": "0xdeadbeef"
+, "unNamedTo": {}, "start": "0xdeadbeef"
 , "end": "0xdeadbeef"
 , "accountedFor": {
   "stateHistory": [],

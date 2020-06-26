@@ -74,7 +74,7 @@
         },
         "traces": [],
         "articulatedTx": {},
-        "compressedTx": "message:EN4V1GTB8",
+        "compressedTx": "0x454e3456 ( stub: 3147544238 )",
         "statements": [
           {
             "blockNum": 202249,
@@ -271,13 +271,7 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFromAndTo": {
-      "0x001d14804b399c6ef80e64576f657660804fec0b": {
-        "tags": "80-Prefund",
-        "name": "Prefund_0002",
-        "count": 2
-      }
-    },
+    "namedFromAndTo": {},
     "unNamedFromAndTo": {},
     "namedFrom": {},
     "unNamedFrom": {

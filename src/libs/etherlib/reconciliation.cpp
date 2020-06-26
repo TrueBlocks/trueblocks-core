@@ -457,6 +457,9 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcile(const CStringArray& corrections, const CReconciliation& lastStatement,
                                 const address_t& accountingFor, blknum_t nextBlock, const CTransaction* trans) {
+    // LOG4(lastStatement.Format());
+    // LOG4(Format());
+
     asset = "ETH";
 
     // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
@@ -607,7 +610,13 @@ extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool use
 bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, const address_t& accountingFor,
                                            blknum_t nextBlock, const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
-    loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
+
+    // If this transaction was read from cache, it will have the traces already. Moreover, they will be
+    // articulated, so we only want to load traces if we don't already have them
+    if (trans->traces.size() == 0) {
+        loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
+    }
+
     for (auto trace : trans->traces) {
         bool isSelfDestruct = trace.action.selfDestructed != "";
         if (isSelfDestruct) {

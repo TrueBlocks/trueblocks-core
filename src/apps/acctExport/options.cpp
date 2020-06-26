@@ -313,6 +313,7 @@ bool COptions::parseArguments(string_q& command) {
             if (appearances || logs || traces)
                 EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
             accountedFor = addrs[0];
+            bytesOnly = substitute(accountedFor, "0x", "");
             articulate = true;
             manageFields("CTransaction:statements", true);
             manageFields("CTransaction:reconciliations", false);
@@ -321,10 +322,11 @@ bool COptions::parseArguments(string_q& command) {
             if (!nodeHasBals) {
                 string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
                 if (rpcProvider == balanceProvider || balanceProvider.empty())
-                    EXIT_FAIL("The RPC server does not have historical state. Quitting...");
+                    EXIT_FAIL(
+                        "--accounting requires historical balances. The RPC server does not have them. Quitting...");
                 setRpcProvider(balanceProvider);
                 if (!nodeHasBalances(false))
-                    EXIT_USAGE("balanceServer set but it does not have historical state. Quitting...");
+                    EXIT_USAGE("balanceServer is set, but it does not have historical state. Quitting...");
             }
         }
     }
@@ -369,6 +371,9 @@ void COptions::Init(void) {
     monitors.clear();
     counts.clear();
     items.clear();
+
+    accountedFor = "";
+    bytesOnly = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -548,179 +553,4 @@ string_q report_cache(int opt) {
         os << "CACHE_BYDEFAULT ";
     }
     return os.str();
-}
-
-//-----------------------------------------------------------------------
-bool COptions::reportOnNeighbors(void) {
-    bool testMode = isTestMode();
-
-    addr_name_map_t fromAndToMap;
-    for (auto addr : fromAddrMap)
-        fromAndToMap[addr.first] = 1L;
-    for (auto addr : toAddrMap)
-        if (fromAndToMap[addr.first] == 1L)
-            fromAndToMap[addr.first] = 2L;
-
-    CNameStatsArray fromAndToUnnamed;
-    CNameStatsArray fromAndToNamed;
-    for (auto addr : fromAndToMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(fromAndToNamed.begin(), fromAndToNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedFromAndTo\": {";
-        for (auto stats : fromAndToNamed) {
-            if (testMode && contains(stats.tags, "Friends"))
-                stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedFromAndTo\": {";
-        bool frst = true;
-        for (auto stats : fromAndToUnnamed) {
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    CNameStatsArray fromUnnamed;
-    CNameStatsArray fromNamed;
-    for (auto addr : fromAddrMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(fromNamed.begin(), fromNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedFrom\": {";
-        for (auto stats : fromNamed) {
-            if (testMode && contains(stats.tags, "Friends"))
-                stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(fromUnnamed.begin(), fromUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedFrom\": {";
-        bool frst = true;
-        for (auto stats : fromUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    CNameStatsArray toUnnamed;
-    CNameStatsArray toNamed;
-    for (auto addr : toAddrMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (isZeroAddr(acct.address)) {
-            acct.tags = "Contract Creation";
-            acct.name = "Contract Creation";
-        }
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(toNamed.begin(), toNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedTo\": {";
-        for (auto stats : toNamed) {
-            if (testMode && contains(stats.tags, "Friends"))
-                stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(toUnnamed.begin(), toUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedTo\": {";
-        bool frst = true;
-        for (auto stats : toUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    return true;
 }

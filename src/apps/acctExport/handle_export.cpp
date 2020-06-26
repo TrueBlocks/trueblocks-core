@@ -7,6 +7,10 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportData(void) {
+    if (!traces && !receipts)
+        return exportAccounting();
+
+#if 1
     ENTER("exportData");
 
     ASSERT(nodeHasBalances(false));
@@ -285,6 +289,7 @@ bool COptions::exportData(void) {
         if (items.size() > 0)
             monitor.writeLastExport(items[items.size() - 1].blk);
 
-    reportOnNeighbors();
+    reportNeighbors();
     EXIT_NOMSG(true);
+#endif
 }

@@ -23,34 +23,8 @@
 #define CACHE_BYUSER (1 << 5)
 #define CACHE_BYDEFAULT (1 << 6)
 
-//-----------------------------------------------------------------------
-class CNameStats {
-  public:
-    address_t address;
-    string_q tags;
-    string_q name;
-    uint64_t count;
-    CNameStats(const address_t& a, const string_q& t, const string_q& n, uint64_t c = 0) {
-        address = a;
-        tags = t;
-        name = n;
-        count = c;
-    }
-
-  private:
-    CNameStats() {
-    }
-};
-typedef vector<CNameStats> CNameStatsArray;
-//-------------------------------------------------------------------------
-inline bool operator<(const CNameStats& v1, const CNameStats& v2) {
-    if (v1.count != v2.count)
-        return v1.count > v2.count;  // We want to sort reverse by count
-    return v1.address < v2.address;
-}
-
-using uint_addr_map_t = map<uint32_t, address_t>;
-using addr_name_map_t = map<address_t, uint64_t>;
+using blk_addr_map_t = map<uint32_t, address_t>;
+using addr_count_map_t = map<address_t, uint64_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -82,22 +56,23 @@ class COptions : public COptionsBase {
     uint64_t nExported;
     string_q className;
     address_t hackAppAddr;
-    uint_addr_map_t prefundAddrMap;
-    uint_addr_map_t blkRewardMap;
+    blk_addr_map_t prefundAddrMap;
+    blk_addr_map_t blkRewardMap;
 
-    addr_name_map_t toAddrMap;
-    addr_name_map_t fromAddrMap;
-    addr_name_map_t emitterAddrMap;
-    addr_name_map_t toTraceAddrMap;
-    addr_name_map_t fromTraceAddrMap;
+    addr_count_map_t toAddrMap;
+    addr_count_map_t fromAddrMap;
+    addr_count_map_t emitterAddrMap;
+    addr_count_map_t toTraceAddrMap;
+    addr_count_map_t fromTraceAddrMap;
+    addr_count_map_t abiMap;
 
-    addr_name_map_t abiMap;
     uint32_t* ts_array;
     size_t ts_cnt;
     blknum_t latestBlock;
     time_q oldestMonitor;
 
     address_t accountedFor;
+    string_q bytesOnly;
 
     uint64_t nProcessing;
     uint64_t nTransactions;
@@ -118,7 +93,8 @@ class COptions : public COptionsBase {
     bool exportAccounting(void);
     bool exportCounts(void);
 
-    bool reportOnNeighbors(void);
+    void addNeighbor(addr_count_map_t& map, const address_t& addr);
+    bool reportNeighbors(void);
 };
 
 //--------------------------------------------------------------------------------
