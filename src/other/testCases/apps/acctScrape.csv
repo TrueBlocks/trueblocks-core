@@ -1,40 +1,23 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  fast, list, apps/acctScrape, CLEANUP,         n, CLEANUP
+on, cmd,  fast, list, apps/acctScrape, CLEANUP,          n, CLEANUP
 
-on, cmd,  fast, null, apps/acctScrape, README,          n, @th
-on, cmd,  fast, null, apps/acctScrape, help,            n, @h
-on, cmd,  fast, null, apps/acctScrape, help_long,       n, help
+on, cmd,  fast, null, apps/acctScrape, README,           n, @th
+on, cmd,  fast, null, apps/acctScrape, help,             n, @h
+on, cmd,  fast, null, apps/acctScrape, help_long,        n, help
 
-on, both, fast, list, apps/acctScrape, no_params,       n,
-on, both, fast, list, apps/acctScrape, fail_list1,      n, list
-on, both, fast, list, apps/acctScrape, fail_list2,      n, addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2200000 & fmt = csv
-on, both, fast, list, apps/acctScrape, list_test,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
-on, both, fast, list, apps/acctScrape, list_chifra,     y, modes = list & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000, chifra
+on, both, fast, list, apps/acctScrape, no_params,        n,
+on, both, fast, list, apps/acctScrape, fail_list1,       n, list
+on, both, fast, list, apps/acctScrape, fail_list2,       n, addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2200000 & fmt = csv
+on, both, fast, list, apps/acctScrape, list_test,        y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+on, both, fast, list, apps/acctScrape, list_chifra,      y, modes = list & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000, chifra
 
-on, both, fast, list, apps/acctScrape, list_final,      n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header
-on, both, fast, list, apps/acctScrape, list_stage,      y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
-on, both, fast, list, apps/acctScrape, list_unripe,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+on, both, fast, list, apps/acctScrape, list_final,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header
+on, both, fast, list, apps/acctScrape, list_stage,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging
+on, both, fast, list, apps/acctScrape, list_unripe,      y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging & unripe
+on, both, fast, list, apps/acctScrape, list_unripe_fail, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & unripe
 
-on, both, fast, list, apps/acctScrape, list_prefund1,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
-on, both, fast, list, apps/acctScrape, list_prefund2,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
-on, both, fast, list, apps/acctScrape, list_prefund3,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
+on, both, fast, list, apps/acctScrape, list_prefund1,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
+on, both, fast, list, apps/acctScrape, list_prefund2,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
+on, both, fast, list, apps/acctScrape, list_prefund3,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
 
-on, cmd,  slow, list, apps/acctScrape, list_speed_test, y, addrs = 0x1234567890123456789012345678901234567890 & end = 7000000
-
-# 10020, apps, list, acctScrape, addrs,     ,  ,      TRUE,  FALSE, TRUE,  TRUE,  ,      positional, list<addr>, one or more Ethereum addresses
-# 10040, apps, list, acctScrape, finalized, f, true,  FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of finalized folder ([{DEF}] by default)
-# 10060, apps, list, acctScrape, staging,   s, false, FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of staging (not yet finalized) folder ([{DEF}] by default)
-# 10080, apps, list, acctScrape, unripe,    u, false, FALSE, FALSE, FALSE, FALSE, local, toggle,     <boolean>,  toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
-# 10100, apps, list, acctScrape, daemon,    d, ,      FALSE, FALSE, FALSE, FALSE, y es,   switch,     <boolean>,  we are being called in daemon mode which causes us to print results differently
-# 10120, apps, list, acctScrape, start,     S, ,      FALSE, FALSE, FALSE, FALSE, local, flag,       <blknum>,   first block to process (inclusive)
-# 10140, apps, list, acctScrape, end,       E, ,      FALSE, FALSE, FALSE, FALSE, local, flag,       <blknum>,   last block to process (inclusive)
-# 10160, apps, list, acctScrape, ,          ,  ,      FALSE, FALSE, TRUE,  TRUE,  na,    description,,           Index transactions for a given Ethereum address (or collection of addresses).
-
-# COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
-# COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
-# COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),
-# COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),
-# COption("daemon", "d", "", OPT_HIDDEN | OPT_SWITCH, "we are being called in daemon mode which causes us to print results differently"),
-# COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-# COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-# COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or collection of addresses)."),
+on, cmd,  slow, list, apps/acctScrape, list_speed_test,  y, addrs = 0x1234567890123456789012345678901234567890 & end = 7000000

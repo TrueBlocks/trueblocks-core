@@ -1,9 +1,8 @@
 num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible,generate,option_kind,data_type,description
 
 10020,apps,list,acctScrape,addrs,,,true,false,true,true,local,positional,list<addr>,one or more Ethereum addresses
-10040,apps,list,acctScrape,finalized,f,true,false,false,false,false,local,toggle,<boolean>,toggle search of finalized folder ([{DEF}] by default)
-10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,toggle,<boolean>,toggle search of staging (not yet finalized) folder ([{DEF}] by default)
-10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,toggle,<boolean>,toggle search of unripe (neither staged nor finalized) folder ([{DEF}] by default)
+10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
+10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder (requires --staging)
 10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or collection of addresses).
@@ -19,7 +18,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10310,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
-10340,apps,export,acctExport,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
+10340,apps,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10350,apps,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
 10360,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
 10380,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
@@ -31,6 +30,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10450,apps,export,acctExport,end,E,,false,false,false,false,local,skipN,<blknum>,last block to process (inclusive)
 10453,apps,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
 10457,apps,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
+10060,apps,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
+10080,apps,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
 10460,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10470,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 10480,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.

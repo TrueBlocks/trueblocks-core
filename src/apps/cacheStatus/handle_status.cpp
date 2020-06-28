@@ -28,8 +28,10 @@ bool COptions::handle_status(ostream& os) {
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
             LOG8("Loaded timestamps");
-            if (details)
+            if (details) {
+                counter.fileRange.second = index.nFiles;
                 forEveryFileInFolder(indexFolder_finalized, noteIndex, &counter);
+            }
             LOG8("Visited folders");
             index.writeBinaryCache("index", details);
             LOG8("Wrote cache");
@@ -379,16 +381,15 @@ bool noteIndex(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
-        if (!isTestMode()) {
-            cerr << path << "\r";
-            cerr.flush();
-        }
-
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
 
         timestamp_t unused;
         blknum_t last = NOPOS;
         blknum_t first = bnFromPath(path, last, unused);
+        if (!isTestMode()) {
+            LOG_PROGRESS1("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
+        }
+
         if (last < counter->scanRange.first)
             return true;
         if (first > counter->scanRange.second)

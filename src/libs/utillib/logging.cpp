@@ -20,8 +20,8 @@ logger<log_policy_i>* dLogger = (logger<log_policy_i>*)&elog;
 logger<log_policy_i>* eLogger = (logger<log_policy_i>*)&elog;
 
 static CDefaultOptions g_LocalUseOnly;
-bool silenceEnter = true;
-bool silenceExit = true;
+bool silenceEnter = true;  // getEnvStr("SILENCE") != "false";
+bool silenceExit = silenceEnter;
 //----------------------------------------------------------------
 string_q _logEnter(const string_q& func) {
     return "Enter(" + g_LocalUseOnly.getProgName() + "," + func + "): ";

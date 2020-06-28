@@ -224,7 +224,7 @@ bool COptions::parseArguments(string_q& command) {
             if (origMode == "export") {
                 // simulate listing
                 for (size_t i = 0; i < 100; i++) {
-                    LOG_INFO(i, " of 100\r");
+                    LOG_PROGRESS1("Extracting", i, 100, "\r");
                     usleep(30000);
                 }
                 CStringArray lines;
@@ -235,7 +235,7 @@ bool COptions::parseArguments(string_q& command) {
                 for (auto line : lines) {
                     cout << line << endl;
                     if (!(++cnt % recordSize)) {
-                        LOG_INFO(record++, " of 100\r");
+                        LOG_PROGRESS1("Displaying", record++, 100, "\r");
                         usleep(10000);
                     }
                 }

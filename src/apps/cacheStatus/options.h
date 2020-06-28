@@ -75,6 +75,7 @@ class CItemCounter : public CCache {
     uint32_t* ts_array;
     size_t ts_cnt;
     blkrange_t scanRange;
+    blkrange_t fileRange;
     CItemCounter(COptions* opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;

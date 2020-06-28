@@ -14,7 +14,7 @@ extern const char* STR_MSG_READERROR;
 //-------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
-
+    namesNotRequired();
     acctlib_init(defaultQuitHandler);
 
     COptions options;

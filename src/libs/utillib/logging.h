@@ -243,6 +243,8 @@ extern logger<log_policy_i>* eLogger;
 #define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
+#define LOG_PROGRESS1(op, progress, goal, post) LOG_INFO((op), " ", (progress), " of ", (goal), (post))
+#define LOG_PROGRESS(op, progress, goal) LOG_PROGRESS1((op), (progress), (goal), "\n")
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -259,6 +261,8 @@ extern logger<log_policy_i>* eLogger;
 #define SEP3(...)
 #define SEP4(...)
 #define SEP5(...)
+#define LOG_PROGRESS(...)
+#define LOG_PROGRESS1(...)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
@@ -302,6 +306,13 @@ extern bool silenceExit;
         if (!silenceExit)                                                                                              \
             LOG4(_logExit(l_funcName));                                                                                \
         return (b);                                                                                                    \
+    }
+
+#define EXIT_VOID()                                                                                                    \
+    {                                                                                                                  \
+        if (!silenceExit)                                                                                              \
+            LOG4(_logExit(l_funcName));                                                                                \
+        return;                                                                                                        \
     }
 
 #define ENTER8(a)                                                                                                      \
