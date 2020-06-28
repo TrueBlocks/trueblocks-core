@@ -45,66 +45,7 @@ inline bool operator<(const CNameStats& v1, const CNameStats& v2) {
 
 //-----------------------------------------------------------------------
 bool COptions::reportNeighbors(void) {
-    bool testMode = isTestMode() || getEnvStr("NO_NAMES") == "true";
-
-    addr_count_map_t fromAndToMap;
-    for (auto addr : fromAddrMap)
-        fromAndToMap[addr.first] = 1L;
-    for (auto addr : toAddrMap)
-        if (fromAndToMap[addr.first] == 1L)
-            fromAndToMap[addr.first] = 2L;
-
-    CNameStatsArray fromAndToUnnamed;
-    CNameStatsArray fromAndToNamed;
-    for (auto addr : fromAndToMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromAndToNamed.push_back(stats);
-        }
-    }
-
-    {
-        sort(fromAndToNamed.begin(), fromAndToNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedFromAndTo\": {";
-        for (auto stats : fromAndToNamed) {
-            if (testMode && contains(stats.tags, "Friends"))
-                stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(fromAndToUnnamed.begin(), fromAndToUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedFromAndTo\": {";
-        bool frst = true;
-        for (auto stats : fromAndToUnnamed) {
-            if (fromAndToMap[stats.address] == 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
-        }
-        os << "}";
-        expContext().fmtMap["meta"] += os.str();
-    }
+    bool testMode = isTestMode() || getEnvStr("HIDE_NAMES") == "true";
 
     CNameStatsArray fromUnnamed;
     CNameStatsArray fromNamed;
@@ -129,13 +70,11 @@ bool COptions::reportNeighbors(void) {
         for (auto stats : fromNamed) {
             if (testMode && contains(stats.tags, "Friends"))
                 stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
+            if (!frst)
+                os << ",";
+            os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+               << "\", \"count\": " << stats.count << " }";
+            frst = false;
         }
         os << "}\n";
         expContext().fmtMap["meta"] += os.str();
@@ -147,12 +86,10 @@ bool COptions::reportNeighbors(void) {
         os << ", \"unNamedFrom\": {";
         bool frst = true;
         for (auto stats : fromUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
+            if (!frst)
+                os << ",";
+            os << "\"" << stats.address << "\": " << stats.count;
+            frst = false;
         }
         os << "}";
         expContext().fmtMap["meta"] += os.str();
@@ -185,13 +122,11 @@ bool COptions::reportNeighbors(void) {
         for (auto stats : toNamed) {
             if (testMode && contains(stats.tags, "Friends"))
                 stats.name = "Name " + stats.address.substr(0, 10);
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-                   << "\", \"count\": " << stats.count << " }";
-                frst = false;
-            }
+            if (!frst)
+                os << ",";
+            os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
+               << "\", \"count\": " << stats.count << " }";
+            frst = false;
         }
         os << "}\n";
         expContext().fmtMap["meta"] += os.str();
@@ -203,12 +138,10 @@ bool COptions::reportNeighbors(void) {
         os << ", \"unNamedTo\": {";
         bool frst = true;
         for (auto stats : toUnnamed) {
-            if (fromAndToMap[stats.address] != 2) {
-                if (!frst)
-                    os << ",";
-                os << "\"" << stats.address << "\": " << stats.count;
-                frst = false;
-            }
+            if (!frst)
+                os << ",";
+            os << "\"" << stats.address << "\": " << stats.count;
+            frst = false;
         }
         os << "}";
 

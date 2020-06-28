@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
+    COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -35,6 +35,8 @@ static const COption params[] = {
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),
     COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the maximum number of records to process before reporting"),  // NOLINT
+    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -56,6 +58,8 @@ bool COptions::parseArguments(string_q& command) {
     bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
+    bool staging = false;
+    bool unripe = false;
     // END_CODE_LOCAL_INIT
 
     latestBlock = getLatestBlock_client();
@@ -95,7 +99,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-R" || arg == "--write_traces") {
             write_traces = true;
 
-        } else if (arg == "-s" || arg == "--skip_ddos") {
+        } else if (arg == "-d" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
 
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
@@ -136,6 +140,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
             if (!confirmBlockNum("max_records", max_records, arg, latest))
                 return false;
+
+        } else if (arg == "-s" || arg == "--staging") {
+            staging = true;
+
+        } else if (arg == "-u" || arg == "--unripe") {
+            unripe = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

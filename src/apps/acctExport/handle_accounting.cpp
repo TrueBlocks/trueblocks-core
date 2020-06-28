@@ -6,6 +6,7 @@
 #include "options.h"
 
 #define NEW_ACCOUNTING 1
+#define FREQ 5
 
 //-----------------------------------------------------------------------
 bool COptions::exportAccounting(void) {
@@ -67,12 +68,9 @@ bool COptions::exportAccounting(void) {
                 }
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && (isApiMode() || !(i % 3))) {
-                    ostringstream os;
-                    os << "Reading " << nExported << " ";
-                    os << plural(className) << "of ";
-                    os << nTransactions << " (max " << nProcessing << ") txs for address " << monitors[0].address;
-                    LOG_INFO(os.str() + "\r");
+                if (!isTestMode() && (nExported % FREQ)) {
+                    LOG_PROGRESS1("Reading", nExported, nTransactions,
+                                  " txs for address " + monitors[0].address + "\r");
                 }
 
             } else {
@@ -151,12 +149,9 @@ bool COptions::exportAccounting(void) {
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && (isApiMode() || !(i % 3))) {
-                    ostringstream os;
-                    os << "Extracting " << nExported << " ";
-                    os << plural(className) << "of ";
-                    os << nTransactions << " (max " << nProcessing << ") txs for address " << monitors[0].address;
-                    LOG_INFO(os.str() + "\r");
+                if (!isTestMode() && (nExported % FREQ)) {
+                    LOG_PROGRESS1("Reading", nExported, nTransactions,
+                                  " txs for address " + monitors[0].address + "\r");
                 }
             }
 
@@ -256,6 +251,8 @@ bool COptions::exportAccounting(void) {
 
     if (isJson && shouldDisplay)
         cout << "]";
+
+    LOG_PROGRESS1("Reading", nExported, nTransactions, " txs for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
         if (items.size() > 0)
