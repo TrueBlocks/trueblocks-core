@@ -56,6 +56,7 @@ inline void setRpcProvider(const string_q& rpc) {
 
 extern void nodeRequired(void);
 extern void nodeNotRequired(void);
+extern void namesNotRequired(void);
 extern void checkNodeRequired(void);
 extern bool isNodeRunning(void);
 extern bool nodeHasTraces(void);

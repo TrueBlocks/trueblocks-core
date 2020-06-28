@@ -115,7 +115,7 @@ CCurlContext* getCurlContext(void) {
     CCurlContext* cntx = new CCurlContext;
     g_threadMap[threadID] = cntx;
     if (verbose)
-        cout << "Created curl context `" << cntx << " for thread " << threadID << endl;
+        cerr << "Created curl context `" << cntx << " for thread " << threadID << endl;
     return cntx;
 }
 
@@ -233,6 +233,11 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
 //-------------------------------------------------------------------------
 void nodeNotRequired(void) {
     getCurlContext()->nodeRequired = false;
+}
+
+//-------------------------------------------------------------------------
+void namesNotRequired(void) {
+    setenv("NO_NAMES", "true", true);
 }
 
 //-------------------------------------------------------------------------
