@@ -9,6 +9,7 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "acctlib.h"
+#include "acctscrapestats.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -19,6 +20,7 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     // END_CODE_DECLARE
 
+    CAcctScrapeStats stats;
     CMonitorArray monitors;
     blkrange_t fileRange;
     size_t visitTypes;

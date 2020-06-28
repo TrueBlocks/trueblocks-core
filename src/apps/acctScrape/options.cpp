@@ -14,9 +14,8 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
-    COption("finalized", "f", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of finalized folder ('on' by default)"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of staging (not yet finalized) folder ('off' by default)"),  // NOLINT
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_TOGGLE, "toggle search of unripe (neither staged nor finalized) folder ('off' by default)"),  // NOLINT
+    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (requires --staging)"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Index transactions for a given Ethereum address (or collection of addresses)."),  // NOLINT
@@ -33,7 +32,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
-    bool finalized = true;
     bool staging = false;
     bool unripe = false;
     blknum_t start = NOPOS;
@@ -50,14 +48,11 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-f" || arg == "--finalized") {
-            finalized = !finalized;
-
         } else if (arg == "-s" || arg == "--staging") {
-            staging = !staging;
+            staging = true;
 
         } else if (arg == "-u" || arg == "--unripe") {
-            unripe = !unripe;
+            unripe = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
@@ -89,10 +84,13 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
 
     // Are we visiting unripe and/or staging in our search?
-    if (unripe)
-        visitTypes |= VIS_UNRIPE;
     if (staging)
         visitTypes |= VIS_STAGING;
+    if (unripe) {
+        if (!(visitTypes & VIS_STAGING))
+            EXIT_USAGE("You must also specify --staging when using --unripe. Quitting...");
+        visitTypes |= VIS_UNRIPE;
+    }
 
     // Where will we start?
     blknum_t nextBlockToVisit = NOPOS;

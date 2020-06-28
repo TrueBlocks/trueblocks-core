@@ -12384,8 +12384,6 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFromAndTo": {},
-    "unNamedFromAndTo": {},
     "namedFrom": {
       "0x00de4b13153673bcae2616b67bf822500d325fc3": {
         "tags": "31-Gitcoin Grants:Grant",

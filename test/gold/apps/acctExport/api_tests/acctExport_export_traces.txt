@@ -90,8 +90,6 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFromAndTo": {},
-    "unNamedFromAndTo": {},
     "namedFrom": {},
     "unNamedFrom": {},
     "namedTo": {},

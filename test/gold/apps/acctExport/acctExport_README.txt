@@ -23,7 +23,7 @@ acctExport -th
 | -U | --count | only available for --appearances mode, if present return only the number of records |
 
 #### Hidden options (shown during testing only)
-| -s | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
+| -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -A | --all_abis | load all previously cached abi files |
 | -f | --freshen | freshen but do not print the exported data |
@@ -31,6 +31,8 @@ acctExport -th
 | -D | --deltas | for --balances option only, export only changes in balances |
 | -c | --first_record <num> | the first record to process |
 | -e | --max_records <num> | the maximum number of records to process before reporting |
+| -s | --staging | ignored (preserved for backwards compatibility) |
+| -u | --unripe | ignored (preserved for backwards compatibility) |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

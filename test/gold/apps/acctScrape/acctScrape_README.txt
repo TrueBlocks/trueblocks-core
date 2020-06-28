@@ -12,9 +12,8 @@ acctScrape -th
 |  | addrs | one or more Ethereum addresses (required) |
 
 #### Hidden options (shown during testing only)
-| -f | --finalized | toggle search of finalized folder ('on' by default) |
-| -s | --staging | toggle search of staging (not yet finalized) folder ('off' by default) |
-| -u | --unripe | toggle search of unripe (neither staged nor finalized) folder ('off' by default) |
+| -s | --staging | enable search of staging (not yet finalized) folder |
+| -u | --unripe | enable search of unripe (neither staged nor finalized) folder (requires --staging) |
 | -S | --start <num> | this value is ignored but remains for backward compatibility |
 | -E | --end <num> | this value is ignored but remains for backward compatibility |
 #### Hidden options (shown during testing only)

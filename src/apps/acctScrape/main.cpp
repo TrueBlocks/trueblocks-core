@@ -9,6 +9,7 @@
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
+    namesNotRequired();
     acctlib_init(defaultQuitHandler);
 
     COptions options;
@@ -37,6 +38,9 @@ int main(int argc, const char* argv[]) {
             LOG4(monitor.address, " freshened to ", monitor.nextBlockAsPerMonitor());
         }
     }
+
+    LOG_INFO(toLower(options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "{", "{p:"))));
+    LOG_INFO(options.stats.Format(STR_DISPLAY_ACCTSCRAPESTATS));
 
     acctlib_cleanup();
     return 0;

@@ -14,22 +14,29 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
     } else {
         // Pick up some useful data for either method...
         COptions* options = reinterpret_cast<COptions*>(data);
+        options->stats.nFiles++;
 
         // Filenames take the form 'start-end.[txt|bin]' where both 'start' and 'end'
         // are inclusive. Silently skips unknown files in the folder (such as shell scripts).
-        if (!contains(path, "-") || !endsWith(path, ".bin"))
+        if (!contains(path, "-") || !endsWith(path, ".bin")) {
+            options->stats.nSkipped++;
             return !shouldQuit();
+        }
 
         timestamp_t unused;
         options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that the --start and --end options are ignored.
-        if (!rangesIntersect(options->scanRange, options->fileRange))
+        if (!rangesIntersect(options->scanRange, options->fileRange)) {
+            options->stats.nSkipped++;
             return !shouldQuit();
+        }
 
-        if (isTestMode() && options->fileRange.second > 5000000)
-            return !shouldQuit();
+        if (isTestMode() && options->fileRange.second > 5000000) {
+            options->stats.nSkipped++;
+            return false;
+        }
 
         // LOG4("Scanning ", path);
         return options->visitBinaryFile(path, data) && !shouldQuit();
@@ -59,14 +66,19 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
     }
     return false;
 }
-
-#define BREAK_PT 1
+/*
+ uint64_t nOpened;
+ uint64_t nFalsePositive;
+ uint64_t nPositive;
+ uint64_t nRecords;
+ */
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void* data) {
     string_q l_funcName = "visitBinaryFile";
-    static uint32_t n = 0;
 
-    //    COptions *options = reinterpret_cast<COptions*>(data);
+    COptions* options = reinterpret_cast<COptions*>(data);
+    options->stats.nScanned++;
+
     string_q bPath = substitute(substitute(path, indexFolder_finalized, indexFolder_blooms), ".bin", ".bloom");
     if (fileExists(bPath)) {
         CNewBloomArray blooms;
@@ -78,26 +90,20 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         }
 
         if (!hit) {
-            if (!(++n % BREAK_PT)) {
-                ostringstream os;
-                os << bBlue << "Skip blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./") << "\r";
-                LOG_INFO(os.str());
-            }
             // none of them hit, so write last block for each of them
             for (auto monitor : monitors) {
                 string_q filename = getMonitorPath(monitor.address);
                 monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
                 monitor.writeLastBlock(fileRange.second + 1);
             }
+            options->stats.nBloomMisses++;
+            LOG_PROGRESS1("Skipping", options->fileRange.first, options->scanRange.second, " bloom miss\r");
             return true;
         }
     }
 
-    if (!(++n % BREAK_PT)) {
-        ostringstream os;
-        os << cYellow << "Scan blocks" << cOff << " " << substitute(path, indexFolder_finalized, "./") << "\r";
-        LOG_INFO(os.str());
-    }
+    options->stats.nBloomHits++;
+    LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit\r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;
@@ -154,10 +160,12 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
         if (found) {
             indexHit = true;
+            options->stats.nPositive++;
             hits += (monitor->address.substr(0, 6) + "..");
             CAddressRecord_base* addrsOnFile =
                 reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
             CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
+            options->stats.nRecords += found->cnt;
             for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
                 CAppearance_base item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                 items.push_back(item);
@@ -170,6 +178,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 lockSection(false);
             }
         } else {
+            options->stats.nFalsePositive++;
             monitor->writeLastBlock(fileRange.second + 1);
         }
     }
@@ -185,12 +194,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         rawData = NULL;
     }
 
-    ostringstream os;
-    os << cBlue << "    bloom file hit ";
-    os << (indexHit ? cGreen : cRed) << (indexHit ? ("index file hits: " + hits) : "false positive") << cOff;
-    os << " at " << cTeal << substitute(path, indexFolder_finalized, "./");
-    os << cOff;
-    LOG_INFO(os.str());
+    string_q result = indexHit ? " index hit " + hits : " false positive";
+    LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit" + result);
 
     return !shouldQuit();
 }
