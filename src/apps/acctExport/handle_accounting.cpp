@@ -69,8 +69,9 @@ bool COptions::exportAccounting(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && (nExported % FREQ)) {
-                    LOG_PROGRESS1("Reading", nExported, nTransactions,
-                                  " txs for address " + monitors[0].address + "\r");
+                    ostringstream post;
+                    post << " txs (max " << max_records << ") for address " << monitors[0].address << "\r";
+                    LOG_PROGRESS1("Reading", nExported, nTransactions, post.str());
                 }
 
             } else {
@@ -150,8 +151,9 @@ bool COptions::exportAccounting(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && (nExported % FREQ)) {
-                    LOG_PROGRESS1("Reading", nExported, nTransactions,
-                                  " txs for address " + monitors[0].address + "\r");
+                    ostringstream post;
+                    post << " txs (max " << max_records << ") for address " << monitors[0].address << "\r";
+                    LOG_PROGRESS1("Extracting", nExported, nTransactions, post.str());
                 }
             }
 
@@ -252,7 +254,7 @@ bool COptions::exportAccounting(void) {
     if (isJson && shouldDisplay)
         cout << "]";
 
-    LOG_PROGRESS1("Reading", nExported, nTransactions, " txs for address " + monitors[0].address + "\r");
+    LOG_PROGRESS1("Reported", nExported, nTransactions, " txs for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
         if (items.size() > 0)

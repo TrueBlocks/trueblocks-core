@@ -25,3 +25,4 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX Token	CXO		18	On Chain
 50-Tokens:ERC20	0xb6f43025b29196af2dddd69b0a58afba079cd600	智投链	IIC		18	On Chain
 60-Airdrops	0xb6fab2c9e391ad3af57567e22bf3eb792079f55c	HEALP Airdrop Sender				TrueBlocks.io
+34-Twitter: Friends	0xb6fee4df663addc0081b51385a6195d52d1c2001	Name 0xb6fee4df				Twitter

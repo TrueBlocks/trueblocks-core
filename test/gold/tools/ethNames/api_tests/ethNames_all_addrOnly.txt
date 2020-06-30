@@ -185,6 +185,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6",
+      "decimals": "0"
+    },
+    {
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
       "decimals": "0"
     },
@@ -309,6 +313,10 @@
       "decimals": 8
     },
     {
+      "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
+      "decimals": "0"
+    },
+    {
       "address": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
       "decimals": 18
     },
@@ -401,6 +409,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
+      "decimals": "0"
+    },
+    {
       "address": "0x04607ca1048f490578f233a8b1354778defdd178",
       "decimals": "0"
     },
@@ -463,6 +475,10 @@
     {
       "address": "0x054c64741dbafdc19784505494029823d89c3b13",
       "decimals": 8
+    },
+    {
+      "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+      "decimals": "0"
     },
     {
       "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
@@ -554,6 +570,10 @@
     },
     {
       "address": "0x064d3230f753d8c14e06cf491fe2f1a3d2ccd5dd",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
       "decimals": "0"
     },
     {
@@ -709,6 +729,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x08808da244d4cdcc56a38748ccebec9985141fd2",
+      "decimals": "0"
+    },
+    {
       "address": "0x088b1147aceaf35cc9be639f4e702268411c7405",
       "decimals": "0"
     },
@@ -779,30 +803,6 @@
     {
       "address": "0x09cabec1ead1c0ba254b09efb3ee13841712be14",
       "decimals": "0"
-    },
-    {
-      "address": "0x09dcabf773a87ff1b1b9885576938f0dcc1075db",
-      "decimals": "0"
-    },
-    {
-      "address": "0x09fe5f0236f0ea5d930197dce254d77b04128075",
-      "decimals": 18
-    },
-    {
-      "address": "0x0a236b41add0073df05eac5fc8505ad745c7859d",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0a43edfe106d295e7c1e591a4b04b5598af9474c",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0a5a187ba205aae2ac85b154585347c0ffeedcd4",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
-      "decimals": 18
     }
   ],
   "types": [

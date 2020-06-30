@@ -103,6 +103,10 @@
     {
       "address": "0xb6fab2c9e391ad3af57567e22bf3eb792079f55c",
       "decimals": "0"
+    },
+    {
+      "address": "0xb6fee4df663addc0081b51385a6195d52d1c2001",
+      "decimals": "0"
     }
   ],
   "types": [

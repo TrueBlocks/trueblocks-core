@@ -380,6 +380,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "34-Twitter: Friends",
+    "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6",
+    "name": "Name 0x00dc74ce",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "@Aezakmi_Steemit"
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
     "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
@@ -659,6 +668,15 @@ ethNames --fmt json
     "description": "Payments solutions for the travel industry."
   },
   {
+    "tags": "34-Twitter: Friends",
+    "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
+    "name": "Name 0x02bbea93",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "Sodunke"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb",
     "name": "InvestDigital Token",
@@ -866,6 +884,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "34-Twitter: Friends",
+    "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
+    "name": "Name 0x04498150",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "okoro"
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x04607ca1048f490578f233a8b1354778defdd178",
     "name": "Grant 608 Signatory Client",
@@ -1008,6 +1035,15 @@ ethNames --fmt json
     "source": "On Chain",
     "decimals": 8,
     "description": "The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals."
+  },
+  {
+    "tags": "34-Twitter: Friends",
+    "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+    "name": "Name 0x0559a413",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "@LUKACACIC"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -1215,6 +1251,15 @@ ethNames --fmt json
     "source": "Gitcoin Website",
     "decimals": 0,
     "description": ""
+  },
+  {
+    "tags": "34-Twitter: Friends",
+    "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
+    "name": "Name 0x0667ad4c",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "@okbabyqn88"
   },
   {
     "tags": "40-Exchanges",
@@ -1559,6 +1604,15 @@ ethNames --fmt json
     "description": ""
   },
   {
+    "tags": "34-Twitter: Friends",
+    "address": "0x08808da244d4cdcc56a38748ccebec9985141fd2",
+    "name": "Name 0x08808da2",
+    "symbol": "",
+    "source": "Twitter",
+    "decimals": 0,
+    "description": "A"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x088b1147aceaf35cc9be639f4e702268411c7405",
     "name": "Name 0x088b1147",
@@ -1755,60 +1809,6 @@ ethNames --fmt json
     "source": "DevCon2 Token Contract",
     "decimals": 0,
     "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0a5a187ba205aae2ac85b154585347c0ffeedcd4",
-    "name": "Name 0x0a5a187b",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
-    "name": "Ethereum Lite",
-    "symbol": "ELITE",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0a82e6ef40cfcca9d5f651292194aa1c7fb2f9f4",
-    "name": "Name 0x0a82e6ef",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "75-Early Actors",
-    "address": "0x0aa8ae2485e31c024201bdf77bfa25021bc10c5b",
-    "name": "Miner_0076_75",
-    "symbol": "",
-    "source": "OnChain",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0abdace70d3790235af448c88547603b945604ea",
-    "name": "district0x Network Token",
-    "symbol": "DNT",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0aef06dcccc531e581f0440059e6ffcc206039ee",
-    "name": "Intelligent Trading Technologies",
-    "symbol": "ITT",
-    "source": "On Chain",
-    "decimals": 8,
-    "description": "Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets."
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

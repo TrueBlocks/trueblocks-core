@@ -4,6 +4,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0xcb42ac441fcade3935243ea118701f39aa004486	Name 0xcb42ac44
 31-Gitcoin Grants:Friends	0xcb44c69d1380b03404e7ca29db033fa987f2d0c5	Name 0xcb44c69d
 31-Gitcoin Grants:Friends	0xcb46219ba114245c3a18761e4f7891f9c4bef8c0	Name 0xcb46219b
+30-Contracts	0xcb4aae35333193232421e86cd2e9b6c91f3b125f	Kleros Token Registry
 90-DevCon2:Individual	0xcb4baa0344065655da9e7d2dde781e5efa25995e	Jordi Baylina
 50-Tokens:ERC20	0xcb5a05bef3257613e984c17dbcf039952b6d883f	Sugar Exchange	SGR		8
 31-Gitcoin Grants:Friends	0xcb5c0d33d92e4910daa24825db8af9b64e17c33c	Name 0xcb5c0d33

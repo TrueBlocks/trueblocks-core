@@ -50,6 +50,18 @@
     },
     {
       "deleted": false,
+      "tags": "34-Twitter: Friends",
+      "address": "0x24029403d13c2e0cfee4a4ee1ba998e5b0367f03",
+      "name": "Name 0x24029403",
+      "symbol": "",
+      "source": "Twitter",
+      "decimals": "0",
+      "description": "@antiprosynth",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
       "name": "Silent Notary Token",

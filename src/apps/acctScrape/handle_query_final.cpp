@@ -66,12 +66,7 @@ bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
     }
     return false;
 }
-/*
- uint64_t nOpened;
- uint64_t nFalsePositive;
- uint64_t nPositive;
- uint64_t nRecords;
- */
+
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void* data) {
     string_q l_funcName = "visitBinaryFile";

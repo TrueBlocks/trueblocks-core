@@ -67,6 +67,9 @@
       "tags": "34-Kyber Network"
     },
     {
+      "tags": "34-Twitter: Friends"
+    },
+    {
       "tags": "35-Pool Together"
     },
     {
