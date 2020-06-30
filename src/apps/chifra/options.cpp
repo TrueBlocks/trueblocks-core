@@ -219,23 +219,24 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
 
+        uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
         string_q path = configPath("mockData/" + origMode + ".json");
         if (fileExists(path)) {
             if (origMode == "export") {
                 // simulate listing
-                for (size_t i = 0; i < 100; i++) {
-                    LOG_PROGRESS1("Extracting", i, 100, "\r");
+                for (size_t i = 0; i < nMocked; i++) {
+                    LOG_PROGRESS1("Extracting", i, nMocked, "\r");
                     usleep(30000);
                 }
                 CStringArray lines;
                 asciiFileToLines(path, lines);
                 size_t cnt = 0;
                 size_t record = 0;
-                size_t recordSize = lines.size() / 100;
+                size_t recordSize = lines.size() / nMocked;
                 for (auto line : lines) {
                     cout << line << endl;
                     if (!(++cnt % recordSize)) {
-                        LOG_PROGRESS1("Displaying", record++, 100, "\r");
+                        LOG_PROGRESS1("Displaying", record++, nMocked, "\r");
                         usleep(10000);
                     }
                 }

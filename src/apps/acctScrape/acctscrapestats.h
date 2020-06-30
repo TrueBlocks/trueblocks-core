@@ -27,7 +27,7 @@ class CAcctScrapeStats : public CBaseNode {
   public:
     uint64_t nFiles;
     uint64_t nSkipped;
-    uint64_t nScanned;
+    uint64_t nChecked;
     uint64_t nBloomMisses;
     uint64_t nBloomHits;
     uint64_t nFalsePositive;
@@ -97,7 +97,7 @@ inline void CAcctScrapeStats::initialize(void) {
 
     nFiles = 0;
     nSkipped = 0;
-    nScanned = 0;
+    nChecked = 0;
     nBloomMisses = 0;
     nBloomHits = 0;
     nFalsePositive = 0;
@@ -115,7 +115,7 @@ inline void CAcctScrapeStats::duplicate(const CAcctScrapeStats& ac) {
 
     nFiles = ac.nFiles;
     nSkipped = ac.nSkipped;
-    nScanned = ac.nScanned;
+    nChecked = ac.nChecked;
     nBloomMisses = ac.nBloomMisses;
     nBloomHits = ac.nBloomHits;
     nFalsePositive = ac.nFalsePositive;

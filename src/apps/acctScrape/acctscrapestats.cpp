@@ -77,8 +77,8 @@ string_q CAcctScrapeStats::getValueByName(const string_q& fieldName) const {
             if (fieldName % "nSkipped") {
                 return uint_2_Str(nSkipped);
             }
-            if (fieldName % "nScanned") {
-                return uint_2_Str(nScanned);
+            if (fieldName % "nChecked") {
+                return uint_2_Str(nChecked);
             }
             if (fieldName % "nBloomMisses") {
                 return uint_2_Str(nBloomMisses);
@@ -125,8 +125,8 @@ bool CAcctScrapeStats::setValueByName(const string_q& fieldNameIn, const string_
                 nSkipped = str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "nScanned") {
-                nScanned = str_2_Uint(fieldValue);
+            if (fieldName % "nChecked") {
+                nChecked = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "nBloomMisses") {
@@ -177,7 +177,7 @@ bool CAcctScrapeStats::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> nFiles;
     archive >> nSkipped;
-    archive >> nScanned;
+    archive >> nChecked;
     archive >> nBloomMisses;
     archive >> nBloomHits;
     archive >> nFalsePositive;
@@ -196,7 +196,7 @@ bool CAcctScrapeStats::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << nFiles;
     archive << nSkipped;
-    archive << nScanned;
+    archive << nChecked;
     archive << nBloomMisses;
     archive << nBloomHits;
     archive << nFalsePositive;
@@ -240,7 +240,7 @@ void CAcctScrapeStats::registerClass(void) {
     ADD_FIELD(CAcctScrapeStats, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nFiles", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nSkipped", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nScanned", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAcctScrapeStats, "nChecked", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nBloomMisses", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nBloomHits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nFalsePositive", T_UNUMBER, ++fieldNum);
@@ -304,7 +304,7 @@ ostream& operator<<(ostream& os, const CAcctScrapeStats& item) {
 const char* STR_DISPLAY_ACCTSCRAPESTATS =
     "[{NFILES}]\t"
     "[{NSKIPPED}]\t"
-    "[{NSCANNED}]\t"
+    "[{NCHECKED}]\t"
     "[{NBLOOMMISSES}]\t"
     "[{NBLOOMHITS}]\t"
     "[{NFALSEPOSITIVE}]\t"

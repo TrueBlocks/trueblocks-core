@@ -39,8 +39,24 @@ int main(int argc, const char* argv[]) {
         }
     }
 
-    LOG_INFO(toLower(options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "{", "{p:"))));
-    LOG_INFO(options.stats.Format(STR_DISPLAY_ACCTSCRAPESTATS));
+    if (options.stats.nFiles != options.stats.nSkipped) {
+        ostringstream header;
+        header << options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "{", "{p:"));
+
+        ostringstream data;
+        data << options.stats.Format(STR_DISPLAY_ACCTSCRAPESTATS);
+
+        LOG_INFO(header.str());
+        LOG_INFO(data.str());
+
+        header << endl;
+        data << endl;
+
+        string_q statsFile = configPath("performance_scraper.txt");
+        if (!fileExists(statsFile))
+            stringToAsciiFile(statsFile, header.str());
+        appendToAsciiFile(statsFile, data.str());
+    }
 
     acctlib_cleanup();
     return 0;
