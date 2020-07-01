@@ -77,8 +77,8 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                return uint_2_Str(blockNum);
+            if (fieldName % "bn") {
+                return uint_2_Str(bn);
             }
             if (fieldName % "begBal") {
                 return begBal;
@@ -145,6 +145,11 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
                 return selfDestructOutflow;
             }
             break;
+        case 't':
+            if (fieldName % "ts") {
+                return ts_2_Str(ts);
+            }
+            break;
         default:
             break;
     }
@@ -172,8 +177,8 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                blockNum = str_2_Uint(fieldValue);
+            if (fieldName % "bn") {
+                bn = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -257,6 +262,12 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
                 return true;
             }
             break;
+        case 't':
+            if (fieldName % "ts") {
+                ts = str_2_Ts(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -282,7 +293,8 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNum;
+    archive >> bn;
+    archive >> ts;
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
@@ -311,7 +323,8 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNum;
+    archive << bn;
+    archive << ts;
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
@@ -365,7 +378,8 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "bn", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "ts", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBal", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBalDiff", T_TEXT, ++fieldNum);
@@ -478,11 +492,28 @@ inline string_q bni_2_Ether(const bigint_t& num) {
 }
 
 //---------------------------------------------------------------------------
+inline string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num) {
+    if (num == 0)
+        return "";
+    bigint_t n = num;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)));
+}
+
+//---------------------------------------------------------------------------
 CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
-    blockNum = nums.blockNum;
+    reconciliationType = nums.reconciliationType;
+    reconciled = nums.reconciled;
+    bn = nums.bn;
+    ts = nums.ts;
     if (expContext().asEther) {
+        asset = "ETH";
         begBal = bni_2_Ether(nums.begBal);
-        begBalDiff = nums.begBalDiff >= 0 ? bni_2_Ether(nums.begBalDiff) : "-" + bni_2_Ether(nums.begBalDiff * -1);
+        begBalDiff = bni_2_Ether(nums.begBalDiff);
         inflow = bni_2_Ether(nums.inflow);
         outflow = bni_2_Ether(nums.outflow);
         intInflow = bni_2_Ether(nums.intInflow);
@@ -494,8 +525,25 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
         gasCostOutflow = bni_2_Ether(nums.gasCostOutflow);
         endBal = bni_2_Ether(nums.endBal);
         endBalCalc = bni_2_Ether(nums.endBalCalc);
-        endBalDiff = nums.endBalDiff >= 0 ? bni_2_Ether(nums.endBalDiff) : "-" + bni_2_Ether(nums.endBalDiff * -1);
+        endBalDiff = bni_2_Ether(nums.endBalDiff);
+    } else if (expContext().asDollars) {
+        asset = "USD";
+        begBal = bni_2_Dollars(nums.ts, nums.begBal);
+        begBalDiff = bni_2_Dollars(nums.ts, nums.begBalDiff);
+        inflow = bni_2_Dollars(nums.ts, nums.inflow);
+        outflow = bni_2_Dollars(nums.ts, nums.outflow);
+        intInflow = bni_2_Dollars(nums.ts, nums.intInflow);
+        intOutflow = bni_2_Dollars(nums.ts, nums.intOutflow);
+        selfDestructInflow = bni_2_Dollars(nums.ts, nums.selfDestructInflow);
+        selfDestructOutflow = bni_2_Dollars(nums.ts, nums.selfDestructOutflow);
+        miningInflow = bni_2_Dollars(nums.ts, nums.miningInflow);
+        prefundInflow = bni_2_Dollars(nums.ts, nums.prefundInflow);
+        gasCostOutflow = bni_2_Dollars(nums.ts, nums.gasCostOutflow);
+        endBal = bni_2_Dollars(nums.ts, nums.endBal);
+        endBalCalc = bni_2_Dollars(nums.ts, nums.endBalCalc);
+        endBalDiff = bni_2_Dollars(nums.ts, nums.endBalDiff);
     } else {
+        asset = "WEI";
         begBal = bni_2_Str(nums.begBal);
         begBalDiff = bni_2_Str(nums.begBalDiff);
         inflow = bni_2_Str(nums.inflow);
@@ -511,9 +559,6 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
         endBalCalc = bni_2_Str(nums.endBalCalc);
         endBalDiff = bni_2_Str(nums.endBalDiff);
     }
-    asset = nums.asset;
-    reconciliationType = nums.reconciliationType;
-    reconciled = nums.reconciled;
 }
 // EXISTING_CODE
 }  // namespace qblocks

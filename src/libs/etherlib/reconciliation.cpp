@@ -77,8 +77,8 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                return uint_2_Str(blockNum);
+            if (fieldName % "bn") {
+                return uint_2_Str(bn);
             }
             if (fieldName % "begBal") {
                 return bni_2_Str(begBal);
@@ -145,6 +145,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
                 return bni_2_Str(selfDestructOutflow);
             }
             break;
+        case 't':
+            if (fieldName % "ts") {
+                return ts_2_Str(ts);
+            }
+            break;
         default:
             break;
     }
@@ -172,8 +177,8 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                blockNum = str_2_Uint(fieldValue);
+            if (fieldName % "bn") {
+                bn = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -257,6 +262,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 return true;
             }
             break;
+        case 't':
+            if (fieldName % "ts") {
+                ts = str_2_Ts(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -282,7 +293,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNum;
+    archive >> bn;
+    archive >> ts;
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
@@ -311,7 +323,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNum;
+    archive << bn;
+    archive << ts;
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
@@ -365,7 +378,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliation, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "bn", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "ts", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
@@ -488,8 +502,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(accountingFor, blockNum == 0 ? 0 : blockNum - 1);
-    endBal = getBalanceAt(accountingFor, blockNum);
+    begBal = getBalanceAt(accountingFor, bn == 0 ? 0 : bn - 1);
+    endBal = getBalanceAt(accountingFor, bn);
 
     // If the user has given us corrections, use them...
     if (corrections.size() > 0) {
@@ -506,7 +520,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
                  intOutflow - selfDestructOutflow - gasCostOutflow;
 
     // Check to see if there are any mismatches...
-    begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
+    begBalDiff = trans - bn == 0 ? 0 : begBal - lastStatement.endBal;
     endBalDiff = endBal - endBalCalc;
 
     // ...if not, we're reconciled, so we can return...
@@ -536,8 +550,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
           12          13           15        both next and previous are different (handled above)
      */
 
-    bool prevDifferent = lastStatement.blockNum != blockNum;
-    bool nextDifferent = blockNum != nextBlock;
+    bool prevDifferent = lastStatement.bn != bn;
+    bool nextDifferent = bn != nextBlock;
 
     if (prevDifferent && nextDifferent) {
         // handled above...
@@ -548,7 +562,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // that case.
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
-        begBal = getBalanceAt(accountingFor, blockNum == 0 ? 0 : blockNum - 1);
+        begBal = getBalanceAt(accountingFor, bn == 0 ? 0 : bn - 1);
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
@@ -577,7 +591,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
-        endBal = getBalanceAt(accountingFor, blockNum);
+        endBal = getBalanceAt(accountingFor, bn);
         endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 

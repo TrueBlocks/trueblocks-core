@@ -19,5 +19,3 @@ acctScrape -h
 	-h  (--help)          display this help screen
 
   Powered by QBlocks
-TIME ~ CLOCK - <INFO>  : nfiles	nskipped	nscanned	nbloommisses	nbloomhits	nfalsepositive	npositive	nrecords
-TIME ~ CLOCK - <INFO>  : 0	0	0	0	0	0	0	0

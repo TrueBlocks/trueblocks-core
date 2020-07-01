@@ -88,10 +88,11 @@ class COptions : public COptionsBase {
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);
 
-    bool exportData(void);
-    bool exportAppearances(void);
     bool exportAccounting(void);
+    bool exportAppearances(void);
     bool exportCounts(void);
+    bool exportReceipts(void);
+    bool exportTraces(void);
 
     void addNeighbor(addr_count_map_t& map, const address_t& addr);
     bool reportNeighbors(void);

@@ -1,6 +1,7 @@
 [settings]
 class = CReconciliationOutput
-fields = blknum blockNum|\
+fields = blknum bn|\
+        timestamp ts|\
         string asset|\
         string begBal|\
         string begBalDiff|\

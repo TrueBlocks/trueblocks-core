@@ -21,7 +21,8 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "summaryStatement": {
-    "blockNum": 0,
+    "bn": 0,
+    "ts": 0,
     "begBal": 0,
     "begBalDiff": 0,
     "inflow": 0,
@@ -92,7 +93,8 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
     "interfaces": []
   },
   "summaryStatement": {
-    "blockNum": 0,
+    "bn": 0,
+    "ts": 0,
     "begBal": 0,
     "begBalDiff": 0,
     "inflow": 0,

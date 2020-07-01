@@ -1,4 +1,2 @@
 acctScrape argc: 4 [1:0x1234567890123456789012345678901234567890] [2:--end] [3:7000000] 
 acctScrape 0x1234567890123456789012345678901234567890 --end 7000000 
-TIME ~ CLOCK - <INFO>  : nfiles	nskipped	nscanned	nbloommisses	nbloomhits	nfalsepositive	npositive	nrecords
-TIME ~ CLOCK - <INFO>  : 1031	1031	0	0	0	0	0	0

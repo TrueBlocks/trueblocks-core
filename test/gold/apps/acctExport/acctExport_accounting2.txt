@@ -24,8 +24,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "compressedTx": "0x ( )",
   "statements": [
     {
-      "blockNum": 1,
-      "asset": "ETH",
+      "bn": 1,
+      "ts": 1438269988,
+      "asset": "WEI",
       "begBal": "0",
       "begBalDiff": "0",
       "inflow": "0",
@@ -71,8 +72,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "compressedTx": "0x ( )",
   "statements": [
     {
-      "blockNum": 5,
-      "asset": "ETH",
+      "bn": 5,
+      "ts": 1438270083,
+      "asset": "WEI",
       "begBal": "5000000000000000000",
       "begBalDiff": "0",
       "inflow": "0",
@@ -118,8 +120,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "compressedTx": "0x ( )",
   "statements": [
     {
-      "blockNum": 56,
-      "asset": "ETH",
+      "bn": 56,
+      "ts": 1438270322,
+      "asset": "WEI",
       "begBal": "10000000000000000000",
       "begBalDiff": "0",
       "inflow": "0",
@@ -165,8 +168,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "compressedTx": "0x ( )",
   "statements": [
     {
-      "blockNum": 235,
-      "asset": "ETH",
+      "bn": 235,
+      "ts": 1438270713,
+      "asset": "WEI",
       "begBal": "13750000000000000000",
       "begBalDiff": "0",
       "inflow": "0",
@@ -212,8 +216,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "compressedTx": "0x ( )",
   "statements": [
     {
-      "blockNum": 247,
-      "asset": "ETH",
+      "bn": 247,
+      "ts": 1438270739,
+      "asset": "WEI",
       "begBal": "18750000000000000000",
       "begBalDiff": "0",
       "inflow": "0",

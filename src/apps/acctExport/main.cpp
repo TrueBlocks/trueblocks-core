@@ -39,11 +39,14 @@ int main(int argc, const char* argv[]) {
             } else if (options.appearances) {
                 options.exportAppearances();
 
-            } else if (options.accounting) {
-                options.exportAccounting();
+            } else if (options.receipts) {
+                options.exportReceipts();
+
+            } else if (options.traces) {
+                options.exportTraces();
 
             } else {
-                options.exportData();
+                options.exportAccounting();
             }
         }
 

@@ -84,7 +84,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         bool hit = false;
         // Note: we used to stop searching on the first hit, and then scan the larger data files for all monitors in
         // this run, but now we keep a map of addresses that were bloom hits and only scan the ones that match.
-        for (size_t a = 0; a < monitors.size() ; a++) { // && !hit; a++) { (remove after groking above comment)
+        for (size_t a = 0; a < monitors.size(); a++) {  // && !hit; a++) { (remove after groking above comment)
             if (isMember(blooms, monitors[a].address)) {
                 hit = true;
                 hitMap[monitors[a].address] = true;
@@ -159,7 +159,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 search.bytes[i] = array[i];
             CAddressRecord_base* found =
                 (CAddressRecord_base*)bsearch(&search, (rawData + sizeof(CHeaderRecord_base)),  // NOLINT
-                                          nAddrs, sizeof(CAddressRecord_base), findAppearance);
+                                              nAddrs, sizeof(CAddressRecord_base), findAppearance);
 
             if (found) {
                 indexHit = true;

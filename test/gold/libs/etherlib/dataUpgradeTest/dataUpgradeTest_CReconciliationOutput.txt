@@ -7,26 +7,28 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-asset               	1006	0	131122	T_TEXT TS_STRING
-begBal              	1007	0	131122	T_TEXT TS_STRING
-begBalDiff          	1008	0	131122	T_TEXT TS_STRING
-inflow              	1009	0	131122	T_TEXT TS_STRING
-outflow             	1010	0	131122	T_TEXT TS_STRING
-intInflow           	1011	0	131122	T_TEXT TS_STRING
-intOutflow          	1012	0	131122	T_TEXT TS_STRING
-selfDestructInflow  	1013	0	131122	T_TEXT TS_STRING
-selfDestructOutflow 	1014	0	131122	T_TEXT TS_STRING
-miningInflow        	1015	0	131122	T_TEXT TS_STRING
-prefundInflow       	1016	0	131122	T_TEXT TS_STRING
-gasCostOutflow      	1017	0	131122	T_TEXT TS_STRING
-endBal              	1018	0	131122	T_TEXT TS_STRING
-endBalCalc          	1019	0	131122	T_TEXT TS_STRING
-endBalDiff          	1020	0	131122	T_TEXT TS_STRING
-reconciliationType  	1021	0	131122	T_TEXT TS_STRING
-reconciled          	1022	0	65556	T_BOOL TS_NUMERAL
+bn                  	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+ts                  	1006	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1007	0	131122	T_TEXT TS_STRING
+begBal              	1008	0	131122	T_TEXT TS_STRING
+begBalDiff          	1009	0	131122	T_TEXT TS_STRING
+inflow              	1010	0	131122	T_TEXT TS_STRING
+outflow             	1011	0	131122	T_TEXT TS_STRING
+intInflow           	1012	0	131122	T_TEXT TS_STRING
+intOutflow          	1013	0	131122	T_TEXT TS_STRING
+selfDestructInflow  	1014	0	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1015	0	131122	T_TEXT TS_STRING
+miningInflow        	1016	0	131122	T_TEXT TS_STRING
+prefundInflow       	1017	0	131122	T_TEXT TS_STRING
+gasCostOutflow      	1018	0	131122	T_TEXT TS_STRING
+endBal              	1019	0	131122	T_TEXT TS_STRING
+endBalCalc          	1020	0	131122	T_TEXT TS_STRING
+endBalDiff          	1021	0	131122	T_TEXT TS_STRING
+reconciliationType  	1022	0	131122	T_TEXT TS_STRING
+reconciled          	1023	0	65556	T_BOOL TS_NUMERAL
 {
-  "blockNum": 0,
+  "bn": 0,
+  "ts": 0,
   "reconciled": false
 }
 
@@ -37,24 +39,25 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-blockNum            	1005	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-asset               	1006	1	131122	T_TEXT TS_STRING
-begBal              	1007	1	131122	T_TEXT TS_STRING
-begBalDiff          	1008	1	131122	T_TEXT TS_STRING
-inflow              	1009	1	131122	T_TEXT TS_STRING
-outflow             	1010	1	131122	T_TEXT TS_STRING
-intInflow           	1011	1	131122	T_TEXT TS_STRING
-intOutflow          	1012	1	131122	T_TEXT TS_STRING
-selfDestructInflow  	1013	1	131122	T_TEXT TS_STRING
-selfDestructOutflow 	1014	1	131122	T_TEXT TS_STRING
-miningInflow        	1015	1	131122	T_TEXT TS_STRING
-prefundInflow       	1016	1	131122	T_TEXT TS_STRING
-gasCostOutflow      	1017	1	131122	T_TEXT TS_STRING
-endBal              	1018	1	131122	T_TEXT TS_STRING
-endBalCalc          	1019	1	131122	T_TEXT TS_STRING
-endBalDiff          	1020	1	131122	T_TEXT TS_STRING
-reconciliationType  	1021	1	131122	T_TEXT TS_STRING
-reconciled          	1022	1	65556	T_BOOL TS_NUMERAL
+bn                  	1005	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+ts                  	1006	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1007	1	131122	T_TEXT TS_STRING
+begBal              	1008	1	131122	T_TEXT TS_STRING
+begBalDiff          	1009	1	131122	T_TEXT TS_STRING
+inflow              	1010	1	131122	T_TEXT TS_STRING
+outflow             	1011	1	131122	T_TEXT TS_STRING
+intInflow           	1012	1	131122	T_TEXT TS_STRING
+intOutflow          	1013	1	131122	T_TEXT TS_STRING
+selfDestructInflow  	1014	1	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1015	1	131122	T_TEXT TS_STRING
+miningInflow        	1016	1	131122	T_TEXT TS_STRING
+prefundInflow       	1017	1	131122	T_TEXT TS_STRING
+gasCostOutflow      	1018	1	131122	T_TEXT TS_STRING
+endBal              	1019	1	131122	T_TEXT TS_STRING
+endBalCalc          	1020	1	131122	T_TEXT TS_STRING
+endBalDiff          	1021	1	131122	T_TEXT TS_STRING
+reconciliationType  	1022	1	131122	T_TEXT TS_STRING
+reconciled          	1023	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -65,30 +68,32 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-asset               	1006	0	131122	T_TEXT TS_STRING
-begBal              	1007	0	131122	T_TEXT TS_STRING
-begBalDiff          	1008	0	131122	T_TEXT TS_STRING
-inflow              	1009	0	131122	T_TEXT TS_STRING
-outflow             	1010	0	131122	T_TEXT TS_STRING
-intInflow           	1011	0	131122	T_TEXT TS_STRING
-intOutflow          	1012	0	131122	T_TEXT TS_STRING
-selfDestructInflow  	1013	0	131122	T_TEXT TS_STRING
-selfDestructOutflow 	1014	0	131122	T_TEXT TS_STRING
-miningInflow        	1015	0	131122	T_TEXT TS_STRING
-prefundInflow       	1016	0	131122	T_TEXT TS_STRING
-gasCostOutflow      	1017	0	131122	T_TEXT TS_STRING
-endBal              	1018	0	131122	T_TEXT TS_STRING
-endBalCalc          	1019	0	131122	T_TEXT TS_STRING
-endBalDiff          	1020	0	131122	T_TEXT TS_STRING
-reconciliationType  	1021	0	131122	T_TEXT TS_STRING
-reconciled          	1022	0	65556	T_BOOL TS_NUMERAL
+bn                  	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+ts                  	1006	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1007	0	131122	T_TEXT TS_STRING
+begBal              	1008	0	131122	T_TEXT TS_STRING
+begBalDiff          	1009	0	131122	T_TEXT TS_STRING
+inflow              	1010	0	131122	T_TEXT TS_STRING
+outflow             	1011	0	131122	T_TEXT TS_STRING
+intInflow           	1012	0	131122	T_TEXT TS_STRING
+intOutflow          	1013	0	131122	T_TEXT TS_STRING
+selfDestructInflow  	1014	0	131122	T_TEXT TS_STRING
+selfDestructOutflow 	1015	0	131122	T_TEXT TS_STRING
+miningInflow        	1016	0	131122	T_TEXT TS_STRING
+prefundInflow       	1017	0	131122	T_TEXT TS_STRING
+gasCostOutflow      	1018	0	131122	T_TEXT TS_STRING
+endBal              	1019	0	131122	T_TEXT TS_STRING
+endBalCalc          	1020	0	131122	T_TEXT TS_STRING
+endBalDiff          	1021	0	131122	T_TEXT TS_STRING
+reconciliationType  	1022	0	131122	T_TEXT TS_STRING
+reconciled          	1023	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 7000,
   "deleted": false,
   "showing": true,
   "cname": "ReconciliationOutput",
-  "blockNum": 0,
+  "bn": 0,
+  "ts": 0,
   "reconciled": false
 }
 

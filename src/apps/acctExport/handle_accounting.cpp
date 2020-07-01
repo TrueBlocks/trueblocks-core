@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define NEW_ACCOUNTING 1
 #define FREQ 5
 
 //-----------------------------------------------------------------------
@@ -47,7 +46,8 @@ bool COptions::exportAccounting(void) {
                 if (accounting) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.blockNum = trans.blockNumber;
+                    nums.bn = trans.blockNumber;
+                    nums.ts = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
                     // trans.reconciliations.clear();
@@ -90,11 +90,12 @@ bool COptions::exportAccounting(void) {
 
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
-#ifdef NEW_ACCOUNTING
+
                 if (accounting) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.blockNum = trans.blockNumber;
+                    nums.bn = trans.blockNumber;
+                    nums.ts = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
                     CReconciliationOutput st(nums);
@@ -144,9 +145,6 @@ bool COptions::exportAccounting(void) {
                     }
                 }
                 if ((write_opt & CACHE_TXS))
-#else
-                if ((write_opt & CACHE_TXS) && !fileExists(txFilename))
-#endif
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
@@ -157,96 +155,24 @@ bool COptions::exportAccounting(void) {
                 }
             }
 
-            if (traces) {
-            } else {
-                if (receipts) {
-                } else if (logs) {
-                    // acctExport --logs
-                    for (auto log : trans.receipt.logs) {
-                        if (!emitter || log.address == monitors[0].address) {
-#ifdef NEW_ACCOUNTING
-#else
-//#error
-//                            if (articulate) {
-//                                if (toAddrMap[log.address] == 1 || fileExists(getAbiPath(log.address))) {
-//                                    CStringArray unused;
-//                                    loadAbiAndCache(abis, log.address, false, unused);
-//                                }
-//                                abis.articulateLog(&log);
-//                            }
-#endif
-                            if (isJson && shouldDisplay && !first)
-                                cout << ", ";
-                            if (shouldDisplay)
-                                cout << log.Format() << endl;
-                            nExported++;
-                            first = false;
-                        }
+            if (logs) {
+                for (auto log : trans.receipt.logs) {
+                    if (!emitter || log.address == monitors[0].address) {
+                        if (isJson && shouldDisplay && !first)
+                            cout << ", ";
+                        if (shouldDisplay)
+                            cout << log.Format() << endl;
+                        nExported++;
+                        first = false;
                     }
-
-                } else {
-#ifdef NEW_ACCOUNTING
-#else
-//                    if (accounting) {
-//                        static CReconciliation lastStatement;
-//                        blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
-//                        CReconciliation nums;
-//                        nums.blockNum = trans.blockNumber;
-//                        CStringArray corrections;
-//                        nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
-//                        CReconciliationOutput st(nums);
-//                        trans.statements.push_back(st);
-//                        lastStatement = nums;
-//                    }
-//
-//                    toAddrMap[trans.to]++;
-//                    fromAddrMap[trans.from]++;
-//                    for (auto log : trans.receipt.logs)
-//                        emitterAddrMap[log.address]++;
-//                    for (auto trace : trans.traces) {
-//                        fromTraceAddrMap[trace.action.from]++;
-//                        toTraceAddrMap[trace.action.to]++;
-//                    }
-//
-//                    if (articulate) {
-//                        abiMap[trans.to]++;
-//                        if (abiMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
-//                            CStringArray unused;
-//                            loadAbiAndCache(abis, trans.to, false, unused);
-//                        }
-//                        abis.articulateTransaction(&trans);
-//
-//                        for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
-//                            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];
-//                            string_q str = log->Format();
-//                            if (contains(str, bytesOnly)) {
-//                                abiMap[log->address]++;
-//                                if (abiMap[log->address] == 1 || fileExists(getAbiPath(log->address))) {
-//                                    CStringArray unused;
-//                                    loadAbiAndCache(abis, log->address, false, unused);
-//                                }
-//                                abis.articulateLog(log);
-//                            }
-//                        }
-//
-//                        for (size_t j = 0; j < trans.traces.size(); j++) {
-//                            CTrace* trace = (CTrace*)&trans.traces[j];
-//                            abiMap[trace->action.to]++;
-//                            if (abiMap[trace->action.to] == 1 || fileExists(getAbiPath(trace->action.to))) {
-//                                CStringArray unused;
-//                                loadAbiAndCache(abis, trace->action.to, false, unused);
-//                            }
-//                            abis.articulateTrace(trace);
-//                        }
-//                    }
-#endif
-                    if (isJson && shouldDisplay && !first)
-                        cout << ", ";
-                    if (shouldDisplay)
-                        cout << trans.Format() << endl;
-                    nExported++;
-                    first = false;
                 }
+            } else {
+                if (isJson && shouldDisplay && !first)
+                    cout << ", ";
+                if (shouldDisplay)
+                    cout << trans.Format() << endl;
+                nExported++;
+                first = false;
             }
         }
     }
@@ -265,8 +191,12 @@ bool COptions::exportAccounting(void) {
     EXIT_NOMSG(true);
 }
 
+#if 0
+TODO: If an abi file is changed, we should re-articulate.
+#endif
+
 // #if 0
-/// * -------------------------------------------------------------------------
+// * -------------------------------------------------------------------------
 // * This source code is confidential proprietary information which is
 // * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
 // * All Rights Reserved

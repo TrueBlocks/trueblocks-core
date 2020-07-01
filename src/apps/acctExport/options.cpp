@@ -247,8 +247,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(hide, false);
         // SEP4("default field showing: " + defShow);
         string_q show =
-            defShow +
-            (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost,dollars|CTrace:traceAddress" : "");
+            defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
 
         // Load as many ABI files as we have
