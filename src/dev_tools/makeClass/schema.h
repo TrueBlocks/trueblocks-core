@@ -28,9 +28,8 @@ class CSchema : public CBaseNode {
     string_q name;
     string_q selector;
     string_q type;
-    bool hidden;
+    string_q unused;
     uint64_t width;
-    string_q function;
     bool editable;
     uint64_t id;
     uint64_t decimals;
@@ -39,9 +38,8 @@ class CSchema : public CBaseNode {
     string_q cn;
     bool download;
     string_q chart;
-    uint32_t detail;
-    bool hide_empty;
     bool searchable;
+    uint64_t detail;
     bool wide;
     string_q underField;
     string_q onDisplay;
@@ -113,9 +111,8 @@ inline void CSchema::initialize(void) {
     name = "";
     selector = "";
     type = "";
-    hidden = false;
+    unused = "";
     width = 0;
-    function = "";
     editable = false;
     id = 0;
     decimals = 0;
@@ -124,9 +121,8 @@ inline void CSchema::initialize(void) {
     cn = "";
     download = false;
     chart = "";
-    detail = 0;
-    hide_empty = false;
     searchable = false;
+    detail = 0;
     wide = false;
     underField = "";
     onDisplay = "";
@@ -145,9 +141,8 @@ inline void CSchema::duplicate(const CSchema& sc) {
     name = sc.name;
     selector = sc.selector;
     type = sc.type;
-    hidden = sc.hidden;
+    unused = sc.unused;
     width = sc.width;
-    function = sc.function;
     editable = sc.editable;
     id = sc.id;
     decimals = sc.decimals;
@@ -156,9 +151,8 @@ inline void CSchema::duplicate(const CSchema& sc) {
     cn = sc.cn;
     download = sc.download;
     chart = sc.chart;
-    detail = sc.detail;
-    hide_empty = sc.hide_empty;
     searchable = sc.searchable;
+    detail = sc.detail;
     wide = sc.wide;
     underField = sc.underField;
     onDisplay = sc.onDisplay;

@@ -99,19 +99,6 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str(editable);
             }
             break;
-        case 'f':
-            if (fieldName % "function") {
-                return function;
-            }
-            break;
-        case 'h':
-            if (fieldName % "hidden") {
-                return bool_2_Str(hidden);
-            }
-            if (fieldName % "hide_empty") {
-                return bool_2_Str(hide_empty);
-            }
-            break;
         case 'i':
             if (fieldName % "id") {
                 return uint_2_Str(id);
@@ -150,6 +137,9 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'u':
+            if (fieldName % "unused") {
+                return unused;
+            }
             if (fieldName % "underField") {
                 return underField;
             }
@@ -208,29 +198,13 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             if (fieldName % "detail") {
-                detail = (uint32_t)str_2_Uint(fieldValue);
+                detail = str_2_Uint(fieldValue);
                 return true;
             }
             break;
         case 'e':
             if (fieldName % "editable") {
                 editable = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-        case 'f':
-            if (fieldName % "function") {
-                function = fieldValue;
-                return true;
-            }
-            break;
-        case 'h':
-            if (fieldName % "hidden") {
-                hidden = str_2_Bool(fieldValue);
-                return true;
-            }
-            if (fieldName % "hide_empty") {
-                hide_empty = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -281,6 +255,10 @@ bool CSchema::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             break;
         case 'u':
+            if (fieldName % "unused") {
+                unused = fieldValue;
+                return true;
+            }
             if (fieldName % "underField") {
                 underField = fieldValue;
                 return true;
@@ -324,9 +302,8 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> name;
     archive >> selector;
     archive >> type;
-    archive >> hidden;
+    // archive >> unused;
     archive >> width;
-    archive >> function;
     archive >> editable;
     archive >> id;
     archive >> decimals;
@@ -335,9 +312,8 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> cn;
     archive >> download;
     archive >> chart;
-    archive >> detail;
-    archive >> hide_empty;
     archive >> searchable;
+    archive >> detail;
     archive >> wide;
     archive >> underField;
     archive >> onDisplay;
@@ -357,9 +333,8 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << name;
     archive << selector;
     archive << type;
-    archive << hidden;
+    // archive << unused;
     archive << width;
-    archive << function;
     archive << editable;
     archive << id;
     archive << decimals;
@@ -368,9 +343,8 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << cn;
     archive << download;
     archive << chart;
-    archive << detail;
-    archive << hide_empty;
     archive << searchable;
+    archive << detail;
     archive << wide;
     archive << underField;
     archive << onDisplay;
@@ -415,9 +389,9 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "selector", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSchema, "hidden", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "unused", T_TEXT, ++fieldNum);
+    HIDE_FIELD(CSchema, "unused");
     ADD_FIELD(CSchema, "width", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CSchema, "function", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "editable", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "id", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "decimals", T_UNUMBER, ++fieldNum);
@@ -426,9 +400,8 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "cn", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "download", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "chart", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSchema, "detail", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CSchema, "hide_empty", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL, ++fieldNum);
+    ADD_FIELD(CSchema, "detail", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CSchema, "wide", T_BOOL, ++fieldNum);
     ADD_FIELD(CSchema, "underField", T_TEXT, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT, ++fieldNum);

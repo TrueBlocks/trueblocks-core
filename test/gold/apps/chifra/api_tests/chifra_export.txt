@@ -1,37 +1,35 @@
 {
   "data": [
-    [
-      {
-        "hash": "0x0",
-        "blockHash": "0x0",
-        "blockNumber": 0,
-        "transactionIndex": 8794,
-        "timestamp": 1438269960,
-        "from": "0xPrefund",
-        "to": "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed",
-        "value": 4.4e+20,
-        "gas": 0,
-        "gasPrice": 0,
-        "input": "",
-        "isError": 0,
-        "receipt": {
-          "contractAddress": "0x0",
-          "gasUsed": 0,
-          "logs": [],
-          "status": null
-        },
-        "traces": [],
-        "articulatedTx": {},
-        "compressedTx": "0x ( )",
-        "gasCost": 0,
-        "etherGasCost": 0,
-        "function": "",
+    {
+      "hash": "0x0",
+      "blockHash": "0x0",
+      "blockNumber": 0,
+      "transactionIndex": 8794,
+      "timestamp": 1438269960,
+      "from": "0xPrefund",
+      "to": "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed",
+      "value": 4.4e+20,
+      "gas": 0,
+      "gasPrice": 0,
+      "input": "",
+      "isError": 0,
+      "receipt": {
+        "contractAddress": "0x0",
         "gasUsed": 0,
-        "date": "2015-07-30 15:26:00 UTC",
-        "ether": 440,
-        "encoding": ""
-      }
-    ]
+        "logs": [],
+        "status": null
+      },
+      "traces": [],
+      "articulatedTx": {},
+      "compressedTx": "0x ( )",
+      "gasCost": 0,
+      "etherGasCost": 0,
+      "function": "",
+      "gasUsed": 0,
+      "date": "2015-07-30 15:26:00 UTC",
+      "ether": 440,
+      "encoding": ""
+    }
   ],
   "types": [
     {

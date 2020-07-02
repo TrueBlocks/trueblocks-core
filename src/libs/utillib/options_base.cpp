@@ -221,8 +221,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             toAll = (" " + substitute(commandList, "\n", ""));
         commandList = "";
         // The command line also has a --file in it, so add these commands as well
-        string_q contents;
-        asciiFileToString(cmdFileName, contents);
+        string_q contents = substitute(asciiFileToString(cmdFileName), "\t", " ");
         cleanString(contents, false);
         if (contents.empty())
             return usage("Command file '" + cmdFileName + "' is empty. Quitting...");

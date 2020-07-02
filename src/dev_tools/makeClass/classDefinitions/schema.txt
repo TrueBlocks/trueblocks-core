@@ -1,7 +1,23 @@
 [settings]
 class = CSchema
-fields = string name|string selector|string type|bool hidden|uint64 width|\
-            string function|bool editable|uint64 id|uint64 decimals|bool isPill|\
-            string align|string cn|bool download|string chart|uint32 detail|bool hide_empty|bool searchable|bool wide|\
-            string underField|string onDisplay|string onAccept|string onValidate
+fields = string name|\
+        string selector|\
+        string type|\
+        string unused (nowrite)|\
+        uint64 width|\
+        bool editable|\
+        uint64 id|\
+        uint64 decimals|\
+        bool isPill|\
+        string align|\
+        string cn|\
+        bool download|\
+        string chart|\
+        bool searchable|\
+        uint64 detail|\
+        bool wide|\
+        string underField|\
+        string onDisplay|\
+        string onAccept|\
+        string onValidate
 includes = etherlib.h

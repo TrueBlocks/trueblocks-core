@@ -208,6 +208,7 @@ bool COptions::handle_generate_js_pages(void) {
                     expContext().lev--;
                     string_q str = os.str();
                     replaceAll(str, "\"", "'");
+                    replaceAll(str, "'getExportValue'", "getExportValue");
                     replaceAll(str, "'getFieldValue'", "getFieldValue");
                     replaceAll(str, "'useFieldValue'", "useFieldValue");
                     if (contains(str, "onValidate:")) {

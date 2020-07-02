@@ -2577,6 +2577,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x662d5d79849113a5403af776210307a7c82a5267	Grant 245 Stackbrief					false	false	false
 81-Other	0x66342e803943929dc47bca1d625f42c7c725b049	Etherlist_Top		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0x66382ac45b6d8cb4f47685e28b61fbb5486817ec	loganbek		Gitcoin Website			false	false	false
+91-Friends	0x663d3947f03ef5b387992b880ac85940057c13e3	evan.ethereum.eth		Etherscan			false	false	false
 31-Gitcoin Grants:Grant	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 Week In Ethereum News evanvannesseth		https://gitcoin.co/grants/237/week-in-ethereum-news			false	false	false
 81-Other	0x664a2f27c4b6a778c5fac601ba2afc1d4d1adca4	Lastisme		Etherscan.io			false	false	false
 90-DevCon2:Individual	0x665bd53d2a92177e48084baf7db8754a92df90cd	christoph2806		DevCon2 Token Contract			false	false	false
