@@ -23,6 +23,16 @@ bool COptions::handle_export(void) {
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 
+    CMonitorArray fa;
+    for (auto a : addrs) {
+        CMonitor m;
+        m.address = a;
+        m.cntBefore = m.cntAfter = m.getRecordCount();
+        fa.push_back(m);
+    }
+    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
+        EXIT_FAIL("'chifra export' freshen_internal returned false");
+
     if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {
         ostringstream os;
         os << "acctExport " << tool_flags;
@@ -34,16 +44,6 @@ bool COptions::handle_export(void) {
         // clang-format on
         EXIT_NOMSG(true);
     }
-
-    CMonitorArray fa;
-    for (auto a : addrs) {
-        CMonitor m;
-        m.address = a;
-        m.cntBefore = m.cntAfter = m.getRecordCount();
-        fa.push_back(m);
-    }
-    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
-        EXIT_FAIL("'chifra export' freshen_internal returned false");
 
     size_t cnt = 0;
     for (auto addr : addrs) {
