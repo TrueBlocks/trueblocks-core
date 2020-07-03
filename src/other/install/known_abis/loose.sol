@@ -1,4 +1,5 @@
 contract A {
+  function mint(address recipient, uint256 amount) { }
   function changeMembership(address member,uint256 amt,bool,string name) { }
   function doit() { }
   function register(bytes32 label, string subdomain, address subdomainOwner, address resolver, address referrer) { }

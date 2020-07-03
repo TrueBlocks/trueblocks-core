@@ -5036,6 +5036,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0xccad17ba7d5014ab87c3931fe3fe1eadd69ed266	Totle Oasis Wrapper		0xTracker			false	false	false
 31-Gitcoin Grants:Friends	0xccae6ca087db3e69fe8a9d074b969cc2378557cb	iftheyknew		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0xccbf21ba6ef00802ab06637896b799f7101f54a2	Bubo	BUBO	On Chain	18		false	false	false
+50-Tokens:ERC20	0xccc014e5735bbd21928384142e6460b452f63a26	dAppNode Token		Etherscan			false	false	false
 30-Contracts:dAppNode	0xcccbee234112c5ea3370fb707875a8b1cf6b0fcf	dAddNode Package 017		TrueBlocks.io			false	false	false
 81-Other	0xcccd5b66bf6990c7210fd76781469b19bcff9bae	Rps		Etherscan.io			false	false	false
 90-DevCon2:Individual	0xcccdda474611ae104b238bc31402744d9857f843	Alex Miller		DevCon2 Token Contract			false	false	false
@@ -5959,7 +5960,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xf34d76c44160bb58b7f01dcb2517d73bece761c9	grg350		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xf354e2712ca8ee3869db26e57f6494fd21752bb2	shankeraditya		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0xf3586684107ce0859c44aa2b2e0fb8cd8731a15a	KaratBank Coin	KBC	On Chain	7		false	false	false
-31-Gitcoin Grants:Friends	0xf35960302a07022aba880dffaec2fdd64d5bf1c1	Giveth Wallet Owner 2 eduadiez		Gitcoin Website			false	false	false
+31-Gitcoin Grants:Friends	0xf35960302a07022aba880dffaec2fdd64d5bf1c1	Edua Diaz (dAppNode)		Etherscan			false	false	false
 81-Other:DAO Related	0xf35e2cc8e6523d683ed44870f5b7cc785051a77d	Control_Account_0xf35e2c		The Dao			false	false	false
 31-Gitcoin Grants:Friends	0xf36aef7ad514e9bff30ef24734b4730cffc76501	herculeeza		Gitcoin Website			false	false	false
 81-Other	0xf36b0f457999cbbb436eeb28dbb5944bfc3f99de	Tickingbomb		Etherscan.io			false	false	false

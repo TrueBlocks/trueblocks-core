@@ -1,5 +1,22 @@
 [
   {
+    "name": "mint",
+    "type": "function",
+    "signature": "mint(address,uint256)",
+    "encoding": "0x40c10f19",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
     "name": "changeMembership",
     "type": "function",
     "signature": "changeMembership(address,uint256,bool,string)",
