@@ -19,7 +19,7 @@ bool COptions::exportAccounting(void) {
 
     CReconciliation lastStatement;
     if (items.size() > 0 && first_record != 0)
-        lastStatement.endBal = getBalanceAt(accountedFor, items[0].blk - 1);
+        lastStatement.endBal = getBalanceAt(expContext().accountedFor, items[0].blk - 1);
 
     bool first = true;
     for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
@@ -46,7 +46,7 @@ bool COptions::exportAccounting(void) {
                     nums.bn = trans.blockNumber;
                     nums.ts = trans.timestamp;
                     CStringArray corrections;
-                    nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
+                    nums.reconcile(corrections, lastStatement, next, &trans);
                     // trans.reconciliations.clear();
                     trans.reconciliations.push_back(nums);
                     trans.statements.clear();
@@ -96,7 +96,7 @@ bool COptions::exportAccounting(void) {
                     nums.bn = trans.blockNumber;
                     nums.ts = trans.timestamp;
                     CStringArray corrections;
-                    nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
+                    nums.reconcile(corrections, lastStatement, next, &trans);
                     CReconciliationOutput st(nums);
                     trans.reconciliations.push_back(nums);
                     trans.statements.push_back(st);
@@ -283,7 +283,7 @@ TODO: If an abi file is changed, we should re-articulate.
 //                CReconciliation nums;
 //                nums.blockNum = trans.blockNumber;
 //                CStringArray corrections;
-//                nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
+//                nums.reconcile(corrections, lastStatement, next, &trans);
 //                trans.reconciliations.push_back(nums);
 //                CReconciliationOutput st(nums);
 //                trans.statements.push_back(st);
@@ -359,7 +359,7 @@ bool COptions::exportAccounting(void) {
     nCacheItemsRead = 0;
     nExported = 0;
 
-    string_q readFilename = getMonitorCach(accountedFor);
+    string_q readFilename = getMonitorCach(expContext().accountedFor);
     bool readFileExists = fileExists(readFilename);
 
     LOG8(string_q(120, '+'));
@@ -412,7 +412,7 @@ bool COptions::exportAccounting(void) {
     // We open the file in staging to protect it from interruption...
     LOG8(string_q(120, '-'));
 
-    string_q stagingFilename = getMonitorCach(accountedFor);
+    string_q stagingFilename = getMonitorCach(expContext().accountedFor);
     bool stagingFileExists = false;
     if (readFileExists) {
         copyFile(readFilename, stagingFilename);
@@ -435,7 +435,7 @@ bool COptions::exportAccounting(void) {
     } else {
         // Otherwise go to the end of the file.
         archive.Seek(0, SEEK_END);
-        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(accountedFor, lastStatement.blockNum);
+        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(expContext().accountedFor, lastStatement.blockNum);
     }
 
     LOG8(string_q(120, '='));
@@ -472,7 +472,7 @@ bool COptions::exportAccounting(void) {
             CReconciliation nums;
             nums.blockNum = trans.blockNumber;
             CStringArray corrections;
-            nums.reconcile(corrections, lastStatement, accountedFor, next, &trans);
+            nums.reconcile(corrections, lastStatement, next, &trans);
             lastStatement = nums;
             CReconciliationOutput st(nums);
             trans.statements.push_back(st);
@@ -510,7 +510,7 @@ bool COptions::exportAccounting(void) {
     if (nCacheItemsWritten > nCacheItemsRead) {
         // If we wrote anything, copy the file to production
         lockSection(true);
-        string_q prodFilename = getMonitorCach(accountedFor);
+        string_q prodFilename = getMonitorCach(expContext().accountedFor);
         if (fileExists(stagingFilename))
             moveFile(stagingFilename, prodFilename);
         lockSection(false);

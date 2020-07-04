@@ -11,7 +11,7 @@
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(addr_count_map_t& map, const address_t& addr) {
-    if (addr == accountedFor || isZeroAddr(addr))
+    if (addr == expContext().accountedFor || isZeroAddr(addr))
         return;
     map[addr]++;
 }

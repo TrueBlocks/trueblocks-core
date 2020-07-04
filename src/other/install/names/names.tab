@@ -222,6 +222,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x06d57af6792edf066046aaf958d92ae5558e0e56	jasonsomensatto		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x06dbfdbfda84eabaea177760092dc22ab1d8f372	samajammin		Gitcoin Website			false	false	false
 34-Humanity DAO	0x06e198fa064f63fccfd7c3dde06a25c6236c72ce	BraveBards realDonaldTrump		https://www.humanitydao.org/humans			false	false	false
+30-Contract	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry		Etherscan			false	false	false
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS	On Chain	18	FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources.	false	false	false
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender		TrueBlocks.io			false	false	false
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach		https://gitcoin.co/grants/141/metamoneymarket			false	false	false
@@ -5288,6 +5289,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xd80db3f58fd4c990571264b2f3285401626cb15a	innovator26		https://kickback.events/			false	false	false
 75-Early Actors	0xd81c0676a709c835d46771a49db31af66c2dd87f	Miner_0063_93		OnChain			false	false	false
 34-Humanity DAO	0xd827bf41c1ec98be2e2b450a702ae4674a230320	cryptoekof		https://www.humanitydao.org/humans			false	false	false
+30-Contract	0xd8282a355383a6513eccc8a16f990ba0026c2d1a	Zerion: Deployer		Etherscan			false	false	false
 50-Tokens:ERC20	0xd82df0abd3f51425eb15ef7580fda55727875f14	DAV Token	DAV	On Chain	18	Blockchain-based transportation protocol enabling a decentralized, peer to peer, global transportation network	false	false	false
 81-Other:DAO Related	0xd838f9c9792bf8398e1f5fbfbd3b43c5a86445aa	TestDAOonMainChain		The Dao			false	false	false
 30-Contracts:Giveth	0xd84069ad1d0b94c041d2389e791e1453d7008c5a	Tennagraph Giveth related Yes Vote on ProgPow		Giveth website			false	false	false

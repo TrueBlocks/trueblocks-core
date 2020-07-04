@@ -470,7 +470,7 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcile(const CStringArray& corrections, const CReconciliation& lastStatement,
-                                const address_t& accountingFor, blknum_t nextBlock, const CTransaction* trans) {
+                                blknum_t nextBlock, const CTransaction* trans) {
     // LOG4(lastStatement.Format());
     // LOG4(Format());
 
@@ -485,13 +485,13 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     reconciliationType = "";
 
     // We need to account for both the case where the account is the sender...
-    if (trans->from == accountingFor) {
+    if (trans->from == expContext().accountedFor) {
         outflow = trans->isError ? 0 : trans->value;
         gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
     // ... and/or the receiver...
-    if (trans->to == accountingFor) {
+    if (trans->to == expContext().accountedFor) {
         if (trans->from == "0xPrefund") {
             prefundInflow = trans->value;
         } else if (trans->from == "0xBlockReward" || trans->from == "0xUncleReward") {
@@ -502,8 +502,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(accountingFor, bn == 0 ? 0 : bn - 1);
-    endBal = getBalanceAt(accountingFor, bn);
+    begBal = getBalanceAt(expContext().accountedFor, bn == 0 ? 0 : bn - 1);
+    endBal = getBalanceAt(expContext().accountedFor, bn);
 
     // If the user has given us corrections, use them...
     if (corrections.size() > 0) {
@@ -531,7 +531,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
     // doing so without having been forced to causes a huge performance penalty.)
-    if (reconcileUsingTraces(lastStatement, accountingFor, nextBlock, trans))
+    if (reconcileUsingTraces(lastStatement, nextBlock, trans))
         return true;
 
     // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
@@ -562,7 +562,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // that case.
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
-        begBal = getBalanceAt(accountingFor, bn == 0 ? 0 : bn - 1);
+        begBal = getBalanceAt(expContext().accountedFor, bn == 0 ? 0 : bn - 1);
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
@@ -591,7 +591,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
-        endBal = getBalanceAt(accountingFor, bn);
+        endBal = getBalanceAt(expContext().accountedFor, bn);
         endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 
@@ -621,8 +621,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, const address_t& accountingFor,
-                                           blknum_t nextBlock, const CTransaction* trans) {
+bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock, const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
@@ -634,25 +633,25 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
     for (auto trace : trans->traces) {
         bool isSelfDestruct = trace.action.selfDestructed != "";
         if (isSelfDestruct) {
-            if (trace.action.refundAddress == accountingFor) {
+            if (trace.action.refundAddress == expContext().accountedFor) {
                 // receives self destructed ether
                 selfDestructInflow += trace.action.balance;
             }
 
             // do not collapse. It may be both
-            if (trace.action.selfDestructed == accountingFor) {
+            if (trace.action.selfDestructed == expContext().accountedFor) {
                 // the smart contract that is being killed and thereby loses the eth
                 selfDestructOutflow += trace.action.balance;
             }
 
         } else {
-            if (trace.action.from == accountingFor) {
+            if (trace.action.from == expContext().accountedFor) {
                 intOutflow += trans->isError ? 0 : trace.action.value;
                 // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
             }
 
             // do not collapse. It may be both
-            if (trace.action.to == accountingFor) {
+            if (trace.action.to == expContext().accountedFor) {
                 intInflow += trans->isError ? 0 : trace.action.value;
             }
         }

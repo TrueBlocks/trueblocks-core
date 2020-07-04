@@ -36,6 +36,7 @@ class CExportContext {
     bool isParity;
     format_t exportFmt;
     CNameValueMap fmtMap;
+    address_t accountedFor;
     map<string_q, const CRuntimeClass*> types;
     CExportContext(void);
 };

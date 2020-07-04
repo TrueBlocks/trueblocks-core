@@ -71,7 +71,6 @@ class COptions : public COptionsBase {
     blknum_t latestBlock;
     time_q oldestMonitor;
 
-    address_t accountedFor;
     string_q bytesOnly;
 
     uint64_t nProcessing;

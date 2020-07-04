@@ -325,8 +325,8 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE("Do not use the --accounting option with --freshen. Quitting...");
             if (appearances || logs || traces)
                 EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
-            accountedFor = addrs[0];
-            bytesOnly = substitute(accountedFor, "0x", "");
+            expContext().accountedFor = addrs[0];
+            bytesOnly = substitute(expContext().accountedFor, "0x", "");
             articulate = true;
             manageFields("CTransaction:statements", true);
             manageFields("CTransaction:reconciliations", false);
@@ -385,7 +385,7 @@ void COptions::Init(void) {
     counts.clear();
     items.clear();
 
-    accountedFor = "";
+    expContext().accountedFor = "";
     bytesOnly = "";
 
     // We don't clear these because they are part of meta data
