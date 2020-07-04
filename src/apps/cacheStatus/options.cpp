@@ -186,7 +186,7 @@ void COptions::Init(void) {
     getlogin_r(username, LOGIN_NAME_MAX);
     if (!getEnvStr("DOCKER_MODE").empty()) {
         memset(username, 0, LOGIN_NAME_MAX);
-        strncpy(username, "nobody", 6);
+        strncpy(username, "nobody", 7);
     }
 
     if (isTestMode()) {
