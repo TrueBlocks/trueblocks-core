@@ -179,6 +179,10 @@ bool COptions::parseArguments(string_q& command) {
         write_opt |= (CACHE_BYUSER);
     }
 
+    // avoid warnings on Ubuntu 20.04
+    if (staging) cerr << "";
+    if (unripe) cerr << "";
+
     // ... but may not be done. In loadAllAppearances, if write_opt is not set by user, we set it to cache transactions
     // or traces if there are less than 1,000 exported items
 
@@ -436,7 +440,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
-        bzero(buffer, nRecords * sizeof(CAppearance_base));
+        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));
 
         CArchive txCache(READING_ARCHIVE);
         if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {

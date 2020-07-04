@@ -97,6 +97,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // removes warning on Ubuntu 20.04
+    if (report) cerr << "";
+
     establishFolder(getCachePath("tmp/"));
     establishFolder(getCachePath("slurps/"));
     establishFolder(getCachePath("blocks/"));

@@ -595,7 +595,7 @@ bool CMonitor::loadAndSort(CAppearanceArray& items) {
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
-        bzero(buffer, nRecords * sizeof(CAppearance_base));
+        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));
         CArchive txCache(READING_ARCHIVE);
         if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
