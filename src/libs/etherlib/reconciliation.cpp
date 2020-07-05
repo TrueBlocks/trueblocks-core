@@ -621,7 +621,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock, const CTransaction* trans) {
+bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
+                                           const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be

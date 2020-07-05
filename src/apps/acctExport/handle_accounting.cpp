@@ -435,7 +435,8 @@ bool COptions::exportAccounting(void) {
     } else {
         // Otherwise go to the end of the file.
         archive.Seek(0, SEEK_END);
-        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(expContext().accountedFor, lastStatement.blockNum);
+        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(expContext().accountedFor,
+lastStatement.blockNum);
     }
 
     LOG8(string_q(120, '='));

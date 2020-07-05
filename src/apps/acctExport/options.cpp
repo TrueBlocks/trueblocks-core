@@ -180,8 +180,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // avoid warnings on Ubuntu 20.04
-    if (staging) cerr << "";
-    if (unripe) cerr << "";
+    if (staging)
+        cerr << "";
+    if (unripe)
+        cerr << "";
 
     // ... but may not be done. In loadAllAppearances, if write_opt is not set by user, we set it to cache transactions
     // or traces if there are less than 1,000 exported items

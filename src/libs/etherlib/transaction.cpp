@@ -648,11 +648,13 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return ret;
                 }
                 if (fieldIn % "classification1") {
-                    if (expContext().accountedFor.empty()) return "";
+                    if (expContext().accountedFor.empty())
+                        return "";
                     return (expContext().accountedFor == tra->to ? "Income" : "Expense");
                 }
                 if (fieldIn % "classification2") {
-                    if (expContext().accountedFor.empty()) return "";
+                    if (expContext().accountedFor.empty())
+                        return "";
                     return (expContext().accountedFor == tra->to ? "incoming" : "outgoing");
                 }
                 break;
