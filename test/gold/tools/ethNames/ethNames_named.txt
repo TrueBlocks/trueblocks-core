@@ -150,6 +150,7 @@ ethNames --named --fmt txt --no_header
 31-Gitcoin Grants:Friends	0x06c04508075c125cd65daf686177fee2a945e2d8	Name 0x06c04508
 75-Early Actors	0x06d138312754bdeb5c1175f47ce00620c480e9c9	Miner_0067_90
 31-Gitcoin Grants:Friends	0x06dbfdbfda84eabaea177760092dc22ab1d8f372	Name 0x06dbfdbf
+30-Contract	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach
@@ -200,4 +201,3 @@ ethNames --named --fmt txt --no_header
 31-Gitcoin Grants:Friends	0x09dcabf773a87ff1b1b9885576938f0dcc1075db	Name 0x09dcabf7
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK		18
 30-Contracts	0x0a236b41add0073df05eac5fc8505ad745c7859d	1inch Exchange
-90-DevCon2:Individual	0x0a43edfe106d295e7c1e591a4b04b5598af9474c	PiperDevCon2Token

@@ -201,6 +201,14 @@
       "output_names": ""
     },
     {
+      "name": "",
+      "type": "function",
+      "signature": "()",
+      "encoding": "",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "SubdomainCreated",
       "type": "event",
       "signature": "SubdomainCreated(address,address,string,string)",
@@ -1814,14 +1822,6 @@
       "signature": "_asyncTransfer(address,uint256)",
       "encoding": "0x1bddcf48",
       "input_names": "dest,amount,",
-      "output_names": ""
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,address)",
-      "encoding": "",
-      "input_names": "ensAddr,resolverAddr,",
       "output_names": ""
     },
     {
@@ -3881,14 +3881,6 @@
       "output_names": "r,"
     },
     {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address)",
-      "encoding": "",
-      "input_names": "_ens,",
-      "output_names": ""
-    },
-    {
       "name": "sireAllowedToAddress",
       "type": "function",
       "signature": "sireAllowedToAddress(uint256)",
@@ -4031,14 +4023,6 @@
       "encoding": "0x48a0c8dd",
       "input_names": "",
       "output_names": "ret_0,"
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,bytes32,address)",
-      "encoding": "",
-      "input_names": "_ens,_node,_resolver,",
-      "output_names": ""
     },
     {
       "name": "_releasableAmount",
@@ -4214,14 +4198,6 @@
       "signature": "_registerInterfaceForAddress(bytes32,address)",
       "encoding": "0x4c40bb60",
       "input_names": "interfaceHash,account,",
-      "output_names": ""
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(string,string)",
-      "encoding": "",
-      "input_names": "_contractName,_founderName,",
       "output_names": ""
     },
     {
@@ -4926,14 +4902,6 @@
       "signature": "deploy(string,uint256,uint256,uint256)",
       "encoding": "0x58948f07",
       "input_names": "val_0,val_1,val_2,val_3,",
-      "output_names": ""
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,address,bytes32,uint256)",
-      "encoding": "",
-      "input_names": "_ens,_previousRegistrar,_baseNode,_transferPeriodEnds,",
       "output_names": ""
     },
     {
@@ -6089,6 +6057,14 @@
       "output_names": ""
     },
     {
+      "name": "from the proxy admin",
+      "type": "",
+      "signature": "from the proxy admin(;)",
+      "encoding": "0x6ec0b74e",
+      "input_names": "val_0,",
+      "output_names": ""
+    },
+    {
       "name": "PaymentReceived",
       "type": "event",
       "signature": "PaymentReceived(address,uint256)",
@@ -7097,14 +7073,6 @@
       "output_names": ""
     },
     {
-      "name": "",
-      "type": "function",
-      "signature": "()",
-      "encoding": "",
-      "input_names": "",
-      "output_names": ""
-    },
-    {
       "name": "getCombinedTokenArray",
       "type": "function",
       "signature": "getCombinedTokenArray()",
@@ -7601,14 +7569,6 @@
       "output_names": "ret_0,"
     },
     {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,address,uint256,uint256)",
-      "encoding": "",
-      "input_names": "_base,_prices,_minCommitmentAge,_maxCommitmentAge,",
-      "output_names": ""
-    },
-    {
       "name": "withdrawAuctionBalances",
       "type": "function",
       "signature": "withdrawAuctionBalances()",
@@ -7983,14 +7943,6 @@
       "encoding": "0x988e6595",
       "input_names": "",
       "output_names": "ret_0,"
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address,bytes32,uint256)",
-      "encoding": "",
-      "input_names": "_ens,_rootNode,_startDate,",
-      "output_names": ""
     },
     {
       "name": "OwnerAdded",
@@ -9198,14 +9150,6 @@
       "signature": "Data(bytes,uint256,string)",
       "encoding": "0xaf235354a0a47c91ee171961326335cb2d1a8e55b8a89859b0e61eb049e50ea0",
       "input_names": "data,integerValue,stringValue,",
-      "output_names": ""
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address[],uint256,uint256)",
-      "encoding": "",
-      "input_names": "_owners,_required,_daylimit,",
       "output_names": ""
     },
     {
@@ -11745,14 +11689,6 @@
       "output_names": "ret_0,"
     },
     {
-      "name": "from the proxy admin",
-      "type": "",
-      "signature": "from the proxy admin(;)",
-      "encoding": "0x6ec0b74e",
-      "input_names": "val_0,",
-      "output_names": ""
-    },
-    {
       "name": "ContenthashChanged",
       "type": "event",
       "signature": "ContenthashChanged(bytes32,bytes)",
@@ -12967,14 +12903,6 @@
       "encoding": "0xfca247ac",
       "input_names": "id,owner,duration,",
       "output_names": "val_0,"
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "signature": "(address[],uint256)",
-      "encoding": "",
-      "input_names": "_owners,_required,",
-      "output_names": ""
     },
     {
       "name": "transferModule",

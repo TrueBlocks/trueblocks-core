@@ -1351,6 +1351,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contract",
+      "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
+      "name": "Zerion: Adapter Registry",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0707681f344deb24184037fc0228856f2137b02e",
       "name": "FNKOSToken",
@@ -1797,15 +1806,6 @@
       "name": "1inch Exchange",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x0a43edfe106d295e7c1e591a4b04b5598af9474c",
-      "name": "PiperDevCon2Token",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
       "decimals": "0",
       "description": ""
     }

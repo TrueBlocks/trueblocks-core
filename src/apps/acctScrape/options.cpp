@@ -117,6 +117,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // Mark the range...
     scanRange = make_pair(nextBlockToVisit, lastBlockToVisit);
+    if (isTestMode()) {
+        scanRange.first = max(scanRange.first, start);
+        scanRange.second = max(scanRange.second, end);
+    }
 
     // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
     if (latest < scanRange.first) {

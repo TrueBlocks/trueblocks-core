@@ -3,6 +3,7 @@ ethNames --tags
 tags
 
 20-Friends
+30-Contract
 30-Contracts
 30-Contracts:Giveth
 30-Contracts:Moloch

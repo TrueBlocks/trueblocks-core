@@ -219,6 +219,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contract",
+    "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
+    "name": "Zerion: Adapter Registry",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "40-Exchanges",
     "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
     "name": "Uniswap: ANT",
@@ -2398,18 +2410,6 @@ ethNames Ether --expand --verbose --fmt json
     "source": "",
     "decimals": 0,
     "description": "",
-    "is_custom": false,
-    "is_prefund": false
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
-    "name": "EOS",
-    "symbol": "EOS",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Infrastructure for Decentralized Applications",
     "is_custom": false,
     "is_prefund": false
   }], "types": [

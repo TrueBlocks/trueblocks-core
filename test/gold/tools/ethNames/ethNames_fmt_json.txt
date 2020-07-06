@@ -1388,6 +1388,15 @@ ethNames --named --custom --owned --fmt json
     "description": ""
   },
   {
+    "tags": "30-Contract",
+    "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
+    "name": "Zerion: Adapter Registry",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0707681f344deb24184037fc0228856f2137b02e",
     "name": "FNKOSToken",
@@ -1798,15 +1807,6 @@ ethNames --named --custom --owned --fmt json
     "name": "Name 0x0982a0bf",
     "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "40-Exchanges",
-    "address": "0x09cabec1ead1c0ba254b09efb3ee13841712be14",
-    "name": "Uniswap: DAI",
-    "symbol": "",
-    "source": "TrueBlocks.io",
     "decimals": 0,
     "description": ""
   }], "types": [

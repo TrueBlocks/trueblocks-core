@@ -29,18 +29,20 @@ compressedTx        	1023	1	131122	T_TEXT TS_STRING
 statements          	1024	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 finalized           	1025	1	65556	T_BOOL TS_NUMERAL
 confirmations       	1026	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1028	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1029	1	131122	T_TEXT TS_STRING
-events              	1030	1	131122	T_TEXT TS_STRING
-price               	1031	1	131122	T_TEXT TS_STRING
-gasUsed             	1032	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1033	1	262149	T_DATE TS_DATE
-datesh              	1034	1	262149	T_DATE TS_DATE
-time                	1035	1	262149	T_DATE TS_DATE
-age                 	1036	1	262149	T_DATE TS_DATE
-ether               	1037	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1038	1	131122	T_TEXT TS_STRING
+classification1     	1027	1	131122	T_TEXT TS_STRING
+classification2     	1028	1	131122	T_TEXT TS_STRING
+gasCost             	1029	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1030	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1031	1	131122	T_TEXT TS_STRING
+events              	1032	1	131122	T_TEXT TS_STRING
+price               	1033	1	131122	T_TEXT TS_STRING
+gasUsed             	1034	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1035	1	262149	T_DATE TS_DATE
+datesh              	1036	1	262149	T_DATE TS_DATE
+time                	1037	1	262149	T_DATE TS_DATE
+age                 	1038	1	262149	T_DATE TS_DATE
+ether               	1039	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1040	1	131122	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -92,18 +94,20 @@ compressedTx        	1023	1	131122	T_TEXT TS_STRING
 statements          	1024	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 finalized           	1025	1	65556	T_BOOL TS_NUMERAL
 confirmations       	1026	1	65561	T_NUMBER TS_NUMERAL
-gasCost             	1027	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1028	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1029	1	131122	T_TEXT TS_STRING
-events              	1030	1	131122	T_TEXT TS_STRING
-price               	1031	1	131122	T_TEXT TS_STRING
-gasUsed             	1032	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1033	1	262149	T_DATE TS_DATE
-datesh              	1034	1	262149	T_DATE TS_DATE
-time                	1035	1	262149	T_DATE TS_DATE
-age                 	1036	1	262149	T_DATE TS_DATE
-ether               	1037	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1038	1	131122	T_TEXT TS_STRING
+classification1     	1027	1	131122	T_TEXT TS_STRING
+classification2     	1028	1	131122	T_TEXT TS_STRING
+gasCost             	1029	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1030	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1031	1	131122	T_TEXT TS_STRING
+events              	1032	1	131122	T_TEXT TS_STRING
+price               	1033	1	131122	T_TEXT TS_STRING
+gasUsed             	1034	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1035	1	262149	T_DATE TS_DATE
+datesh              	1036	1	262149	T_DATE TS_DATE
+time                	1037	1	262149	T_DATE TS_DATE
+age                 	1038	1	262149	T_DATE TS_DATE
+ether               	1039	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1040	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -136,18 +140,20 @@ compressedTx        	1023	0	131122	T_TEXT TS_STRING
 statements          	1024	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 finalized           	1025	0	65556	T_BOOL TS_NUMERAL
 confirmations       	1026	0	65561	T_NUMBER TS_NUMERAL
-gasCost             	1027	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1028	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1029	0	131122	T_TEXT TS_STRING
-events              	1030	0	131122	T_TEXT TS_STRING
-price               	1031	0	131122	T_TEXT TS_STRING
-gasUsed             	1032	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1033	0	262149	T_DATE TS_DATE
-datesh              	1034	0	262149	T_DATE TS_DATE
-time                	1035	0	262149	T_DATE TS_DATE
-age                 	1036	0	262149	T_DATE TS_DATE
-ether               	1037	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1038	0	131122	T_TEXT TS_STRING
+classification1     	1027	0	131122	T_TEXT TS_STRING
+classification2     	1028	0	131122	T_TEXT TS_STRING
+gasCost             	1029	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1030	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1031	0	131122	T_TEXT TS_STRING
+events              	1032	0	131122	T_TEXT TS_STRING
+price               	1033	0	131122	T_TEXT TS_STRING
+gasUsed             	1034	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1035	0	262149	T_DATE TS_DATE
+datesh              	1036	0	262149	T_DATE TS_DATE
+time                	1037	0	262149	T_DATE TS_DATE
+age                 	1038	0	262149	T_DATE TS_DATE
+ether               	1039	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1040	0	131122	T_TEXT TS_STRING
 {
   "schema": 7000,
   "deleted": false,

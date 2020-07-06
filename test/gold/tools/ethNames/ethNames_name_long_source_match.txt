@@ -19,6 +19,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4		Etherscan			false	false	false
 31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group		https://gitcoin.co/grants/75/ethereum-dev-fund-working-group			false	false	false
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		Etherscan			false	false	false
+30-Contract	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry		Etherscan			false	false	false
 40-Exchanges	0x077d52b047735976dfda76fef74d4d988ac25196	Uniswap: ANT	ANT	Etherscan			false	false	false
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	On Chain	18	IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.	false	false	false
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	On Chain	8	DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.	false	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x84487e50db6317e5e834d89d0e81fd873462ea47	GU: Epic Pack Three		Etherscan			false	false	false
 50-Tokens:ERC20	0x859a9c0b44cb7066d956a958b0b82e54c9e44b4b	iEthereum	iETH	On Chain	8	iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.	false	false	false
 31-Gitcoin Grants:Grant	0x85cab7143ff3c01b93e88f5b017692374bb939c2	Grant 223 Ethereum Magicians Magician's Registration					false	false	false
-50-Tokens	0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0	EOS	EOS	Etherscan.io		Infrastructure for Decentralized Applications	false	false	false

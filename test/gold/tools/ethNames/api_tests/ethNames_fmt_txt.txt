@@ -153,6 +153,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0x06c04508075c125cd65daf686177fee2a945e2d8	Name 0x06c04508
 75-Early Actors	0x06d138312754bdeb5c1175f47ce00620c480e9c9	Miner_0067_90
 31-Gitcoin Grants:Friends	0x06dbfdbfda84eabaea177760092dc22ab1d8f372	Name 0x06dbfdbf
+30-Contract	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals
 50-Tokens	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT		18
 80-Malicious	0x0978b496a1635e4a0b4ff867569cf43ee030e967	Possibly Malicious 0x097
 31-Gitcoin Grants:Friends	0x0982a0bf061f3cec2a004b4d2c802f479099c971	Name 0x0982a0bf
-40-Exchanges	0x09cabec1ead1c0ba254b09efb3ee13841712be14	Uniswap: DAI

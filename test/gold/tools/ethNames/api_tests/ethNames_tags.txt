@@ -7,6 +7,9 @@
       "tags": "20-Friends"
     },
     {
+      "tags": "30-Contract"
+    },
+    {
       "tags": "30-Contracts"
     },
     {
