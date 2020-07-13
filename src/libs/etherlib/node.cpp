@@ -1084,6 +1084,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     os << "]";  // finish the data array (or the error array)...
 
     bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
+    bool showProgress = getEnvStr("NO_PROGRESS") != "true";
     if (showSchemas) {
         if (!errStrs.str().empty())
             os << ", \"errors\": [\n" << errStrs.str() << "\n]";
@@ -1127,13 +1128,14 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;
     os << ", \"meta\": {";
-    os << "\"unripe\": " << dispNumOrHex(unripe);
-    os << ","
-       << "\"ripe\": " << dispNumOrHex(ripe);
-    os << ","
-       << "\"staging\": " << dispNumOrHex(staging);
-    os << ","
-       << "\"finalized\": " << dispNumOrHex(finalized);
+    if (showProgress) {
+        os << "\"unripe\": " << dispNumOrHex(unripe) << ",";
+        os << "\"ripe\": " << dispNumOrHex(ripe) << ",";
+        os << "\"staging\": " << dispNumOrHex(staging) << ",";
+        os << "\"finalized\": " << dispNumOrHex(finalized);
+    } else {
+        os << "\"progress\": \"not reported\"";
+    }
     if (showSchemas)
         os << ","
            << "\"client\": " << dispNumOrHex(client);
