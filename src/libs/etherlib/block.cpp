@@ -469,12 +469,12 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    bloom_t removed;
+    biguint_t removed;
     if (m_schema <= getVersionNum(0, 3, 0)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed;  // used to be logsBloom
+        archive >> removed;  // used to be logsB loom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;

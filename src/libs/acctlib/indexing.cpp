@@ -83,7 +83,7 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     hashbytes_t hash = hash_2_Bytes(versionHash);
 
-    CNewBloomArray blooms;
+    CBloomArray blooms;
 
     cerr << "\tExtracting addresses...";
     CArchive archive(WRITING_ARCHIVE);
@@ -141,9 +141,9 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     cerr << "\tFinalizing data..." << endl;
     lockSection(true);  // disallow control+c
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
-    writeNewBloom(bloomFile, blooms);  // write the bloom file
-    copyFile(tmpFile, outFn);          // move the index file
-    ::remove(tmpFile.c_str());         // remove the tmp file
+    writeBloomToBinary(bloomFile, blooms);  // write the bloom file
+    copyFile(tmpFile, outFn);               // move the index file
+    ::remove(tmpFile.c_str());              // remove the tmp file
     lockSection(false);
 
     cerr << "\t" << greenCheck << " Binary file created..." << endl;

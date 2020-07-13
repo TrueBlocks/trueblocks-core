@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "getBloom - Please choose either --block_only or --receipt_only, not both. Quitting..."
-  ]
-}

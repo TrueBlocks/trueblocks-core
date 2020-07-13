@@ -28,7 +28,6 @@ using gas_t = uint64_t;
 using address_t = string_q;
 using hash_t = string_q;
 using ipfshash_t = string_q;
-using bloom_t = biguint_t;
 using wei_t = biguint_t;
 using topic_t = string_q;
 using uchar_t = unsigned char;
@@ -45,7 +44,6 @@ using CIntArray = vector<int64_t>;
 using CBigUintArray = vector<biguint_t>;
 using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
-using CBloomArray = vector<bloom_t>;
 using CTopicArray = vector<topic_t>;
 
 //-------------------------------------------------------------------------
@@ -61,7 +59,6 @@ extern biguint_t topic_2_BigUint(const topic_t& topic);
 extern address_t str_2_Addr(const string_q& str);
 extern hash_t str_2_Hash(const string_q& str);
 extern biguint_t str_2_Wei(const string_q& str);
-extern bloom_t str_2_Bloom(const string_q& str);
 inline topic_t str_2_Topic(const string_q& str) {
     return str;
 }
@@ -80,7 +77,6 @@ extern string_q bnu_2_Str(const biguint_t& bu);
 extern string_q addr_2_Str(const address_t& addr);
 extern string_q hash_2_Str(const hash_t& hash);
 extern string_q wei_2_Str(const wei_t& wei);
-extern string_q bloom_2_Str(const bloom_t& bloom);
 inline string_q topic_2_Str(const topic_t& topic) {
     return topic;
 }
@@ -100,9 +96,6 @@ extern string_q bnu_2_Hex(const biguint_t& bu);
 extern string_q uint_2_Hex(uint64_t num);
 extern string_q wei_2_Ether(const string_q& str);
 extern string_q wei_2_Ether(biguint_t val);
-extern string_q bloom_2_Bytes(const bloom_t& bl);
-extern string_q bloom_2_Bits(const bloom_t& bl);
-extern string_q bloom_2_Bar(const bloom_t& bl);
 extern string_q byte_2_Bits(uint8_t ch);
 
 //--------------------------------------------------------------------

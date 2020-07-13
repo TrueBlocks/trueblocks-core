@@ -29,7 +29,7 @@ class CNewReceipt : public CBaseNode {
     address_t contractAddress;
     gas_t gasUsed;
     CLogEntryArray logs;
-    bloom_t logsBloom;
+    string_q logsBloom;
     bool isError;
 
   public:
@@ -99,7 +99,7 @@ inline void CNewReceipt::initialize(void) {
     contractAddress = "";
     gasUsed = 0;
     logs.clear();
-    logsBloom = 0;
+    logsBloom = "";
     isError = false;
 
     // EXISTING_CODE

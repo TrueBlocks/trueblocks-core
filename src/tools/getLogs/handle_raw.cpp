@@ -14,7 +14,7 @@
     string_q fields =
         "CBlock:blockHash,blockNumber|"
         "CTransaction:to,from,blockHash,blockNumber|"
-        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,logsBloom,root|"
+        "CReceipt:to,from,blockHash,blockNumber,transactionHash,transactionIndex,cumulativeGasUsed,root|"
         "CLogEntry:blockHash,blockNumber,transactionHash,transactionIndex,transactionLogIndex,removed,type";
     manageFields(fields, true);
     string_q result;

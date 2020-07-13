@@ -49,61 +49,6 @@ TEST_F(CThisTest, Test01) {
 }
 }
 
-//------------------------------------------------------------------------
-TEST_F(CThisTest, Test02) {
-    cerr << "Running " << testName << "\n";
-
-#define TT(a)                                                                                                          \
-    {                                                                                                                  \
-        cout                                                                                                           \
-            << "\t" << padRight(#a + string_q(":"), 14)                                                                \
-            << substitute(                                                                                             \
-                   bloom_2_Bytes(a),                                                                                   \
-                   "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" \
-                   "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" \
-                   "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" \
-                   "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" \
-                   "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",   \
-                   "0x")                                                                                               \
-            << endl;                                                                                                   \
-    }
-
-    cout << "Attributes" << endl;
-    TT(TS_NUMERAL)
-    TT(TS_STRING)
-    TT(TS_DATE)
-    TT(TS_ARRAY)
-    TT(TS_OBJECT)
-    TT(TS_POINTER)
-    TT(TS_BIGNUM)
-    TT(TS_INTEGER)
-    cout << "Types" << endl;
-    TT(T_DATE)
-    TT(T_TIME)
-    TT(T_TIMESTAMP)
-    TT(T_BOOL)
-    TT(T_NUMBER)
-    TT(T_UNUMBER)
-    TT(T_BLOCKNUM)
-    TT(T_DOUBLE)
-    TT(T_WEI)
-    TT(T_GAS)
-    TT(T_ETHER)
-    TT(T_UINT256)
-    TT(T_INT256)
-    TT(T_TEXT)
-    TT(T_ADDRESS)
-    TT(T_HASH)
-    TT(T_IPFSHASH)
-    TT(T_BLOOM)
-    TT(T_POINTER)
-    TT(T_OBJECT)
-    ASSERT_EQ("Types", 1, 1);
-
-    return true;
-}
-}
-
 #include "options.h"
 //------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -120,6 +65,5 @@ int main(int argc, const char* argv[]) {
     }
 
     LOAD_TEST(Test01);
-    LOAD_TEST(Test02);
     return testing::RUN_ALL_TESTS();
 }

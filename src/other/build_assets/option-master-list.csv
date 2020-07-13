@@ -154,20 +154,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12882,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12886,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
-12680,tools,blooms,getBloom,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks for which to retrieve blooms
-12700,tools,blooms,getBloom,eab,e,,false,false,true,true,local,switch,<boolean>,pull the enhanced adaptive blooms from QBlocks cache
-12720,tools,blooms,getBloom,block_only,b,,false,false,true,true,header,switch,<boolean>,show only the block-level bloom (--raw only)
-12740,tools,blooms,getBloom,receipt_only,r,,false,false,true,true,header,switch,<boolean>,show only the receipt-level blooms (--raw only)
-12760,tools,blooms,getBloom,bits,i,,false,false,true,true,header,switch,<boolean>,display blooms as bits instead of hex
-12780,tools,blooms,getBloom,bars,a,,false,false,true,true,header,switch,<boolean>,display blooms as bar chart instead of hex
-12800,tools,blooms,getBloom,bitbars,s,,false,false,true,true,header,switch,<boolean>,display nBits as a bar chart
-12820,tools,blooms,getBloom,pctbars,p,,false,false,true,true,header,switch,<boolean>,display nBits as a percentage of bloom space
-12840,tools,blooms,getBloom,bitcount,t,,false,false,true,true,header,switch,<boolean>,display the number of bits lit per bloom
-12860,tools,blooms,getBloom,force,o,,false,false,false,false,local,switch,<boolean>,force a re-write of the bloom to the cache
-12880,tools,blooms,getBloom,,,,false,false,true,true,--,description,,Returns bloom filter(s) from running node (the default) or as EAB from QBlocks.
-12882,tools,blooms,getBloom,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12886,tools,blooms,getBloom,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
-
 12920,tools,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 12940,tools,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 12960,tools,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the local cache or a running node.

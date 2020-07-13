@@ -77,78 +77,9 @@ string_q wei_2_Ether(biguint_t in) {
 }
 
 //--------------------------------------------------------------------------------
-class bloom_tHex : public BigNumStore<unsigned char> {
-  public:
-    explicit bloom_tHex(const biguint_t& numIn);
-    string_q str;
-};
-
-//--------------------------------------------------------------------------------
 string_q byte_2_Bits(uint8_t ch) {
     bitset<8> bits(ch);
     return bits.to_string();
-}
-
-//--------------------------------------------------------------------------------
-string_q bloom_2_Bytes(const bloom_t& bl) {
-    if (bl == 0)
-        return "0x0";
-    bloom_tHex b2(bl);
-    return ("0x" + padLeft(toLower(b2.str), 512, '0'));
-}
-
-//--------------------------------------------------------------------------------
-string_q bloom_2_Bits(const bloom_t& bl) {
-    if (bl == 0)
-        return "0x0";
-    string_q ret = substitute(bloom_2_Bytes(bl), "0x", "");
-    replaceAll(ret, "0", "0000");  // no bits
-
-    replaceAll(ret, "1", "0001");  // one bit
-    replaceAll(ret, "2", "0010");
-    replaceAll(ret, "4", "0100");
-    replaceAll(ret, "8", "1000");
-
-    replaceAll(ret, "3", "0011");  // two bits
-    replaceAll(ret, "5", "0101");
-    replaceAll(ret, "6", "0110");
-    replaceAll(ret, "9", "1001");
-    replaceAll(ret, "a", "1010");
-    replaceAll(ret, "c", "1100");
-
-    replaceAll(ret, "7", "0111");  // three bits
-    replaceAll(ret, "b", "1011");
-    replaceAll(ret, "d", "1101");
-    replaceAll(ret, "e", "1110");
-
-    replaceAll(ret, "f", "1111");  // four bits
-    return ret;
-}
-
-//-------------------------------------------------------------------------------------
-string_q bloom_2_Bar(const bloom_t& bl) {
-    string_q ret = substitute(bloom_2_Bytes(bl), "0x", "");
-    replaceAll(ret, "0", "");  // no bits
-
-    replaceAll(ret, "1", ".");  // one bit
-    replaceAll(ret, "2", ".");
-    replaceAll(ret, "4", ".");
-    replaceAll(ret, "8", ".");
-
-    replaceAll(ret, "3", "-");  // two bits
-    replaceAll(ret, "5", "-");
-    replaceAll(ret, "6", "-");
-    replaceAll(ret, "9", "-");
-    replaceAll(ret, "a", "-");
-    replaceAll(ret, "c", "-");
-
-    replaceAll(ret, "7", "+");  // three bits
-    replaceAll(ret, "b", "+");
-    replaceAll(ret, "d", "+");
-    replaceAll(ret, "e", "+");
-
-    replaceAll(ret, "f", "o");  // four bits
-    return ret;
 }
 
 //--------------------------------------------------------------------------------
@@ -349,11 +280,6 @@ biguint_t str_2_Wei(const string_q& str) {
 }
 
 //--------------------------------------------------------------------------------
-bloom_t str_2_Bloom(const string_q& str) {
-    return str_2_Wei(str);
-}
-
-//--------------------------------------------------------------------------------
 string_q bool_2_Str(bool num) {
     if (!num)
         return "false";
@@ -431,11 +357,6 @@ string_q hash_2_Str(const hash_t& hash) {
 //--------------------------------------------------------------------------------
 string_q wei_2_Str(const wei_t& wei) {
     return bnu_2_Str(wei);
-}
-
-//--------------------------------------------------------------------------------
-string_q bloom_2_Str(const bloom_t& bloom) {
-    return bnu_2_Str(bloom);
 }
 
 //--------------------------------------------------------------------------------
@@ -673,30 +594,6 @@ biguint_t exp_2_BigUint(const string_q& s) {
         ee *= 10;
     num += decimals;
     return str_2_BigUint(num) * ee;
-}
-
-//--------------------------------------------------------------------------------
-bloom_tHex::bloom_tHex(const biguint_t& numIn) {
-    biguint_t x2(numIn);
-
-    len = x2.len;
-    allocate(x2.len);
-
-    unsigned int nDigits = 0;
-    while (x2.len != 0) {
-        biguint_t lastDigit(x2);
-        lastDigit.divide(16, x2);
-        blk[nDigits] = (unsigned char)lastDigit.to_uint();
-        nDigits++;
-    }
-    len = nDigits;
-
-    string_q s(len + 1, '\0');
-    for (unsigned int p = 0; p < len; p++) {
-        unsigned char c = blk[len - 1 - p];
-        s[p] = static_cast<char>((c < 10) ? ('0' + c) : ('A' + c - 10));
-    }
-    str = s;
 }
 
 //----------------------------------------------------------------

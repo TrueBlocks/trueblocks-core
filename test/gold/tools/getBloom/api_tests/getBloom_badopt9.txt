@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "getBloom - Only one of --bits, --bars, --barbits, or --pctbars may be chosen. Quitting..."
-  ]
-}

@@ -1,3 +1,4 @@
+saveSheets
 Answer
 Transactions
 Transactions.1
@@ -15,7 +16,6 @@ alvaro
 everyTx
 grab-pallets
 toml
-bloomBars
 sha3
 folder_sizes
 data-dog
@@ -27,7 +27,6 @@ monetary-base
 shareTheIndex
 callsPerDay
 logging
-bloomBuilder
 addrs_reorder
 junk
 addrs_read

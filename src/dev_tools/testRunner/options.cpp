@@ -104,7 +104,6 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("tools/ethslurp");
                 tests.push_back("tools/ethNames");
                 tests.push_back("tools/getBlock");
-                // tests.push_back("tools/getBloom");
                 tests.push_back("tools/getLogs");
                 tests.push_back("tools/getReceipt");
                 tests.push_back("tools/getState");
@@ -151,7 +150,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/ethslurp");
         tests.push_back("tools/ethNames");
         tests.push_back("tools/getBlock");
-        // tests.push_back("tools/getBloom");
         tests.push_back("tools/getLogs");
         tests.push_back("tools/getReceipt");
         tests.push_back("tools/getState");

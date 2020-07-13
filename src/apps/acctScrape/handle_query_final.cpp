@@ -47,18 +47,18 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 }
 
 //----------------------------------------------------------------------------------
-bool newReadBloomFromBinary(CNewBloomArray& blooms, const string_q& fileName) {
+bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
     blooms.clear();
     CArchive bloomCache(READING_ARCHIVE);
     if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
         uint32_t n;
         bloomCache.Read(n);
         for (size_t i = 0; i < n; i++) {
-            bloom_nt bloom;
+            bloom_t bloom;
             uint32_t nI;
             bloomCache.Read(nI);
             bloom.nInserted = nI;
-            bloomCache.Read(bloom.bits, sizeof(uint8_t), bloom_nt::BYTE_SIZE);
+            bloomCache.Read(bloom.bits, sizeof(uint8_t), bloom_t::BYTE_SIZE);
             blooms.push_back(bloom);
         }
         bloomCache.Close();
@@ -79,8 +79,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
     string_q bPath = substitute(substitute(path, indexFolder_finalized, indexFolder_blooms), ".bin", ".bloom");
     if (fileExists(bPath)) {
-        CNewBloomArray blooms;
-        newReadBloomFromBinary(blooms, bPath);
+        CBloomArray blooms;
+        readBloomFromBinary(blooms, bPath);
         bool hit = false;
         // Note: we used to stop searching on the first hit, and then scan the larger data files for all monitors in
         // this run, but now we keep a map of addresses that were bloom hits and only scan the ones that match.

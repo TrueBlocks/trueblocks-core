@@ -154,10 +154,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
         summaryStatement.endBal = summaryStatement.begBal = str_2_Wei(fieldValue);
         return true;
     }
-    if (fieldName % "address") {
-        if (getCurlContext()->nodeRequired)
-            bloom = makeBloom(fieldValue);
-    }
     // EXISTING_CODE
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
@@ -210,8 +206,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
 //---------------------------------------------------------------------------------------------------
 void CMonitor::finishParse() {
     // EXISTING_CODE
-    if (getCurlContext()->nodeRequired)
-        bloom = makeBloom(address);
     // EXISTING_CODE
 }
 

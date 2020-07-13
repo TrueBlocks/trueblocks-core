@@ -107,18 +107,3 @@ int main(int argc, const char* argv[]) {
     etherlib_cleanup();
 }
 
-#if 0
-void stats(const CNewBloomArray& blooms, const string_q& path) {
-    cout << "d    nTotAddrs:     " << N_RAND_ADDR << endl;
-    cout << "d    maxInserts:    " << MAX_INSERTS << endl;
-    cout << "d    nBytes/bloom:  " << bloom_nt::BYTE_SIZE << " " << sizeof(bloom_nt) << endl;
-    cout << "d    nBits/bloom:   " << bloom_nt::BIT_SIZE() << endl;
-    cout << "d    Size:          " << blooms.size() << endl;
-    for (auto bloom : blooms) {
-        cout << "d        nInserted: " << bloom.nInserted << endl;
-        cout << "d        onBits:    " << bloom.nBitsHit();
-        cout << " (" << (double(bloom.nBitsHit())/double(bloom_nt::BIT_SIZE()))*100. << "%)" << endl;
-    }
-    cout << "d    File:          " << fileSize(path) << " bytes)" << endl;
-}
-#endif

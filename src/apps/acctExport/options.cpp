@@ -191,9 +191,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto addr : addrs) {
         CMonitor monitor;
 
-        // below - don't change the next line, it sets bloom value also
         monitor.setValueByName("address", toLower(addr));
-        // below - don't change the previous line, it sets bloom value also
         monitor.setValueByName("name", toLower(addr));
 
         if (!monitor.exists())

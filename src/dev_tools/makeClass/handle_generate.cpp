@@ -73,8 +73,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // order matters in the next block
         string_q setFmt, regType;
         // clang-format off
-               if (fld.type == "bloom")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOOM";
-        } else if (fld.type == "wei")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
+               if (fld.type == "wei")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
         } else if (fld.type == "gas")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "blknum")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
@@ -347,9 +346,6 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "sbool") {
                     outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
 
-                } else if (p.type == "bloom") {
-                    outStream << ("return bloom_2_Bytes([{PTR}]" + p.name + ");");
-
                 } else if (p.type == "wei") {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
 
@@ -475,9 +471,6 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 outStream << ("```if (fieldName % \"" + p.name + "\") {\n````");
                 if (p.type == "bool" || p.type == "sbool") {
                     outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
-
-                } else if (p.type == "bloom") {
-                    outStream << (p.name + " = str_2_Bloom(fieldValue);\n````return true;");
 
                 } else if (p.type == "wei") {
                     outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
@@ -617,7 +610,6 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "sbool ", "bool ");
 
     replaceAll(outStr, "hash ", "hash_t ");
-    replaceAll(outStr, "bloom ", "bloom_t ");
     replaceAll(outStr, "gas ", "gas_t ");
     replaceAll(outStr, "wei ", "wei_t ");
 

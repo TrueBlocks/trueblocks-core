@@ -98,9 +98,6 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
-            if (fieldName % "logsBloom") {
-                return logsBloom;
-            }
             break;
         case 'r':
             if (fieldName % "root") {
@@ -191,10 +188,6 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
                 }
                 return true;
             }
-            if (fieldName % "logsBloom") {
-                logsBloom = fieldValue;
-                return true;
-            }
             break;
         case 'r':
             if (fieldName % "root") {
@@ -240,7 +233,6 @@ bool CReceipt::Serialize(CArchive& archive) {
     // archive >> cumulativeGasUsed;
     archive >> gasUsed;
     archive >> logs;
-    // archive >> logsBloom;
     // archive >> root;
     archive >> status;
     finishParse();
@@ -258,7 +250,6 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     // archive << cumulativeGasUsed;
     archive << gasUsed;
     archive << logs;
-    // archive << logsBloom;
     // archive << root;
     archive << status;
 
@@ -308,8 +299,6 @@ void CReceipt::registerClass(void) {
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CReceipt, "logsBloom", T_TEXT, ++fieldNum);
-    HIDE_FIELD(CReceipt, "logsBloom");
     ADD_FIELD(CReceipt, "root", T_TEXT, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
     ADD_FIELD(CReceipt, "status", T_UNUMBER, ++fieldNum);
@@ -369,12 +358,12 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CReceipt::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    bloom_t removed;
+    biguint_t removed;
     if (m_schema < getVersionNum(0, 2, 0)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed;  // was logsBloom
+        archive >> removed;  // was logsB loom
         // The 'status' field will be corrected in CBlock::finishParse() once we have a block
         // number. We set status here to NO_STATUS assuming pre-byzantium. After byzantium, we
         // have to pick up the value (0 or 1) from the node
@@ -386,7 +375,7 @@ bool CReceipt::readBackLevel(CArchive& archive) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
-        archive >> removed;  // was logsBloom
+        archive >> removed;  // was logsB loom
         archive >> status;
         finishParse();
         done = true;

@@ -51,7 +51,6 @@ class CMonitor : public CAccountName {
     uint64_t cntAfter;
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
-    bloom_t bloom;
     bool inBlock;
     CArchive* tx_cache;
     void writeLastBlock(blknum_t bn);
@@ -158,7 +157,6 @@ inline void CMonitor::initialize(void) {
 
     // EXISTING_CODE
     latestAppearance = UINT_MAX;
-    bloom = 0;
     inBlock = false;
     tx_cache = NULL;
     cntBefore = 0;
@@ -180,7 +178,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
 
     // EXISTING_CODE
     latestAppearance = mo.latestAppearance;
-    bloom = mo.bloom;
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
     cntBefore = mo.cntBefore;

@@ -14,7 +14,7 @@
 
 typedef struct {
     CIndexHashMap hashes;
-    CIndexHashMap blooms;
+    CIndexHashMap bloom;
 } Thing;
 
 //----------------------------------------------------------------

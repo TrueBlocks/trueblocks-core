@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "getBloom - --eab and --receipts options are not allowed together. Choose one. Quitting..."
-  ]
-}

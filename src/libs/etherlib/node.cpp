@@ -626,37 +626,6 @@ bool readFromJson(CBaseNode& node, const string_q& fileName) {
     return node.parseJson3(contents);
 }
 
-//----------------------------------------------------------------------------------
-bool readBloomFromBinary(CBloomArray& blooms, const string_q& fileName) {
-    blooms.clear();
-    CArchive bloomCache(READING_ARCHIVE);
-    if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
-        bloomCache >> blooms;
-        bloomCache.Close();
-        return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool writeBloomArray(const CBloomArray& blooms, const string_q& fileName) {
-    if (blooms.size() == 0 || (blooms.size() == 1 && blooms[0] == 0))
-        return false;
-
-    string_q created;
-    if (establishFolder(fileName, created)) {
-        if (!created.empty() && !isTestMode())
-            cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
-        CArchive bloomCache(WRITING_ARCHIVE);
-        if (bloomCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
-            bloomCache << blooms;
-            bloomCache.Close();
-            return true;
-        }
-    }
-    return false;
-}
-
 //-------------------------------------------------------------------------
 static string_q getFilename_local(cache_t type, const string_q& bn, const string_q& txid, const string_q& tcid,
                                   bool asPath) {

@@ -1,6 +1,0 @@
-getBloom argc: 2 [1:stateclear] 
-getBloom stateclear 
-{
-  "logsBloom": "0x0",
-  "number": "2717576"
-}

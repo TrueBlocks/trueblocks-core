@@ -7,7 +7,6 @@ fields = hash blockHash (nowrite-min)|\
         address from (nowrite-min)|\
         gas gasUsed|\
         CLogEntryArray logs|\
-        string logsBloom (nowrite)|\
         bytes32 root (nowrite)|\
         uint32 status=NO_STATUS|\
         address to (nowrite-min)|\

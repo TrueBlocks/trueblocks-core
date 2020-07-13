@@ -25,7 +25,6 @@ CTreeNode				a->_val = extract(params, 0*64, 64);
 CTopicArray				a->_val = extract(params, 0*64, 64);
 address				a->_val = str_2_Addr(extract(params, 0*64, 64));
 blknum				a->_val = extract(params, 0*64, 64);
-bloom				a->_val = extract(params, 0*64, 64);
 bool				a->_val = str_2_Int(extract(params, 0*64, 64));
 bytes				a->_val = extract(params, 0*64);
 bytes32				a->_val = extract(params, 0*64, 64);

@@ -100,7 +100,7 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             if (fieldName % "logsBloom") {
-                return bloom_2_Bytes(logsBloom);
+                return logsBloom;
             }
             break;
         default:
@@ -152,7 +152,7 @@ bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fi
                 return true;
             }
             if (fieldName % "logsBloom") {
-                logsBloom = str_2_Bloom(fieldValue);
+                logsBloom = fieldValue;
                 return true;
             }
             break;
@@ -242,7 +242,7 @@ void CNewReceipt::registerClass(void) {
     ADD_FIELD(CNewReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logs", T_OBJECT | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CNewReceipt, "logsBloom", T_BLOOM, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "logsBloom", T_TEXT, ++fieldNum);
     ADD_FIELD(CNewReceipt, "isError", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

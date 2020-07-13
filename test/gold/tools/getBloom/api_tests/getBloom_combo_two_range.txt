@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "getBloom - Specify only a single block range at a time."
-  ]
-}

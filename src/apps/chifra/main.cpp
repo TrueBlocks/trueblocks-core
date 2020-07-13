@@ -58,7 +58,6 @@ int main(int argc, const char* argv[]) {
             map<string, string> cmdMap;
             cmdMap["where"] = "whereBlock";
             cmdMap["tokens"] = "getTokenInfo";
-            cmdMap["blooms"] = "getBloom";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
                 os << cmdMap[options.mode] << " " << options.tool_flags;

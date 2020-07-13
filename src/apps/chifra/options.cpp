@@ -85,7 +85,7 @@ bool COptions::parseArguments(string_q& command) {
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             if (isTestMode())
-                descr += "where|blooms|";
+                descr += "where|";
 
             bool isStatus =
                 (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));

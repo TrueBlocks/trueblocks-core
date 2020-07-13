@@ -396,12 +396,12 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CNewBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    bloom_t removed;
+    biguint_t removed;
     if (m_schema < 502) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed;  // used to be logsBloom
+        archive >> removed;  // used to be logsB loom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;

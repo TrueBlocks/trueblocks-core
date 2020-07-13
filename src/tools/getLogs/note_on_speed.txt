@@ -2,7 +2,7 @@ From
 
 http://ethereum.stackexchange.com/questions/2190/is-searching-data-stored-in-event-logs-prohibitively-slow/2195#2195
 
-To summarise, I believe, that 10s response time is caused by sub-optimal imlementation of bloom filters in go-ethereum. Here are the results of benchmarks with parity:
+To summarise, I believe, that 10s response time is caused by sub-optimal imlementation of b loom filters in go-ethereum. Here are the results of benchmarks with parity:
 
 
 Find all logs from block 0 to 986082 with address: 0x33990122638b9132ca29c723bdf037f1a891a70c

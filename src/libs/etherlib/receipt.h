@@ -32,7 +32,6 @@ class CReceipt : public CBaseNode {
     wei_t cumulativeGasUsed;
     gas_t gasUsed;
     CLogEntryArray logs;
-    string_q logsBloom;
     string_q root;
     uint32_t status;
 
@@ -107,7 +106,6 @@ inline void CReceipt::initialize(void) {
     cumulativeGasUsed = 0;
     gasUsed = 0;
     logs.clear();
-    logsBloom = "";
     root = "";
     status = NO_STATUS;
 
@@ -125,7 +123,6 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     cumulativeGasUsed = re.cumulativeGasUsed;
     gasUsed = re.gasUsed;
     logs = re.logs;
-    logsBloom = re.logsBloom;
     root = re.root;
     status = re.status;
 
