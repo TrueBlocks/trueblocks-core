@@ -28,7 +28,7 @@ class bloom_t {
     }
 
   public:
-    uint64_t nInserted;
+    uint32_t nInserted;
     uint8_t* bits;
 
   public:
@@ -152,6 +152,7 @@ inline bloom_t addr_2_Bloom(const address_t& addrIn) {
 //----------------------------------------------------------------------
 extern bool addToSet(CBloomArray& blooms, const address_t& addr);
 extern bool isMember(const CBloomArray& blooms, const address_t& addr);
-extern bool writeBloomToBinary(const string_q& outFile, const CBloomArray& blooms);
+extern bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms);
+extern bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms);
 
 }  // namespace qblocks

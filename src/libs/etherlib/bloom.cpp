@@ -72,17 +72,36 @@ bool isMember(const CBloomArray& blooms, const address_t& addr) {
     return false;
 }
 
+//----------------------------------------------------------------------------------
+bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms) {
+    blooms.clear();
+    CArchive bloomCache(READING_ARCHIVE);
+    if (bloomCache.Lock(fileName, modeReadOnly, LOCK_NOWAIT)) {
+        uint32_t n;
+        bloomCache.Read(n);
+        for (size_t i = 0; i < n; i++) {
+            bloom_t bloom;
+            bloomCache.Read(bloom.nInserted);
+            bloomCache.Read(bloom.bits, sizeof(uint8_t), bloom_t::BYTE_SIZE);
+            blooms.push_back(bloom);
+        }
+        bloomCache.Close();
+        return true;
+    }
+    return false;
+}
+
 //----------------------------------------------------------------------
-bool writeBloomToBinary(const string_q& outFile, const CBloomArray& blooms) {
+bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
     lockSection(true);
     CArchive output(WRITING_ARCHIVE);
-    if (!output.Lock(outFile, modeWriteCreate, LOCK_NOWAIT)) {
+    if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
         lockSection(false);
         return false;
     }
     output.Write((uint32_t)blooms.size());
     for (auto bloom : blooms) {
-        output.Write((uint32_t)bloom.nInserted);
+        output.Write(bloom.nInserted);
         output.Write(bloom.bits, sizeof(uint8_t), qblocks::bloom_t::BYTE_SIZE);
     }
     output.Release();
