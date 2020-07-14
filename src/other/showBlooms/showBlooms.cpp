@@ -13,30 +13,71 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
+bool visitFile2(const string_q& path, void* data) {
+    if (endsWith(path, '/')) {
+        forEveryFileInFolder(path + "*", visitFile2, data);
+    } else {
+	CStringArray *f = (CStringArray*)data;
+	cout << "adding: " << path << endl;
+	f->push_back(path);
+	}
+	return true;
+}
+
+//----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    forEveryFileInFolder(indexFolder_blooms, visitFile, NULL);
+	CStringArray files;
+	string_q x = substitute(indexFolder_blooms, "scraper.new", "scraper");
+cout << x << endl;
+    forEveryFileInFolder(x, visitFile2, &files);
+    forEveryFileInFolder(indexFolder_blooms, visitFile, &files);
     etherlib_cleanup();
     return 1;
 }
 
+size_t cnt = 0;
 //----------------------------------------------------------------
 bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitFile, data);
     } else {
-        cerr << path << "\r";
-        cerr.flush();
-        CBloomArray blooms;
-        readBloomFromBinary(path, blooms);
-        for (auto bloom : blooms) {
+        CBloomArray blooms1;
+        readBloomFromBinary(path, blooms1);
+
+	string_q p = ((CStringArray*)data)->operator[](cnt++);
+        cout << path << endl;
+        cout << p << endl;
+
+        for (auto bloom : blooms1) {
             if (!bloom.isBitLit(0)) {
-                bloom.showBloom(cout);
-                getchar();
+                cout << "\tzero nlit: " << bloom.nInserted << "\t\t" << bloom.nBitsHit() << string_q(80, ' ') << endl;
             } else {
-                cout << bloom.nBitsHit() << endl;
+                cout << "\tzero lit : " << bloom.nInserted << "\t\t" << bloom.nBitsHit() << string_q(80, ' ') << endl;
             }
         }
+
+        CBloomArray blooms2;
+        readBloomFromBinary(p, blooms2);
+        for (auto bloom : blooms2) {
+            if (!bloom.isBitLit(0)) {
+                cout << "\tzero nli2: " << bloom.nInserted << "\t\t" << bloom.nBitsHit() << string_q(80, ' ') << endl;
+            } else {
+                cout << "\tzero lit2: " << bloom.nInserted << "\t\t" << bloom.nBitsHit() << string_q(80, ' ') << endl;
+            }
+        }
+
+	cout << "\tsize 1: " << blooms1.size() << endl;
+	cout << "\tsize 2: " << blooms2.size() << endl;
+/*
+	for (size_t i = 0 ; i < blooms1.size() ; i++) {
+		if (blooms1[i] != blooms2[i])
+			cout << "differ" << endl;
+		else
+			cout << "same" << endl;
+	}
+*/
     }
+	cout << endl;
     return true;
 }
