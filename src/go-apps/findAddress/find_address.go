@@ -126,7 +126,7 @@ func writeQuotedCSV(data [][]string) {
 
 func convertTo2DStringArray(in []appearanceRecord) (out [][]string) {
 	for _, rec := range in {
-		out = append(out, []string{addrStr, fmt.Sprint(rec.Blk), fmt.Sprint(rec.Txid)})
+		out = append(out, []string{addrStr, fmt.Sprintf("%09d", rec.Blk), fmt.Sprintf("%09d", rec.Txid)})
 	}
 	return
 }
