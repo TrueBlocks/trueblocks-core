@@ -287,6 +287,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x0982a0bf061f3cec2a004b4d2c802f479099c971	martin1209		Gitcoin Website			false	false	false
 34-Humanity DAO	0x0998160bdf3ff6d86a4e9d5c31e0efc3ca7e7d01	shitcoininchina		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0x09acf68a23f24c016dfdf2ee156cdb389f975618	ambient		https://kickback.events/			false	false	false
+30-Contracts	0x09b091492759737c03da9db7edf1cd6bcc3a9d91	Crypto: URI Prefix Controller		Github			false	false	false
 32-Kickback:Friends	0x09c20a9436c95b5fca7d4be76184fe9a0a3a8adf	velma		https://kickback.events/			false	false	false
 34-Humanity DAO	0x09ca59e18c58f25b092a0f2670928f5d0656a331	ethtective		https://www.humanitydao.org/humans			false	false	false
 40-Exchanges	0x09cabec1ead1c0ba254b09efb3ee13841712be14	Uniswap: DAI		TrueBlocks.io			false	false	false
@@ -3258,6 +3259,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x82d9db5a9c6a136caac6dc97c04b4417eb8d11a8	fleupold		Gitcoin Website			false	false	false
 90-DevCon2:Individual	0x82dab27ef586c98f6ba6ad4f23ba4d7bb18986d1	Hendrik Tan		DevCon2 Token Contract			false	false	false
 34-Humanity DAO	0x82e8955ad9f096be8b426dbd176f03e89b060d3f	jake13337		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x82ef94294c95ad0930055f31e53a34509227c5f7	Crypto: Signature Controller		Github			false	false	false
 75-Early Actors	0x82effbaaaf28614e55b2ba440fb198e0e5789b0f	Miner_0090_57		OnChain			false	false	false
 81-Other	0x83051e225a06682ff0dde9bcd267d8418c4cbcd7	Parallelgambling		Etherscan.io			false	false	false
 31-Gitcoin Grants:Grant	0x830ad555fce0547782e14d67d22002082916e660	Grant 414 Nito.cash		https://gitcoin.co/grants/414/nitocash		https://nito.cash	false	false	false
@@ -3997,6 +3999,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xa1b93b469e32309da9916368f7c20565807c784b	cervoneluca		Gitcoin Website			false	false	false
 34-Humanity DAO	0xa1bd817e13ed6bb524ed491cff76c83afec773ac	akimqc		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Grant	0xa1c6845993641b777750e7db2671d9fe65059ae1	Grant 799 Telegram Totality		https://gitcoin.co/grants/799/telegram-totality		https://www.youtube.com/watch?v=EwsxafL7oUw	false	false	false
+30-Contracts	0xa1cac442be6673c49f8e74ffc7c4fd746f3cbd0d	Crypto: Resolver		Github			false	false	false
 34-Humanity DAO	0xa1d3c765e9a9655e8838bc4a9b16d5e6af024321	brendan_dharma		https://www.humanitydao.org/humans			false	false	false
 40-Exchanges	0xa1d907c8ce6ceb844205e371eb71a4ece307cc77	Coinbase 6		OnChain			false	false	false
 31-Gitcoin Grants:Friends	0xa1e2421a68f0208b75acb0014a69e89b1f7492ea	burningtree		Gitcoin Website			false	false	false
@@ -4444,6 +4447,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xb446783dbe268df10b5246d4c473dabcdbbd0581	Liupc270882400		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xb45a50545beeab73f38f31e5973768c421805e5e	TKRToken	TKR	On Chain	18	CryptoInsight - Insight and Analytics Platform.	false	false	false
 32-Kickback:Friends	0xb4724184d67b207a4133d3672f4f0e7159edc5e1	momo		https://kickback.events/			false	false	false
+30-Contracts	0xb485d89aba096fc9f117fa28b80dc8aac7971049	Crypto: Whitelisted Minter		Github			false	false	false
 31-Gitcoin Grants:Friends	0xb49715ff2beeec1e07bcf8d47cb973d3727fbd0b	199911		Gitcoin Website			false	false	false
 81-Other	0xb4abc1bfc403a7b82c777420c81269858a4b8aa4	GavCoin_id158_cnt2_4mo		Ether Camp			false	false	false
 31-Gitcoin Grants:Grant	0xb4bc0f815f56e052f24509a7efd93af230cc3062	Grant 450 Smart Contract Registry		https://gitcoin.co/grants/450/smart-contract-registry		https://www.haveibeenexploited.com	false	false	false
