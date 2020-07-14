@@ -329,7 +329,7 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
         }
     }
 
-    LOG_INFO("Freshinging abi cache for path: ", sourcePath);
+    LOG_INFO("Freshening abi cache for path: ", sourcePath);
     if (!forEveryFileInFolder(sourcePath + "*", visitABI, this))
         return false;
 

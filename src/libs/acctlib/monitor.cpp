@@ -660,5 +660,15 @@ void CMonitor::undeleteMonitor(void) {
 void CMonitor::deleteMonitor(void) {
     stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
 }
+
+//-----------------------------------------------------------------------
+bloom_t CMonitor::getBloom(void) {
+    bloom_t not_set;
+    if (bloom == not_set) {
+        bloom = addr_2_Bloom(address);
+    }
+    return bloom;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks

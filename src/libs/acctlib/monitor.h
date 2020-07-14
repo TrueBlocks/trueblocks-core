@@ -47,6 +47,8 @@ class CMonitor : public CAccountName {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bloom_t bloom;
+    bloom_t getBloom(void);
     uint64_t cntBefore;
     uint64_t cntAfter;
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
@@ -156,6 +158,7 @@ inline void CMonitor::initialize(void) {
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
+    bloom = bloom_t();
     latestAppearance = UINT_MAX;
     inBlock = false;
     tx_cache = NULL;
@@ -177,6 +180,7 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
+    bloom = mo.bloom;
     latestAppearance = mo.latestAppearance;
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
