@@ -62,7 +62,7 @@ bool COptions::handle_scrape(void) {
 
         } else if (ddosRange(startBlock)) {
             // ...or slow things down...
-            n_blocks = 200;
+            n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
         }
     }
 

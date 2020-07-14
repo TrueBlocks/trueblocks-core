@@ -114,12 +114,9 @@ bloom_t addr_2_Bloom(const address_t& addrIn, CUintArray& litBits) {
     bloom_t ret;
     if (isAddress(addrIn)) {
         string_q sha = addrIn;
-        cerr << "sha: " << sha << endl;
         for (size_t k = 0; k < K; k++) {
             string_q dbl_byte = ("0x" + extract(sha, 2 + (k * NIBBLE_WID), NIBBLE_WID));
-            cerr << "\tdbl_byte: " << dbl_byte << " ";
             uint64_t bit = (str_2_Uint(dbl_byte) % BLOOM_WIDTH_IN_BITS);
-            cerr << "bit: " << bit << endl;
             ret.lightBit(bit);
             litBits.push_back(bit);
         }
