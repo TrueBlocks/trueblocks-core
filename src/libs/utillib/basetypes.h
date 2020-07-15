@@ -70,12 +70,6 @@ using namespace std;  // NOLINT - bad practice, but it's way too late now
 #define XX(a)
 #endif
 
-//-----------------------------------------------------------------------------
-#ifndef HOST_NAME_MAX
-#define HOST_NAME_MAX 64
-#define LOGIN_NAME_MAX 64
-#endif
-
 //-------------------------------------------------------------------------
 #include "sfstring.h"
 

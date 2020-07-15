@@ -152,7 +152,6 @@ extern bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging,
 
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);
-extern string_q scraperStatus(bool terse);
 
 //-------------------------------------------------------------------------
 #define blockFolder (getCachePath("blocks/"))

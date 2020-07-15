@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/findAddress
+module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2
 
 go 1.13
 

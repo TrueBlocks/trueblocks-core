@@ -184,6 +184,10 @@ void COptions::Init(void) {
     isConfig = false;
     mode = "";
 
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
     char hostname[HOST_NAME_MAX];
     gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX];

@@ -1,16 +1,19 @@
-package main
+package cmd
 
 import (
-	"bytes"
+	"encoding/binary"
 	"encoding/csv"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
+	"sort"
 	"strings"
 	"sync"
+
+	//"github.com/spf13/cobra"
+	//homedir "github.com/mitchellh/go-homedir"
 
 	"github.com/tushar2708/altcsv"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -22,11 +25,8 @@ import (
 const (
 	// MagicNumber is used to check data validity
 	MagicNumber = 3735928559 // deadbeef
-	// AddressLength = number of bytes of an address
-	AddressLength = 20
 	// HashLength = number of bytes in a HASH
 	HashLength = 32
-
 	// HeaderSize - size of Header Record
 	HeaderSize = 44
 	// AddressSize - size of Address Record
@@ -34,9 +34,6 @@ const (
 	// AppearanceSize - size of Appearance Record
 	AppearanceSize = 8
 )
-
-// Address is 20 bytes
-type Address [AddressLength]byte
 
 // EthHash : 256 bit number - not actually used
 type EthHash [HashLength]byte
@@ -83,29 +80,6 @@ type modifiedAppearanceRecord struct {
 	Txid    uint32 `json:"transactionIndex"`
 }
 
-func (a Address) compare(b Address) int {
-	return bytes.Compare(a[:], b[:])
-}
-
-func (a *Address) setBytes(b []byte) {
-	if len(b) > len(a) {
-		b = b[len(b)-AddressLength:]
-	}
-	copy(a[AddressLength-len(b):], b)
-}
-
-func newAddressFromHex(hexString string) (newAddress Address, err error) {
-	if hexString[:2] == "0x" {
-		hexString = hexString[2:]
-	}
-	hexBytes, err := hex.DecodeString(hexString)
-	if err != nil {
-		return Address{}, err
-	}
-	newAddress.setBytes(hexBytes)
-	return
-}
-
 func writeTextTabbedCSV(data [][]string) {
 	w := csv.NewWriter(os.Stdout)
 	w.Comma = 0x9
@@ -131,46 +105,7 @@ func convertTo2DStringArray(in []appearanceRecord) (out [][]string) {
 	return
 }
 
-func usage() {
-	fmt.Println("usage $ findAddress directory address")
-	fmt.Println("option :")
-	fmt.Println(" --fmt    : set output mode to : json, txt or csv")
-	fmt.Println(" --max    : set maximum number of parallel threads*")
-	fmt.Println(" --log    : enable logging")
-	fmt.Println(" --stream : stream output from threads as received")
-	fmt.Println("examples : ")
-	fmt.Println("$ findAddress data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ findAddress --fmt json data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ findAddress --fmt csv  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ findAddress --fmt txt  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println()
-	fmt.Println("* precedence : flag > config > default (4)")
-}
-
-var notFirst bool // defaults to false
-
-func streamOut(format string, r []appearanceRecord) {
-	switch format {
-	case "json":
-		for _, r := range r {
-			if notFirst {
-				fmt.Println(",")
-			}
-			err := json.NewEncoder(os.Stdout).Encode(r)
-			if err != nil {
-				log.Fatal(err)
-			}
-			notFirst = true
-		}
-	case "txt":
-		writeTextTabbedCSV(convertTo2DStringArray(r))
-	case "csv":
-		writeQuotedCSV(convertTo2DStringArray(r))
-	default:
-	}
-}
-
-func main() {
+func Execute() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.SetConfigType("toml")
@@ -186,7 +121,7 @@ func main() {
 	maxTasks := viper.GetInt("max")
 	if *logging {
 		log.SetOutput(&lumberjack.Logger{
-			Filename:   "logs/findAddress.log",
+			Filename:   "logs/acctScrape2.log",
 			MaxSize:    500,
 			MaxBackups: 3,
 			MaxAge:     28,
@@ -231,7 +166,7 @@ func main() {
 		log.Fatal(err)
 	}
 	resultChannel := make(chan []appearanceRecord, len(files))
-	searchAddress, err := newAddressFromHex(addrStr)
+	searchAddress, err := NewAddressFromHex(addrStr)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -297,4 +232,145 @@ func main() {
 	if *logging {
 		log.Println("Done")
 	}
+}
+
+func usage() {
+	fmt.Println("usage $ acctScrape2 directory address")
+	fmt.Println("option :")
+	fmt.Println(" --fmt    : set output mode to : json, txt or csv")
+	fmt.Println(" --max    : set maximum number of parallel threads*")
+	fmt.Println(" --log    : enable logging")
+	fmt.Println(" --stream : stream output from threads as received")
+	fmt.Println("examples : ")
+	fmt.Println("$ acctScrape2 data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
+	fmt.Println("$ acctScrape2 --fmt json data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
+	fmt.Println("$ acctScrape2 --fmt csv  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
+	fmt.Println("$ acctScrape2 --fmt txt  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
+	fmt.Println()
+	fmt.Println("* precedence : flag > config > default (4)")
+}
+
+var notFirst bool // defaults to false
+
+func streamOut(format string, r []appearanceRecord) {
+	switch format {
+	case "json":
+		for _, r := range r {
+			if notFirst {
+				fmt.Println(",")
+			}
+			err := json.NewEncoder(os.Stdout).Encode(r)
+			if err != nil {
+				log.Fatal(err)
+			}
+			notFirst = true
+		}
+	case "txt":
+		writeTextTabbedCSV(convertTo2DStringArray(r))
+	case "csv":
+		writeQuotedCSV(convertTo2DStringArray(r))
+	default:
+	}
+}
+
+func getHeader(f *os.File) (head Header, err error) {
+	err = binary.Read(f, binary.LittleEndian, &head)
+	return
+}
+
+func getAddressRecord(f *os.File) (addressRec addressRecord, err error) {
+	err = binary.Read(f, binary.LittleEndian, &addressRec)
+	return
+}
+
+func getAddressRecordAndCompare(f *os.File, target Address) (bigger bool, err error) {
+	addressRec, err := getAddressRecord(f)
+	if err != nil {
+		return false, err
+	}
+
+	return addressRec.Bytes.Compare(target) >= 0, nil
+}
+
+func acctScrape2(numRecs uint32, addr Address, f *os.File) (pos int) {
+
+	comp := func(pos int) bool {
+		//fmt.Println(pos)
+		if pos == -1 {
+			return false
+		}
+		if pos == int(numRecs) {
+			return true
+		}
+		f.Seek(int64(HeaderSize+pos*AddressSize), 0)
+		bigger, err := getAddressRecordAndCompare(f, addr)
+		if err != nil {
+			fmt.Println(err)
+			return false
+		}
+		return bigger
+	}
+	pos = sort.Search(int(numRecs), comp)
+	f.Seek(int64(HeaderSize+pos*AddressSize), 0)
+	rec, err := getAddressRecord(f)
+	if err != nil {
+		return -1
+	}
+	if rec.Bytes.Compare(addr) != 0 {
+		return -1
+	}
+	return
+}
+
+func getAppearanceRecords(f *os.File, numAddresses uint32, offset uint32, numRecs uint32) (appy []appearanceRecord, err error) {
+	_, err = f.Seek(int64(HeaderSize+numAddresses*AddressSize+offset*AppearanceSize), 0)
+	if err != nil {
+		log.Fatal(err)
+	}
+	appy = make([]appearanceRecord, numRecs)
+
+	err = binary.Read(f, binary.LittleEndian, &appy)
+
+	return
+}
+
+func parseFile(fileName string, addr Address, resultChannel chan []appearanceRecord, wg *sync.WaitGroup, logging bool) {
+	defer wg.Done()
+	if logging {
+		log.Println(fileName)
+	}
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	head, err := getHeader(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if head.Magic != MagicNumber {
+		log.Fatal("invalid format", fileName)
+	}
+	var results []appearanceRecord
+	newPos := acctScrape2(head.NumberOafAddresses, addr, f)
+	if newPos == -1 {
+		resultChannel <- results // empty array
+		return
+	}
+	//fmt.Println(newPos)
+	_, err = f.Seek(int64(HeaderSize+newPos*AddressSize), 0)
+	if err != nil {
+		log.Fatal(err)
+	}
+	adx, err := getAddressRecord(f)
+	//fmt.Printf("0x%x : %d   %d\n", adx.Bytes, adx.Cnt, adx.Offset)
+
+	results, err = getAppearanceRecords(f, head.NumberOafAddresses, adx.Offset, adx.Cnt)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	resultChannel <- results
+
+	return
 }

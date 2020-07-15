@@ -2,12 +2,12 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (findAddress)
+project (acctScrape2)
 
-ADD_GO_INSTALLABLE_PROGRAM(findAddress *.go)
+ADD_GO_INSTALLABLE_PROGRAM(acctScrape2 *.go)
 
 # Define the executable to be generated
-set(TOOL_NAME "findAddress")
+set(TOOL_NAME "acctScrape2")
 set(PROJ_NAME "go-apps")
 
 # Testing

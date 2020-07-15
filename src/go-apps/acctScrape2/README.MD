@@ -1,9 +1,9 @@
-# findAddress
+# acctScrape2
 
 usage
 
 ```
-$ findAddress <address>
+$ acctScrape2 <address>
 ```
 
 scans all the files in the (data directory)[#data-compulsory] for occurrances of the specified (address)[#address] and outputs them to <stdout>
@@ -11,7 +11,7 @@ scans all the files in the (data directory)[#data-compulsory] for occurrances of
 example (with all options)
 
 ```
-./findAddress 0xff488fd296c38a24cccc60b43dd7254810dab64e --fmt txt --log --max 5
+./acctScrape2 0xff488fd296c38a24cccc60b43dd7254810dab64e --fmt txt --log --max 5
 ```
 
 ### address
@@ -88,7 +88,7 @@ Log the following
 - address searched for
 - filenames being processed
 
-The logfile is stored in lods/findAddress.log
+The logfile is stored in lods/acctScrape2.log
 
 This allows you to confirm that each file is being processed.
 
@@ -102,7 +102,7 @@ Where the address is a popular one, searching could use a ridiculous amount of m
 
 ## configuration file
 
-findAddress uses a configuration file in **TOML** format with two values
+acctScrape2 uses a configuration file in **TOML** format with two values
 
 ### data (compulsory)
 
@@ -114,7 +114,7 @@ data = "/var/binary-data"
 
 ### max (optional)
 
-The maximum number of threads that will be used by findAddress
+The maximum number of threads that will be used by acctScrape2
 
 ```
 max = 7

@@ -58,3 +58,4 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
+extern string_q scraperStatus(void);

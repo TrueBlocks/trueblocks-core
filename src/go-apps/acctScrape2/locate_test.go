@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 	"testing"
+
+	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2/cmd"
 )
 
 func getAddressRecords(t *testing.T, f *os.File, count uint32) (records []addressRecord) {
@@ -46,11 +48,11 @@ func locateRecord(t *testing.T, addrStr string, expectedPos int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	addr, err := newAddressFromHex(addrStr)
+	addr, err := cmd.NewAddressFromHex(addrStr)
 	if err != nil {
 		t.Fatal(err)
 	}
-	pos := findAddress(head.NumberOafAddresses, addr, f)
+	pos := acctScrape2(head.NumberOafAddresses, addr, f)
 
 	if pos != expectedPos {
 		t.Fatal("expected : ", expectedPos, "found", pos)
