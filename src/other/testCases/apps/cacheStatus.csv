@@ -51,13 +51,3 @@ on, both, fast, status, apps/cacheStatus, config_set,      n, set_config
 
 on, both, fast, status, apps/cacheStatus, report,          n, report & fmt = txt
 on, both, fast, status, apps/cacheStatus, report_json,     y, report & fmt = json
-
-# ./apps/cacheStatus/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
-# ./apps/cacheStatus/options.cpp:    COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),
-# ./apps/cacheStatus/options.cpp:    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-# ./apps/cacheStatus/options.cpp:    COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),
-# ./apps/cacheStatus/options.cpp:    COption("list", "l", "", OPT_SWITCH, "display results in Linux ls -l format (assumes --detail)"),
-# ./apps/cacheStatus/options.cpp:    COption("modes", "", "list<enum[index|monitors|names|abis|blocks|transactions|traces|data|slurps|prices|some*|all]>", OPT_POSITIONAL, "which data to retrieve"),
-# ./apps/cacheStatus/options.cpp:    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),
-# ./apps/cacheStatus/options.cpp:    COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),
-# ./apps/cacheStatus/options.cpp:    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
