@@ -4,7 +4,6 @@ cacheStatus caches --types transactions --details --depth 0
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.7.0-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
-  "api_provider": "--providers--",
   "balance_provider": "--providers--",
   "cache_path": "--paths--",
   "index_path": "--paths--",

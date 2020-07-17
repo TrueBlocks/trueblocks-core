@@ -160,7 +160,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 cmd << e << c;
             } else {
-                cmd << "curl -s \"http://localhost:8080/" << test.route;
+                cmd << "curl -s \"" << apiProvider << test.route;
                 if (!test.builtin && !test.options.empty())
                     cmd << "?" << test.options;
                 cmd << "\"";

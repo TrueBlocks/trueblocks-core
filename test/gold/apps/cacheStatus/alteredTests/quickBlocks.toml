@@ -10,7 +10,6 @@ rpcProvider = "http://localhost:36963/"
 balanceProvider = "--new balance Prov--"
 cachePath = "--new cache Path--/"
 indexPath = "--new index Path--/"
-apiProvider = "--new api Provider--"
 configPath = "--new config Path--/"
 etherscan_key = "--new api_key--"
 

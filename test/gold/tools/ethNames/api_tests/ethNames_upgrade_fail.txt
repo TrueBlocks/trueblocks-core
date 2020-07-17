@@ -1774,6 +1774,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x09b091492759737c03da9db7edf1cd6bcc3a9d91",
+      "name": "Crypto: URI Prefix Controller",
+      "symbol": "",
+      "source": "Github",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "40-Exchanges",
       "address": "0x09cabec1ead1c0ba254b09efb3ee13841712be14",
       "name": "Uniswap: DAI",
@@ -1798,15 +1807,6 @@
       "symbol": "WCK",
       "source": "On Chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x0a236b41add0073df05eac5fc8505ad745c7859d",
-      "name": "1inch Exchange",
-      "symbol": "",
-      "source": "0xTracker",
-      "decimals": "0",
       "description": ""
     }
   ],

@@ -15,53 +15,43 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "cache.h"
+#include "acctlib.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
-#include <ctime>
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CStatus : public CBaseNode {
+class CPublishRecord : public CBaseNode {
   public:
-    string_q client_version;
-    string_q trueblocks_version;
-    string_q rpc_provider;
-    string_q balance_provider;
-    string_q cache_path;
-    string_q index_path;
-    string_q host;
-    bool is_testing;
-    bool is_scraping;
-    timestamp_t ts;
-    CCachePtrArray caches;
+    string_q filename;
+    ipfshash_t index_hash;
+    bool index_pinned;
+    ipfshash_t bloom_hash;
+    bool bloom_pinned;
 
   public:
-    CStatus(void);
-    CStatus(const CStatus& st);
-    virtual ~CStatus(void);
-    CStatus& operator=(const CStatus& st);
+    CPublishRecord(void);
+    CPublishRecord(const CPublishRecord& pu);
+    virtual ~CPublishRecord(void);
+    CPublishRecord& operator=(const CPublishRecord& pu);
 
-    DECLARE_NODE(CStatus);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    DECLARE_NODE(CPublishRecord);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CStatus& item) const;
-    bool operator!=(const CStatus& item) const {
+    bool operator==(const CPublishRecord& item) const;
+    bool operator!=(const CPublishRecord& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CStatus& v1, const CStatus& v2);
-    friend ostream& operator<<(ostream& os, const CStatus& item);
+    friend bool operator<(const CPublishRecord& v1, const CPublishRecord& v2);
+    friend ostream& operator<<(ostream& os, const CPublishRecord& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CStatus& st);
+    void duplicate(const CPublishRecord& pu);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -69,91 +59,74 @@ class CStatus : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CStatus::CStatus(void) {
+inline CPublishRecord::CPublishRecord(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CStatus::CStatus(const CStatus& st) {
+inline CPublishRecord::CPublishRecord(const CPublishRecord& pu) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(st);
+    duplicate(pu);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CStatus::~CStatus(void) {
+inline CPublishRecord::~CPublishRecord(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::clear(void) {
+inline void CPublishRecord::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::initialize(void) {
+inline void CPublishRecord::initialize(void) {
     CBaseNode::initialize();
 
-    client_version = "";
-    trueblocks_version = "";
-    rpc_provider = "";
-    balance_provider = "";
-    cache_path = "";
-    index_path = "";
-    host = "";
-    is_testing = false;
-    is_scraping = false;
-    ts = date_2_Ts(Now());
-    caches.clear();
+    filename = "";
+    index_hash = "";
+    index_pinned = false;
+    bloom_hash = "";
+    bloom_pinned = false;
 
     // EXISTING_CODE
-    // convert ts to UTC
-    time_t lt = ts;
-    auto local_field = *gmtime(&lt);
-    local_field.tm_isdst = -1;
-    ts = mktime(&local_field);
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CStatus::duplicate(const CStatus& st) {
+inline void CPublishRecord::duplicate(const CPublishRecord& pu) {
     clear();
-    CBaseNode::duplicate(st);
+    CBaseNode::duplicate(pu);
 
-    client_version = st.client_version;
-    trueblocks_version = st.trueblocks_version;
-    rpc_provider = st.rpc_provider;
-    balance_provider = st.balance_provider;
-    cache_path = st.cache_path;
-    index_path = st.index_path;
-    host = st.host;
-    is_testing = st.is_testing;
-    is_scraping = st.is_scraping;
-    ts = st.ts;
-    caches = st.caches;
+    filename = pu.filename;
+    index_hash = pu.index_hash;
+    index_pinned = pu.index_pinned;
+    bloom_hash = pu.bloom_hash;
+    bloom_pinned = pu.bloom_pinned;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CStatus& CStatus::operator=(const CStatus& st) {
-    duplicate(st);
+inline CPublishRecord& CPublishRecord::operator=(const CPublishRecord& pu) {
+    duplicate(pu);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CStatus::operator==(const CStatus& item) const {
+inline bool CPublishRecord::operator==(const CPublishRecord& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -161,7 +134,7 @@ inline bool CStatus::operator==(const CStatus& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CStatus& v1, const CStatus& v2) {
+inline bool operator<(const CPublishRecord& v1, const CPublishRecord& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -169,14 +142,19 @@ inline bool operator<(const CStatus& v1, const CStatus& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CStatus> CStatusArray;
-extern CArchive& operator>>(CArchive& archive, CStatusArray& array);
-extern CArchive& operator<<(CArchive& archive, const CStatusArray& array);
+typedef vector<CPublishRecord> CPublishRecordArray;
+extern CArchive& operator>>(CArchive& archive, CPublishRecordArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPublishRecordArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_STATUS;
+extern const char* STR_DISPLAY_PUBLISHRECORD;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef bool (*IPFSVISITFUNC)(CPublishRecord& log, void* data);
+bool publishNotPinned(const string_q& filename, CPublishRecord& result);
+bool publishPinned(const string_q& filename, CPublishRecord& result);
+bool forEveryPinnedItem(LOGVISITFUNC func, void* data);
+bool forEveryIPFSItem(LOGVISITFUNC func, void* data);
 // EXISTING_CODE
 }  // namespace qblocks

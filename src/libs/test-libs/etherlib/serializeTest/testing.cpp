@@ -119,7 +119,6 @@ int main(int argc, const char* argv[]) {
         status.client_version = "client_version";
         status.trueblocks_version = "trueblocks_version";
         status.rpc_provider = "rpc_provider";
-        status.api_provider = "api_provider";
         status.balance_provider = "balance_provider";
         status.host = "host";
         status.caches.push_back(&cache);

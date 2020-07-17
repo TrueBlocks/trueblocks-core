@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "status.h"
+#include "publishrecord.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CStatus, CBaseNode);
+IMPLEMENT_NODE(CPublishRecord, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPublishrecordChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPublishrecordChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CStatus::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPublishRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["status_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["publishrecord_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CStatus::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextStatusChunk, this);
+        ctx << getNextChunk(fmt, nextPublishrecordChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPublishrecordChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CStatus*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPublishRecord*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextStatusChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CStatus::getValueByName(const string_q& fieldName) const {
+string_q CPublishRecord::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextStatusChunk_custom(fieldName, this);
+    string_q ret = nextPublishrecordChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -71,46 +71,24 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                return balance_provider;
+            if (fieldName % "bloom_hash") {
+                return bloom_hash;
+            }
+            if (fieldName % "bloom_pinned") {
+                return bool_2_Str(bloom_pinned);
             }
             break;
-        case 'c':
-            if (fieldName % "client_version") {
-                return client_version;
-            }
-            if (fieldName % "caches" || fieldName % "cachesCnt") {
-                size_t cnt = caches.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += caches[i]->Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
-            break;
-        case 'h':
-            if (fieldName % "host") {
-                return host;
+        case 'f':
+            if (fieldName % "filename") {
+                return filename;
             }
             break;
         case 'i':
-            if (fieldName % "is_scraping") {
-                return bool_2_Str_t(is_scraping);
+            if (fieldName % "index_hash") {
+                return index_hash;
             }
-            break;
-        case 'r':
-            if (fieldName % "rpc_provider") {
-                return rpc_provider;
-            }
-            break;
-        case 't':
-            if (fieldName % "trueblocks_version") {
-                return trueblocks_version;
+            if (fieldName % "index_pinned") {
+                return bool_2_Str(index_pinned);
             }
             break;
         default:
@@ -125,7 +103,7 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPublishRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -134,48 +112,28 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                balance_provider = fieldValue;
+            if (fieldName % "bloom_hash") {
+                bloom_hash = fieldValue;
+                return true;
+            }
+            if (fieldName % "bloom_pinned") {
+                bloom_pinned = str_2_Bool(fieldValue);
                 return true;
             }
             break;
-        case 'c':
-            if (fieldName % "client_version") {
-                client_version = fieldValue;
-                return true;
-            }
-            if (fieldName % "caches") {
-                // This drops memory, so we comment it out for now
-                // clear();
-                // caches = new CCachePtrArray;
-                // if (caches) {
-                //     string_q str = fieldValue;
-                //     return caches->parseJson3(str);
-                // }
-                return false;
-            }
-            break;
-        case 'h':
-            if (fieldName % "host") {
-                host = fieldValue;
+        case 'f':
+            if (fieldName % "filename") {
+                filename = fieldValue;
                 return true;
             }
             break;
         case 'i':
-            if (fieldName % "is_scraping") {
-                is_scraping = str_2_Bool(fieldValue);
+            if (fieldName % "index_hash") {
+                index_hash = fieldValue;
                 return true;
             }
-            break;
-        case 'r':
-            if (fieldName % "rpc_provider") {
-                rpc_provider = fieldValue;
-                return true;
-            }
-            break;
-        case 't':
-            if (fieldName % "trueblocks_version") {
-                trueblocks_version = fieldValue;
+            if (fieldName % "index_pinned") {
+                index_pinned = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -186,13 +144,13 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CStatus::finishParse() {
+void CPublishRecord::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CStatus::Serialize(CArchive& archive) {
+bool CPublishRecord::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -204,37 +162,33 @@ bool CStatus::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> client_version;
-    archive >> trueblocks_version;
-    archive >> rpc_provider;
-    archive >> balance_provider;
-    archive >> host;
-    archive >> is_scraping;
-    // archive >> caches;
+    archive >> filename;
+    archive >> index_hash;
+    archive >> index_pinned;
+    archive >> bloom_hash;
+    archive >> bloom_pinned;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CStatus::SerializeC(CArchive& archive) const {
+bool CPublishRecord::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << client_version;
-    archive << trueblocks_version;
-    archive << rpc_provider;
-    archive << balance_provider;
-    archive << host;
-    archive << is_scraping;
-    // archive << caches;
+    archive << filename;
+    archive << index_hash;
+    archive << index_pinned;
+    archive << bloom_hash;
+    archive << bloom_pinned;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CStatusArray& array) {
+CArchive& operator>>(CArchive& archive, CPublishRecordArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -246,7 +200,7 @@ CArchive& operator>>(CArchive& archive, CStatusArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CStatusArray& array) {
+CArchive& operator<<(CArchive& archive, const CPublishRecordArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -255,49 +209,45 @@ CArchive& operator<<(CArchive& archive, const CStatusArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CStatus::registerClass(void) {
+void CPublishRecord::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CStatus, "schema"))
+    if (HAS_FIELD(CPublishRecord, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CStatus, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
-    HIDE_FIELD(CStatus, "caches");
+    ADD_FIELD(CPublishRecord, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "filename", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "index_hash", T_IPFSHASH, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "index_pinned", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "bloom_hash", T_IPFSHASH, ++fieldNum);
+    ADD_FIELD(CPublishRecord, "bloom_pinned", T_BOOL, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CStatus, "schema");
-    HIDE_FIELD(CStatus, "deleted");
-    HIDE_FIELD(CStatus, "showing");
-    HIDE_FIELD(CStatus, "cname");
+    HIDE_FIELD(CPublishRecord, "schema");
+    HIDE_FIELD(CPublishRecord, "deleted");
+    HIDE_FIELD(CPublishRecord, "showing");
+    HIDE_FIELD(CPublishRecord, "cname");
 
-    builtIns.push_back(_biCStatus);
+    builtIns.push_back(_biCPublishRecord);
 
     // EXISTING_CODE
-    SHOW_FIELD(CStatus, "caches");
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CStatus* sta = reinterpret_cast<const CStatus*>(dataPtr);
-    if (sta) {
+string_q nextPublishrecordChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPublishRecord* pub = reinterpret_cast<const CPublishRecord*>(dataPtr);
+    if (pub) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, sta);
+                    return nextBasenodeChunk(fieldIn, pub);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -311,7 +261,7 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CStatus::readBackLevel(CArchive& archive) {
+bool CPublishRecord::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -319,7 +269,7 @@ bool CStatus::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CStatus& item) {
+ostream& operator<<(ostream& os, const CPublishRecord& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -329,16 +279,40 @@ ostream& operator<<(ostream& os, const CStatus& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "caches" && index < caches.size())
-        return caches[index];
-    return NULL;
-}
-
-//---------------------------------------------------------------------------
-const char* STR_DISPLAY_STATUS = "";
+const char* STR_DISPLAY_PUBLISHRECORD =
+    "[{FILENAME}]\t"
+    "[{INDEX_HASH}]\t"
+    "[{INDEX_PINNED}]\t"
+    "[{BLOOM_HASH}]\t"
+    "[{BLOOM_PINNED}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+bool publishNotPinned(const string_q& filename, CPublishRecord& result) {
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool publishPinned(const string_q& filename, CPublishRecord& result) {
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool forEveryPinnedItem(IPFSVISITFUNC func, void* data) {
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool forEveryIPFSItem(IPFSVISITFUNC func, void* data) {
+    //    if (!func)
+    //        return false;
+    //
+    //    for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
+    //        CLogEntry log = trans.receipt.logs[i];
+    //        if (!(*func)(log, data))
+    //            return false;
+    //    }
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks

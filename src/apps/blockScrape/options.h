@@ -8,7 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
+#include "pinlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -59,3 +59,9 @@ class COptions : public COptionsBase {
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
 extern string_q scraperStatus(void);
+
+//-----------------------------------------------------------------------------
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
