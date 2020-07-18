@@ -64,6 +64,8 @@ bool visitBlock(CBlock& block, void* data) {
         decIndent();
     }
     opt->first = false;
+    if (isTestMode() && opt->timestamps)
+        return block.blockNumber < 100;
     return true;
 }
 
@@ -116,15 +118,19 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         block.timestamp = tsArray[bn + 1];
         bool ret = (*func)(block, data);
         if (!ret) {
-            // Cleanup and return if user tells us to
-            ASSERT(tsArray)
-            delete[] tsArray;
+            // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+            // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
+            // ASSERT(tsArray)
+            // delete[] tsArray;
             return false;
         }
     }
 
-    ASSERT(tsArray)
-    delete[] tsArray;
+    // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+    // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
+    // ASSERT(tsArray)
+    // delete[] tsArray;
+
     return true;
 }
 

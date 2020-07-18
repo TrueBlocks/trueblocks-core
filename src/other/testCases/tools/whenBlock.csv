@@ -62,6 +62,8 @@ on, both, fast, when, tools/whenBlock, fmt_api,                     y, block_lis
 on, both, fast, when, tools/whenBlock, fmt_json,                    y, block_list = 1001001 & fmt = json
 on, both, fast, when, tools/whenBlock, fmt_junk,                    y, block_list = 1001001 & fmt = junk
 
+on, both, fast, when, tools/whenBlock, fmt_timestamps,              y, timestamps
+
 # 13920,tools,when,whenBlock,blocks,,,FALSE,FALSE,TRUE,FALSE,,positional,list<blknum>,one or more block numbers (or a 'special' block)&#44; or
 # 13940,tools,when,whenBlock,dates,,,FALSE,FALSE,TRUE,FALSE,,positional,list<date>,one or more dates formatted as YYYY-MM-DD[THH[:MM[:SS]]]
 # 13960,tools,when,whenBlock,list,l,,FALSE,FALSE,TRUE,FALSE,y es,switch,<boolean>,export all the named blocks
