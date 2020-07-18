@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,12 +10,11 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
-
-extern void pinlib_init(QUITHANDLER qh);
-extern void pinlib_cleanup(void);
-
-#include "publishrecord.h"
 #include "pinutils.h"
 
-using namespace qblocks;  // NOLINT
+//-------------------------------------------------------------------------
+bool ipfsExists(void) {
+    ostringstream os;
+    os << "ipfs --help";
+    return (system(os.str().c_str()) == 0);
+}

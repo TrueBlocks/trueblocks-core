@@ -11,12 +11,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+/*
+ * This file was generated with makeClass. Edit only those parts of the code inside
+ * of 'EXISTING_CODE' tags.
+ */
+#include "pinlib.h"
 
-extern void pinlib_init(QUITHANDLER qh);
-extern void pinlib_cleanup(void);
-
-#include "publishrecord.h"
-#include "pinutils.h"
-
-using namespace qblocks;  // NOLINT
+extern bool ipfsExists(void);
