@@ -70,11 +70,6 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "api_provider") {
-                return api_provider;
-            }
-            break;
         case 'b':
             if (fieldName % "balance_provider") {
                 return balance_provider;
@@ -138,12 +133,6 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "api_provider") {
-                api_provider = fieldValue;
-                return true;
-            }
-            break;
         case 'b':
             if (fieldName % "balance_provider") {
                 balance_provider = fieldValue;
@@ -218,7 +207,6 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> client_version;
     archive >> trueblocks_version;
     archive >> rpc_provider;
-    archive >> api_provider;
     archive >> balance_provider;
     archive >> host;
     archive >> is_scraping;
@@ -237,7 +225,6 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << client_version;
     archive << trueblocks_version;
     archive << rpc_provider;
-    archive << api_provider;
     archive << balance_provider;
     archive << host;
     archive << is_scraping;
@@ -281,7 +268,6 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "client_version", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "trueblocks_version", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "api_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);

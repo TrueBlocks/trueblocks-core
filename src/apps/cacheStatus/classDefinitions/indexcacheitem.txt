@@ -1,6 +1,17 @@
 [settings]
 class = CIndexCacheItem
-fields = string type|uint32 nAddresses|uint32 nAppearances|blknum firstAppearance|blknum latestAppearance|timestamp firstTs|timestamp latestTs|string filename|uint32 indexSizeBytes|ipfshash index_hash|uint32 bloomSizeBytes|ipfshash bloom_hash
+fields = string type|\
+        uint32 nAddresses|\
+        uint32 nAppearances|\
+        blknum firstAppearance|\
+        blknum latestAppearance|\
+        timestamp firstTs|\
+        timestamp latestTs|\
+        string filename|\
+        uint32 indexSizeBytes|\
+        ipfshash index_hash|\
+        uint32 bloomSizeBytes|\
+        ipfshash bloom_hash
 includes = etherlib.h
 serialize = true
 use_export = true

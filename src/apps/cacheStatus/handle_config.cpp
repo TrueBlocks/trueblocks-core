@@ -33,8 +33,6 @@ bool COptions::handle_config_get(ostream& os) {
                                       : cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545"));
         values.push_back(isTestMode() ? "--balance Prov--"
                                       : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--api Provider--"
-                                      : cc->getConfigStr(g1_1.name, "apiProvider", "http://localhost:8080"));
         values.push_back(isTestMode() ? "--config Path--" : cc->getConfigStr(g1_2.name, "configPath", defFolder));
         values.push_back(isTestMode() ? "--cache Path--"
                                       : cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/"));
@@ -48,8 +46,6 @@ bool COptions::handle_config_get(ostream& os) {
                                     "the Ethereum node's RPC endpoint", true, false));
         items.push_back(CConfigItem("balanceProvider", substitute(values[cnt++], "\t", "\\t"), "url",
                                     "alternative node endpoint for account balances", false, false));
-        items.push_back(CConfigItem("apiProvider", substitute(values[cnt++], "\t", "\\t"), "url",
-                                    "TrueBlocks' API endpoint", true, false));
         for (auto item : items)
             g1_1.keys.push_back(item);
         f.sections.push_back(g1_1);
@@ -324,11 +320,6 @@ const char* STR_TEST_DATA =
     "          {\n"
     "            \"name\": \"rpcProvider\",\n"
     "            \"value\": \"--new rpc Provider--\",\n"
-    "            \"type\": \"url\"\n"
-    "          },\n"
-    "          {\n"
-    "            \"name\": \"apiProvider\",\n"
-    "            \"value\": \"--new api Provider--\",\n"
     "            \"type\": \"url\"\n"
     "          },\n"
     "          {\n"

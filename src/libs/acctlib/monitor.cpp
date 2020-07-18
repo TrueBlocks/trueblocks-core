@@ -669,6 +669,5 @@ bloom_t CMonitor::getBloom(void) {
     }
     return bloom;
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
