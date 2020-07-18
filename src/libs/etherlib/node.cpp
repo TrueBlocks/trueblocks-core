@@ -1139,6 +1139,7 @@ bool freshenTimestamps(blknum_t minBlock) {
         cerr << ts_2_Date(blockZeroTs).Format(FMT_EXPORT);
         cerr << "          \r";
         cerr.flush();
+        nRecords++;
     }
 
     CBlock block;
