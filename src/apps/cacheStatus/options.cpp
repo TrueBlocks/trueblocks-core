@@ -214,7 +214,7 @@ void COptions::Init(void) {
         status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
     }
     status.trueblocks_version = getVersionStr();
-    status.is_scraping = isTestMode() ? false : contains(listRunning("chifra scrape"), "chifra scrape");
+    status.is_scraping = isTestMode() ? false : isRunning("chifra scrape");
     status.is_testing = isTestMode();
 }
 

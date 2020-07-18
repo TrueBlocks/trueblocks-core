@@ -8,7 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
+#include "pinlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

@@ -5,49 +5,11 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-//--------------------------------------------------------------------------
-inline bool prevLastBlocks(blknum_t& u, blknum_t& r, blknum_t& s, blknum_t& f, blknum_t& c, bool write) {
-    string_q fn = configPath("cache/tmp/scraper-status.txt");
-    if (write) {
-        ostringstream os;
-        os << u << "\t" << r << "\t" << s << "\t" << f << "\t" << c << endl;
-        stringToAsciiFile(fn, os.str());
-    } else {
-        string_q contents = asciiFileToString(fn);
-        CUintArray parts;
-        explode(parts, contents, '\t');
-        if (parts.size()) {
-            u = parts[0];
-            r = parts[1];
-            s = parts[2];
-            f = parts[3];
-            c = parts[4];
-        } else {
-            u = r = s = f = c = NOPOS;
-        }
-    }
-    return true;
-}
-
+extern bool prevLastBlocks(blknum_t& u, blknum_t& r, blknum_t& s, blknum_t& f, blknum_t& c, bool write);
+extern string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f,
+                               const blknum_t c);
 //-------------------------------------------------------------------------
-inline string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f,
-                               const blknum_t c) {
-    if (isTestMode())
-        return "--final--, --staging--, --ripe--, --unripe--, --client--";
-
-    ostringstream os;
-    os << cYellow;
-    os << padNum9T((int64_t)f) << ", ";
-    os << padNum9T((int64_t)s) << ", ";
-    os << padNum9T((int64_t)r) << ", ";
-    os << padNum9T((int64_t)u) << ", ";
-    os << padNum9T((int64_t)c);
-    os << cOff;
-    return os.str();
-}
-
-//-------------------------------------------------------------------------
-string_q scraperStatus(void) {
+string_q handle_reporting(void) {
     char hostname[HOST_NAME_MAX];
     char username[LOGIN_NAME_MAX];
 
@@ -100,5 +62,45 @@ string_q scraperStatus(void) {
     os << cGreen << "  Distances:          " << distances.str() << endl;
     os << cGreen << "  Diffs:              " << diffs.str() << endl;
     os << cGreen << "  Neighbors:          " << pNeighbors.str() << endl;
+    return os.str();
+}
+
+//--------------------------------------------------------------------------
+bool prevLastBlocks(blknum_t& u, blknum_t& r, blknum_t& s, blknum_t& f, blknum_t& c, bool write) {
+    string_q fn = configPath("cache/tmp/scraper-status.txt");
+    if (write) {
+        ostringstream os;
+        os << u << "\t" << r << "\t" << s << "\t" << f << "\t" << c << endl;
+        stringToAsciiFile(fn, os.str());
+    } else {
+        string_q contents = asciiFileToString(fn);
+        CUintArray parts;
+        explode(parts, contents, '\t');
+        if (parts.size()) {
+            u = parts[0];
+            r = parts[1];
+            s = parts[2];
+            f = parts[3];
+            c = parts[4];
+        } else {
+            u = r = s = f = c = NOPOS;
+        }
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
+string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f, const blknum_t c) {
+    if (isTestMode())
+        return "--final--, --staging--, --ripe--, --unripe--, --client--";
+
+    ostringstream os;
+    os << cYellow;
+    os << padNum9T((int64_t)f) << ", ";
+    os << padNum9T((int64_t)s) << ", ";
+    os << padNum9T((int64_t)r) << ", ";
+    os << padNum9T((int64_t)u) << ", ";
+    os << padNum9T((int64_t)c);
+    os << cOff;
     return os.str();
 }

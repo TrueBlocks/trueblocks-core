@@ -13,11 +13,6 @@
             "type": "url"
           },
           {
-            "name": "apiProvider",
-            "value": "--new api Provider--",
-            "type": "url"
-          },
-          {
             "name": "balanceProvider",
             "value": "--new balance Prov--",
             "type": "url"
@@ -183,7 +178,6 @@ current = "0.7.0-alpha"
 
 ------------------------------------------------------------------------------------------------------------------------
   toml.setConfigStr("settings", "rpcProvider", "--new rpc Provider--");
-  toml.setConfigStr("settings", "apiProvider", "--new api Provider--");
   toml.setConfigStr("settings", "balanceProvider", "--new balance Prov--");
   toml.setConfigStr("settings", "configPath", "--new config Path--/");
   toml.setConfigStr("settings", "cachePath", "--new cache Path--/");

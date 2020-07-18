@@ -134,8 +134,9 @@ bool COptions::handle_scrape(void) {
             if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
 
+            // FIX_THIS_CODE
             // Catch the timestamp file up to the scraper
-            freshenTimestamps(getLatestBlock_cache_ripe());
+            // freshenTimestamps(getLatestBlock_cache_ripe());
 
             if (isTestMode()) {
                 // Do nothing related in --daemon mode while testing
@@ -196,14 +197,8 @@ bool visitMonitor(const string_q& path, void* data) {
 }
 
 //----------------------------------------------------------------------------
-string_q processList(const string_q& search) {
-    string_q cmd = "pgrep -lf \"" + search + "\"";
-    return doCommand(cmd);
-}
-
-//----------------------------------------------------------------------------
-extern bool isScraperRunning(const string_q& unsearch) {
-    string_q pList = processList("chifra scrape");
+bool isScraperRunning(const string_q& unsearch) {
+    string_q pList = listProcesses("chifra scrape");
     replace(pList, "  ", " ");
     replace(pList, "chifra scrape " + unsearch, "");
     return contains(pList, "chifra scrape");
