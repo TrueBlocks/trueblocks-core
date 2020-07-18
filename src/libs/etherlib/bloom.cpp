@@ -16,10 +16,10 @@ namespace qblocks {
 
 //----------------------------------------------------------------------
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
-#define BLOOM_WIDTH_IN_BITS  (BLOOM_WIDTH_IN_BYTES * 8)
-#define MAX_ADDRS_IN_BLOOM   50000
-#define NIBBLE_WID           8
-#define K                    10
+#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
+#define MAX_ADDRS_IN_BLOOM 50000
+#define NIBBLE_WID 8
+#define K 5
 
 //---------------------------------------------------------------------------
 void bloom_t::init(void) {
@@ -38,7 +38,8 @@ void bloom_t::copy(const bloom_t& b) {
 
 //---------------------------------------------------------------------------
 bool bloom_t::operator==(const bloom_t& test) const {
-    if (nInserted != test.nInserted) return false;
+    if (nInserted != test.nInserted)
+        return false;
     for (size_t i = 0; i < BLOOM_WIDTH_IN_BYTES; i++) {
         if (bits[i] != test.bits[i])
             return false;
