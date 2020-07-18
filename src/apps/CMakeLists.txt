@@ -12,6 +12,7 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(blockScrape)
+add_subdirectory(ipfsScraper)
 add_subdirectory(acctScrape)
 add_subdirectory(acctExport)
 add_subdirectory(cacheMan)
