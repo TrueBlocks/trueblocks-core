@@ -161,7 +161,6 @@ Show a status
   "client_version": "client_version",
   "trueblocks_version": "trueblocks_version",
   "rpc_provider": "rpc_provider",
-  "api_provider": "api_provider",
   "balance_provider": "balance_provider",
   "host": "host",
   "caches": [

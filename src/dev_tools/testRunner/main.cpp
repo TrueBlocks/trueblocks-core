@@ -61,7 +61,7 @@ int main(int argc, const char* argv[]) {
             for (auto line : lines) {
                 bool ignore1 = startsWith(line, "#");
                 bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
-                bool ignore3 = contains(line, ", route,");
+                bool ignore3 = startsWith(line, "enabled");
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
                     if (contains(line, " all,")) {

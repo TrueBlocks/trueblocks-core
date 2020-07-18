@@ -10854,11 +10854,6 @@
         "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
         "count": 1
       },
-      "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": {
-        "tags": "00-Active",
-        "name": "Meriam Wallet 0x0549",
-        "count": 1
-      },
       "0x0b16f058257f43db6ec84a7b3c77766cb808face": {
         "tags": "31-Gitcoin Grants:Friends",
         "name": "Name 0x0b16f058",
@@ -10915,7 +10910,9 @@
         "count": 1
       }
     },
-    "unNamedFrom": {},
+    "unNamedFrom": {
+      "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": 1
+    },
     "namedTo": {
       "0x7d655c57f71464b6f83811c55d84009cd9f5221c": {
         "tags": "31-Gitcoin Grants:Core",
@@ -10935,14 +10932,14 @@
       "stateHistory": [],
       "curBalance": 0,
       "enabled": true,
-      "tags": "00-Active",
+      "tags": "",
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d",
+      "name": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "symbol": "",
       "source": "",
       "decimals": "",
       "description": "",
-      "is_custom": true,
+      "is_custom": false,
       "is_prefund": false
     }
   }
