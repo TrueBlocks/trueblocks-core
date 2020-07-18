@@ -6,6 +6,7 @@
 #include "options.h"
 
 extern bool visitMonitor(const string_q& path, void* data);
+extern bool isScraperRunning(const string_q& unsearch);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
@@ -37,7 +38,7 @@ bool COptions::handle_scrape(void) {
     if (contains(tool_flags, "restart")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't restart it
-        if (nRunning("chifra scrape") < 2) {
+        if (!isScraperRunning("restart")) {
             LOG_WARN("Scraper is not running. Cannot restart...");
             EXIT_NOMSG(true);
         }
@@ -56,7 +57,7 @@ bool COptions::handle_scrape(void) {
     } else if (contains(tool_flags, "pause")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't pause it
-        if (nRunning("chifra scrape") < 2) {
+        if (!isScraperRunning("pause")) {
             LOG_WARN("Scraper is not running. Cannot pause...");
             EXIT_NOMSG(true);
         }
@@ -73,9 +74,7 @@ bool COptions::handle_scrape(void) {
         EXIT_NOMSG(true);
 
     } else if (contains(tool_flags, "quit")) {
-        //---------------------------------------------------------------------------------
-        // If a seperate instance is not running, we can't kill it
-        if (nRunning("chifra scrape") < 2) {
+        if (!isScraperRunning("quit")) {
             LOG_WARN("Scraper is not running. Cannot quit...");
             EXIT_NOMSG(true);
         }
@@ -88,13 +87,10 @@ bool COptions::handle_scrape(void) {
     } else {
         //---------------------------------------------------------------------------------
         // If it's already running, don't start it again...
-#ifdef MAC
-        // TODO(tjayrush): fix this on non-mac machines
-        if (nRunning("chifra scrape") > 1) {
+        if (isScraperRunning("unused")) {
             LOG_WARN("Scraper is already running. Cannot start it again...");
             EXIT_NOMSG(false);
         }
-#endif
 
         // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
@@ -138,8 +134,9 @@ bool COptions::handle_scrape(void) {
             if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
 
+            // FIX_THIS_CODE
             // Catch the timestamp file up to the scraper
-            freshenTimestamps(getLatestBlock_cache_ripe());
+            // freshenTimestamps(getLatestBlock_cache_ripe());
 
             if (isTestMode()) {
                 // Do nothing related in --daemon mode while testing
@@ -197,4 +194,12 @@ bool visitMonitor(const string_q& path, void* data) {
     }
 
     return true;
+}
+
+//----------------------------------------------------------------------------
+bool isScraperRunning(const string_q& unsearch) {
+    string_q pList = listProcesses("chifra scrape");
+    replace(pList, "  ", " ");
+    replace(pList, "chifra scrape " + unsearch, "");
+    return contains(pList, "chifra scrape");
 }

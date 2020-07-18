@@ -23,6 +23,8 @@ static const COption params[] = {
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_ERROR_MSG;
+//--------------------------------------------------------------------------------
+extern size_t nRunning(const string_q& progName);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -193,6 +195,17 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+size_t nRunning(const string_q& progName) {
+    if (isTestMode()) {
+        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
+        cerr << endl << doCommand(cmd1) << endl;
+    }
+    string_q cmd = "pgrep -lf \"" + progName + "\" | wc -l";
+    string_q result = doCommand(cmd);
+    return str_2_Uint(result);
 }
 
 //--------------------------------------------------------------------------------
