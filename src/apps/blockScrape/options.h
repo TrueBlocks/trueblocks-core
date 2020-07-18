@@ -19,15 +19,8 @@ class CConsolidator {
     ofstream tmp_file;
     string_q tmp_fn;
 
-    // TS_SCRAPER
-    //    string_q ts_fn;
-    //    ofstream ts_file;
-    //    blknum_t ts_bn;
-
     blknum_t prevBlock;
     explicit CConsolidator(blknum_t p);
-    // TS_SCRAPER
-    //    bool checkTimestamps(void);
 
   private:
     CConsolidator(void) {
@@ -58,4 +51,10 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------------
 extern bool copyRipeToStage(const string_q& path, void* data);
-extern string_q scraperStatus(void);
+extern string_q handle_reporting(void);
+
+//-----------------------------------------------------------------------------
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
