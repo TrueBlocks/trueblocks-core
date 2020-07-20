@@ -24,7 +24,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_ERROR_MSG;
 //--------------------------------------------------------------------------------
-extern size_t nRunning(const string_q& progName);
+extern bool isAlreadyRunning(const string_q& progName);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -146,13 +146,22 @@ bool COptions::parseArguments(string_q& command) {
     n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
     n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
 
-#ifdef MAC
-    // TODO(tjayrush): fix this on non-mac machines
-    if (nRunning("blockScrape")) {
-        LOG_WARN("The " + getProgName() + " process may only run once. Quitting...");
+    if (isAlreadyRunning("blockScrape")) {
+        LOG_WARN("The " + getProgName() + " is already running. Quitting...");
         return false;
     }
-#endif
+
+    // FIX_THIS_CODE
+    if (isAlreadyRunning("ipfsScraper")) {
+        LOG_WARN("The " + getProgName() + " is already running. Quitting...");
+        return false;
+    }
+
+    // Do not run if the index is being searched...
+    if (isRunning("acctScrape")) {
+        LOG_WARN("Refusing to run while acctScrape is running. Will restart shortly...");
+        return false;
+    }
 
     return true;
 }
@@ -198,14 +207,13 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-size_t nRunning(const string_q& progName) {
-    if (isTestMode()) {
-        string_q cmd1 = "pgrep -lf \"" + progName + "\"";
-        cerr << endl << doCommand(cmd1) << endl;
-    }
-    string_q cmd = "pgrep -lf \"" + progName + "\" | wc -l";
-    string_q result = doCommand(cmd);
-    return str_2_Uint(result);
+bool isAlreadyRunning(const string_q& progName) {
+    string_q pList = listProcesses(progName);
+    replaceAll(pList, "`", "");        // remove separators if present
+    replaceAll(pList, progName, "`");  // change program name to separator
+    replace(pList, "`", "");           // remove ourselves
+    size_t count = countOf(pList, '`');
+    return count > 0;
 }
 
 //--------------------------------------------------------------------------------

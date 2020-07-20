@@ -365,16 +365,16 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
-		fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
-		fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
-		fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
-		fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
-		fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
-		fmt.Printf("\t  columns2:\t%s\n", scrapeOptions.columns2)
+		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
+		//fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
+		//fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
+		//fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
+		//fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
+		//fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
+		//fmt.Printf("\t  columns2:\t%s\n", scrapeOptions.columns2)
 		fmt.Printf("\t  scraping:")
 		scrapeBlocks()
-		fmt.Println("")
+		//fmt.Println("")
 	},
 }
 

@@ -1442,6 +1442,18 @@
     },
     {
       "deleted": false,
+      "tags": "34-ENS",
+      "address": "0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41",
+      "name": "ENS: Public Resolver 2",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x499a6b77bc25c26bcf8265e2102b1b3dd1617024",
       "name": "Bitether",
@@ -2397,18 +2409,6 @@
       "source": "On Chain",
       "decimals": 8,
       "description": "iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x85cab7143ff3c01b93e88f5b017692374bb939c2",
-      "name": "Grant 223 Ethereum Magicians Magician's Registration",
-      "symbol": "",
-      "source": "",
-      "decimals": "0",
-      "description": "",
       "is_custom": false,
       "is_prefund": false
     }

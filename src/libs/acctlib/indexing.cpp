@@ -24,7 +24,9 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CAppearanceArray_base blockTable;
 
-    cerr << "\tExtracting addresses...";
+    ostringstream os;
+    os << "Extracting addresses...";
+
     ostringstream addrStream;
     for (auto line : lines) {
         CStringArray parts;
@@ -48,26 +50,26 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     addrStream << padNum6(cnt) << endl;
     nAddrs++;
 
-    cerr << endl << "\tExtracting appearances..." << endl;
+    os << "extracting appearances...";
     ostringstream blockStream;
     for (auto record : blockTable) {
         blockStream << padNum9(record.blk) << "\t";
         blockStream << padNum5(record.txid) << endl;
     }
 
-    cerr << "\tExporting data..." << endl;
+    os << "exporting...";
     ostringstream headerStream;
     headerStream << padNum7(MAGIC_NUMBER) << "\t";
     headerStream << versionHash << "\t";
     headerStream << padNum7(nAddrs) << "\t";
     headerStream << padNum7((uint32_t)blockTable.size()) << endl;
 
-    cerr << "\tFinalizing data..." << endl;
+    os << "finalizing...";
     lockSection(true);
     stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
     lockSection(false);
 
-    cerr << "\t" << greenCheck << " Ascii file created..." << endl;
+    LOG_INFO(cYellow, "  ", os.str(), " ascii file created: ", greenCheck, cOff);
 }
 
 //----------------------------------------------------------------
@@ -85,7 +87,9 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     CBloomArray blooms;
 
-    cerr << "\tExtracting addresses...";
+    ostringstream os;
+    os << "Extracting addresses...";
+
     CArchive archive(WRITING_ARCHIVE);
     archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
     archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
@@ -122,13 +126,13 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(cnt);
     nAddrs++;
 
-    cerr << endl << "\tExtracting appearances..." << endl;
+    os << "extracting appearances...";
     for (auto record : blockTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
 
-    cerr << "\tExporting data..." << endl;
+    os << "exporting...";
     archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
@@ -138,7 +142,7 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
-    cerr << "\tFinalizing data..." << endl;
+    os << "finalizing...";
     lockSection(true);  // disallow control+c
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
     writeBloomToBinary(bloomFile, blooms);  // write the bloom file
@@ -146,7 +150,7 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     ::remove(tmpFile.c_str());              // remove the tmp file
     lockSection(false);
 
-    cerr << "\t" << greenCheck << " Binary file created..." << endl;
+    LOG_INFO(cYellow, "  ", os.str(), " binary file created: ", greenCheck, cOff);
 }
 
 //--------------------------------------------------------------------------------

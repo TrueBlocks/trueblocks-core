@@ -8,7 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
+#include "acctlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -38,6 +38,8 @@ class COptions : public COptionsBase {
 
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
+    // FIX_THIS_CODE
+    blknum_t maxIndexRows;
 
     COptions(void);
     ~COptions(void);
@@ -50,11 +52,6 @@ class COptions : public COptionsBase {
 };
 
 //-----------------------------------------------------------------------------
-extern bool copyRipeToStage(const string_q& path, void* data);
+extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern string_q handle_reporting(void);
-
-//-----------------------------------------------------------------------------
-#ifndef HOST_NAME_MAX
-#define HOST_NAME_MAX 64
-#define LOGIN_NAME_MAX 64
-#endif
+extern bool appendFile(const string_q& toFile, const string_q& fromFile);

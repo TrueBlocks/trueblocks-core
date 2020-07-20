@@ -1839,6 +1839,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x4954db6391f4feb5468b6b943d4935353596aec9	USDQ Stablecoin by Q DAO v1.0	USDQ	On Chain	18		false	false	false
 31-Gitcoin Grants:Grant	0x49608550e4b61e6de2ddff45b3361f6711319a14	Grant 865 ExtremeInsureMe DAO Cover for living a life less ordinary		https://gitcoin.co/grants/865/extremedao		https://extremeinsure.me/	false	false	false
 50-Tokens:ERC20	0x49614661737efbfc6a102efaeefdc8e197f7cc0e	Escroco Emerald	ESCE	On Chain	8		false	false	false
+34-ENS	0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41	ENS: Public Resolver 2		Etherscan			false	false	false
 34-Humanity DAO	0x497a145c2b18ec1a911b4f8ccd02482ed7ce94c2	shydesky		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x497baef294c11a5f0f5bea3f2adb3073db448b56	DEX	DEX	On Chain	18		false	false	false
 81-Other	0x498aaea441af871de5e65848a31ce57385dea597	Dice		Etherscan.io			false	false	false

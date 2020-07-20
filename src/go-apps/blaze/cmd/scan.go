@@ -64,16 +64,16 @@ Description:
   data, so you have to edit this file to customize it.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		Options.rpcProvider = "http://localhost:8545"
-		fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
-		fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
-		fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
-		fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
-		fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
-		fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
-		fmt.Printf("\t  columns:\t %s\n", scanOptions.columns)
+		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
+		//fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
+		//fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
+		//fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
+		//fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
+		//fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
+		//fmt.Printf("\t  columns:\t %s\n", scanOptions.columns)
 		fmt.Printf("\t  scraping:\n")
 		scanBlocks()
-		fmt.Println("")
+		//fmt.Println("")
 	},
 }
 

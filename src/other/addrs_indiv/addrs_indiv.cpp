@@ -14,7 +14,7 @@
 
 typedef struct {
     CIndexHashMap hashes;
-    CIndexHashMap bloom;
+    CIndexHashMap blooms;
 } Thing;
 
 //----------------------------------------------------------------
@@ -29,26 +29,40 @@ int main(int argc, const char* argv[]) {
     return 1;
 }
 
+uint32_t cnt = 0;
 //----------------------------------------------------------------
 bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitFile, data);
     } else {
         if (endsWith(path, ".bin")) {
+            if (cnt++ > 1)
+                return false;
             blknum_t end;
             timestamp_t unused2;
             blknum_t start = bnFromPath(path, end, unused2);
             Thing *thing = (Thing*)data;
             CIndexArchive index(READING_ARCHIVE);
             if (index.ReadIndexFromBinary(path)) {
-                cout << start << ",";
-                cout << end << ",";
-                cout << index.header.nAddrs << ",";
-                cout << index.header.nRows << ",";
-                cout << fileSize(path) << ",";
-                cout << fileSize(substitute(substitute(path, "finalized", "blooms"),".bin",".bloom")) << ",";
-                cout << (thing->hashes.operator[](start).hash) << ",";
-                cout << (thing->blooms.operator[](start).hash) << "\n";
+                cout << "start: " << start << endl;
+                cout << "end: " << end << endl;
+                cout << "nAddrs: " << index.header->nAddrs << endl;
+                cout << "nRows: " << index.header->nRows << endl;
+                bool stop = false;
+                for (uint32_t a = 0 ; a < index.nAddrs && !stop ; a++) {
+                    CAddressRecord_base *aRec = &index.addresses[a];
+                    //cout << "[" << a << "]: " << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
+                    cout << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
+                    stop = aRec->offset > 9479;
+                }
+                for (uint32_t a = 0 ; a < index.nApps ; a++) {
+                    CAppearance_base *aRec = &index.appearances[a];
+                    cout << aRec->blk << "\t" << aRec->txid << endl;
+                }
+                cout << "fileSize: " << fileSize(path) << endl;
+                cout << "bloomSize: " << fileSize(substitute(substitute(path, "finalized", "blooms"),".bin",".bloom")) << endl;
+                cout << "indexHash: " << (thing->hashes.operator[](start).hash) << endl;
+                cout << "bllomHash: " << (thing->blooms.operator[](start).hash) << endl;
 
             }
         }

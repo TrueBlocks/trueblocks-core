@@ -121,6 +121,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x47d1a59cbdd19aee060c859c0009277e245328ae	Sonder Token	SNR	Etherscan.io		Overcome the barriers to integration of blockchain-technologies into e-commerce market.	false	false	false
 50-Tokens:ERC20	0x48ff53777f747cfb694101222a944de070c15d36	Ether Kingdoms Token	IMP	On Chain	7	Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges.	false	false	false
 60-Airdrops	0x4936790a58f5ae1c06210cba4eb1024fd7d535ac	Katerium Airdrop		Etherscan			false	false	false
+34-ENS	0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41	ENS: Public Resolver 2		Etherscan			false	false	false
 50-Tokens:ERC20	0x499a6b77bc25c26bcf8265e2102b1b3dd1617024	Bitether	BTR	On Chain	18	Project based on online and offline shopping market all across the globe.	false	false	false
 40-Exchanges	0x49c4f9bc14884f6210f28342ced592a633801a8b	Uniswap: KNC	KNC	Etherscan			false	false	false
 35-Pool Together	0x49d716dfe60b37379010a75329ae09428f17118d	Pool Dai Token plDai RecipientWhitelistPoolToken v0.2.12		Etherscan			false	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x84119cb33e8f590d75c2d6ea4e6b0741a7494eda	Gigwatt Token	WTT	Etherscan.io		Full-service mining solution provider.	false	false	false
 30-Contracts	0x84487e50db6317e5e834d89d0e81fd873462ea47	GU: Epic Pack Three		Etherscan			false	false	false
 50-Tokens:ERC20	0x859a9c0b44cb7066d956a958b0b82e54c9e44b4b	iEthereum	iETH	On Chain	8	iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.	false	false	false
-31-Gitcoin Grants:Grant	0x85cab7143ff3c01b93e88f5b017692374bb939c2	Grant 223 Ethereum Magicians Magician's Registration					false	false	false

@@ -125,7 +125,8 @@ class logger {
                 header.fill('0');
                 header.width(7);
                 clock_t now = clock();
-                header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
+                // FIX_THIS_CODE
+                // header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
                 last_clock = now;
             }
             //            if (LOG_THREAD) {

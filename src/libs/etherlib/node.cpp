@@ -1112,7 +1112,8 @@ bool freshenTimestamps(blknum_t minBlock) {
         string_q zipFile = configPath("ts.bin.gz");
         if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
             string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-            cerr << doCommand(cmd) << endl;
+            string_q result = doCommand(cmd);
+            LOG_INFO(result);
             ASSERT(!fileExists(zipFile));
             ASSERT(fileExists(fn));
         }
@@ -1127,18 +1128,14 @@ bool freshenTimestamps(blknum_t minBlock) {
 
     CArchive file(WRITING_ARCHIVE);
     if (!file.Lock(fn, modeWriteAppend, LOCK_NOWAIT)) {
-        cerr << "Failed to open ts.bin" << endl;
+        LOG_ERR("Failed to open ts.bin");
         return false;
     }
 
     if (nRecords == 0) {
         file << (uint32_t)0 << (uint32_t)blockZeroTs;
         file.flush();
-        cerr << "\t" << padNum9(0) << "\t";
-        cerr << blockZeroTs << "\t";
-        cerr << ts_2_Date(blockZeroTs).Format(FMT_EXPORT);
-        cerr << "          \r";
-        cerr.flush();
+        LOG_INFO(padNum9(0), "\t", blockZeroTs, "\t", ts_2_Date(blockZeroTs).Format(FMT_EXPORT), "          \r");
         nRecords++;
     }
 
@@ -1148,17 +1145,13 @@ bool freshenTimestamps(blknum_t minBlock) {
         getBlock_header(block, bn);
         file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
         file.flush();
-        cerr << "\t" << padNum9(block.blockNumber) << "\t";
-        cerr << block.timestamp << "\t";
-        cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT);
-        cerr << "          \r";
-        cerr.flush();
+        LOG_INFO(padNum9(block.blockNumber), "\t", block.timestamp, "\t", ts_2_Date(block.timestamp).Format(FMT_EXPORT),
+                 "          \r");
     }
     file.Release();
 
-    cerr << cTeal << "\t  updated timestamps to " << block.blockNumber << " (";
-    cerr << block.timestamp << " - ";
-    cerr << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")" << cOff << endl;
+    LOG_INFO(cTeal, "  Updated timestamps to block ", block.blockNumber, " (", block.timestamp, " - ",
+             ts_2_Date(block.timestamp).Format(FMT_EXPORT), ")", cOff);
     return true;
 }
 

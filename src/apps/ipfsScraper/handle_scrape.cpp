@@ -5,30 +5,51 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+// ADJUSTMENTS
+//#define MAX_ROWS 50
+//#define CLIENT 10480200
+//#define N_BLOCKS 100
+#define MAX_ROWS 500000
+#define CLIENT (client + 0)
+#define N_BLOCKS (n_blocks + 0)
+
 //--------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
-    // Remove anything that may be residule from the last run. (For example, if the user hit control+c)
-    ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
-    cleanFolder(indexFolder_unripe);
+    LOG_INFO(string_q(120, '-'));
+
+    // FIX_THIS_CODE
+    maxIndexRows = MAX_ROWS;  // not configurable really
 
     // Find the last visited block. (It's the later of ripe, staging, or finalized.)
     blknum_t unused1, ripe, staging, finalized, client;
     getLatestBlocks(unused1, ripe, staging, finalized, client);
-    // FIX_THIS_CODE
-    client = 10480200;
+
+    // The latest of finalized block, staging block, or ripe block is the last 'good' block. Start one past that...
     blknum_t lastVisit = max(ripe, max(staging, finalized));
     blknum_t startBlock = lastVisit + 1;
 
-    // In some cases (the user is re-syncing his/her node from scratch, but has a partial
-    // index) and, therefore, the index may be ahead of tip of the chain. In this case, we
-    // return without doing anything...
+    // FIX_THIS_CODE -- Just so test cases don't report a difference
+    client = CLIENT;
+
+    // In some cases, the index may be ahead of tip. In that case, we doing nothing...
     if (startBlock > client) {
-        LOG_INFO("The index (", startBlock, ") is caught up to the chain (", client, ").");
+        LOG_INFO("The index (", startBlock, ") is caught up to the tip of the chain (", client, ").");
         return false;
     }
 
+    if (isDockerMode()) {
+        n_blocks = 100;
+        n_block_procs = 5;
+        n_addr_procs = 10;
+    }
+
+    const CToml* config = getGlobalConfig("blockScrape");
+    n_blocks = config->getConfigInt("settings", "n_blocks", (n_blocks == NOPOS ? 2000 : n_blocks));
+    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
+    n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
+
     // Docker will kill blaze if it uses too many resources...
-    if (getEnvStr("DOCKER_MODE") != "true") {
+    if (!isDockerMode()) {
         // ...so we only override on n_blocks to speed things up if not docker...
         if (startBlock < 450000) {
             n_blocks = max((blknum_t)4000, n_blocks);
@@ -39,7 +60,7 @@ bool COptions::handle_scrape(void) {
         }
     }
     // FIX_THIS_CODE
-    n_blocks = 100;
+    n_blocks = N_BLOCKS;
 
     // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block
     // goes ripe, we no longer ask the node about it. We try to move it to staging. Staging
@@ -59,52 +80,54 @@ bool COptions::handle_scrape(void) {
     }
 
     // FIX_THIS_CODE
-    string_q cmmd = "/Users/jrush/Development/trueblocks-core/bin/blaze scrape";
+    // string_q cmd = "/Users/jrush/Development/trueblocks-core/bin/blaze scrape";
+    string_q cmd = "blaze scrape";
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
-    os << cmmd << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
+    os << cmd;
+    os << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
     if (n_block_procs != 20)
         os << " --nBlockProcs " << n_block_procs;
     if (n_addr_procs != 60)
         os << " --nAddrProcs " << n_addr_procs;
 
-    // reporting...
-    cerr << cGreen << "\t" << os.str() << cOff << " (" << (startBlock + n_blocks) << ")" << endl;
+    // Report to the screen...
+    string_q tmp = "cmd: " + substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "");
+    LOG_INFO(cGreen, tmp, cOff, " (ending at: ", (startBlock + n_blocks - 1), ")");
 
-    os << " --ripeBlock " << ripeBlock;
     // ...and make the call to blaze.
+    os << " --ripeBlock " << ripeBlock;
+    // os << " 2>/dev/null 1>/dev/null ";
     if (system(os.str().c_str()) != 0) {
-        // if blaze returns non-zero, it did not complete sucessfully. We need to remove files
-        // in the 'ripe' folder because they're inconsistent (blaze's 'go' processes do not run
-        // in sequence). We blindly clean all ripe files, which is a bit of overill, but it's easy
-        // and it works. Next time we run, it will start over at the last staged block.
+        // blaze will return non-zero if it fails. In this case, we need to remove files in the 'ripe'
+        // folder because they're inconsistent (blaze's 'go' processes do not run in sequence). We
+        // blindly clean all ripe files, which is a bit of overill, but it's easy and it works.
+        // Next time we run, it will start over at the last staged block.
         cleanFolder(indexFolder_ripe);
-        cerr << cRed << "\tBlaze quit without finishing. Reprocessing..." << cOff << endl;
+        LOG_WARN("Blaze quit without finishing. Reprocessing...");
         return false;
     }
 
-    // If blaze returned '0', it has sucessfully run through all the blocks between 'startBlock'
-    // and 'startBlock + n_blocks'. The ripe folder contains individual files, one for each block,
-    // containing lists of addresses that appear in that block. The unripe folder holds blocks that
-    // are less than 28 blocks old. We do nothing further with them here, but the query tool (acctScrape)
-    // may use them. acctScrape is responsible to report to the user that the unripe data may be
-    // unsafe to use. Here, we quit if acctScrape is running. We can quit safely without cleaning
-    // up. The next run will pick up where we left off.
+    LOG_INFO("\r", string_q(120, ' '), "\r");
+
+    // Blaze succeeded, but the user may have started `acctScrape` since it was called. We don't want
+    // to get incorrect results, so we return here knowing it will get cleaned up next time.
     if (isRunning("acctScrape")) {
         LOG_WARN("acctScrape is running. blockScrape will re-run in a moment...");
         return false;
     }
 
-    // cout << indexFolder_staging << ": " << folderExists(indexFolder_staging) << endl;
-    // cout << indexFolder_ripe << ": " << folderExists(indexFolder_ripe) << endl;
-    // cout << indexFolder_unripe << ": " << folderExists(indexFolder_unripe) << endl;
+    // Blaze sucessfullly created individual files, one for each block between 'start' and 'start + n_blocks'.
+    // Each contains a list of addresses that appear in that block. The unripe folder holds blocks that
+    // are less than 28 blocks old. We do nothing further with them, but the query tool (acctScrape)
+    // may use them if it wants to.
 
-    // From this point until the end of the invocation, the processing must be able to stop abruptly
+    // From this point until the end of this invocation, the processing must be able to stop abruptly
     // without resulting in corrupted data (control+c for example). This means we must process a single
-    // file at a time in sequential order. Processing means moving files from a ripe file into the staging
-    // file and then (if applicable) from the staging file into a finalized chunk. If we stop processing
-    // at any point, we want to leave the data in a state where the next invocation of this program
-    // can either clean up or pick up where it left off.
+    // file at a time in sequential order. Processing means moving files from ripe to staging and then
+    // (if applicable) from the staging file into a finalized chunk. If we stop processing at any
+    // point, we want to leave the data in a state where the next invocation of this program can either
+    // clean up or pick up where it left off.
 
     // Next, we processes one file in the ripe folder at a time by appending its data to a temporary
     // staging file. We flush the data after each append and then remove the ripe file. If this process
@@ -120,13 +143,13 @@ bool COptions::handle_scrape(void) {
     // Carries state we need to process the blocks
     CConsolidator cons(p);
     if (!cons.tmp_file.is_open()) {
-        cerr << cRed << "\tCould not open temporary staging file." << cOff << endl;
+        LOG_WARN("Could not open temporary staging file.");
         return false;
     }
 
     // Spin through 'ripe' files and process as we go. Note: it's okay to allow the timestamp file to get
     // ahead of the staged blocks. We only write when the block number is a new one not already in the file.
-    if (!forEveryFileInFolder(indexFolder_ripe, copyRipeToStage, &cons)) {
+    if (!forEveryFileInFolder(indexFolder_ripe, visitCopyRipeToStage, &cons)) {
         // Something went wrong with copying the ripe blocks to staging. (i.e. the user hit control+c or we
         // encountered a non-sequential list of files). We clean up and start over the next time through.
         cleanFolder(indexFolder_unripe);
@@ -142,7 +165,6 @@ bool COptions::handle_scrape(void) {
     // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
     // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
     // anything goes wrong we need clean up and leave the data in a recoverable state.
-    cerr << bTeal << "\t  attempting to consolidate blocks" << cOff << endl;
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -152,9 +174,6 @@ bool COptions::handle_scrape(void) {
     return true;
 }
 
-extern bool appendFile(const string_q& toFile, const string_q& fromFile);
-// FIX_THIS_CODE
-static const blknum_t maxIndexRows = 50;
 //--------------------------------------------------------------------------
 bool COptions::finalize_chunks(CConsolidator* cons) {
     // 'oldStage' contains staged but not yet consolidated records. 'tempStage' contains
@@ -166,52 +185,30 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
-// FIX_THIS_CODE
-#define FF(a)                                                                                                          \
-    { cerr << setw(12) << #a << setw(70) << a << ": " << cYellow << (fileSize(a) / 59) << cOff << endl; }
-#define FF1(a) cerr << bBlue << (a) << cOff << endl << endl;
-    // #define FF(a)
-    // #define FF1(a)
-    FF(tmpFile);
-    FF(oldStage);
-    FF(tempStage);
-    FF(newStage);
-    FF1("Prior to anything");
 
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
-        cerr << bTeal;
-        cerr << "\t  nothing new to process." << endl;
-        cerr << "\t  will consolidate in " << (maxIndexRows - curSize);
-        cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
+        LOG_INFO(bBlue, "Consolidation not ready...", cOff);
+        LOG_INFO(cYellow, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
+                 (maxIndexRows - curSize), " more.", cOff);
         return true;
     }
 
     if (oldStage != tempStage) {
         if (!appendFile(tmpFile, oldStage)) {
             // oldStage is still valid. Caller will clean up the rest
-            cerr << cRed << "Could not append oldStage to temp.fil" << cOff << endl;
+            LOG_ERR("Could not append oldStage to temp.fil.");
             return false;
         }
-        FF(tmpFile);
-        FF(oldStage);
-        FF(tempStage);
-        FF(newStage);
-        FF1("Append oldStage to tmpFile");
     }
 
     // ...next we append the new ripe records if we can...
     if (!appendFile(tmpFile, tempStage)) {
         // oldStage is still valid. Caller will clean up the rest
         ::remove(tmpFile.c_str());
-        cerr << cRed << "Could not append tempStage to temp.fil" << cOff << endl;
+        LOG_ERR("Could not append tempStage to temp.fil.");
         return false;
     }
-    FF(tmpFile);
-    FF(oldStage);
-    FF(tempStage);
-    FF(newStage);
-    FF1("Appending tempStage to tmpFile");
 
     // ...finally, we move the temp file to the new stage without allowing user to hit control+c
     lockSection(true);
@@ -220,11 +217,6 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         ::remove(oldStage.c_str());
     ::remove(tempStage.c_str());
     lockSection(false);
-    FF(tmpFile);
-    FF(oldStage);
-    FF(tempStage);
-    FF(newStage);
-    FF1("Renaming tmp to new, removing old and temp");
 
     // We are now in a valid state with all records in the properly named newStage
     blknum_t curSize = fileSize(newStage) / 59;
@@ -235,8 +227,10 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
     // If we don't have enough records to consolidate, tell the user and return...
     if (curSize <= maxIndexRows) {
-        cerr << bTeal << "\t  will consolidate in " << (maxIndexRows - curSize);
-        cerr << " rows (" << curSize << " of " << maxIndexRows << ")" << cOff << endl;
+        LOG_INFO(" ");
+        LOG_INFO(bBlue, "Consolidation not ready...", cOff);
+        LOG_INFO(cYellow, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
+                 " more.", cOff);
         return true;
     }
 
@@ -244,25 +238,27 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     size_t pass = 0;
     while (curSize > maxIndexRows && !shouldQuit()) {
         lockSection(true);
-        cerr << bBlue << "\tconsolidate (pass " + uint_2_Str(pass++) + ")" << endl;
+
         CStringArray lines;
         lines.reserve(curSize + 100);
         asciiFileToLines(newStage, lines);
-        cerr << "\tnewStage: " << newStage << ": " << lines.size() << endl;
 
-        string_q prev;
-        cerr << "\tsearching from " << (maxIndexRows - 1) << " to " << lines.size() << endl;
-        cerr << cGreen << "\t\t" << (maxIndexRows - 1) << ": " << lines[maxIndexRows - 1] << cOff << endl;
-        cerr << cGreen << "\t\t" << (maxIndexRows) << ": " << lines[maxIndexRows] << cOff << endl;
+        LOG_INFO(" ");
+        LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
+        LOG_INFO(cYellow, "  Starting search at record ", (maxIndexRows - 1), " of ", lines.size(), cOff);
+        if (verbose > 2) {
+            LOG_INFO(cGreen, "\t", (maxIndexRows - 1), ": ", lines[maxIndexRows - 1], cOff);
+            LOG_INFO(cGreen, "\t", (maxIndexRows), ": ", lines[maxIndexRows], cOff);
+        }
+
         size_t where = 0;
+        string_q prev;
         for (uint64_t record = (maxIndexRows - 1); record < lines.size() && where == 0; record++) {
             CStringArray pParts;
             explode(pParts, lines[record], '\t');
-            cerr << bBlue << "\t\t" << record << ": " << pParts[0] << " -- " << pParts[1] << " -- " << pParts[2] << cOff
-                 << "\r";
-            cerr.flush();
-            if (record == lines.size() - 2)
-                cerr << endl;
+            if (verbose > 2 && (record == lines.size() - 2)) {
+                LOG_INFO(bBlue, "\t", record, ": ", pParts[0], " -- ", pParts[1], " -- ", pParts[2], cOff);
+            }
             if (prev != pParts[1]) {
                 if (!prev.empty())
                     where = record - 1;
@@ -270,43 +266,32 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
             }
         }
         if (where == 0) {
-            cerr << "The weird edge case";
+            LOG_INFO("The weird edge case");
             where = lines.size() - 1;
         }
-        cerr << endl;
-        cerr << "\tfound break at " << where << ": " << bBlue << lines[where] << cOff << endl;
+
+        LOG_INFO(cYellow, "  Found a break at line ", where, " extracting records 0 to ", where, " (inclusive) of ",
+                 lines.size(), cOff);
+        if (verbose > 2) {
+            LOG_INFO(cGreen, "\t", 0, ": ", lines[0], cOff);
+            LOG_INFO(cGreen, "\t", 1, ": ", lines[1], cOff);
+            LOG_INFO(bBlue, "\t", where, ": ", lines[where], cOff);
+            LOG_INFO(bTeal, "\t", (where + 1), ": ", lines[where + 1], cOff);
+        }
 
         CStringArray consolidatedLines;
         consolidatedLines.reserve(lines.size());
-        cerr << "\textract records 0 to " << where << " (inclusive) of " << lines.size() << endl;
-        cerr << cGreen << "\t\t" << 0 << ": " << lines[0] << cOff << endl;
-        cerr << cGreen << "\t\t" << 1 << ": " << lines[1] << cOff << endl;
         for (uint64_t record = 0; record <= where; record++) {
-            if (verbose > 2) {
-                cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
-                cerr.flush();
-                if (record == where - 1)
-                    cerr << endl;
-            }
             if (countOf(lines[record], '\t') != 2) {
-                cerr << "Found a record with less than two tabs. Quitting..." << endl;
-                if (record > 0)
-                    cerr << bBlue << "empty line follows: " << lines[record - 1] << cOff << endl;
-                cerr << bBlue << "empty line: [" << lines[record] << "]" << cOff << endl;
-                if (record < where)
-                    cerr << bBlue << "empty line preceeds: " << lines[record + 1] << cOff << endl;
+                LOG_WARN("Found a record with less than two tabs. Quitting...");
+                LOG_WARN("preceeding line:\t[", ((record > 0) ? lines[record - 1] : "N/A"), "]");
+                LOG_WARN("offending line:\t[", lines[record], "]");
+                LOG_WARN("following line:\t[", ((record < where) ? lines[record + 1] : "N/A"), "]");
                 return false;
             }
             consolidatedLines.push_back(lines[record]);
         }
 
-        if (verbose > 2) {
-            cerr << endl;
-            cerr << bTeal << "\t\t" << (where + 1) << ": " << lines[where + 1] << cOff << endl;
-        } else {
-            cerr << bBlue << "\t\t" << (where) << ": " << lines[where] << cOff << endl;
-            cerr << bTeal << "\t\t" << (where + 1) << ": " << lines[where + 1] << cOff << endl;
-        }
         CStringArray p1;
         explode(p1, consolidatedLines[0], '\t');
         CStringArray p2;
@@ -315,32 +300,36 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         sort(consolidatedLines.begin(), consolidatedLines.end());
         string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
         writeIndexAsBinary(binFile, consolidatedLines);
-        cerr << "\twrote " << bYellow << consolidatedLines.size() << cOff << " records to " << binFile << endl;
+        LOG_INFO(cRed, "  Pinned index chunk (QmVj3KNNtFbDEaTpWxbgvMBUj1KhAVtE4Cw6zc6qEmQhUZ) to IPFS and Pinata",
+                 cOff);
+        LOG_INFO(cRed, "  Pinned bloom filter (Qmw6zc6qEmQhUZVj3KNNtFbDEaTpWxbgvMBUj1KhAVtE4C) to IPFS and Pinata",
+                 cOff);
+        LOG_INFO(cRed,
+                 "  Published  record to UnchainedIndex Smart Contract (0x438e458e16314c30fdbc622d81108cbc8877f2a0)",
+                 cOff);
+        LOG_INFO(cYellow, "  Wrote ", consolidatedLines.size(), " records to ",
+                 substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
 
         where += 1;
         CStringArray remainingLines;
         remainingLines.reserve(maxIndexRows + 100);
-        cerr << "\textract records " << where << " to " << lines.size() << " of " << lines.size() << endl;
-        cerr << cGreen << "\t\t" << where << ": " << lines[where] << cOff << endl;
-        cerr << cGreen << "\t\t" << where + 1 << ": " << lines[where + 1] << cOff << endl;
+
+        if (verbose > 2) {
+            LOG_INFO(cYellow, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
+            LOG_INFO(cGreen, "\t", where, ": ", lines[where], cOff);
+            LOG_INFO(cGreen, "\t", (where + 1), ": ", lines[where + 1], cOff);
+            LOG_INFO(bBlue, "\t", (where - 1), ": ", lines[where - 1], cOff);
+            LOG_INFO(bTeal, "\t", (where), ": ", lines[where], cOff);
+        }
+
         for (uint64_t record = where; record < lines.size(); record++) {
-            if (verbose > 2) {
-                cerr << bBlue << "\t\t" << record << ": " << lines[record] << cOff << "\r";
-                cerr.flush();
-                if (record == lines.size() - 2)
-                    cerr << endl;
-            }
             remainingLines.push_back(lines[record]);
         }
-        if (verbose > 2) {
-            cerr << endl;
-        } else {
-            cerr << bBlue << "\t\t" << (where - 1) << ": " << lines[where - 1] << cOff << endl;
-            cerr << bTeal << "\t\t" << (where) << ": " << lines[where] << cOff << endl;
-        }
+
         ::remove(newStage.c_str());
         linesToAsciiFile(newStage, remainingLines, true);
-        cerr << "\twrote " << bMagenta << remainingLines.size() << cOff << " records to " << newStage << endl;
+        LOG_INFO(cYellow, "  Wrote ", remainingLines.size(), " records to ",
+                 substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
 
         curSize = fileSize(newStage) / 59;
         lockSection(false);
@@ -349,30 +338,30 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 }
 
 //--------------------------------------------------------------------------
-bool copyRipeToStage(const string_q& path, void* data) {
+bool visitCopyRipeToStage(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
-        return forEveryFileInFolder(path + "*", copyRipeToStage, data);
+        return forEveryFileInFolder(path + "*", visitCopyRipeToStage, data);
 
     } else {
         blknum_t e_unused;
         timestamp_t ts;
         blknum_t bn = bnFromPath(path, e_unused, ts);
-        CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
+
         // If we're not one behind, we have a problem
+        CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
         if ((con->prevBlock + 1) != bn) {
             // For some reason, we're missing a file. Quit and try again next time
-            cerr << cRed << "Current file (" << path << ") does not sequentially follow previous file "
-                 << con->prevBlock << "." << cOff << endl;
-            //            cerr << "Press enter to continue: ";
-            //            getchar();
+            LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", con->prevBlock, ".");
             return false;
         }
+
         ifstream inputStream(path, ios::in);
         if (!inputStream.is_open()) {
             // Something went wrong, try again next time
-            cerr << cRed << "Could not open input stream " << path << cOff << endl;
+            LOG_WARN("Could not open input stream ", path);
             return false;
         }
+
         lockSection(true);
         con->tmp_file << inputStream.rdbuf();
         con->tmp_file.flush();

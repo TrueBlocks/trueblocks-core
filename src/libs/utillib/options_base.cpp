@@ -80,9 +80,9 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 
     //        // send out the environment, if any non-default
     //        if (isTestMode() || isLevelOn(sev_debug4)) {
-    //            if (isApiMode())                        { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
-    //            if (getEnvStr("DOCKER_MODE") == "true") { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
-    //            if (!getEnvStr("IPFS_PATH").empty())    { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
+    //            if (isApiMode())                     { LOG4("API_MODE=",    getEnvStr("API_MODE")); }
+    //            if (isDockerMode())                  { LOG4("DOCKER_MODE=", getEnvStr("DOCKER_MODE")); }
+    //            if (!getEnvStr("IPFS_PATH").empty()) { LOG4("IPFS_PATH=",   getEnvStr("IPFS_PATH")); }
     //        }
 
     CStringArray argumentsIn;

@@ -88,8 +88,19 @@ typedef int (*SEARCHFUNC)(const void* ob1, const void* ob2);
 typedef int (*SORTINGFUNC)(const void* ob1, const void* ob2);
 
 //---------------------------------------------------------------------------
+inline bool isDockerMode(void) {
+    static uint64_t docker_mode = NOPOS;
+    if (docker_mode == NOPOS)
+        docker_mode = getEnvStr("DOCKER_MODE") == "true";
+    return docker_mode;
+}
+
+//---------------------------------------------------------------------------
 inline bool isTestMode(void) {
-    return (getEnvStr("TEST_MODE") == "true");
+    static uint64_t test_mode = NOPOS;
+    if (test_mode == NOPOS)
+        test_mode = getEnvStr("TEST_MODE") == "true";
+    return test_mode;
 }
 
 //---------------------------------------------------------------------------

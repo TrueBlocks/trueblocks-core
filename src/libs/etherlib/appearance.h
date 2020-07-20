@@ -238,31 +238,5 @@ inline bool operator<(const CAppearance_base& v1, const CAppearance_base& v2) {
 inline bool sortAppearanceBaseReverse(const CAppearance_base& v1, const CAppearance_base& v2) {
     return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
-
-//----------------------------------------------------------------
-struct CHeaderRecord_base {
-    uint32_t magic;
-    uint8_t hash[32];
-    uint32_t nAddrs;
-    uint32_t nRows;
-};
-
-//---------------------------------------------------------------------------
-class CIndexArchive : public CArchive {
-  public:
-    CHeaderRecord_base header;
-    uint64_t nAddrs;
-    uint64_t nApps;
-    CAddressRecord_base* addresses;
-    CAppearance_base* appearances;
-
-    explicit CIndexArchive(bool mode);
-    ~CIndexArchive(void);
-    bool ReadIndexFromBinary(const string_q& fn);
-
-  private:
-    CIndexArchive(void) : CArchive(READING_ARCHIVE) {
-    }
-};
 // EXISTING_CODE
 }  // namespace qblocks
