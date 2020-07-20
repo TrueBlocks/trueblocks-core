@@ -37,7 +37,7 @@ template <>
 string_q logger<log_policy_i>::get_logline_header(void) {
     stringstream header;
 // FIX_THIS_CODE
-#define LOG_TIMING false
+#define LOG_TIMING true
     if (LOG_TIMING) {
         if (isTestMode()) {
             header << "TIME ~ CLOCK - ";

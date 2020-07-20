@@ -82,16 +82,19 @@ bool COptions::handle_scrape(void) {
     ostringstream os;
     os << cmd;
     os << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
+
+    // Report to the screen...
+    ostringstream msg;
+    msg << cGreen << "cmd: " << substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "") << cOff;
+    msg << " (to: " << (startBlock + n_blocks - 1) << " of: " << client << " remains: " << (client - (startBlock + n_blocks - 1)) << ")";
+    LOG_INFO(cGreen, "path: ", indexFolder, cOff);
+    LOG_INFO(msg.str());
+
+    // ...and make the call to blaze.
     if (n_block_procs != 20)
         os << " --nBlockProcs " << n_block_procs;
     if (n_addr_procs != 60)
         os << " --nAddrProcs " << n_addr_procs;
-
-    // Report to the screen...
-    string_q tmp = "cmd: " + substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "");
-    LOG_INFO(cGreen, tmp, cOff, " (ending at: ", (startBlock + n_blocks - 1), ")");
-
-    // ...and make the call to blaze.
     os << " --ripeBlock " << ripeBlock;
     // os << " 2>/dev/null 1>/dev/null ";
     if (system(os.str().c_str()) != 0) {
@@ -161,6 +164,7 @@ bool COptions::handle_scrape(void) {
     // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
     // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
     // anything goes wrong we need clean up and leave the data in a recoverable state.
+    LOG_INFO(cGreen, "Blaze succeeded, trying to consolidate...", cOff);
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -185,7 +189,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
+        LOG_INFO(cWhite, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
                  (maxIndexRows - curSize), " more.", cOff);
         return true;
     }
@@ -223,9 +227,8 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
     // If we don't have enough records to consolidate, tell the user and return...
     if (curSize <= maxIndexRows) {
-        LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
+        LOG_INFO(cWhite, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
                  " more.", cOff);
         return true;
     }
@@ -239,9 +242,8 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         lines.reserve(curSize + 100);
         asciiFileToLines(newStage, lines);
 
-        LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
-        LOG_INFO(cYellow, "  Starting search at record ", (maxIndexRows - 1), " of ", lines.size(), cOff);
+        LOG_INFO(cWhite, "  Starting search at record ", (maxIndexRows - 1), " of ", lines.size(), cOff);
         if (verbose > 2) {
             LOG_INFO(cGreen, "\t", (maxIndexRows - 1), ": ", lines[maxIndexRows - 1], cOff);
             LOG_INFO(cGreen, "\t", (maxIndexRows), ": ", lines[maxIndexRows], cOff);
@@ -266,7 +268,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
             where = lines.size() - 1;
         }
 
-        LOG_INFO(cYellow, "  Found a break at line ", where, " extracting records 0 to ", where, " (inclusive) of ",
+        LOG_INFO(cWhite, "  Found a break at line ", where, " extracting records 0 to ", where, " (inclusive) of ",
                  lines.size(), cOff);
         if (verbose > 2) {
             LOG_INFO(cGreen, "\t", 0, ": ", lines[0], cOff);
@@ -303,7 +305,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         LOG_INFO(cRed,
                  "  Published  record to UnchainedIndex Smart Contract (0x438e458e16314c30fdbc622d81108cbc8877f2a0)",
                  cOff);
-        LOG_INFO(cYellow, "  Wrote ", consolidatedLines.size(), " records to ",
+        LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
                  substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
 
         where += 1;
@@ -311,7 +313,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         remainingLines.reserve(maxIndexRows + 100);
 
         if (verbose > 2) {
-            LOG_INFO(cYellow, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
+            LOG_INFO(cWhite, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
             LOG_INFO(cGreen, "\t", where, ": ", lines[where], cOff);
             LOG_INFO(cGreen, "\t", (where + 1), ": ", lines[where + 1], cOff);
             LOG_INFO(bBlue, "\t", (where - 1), ": ", lines[where - 1], cOff);
@@ -324,8 +326,9 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
         ::remove(newStage.c_str());
         linesToAsciiFile(newStage, remainingLines, true);
-        LOG_INFO(cYellow, "  Wrote ", remainingLines.size(), " records to ",
+        LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
                  substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
+        LOG_INFO(" ");
 
         curSize = fileSize(newStage) / 59;
         lockSection(false);
