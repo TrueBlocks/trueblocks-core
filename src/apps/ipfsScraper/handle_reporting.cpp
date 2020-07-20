@@ -31,8 +31,6 @@ string_q handle_reporting(void) {
     uint64_t pUnripe, pRipe, pStaging, pFinalized, pClient;
 
     getLatestBlocks(unripe, ripe, staging, finalized, client);
-    // FIX_THIS_CODE
-    // client = 10480200;
     if (fileExists(configPath("cache/tmp/scraper-status.txt"))) {
         prevLastBlocks(pUnripe, pRipe, pStaging, pFinalized, pClient, false);
     } else {

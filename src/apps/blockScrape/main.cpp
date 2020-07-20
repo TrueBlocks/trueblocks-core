@@ -21,6 +21,7 @@ int main(int argc, const char* argv[]) {
     }
 
     cerr << handle_reporting();
+
     // FIX_THIS_CODE
     freshenTimestamps(getLatestBlock_cache_ripe());
 

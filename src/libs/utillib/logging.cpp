@@ -31,4 +31,26 @@ string_q _logEnter(const string_q& func) {
 string_q _logExit(const string_q& func) {
     return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
 }
+
+//----------------------------------------------------------------
+template <>
+string_q logger<log_policy_i>::get_logline_header(void) {
+    stringstream header;
+// FIX_THIS_CODE
+#define LOG_TIMING false
+    if (LOG_TIMING) {
+        if (isTestMode()) {
+            header << "TIME ~ CLOCK - ";
+        } else {
+            static clock_t last_clock = 0;
+            header.fill('0');
+            header.width(7);
+            clock_t now = clock();
+            header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
+            last_clock = now;
+        }
+    }
+    header << cOff;
+    return header.str();
+}
 }  // namespace qblocks

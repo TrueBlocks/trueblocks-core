@@ -5,31 +5,30 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-// ADJUSTMENTS
+// FIX_THIS_CODE
 //#define MAX_ROWS 50
 //#define CLIENT 10480200
 //#define N_BLOCKS 100
+//#define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
 #define MAX_ROWS 500000
 #define CLIENT (client + 0)
 #define N_BLOCKS (n_blocks + 0)
+#define THE_CMD "blaze scrape"
 
 //--------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     LOG_INFO(string_q(120, '-'));
 
-    // FIX_THIS_CODE
     maxIndexRows = MAX_ROWS;  // not configurable really
 
     // Find the last visited block. (It's the later of ripe, staging, or finalized.)
     blknum_t unused1, ripe, staging, finalized, client;
     getLatestBlocks(unused1, ripe, staging, finalized, client);
+    client = CLIENT;
 
     // The latest of finalized block, staging block, or ripe block is the last 'good' block. Start one past that...
     blknum_t lastVisit = max(ripe, max(staging, finalized));
     blknum_t startBlock = lastVisit + 1;
-
-    // FIX_THIS_CODE -- Just so test cases don't report a difference
-    client = CLIENT;
 
     // In some cases, the index may be ahead of tip. In that case, we doing nothing...
     if (startBlock > client) {
@@ -59,7 +58,6 @@ bool COptions::handle_scrape(void) {
             n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
         }
     }
-    // FIX_THIS_CODE
     n_blocks = N_BLOCKS;
 
     // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block
@@ -79,9 +77,7 @@ bool COptions::handle_scrape(void) {
         n_blocks = (client - startBlock);
     }
 
-    // FIX_THIS_CODE
-    // string_q cmd = "/Users/jrush/Development/trueblocks-core/bin/blaze scrape";
-    string_q cmd = "blaze scrape";
+    string_q cmd = THE_CMD;
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
     os << cmd;

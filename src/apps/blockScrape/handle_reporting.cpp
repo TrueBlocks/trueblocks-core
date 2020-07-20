@@ -8,8 +8,17 @@
 extern bool prevLastBlocks(blknum_t& u, blknum_t& r, blknum_t& s, blknum_t& f, blknum_t& c, bool write);
 extern string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, const blknum_t f,
                                const blknum_t c);
+
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
+
 //-------------------------------------------------------------------------
 string_q handle_reporting(void) {
+#if 1
+    return "";
+#else
     char hostname[HOST_NAME_MAX];
     char username[LOGIN_NAME_MAX];
 
@@ -103,4 +112,5 @@ string_q showLastBlocks(const blknum_t u, const blknum_t r, const blknum_t s, co
     os << padNum9T((int64_t)c);
     os << cOff;
     return os.str();
+#endif
 }

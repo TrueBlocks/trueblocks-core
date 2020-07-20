@@ -66,10 +66,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Establish the folders that hold the data...
-    // Do not collapse -- getIndexPath does not create it if it doesn't exist
-    string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
-    if (indexPath != "<not-set>")
-        establishFolder(indexPath);
+    establishFolder(indexFolder);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
@@ -93,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    LOG4("indexPath: " + indexPath);
+    LOG4("indexPath: " + indexFolder);
     LOG4("finalized: " + indexFolder_finalized);
     LOG4("blooms: " + indexFolder_blooms);
     LOG4("staging: " + indexFolder_staging);
@@ -126,6 +123,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     const CToml* config = getGlobalConfig("blockScrape");
+
     bool needsParity = config->getConfigBool("requires", "parity", true);
     if (needsParity && !isParity())
         return usage("This tool requires Parity. Quitting...");
@@ -133,7 +131,7 @@ bool COptions::parseArguments(string_q& command) {
     bool needsTracing = config->getConfigBool("requires", "tracing", true);
     if (needsTracing && !nodeHasTraces()) {
         string_q errMsg = "You must be running Parity with `--tracing on` for this tool to work properly.";
-        if (getEnvStr("DOCKER_MODE") == "true")
+        if (isDockerMode())
             errMsg += " If you're running docker, enable remote RPC endpoints (see Parity help).";
         return usage(errMsg);
     }
@@ -141,10 +139,6 @@ bool COptions::parseArguments(string_q& command) {
     bool needsBalances = config->getConfigBool("requires", "balances", false);
     if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
-
-    n_blocks = config->getConfigInt("settings", "n_blocks", (n_blocks == NOPOS ? 2000 : n_blocks));
-    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
-    n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
 
     if (isAlreadyRunning("blockScrape")) {
         LOG_WARN("The " + getProgName() + " is already running. Quitting...");
@@ -163,6 +157,10 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
+    // The previous run may have quit early, leaving the folders in a mild state of disrepair. Clean up first.
+    ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
+    cleanFolder(indexFolder_unripe);
+
     return true;
 }
 
@@ -180,11 +178,6 @@ void COptions::Init(void) {
     n_block_procs = NOPOS;
     n_addr_procs = NOPOS;
     // END_CODE_INIT
-    if (getEnvStr("DOCKER_MODE") == "true") {
-        n_blocks = 100;
-        n_block_procs = 5;
-        n_addr_procs = 10;
-    }
 
     minArgs = 0;
 }

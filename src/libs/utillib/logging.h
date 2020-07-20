@@ -106,38 +106,7 @@ class logger {
     mutex write_mutex;
 
     //----------------------------------------------------------------
-    string_q get_logline_header(void) {
-        //           static unsigned log_line_number = 0;
-
-        stringstream header;
-        //            header.fill('0');
-        //            header.width(7);
-        //            header << bBlack << ++log_line_number << " ";
-        if (isTestMode()) {
-            header << "TIME ~ CLOCK - ";
-        } else {
-//                header << Now().Format(FMT_EXPORT) << " ~ ";
-//                header << TIC() << " ~ ";
-#define LOG_TIMING true
-#define LOG_THREAD false
-            if (LOG_TIMING) {
-                static clock_t last_clock = 0;
-                header.fill('0');
-                header.width(7);
-                clock_t now = clock();
-                // FIX_THIS_CODE
-                // header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
-                last_clock = now;
-            }
-            //            if (LOG_THREAD) {
-            //                header.fill('0');
-            //                header.width(7);
-            //                header << this_thread::get_id() << " + ";
-            //            }
-        }
-        header << cOff;
-        return header.str();
-    }
+    string_q get_logline_header(void);
 
     //----------------------------------------------------------------
     void print_impl() {
