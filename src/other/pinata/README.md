@@ -33,7 +33,7 @@ Curl response: 60: SSL peer certificate or SSH remote key was not OK
 Same code on Ubuntu produces:
 
 ```[bash]
-Curl response: 60: SSL peer certificate or SSH remote key was not OK
+Curl response: {"IpfsHash":"QmXTAALdtWWzm9x5GZV7bC9yiYS7iFFUL3B5jFVtdafuv2","PinSize":58,"Timestamp":"2020-07-21T21:43:36.709Z"}
 ```
 
 ## Which version of openssl?
