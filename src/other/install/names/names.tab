@@ -954,6 +954,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x236b76e5d51a622923619095bd464fc536b6fd32	lucawint		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Friends	0x237855f2cd7732e48660b00d6661c9c8ca254207	pankajrathor		Gitcoin Website			false	false	false
 81-Other	0x237f29bbfd52c768a02980ea8d4d983a1d234edc	SimpleDice_id97		Etherscan.io			false	false	false
+30-Contracts	0x23850f3e6f760b92491892a5a3772e7fc000adf1	Uniswap: ORB 2		Etherscan			false	false	false
 32-Kickback:Friends	0x238751d1af7ceb2c840075908221434a882a9807	cwhinfrey		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x23896c3948c43a8f6dfd1384c141ff4161c995b9	ray		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x23936429fc179da0e1300644fb3b489c736d562f	yuetloo		https://kickback.events/			false	false	false
@@ -3497,6 +3498,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x8c9a3f3d4b250b9570640a0d192ca87302cbd511	clewis31		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x8cd670a71ba1a5f44edf1b728fa0d0cab67f94af	kpatch		https://kickback.events/			false	false	false
 31-Gitcoin Grants:Friends	0x8ce7e1a2493ba92ded07ae926d347fc8eebcd142	mounibec		Gitcoin Website			false	false	false
+30-Contracts	0x8ce87f39c30396fdfe7f25378363307b3ba3002d	Bankshot		Etherscan			false	false	false
 34-Humanity DAO	0x8ce8b7e9dec84236935d0df3cf1e094913123f03	lionellevine		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0x8cf10082180844c0e0724f27c55b5067bc1c1495	marc0olo		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0x8cf63bffaf3a55eb59a5e613826afa14cf3f64a1	xiaoerzi2		https://www.humanitydao.org/humans			false	false	false
@@ -4203,6 +4205,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xaaae86c9ea7c6adce9637a472735053637a2105b	madanadit		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0xaaaebe6fe48e54f431b0c390cfaf0b017d09d42d	Celsius	CEL	On Chain	4		false	false	false
 50-Tokens	0xaaaf91d9b90df800df4f55c205fd6989c977e73a	Monolith	TKN	defipulse.com	8		false	false	false
+30-Contracts	0xaac2497174f2ec4069a98375a67d798db8a05337	PoapDelegatedMint		Etherscan			false	false	false
 50-Tokens:ERC20	0xaad54c9f27b876d2538455dda69207279ff673a5	Davinci coin	DAC	On Chain	18	Blockchain ecosystem for building and deploying decentralized application	false	false	false
 60-Airdrops	0xaad55936b58e017cb709613e8cdc53766c8370e7	HEALP Airdrop Sender		TrueBlocks.io			false	false	false
 81-Other	0xaae10c1223df062e2df6982a80621977fa8b2d34	Dice		Etherscan.io			false	false	false
