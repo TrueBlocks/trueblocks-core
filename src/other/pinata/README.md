@@ -1,19 +1,19 @@
 ## Building
 
-After building **trueblocks** go to the folder for pinata:
+After building **trueblocks** on the `develop` branch, go to the pinata test folder:
 
 ```[bash]
 cd ../src/other/pinata
 ```
 
-Edit **pinata.cpp** and change the two lines:
+Edit **pinata.cpp** and change the two lines by entering your `pinata` api keys:
 
 ```[bash]
 string_q API_KEY = "pinata_api_key: YOUR_KEY";
 string_q API_SECRET_KEY = "pinata_secret_api_key: YOUR_SECRET_KEY";
 ```
 
-Replace only the `YOUR_KEY` and `YOUR_SECRET_KEY` values (not the whole string). Save and then:
+Replace the `YOUR_KEY` and `YOUR_SECRET_KEY` values (not the whole string). Save and then:
 
 ```[bash]
 make
@@ -25,10 +25,20 @@ make
 When I run this on Mac, I get:
 
 ```[bash]
-
+Curl response: 60: SSL peer certificate or SSH remote key was not OK
 ```
 
-Which version of openssl?
+## On Ubuntu
+
+Same code on Ubuntu produces:
+
+```[bash]
+Curl response: 60: SSL peer certificate or SSH remote key was not OK
+```
+
+## Which version of openssl?
+
+On Mac:
 
 ```[bash]
 openssl version -a
@@ -40,12 +50,12 @@ produces:
 OpenSSL 1.0.2t  10 Sep 2019
 built on: reproducible build, date unspecified
 platform: darwin64-x86_64-cc
-options:  bn(64,64) rc4(ptr,int) des(idx,cisc,16,int) idea(int) blowfish(idx) 
+options:  bn(64,64) rc4(ptr,int) des(idx,cisc,16,int) idea(int) blowfish(idx)
 compiler: clang -I. -I.. -I../include  -fPIC -fno-common -DOPENSSL_PIC -DOPENSSL_THREADS -D_REENTRANT -DDSO_DLFCN -DHAVE_DLFCN_H -arch x86_64 -O3 -DL_ENDIAN -Wall -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DMD5_ASM -DAES_ASM -DVPAES_ASM -DBSAES_ASM -DWHIRLPOOL_ASM -DGHASH_ASM -DECP_NISTZ256_ASM
 OPENSSLDIR: "/usr/local/etc/openssl"
 ```
 
-## On Ubuntu
+On Ubuntu:
 
 ```[bash]
 openssl version -a
