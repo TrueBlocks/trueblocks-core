@@ -15,6 +15,7 @@
 #define N_BLOCKS (n_blocks + 0)
 #define THE_CMD "blaze scrape"
 
+
 //--------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     LOG_INFO(string_q(120, '-'));
@@ -84,11 +85,7 @@ bool COptions::handle_scrape(void) {
     os << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
 
     // Report to the screen...
-    ostringstream msg;
-    msg << cGreen << "cmd: " << substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "") << cOff;
-    msg << " (to: " << (startBlock + n_blocks - 1) << " of: " << client << " remains: " << (client - (startBlock + n_blocks - 1)) << ")";
-    LOG_INFO(cGreen, "path: ", indexFolder, cOff);
-    LOG_INFO(msg.str());
+    LOG_INFO(cGreen, "starting blaze with path: ", indexFolder, cOff);
 
     // ...and make the call to blaze.
     if (n_block_procs != 20)
@@ -159,12 +156,28 @@ bool COptions::handle_scrape(void) {
     }
     cons.tmp_file.close();
 
+    // Timing of the logs matters, do not move
+    ostringstream msg;
+    msg << "blaze finished -";
+    msg << " start: " << startBlock;
+    msg << " end: " << (startBlock + n_blocks + 1);
+    msg << " n_blocks: " << n_blocks;
+    msg << " client: " << client;
+    msg << " remaining: " << (client - (startBlock + n_blocks - 1));
+
+static clock_t last_clock = 0;
+cout.fill('0');
+cout.width(7);
+clock_t now = clock();
+cout << "call," << now << ":" << padNum7T(uint64_t(now - last_clock)) << msg.str() << endl;
+last_clock = now;
+
     // The stage now contains all non-consolidated records. Ripe should be empty. All files are closed.
 
     // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
     // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
     // anything goes wrong we need clean up and leave the data in a recoverable state.
-    LOG_INFO(cGreen, "Blaze succeeded, trying to consolidate...", cOff);
+    LOG_INFO(cGreen, "Trying to consolidate...", cOff);
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -186,11 +199,16 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
 
+static clock_t last_clock = 0;
+cout.fill('0');
+cout.width(7);
+clock_t now = clock();
+
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cWhite, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
-                 (maxIndexRows - curSize), " more.", cOff);
+cout << "nonew," << now << ":" << padNum7T(uint64_t(now - last_clock)) << "have:" << curSize << " max:" << maxIndexRows << " need:" << (maxIndexRows - curSize) << endl;
+last_clock = now;
         return true;
     }
 
@@ -228,8 +246,8 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     // If we don't have enough records to consolidate, tell the user and return...
     if (curSize <= maxIndexRows) {
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cWhite, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
-                 " more.", cOff);
+cout << "notready," << now << ":" << padNum7T(uint64_t(now - last_clock)) << "have:" << curSize << " max:" << maxIndexRows << " need:" << (maxIndexRows - curSize) << endl;
+last_clock = now;
         return true;
     }
 
@@ -305,8 +323,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         LOG_INFO(cRed,
                  "  Published  record to UnchainedIndex Smart Contract (0x438e458e16314c30fdbc622d81108cbc8877f2a0)",
                  cOff);
-        LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
-                 substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
+        cerr << "wrote1:" << consolidatedLines.size() << " to:" << substitute(binFile, indexFolder_finalized, "$FINAL/") << endl;
 
         where += 1;
         CStringArray remainingLines;
@@ -326,9 +343,11 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
         ::remove(newStage.c_str());
         linesToAsciiFile(newStage, remainingLines, true);
-        LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
-                 substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
+        cerr << "wrote2:" << remainingLines.size() << " to:" << substitute(newStage, indexFolder_staging, "$STAGING/") << endl;
         LOG_INFO(" ");
+
+cout << "wrote:" << now << ":" << padNum7T(uint64_t(now - last_clock)) << "cnt:" << consolidatedLines.size() << " rem:" << remainingLines.size() << endl;
+last_clock = now;
 
         curSize = fileSize(newStage) / 59;
         lockSection(false);

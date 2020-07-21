@@ -105,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        LOG_INFO("Origin block index (" + zeroBin + ") not found. Building it from " +
+        LOG_INFO("Origin block index not found. Building it from " +
                  uint_2_Str(prefundWeiMap.size()) + " prefunds.");
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         CStringArray appearances;

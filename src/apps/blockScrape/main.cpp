@@ -24,6 +24,7 @@ int main(int argc, const char* argv[]) {
 
     // FIX_THIS_CODE
     freshenTimestamps(getLatestBlock_cache_ripe());
+    LOG_INFO("Run complete.");
 
     acctlib_cleanup();
 

@@ -306,7 +306,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	}
 	counter++
 	if counter%skip == 0 {
-		fmt.Print(".")
+		fmt.Fprint(os.Stderr, ".")
 	}
 }
 
@@ -372,7 +372,7 @@ Description:
 		//fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
 		//fmt.Printf("\t  unripePath:\t %s\n", Options.unripePath)
 		//fmt.Printf("\t  columns2:\t%s\n", scrapeOptions.columns2)
-		fmt.Printf("\t  scraping:")
+		//fmt.Printf("\t  scraping:")
 		scrapeBlocks()
 		//fmt.Println("")
 	},
