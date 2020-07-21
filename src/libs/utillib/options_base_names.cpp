@@ -131,7 +131,11 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
         account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
         string_q prefundName = "Prefund_" + padNum4(cnt);
         account.is_prefund = account.name.empty(); // only mark as pre-fund if it didn't exist before
-        account.name = account.name.empty() ? prefundName : account.name + " (" + prefundName + ")";
+        account.name = account.name.empty() ?
+                        prefundName : 
+                        contains(account.name, "(Prefund_") ?
+                            account.name :
+                            account.name + " (" + prefundName + ")";
         account.source = account.source.empty() ? "Genesis" : account.source;
         theMap[account.address] = account;
         cnt++;
