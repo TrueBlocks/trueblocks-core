@@ -23,8 +23,8 @@ int main(int argc, const char* argv[]) {
     nodeNotRequired();
 
     string_q fileName = "./test.fil";
-    string_q API_KEY = "pinata_api_key: 4586b0cfbb404d87be6e";
-    string_q API_SECRET_KEY = "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858";
+    string_q API_KEY = "pinata_api_key: YOUR_KEY";
+    string_q API_SECRET_KEY = "pinata_secret_api_key: YOUR_SECRET_KEY";
 
     CURL *curl;
     curl = curl_easy_init();
