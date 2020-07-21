@@ -514,7 +514,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     setenv("TEST_MODE", "false", true);
     dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
-        if (!contains(name.name, "Prefund_"))  // if the user has customized a prefund, save it as a custom as well
+        if (!name.is_prefund) //contains(name.name, "Prefund_"))  // if the user has customized a prefund, save it as a custom as well
             dataStream2 << name.Format(fmt) << endl;
     }
     setenv("TEST_MODE", testMode.c_str(), true);
