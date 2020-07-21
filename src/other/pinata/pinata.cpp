@@ -20,6 +20,7 @@ extern size_t testCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 extern bool visitBloom(const string& path, void *data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    nodeNotRequired();
     etherlib_init(quickQuitHandler);
 
     CPinningRecordArray records;
