@@ -21,17 +21,11 @@ extern bool visitBloom(const string& path, void *data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
-    etherlib_init(quickQuitHandler);
 
-    CPinningRecordArray records;
-    forEveryFileInFolder(indexFolder_blooms, visitBloom, &records);
+    string_q fileName = "./test.fil";
+    string_q API_KEY = "pinata_api_key: 4586b0cfbb404d87be6e";
+    string_q API_SECRET_KEY = "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858";
 
-    etherlib_cleanup();
-    return 1;
-}
-
-//----------------------------------------------------------------
-void pinToPinata(const string_q& indexFile, const string_q& bloomFile) {
     CURL *curl;
     curl = curl_easy_init();
     if (curl) {
@@ -40,8 +34,8 @@ void pinToPinata(const string_q& indexFile, const string_q& bloomFile) {
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
         struct curl_slist *headers = NULL;
-        headers = curl_slist_append(headers, "pinata_api_key: VALUE");
-        headers = curl_slist_append(headers, "pinata_secret_api_key: VALUE");
+        headers = curl_slist_append(headers, API_KEY.c_str());
+        headers = curl_slist_append(headers, API_SECRET_KEY.c_str());
         headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         string_q result;
@@ -52,37 +46,20 @@ void pinToPinata(const string_q& indexFile, const string_q& bloomFile) {
         mime = curl_mime_init(curl);
         part = curl_mime_addpart(mime);
         curl_mime_name(part, "file");
-        curl_mime_filedata(part, indexFile.c_str());
+        curl_mime_filedata(part, fileName.c_str());
         curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
         CURLcode res = curl_easy_perform(curl);
-	    if (res == 0) {
-		    cout << result << endl;
-	    }
-	    cerr << "Curl result: " << res << endl;
+        cout << "Curl response: ";
+        if (res == 0) {
+            cout << result << endl;
+        } else {
+            cerr << res << ": " << curl_easy_strerror(res) << endl;
+        }
         curl_mime_free(mime);
     }
     curl_easy_cleanup(curl);
-}
 
-//----------------------------------------------------------------
-bool visitBloom(const string& path, void *data) {
-   if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", visitBloom, data);
-    } else {
-        if (endsWith(path, ".bloom")) {
-            cerr << "Pushing " << path << " to Pinata" << endl;
-            pinToPinata(path, "");
-            string_q index = substitute(substitute(path, "blooms", "finalized"), ".bloom", ".bin");
-            cerr << "Pushing " << index << " to Pinata" << endl;
-            pinToPinata(index, "");
-            cerr << "Sleeping for X seconds." << endl;
-            for (uint32_t i = 0 ; i < SECONDS ; i++) {
-                cerr << "."; usleep(1 * 1000000);
-            }
-            cerr << endl;
-        }
-    }
-    return true;
+    return 1;
 }
 
 //-------------------------------------------------------------------------
