@@ -43,21 +43,21 @@ void pinToPinata(const string_q& indexFile, const string_q& bloomFile) {
         headers = curl_slist_append(headers, "pinata_secret_api_key: VALUE");
         headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-	string_q result;
-	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        string_q result;
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, testCallback);
         curl_mime *mime;
         curl_mimepart *part;
         mime = curl_mime_init(curl);
         part = curl_mime_addpart(mime);
         curl_mime_name(part, "file");
-        curl_mime_filedata(part, fileName.c_str());
+        curl_mime_filedata(part, indexFile.c_str());
         curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
-	CURLcode res = curl_easy_perform(curl);
-	if (res == 0) {
-		cout << result << endl;
-	}
-	cerr << "Curl result: " << res << endl;
+        CURLcode res = curl_easy_perform(curl);
+	    if (res == 0) {
+		    cout << result << endl;
+	    }
+	    cerr << "Curl result: " << res << endl;
         curl_mime_free(mime);
     }
     curl_easy_cleanup(curl);
@@ -70,10 +70,10 @@ bool visitBloom(const string& path, void *data) {
     } else {
         if (endsWith(path, ".bloom")) {
             cerr << "Pushing " << path << " to Pinata" << endl;
-            pinToPinata(path);
+            pinToPinata(path, "");
             string_q index = substitute(substitute(path, "blooms", "finalized"), ".bloom", ".bin");
             cerr << "Pushing " << index << " to Pinata" << endl;
-            pinToPinata(index);
+            pinToPinata(index, "");
             cerr << "Sleeping for X seconds." << endl;
             for (uint32_t i = 0 ; i < SECONDS ; i++) {
                 cerr << "."; usleep(1 * 1000000);
