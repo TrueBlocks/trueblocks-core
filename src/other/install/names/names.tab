@@ -1415,6 +1415,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 33-Set Protocol:Wrapers	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper		TrueBlocks.io			false	false	false
 34-Humanity DAO	0x370ceca4fc1287ed99924bba76259f6c771a6022	rzurrer		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x3719810c10bbe6426aae2f2a79be241c2df87e90	famlomo		Gitcoin Website			false	false	false
+30-Contracts	0x374026a48d777cb0ffdccdb9a919c0aa7ce8a0fc	Genesis Protocol		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x37438ee973de2942067b48036c2341a23bd19290	thejaysf		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Friends	0x3773bcf38078a2c220f7d9073a3610e13bab3f66	gittygoo		Gitcoin Website			false	false	false
 32-Kickback:Friends	0x37867e29317f7aad574b20eb39d19eaf8ee61a7b	denton		https://kickback.events/			false	false	false
@@ -2584,6 +2585,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x66342e803943929dc47bca1d625f42c7c725b049	Etherlist_Top		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0x66382ac45b6d8cb4f47685e28b61fbb5486817ec	loganbek		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Grant	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 Week In Ethereum News evanvannesseth		https://gitcoin.co/grants/237/week-in-ethereum-news			false	false	false
+91-Friends	0x663d3947f03ef5b387992b880ac85940057c13e3	evan.ethereum.eth		Etherscan			false	false	false
+30-Contracts	0x6646d0a32d6b9c1d1a7389a6b8da7e5fd780f316	Genesis ContributionReward		Etherscan			false	false	false
 81-Other	0x664a2f27c4b6a778c5fac601ba2afc1d4d1adca4	Lastisme		Etherscan.io			false	false	false
 90-DevCon2:Individual	0x665bd53d2a92177e48084baf7db8754a92df90cd	christoph2806		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x667088b212ce3d06a1b553a7221e1fd19000d9af	WINGS	WINGS	On Chain	18	A decentralized platform to create, join and manage projects	false	false	false
@@ -3651,6 +3654,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x92ab1f32771e67172a00f1e1a78286355b0cdc80	Totle Bancor Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0x92c107f369710c625c7574e88a21dfb305263dd2	0xstark		https://www.humanitydao.org/humans			false	false	false
 60-Airdrops	0x92ca643fe78ea22c89c13caed410fec7425ee6fc	VIN Airdrop	VIN	TrueBlocks.io			false	false	false
+30-Contracts	0x91b9d2835ad914bc1dcfe09bd1816febd04fd689	GU: Capped Vault		Etherscan			false	false	false
 30-Contracts	0x92e1121149ac6c71a00555d62e41054910495616	GU: Atlas Belt		Etherscan			false	false	false
 50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH	On Chain	8	Aims to build a global network of retail and individual converters providing cash to digital conversions to and from our ecosystem, helping people worldwide to unbank.	false	false	false
 50-Tokens:ERC20	0x92e78dae1315067a8819efd6dca432de9dcde2e9	Veros	VRS	On Chain	6		false	false	false
@@ -3688,6 +3692,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x93f50d49c08551d1c2458a89ebf81237555e6b3e	mahinahmed4312		https://www.humanitydao.org/humans			false	false	false
 81-Other	0x940661325d53c0a6387b6abed4528d6e97fa17f6	Contract_id60_cnt2_5mo		Ether Camp			false	false	false
 32-Kickback:Friends	0x9410a73737e73e105c7cbd57ba64a3073e6a0924	ejwessel		https://kickback.events/			false	false	false
+30-Contracts	0x941f40c2955ee09ba638409f67ef27c531fc055c	Vyper Multisend		Etherscan			false	false	false
 81-Other	0x943bbeef41460a3f0f3ac7f7a062128ad0ba9cb1	Dgxswap		Etherscan.io			false	false	false
 50-Tokens:ERC20	0x943ed852dadb5c3938ecdc6883718df8142de4c8	FTI	FTI	On Chain	18		false	false	false
 81-Other	0x9448b35b4c9eea695dedff285e0cd8bc6c65e2b1	Foundation_id207_cnt2_3mo		Ether Camp			false	false	false
@@ -5284,6 +5289,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xd79b4c6791784184e2755b2fc1659eaab0f80456	Honestdice		Etherscan.io			false	false	false
 81-Other	0xd7ae299fdcab1211cfc6c58a26381e4cc7749d40	Etheropt_id104_cnt2_5mo		Ether Camp			false	false	false
 50-Tokens:ERC20	0xd7b3669c7d3e38ab5a441383d41f25e003e02148	SealToken	SEAL	On Chain	18	Seal is a blockchain powered product authentication and services platform which will provide consumers and manufacturers with product trust.	false	false	false
+30-Contracts	0xd7c61fe2b5ef2131e3cbfc93055c2d29de5857fc	Vyper Multisend Sender		Etherscan			false	false	false
 50-Tokens:ERC20	0xd7cddd45629934c2f6ed3b63217bd8085d7c14a8	AVH	AVH	On Chain	18		false	false	false
 60-Airdrops	0xd7d0f507e4ecb367f435939fee0605413cacddb6	CNX Airdrop Sender		TrueBlocks.io			false	false	false
 31-Gitcoin Grants:Friends	0xd7e055635ec1f37f87b51d24693818017ffeb422	loul79		Gitcoin Website			false	false	false
