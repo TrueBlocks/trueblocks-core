@@ -15,7 +15,6 @@
 #define N_BLOCKS (n_blocks + 0)
 #define THE_CMD "blaze scrape"
 
-
 //--------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     LOG_INFO(string_q(120, '-'));
