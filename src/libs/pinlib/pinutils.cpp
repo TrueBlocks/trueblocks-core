@@ -158,12 +158,9 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     string_q fn = fileName + (type == "blooms" ? ".bloom" : ".bin");
     string_q source = getIndexPath(type + "/" + fn);
     string_q zip = source + ".gz";
-    string_q cmd1 = "gzip --keep " + source;
-    string_q cmd2 = "rm -f " + zip;
     // clang-format on
+    string_q cmd1 = "gzip --keep " + source;
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    usleep(1000000);
-    if (system(cmd2.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format off
 
     string_q result;
@@ -196,6 +193,12 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
         curl_slist_free_all(headers);
     }
     curl_easy_cleanup(curl);
+
+    // clang-format on
+    string_q cmd2 = "rm -f " + zip;
+    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format off
+
     //LOG4("Finishing pin: ", result);
     LOG4("Finishing pin");
     return result;
