@@ -82,15 +82,16 @@ bool COptions::handle_scrape(void) {
     ostringstream os;
     os << cmd;
     os << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
-
-    // Report to the screen...
-    LOG_INFO(cGreen, "starting blaze with path: ", indexFolder, cOff);
-
-    // ...and make the call to blaze.
     if (n_block_procs != 20)
         os << " --nBlockProcs " << n_block_procs;
     if (n_addr_procs != 60)
         os << " --nAddrProcs " << n_addr_procs;
+
+    // Report to the screen...
+    string_q tmp = "cmd: " + substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "");
+    LOG_INFO(cGreen, tmp, cOff, " (ending at: ", (startBlock + n_blocks - 1), ")");
+
+    // ...and make the call to blaze.
     os << " --ripeBlock " << ripeBlock;
     // os << " 2>/dev/null 1>/dev/null ";
     if (system(os.str().c_str()) != 0) {
@@ -155,28 +156,11 @@ bool COptions::handle_scrape(void) {
     }
     cons.tmp_file.close();
 
-    // Timing of the logs matters, do not move
-    ostringstream msg;
-    msg << "blaze finished -";
-    msg << " start: " << startBlock;
-    msg << " end: " << (startBlock + n_blocks + 1);
-    msg << " n_blocks: " << n_blocks;
-    msg << " client: " << client;
-    msg << " remaining: " << (client - (startBlock + n_blocks - 1));
-
-static clock_t last_clock = 0;
-cout.fill('0');
-cout.width(7);
-clock_t now = clock();
-cout << "call," << now << ":" << padNum7T(uint64_t(now - last_clock)) << msg.str() << endl;
-last_clock = now;
-
     // The stage now contains all non-consolidated records. Ripe should be empty. All files are closed.
 
     // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
     // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
     // anything goes wrong we need clean up and leave the data in a recoverable state.
-    LOG_INFO(cGreen, "Trying to consolidate...", cOff);
     if (!finalize_chunks(&cons)) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -198,16 +182,11 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
 
-static clock_t last_clock = 0;
-cout.fill('0');
-cout.width(7);
-clock_t now = clock();
-
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-cout << "nonew," << now << ":" << padNum7T(uint64_t(now - last_clock)) << "have:" << curSize << " max:" << maxIndexRows << " need:" << (maxIndexRows - curSize) << endl;
-last_clock = now;
+        LOG_INFO(cYellow, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
+                 (maxIndexRows - curSize), " more.", cOff);
         return true;
     }
 
@@ -244,9 +223,10 @@ last_clock = now;
 
     // If we don't have enough records to consolidate, tell the user and return...
     if (curSize <= maxIndexRows) {
+        LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-cout << "notready," << now << ":" << padNum7T(uint64_t(now - last_clock)) << "have:" << curSize << " max:" << maxIndexRows << " need:" << (maxIndexRows - curSize) << endl;
-last_clock = now;
+        LOG_INFO(cYellow, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
+                 " more.", cOff);
         return true;
     }
 
@@ -259,6 +239,7 @@ last_clock = now;
         lines.reserve(curSize + 100);
         asciiFileToLines(newStage, lines);
 
+        LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
         LOG_INFO(cWhite, "  Starting search at record ", (maxIndexRows - 1), " of ", lines.size(), cOff);
         if (verbose > 2) {
@@ -315,14 +296,20 @@ last_clock = now;
         sort(consolidatedLines.begin(), consolidatedLines.end());
         string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
         writeIndexAsBinary(binFile, consolidatedLines);
-        LOG_INFO(cRed, "  Pinned index chunk (QmVj3KNNtFbDEaTpWxbgvMBUj1KhAVtE4Cw6zc6qEmQhUZ) to IPFS and Pinata",
-                 cOff);
-        LOG_INFO(cRed, "  Pinned bloom filter (Qmw6zc6qEmQhUZVj3KNNtFbDEaTpWxbgvMBUj1KhAVtE4C) to IPFS and Pinata",
-                 cOff);
+
+        if (pin) {
+            CPinnedItem pinRecord;
+            pinChunk(p1[1] + "-" + p2[1], pinRecord);
+            ostringstream ps;
+            ps << pinRecord << endl;
+            LOG_INFO(cRed, "Pinned to: ", substitute(ps.str(), "\n", " "));
+        }
+
         LOG_INFO(cRed,
                  "  Published  record to UnchainedIndex Smart Contract (0x438e458e16314c30fdbc622d81108cbc8877f2a0)",
                  cOff);
-        cerr << "wrote1:" << consolidatedLines.size() << " to:" << substitute(binFile, indexFolder_finalized, "$FINAL/") << endl;
+        LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
+                 substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
 
         where += 1;
         CStringArray remainingLines;
@@ -342,11 +329,8 @@ last_clock = now;
 
         ::remove(newStage.c_str());
         linesToAsciiFile(newStage, remainingLines, true);
-        cerr << "wrote2:" << remainingLines.size() << " to:" << substitute(newStage, indexFolder_staging, "$STAGING/") << endl;
-        LOG_INFO(" ");
-
-cout << "wrote:" << now << ":" << padNum7T(uint64_t(now - last_clock)) << "cnt:" << consolidatedLines.size() << " rem:" << remainingLines.size() << endl;
-last_clock = now;
+        LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
+                 substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
 
         curSize = fileSize(newStage) / 59;
         lockSection(false);

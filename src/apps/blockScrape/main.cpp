@@ -7,7 +7,7 @@
 
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    acctlib_init(defaultQuitHandler);
+    pinlib_init(defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
     freshenTimestamps(getLatestBlock_cache_ripe());
     LOG_INFO("Run complete.");
 
-    acctlib_cleanup();
+    pinlib_cleanup();
 
     return 0;
 }

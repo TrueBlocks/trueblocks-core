@@ -8,6 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
+#include "pinlib.h"
 #include "acctlib.h"
 
 // BEG_ERROR_DEFINES
@@ -34,6 +35,7 @@ class COptions : public COptionsBase {
     blknum_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
+    bool pin;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;

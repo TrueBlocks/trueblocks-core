@@ -14,8 +14,10 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("pin", "p", "", OPT_SWITCH, "pin newly created chunks (and blooms) to Pinata (available only when scraping)"),  // NOLINT
+    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "show a list of all previously pinned chunks and blooms (precludes other options)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -27,10 +29,13 @@ extern const char* STR_ERROR_MSG;
 extern bool isAlreadyRunning(const string_q& progName);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
+    ENTER("parseArguments");
+    
     if (!standardOptions(command))
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    bool listpins = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -44,13 +49,19 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("n_blocks", n_blocks, arg, latest))
                 return false;
 
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--n_block_procs:")) {
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--n_block_procs:")) {
             if (!confirmUint("n_block_procs", n_block_procs, arg))
                 return false;
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
             if (!confirmUint("n_addr_procs", n_addr_procs, arg))
                 return false;
+
+        } else if (arg == "-p" || arg == "--pin") {
+            pin = true;
+
+        } else if (arg == "-l" || arg == "--listpins") {
+            listpins = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -105,8 +116,7 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        LOG_INFO("Origin block index not found. Building it from " +
-                 uint_2_Str(prefundWeiMap.size()) + " prefunds.");
+        LOG_INFO("Origin block index not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
@@ -177,6 +187,7 @@ void COptions::Init(void) {
     n_blocks = NOPOS;
     n_block_procs = NOPOS;
     n_addr_procs = NOPOS;
+    pin = false;
     // END_CODE_INIT
 
     minArgs = 0;
