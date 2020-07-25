@@ -109,6 +109,11 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("ripe: " + indexFolder_ripe);
     LOG4("tmp: " + configPath("cache/tmp/"));
 
+    if (listpins) {
+        cout << "Not implemented: listpins" << endl;
+        return false;
+    }
+
     CBlock latestBlock;
     getBlock_light(latestBlock, "latest");
     latestBlockTs = latestBlock.timestamp;
@@ -129,6 +134,13 @@ bool COptions::parseArguments(string_q& command) {
         }
         LOG_INFO("Writing index...");
         writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
+        if (pin) {
+            CPinnedItem pinRecord;
+            pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
+            ostringstream ps;
+            ps << pinRecord << endl;
+            LOG_INFO(cRed, "Pinned to: ", substitute(ps.str(), "\n", " "));
+        }
         LOG_INFO("Done...");
     }
 

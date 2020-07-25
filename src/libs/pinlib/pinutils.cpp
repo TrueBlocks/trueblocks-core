@@ -23,6 +23,9 @@ static CPinnedItemArray pins;
 
 //----------------------------------------------------------------
 bool pinChunk(const string_q& fileName, CPinnedItem& item) {
+    if (!readPins())
+        return false;
+
     // If already pinned, no reason to pin it again...
     CPinnedItem copy;
     if (findChunk(fileName, copy)) {
@@ -179,7 +182,7 @@ static string_q pinOneFile(const string_q& fileName) {
         curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
         CURLcode res = curl_easy_perform(curl);
         if (res != 0) {
-            result = curl_easy_strerror(res);
+            result += curl_easy_strerror(res);
         }
         curl_mime_free(mime);
         curl_slist_free_all(headers);
@@ -201,7 +204,6 @@ static string_q unpinOneFile(const string_q& hash) {
 
     string_q result;
     CURL *curl;
-    CURLcode res;
     curl = curl_easy_init();
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -215,7 +217,10 @@ static string_q unpinOneFile(const string_q& hash) {
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        res = curl_easy_perform(curl);
+	CURLcode res = curl_easy_perform(curl);
+        if (res != 0) {
+            result += curl_easy_strerror(res);
+        }
     }
     curl_easy_cleanup(curl);
     LOG4("Finishing unpin: ", result);
@@ -234,7 +239,6 @@ bool listPins(string& result) {
 
     result.clear();
     CURL *curl;
-    CURLcode res;
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
@@ -247,7 +251,10 @@ bool listPins(string& result) {
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        res = curl_easy_perform(curl);
+	CURLcode res = curl_easy_perform(curl);
+        if (res != 0) {
+            result += curl_easy_strerror(res);
+        }
     }
     curl_easy_cleanup(curl);
     LOG4("Finishing list: ", result);
@@ -275,7 +282,9 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
 
     if (writeAscii) {
         stringToAsciiFile(textFile, os.str());
-        string_q cmd = "touch -A -000005 " + textFile;
+	string_q now = Now().Format("%Y%m%d%H%M.00");
+        string_q cmd = "touch -mt " + now + " " + textFile;
+	cerr << cmd << endl;
         if (system(cmd.c_str())) {
         }  // Don't remove cruft. Silences compiler warnings
     }
@@ -315,8 +324,7 @@ static bool readPins(void) {
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
-        cerr << "Cannot find ipfs hash json file. Quitting..." << endl;
-        return false;
+        return true;
 
     } else {
         pins.clear();  // redundant, but fine
