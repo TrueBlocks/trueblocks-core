@@ -159,14 +159,14 @@ static string_q pinOneFile(const string_q& fileName) {
     CURL* curl;
     curl = curl_easy_init();
     if (curl) {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/pinning/pin");
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/pinning/pinFileToIPFS");
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
         struct curl_slist* headers = NULL;
         headers = curl_slist_append(headers, ("pinata_api_key: " + apiKey).c_str());
         headers = curl_slist_append(headers, ("pinata_secret_api_key: " + secret).c_str());
-        headers = curl_slist_append(headers, "Content-Type: application/json");
+        headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
