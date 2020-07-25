@@ -159,7 +159,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     string_q source = getIndexPath(type + "/" + fn);
     string_q zip = source + ".gz";
     // clang-format on
-    string_q cmd1 = "gzip --keep " + source;
+    string_q cmd1 = "yes | gzip --keep " + source;
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format off
 
@@ -195,7 +195,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     curl_easy_cleanup(curl);
 
     // clang-format on
-    string_q cmd2 = "rm -f " + zip;
+    string_q cmd2 = "yes | rm -f " + zip;
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format off
 
