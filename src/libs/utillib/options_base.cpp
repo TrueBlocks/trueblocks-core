@@ -981,11 +981,11 @@ void COptionsBase::loadSpecials(void) {
     specials.clear();
     extern const char* STR_DEFAULT_WHENBLOCKS;
     string_q specialsStr = STR_DEFAULT_WHENBLOCKS;
-    CKeyValuePair keyVal;
+    CKeyValue keyVal;
     while (keyVal.parseJson3(specialsStr)) {
         CNameValue pair = make_pair(keyVal.jsonrpc, keyVal.result);
         specials.push_back(pair);
-        keyVal = CKeyValuePair();  // reset
+        keyVal = CKeyValue();  // reset
     }
     sort(specials.begin(), specials.end(), sortByValue);
     return;

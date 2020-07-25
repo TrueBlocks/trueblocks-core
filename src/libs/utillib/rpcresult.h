@@ -21,7 +21,8 @@ namespace qblocks {
 
 // EXISTING_CODE
 // Note: this class doubles as a key/value pair for json parsing
-#define CKeyValuePair CRPCResult
+#define CKeyValue CRPCResult
+#define CKeyValueArray CRPCResultArray
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
