@@ -15,7 +15,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "acctlib.h"
+#include "utillib.h"
+#include "pinatapin.h"
 
 namespace qblocks {
 
@@ -23,35 +24,34 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPublishRecord : public CBaseNode {
+class CPinataList : public CBaseNode {
   public:
-    string_q filename;
-    ipfshash_t index_hash;
-    bool index_pinned;
-    ipfshash_t bloom_hash;
-    bool bloom_pinned;
+    string_q count;
+    CPinataPinArray rows;
 
   public:
-    CPublishRecord(void);
-    CPublishRecord(const CPublishRecord& pu);
-    virtual ~CPublishRecord(void);
-    CPublishRecord& operator=(const CPublishRecord& pu);
+    CPinataList(void);
+    CPinataList(const CPinataList& pi);
+    virtual ~CPinataList(void);
+    CPinataList& operator=(const CPinataList& pi);
 
-    DECLARE_NODE(CPublishRecord);
+    DECLARE_NODE(CPinataList);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPublishRecord& item) const;
-    bool operator!=(const CPublishRecord& item) const {
+    bool operator==(const CPinataList& item) const;
+    bool operator!=(const CPinataList& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CPublishRecord& v1, const CPublishRecord& v2);
-    friend ostream& operator<<(ostream& os, const CPublishRecord& item);
+    friend bool operator<(const CPinataList& v1, const CPinataList& v2);
+    friend ostream& operator<<(ostream& os, const CPinataList& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPublishRecord& pu);
+    void duplicate(const CPinataList& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,74 +59,68 @@ class CPublishRecord : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPublishRecord::CPublishRecord(void) {
+inline CPinataList::CPinataList(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPublishRecord::CPublishRecord(const CPublishRecord& pu) {
+inline CPinataList::CPinataList(const CPinataList& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pu);
+    duplicate(pi);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPublishRecord::~CPublishRecord(void) {
+inline CPinataList::~CPinataList(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPublishRecord::clear(void) {
+inline void CPinataList::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPublishRecord::initialize(void) {
+inline void CPinataList::initialize(void) {
     CBaseNode::initialize();
 
-    filename = "";
-    index_hash = "";
-    index_pinned = false;
-    bloom_hash = "";
-    bloom_pinned = false;
+    count = "";
+    rows.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPublishRecord::duplicate(const CPublishRecord& pu) {
+inline void CPinataList::duplicate(const CPinataList& pi) {
     clear();
-    CBaseNode::duplicate(pu);
+    CBaseNode::duplicate(pi);
 
-    filename = pu.filename;
-    index_hash = pu.index_hash;
-    index_pinned = pu.index_pinned;
-    bloom_hash = pu.bloom_hash;
-    bloom_pinned = pu.bloom_pinned;
+    count = pi.count;
+    rows = pi.rows;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPublishRecord& CPublishRecord::operator=(const CPublishRecord& pu) {
-    duplicate(pu);
+inline CPinataList& CPinataList::operator=(const CPinataList& pi) {
+    duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPublishRecord::operator==(const CPublishRecord& item) const {
+inline bool CPinataList::operator==(const CPinataList& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -134,7 +128,7 @@ inline bool CPublishRecord::operator==(const CPublishRecord& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPublishRecord& v1, const CPublishRecord& v2) {
+inline bool operator<(const CPinataList& v1, const CPinataList& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -142,19 +136,14 @@ inline bool operator<(const CPublishRecord& v1, const CPublishRecord& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPublishRecord> CPublishRecordArray;
-extern CArchive& operator>>(CArchive& archive, CPublishRecordArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPublishRecordArray& array);
+typedef vector<CPinataList> CPinataListArray;
+extern CArchive& operator>>(CArchive& archive, CPinataListArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinataListArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PUBLISHRECORD;
+extern const char* STR_DISPLAY_PINATALIST;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef bool (*IPFSVISITFUNC)(CPublishRecord& log, void* data);
-bool publishNotPinned(const string_q& filename, CPublishRecord& result);
-bool publishPinned(const string_q& filename, CPublishRecord& result);
-bool forEveryPinnedItem(LOGVISITFUNC func, void* data);
-bool forEveryIPFSItem(LOGVISITFUNC func, void* data);
 // EXISTING_CODE
 }  // namespace qblocks

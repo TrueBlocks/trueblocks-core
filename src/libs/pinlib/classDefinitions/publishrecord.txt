@@ -1,9 +1,0 @@
-[settings]
-class = CPublishRecord
-fields = string filename|\
-        ipfshash index_hash|\
-        bool index_pinned|\
-        ipfshash bloom_hash|\
-        bool bloom_pinned
-includes = acctlib.h
-display_str = filename, index_hash, index_pinned, bloom_hash, bloom_pinned

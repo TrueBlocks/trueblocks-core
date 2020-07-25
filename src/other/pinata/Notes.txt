@@ -1,0 +1,7 @@
+It took about 3 hours to upload 9500 files to Pinata
+It took about 2 minutes to upload 60 gzipped tarballs
+
+It took about four hours to download the 9500 file from Pinata
+It took about 45 minuts to download the 60 tarballs
+
+Conclusion better to upload and download larger files

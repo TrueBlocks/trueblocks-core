@@ -14,10 +14,15 @@
 
 //-------------------------------------------------------------------------
 void pinlib_init(QUITHANDLER qh) {
-    acctlib_init(qh);
+    etherlib_init(qh);
+    CPinnedItem::registerClass();
+    CPinataPin::registerClass();
+    CPinataList::registerClass();
+    CPinataMetadata::registerClass();
+    CPinataRegion::registerClass();
 }
 
 //-------------------------------------------------------------------------
 void pinlib_cleanup(void) {
-    acctlib_cleanup();
+    etherlib_cleanup();
 }

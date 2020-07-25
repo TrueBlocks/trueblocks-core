@@ -3,6 +3,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10020,apps,list,acctScrape,addrs,,,true,false,true,true,local,positional,list<addr>,one or more Ethereum addresses
 10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
 10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder (requires --staging)
+10083,apps,list,acctScrape,blooms,b,false,false,false,false,false,header,switch,<boolean>,process query by first using bloom filter and&#44; if hit&#44; downloading index chunk from remote
 10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Index transactions for a given Ethereum address (or collection of addresses).
@@ -37,8 +38,10 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10480,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
 
 10600,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
-10620,apps,scrape,blockScrape,n_block_procs,p,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
+10620,apps,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
+10650,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin newly created chunks (and blooms) to Pinata (available only when scraping&#44; requires API key)
+10652,apps,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,show a list of all previously pinned chunks and blooms (precludes other options&#44; requires API key)
 10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
 10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve

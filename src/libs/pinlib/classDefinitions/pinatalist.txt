@@ -1,0 +1,6 @@
+[settings]
+class = CPinataList
+fields = string count|\
+        CPinataPinArray rows
+includes = utillib.h|pinatapin.h
+cpp_includes =

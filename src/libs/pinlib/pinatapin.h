@@ -15,7 +15,9 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "utillib.h"
+#include "pinatametadata.h"
+#include "pinataregion.h"
 
 namespace qblocks {
 
@@ -23,36 +25,40 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinningRecord : public CBaseNode {
+class CPinataPin : public CBaseNode {
   public:
-    timestamp_t pinDate;
-    string_q fileName;
-    string_q index_hash;
-    uint64_t index_size;
-    string_q bloom_hash;
-    uint64_t bloom_size;
+    string_q id;
+    string_q ipfs_pin_hash;
+    uint64_t size;
+    string_q user_id;
+    string_q date_pinned;
+    string_q date_unpinned;
+    CPinataMetadata metadata;
+    CPinataRegionArray regions;
 
   public:
-    CPinningRecord(void);
-    CPinningRecord(const CPinningRecord& pi);
-    virtual ~CPinningRecord(void);
-    CPinningRecord& operator=(const CPinningRecord& pi);
+    CPinataPin(void);
+    CPinataPin(const CPinataPin& pi);
+    virtual ~CPinataPin(void);
+    CPinataPin& operator=(const CPinataPin& pi);
 
-    DECLARE_NODE(CPinningRecord);
+    DECLARE_NODE(CPinataPin);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinningRecord& item) const;
-    bool operator!=(const CPinningRecord& item) const {
+    bool operator==(const CPinataPin& item) const;
+    bool operator!=(const CPinataPin& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CPinningRecord& v1, const CPinningRecord& v2);
-    friend ostream& operator<<(ostream& os, const CPinningRecord& item);
+    friend bool operator<(const CPinataPin& v1, const CPinataPin& v2);
+    friend ostream& operator<<(ostream& os, const CPinataPin& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinningRecord& pi);
+    void duplicate(const CPinataPin& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -60,14 +66,14 @@ class CPinningRecord : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinningRecord::CPinningRecord(void) {
+inline CPinataPin::CPinataPin(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinningRecord::CPinningRecord(const CPinningRecord& pi) {
+inline CPinataPin::CPinataPin(const CPinataPin& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(pi);
@@ -77,51 +83,55 @@ inline CPinningRecord::CPinningRecord(const CPinningRecord& pi) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinningRecord::~CPinningRecord(void) {
+inline CPinataPin::~CPinataPin(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinningRecord::clear(void) {
+inline void CPinataPin::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinningRecord::initialize(void) {
+inline void CPinataPin::initialize(void) {
     CBaseNode::initialize();
 
-    pinDate = 0;
-    fileName = "";
-    index_hash = "";
-    index_size = 0;
-    bloom_hash = "";
-    bloom_size = 0;
+    id = "";
+    ipfs_pin_hash = "";
+    size = 0;
+    user_id = "";
+    date_pinned = "";
+    date_unpinned = "";
+    metadata = CPinataMetadata();
+    regions.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinningRecord::duplicate(const CPinningRecord& pi) {
+inline void CPinataPin::duplicate(const CPinataPin& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
-    pinDate = pi.pinDate;
-    fileName = pi.fileName;
-    index_hash = pi.index_hash;
-    index_size = pi.index_size;
-    bloom_hash = pi.bloom_hash;
-    bloom_size = pi.bloom_size;
+    id = pi.id;
+    ipfs_pin_hash = pi.ipfs_pin_hash;
+    size = pi.size;
+    user_id = pi.user_id;
+    date_pinned = pi.date_pinned;
+    date_unpinned = pi.date_unpinned;
+    metadata = pi.metadata;
+    regions = pi.regions;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinningRecord& CPinningRecord::operator=(const CPinningRecord& pi) {
+inline CPinataPin& CPinataPin::operator=(const CPinataPin& pi) {
     duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,7 +139,7 @@ inline CPinningRecord& CPinningRecord::operator=(const CPinningRecord& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinningRecord::operator==(const CPinningRecord& item) const {
+inline bool CPinataPin::operator==(const CPinataPin& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -137,7 +147,7 @@ inline bool CPinningRecord::operator==(const CPinningRecord& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinningRecord& v1, const CPinningRecord& v2) {
+inline bool operator<(const CPinataPin& v1, const CPinataPin& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -145,16 +155,12 @@ inline bool operator<(const CPinningRecord& v1, const CPinningRecord& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinningRecord> CPinningRecordArray;
-extern CArchive& operator>>(CArchive& archive, CPinningRecordArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinningRecordArray& array);
+typedef vector<CPinataPin> CPinataPinArray;
+extern CArchive& operator>>(CArchive& archive, CPinataPinArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinataPinArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinningRecord& pin);
-extern CArchive& operator>>(CArchive& archive, CPinningRecord& pin);
-
-//---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINNINGRECORD;
+extern const char* STR_DISPLAY_PINATAPIN;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -3441,7 +3441,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931	tarasbob		OnChain			false	false	false
 50-Tokens:ERC20	0x89c6c856a6db3e46107163d0cda7a7ff211bd655	Darico Ecosystem Coin	DEC	On Chain	18	Darico‚Äö√Ñ√¥s complete solution lets you monitor, trade, invest and spend your cryptocurrencies all from one integrated ecosystem.	false	false	false
 31-Gitcoin Grants:Grant	0x89d1fec16ba1c8aebc7866263eb4ca2d8bd8eec4	Grant 728 DEFI Security Matching Round		https://gitcoin.co/grants/728/defi-security-matching-round		https://twitter.com/owocki/status/1252002447515475969	false	false	false
-30-Contracts	0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sia Stablecoin v1.0	SAI	Etherscan.io			false	false	false
+30-Contracts	0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359	Sai Stablecoin v1.0	SAI	Etherscan.io			false	false	false
 81-Other	0x89d64bc7e46bdc49a89652ae9bb167418cbad62e	Ethtoken		Etherscan.io			false	false	false
 81-Other	0x89d8ea79e807d9d63d62648d183402cd015044e0	@dedriss		Steem			false	false	false
 31-Gitcoin Grants:Grant	0x89eeaf6cef929b2b35bfa7ddd37390c6d3c86500	Grant 156 Zero Knowledge Education					false	false	false

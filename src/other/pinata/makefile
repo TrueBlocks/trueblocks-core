@@ -1,7 +1,7 @@
 #-------------------------------------------------
 libraries=../../libs
 bin=bin
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib -I$(libraries)/acctlib
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib -I$(libraries)/acctlib -I$(libraries)/pinlib
 
 #-------------------------------------------------
 # for mac builds
@@ -16,7 +16,6 @@ dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
-pinningRecord.cpp \
 $(exec).cpp
 
 #-------------------------------------------------

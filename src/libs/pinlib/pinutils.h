@@ -18,3 +18,8 @@
 #include "pinlib.h"
 
 extern bool ipfsExists(void);
+
+extern bool findChunk(const string_q& fileName, CPinnedItem& item);
+extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
+extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
+extern bool listPins(string_q& result);

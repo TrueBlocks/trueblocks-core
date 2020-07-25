@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "pinningRecord.h"
+#include "pinatametadata.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinningRecord, CBaseNode);
+IMPLEMENT_NODE(CPinataMetadata, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextPinningrecordChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinningrecordChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinatametadataChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinatametadataChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinningRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinataMetadata::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinningrecord_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinatametadata_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CPinningRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinningrecordChunk, this);
+        ctx << getNextChunk(fmt, nextPinatametadataChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinningrecordChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinatametadataChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinningRecord*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinataMetadata*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextPinningrecordChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinningRecord::getValueByName(const string_q& fieldName) const {
+string_q CPinataMetadata::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinningrecordChunk_custom(fieldName, this);
+    string_q ret = nextPinatametadataChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,30 +70,24 @@ string_q CPinningRecord::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloom_hash") {
-                return bloom_hash;
-            }
-            if (fieldName % "bloom_size") {
-                return uint_2_Str(bloom_size);
-            }
-            break;
-        case 'f':
-            if (fieldName % "fileName") {
-                return fileName;
-            }
-            break;
-        case 'i':
-            if (fieldName % "index_hash") {
-                return index_hash;
-            }
-            if (fieldName % "index_size") {
-                return uint_2_Str(index_size);
+        case 'k':
+            if (fieldName % "keyvalues" || fieldName % "keyvaluesCnt") {
+                size_t cnt = keyvalues.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += keyvalues[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
-        case 'p':
-            if (fieldName % "pinDate") {
-                return ts_2_Str(pinDate);
+        case 'n':
+            if (fieldName % "name") {
+                return name;
             }
             break;
         default:
@@ -108,7 +102,7 @@ string_q CPinningRecord::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinningRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinataMetadata::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -116,35 +110,20 @@ bool CPinningRecord::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloom_hash") {
-                bloom_hash = fieldValue;
-                return true;
-            }
-            if (fieldName % "bloom_size") {
-                bloom_size = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'f':
-            if (fieldName % "fileName") {
-                fileName = fieldValue;
+        case 'k':
+            if (fieldName % "keyvalues") {
+                CKeyValue item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    keyvalues.push_back(item);
+                    item = CKeyValue();  // reset
+                }
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "index_hash") {
-                index_hash = fieldValue;
-                return true;
-            }
-            if (fieldName % "index_size") {
-                index_size = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'p':
-            if (fieldName % "pinDate") {
-                pinDate = str_2_Ts(fieldValue);
+        case 'n':
+            if (fieldName % "name") {
+                name = fieldValue;
                 return true;
             }
             break;
@@ -155,13 +134,13 @@ bool CPinningRecord::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinningRecord::finishParse() {
+void CPinataMetadata::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinningRecord::Serialize(CArchive& archive) {
+bool CPinataMetadata::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -173,35 +152,27 @@ bool CPinningRecord::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> pinDate;
-    archive >> fileName;
-    archive >> index_hash;
-    archive >> index_size;
-    archive >> bloom_hash;
-    archive >> bloom_size;
+    archive >> name;
+    archive >> keyvalues;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinningRecord::SerializeC(CArchive& archive) const {
+bool CPinataMetadata::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << pinDate;
-    archive << fileName;
-    archive << index_hash;
-    archive << index_size;
-    archive << bloom_hash;
-    archive << bloom_size;
+    archive << name;
+    archive << keyvalues;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinningRecordArray& array) {
+CArchive& operator>>(CArchive& archive, CPinataMetadataArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -213,7 +184,7 @@ CArchive& operator>>(CArchive& archive, CPinningRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinningRecordArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinataMetadataArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -222,38 +193,34 @@ CArchive& operator<<(CArchive& archive, const CPinningRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinningRecord::registerClass(void) {
+void CPinataMetadata::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinningRecord, "schema"))
+    if (HAS_FIELD(CPinataMetadata, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinningRecord, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "pinDate", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "fileName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "index_hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "index_size", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "bloom_hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinningRecord, "bloom_size", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "name", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataMetadata, "keyvalues", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinningRecord, "schema");
-    HIDE_FIELD(CPinningRecord, "deleted");
-    HIDE_FIELD(CPinningRecord, "showing");
-    HIDE_FIELD(CPinningRecord, "cname");
+    HIDE_FIELD(CPinataMetadata, "schema");
+    HIDE_FIELD(CPinataMetadata, "deleted");
+    HIDE_FIELD(CPinataMetadata, "showing");
+    HIDE_FIELD(CPinataMetadata, "cname");
 
-    builtIns.push_back(_biCPinningRecord);
+    builtIns.push_back(_biCPinataMetadata);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinningrecordChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinningRecord* pin = reinterpret_cast<const CPinningRecord*>(dataPtr);
+string_q nextPinatametadataChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinataMetadata* pin = reinterpret_cast<const CPinataMetadata*>(dataPtr);
     if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -275,27 +242,15 @@ string_q nextPinningrecordChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CPinningRecord::readBackLevel(CArchive& archive) {
+bool CPinataMetadata::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
 }
 
-//---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinningRecord& pin) {
-    pin.SerializeC(archive);
-    return archive;
-}
-
-//---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinningRecord& pin) {
-    pin.Serialize(archive);
-    return archive;
-}
-
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinningRecord& item) {
+ostream& operator<<(ostream& os, const CPinataMetadata& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -305,13 +260,14 @@ ostream& operator<<(ostream& os, const CPinningRecord& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINNINGRECORD =
-    "[{PINDATE}]\t"
-    "[{FILENAME}]\t"
-    "[{INDEX_HASH}]\t"
-    "[{INDEX_SIZE}]\t"
-    "[{BLOOM_HASH}]\t"
-    "[{BLOOM_SIZE}]";
+const CBaseNode* CPinataMetadata::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "keyvalues" && index < keyvalues.size())
+        return &keyvalues[index];
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
+const char* STR_DISPLAY_PINATAMETADATA = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

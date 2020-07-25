@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "publishrecord.h"
+#include "pinataregion.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPublishRecord, CBaseNode);
+IMPLEMENT_NODE(CPinataRegion, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPublishrecordChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPublishrecordChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinataregionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinataregionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPublishRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinataRegion::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["publishrecord_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinataregion_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CPublishRecord::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPublishrecordChunk, this);
+        ctx << getNextChunk(fmt, nextPinataregionChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPublishrecordChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinataregionChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPublishRecord*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinataRegion*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextPublishrecordChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPublishRecord::getValueByName(const string_q& fieldName) const {
+string_q CPinataRegion::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPublishrecordChunk_custom(fieldName, this);
+    string_q ret = nextPinataregionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,25 +70,19 @@ string_q CPublishRecord::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloom_hash") {
-                return bloom_hash;
-            }
-            if (fieldName % "bloom_pinned") {
-                return bool_2_Str(bloom_pinned);
+        case 'c':
+            if (fieldName % "currentReplicationCount") {
+                return currentReplicationCount;
             }
             break;
-        case 'f':
-            if (fieldName % "filename") {
-                return filename;
+        case 'd':
+            if (fieldName % "desiredReplicationCount") {
+                return desiredReplicationCount;
             }
             break;
-        case 'i':
-            if (fieldName % "index_hash") {
-                return index_hash;
-            }
-            if (fieldName % "index_pinned") {
-                return bool_2_Str(index_pinned);
+        case 'r':
+            if (fieldName % "regionId") {
+                return regionId;
             }
             break;
         default:
@@ -103,7 +97,7 @@ string_q CPublishRecord::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPublishRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinataRegion::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -111,29 +105,21 @@ bool CPublishRecord::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloom_hash") {
-                bloom_hash = fieldValue;
-                return true;
-            }
-            if (fieldName % "bloom_pinned") {
-                bloom_pinned = str_2_Bool(fieldValue);
+        case 'c':
+            if (fieldName % "currentReplicationCount") {
+                currentReplicationCount = fieldValue;
                 return true;
             }
             break;
-        case 'f':
-            if (fieldName % "filename") {
-                filename = fieldValue;
+        case 'd':
+            if (fieldName % "desiredReplicationCount") {
+                desiredReplicationCount = fieldValue;
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "index_hash") {
-                index_hash = fieldValue;
-                return true;
-            }
-            if (fieldName % "index_pinned") {
-                index_pinned = str_2_Bool(fieldValue);
+        case 'r':
+            if (fieldName % "regionId") {
+                regionId = fieldValue;
                 return true;
             }
             break;
@@ -144,13 +130,13 @@ bool CPublishRecord::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPublishRecord::finishParse() {
+void CPinataRegion::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPublishRecord::Serialize(CArchive& archive) {
+bool CPinataRegion::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -162,33 +148,29 @@ bool CPublishRecord::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> filename;
-    archive >> index_hash;
-    archive >> index_pinned;
-    archive >> bloom_hash;
-    archive >> bloom_pinned;
+    archive >> regionId;
+    archive >> currentReplicationCount;
+    archive >> desiredReplicationCount;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPublishRecord::SerializeC(CArchive& archive) const {
+bool CPinataRegion::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << filename;
-    archive << index_hash;
-    archive << index_pinned;
-    archive << bloom_hash;
-    archive << bloom_pinned;
+    archive << regionId;
+    archive << currentReplicationCount;
+    archive << desiredReplicationCount;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPublishRecordArray& array) {
+CArchive& operator>>(CArchive& archive, CPinataRegionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -200,7 +182,7 @@ CArchive& operator>>(CArchive& archive, CPublishRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPublishRecordArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinataRegionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -209,45 +191,43 @@ CArchive& operator<<(CArchive& archive, const CPublishRecordArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPublishRecord::registerClass(void) {
+void CPinataRegion::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPublishRecord, "schema"))
+    if (HAS_FIELD(CPinataRegion, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPublishRecord, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "filename", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "index_hash", T_IPFSHASH, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "index_pinned", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "bloom_hash", T_IPFSHASH, ++fieldNum);
-    ADD_FIELD(CPublishRecord, "bloom_pinned", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "regionId", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "currentReplicationCount", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "desiredReplicationCount", T_TEXT, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPublishRecord, "schema");
-    HIDE_FIELD(CPublishRecord, "deleted");
-    HIDE_FIELD(CPublishRecord, "showing");
-    HIDE_FIELD(CPublishRecord, "cname");
+    HIDE_FIELD(CPinataRegion, "schema");
+    HIDE_FIELD(CPinataRegion, "deleted");
+    HIDE_FIELD(CPinataRegion, "showing");
+    HIDE_FIELD(CPinataRegion, "cname");
 
-    builtIns.push_back(_biCPublishRecord);
+    builtIns.push_back(_biCPinataRegion);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPublishrecordChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPublishRecord* pub = reinterpret_cast<const CPublishRecord*>(dataPtr);
-    if (pub) {
+string_q nextPinataregionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinataRegion* pin = reinterpret_cast<const CPinataRegion*>(dataPtr);
+    if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pub);
+                    return nextBasenodeChunk(fieldIn, pin);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -261,7 +241,7 @@ string_q nextPublishrecordChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CPublishRecord::readBackLevel(CArchive& archive) {
+bool CPinataRegion::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -269,7 +249,7 @@ bool CPublishRecord::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPublishRecord& item) {
+ostream& operator<<(ostream& os, const CPinataRegion& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -279,40 +259,9 @@ ostream& operator<<(ostream& os, const CPublishRecord& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PUBLISHRECORD =
-    "[{FILENAME}]\t"
-    "[{INDEX_HASH}]\t"
-    "[{INDEX_PINNED}]\t"
-    "[{BLOOM_HASH}]\t"
-    "[{BLOOM_PINNED}]";
+const char* STR_DISPLAY_PINATAREGION = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool publishNotPinned(const string_q& filename, CPublishRecord& result) {
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool publishPinned(const string_q& filename, CPublishRecord& result) {
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool forEveryPinnedItem(IPFSVISITFUNC func, void* data) {
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool forEveryIPFSItem(IPFSVISITFUNC func, void* data) {
-    //    if (!func)
-    //        return false;
-    //
-    //    for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
-    //        CLogEntry log = trans.receipt.logs[i];
-    //        if (!(*func)(log, data))
-    //            return false;
-    //    }
-    return true;
-}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -11,12 +11,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "acctlib.h"
+#include "etherlib.h"
+
+#include "pinneditem.h"
+#include "pinatalist.h"
+#include "pinatapin.h"
+#include "pinutils.h"
 
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
-
-#include "publishrecord.h"
-#include "pinutils.h"
 
 using namespace qblocks;  // NOLINT
