@@ -14,7 +14,7 @@
 
 namespace qblocks {
 
-hash_t versionHash = "0x0000000000000000000000000000000000000000000000000000000000000000";
+hash_t versionHash = "020607_b463487-000-000700_f44a14e8821d0fdcd2a45aa1c959e76183d5dfa4";
 
 //----------------------------------------------------------------
 void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
