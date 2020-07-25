@@ -33,12 +33,17 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
         return true;
     }
 
+    item.fileName = fileName;
     string_q indexStr = pinOneFile(getIndexPath("finalized/" + fileName + ".bin"));
     if (!contains(indexStr, "IpfsHash")) {
         cerr << "Could not pin index file to Pinata. Quitting..." << endl;
         return false;
     }
     cleanPinataStr(indexStr);
+    CPinataPin index;
+    index.parseJson3(indexStr);
+    item.indexHash = index.ipfs_pin_hash;
+    item.uploadTs = date_2_Ts(index.date_pinned);
 
     string_q bloomStr = pinOneFile(getIndexPath("blooms/" + fileName + ".bloom"));
     if (!contains(bloomStr, "IpfsHash")) {
@@ -46,17 +51,9 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
         return false;
     }
     cleanPinataStr(bloomStr);
-
-    CPinataPin index;
     CPinataPin bloom;
-
-    index.parseJson3(indexStr);
     bloom.parseJson3(bloomStr);
-
-    item.indexHash = index.ipfs_pin_hash;
     item.bloomHash = bloom.ipfs_pin_hash;
-    item.fileName = index.metadata.name;
-    item.uploadTs = date_2_Ts(index.date_pinned);
 
     // add it to the array
     pins.push_back(item);
@@ -188,7 +185,8 @@ static string_q pinOneFile(const string_q& fileName) {
         curl_slist_free_all(headers);
     }
     curl_easy_cleanup(curl);
-    LOG4("Finishing pin: ", result);
+    //LOG4("Finishing pin: ", result);
+    LOG4("Finishing pin");
     return result;
 }
 
@@ -263,9 +261,9 @@ bool listPins(string& result) {
 
 //----------------------------------------------------------------
 static void cleanPinataStr(string_q& in) {
-    replace(in, "IpfsHash", "ipfsHash");
-    replace(in, "PinSize", "pinSize");
-    replace(in, "Timestamp", "dateStr");
+    replace(in, "IpfsHash", "ipfs_pin_hash");
+    replace(in, "PinSize", "size");
+    replace(in, "Timestamp", "date_pinned");
 }
 
 //---------------------------------------------------------------------------
