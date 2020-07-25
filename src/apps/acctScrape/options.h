@@ -18,6 +18,7 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    bool blooms;
     // END_CODE_DECLARE
 
     CAcctScrapeStats stats;

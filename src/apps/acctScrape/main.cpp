@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
         cleanMonitorStage();
 
         if (options.visitTypes & VIS_FINAL)
-            forEveryFileInFolder(indexFolder_finalized, visitFinalIndexFiles, &options);
+            forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, &options);
 
         if (options.visitTypes & VIS_STAGING)
             forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, &options);

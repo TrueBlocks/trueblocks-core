@@ -6,6 +6,7 @@
 #include "acctlib.h"
 #include "options.h"
 
+extern bool establishIndexChunk(const string_q& chunk);
 //---------------------------------------------------------------
 bool visitFinalIndexFiles(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
@@ -18,7 +19,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         // Filenames take the form 'start-end.[txt|bin]' where both 'start' and 'end'
         // are inclusive. Silently skips unknown files in the folder (such as shell scripts).
-        if (!contains(path, "-") || !endsWith(path, ".bin")) {
+        if (!contains(path, "-") || !endsWith(path, ".bloom")) {
             options->stats.nSkipped++;
             return !shouldQuit();
         }
@@ -56,10 +57,11 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     typedef map<address_t, bool> CHitMap;
     CHitMap hitMap;
 
-    string_q bPath = substitute(substitute(path, indexFolder_finalized, indexFolder_blooms), ".bin", ".bloom");
-    if (fileExists(bPath)) {
+    string_q bloomPath = path;
+    string_q indexPath = substitute(substitute(path, indexFolder_blooms, indexFolder_finalized), ".bloom", ".bin");
+    if (fileExists(bloomPath)) {
         CBloomArray blooms;
-        readBloomFromBinary(bPath, blooms);
+        readBloomFromBinary(bloomPath, blooms);
         bool hit = false;
         // Note: we used to stop searching on the first hit, and then scan the larger data files for all monitors in
         // this run, but now we keep a map of addresses that were bloom hits and only scan the ones that match.
@@ -82,6 +84,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             return true;
         }
     }
+
+    if (!establishIndexChunk(indexPath))
+        EXIT_FAIL("Could not establish (that is download) index chunk " + indexPath + ". Quitting...");
 
     options->stats.nBloomHits++;
     LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit\r");
@@ -109,10 +114,10 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
             if (!chunk) {
                 chunk = new CArchive(READING_ARCHIVE);
-                if (!chunk || !chunk->Lock(path, modeReadOnly, LOCK_NOWAIT))
-                    EXIT_FAIL("Could not open index file " + path + ".");
+                if (!chunk || !chunk->Lock(indexPath, modeReadOnly, LOCK_NOWAIT))
+                    EXIT_FAIL("Could not open index file " + indexPath + ".");
 
-                size_t sz = fileSize(path);
+                size_t sz = fileSize(indexPath);
                 rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));
                 if (!rawData) {
                     chunk->Release();
@@ -181,4 +186,16 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit" + result);
 
     return !shouldQuit();
+}
+
+//---------------------------------------------------------------
+bool getIndexChunkFromIPFS(const string_q& chunk) {
+    return true;
+}
+
+//---------------------------------------------------------------
+bool establishIndexChunk(const string_q& chunk) {
+    if (!fileExists(chunk)) {
+    }
+    return true;
 }
