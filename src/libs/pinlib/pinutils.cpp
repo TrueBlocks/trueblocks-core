@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "pinutils.h"
 
-static string_q pinOneFile(const string_q& fileName);
+static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
 static bool writePins(const CPinnedItemArray& array, bool writeAscii);
@@ -34,7 +34,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     }
 
     item.fileName = fileName;
-    string_q indexStr = pinOneFile(getIndexPath("finalized/" + fileName + ".bin"));
+    string_q indexStr = pinOneFile(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
         cerr << "Could not pin index file to Pinata. Quitting..." << endl;
         return false;
@@ -45,7 +45,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     item.indexHash = index.ipfs_pin_hash;
     item.uploadTs = date_2_Ts(index.date_pinned);
 
-    string_q bloomStr = pinOneFile(getIndexPath("blooms/" + fileName + ".bloom"));
+    string_q bloomStr = pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
         cerr << "Could not pin bloom file to Pinata. Quitting..." << endl;
         return false;
@@ -146,7 +146,7 @@ static bool getApiKeys(string_q& apiKey, string_q&secret) {
 }
 
 //----------------------------------------------------------------
-static string_q pinOneFile(const string_q& fileName) {
+static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     LOG4("Starting pin");
 
     string_q apiKey, secret;
@@ -154,6 +154,17 @@ static string_q pinOneFile(const string_q& fileName) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
+
+    string_q fn = fileName + (type == "blooms" ? ".bloom" : ".bin");
+    string_q source = getIndexPath(type + "/" + fn);
+    string_q zip = source + ".gz";
+    string_q cmd1 = "gzip --keep " + source;
+    string_q cmd2 = "rm -f " + zip;
+    // clang-format on
+    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    usleep(1000000);
+    if (system(cmd2.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format off
 
     string_q result;
     CURL* curl;
@@ -175,7 +186,7 @@ static string_q pinOneFile(const string_q& fileName) {
         mime = curl_mime_init(curl);
         part = curl_mime_addpart(mime);
         curl_mime_name(part, "file");
-        curl_mime_filedata(part, fileName.c_str());
+        curl_mime_filedata(part, zip.c_str());
         curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
         CURLcode res = curl_easy_perform(curl);
         if (res != 0) {
@@ -280,11 +291,12 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
 
     if (writeAscii) {
         stringToAsciiFile(textFile, os.str());
-	string_q now = Now().Format("%Y%m%d%H%M.00");
+        string_q now = Now().Format("%Y%m%d%H%M.00");
         string_q cmd = "touch -mt " + now + " " + textFile;
-	cerr << cmd << endl;
-        if (system(cmd.c_str())) {
-        }  // Don't remove cruft. Silences compiler warnings
+        cerr << cmd << endl;
+        // clang-format off
+        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
     }
 
     establishFolder(binFile);
