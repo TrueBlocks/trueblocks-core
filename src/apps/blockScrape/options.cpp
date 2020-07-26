@@ -134,7 +134,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         LOG_INFO("Writing index...");
         writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
-        if (pin) {
+        if (false) { //pin) {
             CPinnedItem pinRecord;
             pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
             ostringstream ps;
