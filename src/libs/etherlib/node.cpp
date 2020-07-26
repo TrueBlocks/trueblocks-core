@@ -437,7 +437,7 @@ bool getChainHead(void) {
 
 //--------------------------------------------------------------------------
 blknum_t getLatestBlock_cache_final(void) {
-    string_q finLast = getLastFileInFolder(indexFolder_finalized, false);
+    string_q finLast = getLastFileInFolder(indexFolder_blooms, false);
     if (!finLast.empty()) {
         // Files in this folder are n-m.bin
         blknum_t last;

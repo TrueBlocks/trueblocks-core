@@ -8,6 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
+#include "pinlib.h"
 #include "acctlib.h"
 #include "acctscrapestats.h"
 

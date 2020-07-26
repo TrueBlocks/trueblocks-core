@@ -23,3 +23,5 @@ extern bool findChunk(const string_q& fileName, CPinnedItem& item);
 extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
 extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
 extern bool listPins(string_q& result);
+extern bool getChunk(const string_q& fileName, CPinnedItem& item);
+extern bool unpinChunkByHash(const string_q& hash);

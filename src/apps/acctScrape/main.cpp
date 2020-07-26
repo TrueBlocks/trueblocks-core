@@ -3,14 +3,13 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "etherlib.h"
 #include "options.h"
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
     namesNotRequired();
-    acctlib_init(defaultQuitHandler);
+    pinlib_init(defaultQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -58,6 +57,6 @@ int main(int argc, const char* argv[]) {
         appendToAsciiFile(statsFile, data.str());
     }
 
-    acctlib_cleanup();
+    pinlib_cleanup();
     return 0;
 }

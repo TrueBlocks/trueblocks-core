@@ -4,6 +4,22 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
     verbose = 5;
+    string_q contents = asciiFileToString("deletes.txt");
+    CStringArray lines;
+    explode(lines, contents, '\n');
+    for (auto line : lines) {
+        unpinChunkByHash(line);
+        cout << line << endl;
+    }
+    pinlib_cleanup();
+    return 1;
+}
+
+#if 0
+//----------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    pinlib_init(quickQuitHandler);
+    verbose = 5;
 
     if (argc != 2) {
         cerr << "pinata <filename>" << endl;
@@ -65,3 +81,5 @@ int main(int argc, const char* argv[]) {
     pinlib_cleanup();
     return 1;
 }
+#endif
+

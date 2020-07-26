@@ -64,6 +64,13 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //---------------------------------------------------------------------------
+bool unpinChunkByHash(const string_q& hash) {
+    unpinOneFile(hash);
+    usleep(3000000);
+    return true;
+}
+
+//---------------------------------------------------------------------------
 bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     if (!readPins())
         return false;
@@ -113,6 +120,28 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //-------------------------------------------------------------------------
+bool getChunk(const string_q& fileName, CPinnedItem& item) {
+    if (!readPins())
+        return false;
+
+    // If we don't think it's pinned, Pinata may, so proceed even if not found
+    if (!findChunk(fileName, item)) {
+        //return true;
+    }
+
+    // clang-format off
+    string_q cmd = "curl \"https://ipfs.io/ipfs/" + item.indexHash + "\" --output " + fileName + ".bin.gz ; ";
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    cmd = " gunzip *";
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    cmd = "mv " + fileName + ".bin " + indexFolder_finalized + fileName + ".bin";
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+
+    return true;
+}
+
+//-------------------------------------------------------------------------
 bool ipfsExists(void) {
     ostringstream os;
     os << "ipfs --help";
@@ -158,10 +187,10 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     string_q fn = fileName + (type == "blooms" ? ".bloom" : ".bin");
     string_q source = getIndexPath(type + "/" + fn);
     string_q zip = source + ".gz";
-    // clang-format on
+    // clang-format off
     string_q cmd1 = "yes | gzip --keep " + source;
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format off
+    // clang-format on
 
     string_q result;
     CURL* curl;
@@ -194,10 +223,10 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     }
     curl_easy_cleanup(curl);
 
-    // clang-format on
+    // clang-format off
     string_q cmd2 = "yes | rm -f " + zip;
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format off
+    // clang-format on
 
     //LOG4("Finishing pin: ", result);
     LOG4("Finishing pin");

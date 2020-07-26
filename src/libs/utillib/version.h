@@ -23,5 +23,6 @@ extern uint32_t getVersionNum(void);
 extern string_q GIT_COMMIT_BRANCH;
 extern string_q GIT_COMMIT_HASH;
 extern timestamp_t GIT_COMMIT_TS;
+extern string_q versionHash;
 
 }  // namespace qblocks

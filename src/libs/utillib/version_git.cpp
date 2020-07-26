@@ -18,5 +18,6 @@ namespace qblocks {
 string_q GIT_COMMIT_BRANCH = D_COMMIT_BRANCH;
 string_q GIT_COMMIT_HASH = D_COMMIT_HASH;
 timestamp_t GIT_COMMIT_TS = D_COMMIT_TS;
+string_q versionHash = "0x" + padLeft(D_COMMIT_HASH, 64, '0');
 
 }  // namespace qblocks
