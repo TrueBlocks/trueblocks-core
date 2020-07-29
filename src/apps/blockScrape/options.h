@@ -51,6 +51,8 @@ class COptions : public COptionsBase {
 
     bool handle_scrape(void);
     bool finalize_chunks(CConsolidator* cons);
+
+    bool hasPinataKeys(void);
 };
 
 //-----------------------------------------------------------------------------

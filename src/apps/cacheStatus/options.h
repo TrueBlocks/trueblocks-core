@@ -8,7 +8,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
+#include "pinlib.h"
 #include "status.h"
 #include "chaincache.h"
 #include "collectioncache.h"

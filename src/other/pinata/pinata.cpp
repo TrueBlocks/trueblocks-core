@@ -1,18 +1,32 @@
 #include "pinlib.h"
 
+extern bool addPinToArray(CPinnedItem& item, void *data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
     verbose = 5;
-    string_q contents = asciiFileToString("deletes.txt");
-    CStringArray lines;
-    explode(lines, contents, '\n');
-    for (auto line : lines) {
-        unpinChunkByHash(line);
-        cout << line << endl;
-    }
+
+    CPinReport report;
+    report.publishTs = date_2_Ts(Now());
+    report.fileName = "ipfs-hashes/pin-report.json";
+    report.indexFormat = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2";
+    report.bloomFormat = "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD";
+    report.newBlockRange = "000000000-010156360";
+    forEveryPin(addPinToArray, &report.newPins);
+    report.prevHash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH";
+    report.prevBlockRange = "";
+    report.prevPins.clear();
+    report.doExport(cout);
     pinlib_cleanup();
+
     return 1;
+}
+
+//----------------------------------------------------------------
+bool addPinToArray(CPinnedItem& pin, void *data) {
+    CPinnedItemArray *array = (CPinnedItemArray*)data;
+    array->push_back(pin);
+    return true;
 }
 
 #if 0

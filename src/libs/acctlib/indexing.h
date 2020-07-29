@@ -21,31 +21,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-class CIndexChunk {
-  public:
-    hash_t hash;
-    uint64_t cnt;
-    explicit CIndexChunk(const hash_t& h) {
-        hash = h;
-        cnt = 0;
-    }
-    CIndexChunk& operator=(const CIndexChunk& ic) {
-        hash = ic.hash;
-        cnt = ic.cnt;
-        return *this;
-    }
-    CIndexChunk() {
-        hash = "";
-        cnt = 0;
-    }
-    CIndexChunk(const CIndexChunk& ic) {
-        hash = ic.hash;
-        cnt = ic.cnt;
-    }
-};
-
-//-----------------------------------------------------------------------
-typedef map<blknum_t, CIndexChunk> CIndexHashMap;
+typedef map<blknum_t, string_q> CIndexHashMap;
 
 //-----------------------------------------------------------------------
 #define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
@@ -54,6 +30,4 @@ extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
 extern void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
 extern size_t readIndexFromBinary(const string_q& inFn, uint64_t& nAppearances, const CStringArray& lines);
 extern bool readIndexHeaderFromBinary(const string_q& inFn, CHeaderRecord_base* header);
-extern void loadHashes(CIndexHashMap& map, const string_q& which);
-
 }  // namespace qblocks

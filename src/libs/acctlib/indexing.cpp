@@ -151,23 +151,4 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     LOG_INFO(cYellow, "  ", os.str(), " binary file created: ", greenCheck, cOff);
 }
 
-//--------------------------------------------------------------------------------
-void loadHashes(CIndexHashMap& map, const string_q& which) {
-    string_q hashFn = configPath("ipfs-hashes/" + which + ".txt");
-    if (!fileExists(hashFn)) {
-        cerr << "Hash file (" << hashFn << ") not found." << endl;
-    } else {
-        string_q contents = asciiFileToString(hashFn);
-        CStringArray lines;
-        explode(lines, contents, '\n');
-        for (auto line : lines) {
-            line = substitute(substitute(line, ".bin", ""), ".bloom", "");
-            CStringArray parts;
-            explode(parts, line, ' ');
-            blknum_t num = str_2_Uint(nextTokenClear(parts[2], '-'));
-            map[num] = CIndexChunk(parts[1]);
-        }
-    }
-}
-
 }  // namespace qblocks

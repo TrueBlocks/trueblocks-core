@@ -158,8 +158,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
     } else {
-        loadHashes(indexHashes, "finalized");
-        loadHashes(bloomHashes, "blooms");
+        loadPins(bloomHashes, indexHashes);
     }
     HIDE_FIELD(CChainCache, "max_depth");
 

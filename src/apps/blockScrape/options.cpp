@@ -16,8 +16,8 @@ static const COption params[] = {
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption("pin", "p", "", OPT_SWITCH, "pin newly created chunks (and blooms) to Pinata (available only when scraping)"),  // NOLINT
-    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "show a list of all previously pinned chunks and blooms (precludes other options)"),  // NOLINT
+    COption("pin", "p", "", OPT_SWITCH, "pin newly created chunks (and blooms) to Pinata (available only when scraping, requires API key)"),  // NOLINT
+    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "show a list of all previously pinned chunks and blooms (precludes other options, requires API key)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -30,7 +30,7 @@ extern bool isAlreadyRunning(const string_q& progName);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
-    
+
     if (!standardOptions(command))
         return false;
 
@@ -114,6 +114,12 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
+    if (listpins || pin) {
+        if (!hasPinataKeys()) {
+            return usage("In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. Quitting...");
+        }
+    }
+
     CBlock latestBlock;
     getBlock_light(latestBlock, "latest");
     latestBlockTs = latestBlock.timestamp;
@@ -134,7 +140,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         LOG_INFO("Writing index...");
         writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
-        if (false) { //pin) {
+        if (pin) {
             CPinnedItem pinRecord;
             pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
             ostringstream ps;
@@ -230,6 +236,12 @@ bool isAlreadyRunning(const string_q& progName) {
     replace(pList, "`", "");           // remove ourselves
     size_t count = countOf(pList, '`');
     return count > 0;
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::hasPinataKeys(void) {
+    string_q unused1, unused2;
+    return getPinataKeys(unused1, unused2);
 }
 
 //--------------------------------------------------------------------------------

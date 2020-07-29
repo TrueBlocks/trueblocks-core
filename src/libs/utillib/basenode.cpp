@@ -545,6 +545,11 @@ void CBaseNode::doExport(ostream& os) const {
     if (!pClass)
         return;
 
+    if (pClass->fieldList.size() == 0) {
+        cerr << "Class '" << pClass->m_ClassName << "' has no fields. Is it registered?" << endl;
+        return;
+    }
+
     string_q firstShowing;
     CFieldDataArray fields;
     map<string_q, bool> fieldMap;

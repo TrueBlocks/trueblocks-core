@@ -10,10 +10,8 @@
 //#define CLIENT 10480200
 //#define N_BLOCKS 100
 //#define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
-#define MAX_ROWS 5000
-//00
-#define CLIENT 20000
-//(client + 0)
+#define MAX_ROWS 1000000
+#define CLIENT (client + 0)
 #define N_BLOCKS (n_blocks + 0)
 #define THE_CMD "blaze scrape"
 
@@ -299,7 +297,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
         writeIndexAsBinary(binFile, consolidatedLines);
 
-        if (false) { //pin) {
+        if (pin) {
             CPinnedItem pinRecord;
             pinChunk(p1[1] + "-" + p2[1], pinRecord);
             ostringstream ps;
