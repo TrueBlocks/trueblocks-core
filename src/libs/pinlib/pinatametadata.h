@@ -140,6 +140,10 @@ extern CArchive& operator>>(CArchive& archive, CPinataMetadataArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPinataMetadataArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPinataMetadata& pin);
+extern CArchive& operator>>(CArchive& archive, CPinataMetadata& pin);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PINATAMETADATA;
 
 //---------------------------------------------------------------------------

@@ -23,8 +23,10 @@ import (
 )
 
 const (
+	// AddressLength = number of bytes of an address
+	AddressLength = 20
 	// MagicNumber is used to check data validity
-	MagicNumber = 3735928559 // deadbeef
+	MagicNumber = 3735928559 // deadbeef in hex
 	// HashLength = number of bytes in a HASH
 	HashLength = 32
 	// HeaderSize - size of Header Record
@@ -105,6 +107,7 @@ func convertTo2DStringArray(in []appearanceRecord) (out [][]string) {
 	return
 }
 
+// Execute The main executable function
 func Execute() {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")

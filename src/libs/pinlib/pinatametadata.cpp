@@ -249,6 +249,18 @@ bool CPinataMetadata::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CPinataMetadata& pin) {
+    pin.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CPinataMetadata& pin) {
+    pin.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CPinataMetadata& item) {
     // EXISTING_CODE

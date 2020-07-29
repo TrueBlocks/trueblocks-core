@@ -15,7 +15,8 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "utillib.h"
+#include "etherlib.h"
+#include "pinneditem.h"
 
 namespace qblocks {
 
@@ -23,33 +24,41 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinataRegion : public CBaseNode {
+class CPinReport : public CBaseNode {
   public:
-    string_q regionId;
-    string_q currentReplicationCount;
-    string_q desiredReplicationCount;
+    timestamp_t publishTs;
+    string_q fileName;
+    string_q indexFormat;
+    string_q bloomFormat;
+    hash_t prevHash;
+    string_q newBlockRange;
+    CPinnedItemArray newPins;
+    string_q prevBlockRange;
+    CPinnedItemArray prevPins;
 
   public:
-    CPinataRegion(void);
-    CPinataRegion(const CPinataRegion& pi);
-    virtual ~CPinataRegion(void);
-    CPinataRegion& operator=(const CPinataRegion& pi);
+    CPinReport(void);
+    CPinReport(const CPinReport& pi);
+    virtual ~CPinReport(void);
+    CPinReport& operator=(const CPinReport& pi);
 
-    DECLARE_NODE(CPinataRegion);
+    DECLARE_NODE(CPinReport);
+
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinataRegion& item) const;
-    bool operator!=(const CPinataRegion& item) const {
+    bool operator==(const CPinReport& item) const;
+    bool operator!=(const CPinReport& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CPinataRegion& v1, const CPinataRegion& v2);
-    friend ostream& operator<<(ostream& os, const CPinataRegion& item);
+    friend bool operator<(const CPinReport& v1, const CPinReport& v2);
+    friend ostream& operator<<(ostream& os, const CPinReport& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinataRegion& pi);
+    void duplicate(const CPinReport& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,14 +66,14 @@ class CPinataRegion : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinataRegion::CPinataRegion(void) {
+inline CPinReport::CPinReport(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinataRegion::CPinataRegion(const CPinataRegion& pi) {
+inline CPinReport::CPinReport(const CPinReport& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(pi);
@@ -74,45 +83,57 @@ inline CPinataRegion::CPinataRegion(const CPinataRegion& pi) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinataRegion::~CPinataRegion(void) {
+inline CPinReport::~CPinReport(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataRegion::clear(void) {
+inline void CPinReport::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataRegion::initialize(void) {
+inline void CPinReport::initialize(void) {
     CBaseNode::initialize();
 
-    regionId = "";
-    currentReplicationCount = "";
-    desiredReplicationCount = "";
+    publishTs = 0;
+    fileName = "";
+    indexFormat = "";
+    bloomFormat = "";
+    prevHash = "";
+    newBlockRange = "";
+    newPins.clear();
+    prevBlockRange = "";
+    prevPins.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataRegion::duplicate(const CPinataRegion& pi) {
+inline void CPinReport::duplicate(const CPinReport& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
-    regionId = pi.regionId;
-    currentReplicationCount = pi.currentReplicationCount;
-    desiredReplicationCount = pi.desiredReplicationCount;
+    publishTs = pi.publishTs;
+    fileName = pi.fileName;
+    indexFormat = pi.indexFormat;
+    bloomFormat = pi.bloomFormat;
+    prevHash = pi.prevHash;
+    newBlockRange = pi.newBlockRange;
+    newPins = pi.newPins;
+    prevBlockRange = pi.prevBlockRange;
+    prevPins = pi.prevPins;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinataRegion& CPinataRegion::operator=(const CPinataRegion& pi) {
+inline CPinReport& CPinReport::operator=(const CPinReport& pi) {
     duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,7 +141,7 @@ inline CPinataRegion& CPinataRegion::operator=(const CPinataRegion& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinataRegion::operator==(const CPinataRegion& item) const {
+inline bool CPinReport::operator==(const CPinReport& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -128,7 +149,7 @@ inline bool CPinataRegion::operator==(const CPinataRegion& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinataRegion& v1, const CPinataRegion& v2) {
+inline bool operator<(const CPinReport& v1, const CPinReport& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -136,16 +157,16 @@ inline bool operator<(const CPinataRegion& v1, const CPinataRegion& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinataRegion> CPinataRegionArray;
-extern CArchive& operator>>(CArchive& archive, CPinataRegionArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinataRegionArray& array);
+typedef vector<CPinReport> CPinReportArray;
+extern CArchive& operator>>(CArchive& archive, CPinReportArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinReportArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinataRegion& pin);
-extern CArchive& operator>>(CArchive& archive, CPinataRegion& pin);
+extern CArchive& operator<<(CArchive& archive, const CPinReport& pin);
+extern CArchive& operator>>(CArchive& archive, CPinReport& pin);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINATAREGION;
+extern const char* STR_DISPLAY_PINREPORT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

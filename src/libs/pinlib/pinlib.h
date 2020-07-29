@@ -11,12 +11,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
+#include "acctlib.h"
 
 #include "pinneditem.h"
 #include "pinatalist.h"
 #include "pinatapin.h"
 #include "pinutils.h"
+#include "pinreport.h"
 
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);

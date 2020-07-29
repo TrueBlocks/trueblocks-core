@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "pinatapin.h"
+#include "pinreport.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinataPin, CBaseNode);
+IMPLEMENT_NODE(CPinReport, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinatapinChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinatapinChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinreportChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinreportChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinataPin::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinReport::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinatapin_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinreport_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CPinataPin::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinatapinChunk, this);
+        ctx << getNextChunk(fmt, nextPinreportChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatapinChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinreportChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinataPin*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinReport*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextPinatapinChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinataPin::getValueByName(const string_q& fieldName) const {
+string_q CPinReport::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinatapinChunk_custom(fieldName, this);
+    string_q ret = nextPinreportChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -70,52 +70,61 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "date_pinned") {
-                return date_pinned;
+        case 'b':
+            if (fieldName % "bloomFormat") {
+                return bloomFormat;
             }
-            if (fieldName % "date_unpinned") {
-                return date_unpinned;
+            break;
+        case 'f':
+            if (fieldName % "fileName") {
+                return fileName;
             }
             break;
         case 'i':
-            if (fieldName % "id") {
-                return id;
-            }
-            if (fieldName % "ipfs_pin_hash") {
-                return ipfs_pin_hash;
+            if (fieldName % "indexFormat") {
+                return indexFormat;
             }
             break;
-        case 'm':
-            if (fieldName % "metadata") {
-                if (metadata == CPinataMetadata())
-                    return "{}";
-                return metadata.Format();
+        case 'n':
+            if (fieldName % "newBlockRange") {
+                return newBlockRange;
             }
-            break;
-        case 'r':
-            if (fieldName % "regions" || fieldName % "regionsCnt") {
-                size_t cnt = regions.size();
+            if (fieldName % "newPins" || fieldName % "newPinsCnt") {
+                size_t cnt = newPins.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
-                    retS += regions[i].Format();
+                    retS += newPins[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
             }
             break;
-        case 's':
-            if (fieldName % "size") {
-                return uint_2_Str(size);
+        case 'p':
+            if (fieldName % "publishTs") {
+                return ts_2_Str(publishTs);
             }
-            break;
-        case 'u':
-            if (fieldName % "user_id") {
-                return user_id;
+            if (fieldName % "prevHash") {
+                return hash_2_Str(prevHash);
+            }
+            if (fieldName % "prevBlockRange") {
+                return prevBlockRange;
+            }
+            if (fieldName % "prevPins" || fieldName % "prevPinsCnt") {
+                size_t cnt = prevPins.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += prevPins[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
         default:
@@ -125,21 +134,12 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("metadata")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = metadata.getValueByName(f);
-        return f;
-    }
-
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -147,51 +147,59 @@ bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "date_pinned") {
-                date_pinned = fieldValue;
+        case 'b':
+            if (fieldName % "bloomFormat") {
+                bloomFormat = fieldValue;
                 return true;
             }
-            if (fieldName % "date_unpinned") {
-                date_unpinned = fieldValue;
+            break;
+        case 'f':
+            if (fieldName % "fileName") {
+                fileName = fieldValue;
                 return true;
             }
             break;
         case 'i':
-            if (fieldName % "id") {
-                id = fieldValue;
-                return true;
-            }
-            if (fieldName % "ipfs_pin_hash") {
-                ipfs_pin_hash = fieldValue;
+            if (fieldName % "indexFormat") {
+                indexFormat = fieldValue;
                 return true;
             }
             break;
-        case 'm':
-            if (fieldName % "metadata") {
-                return metadata.parseJson3(fieldValue);
+        case 'n':
+            if (fieldName % "newBlockRange") {
+                newBlockRange = fieldValue;
+                return true;
             }
-            break;
-        case 'r':
-            if (fieldName % "regions") {
-                CPinataRegion item;
+            if (fieldName % "newPins") {
+                CPinnedItem item;
                 string_q str = fieldValue;
                 while (item.parseJson3(str)) {
-                    regions.push_back(item);
-                    item = CPinataRegion();  // reset
+                    newPins.push_back(item);
+                    item = CPinnedItem();  // reset
                 }
                 return true;
             }
             break;
-        case 's':
-            if (fieldName % "size") {
-                size = str_2_Uint(fieldValue);
+        case 'p':
+            if (fieldName % "publishTs") {
+                publishTs = str_2_Ts(fieldValue);
                 return true;
             }
-            break;
-        case 'u':
-            if (fieldName % "user_id") {
-                user_id = fieldValue;
+            if (fieldName % "prevHash") {
+                prevHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            if (fieldName % "prevBlockRange") {
+                prevBlockRange = fieldValue;
+                return true;
+            }
+            if (fieldName % "prevPins") {
+                CPinnedItem item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    prevPins.push_back(item);
+                    item = CPinnedItem();  // reset
+                }
                 return true;
             }
             break;
@@ -202,13 +210,13 @@ bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinataPin::finishParse() {
+void CPinReport::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataPin::Serialize(CArchive& archive) {
+bool CPinReport::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -220,39 +228,41 @@ bool CPinataPin::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> id;
-    archive >> ipfs_pin_hash;
-    archive >> size;
-    archive >> user_id;
-    archive >> date_pinned;
-    archive >> date_unpinned;
-    archive >> metadata;
-    archive >> regions;
+    archive >> publishTs;
+    archive >> fileName;
+    archive >> indexFormat;
+    archive >> bloomFormat;
+    archive >> prevHash;
+    archive >> newBlockRange;
+    archive >> newPins;
+    archive >> prevBlockRange;
+    archive >> prevPins;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataPin::SerializeC(CArchive& archive) const {
+bool CPinReport::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << id;
-    archive << ipfs_pin_hash;
-    archive << size;
-    archive << user_id;
-    archive << date_pinned;
-    archive << date_unpinned;
-    archive << metadata;
-    archive << regions;
+    archive << publishTs;
+    archive << fileName;
+    archive << indexFormat;
+    archive << bloomFormat;
+    archive << prevHash;
+    archive << newBlockRange;
+    archive << newPins;
+    archive << prevBlockRange;
+    archive << prevPins;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataPinArray& array) {
+CArchive& operator>>(CArchive& archive, CPinReportArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -264,7 +274,7 @@ CArchive& operator>>(CArchive& archive, CPinataPinArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataPinArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinReportArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -273,40 +283,41 @@ CArchive& operator<<(CArchive& archive, const CPinataPinArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinataPin::registerClass(void) {
+void CPinReport::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinataPin, "schema"))
+    if (HAS_FIELD(CPinReport, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinataPin, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinataPin, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataPin, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataPin, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "id", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "ipfs_pin_hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "size", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CPinataPin, "user_id", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "date_pinned", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "date_unpinned", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "metadata", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CPinataPin, "regions", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPinReport, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinReport, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinReport, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinReport, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "publishTs", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CPinReport, "fileName", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "indexFormat", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "bloomFormat", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "prevHash", T_HASH, ++fieldNum);
+    ADD_FIELD(CPinReport, "newBlockRange", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPinReport, "prevBlockRange", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "prevPins", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinataPin, "schema");
-    HIDE_FIELD(CPinataPin, "deleted");
-    HIDE_FIELD(CPinataPin, "showing");
-    HIDE_FIELD(CPinataPin, "cname");
+    HIDE_FIELD(CPinReport, "schema");
+    HIDE_FIELD(CPinReport, "deleted");
+    HIDE_FIELD(CPinReport, "showing");
+    HIDE_FIELD(CPinReport, "cname");
 
-    builtIns.push_back(_biCPinataPin);
+    builtIns.push_back(_biCPinReport);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatapinChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinataPin* pin = reinterpret_cast<const CPinataPin*>(dataPtr);
+string_q nextPinreportChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinReport* pin = reinterpret_cast<const CPinReport*>(dataPtr);
     if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -328,7 +339,7 @@ string_q nextPinatapinChunk_custom(const string_q& fieldIn, const void* dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CPinataPin::readBackLevel(CArchive& archive) {
+bool CPinReport::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -336,19 +347,19 @@ bool CPinataPin::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataPin& pin) {
+CArchive& operator<<(CArchive& archive, const CPinReport& pin) {
     pin.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataPin& pin) {
+CArchive& operator>>(CArchive& archive, CPinReport& pin) {
     pin.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataPin& item) {
+ostream& operator<<(ostream& os, const CPinReport& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -358,16 +369,21 @@ ostream& operator<<(ostream& os, const CPinataPin& item) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "metadata")
-        return &metadata;
-    if (fieldName % "regions" && index < regions.size())
-        return &regions[index];
+const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "newPins" && index < newPins.size())
+        return &newPins[index];
+    if (fieldName % "prevPins" && index < prevPins.size())
+        return &prevPins[index];
     return NULL;
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINATAPIN = "";
+const char* STR_DISPLAY_PINREPORT =
+    "[{PUBLISHTS}]\t"
+    "[{FILENAME}]\t"
+    "[{PREVHASH}]\t"
+    "[{NEWPINS}]\t"
+    "[{PREVPINS}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

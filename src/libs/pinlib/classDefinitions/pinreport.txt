@@ -1,0 +1,14 @@
+[settings]
+class = CPinReport
+fields = timestamp publishTs|\
+        string fileName|\
+        string indexFormat|\
+        string bloomFormat|\
+        hash prevHash|\
+        string newBlockRange|\
+        CPinnedItemArray newPins|\
+        string prevBlockRange|\
+        CPinnedItemArray prevPins
+includes = etherlib.h|pinneditem.h
+serializable = true
+display_str = publishTs, fileName, prevHash, newPins, prevPins

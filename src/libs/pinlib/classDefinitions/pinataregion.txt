@@ -5,3 +5,4 @@ fields = string regionId|\
         string desiredReplicationCount
 includes = utillib.h
 cpp_includes =
+serializable = true

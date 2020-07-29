@@ -20,6 +20,7 @@ void pinlib_init(QUITHANDLER qh) {
     CPinataList::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();
+    CPinReport::registerClass();
 }
 
 //-------------------------------------------------------------------------

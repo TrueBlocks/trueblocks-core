@@ -10,3 +10,4 @@ fields = string id|\
         CPinataRegionArray regions
 includes = utillib.h|pinatametadata.h|pinataregion.h
 cpp_includes =
+serializable = true

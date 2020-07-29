@@ -17,11 +17,19 @@
  */
 #include "pinlib.h"
 
-extern bool ipfsExists(void);
+namespace qblocks {
 
+extern bool ipfsExists(void);
 extern bool findChunk(const string_q& fileName, CPinnedItem& item);
 extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
 extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
 extern bool listPins(string_q& result);
 extern bool getChunk(const string_q& fileName, CPinnedItem& item);
 extern bool unpinChunkByHash(const string_q& hash);
+extern void loadPins(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
+extern bool getPinataKeys(string_q& apiKey, string_q& secret);
+
+typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
+extern bool forEveryPin(PINFUNC func, void* data);
+
+}  // namespace qblocks

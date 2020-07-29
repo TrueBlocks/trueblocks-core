@@ -141,6 +141,10 @@ extern CArchive& operator>>(CArchive& archive, CPinataListArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPinataListArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPinataList& pin);
+extern CArchive& operator>>(CArchive& archive, CPinataList& pin);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PINATALIST;
 
 //---------------------------------------------------------------------------

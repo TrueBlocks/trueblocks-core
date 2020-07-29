@@ -160,6 +160,10 @@ extern CArchive& operator>>(CArchive& archive, CPinataPinArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPinataPinArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPinataPin& pin);
+extern CArchive& operator>>(CArchive& archive, CPinataPin& pin);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PINATAPIN;
 
 //---------------------------------------------------------------------------

@@ -5,8 +5,8 @@ fields = string fileName|\
         string bloomHash|\
         string indexHash
 includes = utillib.h
+cpp_includes =
 sort = v1.fileName < v2.fileName
 equals = fileName == item.fileName
-serialize = true
-cpp_includes =
+serializable = true
 display_str = fileName, uploadTs, bloomHash, indexHash

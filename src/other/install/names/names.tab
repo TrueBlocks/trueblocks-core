@@ -1073,6 +1073,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x280dcb84bb08381968fe62af5ec5ba15d5bb834b	Flora		DevCon2 Token Contract			false	false	false
 90-DevCon2:Individual	0x281c329f1cddc54de2bdc648ea54878781a74415	jesse.eth		DevCon2 Token Contract			false	false	false
 31-Gitcoin Grants:Friends	0x282e6ab2abb949505d3964d799c873c773d520c7	developerkevin		Gitcoin Website			false	false	false
+34-ENS	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	ENS: ETH Registrar Controller		Etherscan			false	false	false
 34-Humanity DAO	0x283eec5a3eb0caa4dd00d33e7ad7fd57115e199d	ChuckChain		https://www.humanitydao.org/humans			false	false	false
 30-Contracts	0x2840411594cffef97df411bf5f0dbf042fef6d21	Totle 0x Wrapper		0xTracker			false	false	false
 30-Contracts	0x284620b56318d18db45e40614556b9cb1d0dd92b	Arbitrage Bot		0xTracker			false	false	false
@@ -2584,7 +2585,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x662d5d79849113a5403af776210307a7c82a5267	Grant 245 Stackbrief					false	false	false
 81-Other	0x66342e803943929dc47bca1d625f42c7c725b049	Etherlist_Top		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0x66382ac45b6d8cb4f47685e28b61fbb5486817ec	loganbek		Gitcoin Website			false	false	false
-31-Gitcoin Grants:Grant	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 Week In Ethereum News evanvannesseth		https://gitcoin.co/grants/237/week-in-ethereum-news			false	false	false
 91-Friends	0x663d3947f03ef5b387992b880ac85940057c13e3	evan.ethereum.eth		Etherscan			false	false	false
 30-Contracts	0x6646d0a32d6b9c1d1a7389a6b8da7e5fd780f316	Genesis ContributionReward		Etherscan			false	false	false
 81-Other	0x664a2f27c4b6a778c5fac601ba2afc1d4d1adca4	Lastisme		Etherscan.io			false	false	false
@@ -3654,7 +3654,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x92ab1f32771e67172a00f1e1a78286355b0cdc80	Totle Bancor Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0x92c107f369710c625c7574e88a21dfb305263dd2	0xstark		https://www.humanitydao.org/humans			false	false	false
 60-Airdrops	0x92ca643fe78ea22c89c13caed410fec7425ee6fc	VIN Airdrop	VIN	TrueBlocks.io			false	false	false
-30-Contracts	0x91b9d2835ad914bc1dcfe09bd1816febd04fd689	GU: Capped Vault		Etherscan			false	false	false
 30-Contracts	0x92e1121149ac6c71a00555d62e41054910495616	GU: Atlas Belt		Etherscan			false	false	false
 50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH	On Chain	8	Aims to build a global network of retail and individual converters providing cash to digital conversions to and from our ecosystem, helping people worldwide to unbank.	false	false	false
 50-Tokens:ERC20	0x92e78dae1315067a8819efd6dca432de9dcde2e9	Veros	VRS	On Chain	6		false	false	false

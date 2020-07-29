@@ -12,6 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "pinutils.h"
 
+namespace qblocks {
+
 static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
@@ -80,7 +82,7 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     if (!findChunk(fileName, copy)) {
         item = copy;
         item.fileName = fileName;
-        //return true;
+        // return true;
     }
 
     CPinnedItemArray array;
@@ -126,18 +128,31 @@ bool getChunk(const string_q& fileName, CPinnedItem& item) {
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
     if (!findChunk(fileName, item)) {
-        //return true;
+        // return true;
     }
 
     // clang-format off
     string_q cmd = "curl \"https://ipfs.io/ipfs/" + item.indexHash + "\" --output " + fileName + ".bin.gz ; ";
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    cmd = " gunzip *";
+    cmd = " gunzip *.gz";
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     cmd = "mv " + fileName + ".bin " + indexFolder_finalized + fileName + ".bin";
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool forEveryPin(PINFUNC func, void* data) {
+    if (!func)
+        return false;
+    if (!readPins())
+        return false;
+    for (auto pin : pins) {
+        if (!(*func)(pin, data))
+            return false;
+    }
     return true;
 }
 
@@ -162,7 +177,7 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 }
 
 //----------------------------------------------------------------
-static bool getApiKeys(string_q& apiKey, string_q&secret) {
+bool getPinataKeys(string_q& apiKey, string_q& secret) {
     apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
     if (apiKey == "<notset>")
         return false;
@@ -179,7 +194,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     LOG4("Starting pin");
 
     string_q apiKey, secret;
-    if (!getApiKeys(apiKey, secret)) {
+    if (!getPinataKeys(apiKey, secret)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -228,7 +243,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    //LOG4("Finishing pin: ", result);
+    // LOG4("Finishing pin: ", result);
     LOG4("Finishing pin");
     return result;
 }
@@ -238,27 +253,28 @@ static string_q unpinOneFile(const string_q& hash) {
     LOG4("Starting unpin");
 
     string_q apiKey, secret;
-    if (!getApiKeys(apiKey, secret)) {
+    if (!getPinataKeys(apiKey, secret)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
 
     string_q result;
-    CURL *curl;
+    CURL* curl;
     curl = curl_easy_init();
-    if(curl) {
+    if (curl) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist *headers = NULL;
+        struct curl_slist* headers = NULL;
         headers = curl_slist_append(headers, "pinata_api_key: 4586b0cfbb404d87be6e");
-        headers = curl_slist_append(headers, "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858");
+        headers = curl_slist_append(
+            headers, "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858");
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-	CURLcode res = curl_easy_perform(curl);
+        CURLcode res = curl_easy_perform(curl);
         if (res != 0) {
             result += curl_easy_strerror(res);
         }
@@ -273,26 +289,28 @@ bool listPins(string& result) {
     LOG4("Starting list");
 
     string_q apiKey, secret;
-    if (!getApiKeys(apiKey, secret)) {
+    if (!getPinataKeys(apiKey, secret)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return false;
     }
 
     result.clear();
-    CURL *curl;
+    CURL* curl;
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+        // TODO(tjayrush): this has pagination, I just didn't notice it
         curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/data/pinList?status=pinned");
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist *headers = NULL;
+        struct curl_slist* headers = NULL;
         headers = curl_slist_append(headers, "pinata_api_key: 4586b0cfbb404d87be6e");
-        headers = curl_slist_append(headers, "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858");
+        headers = curl_slist_append(
+            headers, "pinata_secret_api_key: 9989d172ecb411ed57017501105ee2f8da832330470ae03cdc76157d165fc858");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-	CURLcode res = curl_easy_perform(curl);
+        CURLcode res = curl_easy_perform(curl);
         if (res != 0) {
             result += curl_easy_strerror(res);
         }
@@ -400,3 +418,16 @@ static bool readPins(void) {
     }
     return true;
 }
+
+//--------------------------------------------------------------------------------
+void loadPins(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+    if (!readPins())
+        return;
+    for (auto pin : pins) {
+        blknum_t num = str_2_Uint(pin.fileName);
+        bloomMap[num] = pin.bloomHash;
+        indexMap[num] = pin.indexHash;
+    }
+}
+
+}  // namespace qblocks

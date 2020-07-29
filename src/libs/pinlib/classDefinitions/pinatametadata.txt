@@ -3,5 +3,5 @@ class = CPinataMetadata
 fields = string name|\
     CKeyValueArray keyvalues
 includes = utillib.h
-serialize = true
 cpp_includes =
+serializable = true

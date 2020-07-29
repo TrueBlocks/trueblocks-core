@@ -144,6 +144,10 @@ extern CArchive& operator>>(CArchive& archive, CPinnedItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPinnedItemArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPinnedItem& pin);
+extern CArchive& operator>>(CArchive& archive, CPinnedItem& pin);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PINNEDITEM;
 
 //---------------------------------------------------------------------------

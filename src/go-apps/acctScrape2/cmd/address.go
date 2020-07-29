@@ -5,15 +5,10 @@ import (
 	"encoding/hex"
 )
 
-const (
-	// AddressLength = number of bytes of an address
-	AddressLength = 20
-)
-
 // Address is 20 bytes
 type Address [AddressLength]byte
 
-
+// Compare Compares two addresses
 func (a Address) Compare(b Address) int {
 	return bytes.Compare(a[:], b[:])
 }
@@ -25,6 +20,7 @@ func (a *Address) setBytes(b []byte) {
 	copy(a[AddressLength-len(b):], b)
 }
 
+// NewAddressFromHex Converts a hex string to an address
 func NewAddressFromHex(hexString string) (newAddress Address, err error) {
 	if hexString[:2] == "0x" {
 		hexString = hexString[2:]
