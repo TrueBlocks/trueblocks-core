@@ -114,10 +114,10 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (listpins || pin) {
-        if (!hasPinataKeys()) {
-            return usage("In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. Quitting...");
-        }
+    if ((listpins || pin) && !hasPinataKeys()) {
+        return usage(
+            "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. "
+            "Quitting...");
     }
 
     CBlock latestBlock;
