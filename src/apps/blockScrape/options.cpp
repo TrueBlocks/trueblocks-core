@@ -16,8 +16,8 @@ static const COption params[] = {
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption("pin", "p", "", OPT_SWITCH, "pin newly created chunks (and blooms) to Pinata (available only when scraping, requires API key)"),  // NOLINT
-    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "show a list of all previously pinned chunks and blooms (precludes other options, requires API key)"),  // NOLINT
+    COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires API key)"),
+    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
     // END_CODE_OPTIONS

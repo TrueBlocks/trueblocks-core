@@ -8,12 +8,12 @@ blockScrape --n_addr_procs -12
 
   Where:  
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
-	-p  (--pin)           pin newly created chunks (and blooms) to Pinata (available only when scraping, requires API key)
+	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires API key)
 
 #### Hidden options (shown during testing only)
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
-	-l  (--listpins)      show a list of all previously pinned chunks and blooms (precludes other options, requires API key)
+	-l  (--listpins)      list pins (precludes other options, requires API key)
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

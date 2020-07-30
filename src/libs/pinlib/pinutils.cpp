@@ -18,7 +18,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
 static bool writePins(const CPinnedItemArray& array, bool writeAscii);
-static bool readPins(bool required=false);
+static bool readPins(bool required = false);
 
 //---------------------------------------------------------------------------
 static CPinnedItemArray pins;
@@ -385,7 +385,7 @@ static bool readPins(bool required) {
 
     } else if (!fileExists(textFile)) {
         if (required) {
-            LOG_ERR(Pins file is required, but not found. Quitting...");
+            LOG_ERR("Pins file is required, but not found. Quitting...");
             return false;
         }
         return true;
