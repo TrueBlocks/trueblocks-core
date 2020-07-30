@@ -31,10 +31,6 @@ project (quickBlocks)
 # message(DEBUG  "Building src")
 
 # ----------------------------------------------------------------------------------------
-# Add support for building some go programs
-include(other/build_assets/GolangSimple.cmake)
-
-# ----------------------------------------------------------------------------------------
 # Allow targets in cascade
 set_property (GLOBAL PROPERTY ALLOW_DUPLICATE_CUSTOM_TARGETS 1)
 
