@@ -14,7 +14,7 @@
 
 //-------------------------------------------------------------------------
 void pinlib_init(QUITHANDLER qh) {
-    etherlib_init(qh);
+    acctlib_init(qh);
     CPinnedItem::registerClass();
     CPinataPin::registerClass();
     CPinataList::registerClass();
@@ -25,5 +25,5 @@ void pinlib_init(QUITHANDLER qh) {
 
 //-------------------------------------------------------------------------
 void pinlib_cleanup(void) {
-    etherlib_cleanup();
+    acctlib_cleanup();
 }

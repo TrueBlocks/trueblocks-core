@@ -3,15 +3,17 @@ blockScrape --junk
 
   Invalid option: --junk
 
-  Usage:    blockScrape [-n|-v|-h]  
+  Usage:    blockScrape [-n|-p|-v|-h]  
   Purpose:  Decentralized blockchain scraper and block cache.
 
   Where:  
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
+	-p  (--pin)           pin newly created chunks (and blooms) to Pinata (available only when scraping, requires API key)
 
 #### Hidden options (shown during testing only)
-	-p  (--n_block_procs <num>)number of block channels for blaze
+	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
+	-l  (--listpins)      show a list of all previously pinned chunks and blooms (precludes other options, requires API key)
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

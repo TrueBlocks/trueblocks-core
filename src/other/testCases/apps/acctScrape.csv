@@ -21,3 +21,5 @@ on, both, fast, list, apps/acctScrape, list_prefund2,    y, addrs = 0x001d14804b
 on, both, fast, list, apps/acctScrape, list_prefund3,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
 
 on, cmd,  slow, list, apps/acctScrape, list_speed_test,  y, addrs = 0x1234567890123456789012345678901234567890 & end = 7000000
+
+on, cmd,  slow, list, apps/acctScrape, list_seed_1,      y, addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 10296792

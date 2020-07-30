@@ -30,7 +30,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On Chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false
 50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA	On Chain	8	AN Ethereum Token Backed Micro Macro Freelance Marketplace.	false	false	false
 60-Airdrops	0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6	HEX Airdrop Sender	HEX	Etherscan			false	false	false
+91-Friends	0x0c3239e2e841242db989a61518c22247e8c55208	Name 0x0c3239e2		Etherscan			false	false	false
 36-Compound	0x0c3f8df27e1a00b47653fde878d68d35f00714c0	Compound: 200bps_Slope1000bps		Etherscan			false	false	false
+30-Contracts	0x0c7cf86188632e16af00415214155950684466a8	Axie Egg Coin	AEC	Etherscan			false	false	false
 50-Tokens	0x0d88ed6e74bbfd96b831231638b66c05571e824f	AVT	AVT	Etherscan.io		An open-source protocol that delivers the global standard for ticketing.	false	false	false
 31-Gitcoin Grants:Grant	0x0df05adac0159e215111696339ad4998e5871b3d	Grant 576 BlockScout.com for Ethereum Mainnet hosting		https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting		https://blockscout.com/eth/mainnet	false	false	false
 50-Tokens:ERC20	0x0f5d2fb29fb7d3cfee444a200298f468908cc942	Decentraland MANA	MANA	On Chain	18	Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications	false	false	false
@@ -61,6 +63,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x22365168c8705e95b2d08876c23a8c13e3ad72e2	GU: Tournament Pass		Etherscan			false	false	false
 34-ENS	0x226159d592e2b063810a10ebf6dcbada94ed68b8	ENS: Old Public Resolver 2		Etherscan			false	false	false
 50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET	On Chain	18	RoBet is an Ethereum based sportsbook platform regulated by smart contracts.	false	false	false
+30-Contracts	0x23850f3e6f760b92491892a5a3772e7fc000adf1	Uniswap: ORB 2		Etherscan			false	false	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On Chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false
 31-Gitcoin Grants:Grant	0x24e8bb6a37774d8a0187e196beb29601ed5920bf	Grant 348 EtherLoans undercollateralized loans unstoppable DeFi		https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d		https://www.etherloans.io/	false	false	false
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On Chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false
@@ -70,6 +73,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 35-Pool Together	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1		Etherscan			false	false	false
 50-Tokens:ERC20	0x27dce1ec4d3f72c3e457cc50354f1f975ddef488	AirToken	AIR	On Chain	8	AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees.	false	false	false
 50-Tokens:ERC20	0x27f706edde3ad952ef647dd67e24e38cd0803dd6	Useless Ethereum Token	UET	On Chain	18	The world's first 100% honest Ethereum ICO.	false	false	false
+34-ENS	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	ENS: ETH Registrar Controller		Etherscan			false	false	false
 50-Tokens	0x28b5e12cce51f15594b0b91d5b5adaa70f684a02	NapoleonX	NPX	Etherscan.io			false	false	false
 50-Tokens	0x28c8d01ff633ea9cd8fc6a451d7457889e698de6	Ethereum Gold	ETG	Etherscan.io		Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.	false	false	false
 35-Pool Together	0x29fe7d60ddf151e5b52e5fab4f1325da6b2bd958	Pool Dai MCDAwarePool v0.2.12		Etherscan			false	false	false
@@ -89,6 +93,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x32cefb2dc869bbfe636f7547cda43f561bf88d5a	Grant 152 Ethereum For Farsi Speaking Population					false	false	false
 50-Tokens:ERC20	0x33c623a2baafeb8d15dfaf3ce44095efec83d72c	SGPay Token	SGP	On Chain	18	SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.	false	false	false
 31-Gitcoin Grants:Grant	0x35ca7ae854338dcbc154066f0ea00b636d38e431	Grant 126 Humans of Ethereum		https://gitcoin.co/grants/126/humansofethereum			false	false	false
+30-Contracts	0x374026a48d777cb0ffdccdb9a919c0aa7ce8a0fc	Genesis Protocol		Etherscan			false	false	false
 31-Gitcoin Grants:Grant	0x38298ef8a8306579e21246d5227694b5560d9cb5	Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat		https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2			false	false	false
 50-Tokens	0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2	HPBCoin	HPB	Etherscan.io		HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications	false	false	false
 50-Tokens:ERC20	0x3918c42f14f2eb1168365f911f63e540e5a306b5	Neural Protocol	NRP	On Chain	8	NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.	false	false	false
@@ -152,7 +157,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ	Etherscan			false	false	false
 60-Airdrops	0x65d2c9da791d412d97874a879d427416502f2cd0	AGLD Airdrop Sender		Etherscan			false	false	false
 50-Tokens:ERC20	0x662abcad0b7f345ab7ffb1b1fbb9df7894f18e66	CarTaxi	CTX	On Chain	18	A blockchain platform based on Ethereum for automated service for car towing.	false	false	false
-31-Gitcoin Grants:Grant	0x663d3947f03ef5b387992b880ac85940057c13e3	Grant 237 Week In Ethereum News evanvannesseth		https://gitcoin.co/grants/237/week-in-ethereum-news			false	false	false
+91-Friends	0x663d3947f03ef5b387992b880ac85940057c13e3	Name 0x663d3947		Etherscan			false	false	false
+30-Contracts	0x6646d0a32d6b9c1d1a7389a6b8da7e5fd780f316	Genesis ContributionReward		Etherscan			false	false	false
 50-Tokens:ERC20	0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd	Verify Token	CRED	On Chain	18	A distributed reputation protocol built on the Ethereum blockchain.	false	false	false
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On Chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.	false	false	false
 31-Gitcoin Grants:Grant	0x68085e7f88e90fa9247489c83fab30b177ebccb3	Grant 030 Grant 082 Official Progpow Technical Audit Funding		https://gitcoin.co/grants/30/ethereum-all-core-devs-community-project-managem-2			false	false	false
@@ -194,9 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x7f1c9feb3a616cbda1ff474cfda802d8840df2af	Grant 826 0xChan Design an Ethereum Crypto Waifu		https://gitcoin.co/grants/826/0x-chan-design-an-ethereum-crypto-waifu		https://www.patreon.com/rootdraws	false	false	false
 30-Contracts	0x80391307f1b08cc068fa1d1b77513b98c36dfbfa	GU: Shiny Legendary Pack Two		Etherscan			false	false	false
 30-Contracts	0x80b3075410ee52c520dd203f60206f633d27a109	GU: Legendary Pack Three		Etherscan			false	false	false
-50-Tokens:ERC20	0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5	Kin	KIN	On Chain	18	The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market.	false	false	false
-50-Tokens:ERC20	0x826e62ea830b7943154cfa7317debad096125207	SingularDTV Sender 1		Etherscan			false	false	false
-60-Airdrops	0x83795ddfcda25819524e8849787d193b1dd51d3a	LPT Airdrop Sender		Etherscan			false	false	false
-50-Tokens	0x84119cb33e8f590d75c2d6ea4e6b0741a7494eda	Gigwatt Token	WTT	Etherscan.io		Full-service mining solution provider.	false	false	false
-30-Contracts	0x84487e50db6317e5e834d89d0e81fd873462ea47	GU: Epic Pack Three		Etherscan			false	false	false
-50-Tokens:ERC20	0x859a9c0b44cb7066d956a958b0b82e54c9e44b4b	iEthereum	iETH	On Chain	8	iEthereum aims to be a public Ethereum-based token for use in mainstream digital wallets, that enables real-time, peer-to-peer value exchange and payment services.	false	false	false
