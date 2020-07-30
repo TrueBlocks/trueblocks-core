@@ -12,78 +12,7 @@
       "is_scraping": false,
       "caches": [
         {
-          "items": [
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 41351,
-              "nAppearances": 500017,
-              "firstAppearance": 2986116,
-              "latestAppearance": 3012968,
-              "firstTs": 1484277812,
-              "latestTs": 1484659811,
-              "filename": "/--index-path--/002986116-003012968.bin",
-              "indexSizeBytes": 5158008,
-              "index_hash": "",
-              "bloomSizeBytes": 131080,
-              "bloom_hash": ""
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 41408,
-              "nAppearances": 500002,
-              "firstAppearance": 3012969,
-              "latestAppearance": 3039485,
-              "firstTs": 1484659813,
-              "latestTs": 1485038618,
-              "filename": "/--index-path--/003012969-003039485.bin",
-              "indexSizeBytes": 5159484,
-              "index_hash": "",
-              "bloomSizeBytes": 131080,
-              "bloom_hash": ""
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 38949,
-              "nAppearances": 500006,
-              "firstAppearance": 3039486,
-              "latestAppearance": 3064476,
-              "firstTs": 1485038623,
-              "latestTs": 1485396031,
-              "filename": "/--index-path--/003039486-003064476.bin",
-              "indexSizeBytes": 5090664,
-              "index_hash": "",
-              "bloomSizeBytes": 131080,
-              "bloom_hash": ""
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 38454,
-              "nAppearances": 500000,
-              "firstAppearance": 3064477,
-              "latestAppearance": 3090505,
-              "firstTs": 1485396040,
-              "latestTs": 1485768828,
-              "filename": "/--index-path--/003064477-003090505.bin",
-              "indexSizeBytes": 5076756,
-              "index_hash": "",
-              "bloomSizeBytes": 131080,
-              "bloom_hash": ""
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 40275,
-              "nAppearances": 500000,
-              "firstAppearance": 3090506,
-              "latestAppearance": 3117476,
-              "firstTs": 1485768838,
-              "latestTs": 1486156334,
-              "filename": "/--index-path--/003090506-003117476.bin",
-              "indexSizeBytes": 5127744,
-              "index_hash": "",
-              "bloomSizeBytes": 131080,
-              "bloom_hash": ""
-            }
-          ],
+          "items": [],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,
@@ -121,6 +50,27 @@
           "is_valid": true
         },
         {
+          "addrs": [],
+          "items": [
+            {
+              "type": "CMonitorCacheItem",
+              "deleted": false,
+              "sizeInBytes2": 0,
+              "tags": "",
+              "address": "---address---",
+              "name": "",
+              "symbol": "",
+              "source": "",
+              "decimals": "0",
+              "description": "",
+              "is_custom": false,
+              "is_prefund": false,
+              "nAppearances": 18446744073709552000,
+              "firstAppearance": 18446744073709552000,
+              "latestAppearance": 18446744073709552000,
+              "sizeInBytes": 18446744073709552000
+            }
+          ],
           "type": "CNameCache",
           "path": "namesPath",
           "nFiles": 0,
@@ -224,59 +174,6 @@
         {
           "name": "is_valid",
           "type": "bool"
-        }
-      ]
-    },
-    {
-      "type": "CIndexCacheItem",
-      "fields": [
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "nAddresses",
-          "type": "unumber"
-        },
-        {
-          "name": "nAppearances",
-          "type": "unumber"
-        },
-        {
-          "name": "firstAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "firstTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "latestTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "filename",
-          "type": "text"
-        },
-        {
-          "name": "indexSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "index_hash",
-          "type": "ipfshash"
-        },
-        {
-          "name": "bloomSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "bloom_hash",
-          "type": "ipfshash"
         }
       ]
     },
@@ -389,6 +286,14 @@
     {
       "type": "CNameCache",
       "fields": [
+        {
+          "name": "addrs",
+          "type": "address|ts_array"
+        },
+        {
+          "name": "items",
+          "type": "object|ts_array"
+        },
         {
           "name": "type",
           "type": "text"

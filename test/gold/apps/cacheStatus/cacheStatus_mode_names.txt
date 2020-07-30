@@ -12,6 +12,11 @@ cacheStatus names
   "is_scraping": false,
   "caches": [
     {
+      "addrs": [
+        "--address--",
+        "--address--"
+      ],
+      "items": [],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

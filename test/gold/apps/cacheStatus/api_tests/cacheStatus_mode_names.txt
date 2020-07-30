@@ -12,6 +12,11 @@
       "is_scraping": false,
       "caches": [
         {
+          "addrs": [
+            "--address--",
+            "--address--"
+          ],
+          "items": [],
           "type": "CNameCache",
           "path": "namesPath",
           "nFiles": 0,
@@ -27,6 +32,14 @@
     {
       "type": "CNameCache",
       "fields": [
+        {
+          "name": "addrs",
+          "type": "address|ts_array"
+        },
+        {
+          "name": "items",
+          "type": "object|ts_array"
+        },
         {
           "name": "type",
           "type": "text"

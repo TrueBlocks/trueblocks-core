@@ -33,6 +33,11 @@ cacheStatus some
       "is_valid": true
     },
     {
+      "addrs": [
+        "--address--",
+        "--address--"
+      ],
+      "items": [],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

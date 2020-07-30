@@ -12,78 +12,7 @@ cacheStatus --details some --start 3000000 --end 3100000
   "is_scraping": false,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 41351,
-          "nAppearances": 500017,
-          "firstAppearance": 2986116,
-          "latestAppearance": 3012968,
-          "firstTs": 1484277812,
-          "latestTs": 1484659811,
-          "filename": "/--index-path--/002986116-003012968.bin",
-          "indexSizeBytes": 5158008,
-          "index_hash": "",
-          "bloomSizeBytes": 131080,
-          "bloom_hash": ""
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 41408,
-          "nAppearances": 500002,
-          "firstAppearance": 3012969,
-          "latestAppearance": 3039485,
-          "firstTs": 1484659813,
-          "latestTs": 1485038618,
-          "filename": "/--index-path--/003012969-003039485.bin",
-          "indexSizeBytes": 5159484,
-          "index_hash": "",
-          "bloomSizeBytes": 131080,
-          "bloom_hash": ""
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 38949,
-          "nAppearances": 500006,
-          "firstAppearance": 3039486,
-          "latestAppearance": 3064476,
-          "firstTs": 1485038623,
-          "latestTs": 1485396031,
-          "filename": "/--index-path--/003039486-003064476.bin",
-          "indexSizeBytes": 5090664,
-          "index_hash": "",
-          "bloomSizeBytes": 131080,
-          "bloom_hash": ""
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 38454,
-          "nAppearances": 500000,
-          "firstAppearance": 3064477,
-          "latestAppearance": 3090505,
-          "firstTs": 1485396040,
-          "latestTs": 1485768828,
-          "filename": "/--index-path--/003064477-003090505.bin",
-          "indexSizeBytes": 5076756,
-          "index_hash": "",
-          "bloomSizeBytes": 131080,
-          "bloom_hash": ""
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 40275,
-          "nAppearances": 500000,
-          "firstAppearance": 3090506,
-          "latestAppearance": 3117476,
-          "firstTs": 1485768838,
-          "latestTs": 1486156334,
-          "filename": "/--index-path--/003090506-003117476.bin",
-          "indexSizeBytes": 5127744,
-          "index_hash": "",
-          "bloomSizeBytes": 131080,
-          "bloom_hash": ""
-        }
-      ],
+      "items": [],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -121,6 +50,27 @@ cacheStatus --details some --start 3000000 --end 3100000
       "is_valid": true
     },
     {
+      "addrs": [],
+      "items": [
+        {
+          "type": "CMonitorCacheItem",
+          "deleted": false,
+          "sizeInBytes2": 0,
+          "tags": "",
+          "address": "---address---",
+          "name": "",
+          "symbol": "",
+          "source": "",
+          "decimals": 0,
+          "description": "",
+          "is_custom": false,
+          "is_prefund": false,
+          "nAppearances": 18446744073709551615,
+          "firstAppearance": 18446744073709551615,
+          "latestAppearance": 18446744073709551615,
+          "sizeInBytes": 18446744073709551615
+        }
+      ],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

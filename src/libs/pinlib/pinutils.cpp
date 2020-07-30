@@ -18,7 +18,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
 static bool writePins(const CPinnedItemArray& array, bool writeAscii);
-static bool readPins(void);
+static bool readPins(bool required = false);
 
 //---------------------------------------------------------------------------
 static CPinnedItemArray pins;
@@ -123,7 +123,7 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 
 //-------------------------------------------------------------------------
 bool getChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readPins())
+    if (!readPins(true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -364,7 +364,7 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
 }
 
 //---------------------------------------------------------------------------
-static bool readPins(void) {
+static bool readPins(bool required) {
     if (!pins.empty())
         return true;
 
@@ -377,13 +377,17 @@ static bool readPins(void) {
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
         if (!pinFile.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            cerr << "Could not open pin file for reading. Quitting..." << endl;
+            LOG_ERR("Could not open pin file for reading. Quitting...");
             return false;
         }
         pinFile >> pins;
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
+        if (required) {
+            LOG_ERR("Pins file is required, but not found. Quitting...");
+            return false;
+        }
         return true;
 
     } else {
