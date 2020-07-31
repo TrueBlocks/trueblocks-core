@@ -1123,8 +1123,10 @@ bool freshenTimestamps(blknum_t minBlock) {
     if (nRecords >= minBlock)
         return true;
 
-    if (fileExists(fn + ".lck"))  // it's being updated elsewhere
-        return true;
+    if (fileExists(fn + ".lck")) { // it's being updated elsewhere
+        LOG_ERR("Timestamp file (ts.bin) is locked. Cannot update.");
+        return false;
+    }
 
     CArchive file(WRITING_ARCHIVE);
     if (!file.Lock(fn, modeWriteAppend, LOCK_NOWAIT)) {

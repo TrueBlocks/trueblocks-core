@@ -3055,6 +3055,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x7995ab36bb307afa6a683c24a25d90dc1ea83566	HitchainCoin	HIT	On Chain	6		false	false	false
 81-Other	0x7996d791995b9f9c15eb4c3e899b09a344c54bdb	Gameofthrones		Etherscan.io			false	false	false
 34-Humanity DAO	0x79999370d02340bc8e3cf1c17b843696219a82e0	RenaudVal		https://www.humanitydao.org/humans			false	false	false
+30-Contracts	0x799ab1dd09d1a0012bf27b78ebd03f7a1256d5db	Weird Test Counter		TrueBlocks			false	false	false
 32-Kickback:Friends	0x79a9c9c0440147dc5c0251360a042f38f4d2a774	datumshane		https://kickback.events/			false	false	false
 32-Kickback:Friends	0x79b7307f4f7b1cb42fc1d88559683753ff9d0986	hellakatz		https://kickback.events/			false	false	false
 31-Gitcoin Grants:Friends	0x79c4213a328e3b4f1d87b4953c14759399db25e2	litodertechie		Gitcoin Website			false	false	false

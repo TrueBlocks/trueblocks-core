@@ -1,12 +1,24 @@
 package main
 
 import (
-	"os"
+	"fmt"
+	"log"
 
-	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/sendTx/cmd"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 func main() {
-	cmd.Execute()
-	os.Exit(0)
+	conn, err := ethclient.Dial("https://mainnet.infura.io/v3/bd294519b16b4967b4d647071088f473")
+	if err != nil {
+		log.Fatalf("Failed to connect: %v", err)
+	}
+
+	contract, err := NewUnchainedIndex(common.HexToAddress("0x50c8f8c71828e594a513cc540176822a57e597c2"), conn)
+	if err != nil {
+		log.Fatalf("Could not connect to contract: %v", err)
+	}
+
+	value, _ := contract.IndexHash(nil)
+	fmt.Println(value)
 }

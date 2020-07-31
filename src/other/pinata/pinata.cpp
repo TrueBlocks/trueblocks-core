@@ -11,8 +11,8 @@ int main(int argc, const char* argv[]) {
     report.fileName = "ipfs-hashes/pin-report.json";
     report.indexFormat = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2";
     report.bloomFormat = "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD";
-    report.newBlockRange = "000000000-010156360";
     forEveryPin(addPinToArray, &report.newPins);
+    report.newBlockRange = "000000000-010567003";
     report.prevHash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH";
     report.prevBlockRange = "";
     report.prevPins.clear();

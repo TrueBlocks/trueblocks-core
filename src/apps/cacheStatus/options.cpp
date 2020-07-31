@@ -232,6 +232,7 @@ COptions::COptions(void) {
     CChainCache::registerClass();
     CMonitorCache::registerClass();
     CMonitorCacheItem::registerClass();
+    CNameCache::registerClass();
     CSlurpCache::registerClass();
     CPriceCache::registerClass();
     CPriceCacheItem::registerClass();
