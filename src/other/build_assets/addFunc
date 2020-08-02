@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-export HOME="/Users/jrush/.quickBlocks/known_abis"
-export SOURCE="../src/other/install/known_abis"
+echo
+echo "    This tool has been disabled. If you re-enable it, and re-run it, you will see that it removes some of the existing "
+echo "    functions breaking some test cases Especially, Ben D.'s GitCoin Round 6 smart contract which uses a tuple "
+echo "    struct 'Donation' in the interface."
+echo
 
-pico $SOURCE/loose.sol
-cp -p $SOURCE/loose.sol ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.sol
-grabAbi --sol 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE 2>/dev/null
-cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$HOME/loose.json
-cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$SOURCE/loose.json
-echo "Function added and copied to install folder"
+#export HOME="/Users/jrush/.quickBlocks/known_abis"
+#export SOURCE="../src/other/install/known_abis"
+#
+#pico $SOURCE/loose.sol
+#cp -p $SOURCE/loose.sol ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.sol
+#grabAbi --sol 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE 2>/dev/null
+#cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$HOME/loose.json
+#cat ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.json | jq >$SOURCE/loose.json
+#echo "Function added and copied to install folder"

@@ -113,6 +113,20 @@
             },
             {
               "type": "CIndexCacheItem",
+              "nAddresses": 67653,
+              "nAppearances": 1000252,
+              "firstAppearance": 1787717,
+              "latestAppearance": 1848056,
+              "firstTs": 1467128375,
+              "latestTs": 1467992105,
+              "filename": "/--index-path--/001787717-001848056.bin",
+              "indexSizeBytes": 9896344,
+              "index_hash": "QmVx...Vjha",
+              "bloomSizeBytes": 262156,
+              "bloom_hash": "QmVb...nTXt"
+            },
+            {
+              "type": "CIndexCacheItem",
               "nAddresses": 75252,
               "nAppearances": 1000290,
               "firstAppearance": 1848057,

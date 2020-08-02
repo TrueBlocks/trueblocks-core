@@ -624,6 +624,7 @@ extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool use
 bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
                                            const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
+    prefundInflow = miningInflow = 0;
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
     // articulated, so we only want to load traces if we don't already have them
@@ -653,7 +654,13 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
 
             // do not collapse. It may be both
             if (trace.action.to == expContext().accountedFor) {
-                intInflow += trans->isError ? 0 : trace.action.value;
+                if (trans->from == "0xPrefund") {
+                    prefundInflow = trans->value;
+                } else if (trans->from == "0xBlockReward" || trans->from == "0xUncleReward") {
+                    miningInflow = trans->value;
+                } else {
+                    intInflow += trans->isError ? 0 : trace.action.value;
+                }
             }
         }
     }

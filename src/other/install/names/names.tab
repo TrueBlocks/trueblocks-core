@@ -944,6 +944,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x22c3534a948c1504fa765e67f1aaf3d2a2494116	chrisdotn		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0x22dc622df269e140a85ab8268b49f82f84713558	Jeff Lau		DevCon2 Token Contract			false	false	false
 90-DevCon2:Individual	0x22e0b23e78d9647ab3d83f5958cdd8726b26de40	Lee Kuo Chuen		DevCon2 Token Contract			false	false	false
+20-Friends	0x22e7e43e1b8bb4d2ed82073a40b5cde63c3da8e1	CreamKitty Sender		Kittie Website			false	false	false
 81-Other	0x22f83d39a2148dd389ed4c7a9280f57d5c8679da	Emailer		Etherscan.io			false	false	false
 90-DevCon2:Individual	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler (Prefund_1171)		DevCon2 Token Contract			false	false	false
 30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false
@@ -1030,7 +1031,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x264dc2dedcdcbb897561a57cba5085ca416fb7b4	QunQunCommunities	QUN	On Chain	18	Incentive community platform based on blockchain technology.	false	false	false
 30-Contracts	0x26588a9301b0428d95e6fc3a5024fce8bec12d51	Oraclize		TrueBlocks.io			false	false	false
 31-Gitcoin Grants:Friends	0x26641409080b27f3858c02c176724220ff34b2e5	akimc		Gitcoin Website			false	false	false
-40-Exchanges	0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0	Kraken 4 03		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0x2689906240d24b2d22d8fb59c2a9e7f3646d8d95	mileswh		Gitcoin Website			false	false	false
 90-DevCon2:Individual	0x26a72f03e65bc9306298c31af6562e3016907216	crystal.ann		DevCon2 Token Contract			false	false	false
 34-Humanity DAO	0x26b7929ce02124e8ff4aa380da99f92abc45f167	sirwang2		https://www.humanitydao.org/humans			false	false	false
@@ -1280,7 +1280,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x30cf4662af70b48244e2969458714f94949d664c	divguy		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Friends	0x30dffb4d23355f93ba05c0f25be31c0cc640bd3c	eddy-fi		Gitcoin Website			false	false	false
 20-Friends	0x30eaf1eab0b44c3dee35b5876d1ce9fee3d6909e	Aaron's Receiver		TrueBlocks.io			false	false	false
-30-Contracts	0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7	Common Stack Donation Address		TrueBlocks.io			false	false	false
+30-Contracts	0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7	Giveth Bridge to Kovan		TrueBlocks.io			false	false	false
 31-Gitcoin Grants:Grant	0x3111327edd38890c3fe564afd96b4c73e8101747	Grant 510 Trustless Fund		https://gitcoin.co/grants/510/trustless-fund		https://trustless.fund/	false	false	false
 81-Other	0x3116d8622f80b0b7d607033ddc8fe643ecc518da	My Campaign		Weifund Website			false	false	false
 90-DevCon2:Individual	0x3118063f5897af24a05112fcceec284f0bf98eac	Santiago Rodreguez Pozo		DevCon2 Token Contract			false	false	false
@@ -3149,7 +3149,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x7d56485e026d5d3881f778e99969d2b1f90c50af	Protectthecastle		Etherscan.io			false	false	false
 32-Kickback:Friends	0x7d571b2942b8144ebfd22c5f608a391f0b9e43d3	awgneo		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x7d5edcd23daa3fb94317d32ae253ee1af08ba14d	Ethbet	EBET	On Chain	2	The decentralized, peer-to-peer, and provably-fair Ethereum-based dicing game without a house edge.	false	false	false
-31-Gitcoin Grants:Core	0x7d655c57f71464b6f83811c55d84009cd9f5221c	New Gitcoin Splitter		OnChain			false	false	false
+31-Gitcoin Grants:Core	0x7d655c57f71464b6f83811c55d84009cd9f5221c	Gitcoin Round 6		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Friends	0x7d678b9218ac289e0c9f18c82f546c988bfe3022	critesjosh		Gitcoin Website			false	false	false
 32-Kickback:Friends	0x7d714a30b7f7f688dfa81f4f1d8bf605ccd083a7	domsteil		https://kickback.events/			false	false	false
 34-Humanity DAO	0x7d76de512c2865db78332c3bdc937af064ecd58a	fastfoodism		https://www.humanitydao.org/humans			false	false	false
@@ -4956,6 +4956,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xc8b186ed4780143ba9116387611063a0e96d7b8f	Grant 125 Kickback		https://gitcoin.co/grants/125/kickback			false	false	false
 50-Tokens:ERC20	0xc8c6a31a4a806d3710a7b38b7b296d2fabccdba8	elixir	ELIX	On Chain	18		false	false	false
 31-Gitcoin Grants:Friends	0xc8d61e23839794b162da78a5c927fd7b2cd92055	frdra		OnChain			false	false	false
+20-Friends	0xc8d6e529bde393fc4e596480d3348ceaeab08dcd	CreamKitty Sender 2		Kittie Website			false	false	false
 81-Other	0xc8da125b61fe356239321309ca07465d28887778	Dice		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0xc8fe2da6d80ee2b418fa6684819986819df5f179	yangwao		Gitcoin Website			false	false	false
 34-Humanity DAO	0xc9017f1f18dc2abd372128599e7c961bd20f7772	fan_y1		https://www.humanitydao.org/humans			false	false	false
@@ -5219,7 +5220,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xd44acd5a54f8d802a289c4c346d93f79177343ca	Grant 240 Ethsearch		https://gitcoin.co/grants/240/ethsearch			false	false	false
 50-Tokens:ERC20	0xd44bb6663936cab1310584a277f7daa6943d4904	Winco	WCO	On Chain	8		false	false	false
 32-Kickback:Friends	0xd44d3947d23ec6a7908a8b777614cf24860715e9	gm		https://kickback.events/			false	false	false
-30-Contracts	0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa	Early Self Destructed Contract		Etherscan			false	false	false
 50-Tokens:ERC20	0xd45247c07379d94904e0a87b4481f0a1ddfa0c64	Buggyra Coin Zero	BCZERO	On Chain	18	BCZERO will act as the payment platform for racing series in China, India, Europe, South America and for Sponsorships and Fans.	false	false	false
 31-Gitcoin Grants:Grant	0xd461cf004eda0ddb0028b831b62bf38b3a6d1e5a	Grant 461 Aleph.im Decentralized opensource cloud platform		https://gitcoin.co/grants/461/alephim-decentralized-open-source-cloud-platform		https://aleph.im	false	false	false
 31-Gitcoin Grants:Grant	0xd465484af946ab1f29ffad0c6971c5fd58b7ab7d	Grant 058 Ironbelly		https://gitcoin.co/grants/58/ironbelly			false	false	false
@@ -5381,6 +5381,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xdb7fc5e20fe4567ececba1df82a234781aa37f8c	Grant 089 Hopr Decentralized Privacy Preserving Messaging		https://gitcoin.co/grants/89/hopr-decentralized-privacy-preserving-messaging-2			false	false	false
 50-Tokens:ERC20	0xdb8646f5b487b5dd979fac618350e85018f557d4	BitcoinToken	BTK	On Chain	18	Bitcoin Token BTK is a digital currency. It uses peer-to-peer technology to operate with no central authority or banks managing transactions are carried out collectively by the network.	false	false	false
 32-Kickback:Friends	0xdb878d5945c05cd31b5b78fa632b9d4946fe497c	marsbeard		https://kickback.events/			false	false	false
+20-Friends	0xdb8ea30109be8de1567a0c6ad2ee8cc55cdab02b	CreamKitty		Kittie Website			false	false	false
 81-Other	0xdb9b3f9c12e710517ac572378c6199bc3624b1ed	Matching_Finneys		Etherscan.io			false	false	false
 31-Gitcoin Grants:Grant	0xdb9bc8b6770e179b2f1f6cd0562bbcdb99784f39	Grant 328 Ether Data Science		https://gitcoin.co/grants/328/ether-data-science		https://etherdatascience.com	false	false	false
 31-Gitcoin Grants:Grant	0xdba411d32793e057cb69658cf0d16b55dffb652a	Grant 065 Urllib3		https://gitcoin.co/grants/65/urllib3			false	false	false
@@ -5495,7 +5496,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xdf6ef343350780bf8c3410bf062e0c015b1dd671	Blackmoon Crypto Token	BMC	On Chain	8		false	false	false
 31-Gitcoin Grants:Friends	0xdf73fe01dfddb55a900b947c5726b2e54dddd95a	wolflo		Gitcoin Website			false	false	false
 81-Other	0xdf7734f8dbd40b392128993d847e9ede790dd1c9	Dice		Etherscan.io			false	false	false
-31-Gitcoin Grants:Core	0xdf869fad6db91f437b59f1edefab319493d4c4ce	Gitcoin Previous Splitter		TrueBlocks.io			false	false	false
+31-Gitcoin Grants:Core	0xdf869fad6db91f437b59f1edefab319493d4c4ce	Gitcoin Round 5		Gitcoin Website			false	false	false
 32-Kickback:Friends	0xdf88db057916e6f856877c3f399a16c9100e23b4	cptnthunderbacon		https://kickback.events/			false	false	false
 32-Kickback:Friends	0xdf9186aa39ecb85b45d78ae7019a5de685ca73c5	dtutila		https://kickback.events/			false	false	false
 32-Kickback:Friends	0xdf9b0d723776972c5cae27fdb4f3ea827a5cf283	jdbender66		https://kickback.events/			false	false	false

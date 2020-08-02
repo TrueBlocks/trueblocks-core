@@ -132,7 +132,7 @@ bool getChunk(const string_q& fileName, CPinnedItem& item) {
     }
 
     // clang-format off
-    string_q cmd = "curl \"https://ipfs.io/ipfs/" + item.indexHash + "\" --output " + fileName + ".bin.gz ; ";
+    string_q cmd = "curl -s \"https://ipfs.io/ipfs/" + item.indexHash + "\" --output " + fileName + ".bin.gz ; ";
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     cmd = " gunzip *.gz";
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
