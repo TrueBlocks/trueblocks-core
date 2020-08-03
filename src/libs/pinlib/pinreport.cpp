@@ -75,6 +75,11 @@ string_q CPinReport::getValueByName(const string_q& fieldName) const {
                 return bloomFormat;
             }
             break;
+        case 'c':
+            if (fieldName % "commitHash") {
+                return commitHash;
+            }
+            break;
         case 'f':
             if (fieldName % "fileName") {
                 return fileName;
@@ -104,9 +109,6 @@ string_q CPinReport::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
-            if (fieldName % "publishTs") {
-                return ts_2_Str(publishTs);
-            }
             if (fieldName % "prevHash") {
                 return hash_2_Str(prevHash);
             }
@@ -153,6 +155,12 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
+        case 'c':
+            if (fieldName % "commitHash") {
+                commitHash = fieldValue;
+                return true;
+            }
+            break;
         case 'f':
             if (fieldName % "fileName") {
                 fileName = fieldValue;
@@ -181,10 +189,6 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             break;
         case 'p':
-            if (fieldName % "publishTs") {
-                publishTs = str_2_Ts(fieldValue);
-                return true;
-            }
             if (fieldName % "prevHash") {
                 prevHash = str_2_Hash(fieldValue);
                 return true;
@@ -228,10 +232,10 @@ bool CPinReport::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> publishTs;
     archive >> fileName;
     archive >> indexFormat;
     archive >> bloomFormat;
+    archive >> commitHash;
     archive >> prevHash;
     archive >> newBlockRange;
     archive >> newPins;
@@ -248,10 +252,10 @@ bool CPinReport::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << publishTs;
     archive << fileName;
     archive << indexFormat;
     archive << bloomFormat;
+    archive << commitHash;
     archive << prevHash;
     archive << newBlockRange;
     archive << newPins;
@@ -293,10 +297,10 @@ void CPinReport::registerClass(void) {
     ADD_FIELD(CPinReport, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinReport, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinReport, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "publishTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CPinReport, "fileName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "indexFormat", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "bloomFormat", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "commitHash", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "prevHash", T_HASH, ++fieldNum);
     ADD_FIELD(CPinReport, "newBlockRange", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY, ++fieldNum);
@@ -378,12 +382,7 @@ const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINREPORT =
-    "[{PUBLISHTS}]\t"
-    "[{FILENAME}]\t"
-    "[{PREVHASH}]\t"
-    "[{NEWPINS}]\t"
-    "[{PREVPINS}]";
+const char* STR_DISPLAY_PINREPORT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

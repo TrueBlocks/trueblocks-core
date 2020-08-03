@@ -36,6 +36,7 @@ class COptions : public COptionsBase {
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
     bool pin;
+    bool publish;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;

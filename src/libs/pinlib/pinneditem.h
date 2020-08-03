@@ -26,7 +26,6 @@ namespace qblocks {
 class CPinnedItem : public CBaseNode {
   public:
     string_q fileName;
-    timestamp_t uploadTs;
     string_q bloomHash;
     string_q indexHash;
 
@@ -92,7 +91,6 @@ inline void CPinnedItem::initialize(void) {
     CBaseNode::initialize();
 
     fileName = "";
-    uploadTs = 0;
     bloomHash = "";
     indexHash = "";
 
@@ -106,7 +104,6 @@ inline void CPinnedItem::duplicate(const CPinnedItem& pi) {
     CBaseNode::duplicate(pi);
 
     fileName = pi.fileName;
-    uploadTs = pi.uploadTs;
     bloomHash = pi.bloomHash;
     indexHash = pi.indexHash;
 

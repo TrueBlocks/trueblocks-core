@@ -1,7 +1,6 @@
 [settings]
 class = CPinnedItem
 fields = string fileName|\
-        timestamp uploadTs|\
         string bloomHash|\
         string indexHash
 includes = utillib.h
@@ -9,4 +8,4 @@ cpp_includes =
 sort = v1.fileName < v2.fileName
 equals = fileName == item.fileName
 serializable = true
-display_str = fileName, uploadTs, bloomHash, indexHash
+display_str = fileName, bloomHash, indexHash

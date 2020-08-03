@@ -40,7 +40,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10600,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
 10620,apps,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
-10650,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires API key)
+10650,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key)
+10650,apps,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart contract
 10652,apps,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,list pins (precludes other options&#44; requires API key)
 10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 

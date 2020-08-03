@@ -300,14 +300,11 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         if (pin) {
             CPinnedItem pinRecord;
             pinChunk(p1[1] + "-" + p2[1], pinRecord);
-            ostringstream ps;
-            ps << pinRecord << endl;
-            LOG_INFO(cRed, "Pinned to: ", substitute(ps.str(), "\n", " "));
         }
 
-        LOG_INFO(cRed,
-                 "  Published  record to UnchainedIndex Smart Contract (0x438e458e16314c30fdbc622d81108cbc8877f2a0)",
-                 cOff);
+        if (publish) {
+            publishManifest(cout);
+        }
         LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
                  substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
 

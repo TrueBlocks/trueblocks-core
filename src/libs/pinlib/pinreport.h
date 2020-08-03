@@ -26,10 +26,10 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CPinReport : public CBaseNode {
   public:
-    timestamp_t publishTs;
     string_q fileName;
     string_q indexFormat;
     string_q bloomFormat;
+    string_q commitHash;
     hash_t prevHash;
     string_q newBlockRange;
     CPinnedItemArray newPins;
@@ -99,10 +99,10 @@ inline void CPinReport::clear(void) {
 inline void CPinReport::initialize(void) {
     CBaseNode::initialize();
 
-    publishTs = 0;
     fileName = "";
     indexFormat = "";
     bloomFormat = "";
+    commitHash = "";
     prevHash = "";
     newBlockRange = "";
     newPins.clear();
@@ -118,10 +118,10 @@ inline void CPinReport::duplicate(const CPinReport& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
-    publishTs = pi.publishTs;
     fileName = pi.fileName;
     indexFormat = pi.indexFormat;
     bloomFormat = pi.bloomFormat;
+    commitHash = pi.commitHash;
     prevHash = pi.prevHash;
     newBlockRange = pi.newBlockRange;
     newPins = pi.newPins;

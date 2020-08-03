@@ -85,11 +85,6 @@ string_q CPinnedItem::getValueByName(const string_q& fieldName) const {
                 return indexHash;
             }
             break;
-        case 'u':
-            if (fieldName % "uploadTs") {
-                return ts_2_Str(uploadTs);
-            }
-            break;
         default:
             break;
     }
@@ -107,11 +102,6 @@ bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "uploadDate") {
-        fieldName = "uploadTs";
-        timestamp_t ts = date_2_Ts(fieldValue);
-        fieldValue = ts_2_Str(ts);
-    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -130,12 +120,6 @@ bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
         case 'i':
             if (fieldName % "indexHash") {
                 indexHash = fieldValue;
-                return true;
-            }
-            break;
-        case 'u':
-            if (fieldName % "uploadTs") {
-                uploadTs = str_2_Ts(fieldValue);
                 return true;
             }
             break;
@@ -165,7 +149,6 @@ bool CPinnedItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> fileName;
-    archive >> uploadTs;
     archive >> bloomHash;
     archive >> indexHash;
     finishParse();
@@ -180,7 +163,6 @@ bool CPinnedItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << fileName;
-    archive << uploadTs;
     archive << bloomHash;
     archive << indexHash;
 
@@ -220,7 +202,6 @@ void CPinnedItem::registerClass(void) {
     ADD_FIELD(CPinnedItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinnedItem, "fileName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "uploadTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CPinnedItem, "bloomHash", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinnedItem, "indexHash", T_TEXT, ++fieldNum);
 
@@ -292,7 +273,6 @@ ostream& operator<<(ostream& os, const CPinnedItem& item) {
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_PINNEDITEM =
     "[{FILENAME}]\t"
-    "[{UPLOADTS}]\t"
     "[{BLOOMHASH}]\t"
     "[{INDEXHASH}]";
 

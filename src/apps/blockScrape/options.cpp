@@ -16,7 +16,8 @@ static const COption params[] = {
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-    COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires API key)"),
+    COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key)"),
+    COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
@@ -59,6 +60,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
+
+        } else if (arg == "-u" || arg == "--publish") {
+            publish = true;
 
         } else if (arg == "-l" || arg == "--listpins") {
             listpins = true;
@@ -127,8 +131,9 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBin)) {
-        LOG_INFO("Origin block index not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
+
+        LOG_INFO("Index for block zero was not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
             // The prefund transactions have a zero for thier block numbers and an index
@@ -138,15 +143,17 @@ bool COptions::parseArguments(string_q& command) {
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());
         }
-        LOG_INFO("Writing index...");
+
         writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
         if (pin) {
             CPinnedItem pinRecord;
             pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
-            ostringstream ps;
-            ps << pinRecord << endl;
-            LOG_INFO(cRed, "Pinned to: ", substitute(ps.str(), "\n", " "));
         }
+
+        if (publish) {
+            publishManifest(cout);
+        }
+
         LOG_INFO("Done...");
     }
 
@@ -206,6 +213,7 @@ void COptions::Init(void) {
     n_block_procs = NOPOS;
     n_addr_procs = NOPOS;
     pin = false;
+    publish = false;
     // END_CODE_INIT
 
     minArgs = 0;

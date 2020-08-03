@@ -17,20 +17,74 @@ namespace qblocks {
 static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
-static bool writePins(const CPinnedItemArray& array, bool writeAscii);
-static bool readPins(bool required = false);
+static bool writeManifest(const CPinnedItemArray& array, bool writeAscii);
+static bool readManifest(bool required = false);
 
 //---------------------------------------------------------------------------
 static CPinnedItemArray pins;
 
+typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
+extern bool forEveryPin(PINFUNC func, void* data);
+
+//-------------------------------------------------------------------------
+bool forEveryPin(PINFUNC func, void* data) {
+    if (!func)
+        return false;
+    if (!readManifest())
+        return false;
+    for (auto pin : pins) {
+        if (!(*func)(pin, data))
+            return false;
+    }
+    return true;
+}
+
+//----------------------------------------------------------------
+bool addNewPin(CPinnedItem& pin, void *data) {
+    CPinReport *report = (CPinReport*)data;
+    report->newPins.push_back(pin);
+
+    timestamp_t unused;
+    blknum_t newEnd;
+    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
+
+    if (report->newBlockRange.empty()) {
+        report->newBlockRange = padNum9(newStart) + "-"+ padNum9(newEnd);
+    } else {
+        blknum_t oldEnd;
+        blknum_t oldStart = bnFromPath(report->newBlockRange, oldEnd, unused);
+        report->newBlockRange = padNum9(min(oldStart, newStart)) + "-"+ padNum9(max(oldEnd, newEnd));
+    }
+    return true;
+}
+
+//----------------------------------------------------------------
+bool publishManifest(ostream& os) {
+
+    CPinReport report;
+    report.fileName = "pin-manifest.json";
+    report.indexFormat = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2";
+    report.bloomFormat = "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD";
+    report.commitHash = "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53";
+    forEveryPin(addNewPin, &report);
+    report.prevHash = "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm";
+    report.prevBlockRange = "";
+    report.prevPins.clear();
+    report.doExport(os);
+
+    return true;
+}
+
 //----------------------------------------------------------------
 bool pinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readPins())
+    if (!readManifest()) {
         return false;
+    }
 
     // If already pinned, no reason to pin it again...
     CPinnedItem copy;
     if (findChunk(fileName, copy)) {
+        LOG_WARN("Pin for blocks ", fileName, " already exists.");
         item = copy;
         return true;
     }
@@ -38,31 +92,34 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     item.fileName = fileName;
     string_q indexStr = pinOneFile(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
-        cerr << "Could not pin index file to Pinata. Quitting..." << endl;
+        LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
         return false;
     }
+
     cleanPinataStr(indexStr);
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
-    item.uploadTs = date_2_Ts(index.date_pinned);
+    LOG_INFO(cRed, "Pinned index for blocks ", fileName, " to: ", item.indexHash);
 
     string_q bloomStr = pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
-        cerr << "Could not pin bloom file to Pinata. Quitting..." << endl;
+        LOG_ERR("Could not pin bloom for blocks ", fileName, " file to Pinata. Quitting...");
         return false;
     }
+
     cleanPinataStr(bloomStr);
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
+    LOG_INFO(cRed, "Pinned bloom for blocks ", fileName, " to: ", item.bloomHash);
 
     // add it to the array
     pins.push_back(item);
 
     // write the array (after sorting it) to the database
     sort(pins.begin(), pins.end());
-    return writePins(pins, true);
+    return writeManifest(pins, true);
 }
 
 //---------------------------------------------------------------------------
@@ -74,7 +131,7 @@ bool unpinChunkByHash(const string_q& hash) {
 
 //---------------------------------------------------------------------------
 bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readPins())
+    if (!readManifest())
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -103,12 +160,12 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     pins.clear();
     pins = array;
     sort(pins.begin(), pins.end());
-    return writePins(pins, true);
+    return writeManifest(pins, true);
 }
 
 //---------------------------------------------------------------------------
 bool findChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readPins())
+    if (!readManifest())
         return false;
 
     CPinnedItem search;
@@ -123,7 +180,7 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 
 //-------------------------------------------------------------------------
 bool getChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readPins(true))
+    if (!readManifest(true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -140,19 +197,6 @@ bool getChunk(const string_q& fileName, CPinnedItem& item) {
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryPin(PINFUNC func, void* data) {
-    if (!func)
-        return false;
-    if (!readPins())
-        return false;
-    for (auto pin : pins) {
-        if (!(*func)(pin, data))
-            return false;
-    }
     return true;
 }
 
@@ -328,10 +372,7 @@ static void cleanPinataStr(string_q& in) {
 }
 
 //---------------------------------------------------------------------------
-static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
-    string_q textFile = configPath("ipfs-hashes/pins.json");
-    string_q binFile = getCachePath("tmp/pins.bin");
-
+static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
     ostringstream os;
     if (writeAscii)
         for (auto pin : pins)
@@ -340,6 +381,7 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
     lockSection(true);  // disallow control+C until we write both files
 
     if (writeAscii) {
+        string_q textFile = configPath("ipfs-hashes/pins.json");
         stringToAsciiFile(textFile, os.str());
         string_q now = Now().Format("%Y%m%d%H%M.00");
         string_q cmd = "touch -mt " + now + " " + textFile;
@@ -349,6 +391,7 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
         // clang-format on
     }
 
+    string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
     CArchive pinFile(WRITING_ARCHIVE);
     if (!pinFile.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
@@ -364,14 +407,14 @@ static bool writePins(const CPinnedItemArray& array, bool writeAscii) {
 }
 
 //---------------------------------------------------------------------------
-static bool readPins(bool required) {
+static bool readManifest(bool required) {
     if (!pins.empty())
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
-    time_q binDate = fileLastModifyDate(binFile);
-
     string_q textFile = configPath("ipfs-hashes/pins.json");
+
+    time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
     if (binDate > textDate && fileExists(binFile)) {
@@ -416,16 +459,16 @@ static bool readPins(bool required) {
                 pin = CPinnedItem();
             }
         }
-        LOG4("Done lLoading pins");
+        LOG4("Done Loading pins");
         sort(pins.begin(), pins.end());
-        writePins(pins, false);
+        writeManifest(pins, false);
     }
     return true;
 }
 
 //--------------------------------------------------------------------------------
-void loadPins(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    if (!readPins())
+void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+    if (!readManifest())
         return;
     for (auto pin : pins) {
         blknum_t num = str_2_Uint(pin.fileName);
