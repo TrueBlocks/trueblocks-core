@@ -819,6 +819,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0",
+    "name": "Kraken 4 03",
+    "symbol": "",
+    "source": "Etherscan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
     "name": "AirSwap Token",
@@ -2398,18 +2410,6 @@ ethNames Ether --expand --verbose --fmt json
     "source": "Etherscan",
     "decimals": 0,
     "description": "",
-    "is_custom": false,
-    "is_prefund": false
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5",
-    "name": "Kin",
-    "symbol": "KIN",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "The vision for Kin is rooted in the belief that a broad group of participants can come together to create an open ecosystem of tools for digital communication and commerce that prioritizes consumer experience, bringing a fair and user-oriented model for digital services to the market.",
     "is_custom": false,
     "is_prefund": false
   }], "types": [

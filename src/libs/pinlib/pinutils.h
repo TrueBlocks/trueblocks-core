@@ -29,9 +29,11 @@ extern bool publishManifest(ostream& os);
 extern bool findChunk(const string_q& fileName, CPinnedItem& item);
 
 extern bool listPins(string_q& result);
-extern bool getChunk(const string_q& fileName, CPinnedItem& item);
-extern bool unpinChunkByHash(const string_q& hash);
 extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
+
+extern bool unpinChunkByHash(const string_q& hash);
+extern bool getChunkByHash(const string_q& fileName, CPinnedItem& item);
+extern bool getFileByHash(const hash_t& hash, const string_q& outFilename);
 
 extern bool getPinataKeys(string_q& apiKey, string_q& secret);
 

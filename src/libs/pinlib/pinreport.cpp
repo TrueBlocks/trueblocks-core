@@ -75,11 +75,6 @@ string_q CPinReport::getValueByName(const string_q& fieldName) const {
                 return bloomFormat;
             }
             break;
-        case 'c':
-            if (fieldName % "commitHash") {
-                return commitHash;
-            }
-            break;
         case 'f':
             if (fieldName % "fileName") {
                 return fileName;
@@ -152,12 +147,6 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
         case 'b':
             if (fieldName % "bloomFormat") {
                 bloomFormat = fieldValue;
-                return true;
-            }
-            break;
-        case 'c':
-            if (fieldName % "commitHash") {
-                commitHash = fieldValue;
                 return true;
             }
             break;
@@ -235,7 +224,6 @@ bool CPinReport::Serialize(CArchive& archive) {
     archive >> fileName;
     archive >> indexFormat;
     archive >> bloomFormat;
-    archive >> commitHash;
     archive >> prevHash;
     archive >> newBlockRange;
     archive >> newPins;
@@ -255,7 +243,6 @@ bool CPinReport::SerializeC(CArchive& archive) const {
     archive << fileName;
     archive << indexFormat;
     archive << bloomFormat;
-    archive << commitHash;
     archive << prevHash;
     archive << newBlockRange;
     archive << newPins;
@@ -300,7 +287,6 @@ void CPinReport::registerClass(void) {
     ADD_FIELD(CPinReport, "fileName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "indexFormat", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "bloomFormat", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "commitHash", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "prevHash", T_HASH, ++fieldNum);
     ADD_FIELD(CPinReport, "newBlockRange", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY, ++fieldNum);

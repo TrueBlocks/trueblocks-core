@@ -3,7 +3,6 @@ class = CPinReport
 fields = string fileName|\
         string indexFormat|\
         string bloomFormat|\
-        string commitHash|\
         hash prevHash|\
         string newBlockRange|\
         CPinnedItemArray newPins|\

@@ -4,7 +4,18 @@ extern bool addPinToArray(CPinnedItem& item, void *data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
-    publishManifest(cout);
+
+//    CPinnedItem item;
+//    item.indexHash = "QmXZ35T7XUnXF4HDKbVyEM2bEmdcS69jr5CCmaMUn7nbtv";
+//    getChunkByHash("010516047-010517620", item);
+
+    CAbi abi;
+    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
+    address_t unchainedIndex = "0x50c8f8c71828e594a513cc540176822a57e597c2";
+    cout << doEthCall(unchainedIndex, "0x5cb8eca4", "", getLatestBlock_client(), abi);
+
+    //publishManifest(cout);
+
     pinlib_cleanup();
     return 1;
 }

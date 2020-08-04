@@ -334,6 +334,15 @@
       "output_names": ""
     },
     {
+      "name": "HashPublished",
+      "type": "event",
+      "signature": "HashPublished(string)",
+      "encoding": "0x0488fc5a0e346a47f90cfa4d25262d1a430445fa176c4b7000f005bc2f474b73",
+      "address": "0x0",
+      "input_names": "hash,",
+      "output_names": ""
+    },
+    {
       "name": "getScriptExecutor",
       "type": "function",
       "signature": "getScriptExecutor(bytes)",
@@ -5653,6 +5662,15 @@
       "output_names": ""
     },
     {
+      "name": "indexHash",
+      "type": "function",
+      "signature": "indexHash()",
+      "encoding": "0x5cb8eca4",
+      "address": "0x0",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "_at",
       "type": "function",
       "signature": "_at(Map,uint256)",
@@ -8200,6 +8218,15 @@
       "output_names": ""
     },
     {
+      "name": "publishHash",
+      "type": "function",
+      "signature": "publishHash(string)",
+      "encoding": "0x8f1f9902",
+      "address": "0x0",
+      "input_names": "hash,",
+      "output_names": ""
+    },
+    {
       "name": "changeAdmin",
       "type": "function",
       "signature": "changeAdmin(address)",
@@ -9476,6 +9503,15 @@
       "address": "0x0",
       "input_names": "_paymentId,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "changeOwner",
+      "type": "function",
+      "signature": "changeOwner(address)",
+      "encoding": "0xa6f9dae1",
+      "address": "0x0",
+      "input_names": "newOwner,",
+      "output_names": "oldOwner,"
     },
     {
       "name": "_ragequit",

@@ -29,7 +29,6 @@ class CPinReport : public CBaseNode {
     string_q fileName;
     string_q indexFormat;
     string_q bloomFormat;
-    string_q commitHash;
     hash_t prevHash;
     string_q newBlockRange;
     CPinnedItemArray newPins;
@@ -102,7 +101,6 @@ inline void CPinReport::initialize(void) {
     fileName = "";
     indexFormat = "";
     bloomFormat = "";
-    commitHash = "";
     prevHash = "";
     newBlockRange = "";
     newPins.clear();
@@ -121,7 +119,6 @@ inline void CPinReport::duplicate(const CPinReport& pi) {
     fileName = pi.fileName;
     indexFormat = pi.indexFormat;
     bloomFormat = pi.bloomFormat;
-    commitHash = pi.commitHash;
     prevHash = pi.prevHash;
     newBlockRange = pi.newBlockRange;
     newPins = pi.newPins;

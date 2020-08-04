@@ -133,7 +133,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!fileExists(zeroBin)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
 
-        LOG_INFO("Index for block zero was not found. Building it from " + uint_2_Str(prefundWeiMap.size()) + " prefunds.");
+        LOG_INFO("Index for block zero was not found. Building it from " + uint_2_Str(prefundWeiMap.size()) +
+                 " prefunds.");
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
             // The prefund transactions have a zero for thier block numbers and an index

@@ -22,6 +22,12 @@ static bool readManifest(bool required = false);
 
 //---------------------------------------------------------------------------
 static CPinnedItemArray pins;
+static CPinReport report;
+
+//---------------------------------------------------------------------------
+#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
+#define hashToIndexFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+#define hashToBloomFilterFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
 
 typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
 extern bool forEveryPin(PINFUNC func, void* data);
@@ -40,36 +46,33 @@ bool forEveryPin(PINFUNC func, void* data) {
 }
 
 //----------------------------------------------------------------
-bool addNewPin(CPinnedItem& pin, void *data) {
-    CPinReport *report = (CPinReport*)data;
-    report->newPins.push_back(pin);
+bool addNewPin(CPinnedItem& pin, void* data) {
+    CPinReport* reportPtr = (CPinReport*)data;
+    reportPtr->newPins.push_back(pin);
 
     timestamp_t unused;
     blknum_t newEnd;
     blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
 
-    if (report->newBlockRange.empty()) {
-        report->newBlockRange = padNum9(newStart) + "-"+ padNum9(newEnd);
+    if (reportPtr->newBlockRange.empty()) {
+        reportPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
     } else {
         blknum_t oldEnd;
-        blknum_t oldStart = bnFromPath(report->newBlockRange, oldEnd, unused);
-        report->newBlockRange = padNum9(min(oldStart, newStart)) + "-"+ padNum9(max(oldEnd, newEnd));
+        blknum_t oldStart = bnFromPath(reportPtr->newBlockRange, oldEnd, unused);
+        reportPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
     }
     return true;
 }
 
 //----------------------------------------------------------------
 bool publishManifest(ostream& os) {
-
-    CPinReport report;
     report.fileName = "pin-manifest.json";
-    report.indexFormat = "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2";
-    report.bloomFormat = "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD";
-    report.commitHash = "f29699d3281e41cb011ddfbe50b7f01bfe5e3c53";
+    report.indexFormat = hashToIndexFile;
+    report.bloomFormat = hashToBloomFilterFile;
+    report.prevHash = hashToEmptyFile;  // causes reload from smart contract
+
     forEveryPin(addNewPin, &report);
-    report.prevHash = "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm";
-    report.prevBlockRange = "";
-    report.prevPins.clear();
+
     report.doExport(os);
 
     return true;
@@ -123,7 +126,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //---------------------------------------------------------------------------
-bool unpinChunkByHash(const string_q& hash) {
+bool unpinChunkByHash(const hash_t& hash) {
     unpinOneFile(hash);
     usleep(3000000);
     return true;
@@ -179,7 +182,7 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //-------------------------------------------------------------------------
-bool getChunk(const string_q& fileName, CPinnedItem& item) {
+bool getChunkByHash(const string_q& fileName, CPinnedItem& item) {
     if (!readManifest(true))
         return false;
 
@@ -189,15 +192,29 @@ bool getChunk(const string_q& fileName, CPinnedItem& item) {
     }
 
     // clang-format off
-    string_q cmd = "curl -s \"https://ipfs.io/ipfs/" + item.indexHash + "\" --output " + fileName + ".bin.gz ; ";
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    cmd = " gunzip *.gz";
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    cmd = "mv " + fileName + ".bin " + indexFolder_finalized + fileName + ".bin";
+    string_q fn = fileName + ".bin";
+    getFileByHash(item.indexHash, fn + ".gz");
+
+    string_q cmd = "mv " + getCachePath("tmp/" + fn) + " " + indexFolder_finalized + fn;
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
     return true;
+}
+
+//-------------------------------------------------------------------------
+bool getFileByHash(const hash_t& hash, const string_q& outFilename) { // also unzips if the file is zipped
+    string_q cmd = "curl -s ";
+    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
+    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+
+    if (endsWith(outFilename, ".gz")) {
+        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
+        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    }
+
+    return fileExists(substitute(outFilename, ".gz", ""));
 }
 
 //-------------------------------------------------------------------------
