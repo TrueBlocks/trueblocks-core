@@ -70,11 +70,10 @@ bool publishManifest(ostream& os) {
     report.indexFormat = hashToIndexFile;
     report.bloomFormat = hashToBloomFilterFile;
     report.prevHash = hashToEmptyFile;  // causes reload from smart contract
-
     forEveryPin(addNewPin, &report);
-
     report.doExport(os);
-
+    address_t unchained = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
+    LOG_INFO(cRed, "  Published manifest to Ethereum smart contract at ", unchained, cOff);
     return true;
 }
 
@@ -103,7 +102,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
-    LOG_INFO(cRed, "Pinned index for blocks ", fileName, " to: ", item.indexHash);
+    LOG_INFO(cRed, "  Pinned index for blocks ", fileName, " to: ", item.indexHash, cOff);
 
     string_q bloomStr = pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
@@ -115,7 +114,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(cRed, "Pinned bloom for blocks ", fileName, " to: ", item.bloomHash);
+    LOG_INFO(cRed, "  Pinned bloom for blocks ", fileName, " to: ", item.bloomHash, cOff);
 
     // add it to the array
     pins.push_back(item);

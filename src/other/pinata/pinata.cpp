@@ -9,12 +9,12 @@ int main(int argc, const char* argv[]) {
 //    item.indexHash = "QmXZ35T7XUnXF4HDKbVyEM2bEmdcS69jr5CCmaMUn7nbtv";
 //    getChunkByHash("010516047-010517620", item);
 
-    CAbi abi;
-    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
-    address_t unchainedIndex = "0x50c8f8c71828e594a513cc540176822a57e597c2";
-    cout << doEthCall(unchainedIndex, "0x5cb8eca4", "", getLatestBlock_client(), abi);
+//    CAbi abi;
+//    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
+//    address_t unchainedIndex = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
+//    cout << doEthCall(unchainedIndex, "0x5cb8eca4", "", getLatestBlock_client(), abi);
 
-    //publishManifest(cout);
+    publishManifest(cout);
 
     pinlib_cleanup();
     return 1;
