@@ -14,11 +14,11 @@ func main() {
 		log.Fatalf("Failed to connect: %v", err)
 	}
 
-	contract, err := NewUnchainedIndex(common.HexToAddress("0x50c8f8c71828e594a513cc540176822a57e597c2"), conn)
+	contract, err := NewUnchainedIndex(common.HexToAddress("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"), conn)
 	if err != nil {
 		log.Fatalf("Could not connect to contract: %v", err)
 	}
 
-	value, _ := contract.IndexHash(nil)
+	value, _ := contract.ManifestHash(nil)
 	fmt.Println(value)
 }

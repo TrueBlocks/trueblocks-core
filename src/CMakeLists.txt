@@ -61,7 +61,7 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS acct ether util pin ${CURL_LIBRARIES})
+set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
 # set (BASE_LIBS acct ether util pin sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------

@@ -4,14 +4,14 @@ pragma solidity >=0.6.0 <0.7.0;
 contract UnchainedIndex {
     constructor() public {
         owner = msg.sender;
-        indexHash = "QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH"; // empty file
-        emit HashPublished(indexHash);
+        manifestHash = "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"; // empty file
+        emit HashPublished(manifestHash);
         emit OwnerChanged(address(0), owner);
     }
 
     function publishHash(string memory hash) public {
         require(msg.sender == owner, "msg.sender must be owner");
-        indexHash = hash;
+        manifestHash = hash;
         emit HashPublished(hash);
     }
 
@@ -26,6 +26,6 @@ contract UnchainedIndex {
     event HashPublished(string hash);
     event OwnerChanged(address oldOwner, address newOwner);
 
-    string public indexHash;
+    string public manifestHash;
     address public owner;
 }
