@@ -23,10 +23,10 @@ bool visitFile(const string_q& path, void* data) {
         string_q asciiFn = substitute(path, indexFolder_sorted, "./ascii/");
         bool asciiExists = fileExists(asciiFn);
 
-        string_q binaryFn = substitute(substitute(path, indexFolder_sorted, "./finalized/"), ".txt", ".bin");
+        string_q binaryFn = substitute(substitute(path, indexFolder_sorted, "./f inalized/"), ".txt", ".bin");
         bool binaryExists = fileExists(binaryFn);
 
-        string_q bloomFn = substitute(substitute(path, indexFolder_sorted, "./blooms/"), ".txt", ".bloom");
+        string_q bloomFn = substitute(substitute(path, indexFolder_sorted, "./b looms/"), ".txt", ".bloom");
         bool bloomExists = fileExists(bloomFn);
 
         if (asciiExists && binaryExists && bloomExists) {

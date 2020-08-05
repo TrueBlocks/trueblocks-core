@@ -36,7 +36,7 @@ extern bool forEveryPin(PINFUNC func, void* data);
 bool forEveryPin(PINFUNC func, void* data) {
     if (!func)
         return false;
-    if (!readManifest())
+    if (!readManifest(true))
         return false;
     for (auto pin : pins) {
         if (!(*func)(pin, data))
@@ -69,11 +69,12 @@ bool publishManifest(ostream& os) {
     report.fileName = "pin-manifest.json";
     report.indexFormat = hashToIndexFile;
     report.bloomFormat = hashToBloomFilterFile;
-    report.prevHash = hashToEmptyFile;  // causes reload from smart contract
+    report.prevHash = ""; //(prevHash == "" ? hashToEmptyFile : prevHash);
+
     forEveryPin(addNewPin, &report);
+
     report.doExport(os);
-    address_t unchained = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
-    LOG_INFO(cRed, "  Published manifest to Ethereum smart contract at ", unchained, cOff);
+
     return true;
 }
 
@@ -102,7 +103,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
-    LOG_INFO(cRed, "  Pinned index for blocks ", fileName, " to: ", item.indexHash, cOff);
+    LOG_INFO(cRed, "Pinned index for blocks ", fileName, " to: ", item.indexHash);
 
     string_q bloomStr = pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
@@ -114,7 +115,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(cRed, "  Pinned bloom for blocks ", fileName, " to: ", item.bloomHash, cOff);
+    LOG_INFO(cRed, "Pinned bloom for blocks ", fileName, " to: ", item.bloomHash);
 
     // add it to the array
     pins.push_back(item);
@@ -397,7 +398,7 @@ static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
     lockSection(true);  // disallow control+C until we write both files
 
     if (writeAscii) {
-        string_q textFile = configPath("ipfs-hashes/pins.json");
+        string_q textFile = configPath("ipfs-hashes/pins.txt");
         stringToAsciiFile(textFile, os.str());
         string_q now = Now().Format("%Y%m%d%H%M.00");
         string_q cmd = "touch -mt " + now + " " + textFile;
@@ -428,7 +429,7 @@ static bool readManifest(bool required) {
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = configPath("ipfs-hashes/pins.json");
+    string_q textFile = configPath("ipfs-hashes/pins.txt");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);

@@ -38,7 +38,7 @@ bool visitFile(const string_q& path, void* data) {
 //                return true;
 //            }
 
-            string_q outFile = substitute(substitute(path, indexFolder_finalized, "./sorted/"), ".bin", ".txt");
+            string_q outFile = substitute(substitute(path, indexFolder_f inalized, "./sorted/"), ".bin", ".txt");
             string_q three = substitute(outFile, "./sorted/", "").substr(0, 3);
             outFile = substitute(outFile, "/sorted/", "/sorted/" + three + "/");
             establishFolder(outFile);

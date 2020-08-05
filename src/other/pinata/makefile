@@ -5,9 +5,9 @@ cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/et
 
 #-------------------------------------------------
 # for mac builds
-#libs=$(libraries)/*.a /usr/lib/libcurl.dylib
+libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 # for ubuntu builds
-libs=$(libraries)/libpin.a $(libraries)/libacct.a $(libraries)/libether.a $(libraries)/libutil.a -lcurl
+#libs=$(libraries)/libpin.a $(libraries)/libacct.a $(libraries)/libether.a $(libraries)/libutil.a -lcurl
 
 #-------------------------------------------------
 exec=pinata

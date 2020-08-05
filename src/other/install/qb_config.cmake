@@ -130,11 +130,11 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/finalized.txt")
+set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/pin-manifest.json")
 if (NOT EXISTS "${IPFS_HASHES}")
 	message(STATUS "Seeding ipfs hash files to ${DEST_PATH}/ipfs-hashes")
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/finalized.txt" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/blooms.txt" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/ipfs-hashes/pin-manifest.json" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/ipfs-hashes/empty.fil" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------

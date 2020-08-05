@@ -5,18 +5,15 @@ extern bool addPinToArray(CPinnedItem& item, void *data);
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
 
-//    CPinnedItem item;
-//    item.indexHash = "QmXZ35T7XUnXF4HDKbVyEM2bEmdcS69jr5CCmaMUn7nbtv";
-//    getChunkByHash("010516047-010517620", item);
+    CAbi abi;
+    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
+    address_t unchainedIndex = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
+    string_q prevHash = doEthCall(unchainedIndex, "0x337f3f32", "", getLatestBlock_client(), abi);
 
-//    CAbi abi;
-//    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
-//    address_t unchainedIndex = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
-//    cout << doEthCall(unchainedIndex, "0x5cb8eca4", "", getLatestBlock_client(), abi);
-
-    publishManifest(cout);
+    publishManifest(cout); //, prevHash);
 
     pinlib_cleanup();
+
     return 1;
 }
 
