@@ -6,7 +6,7 @@ Go code to interact with the Unchained Index smart contract, which is purposeful
 
 [Unchained Index Smart Contract](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)  
 [Unchained Index Owner](https://etherscan.io/address/0xAaCfb3880147061cCA2a9305eb076Bf889731870)  
-[The project is explained in this video]()
+[Video explaining the project](https://www.youtube.com/watch?v=NvSbMueU7wc)
 
 ### Solidity for Unchained Index
 ```
