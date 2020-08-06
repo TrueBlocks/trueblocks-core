@@ -5,12 +5,14 @@ extern bool addPinToArray(CPinnedItem& item, void *data);
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
 
-    CAbi abi;
-    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
-    address_t unchainedIndex = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd";
-    string_q prevHash = doEthCall(unchainedIndex, "0x337f3f32", "", getLatestBlock_client(), abi);
+    string_q provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "");
 
-    publishManifest(cout); //, prevHash);
+    LOG_INFO("rpcProvider:\t", cGreen, provider, cOff);
+    LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
+    LOG_INFO("unchainedIndex:\t", cGreen, unchainedIndex, cOff);
+
+    freshenBloomFilters();
+    //publishManifest(cout); //, prevHash);
 
     pinlib_cleanup();
 

@@ -21,16 +21,8 @@ static bool writeManifest(const CPinnedItemArray& array, bool writeAscii);
 static bool readManifest(bool required = false);
 
 //---------------------------------------------------------------------------
-static CPinnedItemArray pins;
-static CPinReport report;
-
-//---------------------------------------------------------------------------
-#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
-#define hashToIndexFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
-#define hashToBloomFilterFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
-
-typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
-extern bool forEveryPin(PINFUNC func, void* data);
+static CPinnedItemArray pinList;
+static CPinReport pinReport;
 
 //-------------------------------------------------------------------------
 bool forEveryPin(PINFUNC func, void* data) {
@@ -38,7 +30,7 @@ bool forEveryPin(PINFUNC func, void* data) {
         return false;
     if (!readManifest(true))
         return false;
-    for (auto pin : pins) {
+    for (auto pin : pinList) {
         if (!(*func)(pin, data))
             return false;
     }
@@ -64,16 +56,71 @@ bool addNewPin(CPinnedItem& pin, void* data) {
     return true;
 }
 
+//-------------------------------------------------------------------------
+bool getFileByHash(const hash_t& hash, const string_q& outFilename) { // also unzips if the file is zipped
+    string_q cmd = "curl -s ";
+    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
+    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+
+    if (endsWith(outFilename, ".gz")) {
+        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
+        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    }
+
+    return fileExists(substitute(outFilename, ".gz", ""));
+}
+
+//-------------------------------------------------------------------------
+string_q getFileContentsByHash(const hash_t& hash) { // also unzips if the file is zipped
+    string_q cmd = "curl -s ";
+    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
+    return doCommand(cmd);
+}
+
+
+//----------------------------------------------------------------
+hash_t getCurrentManifest(void) {
+    CAbi abi;
+    abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
+    address_t contractAddr = unchainedIndex;
+    return doEthCall(contractAddr, manifestHash, "", getLatestBlock_client(), abi);
+}
+
+//----------------------------------------------------------------
+hash_t getLastManifest(void) {
+    return asciiFileToString(configPath("ipfs-hashes/lastHash.txt"));
+}
+
+//----------------------------------------------------------------
+bool freshenBloomFilters(void) {
+    string_q cur = getCurrentManifest();
+    string_q prev = getLastManifest();
+    if (cur != prev) {
+        LOG_INFO("Manifest needs to be updated. Previous [", prev, "] Current [", cur, "]");
+        stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), cur);
+        string_q contents = getFileContentsByHash(cur);
+        if (contents != "empty file") {
+            stringToAsciiFile(configPath("ipfs-hashes/pin-manifest.json"), contents);
+            pinList.clear();
+            readManifest();
+        }
+    } else {
+        LOG_INFO("Manifest is up to data at: ", cur);
+    }
+    return true;
+}
+
 //----------------------------------------------------------------
 bool publishManifest(ostream& os) {
-    report.fileName = "pin-manifest.json";
-    report.indexFormat = hashToIndexFile;
-    report.bloomFormat = hashToBloomFilterFile;
-    report.prevHash = ""; //(prevHash == "" ? hashToEmptyFile : prevHash);
+    pinReport.fileName = "pin-manifest.json";
+    pinReport.indexFormat = hashToIndexFile;
+    pinReport.bloomFormat = hashToBloomFilterFile;
+    pinReport.prevHash = ""; //(prevHash == "" ? hashToEmptyFile : prevHash);
 
-    forEveryPin(addNewPin, &report);
+    forEveryPin(addNewPin, &pinReport);
 
-    report.doExport(os);
+    pinReport.doExport(os);
 
     return true;
 }
@@ -118,11 +165,11 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     LOG_INFO(cRed, "Pinned bloom for blocks ", fileName, " to: ", item.bloomHash);
 
     // add it to the array
-    pins.push_back(item);
+    pinList.push_back(item);
 
     // write the array (after sorting it) to the database
-    sort(pins.begin(), pins.end());
-    return writeManifest(pins, true);
+    sort(pinList.begin(), pinList.end());
+    return writeManifest(pinList, true);
 }
 
 //---------------------------------------------------------------------------
@@ -146,7 +193,7 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     }
 
     CPinnedItemArray array;
-    for (auto pin : pins) {
+    for (auto pin : pinList) {
         if (pin.fileName == fileName) {
             cout << "Unpinning: " << pin.fileName << endl;
             unpinOneFile(pin.indexHash);
@@ -160,10 +207,10 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     }
     cout << endl;
 
-    pins.clear();
-    pins = array;
-    sort(pins.begin(), pins.end());
-    return writeManifest(pins, true);
+    pinList.clear();
+    pinList = array;
+    sort(pinList.begin(), pinList.end());
+    return writeManifest(pinList, true);
 }
 
 //---------------------------------------------------------------------------
@@ -173,8 +220,8 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 
     CPinnedItem search;
     search.fileName = fileName;
-    const vector<CPinnedItem>::iterator it = find(pins.begin(), pins.end(), search);
-    if (it != pins.end()) {
+    const vector<CPinnedItem>::iterator it = find(pinList.begin(), pinList.end(), search);
+    if (it != pinList.end()) {
         item = *it;
         return true;
     }
@@ -200,21 +247,6 @@ bool getChunkByHash(const string_q& fileName, CPinnedItem& item) {
     // clang-format on
 
     return true;
-}
-
-//-------------------------------------------------------------------------
-bool getFileByHash(const hash_t& hash, const string_q& outFilename) { // also unzips if the file is zipped
-    string_q cmd = "curl -s ";
-    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
-    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-
-    if (endsWith(outFilename, ".gz")) {
-        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
-        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    }
-
-    return fileExists(substitute(outFilename, ".gz", ""));
 }
 
 //-------------------------------------------------------------------------
@@ -392,7 +424,7 @@ static void cleanPinataStr(string_q& in) {
 static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
     ostringstream os;
     if (writeAscii)
-        for (auto pin : pins)
+        for (auto pin : pinList)
             os << pin.Format(STR_DISPLAY_PINNEDITEM) << endl;
 
     lockSection(true);  // disallow control+C until we write both files
@@ -425,14 +457,17 @@ static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
 
 //---------------------------------------------------------------------------
 static bool readManifest(bool required) {
-    if (!pins.empty())
+    if (!pinList.empty())
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = configPath("ipfs-hashes/pins.txt");
+    string_q textFile = configPath("ipfs-hashes/pin-manifest.json");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
+
+    LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
+    LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
@@ -440,7 +475,7 @@ static bool readManifest(bool required) {
             LOG_ERR("Could not open pin file for reading. Quitting...");
             return false;
         }
-        pinFile >> pins;
+        pinFile >> pinList;
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
@@ -451,34 +486,17 @@ static bool readManifest(bool required) {
         return true;
 
     } else {
-        pins.clear();  // redundant, but fine
+        pinList.clear();  // redundant, but fine
         string_q contents = asciiFileToString(textFile);
-        if (contains(contents, "[")) {
-            // slow JSON
-            replace(contents, "[", "");
-            replace(contents, "]", "");
-            CPinnedItem pin;
-            while (pin.parseJson3(contents)) {
-                LOG4("Loading pin: ", pin.fileName, "\r");
-                pins.push_back(pin);
-                pin = CPinnedItem();
-            }
-        } else {
-            CStringArray fields;
-            string_q fieldStr = substitute(substitute(toLower(STR_DISPLAY_PINNEDITEM), "[{", ""), "}]", "");
-            explode(fields, fieldStr, '\t');
-            CStringArray lines;
-            explode(lines, contents, '\n');
-            CPinnedItem pin;
-            for (auto line : lines) {
-                pin.parseText(fields, line);
-                pins.push_back(pin);
-                pin = CPinnedItem();
-            }
-        }
+        CPinReport report;
+        report.parseJson3(contents);
+        for (auto pin : report.prevPins)
+            pinList.push_back(pin);
+        for (auto pin : report.newPins)
+            pinList.push_back(pin);
         LOG4("Done Loading pins");
-        sort(pins.begin(), pins.end());
-        writeManifest(pins, false);
+        sort(pinList.begin(), pinList.end());
+        writeManifest(pinList, false);
     }
     return true;
 }
@@ -487,7 +505,7 @@ static bool readManifest(bool required) {
 void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     if (!readManifest())
         return;
-    for (auto pin : pins) {
+    for (auto pin : pinList) {
         blknum_t num = str_2_Uint(pin.fileName);
         bloomMap[num] = pin.bloomHash;
         indexMap[num] = pin.indexHash;
