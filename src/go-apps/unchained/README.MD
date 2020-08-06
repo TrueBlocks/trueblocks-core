@@ -2,6 +2,13 @@
 
 Go code to interact with the Unchained Index smart contract, which is purposefully a very simple attestation to an IPFS hash of TrueBlocks' pin manifest.
 
+### Links
+
+[Unchained Index Smart Contract](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
+[Unchained Index Owner](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
+
+[The project is explained in this video]()
+
 ### Solidity source code for the unchained index smart contract.
 ```
 // SPDX-License-Identifier: MIT
@@ -37,7 +44,3 @@ contract UnchainedIndex {
 }
 ```
 
-[Link to the smart contract on Etherscan](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
-[Link to the smart contract owner on Etherscan](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
-
-[The project is explained in this video]()
