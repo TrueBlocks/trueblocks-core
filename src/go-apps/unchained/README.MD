@@ -8,7 +8,7 @@ Go code to interact with the Unchained Index smart contract, which is purposeful
 [Unchained Index Owner](https://etherscan.io/address/0xAaCfb3880147061cCA2a9305eb076Bf889731870)  
 [The project is explained in this video]()
 
-### Solidity source code for the unchained index smart contract.
+### Solidity for Unchained Index
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.7.0;
