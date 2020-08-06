@@ -11,8 +11,9 @@ int main(int argc, const char* argv[]) {
     LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
     LOG_INFO("unchainedIndex:\t", cGreen, unchainedIndex, cOff);
 
-    freshenBloomFilters();
+    //freshenBloomFilters();
     //publishManifest(cout); //, prevHash);
+    cout << getFileContentsByHash("QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV")<< endl;
 
     pinlib_cleanup();
 

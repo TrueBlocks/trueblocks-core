@@ -37,6 +37,7 @@ extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 extern bool unpinChunkByHash(const string_q& hash);
 extern bool getChunkByHash(const string_q& fileName, CPinnedItem& item);
 extern bool getFileByHash(const hash_t& hash, const string_q& outFilename);
+extern string_q getFileContentsByHash(const hash_t& hash);
 
 extern bool getPinataKeys(string_q& apiKey, string_q& secret);
 
