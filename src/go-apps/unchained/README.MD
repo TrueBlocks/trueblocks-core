@@ -4,9 +4,8 @@ Go code to interact with the Unchained Index smart contract, which is purposeful
 
 ### Links
 
-[Unchained Index Smart Contract](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
-[Unchained Index Owner](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)
-
+[Unchained Index Smart Contract](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)  
+[Unchained Index Owner](https://etherscan.io/address/0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd)  
 [The project is explained in this video]()
 
 ### Solidity source code for the unchained index smart contract.
