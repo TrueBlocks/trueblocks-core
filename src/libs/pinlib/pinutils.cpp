@@ -120,7 +120,8 @@ bool publishManifest(ostream& os) {
 
     forEveryPin(addNewPin, &pinReport);
 
-    pinReport.doExport(os);
+    //pinReport.doExport(os);
+    LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndex, cOff);
 
     return true;
 }
@@ -150,7 +151,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
-    LOG_INFO(cRed, "Pinned index for blocks ", fileName, " to: ", item.indexHash);
+    LOG_INFO(bRed, "  Pinned index to blocks ", substitute(fileName, "-", " "), " to: ", item.indexHash, cOff);
 
     string_q bloomStr = pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
@@ -162,7 +163,7 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(cRed, "Pinned bloom for blocks ", fileName, " to: ", item.bloomHash);
+    LOG_INFO(bRed, "  Pinned bloom for index to blocks ", substitute(fileName, "-", " "), " to: ", item.bloomHash, cOff);
 
     // add it to the array
     pinList.push_back(item);
@@ -296,7 +297,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
     string_q source = getIndexPath(type + "/" + fn);
     string_q zip = source + ".gz";
     // clang-format off
-    string_q cmd1 = "yes | gzip --keep " + source;
+    string_q cmd1 = "yes | gzip --keep " + source + " 2>/dev/null";
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
 
@@ -434,7 +435,7 @@ static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
         stringToAsciiFile(textFile, os.str());
         string_q now = Now().Format("%Y%m%d%H%M.00");
         string_q cmd = "touch -mt " + now + " " + textFile;
-        cerr << cmd << endl;
+        //cerr << cmd << endl;
         // clang-format off
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
@@ -466,8 +467,8 @@ static bool readManifest(bool required) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
-    LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
-    LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
+    //LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
+    //LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);

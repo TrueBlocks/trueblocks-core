@@ -129,7 +129,7 @@ bool COptions::parseArguments(string_q& command) {
     latestBlockTs = latestBlock.timestamp;
     latestBlockNum = latestBlock.blockNumber;
 
-    string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
+    string_q zeroBin = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
     if (!fileExists(zeroBin)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
 

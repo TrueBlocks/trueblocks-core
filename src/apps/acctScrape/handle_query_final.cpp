@@ -196,7 +196,7 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 //---------------------------------------------------------------
 bool establishIndexChunk(const string_q& fileName) {
     if (!fileExists(fileName)) {
-        cerr << fileName << " not present. Retreiving from IPFS" << endl;
+        LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
         CPinnedItem pin;
         if (!getChunkByHash(substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""), pin)) {
             cerr << "Could not retrieve file from IPFS: " << fileName << endl;
