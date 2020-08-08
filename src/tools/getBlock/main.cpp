@@ -41,6 +41,10 @@ int main(int argc, const char* argv[]) {
 
 //------------------------------------------------------------
 string_q doOneBlock(uint64_t num, const COptions& opt) {
+#if 0
+    string_q result;
+    queryRawBlockTrace(result, num);
+#else
     string_q fileName = getBinaryCacheFilename(CT_BLOCKS, num);
 
     CBlock gold;
@@ -89,7 +93,7 @@ string_q doOneBlock(uint64_t num, const COptions& opt) {
         }
         result = gold.Format(expContext().fmtMap["format"]);
     }
-
+#endif
     return result;
 }
 

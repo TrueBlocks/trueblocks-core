@@ -7,7 +7,7 @@ cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/et
 # for mac builds
 libs=$(libraries)/*.a /usr/lib/libcurl.dylib
 # for ubuntu builds
-#libs=$(libraries)/*.a -lcurl
+#libs=$(libraries)/libpin.a $(libraries)/libacct.a $(libraries)/libether.a $(libraries)/libutil.a -lcurl
 
 #-------------------------------------------------
 exec=single
@@ -33,7 +33,7 @@ app:
 
 test:
 	@make
-	@./do_tests
+	@echo "No tests"
 
 #-------------------------------------------------
 # probably don't have to change below this line
@@ -57,4 +57,4 @@ cleanall:
 	@make clean
 
 clean:
-	-@$(RM) -f $(product) objs/* 2> /dev/null
+	-@$(RM) -f $(dest) $(product) objs/* 2> /dev/null

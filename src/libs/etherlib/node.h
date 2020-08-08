@@ -42,6 +42,10 @@ extern bool queryBlock(CBlock& block, const string_q& num, bool needTrace);
 //-------------------------------------------------------------------------
 // lower level access to the node's responses
 extern bool queryRawBlock(string_q& results, const string_q& blockNum, bool needTrace, bool hashesOnly);
+extern bool queryRawBlockTrace(string_q& results, const string_q& hexNum);
+inline bool queryRawBlockTrace(string_q& results, blknum_t blockNum) {
+    return queryRawBlockTrace(results, uint_2_Hex(blockNum));
+}
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);

@@ -299,12 +299,14 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
 
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--very_raw ")) {
         replaceAll(cmdLine, "--very_raw ", "");
+        setenv("NO_SCHEMAS", "true", true);
         isRaw = true;
         isVeryRaw = true;
     }
 
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
+        setenv("NO_SCHEMAS", "true", true);
         isRaw = true;
     }
 

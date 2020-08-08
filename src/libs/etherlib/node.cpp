@@ -338,6 +338,14 @@ bool queryRawBlock(string_q& blockStr, const string_q& datIn, bool needTrace, bo
 }
 
 //-------------------------------------------------------------------------
+bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
+    string_q data = "[\"[BLOCKNUM]\"]";
+    replace(data, "[BLOCKNUM]", hexNum);
+    blockStr = callRPC("trace_block", data, true);
+    return true;
+}
+
+//-------------------------------------------------------------------------
 string_q getRawBlock(blknum_t bn) {
     string_q numStr = uint_2_Str(bn);
 
