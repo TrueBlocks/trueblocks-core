@@ -3073,6 +3073,14 @@
       "output_names": ""
     },
     {
+      "name": "manifestHash",
+      "type": "function",
+      "signature": "manifestHash()",
+      "encoding": "0x337f3f32",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "doWithdraw",
       "type": "function",
       "signature": "doWithdraw(address,uint256)",
@@ -5231,14 +5239,6 @@
       "encoding": "0x5ca4d4bb",
       "input_names": "executorId,",
       "output_names": ""
-    },
-    {
-      "name": "indexHash",
-      "type": "function",
-      "signature": "indexHash()",
-      "encoding": "0x5cb8eca4",
-      "input_names": "",
-      "output_names": "val_0,"
     },
     {
       "name": "_at",

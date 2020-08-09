@@ -69,7 +69,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On Chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false
 31-Gitcoin Grants:Grant	0x24e8bb6a37774d8a0187e196beb29601ed5920bf	Grant 348 EtherLoans undercollateralized loans unstoppable DeFi		https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d		https://www.etherloans.io/	false	false	false
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On Chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false
-40-Exchanges	0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0	Kraken 4 03		Etherscan			false	false	false
 50-Tokens:ERC20	0x27054b13b1b798b345b591a4d22e6562d47ea75a	AirSwap Token	AST	On Chain	4	AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens	false	false	false
 30-Contracts	0x273f7f8e6489682df756151f5525576e322d51a3	MCH: Hero		Etherscan			false	false	false
 35-Pool Together	0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6	Pool Together Pool 1		Etherscan			false	false	false
@@ -137,6 +136,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 33-Set Prototcol	0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180	Set: Rebalancing Set Exchange Issuance Module V2		Etherscan			false	false	false
 35-Pool Together	0x4fc604536134dc64718800361ecbca0df6cbfe08	Pool Together Pool 2		Etherscan			false	false	false
 50-Tokens:ERC20	0x501262281b2ba043e2fbf14904980689cddb0c78	Mithril Ore	MORE	On Chain	2	Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.	false	false	false
+75-Early Actors	0x5088d623ba0fcf0131e0897a91734a4d83596aa0	MinerBlk3		Etherscan			false	false	false
 30-Contracts	0x519b70055af55a007110b4ff99b0ea33071c720a	dxDAO		Etherscan			false	false	false
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related		Etherscan			false	false	false
 50-Tokens:ERC20	0x539efe69bcdd21a83efd9122571a64cc25e0282b	Ethereum Blue	BLUE	On Chain	8	BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.	false	false	false

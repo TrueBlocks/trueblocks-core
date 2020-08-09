@@ -3,6 +3,4 @@
 ,{"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226","gas":"0x10d88","input":"0x","to":"0xd77ba7ef37f87d5246f35de898133e09c92ecaca","value":"0x1dd0b460c6bf1c00"},"blockHash":"0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53","blockNumber":1001001,"result":{"gasUsed":"0x0","output":"0x"},"subtraces":0,"traceAddress":[],"transactionHash":"0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a","transactionPosition":1,"type":"call"}],"id":"1"}
 ], "errors": [
 "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."
-], "types": [
-{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
 ] }

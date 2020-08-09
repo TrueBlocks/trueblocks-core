@@ -57,27 +57,28 @@ bool addNewPin(CPinnedItem& pin, void* data) {
 }
 
 //-------------------------------------------------------------------------
-bool getFileByHash(const hash_t& hash, const string_q& outFilename) { // also unzips if the file is zipped
+bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also unzips if the file is zipped
     string_q cmd = "curl -s ";
     cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
     cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    if (system(cmd.c_str())) {
+    }  // Don't remove cruft. Silences compiler warnings
 
     if (endsWith(outFilename, ".gz")) {
         cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
-        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        if (system(cmd.c_str())) {
+        }  // Don't remove cruft. Silences compiler warnings
     }
 
     return fileExists(substitute(outFilename, ".gz", ""));
 }
 
 //-------------------------------------------------------------------------
-string_q getFileContentsByHash(const hash_t& hash) { // also unzips if the file is zipped
+string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file is zipped
     string_q cmd = "curl -s ";
     cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
     return doCommand(cmd);
 }
-
 
 //----------------------------------------------------------------
 hash_t getCurrentManifest(void) {
@@ -116,11 +117,11 @@ bool publishManifest(ostream& os) {
     pinReport.fileName = "pin-manifest.json";
     pinReport.indexFormat = hashToIndexFile;
     pinReport.bloomFormat = hashToBloomFilterFile;
-    pinReport.prevHash = ""; //(prevHash == "" ? hashToEmptyFile : prevHash);
+    pinReport.prevHash = "";  //(prevHash == "" ? hashToEmptyFile : prevHash);
 
     forEveryPin(addNewPin, &pinReport);
 
-    //pinReport.doExport(os);
+    // pinReport.doExport(os);
     LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndex, cOff);
 
     return true;
@@ -163,7 +164,8 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(bRed, "  Pinned bloom for index to blocks ", substitute(fileName, "-", " "), " to: ", item.bloomHash, cOff);
+    LOG_INFO(bRed, "  Pinned bloom for index to blocks ", substitute(fileName, "-", " "), " to: ", item.bloomHash,
+             cOff);
 
     // add it to the array
     pinList.push_back(item);
@@ -435,7 +437,7 @@ static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
         stringToAsciiFile(textFile, os.str());
         string_q now = Now().Format("%Y%m%d%H%M.00");
         string_q cmd = "touch -mt " + now + " " + textFile;
-        //cerr << cmd << endl;
+        // cerr << cmd << endl;
         // clang-format off
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
@@ -467,8 +469,8 @@ static bool readManifest(bool required) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
-    //LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
-    //LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
+    // LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
+    // LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);

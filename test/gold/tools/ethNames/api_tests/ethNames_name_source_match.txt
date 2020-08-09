@@ -818,18 +818,6 @@
     },
     {
       "deleted": false,
-      "tags": "40-Exchanges",
-      "address": "0x267be1c1d684f78cb4f6a176c4911b741e4ffdc0",
-      "name": "Kraken 4 03",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": "0",
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
       "name": "AirSwap Token",
@@ -1629,6 +1617,18 @@
       "source": "On Chain",
       "decimals": 2,
       "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "75-Early Actors",
+      "address": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
+      "name": "MinerBlk3",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": "0",
+      "description": "",
       "is_custom": false,
       "is_prefund": false
     },

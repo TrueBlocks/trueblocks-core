@@ -985,12 +985,12 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
 
+    if (!errStrs.str().empty())
+        os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+
     bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
     bool showProgress = getEnvStr("NO_PROGRESS") != "true";
     if (showSchemas) {
-        if (!errStrs.str().empty())
-            os << ", \"errors\": [\n" << errStrs.str() << "\n]";
-
         if (!isText && expContext().types.size() > 0) {
             ostringstream typeStrs;
             first = true;

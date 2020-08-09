@@ -2032,7 +2032,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x505e20c0fb8252ca7ac21d54d5432eccd4f2d076	rockfridrich		Gitcoin Website			false	false	false
 33-Set Protocol:Other	0x50711c5cea991d54d37a2384d22568734976d154	Signature Validator		https://github.com/SetProtocol/set-protocol-contracts			false	false	false
 81-Other	0x50739060a2c32dc076e507ae1a893aab28ecfe68	Dice		Etherscan.io			false	false	false
-75-Early	0x5088d623ba0fcf0131e0897a91734a4d83596aa0	MinerBlk3		Etherscan			false	false	false
+75-Early Actors	0x5088d623ba0fcf0131e0897a91734a4d83596aa0	MinerBlk3		Etherscan			false	false	false
 81-Other	0x5089dc2885eeed3790e5295583b99babfdcbe3a9	Test Campaign 1		Weifund Website			false	false	false
 34-Humanity DAO	0x50af5f78a48bfbb09d4a53263be9a405b4d39fec	stonemchael		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x50ba55bf41580f0ba7df31d9d20b129e6d2df6ae	semenka		Gitcoin Website			false	false	false
@@ -4645,7 +4645,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 35-Pool Together	0xbb6365bf44c63971a948d95d80f77ba3e76489df	Pool Together Upgradeable Proxy		Etherscan			false	false	false
 31-Gitcoin Grants:Friends	0xbb6b34131210c091cb2890b81fce7103816324a5	dogemos		Gitcoin Website			false	false	false
 81-Other	0xbb70e866804653c2ee81e1cba7564c2f5207e97d	ConferenceCertification_id231_cnt2_2mo		Ether Camp			false	false	false
-75-Early	0xbb7b8287f3f0a933474a79eae42cbca977791171	MinerBlk25		Etherscan			false	false	false
+75-Early Actors	0xbb7b8287f3f0a933474a79eae42cbca977791171	MinerBlk25		Etherscan			false	false	false
 90-DevCon2:Individual	0xbb834721db0674f8b4021cd0202e09e0e2ee5e5f	minhwan		DevCon2 Token Contract			false	false	false
 40-Exchanges	0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc	Coinbase 2		Etherscan			false	false	false
 81-Other	0xbb9854bfd082c48b4d426ac6a2a152b01326f46f	X3		Etherscan.io			false	false	false

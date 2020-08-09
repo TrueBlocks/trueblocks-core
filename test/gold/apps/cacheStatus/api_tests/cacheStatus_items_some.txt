@@ -12,7 +12,64 @@
       "is_scraping": false,
       "caches": [
         {
-          "items": [],
+          "items": [
+            {
+              "type": "CIndexCacheItem",
+              "nAddresses": 41556,
+              "nAppearances": 500012,
+              "firstAppearance": 2998252,
+              "latestAppearance": 3025310,
+              "firstTs": 1484450745,
+              "latestTs": 1484835514,
+              "filename": "/--index-path--/002998252-003025310.bin",
+              "indexSizeBytes": 5163708,
+              "index_hash": "",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": ""
+            },
+            {
+              "type": "CIndexCacheItem",
+              "nAddresses": 40129,
+              "nAppearances": 500008,
+              "firstAppearance": 3025311,
+              "latestAppearance": 3051651,
+              "firstTs": 1484835515,
+              "latestTs": 1485212476,
+              "filename": "/--index-path--/003025311-003051651.bin",
+              "indexSizeBytes": 5123720,
+              "index_hash": "",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": ""
+            },
+            {
+              "type": "CIndexCacheItem",
+              "nAddresses": 39337,
+              "nAppearances": 500024,
+              "firstAppearance": 3051652,
+              "latestAppearance": 3076199,
+              "firstTs": 1485212520,
+              "latestTs": 1485563875,
+              "filename": "/--index-path--/003051652-003076199.bin",
+              "indexSizeBytes": 5101672,
+              "index_hash": "",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": ""
+            },
+            {
+              "type": "CIndexCacheItem",
+              "nAddresses": 39529,
+              "nAppearances": 500006,
+              "firstAppearance": 3076200,
+              "latestAppearance": 3103319,
+              "firstTs": 1485563890,
+              "latestTs": 1485953000,
+              "filename": "/--index-path--/003076200-003103319.bin",
+              "indexSizeBytes": 5106904,
+              "index_hash": "",
+              "bloomSizeBytes": 131080,
+              "bloom_hash": ""
+            }
+          ],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,
@@ -174,6 +231,59 @@
         {
           "name": "is_valid",
           "type": "bool"
+        }
+      ]
+    },
+    {
+      "type": "CIndexCacheItem",
+      "fields": [
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "nAddresses",
+          "type": "unumber"
+        },
+        {
+          "name": "nAppearances",
+          "type": "unumber"
+        },
+        {
+          "name": "firstAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "latestAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "firstTs",
+          "type": "timestamp"
+        },
+        {
+          "name": "latestTs",
+          "type": "timestamp"
+        },
+        {
+          "name": "filename",
+          "type": "text"
+        },
+        {
+          "name": "indexSizeBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "index_hash",
+          "type": "ipfshash"
+        },
+        {
+          "name": "bloomSizeBytes",
+          "type": "unumber"
+        },
+        {
+          "name": "bloom_hash",
+          "type": "ipfshash"
         }
       ]
     },

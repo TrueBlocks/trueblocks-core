@@ -5,6 +5,4 @@ getLogs 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x076
 ,{"jsonrpc":"2.0","result":[],"id":"1"}
 ], "errors": [
 "Transaction 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 not found."
-], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
 ] }
