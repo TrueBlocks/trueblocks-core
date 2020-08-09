@@ -864,7 +864,7 @@ bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t
     hash = uint_2_Hex(bn * 100000 + txid);
     to = addr;
     from = (txid == 99999 ? "0xBlockReward" : "0xUncleReward");
-    value = blockReward(bn, txid, false);
+    value = getBlockReward(bn, txid, false);
     return true;
 }
 

@@ -194,5 +194,6 @@ extern const char* STR_DISPLAY_TRACE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern wei_t getBlockReward(blknum_t bn, blknum_t txid, bool txFee);
 // EXISTING_CODE
 }  // namespace qblocks

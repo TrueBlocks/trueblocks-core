@@ -17,6 +17,7 @@
 #include <algorithm>
 #include "trace.h"
 #include "transaction.h"
+#include "node.h"
 
 namespace qblocks {
 
@@ -508,7 +509,27 @@ bool CTrace::isError(void) const {
     return !error.empty();
 }
 
-extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
+//---------------------------------------------------------------------------
+wei_t getBlockReward(blknum_t bn, blknum_t txid, bool txFee) {
+    if (txFee || txid == 99998)  // TODO(tjayrush): figure out uncle mining reward
+        return str_2_Wei("0000000000000000000");
+
+    wei_t reward = 0;
+    if (bn < byzantiumBlock) {
+        reward = str_2_Wei("5000000000000000000");
+    } else if (bn < constantinopleBlock) {
+        reward = str_2_Wei("3000000000000000000");
+    } else {
+        reward = str_2_Wei("2000000000000000000");
+    }
+
+    blknum_t nUncles = getUncleCount(bn);
+    if (nUncles)
+        reward += ((reward / 32) * nUncles);
+
+    return reward;
+}
+
 //---------------------------------------------------------------------------
 void CTrace::loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid) {
     blockNumber = bn;
@@ -516,7 +537,7 @@ void CTrace::loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t 
     action.from = (txid == 99998 ? "0xUncleReward" : "0xBlockReward");
     action.to = trans.to;
     action.callType = (txid == 99998 ? "uncle-reward" : "block-reward");
-    action.value = blockReward(bn, txid, false);
+    action.value = getBlockReward(bn, txid, false);
     traceAddress.push_back((txid == 99998 ? "null-u-s" : "null-b-s"));
     transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";
@@ -530,7 +551,7 @@ void CTrace::loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum
     action.from = "0xTransactionFee";
     action.to = trans.to;
     action.callType = "tx-fee";
-    action.value = blockReward(bn, txid, true);
+    action.value = getBlockReward(bn, txid, true);
     traceAddress.push_back("null-f-s");
     transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";

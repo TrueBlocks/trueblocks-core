@@ -148,6 +148,43 @@ bool getBlock(CBlock& block, const hash_t& blockHash) {
 }
 
 //-------------------------------------------------------------------------
+bool getUncle(CBlock& block, blknum_t blockNum, size_t index) {
+    return queryUncle(block, uint_2_Hex(blockNum), index);
+}
+
+//-------------------------------------------------------------------------
+bool getUncle(CBlock& block, const hash_t& blockHash, size_t index) {
+    return queryUncle(block, blockHash, index);
+}
+
+//-------------------------------------------------------------------------
+bool queryUncle(CBlock& block, const string_q& datIn, size_t index) {
+    if (datIn == "latest")
+        return queryUncle(block, uint_2_Str(getLatestBlock_client()), index);
+    string_q func = isHash(datIn) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
+    string_q params = "[" + quote(datIn) + "," + quote(uint_2_Hex(index)) + "]";
+    return getObjectViaRPC(block, func, params);
+}
+
+//-------------------------------------------------------------------------
+size_t getUncleCount(blknum_t blockNum) {
+    return queryUncleCount(uint_2_Hex(blockNum));
+}
+
+//-------------------------------------------------------------------------
+size_t getUncleCount(const hash_t& blockHash) {
+    return queryUncleCount(blockHash);
+}
+
+//-------------------------------------------------------------------------
+size_t queryUncleCount(const string_q& datIn) {
+    if (datIn == "latest")
+        return queryUncleCount(uint_2_Hex(getLatestBlock_client()));
+    string_q func = isHash(datIn) ? "eth_getUncleCountByBlockHash" : "eth_getUncleCountByBlockNumber";
+    return str_2_Uint(callRPC(func, "[" + quote(datIn) + "]", false));
+}
+
+//-------------------------------------------------------------------------
 bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
     if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
         readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
@@ -247,9 +284,12 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
             trans.traces.push_back(dDos);
 
         } else if (txid == 99997 || txid == 99998 || txid == 99999) {
-            CTrace blockReward;
-            blockReward.loadAsBlockReward(trans, bn, txid);
-            trans.traces.push_back(blockReward);
+            // 99997 is misconfigured miners early in the chain due to a bug. Mining rewards was sent to zero addr
+            // 99998 is an uncle reward
+            // 99999 is the mining reward
+            CTrace rewardTrace;
+            rewardTrace.loadAsBlockReward(trans, bn, txid);
+            trans.traces.push_back(rewardTrace);
 
             if (txid == 99999) {
                 CTrace txFee;
@@ -722,6 +762,24 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t cou
 }
 
 //-------------------------------------------------------------------------
+bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
+    // Here we simply scan the numbers and either read from disc or query the node
+    if (!func)
+        return false;
+
+    for (uint64_t i = start; i < start + count - 1; i = i + skip) {
+        CBlock block;
+        getBlock_light(block, i);
+        bool ret = (*func)(block, data);
+        if (!ret) {
+            // Cleanup and return if user tells us to
+            return false;
+        }
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
 bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) {
     return true;
 }
@@ -1077,20 +1135,6 @@ bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool p
     }
     getBlock_light(block, first);
     return true;
-}
-
-//-------------------------------------------------------------------------
-wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee) {
-    if (txFee || txid == 99998)  // TODO(tjayrush): figure out uncle mining reward
-        return str_2_Wei("0000000000000000000");
-
-    if (bn < byzantiumBlock) {
-        return str_2_Wei("5000000000000000000");
-    } else if (bn < constantinopleBlock) {
-        return str_2_Wei("3000000000000000000");
-    } else {
-        return str_2_Wei("2000000000000000000");
-    }
 }
 
 //----------------------------------------------------------------

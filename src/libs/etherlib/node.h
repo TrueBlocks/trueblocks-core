@@ -26,6 +26,10 @@ extern void etherlib_cleanup(void);
 // fastest methods to access data
 extern bool getBlock(CBlock& block, blknum_t blockNum);
 extern bool getBlock(CBlock& block, const hash_t& blockHash);
+extern bool getUncle(CBlock& block, blknum_t blockNum, size_t index);
+extern bool getUncle(CBlock& block, const hash_t& blockHash, size_t index);
+extern size_t getUncleCount(blknum_t blockNum);
+extern size_t getUncleCount(const hash_t& blockHash);
 extern bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txID);
 extern bool getTransaction(CTransaction& trans, const hash_t& txHash);
 extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t txID);
@@ -38,6 +42,8 @@ extern bool getFullReceipt(CTransaction* trans, bool needsTrace);
 
 //-------------------------------------------------------------------------
 extern bool queryBlock(CBlock& block, const string_q& num, bool needTrace);
+extern bool queryUncle(CBlock& block, const string_q& num, size_t index);
+extern size_t queryUncleCount(const string_q& num);
 
 //-------------------------------------------------------------------------
 // lower level access to the node's responses
@@ -130,6 +136,8 @@ extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint6
                           uint64_t skip = 1);  // NOLINT
 extern bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                                 uint64_t skip = 1);  // NOLINT
+extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
+                                uint64_t skip = 1);  // NOLINT
 
 //-------------------------------------------------------------------------
 // forEvery functions
@@ -187,7 +195,6 @@ extern bool freshenTimestamps(blknum_t minBlock);
 extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 
 //-------------------------------------------------------------------------
-extern wei_t blockReward(blknum_t bn, blknum_t txid, bool txFee);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
