@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-e|-a|-u|-n|-c|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  
@@ -15,6 +15,7 @@ getBlock -th
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
 | -c | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
+| -U | --uncles | display uncle blocks (if any) instead of the requested block |
 
 #### Hidden options (shown during testing only)
 | -o | --force | force a re-write of the block to the cache |

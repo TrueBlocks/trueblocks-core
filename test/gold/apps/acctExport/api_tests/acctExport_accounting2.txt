@@ -107,14 +107,14 @@
       "encoding": ""
     },
     {
-      "hash": "0x56f99e",
+      "hash": "0x0",
       "blockHash": "0x0",
       "blockNumber": 56,
       "transactionIndex": 99998,
       "timestamp": 1438270322,
       "from": "0xUncleReward",
       "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "value": 0,
+      "value": 3.75e+18,
       "gas": 0,
       "gasPrice": 0,
       "input": "",
@@ -141,14 +141,14 @@
           "intOutflow": "0",
           "selfDestructInflow": "0",
           "selfDestructOutflow": "0",
-          "miningInflow": "0",
+          "miningInflow": "3750000000000000000",
           "prefundInflow": "0",
           "gasCostOutflow": "0",
           "endBal": "13750000000000000000",
-          "endBalCalc": "10000000000000000000",
-          "endBalDiff": "3750000000000000000",
+          "endBalCalc": "13750000000000000000",
+          "endBalDiff": "0",
           "reconciliationType": "",
-          "reconciled": false
+          "reconciled": true
         }
       ],
       "gasCost": 0,
@@ -156,7 +156,7 @@
       "function": "",
       "gasUsed": 0,
       "date": "2015-07-30 15:32:02 UTC",
-      "ether": 0,
+      "ether": 3.75,
       "encoding": ""
     },
     {
@@ -213,14 +213,14 @@
       "encoding": ""
     },
     {
-      "hash": "0x17a6afe",
+      "hash": "0x0",
       "blockHash": "0x0",
       "blockNumber": 247,
       "transactionIndex": 99998,
       "timestamp": 1438270739,
       "from": "0xUncleReward",
       "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-      "value": 0,
+      "value": 3125000000000000000,
       "gas": 0,
       "gasPrice": 0,
       "input": "",
@@ -247,14 +247,14 @@
           "intOutflow": "0",
           "selfDestructInflow": "0",
           "selfDestructOutflow": "0",
-          "miningInflow": "0",
+          "miningInflow": "3125000000000000000",
           "prefundInflow": "0",
           "gasCostOutflow": "0",
           "endBal": "21875000000000000000",
-          "endBalCalc": "18750000000000000000",
-          "endBalDiff": "3125000000000000000",
+          "endBalCalc": "21875000000000000000",
+          "endBalDiff": "0",
           "reconciliationType": "",
-          "reconciled": false
+          "reconciled": true
         }
       ],
       "gasCost": 0,
@@ -262,7 +262,7 @@
       "function": "",
       "gasUsed": 0,
       "date": "2015-07-30 15:38:59 UTC",
-      "ether": 0,
+      "ether": 3.125,
       "encoding": ""
     }
   ],

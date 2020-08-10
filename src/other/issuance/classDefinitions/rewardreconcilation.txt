@@ -1,0 +1,9 @@
+[settings]
+class = CRewardReconcilation
+fields = blknum blockNumber|\
+        timestamp timestamp|\
+        wei baseReward|\
+        wei uncAddReward|\
+        wei uncleReward
+includes = etherlib.h
+display_str = blockNumber, timestamp, baseReward, uncAddReward, uncleReward

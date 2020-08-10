@@ -3,7 +3,7 @@ chifra blocks --help
 chifra blocks argc: 2 [1:--help] 
 chifra blocks --help 
 
-  Usage:    chifra blocks [-e|-a|-u|-n|-c|-v|-h] <block> [block...]  
+  Usage:    chifra blocks [-e|-a|-u|-n|-c|-U|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
 
   Where:  
@@ -13,6 +13,7 @@ chifra blocks --help
 	-u  (--uniq)          display only uniq addresses found per block
 	-n  (--uniq_tx)       display only uniq addresses found per transaction
 	-c  (--count_only)    display counts of appearances (for --addrs, --uniq, or --uniq_tx only)
+	-U  (--uncles)        display uncle blocks (if any) instead of the requested block
 
 #### Hidden options (shown during testing only)
 	-o  (--force)         force a re-write of the block to the cache

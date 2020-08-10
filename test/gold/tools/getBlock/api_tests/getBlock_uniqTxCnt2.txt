@@ -3,7 +3,7 @@
     {
       "blockNumber": 1301011,
       "transactionsCnt": 1,
-      "uniq_tx": 3
+      "uniq_tx": 4
     },
     {
       "blockNumber": 1301324,
@@ -48,7 +48,7 @@
     {
       "blockNumber": 1303828,
       "transactionsCnt": 1,
-      "uniq_tx": 9
+      "uniq_tx": 10
     },
     {
       "blockNumber": 1304141,
@@ -63,7 +63,7 @@
     {
       "blockNumber": 1304767,
       "transactionsCnt": 12,
-      "uniq_tx": 25
+      "uniq_tx": 27
     },
     {
       "blockNumber": 1305080,
@@ -73,7 +73,7 @@
     {
       "blockNumber": 1305393,
       "transactionsCnt": 0,
-      "uniq_tx": 1
+      "uniq_tx": 2
     },
     {
       "blockNumber": 1305706,
@@ -128,7 +128,7 @@
     {
       "blockNumber": 1308836,
       "transactionsCnt": 6,
-      "uniq_tx": 13
+      "uniq_tx": 14
     },
     {
       "blockNumber": 1309149,
@@ -178,7 +178,7 @@
     {
       "blockNumber": 1311966,
       "transactionsCnt": 11,
-      "uniq_tx": 23
+      "uniq_tx": 24
     }
   ],
   "types": [

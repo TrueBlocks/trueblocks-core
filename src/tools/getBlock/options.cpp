@@ -26,6 +26,7 @@ static const COption params[] = {
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
     COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),  // NOLINT
+    COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // clang-format on
@@ -72,6 +73,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--count_only") {
             count_only = true;
+
+        } else if (arg == "-U" || arg == "--uncles") {
+            uncles = true;
 
         } else if (arg == "-o" || arg == "--force") {
             force = true;
@@ -135,6 +139,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!filterType.empty() && force)
         return usage("The --force option is not available when using one of the address options. Quitting...");
 
+    if (uncles && force)
+        return usage("The --force option is not available for uncles. Quitting...");
+
     if (!blocks.hasBlocks())
         return usage("You must specify at least one block. Quitting...");
 
@@ -172,6 +179,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     hashes_only = false;
     count_only = false;
+    uncles = false;
     force = false;
     // END_CODE_INIT
 

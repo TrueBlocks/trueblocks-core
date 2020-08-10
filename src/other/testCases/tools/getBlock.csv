@@ -12,6 +12,7 @@ on, both, fast, blocks, tools/getBlock, baddata,            y, blocks = 1590000 
 
 on, both, fast, blocks, tools/getBlock, empty,              y, blocks = 1001001
 on, both, fast, blocks, tools/getBlock, bloom,              y, blocks = 4000001
+on, both, fast, blocks, tools/getBlock, uncles,             y, blocks = 3 469 & uncles
 on, both, fast, blocks, tools/getBlock, byhash,             y, blocks = 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
 on, both, fast, blocks, tools/getBlock, blooms,             y, blocks = 1590000 4000001 4000002 & force
 on, both, fast, blocks, tools/getBlock, range,              y, blocks = 4000001-4000003 & force
@@ -33,6 +34,7 @@ on, both, medi, blocks, tools/getBlock, hashes_1,           y, blocks = 4001001 
 on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 & addrs & fmt = csv
 on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & addrs & verbose = 1 & fmt = txt
 on, both, medi, blocks, tools/getBlock, address_uniq1,      n, blocks = 3982128 & uniq
+on, both, medi, blocks, tools/getBlock, address_uniq2,      n, blocks = 3 & uniq
 on, both, medi, blocks, tools/getBlock, address_uniqTx1,    n, blocks = 3982128 & uniq_tx
 on, both, slow, blocks, tools/getBlock, byzantium_1,        y, blocks = 4369999 4370000 4380101 & force
 on, both, fast, blocks, tools/getBlock, blockByHash,        y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b

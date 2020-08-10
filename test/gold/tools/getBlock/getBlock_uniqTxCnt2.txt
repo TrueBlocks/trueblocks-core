@@ -1,7 +1,7 @@
 getBlock argc: 6 [1:1301011-1312011:313] [2:--uniq_tx] [3:--count_only] [4:--fmt] [5:json] 
 getBlock 1301011-1312011:313 --uniq_tx --count_only --fmt json 
 { "data": [
-{ "blockNumber": 1301011, "transactionsCnt": 1, "uniq_tx": 3},
+{ "blockNumber": 1301011, "transactionsCnt": 1, "uniq_tx": 4},
 { "blockNumber": 1301324, "transactionsCnt": 0, "uniq_tx": 1},
 { "blockNumber": 1301637, "transactionsCnt": 0, "uniq_tx": 1},
 { "blockNumber": 1301950, "transactionsCnt": 1, "uniq_tx": 8},
@@ -10,12 +10,12 @@ getBlock 1301011-1312011:313 --uniq_tx --count_only --fmt json
 { "blockNumber": 1302889, "transactionsCnt": 2, "uniq_tx": 5},
 { "blockNumber": 1303202, "transactionsCnt": 3, "uniq_tx": 7},
 { "blockNumber": 1303515, "transactionsCnt": 3, "uniq_tx": 7},
-{ "blockNumber": 1303828, "transactionsCnt": 1, "uniq_tx": 9},
+{ "blockNumber": 1303828, "transactionsCnt": 1, "uniq_tx": 10},
 { "blockNumber": 1304141, "transactionsCnt": 0, "uniq_tx": 1},
 { "blockNumber": 1304454, "transactionsCnt": 14, "uniq_tx": 35},
-{ "blockNumber": 1304767, "transactionsCnt": 12, "uniq_tx": 25},
+{ "blockNumber": 1304767, "transactionsCnt": 12, "uniq_tx": 27},
 { "blockNumber": 1305080, "transactionsCnt": 3, "uniq_tx": 7},
-{ "blockNumber": 1305393, "transactionsCnt": 0, "uniq_tx": 1},
+{ "blockNumber": 1305393, "transactionsCnt": 0, "uniq_tx": 2},
 { "blockNumber": 1305706, "transactionsCnt": 9, "uniq_tx": 19},
 { "blockNumber": 1306019, "transactionsCnt": 0, "uniq_tx": 1},
 { "blockNumber": 1306332, "transactionsCnt": 17, "uniq_tx": 35},
@@ -26,7 +26,7 @@ getBlock 1301011-1312011:313 --uniq_tx --count_only --fmt json
 { "blockNumber": 1307897, "transactionsCnt": 6, "uniq_tx": 13},
 { "blockNumber": 1308210, "transactionsCnt": 6, "uniq_tx": 13},
 { "blockNumber": 1308523, "transactionsCnt": 4, "uniq_tx": 9},
-{ "blockNumber": 1308836, "transactionsCnt": 6, "uniq_tx": 13},
+{ "blockNumber": 1308836, "transactionsCnt": 6, "uniq_tx": 14},
 { "blockNumber": 1309149, "transactionsCnt": 2, "uniq_tx": 5},
 { "blockNumber": 1309462, "transactionsCnt": 2, "uniq_tx": 5},
 { "blockNumber": 1309775, "transactionsCnt": 0, "uniq_tx": 1},
@@ -36,6 +36,6 @@ getBlock 1301011-1312011:313 --uniq_tx --count_only --fmt json
 { "blockNumber": 1311027, "transactionsCnt": 2, "uniq_tx": 5},
 { "blockNumber": 1311340, "transactionsCnt": 0, "uniq_tx": 1},
 { "blockNumber": 1311653, "transactionsCnt": 16, "uniq_tx": 33},
-{ "blockNumber": 1311966, "transactionsCnt": 11, "uniq_tx": 23}], "types": [
+{ "blockNumber": 1311966, "transactionsCnt": 11, "uniq_tx": 24}], "types": [
 { "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
 ] }

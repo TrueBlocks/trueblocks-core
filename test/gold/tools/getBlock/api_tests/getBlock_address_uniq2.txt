@@ -1,0 +1,16 @@
+{"data": [
+  {
+    "bn": 3,
+    "tx": 99999,
+    "tc": "",
+    "addr": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
+    "reason": "miner"
+  },  {
+    "bn": 3,
+    "tx": 99998,
+    "tc": "",
+    "addr": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+    "reason": "uncle"
+  }], "types": [
+{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

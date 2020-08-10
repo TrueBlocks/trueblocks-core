@@ -98,14 +98,14 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "ether": 5.000000000000000000
 }
 , {
-  "hash": "0x56f99e",
+  "hash": "0x0",
   "blockHash": "0x0",
   "blockNumber": 56,
   "transactionIndex": 99998,
   "timestamp": 1438270322,
   "from": "0xUncleReward",
   "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 0,
+  "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
@@ -131,19 +131,19 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "intOutflow": "0",
       "selfDestructInflow": "0",
       "selfDestructOutflow": "0",
-      "miningInflow": "0",
+      "miningInflow": "3750000000000000000",
       "prefundInflow": "0",
       "gasCostOutflow": "0",
       "endBal": "13750000000000000000",
-      "endBalCalc": "10000000000000000000",
-      "endBalDiff": "3750000000000000000",
-      "reconciled": false
+      "endBalCalc": "13750000000000000000",
+      "endBalDiff": "0",
+      "reconciled": true
     }
   ],
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:32:02 UTC",
-  "ether": 0.000000000000000000
+  "ether": 3.750000000000000000
 }
 , {
   "hash": "0x1681b7f",
@@ -194,14 +194,14 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "ether": 5.000000000000000000
 }
 , {
-  "hash": "0x17a6afe",
+  "hash": "0x0",
   "blockHash": "0x0",
   "blockNumber": 247,
   "transactionIndex": 99998,
   "timestamp": 1438270739,
   "from": "0xUncleReward",
   "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "value": 0,
+  "value": 3125000000000000000,
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
@@ -227,19 +227,19 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "intOutflow": "0",
       "selfDestructInflow": "0",
       "selfDestructOutflow": "0",
-      "miningInflow": "0",
+      "miningInflow": "3125000000000000000",
       "prefundInflow": "0",
       "gasCostOutflow": "0",
       "endBal": "21875000000000000000",
-      "endBalCalc": "18750000000000000000",
-      "endBalDiff": "3125000000000000000",
-      "reconciled": false
+      "endBalCalc": "21875000000000000000",
+      "endBalDiff": "0",
+      "reconciled": true
     }
   ],
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:38:59 UTC",
-  "ether": 0.000000000000000000
+  "ether": 3.125000000000000000
 }
 TIME ~ CLOCK - <INFO>  : Reported 5 of 255 txs for address 0x05a56e2d52c817161883f50c441c3228cfe54d9f], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
