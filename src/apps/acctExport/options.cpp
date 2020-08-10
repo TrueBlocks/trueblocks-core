@@ -455,7 +455,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
             if (buffer[i].blk == 0)
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
-            if (buffer[i].txid == 99999 || buffer[i].txid == 99998 || buffer[i].txid == 99997)
+            if (buffer[i].txid == 99997 || buffer[i].txid == 99998 || buffer[i].txid == 99999)
                 blkRewardMap[buffer[i].blk] = addr;
             apps.push_back(buffer[i]);
         }

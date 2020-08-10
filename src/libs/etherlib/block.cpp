@@ -580,9 +580,15 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data
         return false;
 
     foundOne(func, data, blockNumber, 99999, 0, miner, "miner");
+    uint64_t nUncles = getUncleCount(blockNumber);
+    for (size_t index = 0; index < nUncles; index++) {
+        CBlock uncle;
+        getUncle(uncle, blockNumber, index);
+        foundOne(func, data, blockNumber, 99998, 0, uncle.miner, "uncle");
+    }
     for (size_t tr = 0; tr < transactions.size(); tr++) {
         CTransaction* trans = &transactions[tr];
-        if (!trans->forEveryAddress(func, traceFilter, data))
+        if (!trans->forEveryAddressTx(func, traceFilter, data))
             return false;
     }
     return true;
@@ -625,7 +631,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy,
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryAddress(ADDRESSFUNC funcy, TRANSFUNC filt, void* data) {
+bool CTransaction::forEveryAddressTx(ADDRESSFUNC funcy, TRANSFUNC filt, void* data) {
     blknum_t tr = transactionIndex;
     const CReceipt* recPtr = &receipt;
     if (!foundOne(funcy, data, blockNumber, tr, 0, from, "from"))
@@ -667,7 +673,7 @@ bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter
     if (!func)
         return false;
     CUniqueState state(func, data, false);
-    return forEveryAddress(accumulateAddresses, traceFilter, &state);
+    return forEveryAddressTx(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------
@@ -675,7 +681,7 @@ bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceF
     if (!func)
         return false;
     CUniqueState state(func, data, true);
-    return forEveryAddress(accumulateAddresses, traceFilter, &state);
+    return forEveryAddressTx(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------

@@ -151,4 +151,77 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     LOG_INFO(cYellow, "  ", os.str(), " binary file created: ", greenCheck, cOff);
 }
 
+    //--------------------------------------------------------------
+    bool chunkVisitFunc(const string_q& path, void* data) {
+        if (endsWith(path, "/")) {
+            return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
+
+        } else {
+            CChunkVisitor *visitor = (CChunkVisitor*)data;
+            if (!visitor || !visitor->callFunc)
+                return false;
+            CIndexArchive archive(READING_ARCHIVE);
+            archive.ReadIndexFromBinary(path);
+            return (*visitor->callFunc)(archive, visitor->callData);
+        }
+        return true;
+    }
+
+    //--------------------------------------------------------------
+    bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data) {
+        CChunkVisitor visitor;
+        visitor.callFunc = func;
+        visitor.callData = data;
+        return forEveryFileInFolder(indexFolder_finalized, chunkVisitFunc, &visitor);
+    }
+
+    //--------------------------------------------------------------
+    bool bloomVisitFunc(const string_q& path, void* data) {
+        return true;
+    }
+
+    //--------------------------------------------------------------
+    typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);
+    bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data) {
+        return forEveryFileInFolder(indexFolder_blooms, bloomVisitFunc, data);
+    }
+
+//    //--------------------------------------------------------------
+//    bool visitIndex(CIndexArchive& chunk, void* data) {
+//        string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
+//        LOG_INFO(fn, "\t", chunk.nApps, "\t", chunk.nAddrs, "\t", fileSize(chunk.getFilename()));
+//
+//        uint32_t cnt = 0;
+//        CAppearanceArray apps;
+//        for (uint64_t a = 0 ; a < chunk.nAddrs ; a++) {
+//            CAddressRecord_base* addr = &chunk.addresses[a];
+//            for (uint64_t p = addr->offset ; p < (addr->offset + addr->cnt) ; p++) {
+//                CAppearance_base* app =&chunk.appearances[p];
+//                if (app->txid == 99998) {
+//                    CAppearance aa;
+//                    aa.bn = app->blk;
+//                    aa.tx = app->txid;
+//                    aa.addr = bytes_2_Addr(addr->bytes);
+//                    aa.reason = "Uncle";
+//                    apps.push_back(aa);
+//                }
+//                if (!(cnt++ % 23))
+//                    cerr << "Checking: " << bytes_2_Addr(addr->bytes) << "\t" << app->blk << "\t" << app->txid << "\r";cerr.flush();
+//            }
+//        }
+//
+//        sort(apps.begin(), apps.end());
+//        for (auto app : apps) {
+//            size_t count = getUncleCount(app.bn);
+//            for (blknum_t i = 0 ; i < count ; i++) {
+//                CBlock uncle;
+//                getUncle(uncle, app.bn, i);
+//                cout << i << "\t" << app.bn << "\t" << uncle.blockNumber << "\t" << (float(uncle.blockNumber + 8 - app.bn) / 8) << endl;
+//            }
+//            printf("");
+//        }
+//
+//        return true;
+//    }
+
 }  // namespace qblocks

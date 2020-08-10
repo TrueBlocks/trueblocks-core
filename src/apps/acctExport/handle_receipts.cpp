@@ -35,13 +35,8 @@ bool COptions::exportReceipts(void) {
                 block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
 
             } else {
-                if (item->blk == 0) {
-                    address_t addr = prefundAddrMap[item->txid];
-                    trans.transactionIndex = item->txid;
-                    trans.loadAsPrefund(addr, prefundWeiMap[addr]);
-
-                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
-                    trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+                if (item->blk == 0 || (item->txid == 99997 || item->txid == 99999 || item->txid == 99998)) {
+                    // Not a thing
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);

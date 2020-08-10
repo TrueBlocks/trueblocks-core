@@ -858,28 +858,6 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
 }
 
 //-------------------------------------------------------------------------
-bool CTransaction::loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr) {
-    blockNumber = bn;
-    transactionIndex = txid;
-    hash = uint_2_Hex(bn * 100000 + txid);
-    to = addr;
-    from = (txid == 99999 ? "0xBlockReward" : "0xUncleReward");
-    value = getBlockReward(bn, txid, false);
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool CTransaction::loadAsPrefund(const address_t& addr, const wei_t& amount) {
-    blknum_t id = transactionIndex;
-    initialize();
-    transactionIndex = id;
-    from = "0xPrefund";
-    to = addr;
-    value = amount;
-    return true;
-}
-
-//-------------------------------------------------------------------------
 string_q compressInput(const string_q& inputIn) {
     string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
     string_q name = input.substr(0, 10);

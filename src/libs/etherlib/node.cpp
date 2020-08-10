@@ -280,21 +280,29 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
     } else {
         if (skipDdos) {
             CTrace dDos;
-            dDos.loadAsDdos(trans, bn, txid);
+            dDos.loadTraceAsDdos(trans, bn, txid);
             trans.traces.push_back(dDos);
 
-        } else if (txid == 99997 || txid == 99998 || txid == 99999) {
-            // 99997 is misconfigured miners early in the chain due to a bug. Mining rewards was sent to zero addr
-            // 99998 is an uncle reward
-            // 99999 is the mining reward
+        } else if (txid == 99997 || txid == 99999) {
+            // 99997 was a misconfigured miners early in the chain due to a bug.
+            // 99999 is record for the winning miner
             CTrace rewardTrace;
-            rewardTrace.loadAsBlockReward(trans, bn, txid);
+            rewardTrace.loadTraceAsBlockReward(trans, bn, txid);
             trans.traces.push_back(rewardTrace);
 
-            if (txid == 99999) {
-                CTrace txFee;
-                txFee.loadAsTransactionFee(trans, bn, txid);
-                trans.traces.push_back(txFee);
+            CTrace txFee;
+            txFee.loadTraceAsTransFee(trans, bn, txid);
+            trans.traces.push_back(txFee);
+
+        } else if (txid == 99998) {
+            // 99998 is an uncle reward
+            uint64_t nUncles = getUncleCount(bn);
+            for (size_t i = 0; i < nUncles; i++) {
+                CBlock uncle;
+                CTrace rewardTrace;
+                getUncle(uncle, bn, i);
+                rewardTrace.loadTraceAsUncleReward(trans, bn, uncle.blockNumber);
+                trans.traces.push_back(rewardTrace);
             }
 
         } else {

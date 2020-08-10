@@ -14,6 +14,7 @@
 #include "etherlib.h"
 #include "node_curl.h"
 #include "cacheentry.h"
+#include "rewards.h"
 
 namespace qblocks {
 

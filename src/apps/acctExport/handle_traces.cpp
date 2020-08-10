@@ -38,10 +38,19 @@ bool COptions::exportTraces(void) {
                 if (item->blk == 0) {
                     address_t addr = prefundAddrMap[item->txid];
                     trans.transactionIndex = item->txid;
-                    trans.loadAsPrefund(addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(addr, prefundWeiMap[addr]);
 
-                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
-                    trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+                } else if (item->txid == 99997 || item->txid == 99999) {
+                    trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+
+                } else if (item->txid == 99998) {
+                    uint64_t nUncles = getUncleCount(item->blk);
+                    for (size_t u = 0; u < nUncles; u++) {
+                        CBlock uncle;
+                        getUncle(uncle, item->blk, u);
+                        trans.loadTransAsUncleReward(item->blk, uncle.blockNumber);
+                        trans.to = blkRewardMap[item->blk];
+                    }
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);

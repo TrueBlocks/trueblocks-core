@@ -77,10 +77,21 @@ bool COptions::exportAccounting(void) {
                 if (item->blk == 0) {
                     address_t addr = prefundAddrMap[item->txid];
                     trans.transactionIndex = item->txid;
-                    trans.loadAsPrefund(addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(addr, prefundWeiMap[addr]);
 
-                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
-                    trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+                } else if (item->txid == 99997 || item->txid == 99999) {
+                    trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+
+                } else if (item->txid == 99998) {
+                    uint64_t nUncles = getUncleCount(item->blk);
+                    for (size_t u = 0; u < nUncles; u++) {
+                        CBlock uncle;
+                        getUncle(uncle, item->blk, u);
+                        if (uncle.miner == blkRewardMap[item->blk]) {
+                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber);
+                            trans.to = uncle.miner;
+                        }
+                    }
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);
@@ -269,9 +280,9 @@ TODO: If an abi file is changed, we should re-articulate.
 //                if (item->blk == 0) {
 //                    address_t addr = prefundAddrMap[item->txid];
 //                    trans.transactionIndex = item->txid;
-//                    trans.loadAsPrefund(addr, prefundWeiMap[addr]);
-//                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
-//                    trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+//                    trans.loadAsP refund(addr, prefundWeiMap[addr]);
+//                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99 999) {
+//                    trans.loadAsBloc kReward(item->blk, item->txid, blkRewardMap[item->blk]);
 //                } else {
 //                    getTransaction(trans, item->blk, item->txid);
 //                    getFullReceipt(&trans, true);
@@ -455,10 +466,10 @@ lastStatement.blockNum);
             if (item->blk == 0) {
                 address_t addr = prefundAddrMap[item->txid];
                 trans.transactionIndex = item->txid;
-                trans.loadAsPrefund(addr, prefundWeiMap[addr]);
+                trans.loadAs Prefund(addr, prefundWeiMap[addr]);
 
-            } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99999) {
-                trans.loadAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+            } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99 999) {
+                trans.loadAsBlock Reward(item->blk, item->txid, blkRewardMap[item->blk]);
 
             } else {
                 getTransaction(trans, item->blk, item->txid);

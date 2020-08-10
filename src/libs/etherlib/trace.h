@@ -64,9 +64,10 @@ class CTrace : public CBaseNode {
     // EXISTING_CODE
     bool isError(void) const;
     const CTransaction* pTrans;
-    void loadAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
-    void loadAsTransactionFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
-    void loadAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid);
+    void loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
+    void loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blknum_t uncleBn);
+    void loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
+    void loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid);
     // EXISTING_CODE
     bool operator==(const CTrace& item) const;
     bool operator!=(const CTrace& item) const {
@@ -194,6 +195,5 @@ extern const char* STR_DISPLAY_TRACE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern wei_t getBlockReward(blknum_t bn, blknum_t txid, bool txFee);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -68,11 +68,12 @@ class CTransaction : public CBaseNode {
 
     // EXISTING_CODE
     const CBlock* pBlock;
-    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryAddressTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool loadAsPrefund(const address_t& addr, const wei_t& amount);
-    bool loadAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
+    bool loadTransAsPrefund(const address_t& addr, const wei_t& amount);
+    bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
+    bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const {
