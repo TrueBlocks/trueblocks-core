@@ -299,4 +299,12 @@ typedef struct {
 extern bool getNewestFile(const string_q& path, void* data);
 extern fileInfo getNewestFileInFolder(const string_q& path);
 
+typedef enum { BY_NOTHING = 0, BY_YEAR, BY_MONTH, BY_WEEK, BY_DAY, BY_HOUR } period_t;
+extern bool isSameYear(const time_q& t1, const time_q& t2);
+extern bool isSameMonth(const time_q& t1, const time_q& t2);
+extern bool isSameWeek(const time_q& t1, const time_q& t2);
+extern bool isSameDay(const time_q& t1, const time_q& t2);
+extern bool isSameHour(const time_q& t1, const time_q& t2);
+extern bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2);
+
 }  // namespace qblocks

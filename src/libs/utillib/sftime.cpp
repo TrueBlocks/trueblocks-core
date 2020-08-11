@@ -1018,4 +1018,44 @@ fileInfo getNewestFileInFolder(const string_q& path) {
     return rec;
 }
 
+//----------------------------------------------------------------------------------
+bool isSameYear(const time_q& t1, const time_q& t2) {
+    return BOY(t1) == BOY(t2);
+}
+
+//----------------------------------------------------------------------------------
+bool isSameMonth(const time_q& t1, const time_q& t2) {
+    return BOM(t1) == BOM(t2);
+}
+
+//----------------------------------------------------------------------------------
+bool isSameWeek(const time_q& t1, const time_q& t2) {
+    return BOW(t1) == BOW(t2);
+}
+
+//----------------------------------------------------------------------------------
+bool isSameDay(const time_q& t1, const time_q& t2) {
+    return BOD(t1) == BOD(t2);
+}
+
+//----------------------------------------------------------------------------------
+bool isSameHour(const time_q& t1, const time_q& t2) {
+    return BOH(t1) == BOH(t2);
+}
+
+//----------------------------------------------------------------------------------
+bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
+    switch (period) {
+        case BY_YEAR: return isSameYear(t1, t2);
+        case BY_MONTH: return isSameMonth(t1, t2);
+        case BY_WEEK: return isSameWeek(t1, t2);
+        case BY_DAY: return isSameDay(t1, t2);
+        case BY_HOUR: return isSameHour(t1, t2);
+        case BY_NOTHING:
+        default:
+            break;
+    }
+    return t1 == t2;
+}
+
 }  // namespace qblocks
