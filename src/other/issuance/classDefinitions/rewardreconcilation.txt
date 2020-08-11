@@ -3,7 +3,7 @@ class = CRewardReconcilation
 fields = blknum blockNumber|\
         timestamp timestamp|\
         wei baseReward|\
-        wei uncAddReward|\
+        wei baseAddReward|\
         wei uncleReward
 includes = etherlib.h
-display_str = blockNumber, timestamp, baseReward, uncAddReward, uncleReward
+display_str = blockNumber, timestamp, month, day, baseReward, baseAddReward, blockReward, uncleReward, totalReward

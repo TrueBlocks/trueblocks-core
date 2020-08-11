@@ -27,18 +27,27 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     // END_CODE_DECLARE
 
-    bool option1;
-    bool option2;
+    bool generate = false;
+    bool audit = false;
+    bool uncles = false;
+    period_t by_period = BY_NOTHING;
+    bool discrete = false;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
+    bool loadResults(CRewardReconcilationArray& recs);
+
+    bool model_issuance(void);
+    bool audit_issuance(void);
+    bool show_uncle_blocks(void);
+    bool summary_by_period(void);
 };
 
 //-----------------------------------------------------------------------------
 extern bool visitNonEmptyBlock(CBlock& node, void* data);
 extern bool visitEmptyBlock(CBlock& node, void* data);
-extern string_q CSV_DISPLAY_REWARDRECONCILATION;
 extern timestamp_t getBlockTimestamp(blknum_t bn);
+extern string_q CSV_DISPLAY_REWARDRECONCILATION;

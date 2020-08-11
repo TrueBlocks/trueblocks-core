@@ -13,63 +13,56 @@
 #include "acctlib.h"
 #include "options.h"
 
-blknum_t start = 1268725;
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    etherlib_init(quickQuitHandler);
-    CRewardReconcilation::registerClass();
+    nodeNotRequired();
+    acctlib_init(quickQuitHandler);
 
-#if 1
-    string_q contents = asciiFileToString("uncle_blocks.csv");
-    CUintArray blocks;
-    explode(blocks, contents, '\n');
-    blknum_t prev = start;
-    for (auto block : blocks) {
-        for (blknum_t bn = prev ; bn < block ; bn++) {
-            CRewardReconcilation rec;
-            rec.blockNumber = bn;
-            rec.baseReward = getBlockReward(bn, false);
-            rec.timestamp = getBlockTimestamp(bn);
-            if (bn == prev) {
-                // This block has an uncle
-                rec.uncAddReward = getBlockReward(bn, true) - rec.baseReward;
-                uint64_t count = getUncleCount(bn);
-                for (size_t i = 0 ; i < count ; i++) {
-                    CBlock uncle;
-                    getUncle(uncle, bn, i);
-                    rec.uncleReward += getUncleReward(bn, uncle.blockNumber);
-                }
-            }
-            cout << rec.Format(CSV_DISPLAY_REWARDRECONCILATION) << endl;
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
+    bool once = true;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
+
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CRewardReconcilation));
+
+        if (options.generate) {
+            if (options.by_period)
+                options.summary_by_period();
+            else
+                options.model_issuance();
+
+        } else if (options.audit) {
+            options.audit_issuance();
+
+        } else if (options.uncles) {
+            options.show_uncle_blocks();
+
+        } else {
+            ASSERT(0); // can't happen
         }
-        prev = block;
+        once = false;
     }
-#else
-    wei_t total = 0;
-    forEveryBlock(visitBlock, &total, 0, getLatestBlock_client());
-#endif
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    etherlib_cleanup();
+    acctlib_cleanup();
     return 0;
 }
 
 //--------------------------------------------------------------
 timestamp_t getBlockTimestamp(blknum_t bn) {
-    static uint32_t *timestamps = NULL;
+    static uint32_t* timestamps = NULL;
     static size_t nTimestamps = 0;
     if (nTimestamps == 0) {
         loadTimestampFile(&timestamps, nTimestamps);
         cerr << "Timestamps loaded..." << endl;
     }
-    return bn < nTimestamps ? timestamps[(bn*2)+1] : 0;
+    return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;
 }
 
 //--------------------------------------------------------------
-bool visitBlock(CBlock& block, void* data) {
-    CRewardReconcilation rec(block.blockNumber, block.miner);
-    rec.timestamp = getBlockTimestamp(block.blockNumber);
-    cout << rec.Format(CSV_DISPLAY_REWARDRECONCILATION) << endl;
-    return true;
-}
-
 string_q CSV_DISPLAY_REWARDRECONCILATION = substitute(STR_DISPLAY_REWARDRECONCILATION, "\t", ",");

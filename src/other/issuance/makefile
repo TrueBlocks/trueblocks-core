@@ -18,6 +18,7 @@ dest=$(bin)/$(exec)
 src= \
 options.cpp \
 rewardreconcilation.cpp \
+handlers.cpp \
 $(exec).cpp
 
 #-------------------------------------------------

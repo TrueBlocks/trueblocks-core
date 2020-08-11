@@ -28,7 +28,7 @@ class CRewardReconcilation : public CBaseNode {
     blknum_t blockNumber;
     timestamp_t timestamp;
     wei_t baseReward;
-    wei_t uncAddReward;
+    wei_t baseAddReward;
     wei_t uncleReward;
 
   public:
@@ -41,6 +41,7 @@ class CRewardReconcilation : public CBaseNode {
 
     // EXISTING_CODE
     explicit CRewardReconcilation(blknum_t bn, const address_t& blockMiner);
+    CRewardReconcilation& operator+=(const CRewardReconcilation& rec);
     // EXISTING_CODE
     bool operator==(const CRewardReconcilation& item) const;
     bool operator!=(const CRewardReconcilation& item) const {
@@ -96,7 +97,7 @@ inline void CRewardReconcilation::initialize(void) {
     blockNumber = 0;
     timestamp = 0;
     baseReward = 0;
-    uncAddReward = 0;
+    baseAddReward = 0;
     uncleReward = 0;
 
     // EXISTING_CODE
@@ -111,7 +112,7 @@ inline void CRewardReconcilation::duplicate(const CRewardReconcilation& re) {
     blockNumber = re.blockNumber;
     timestamp = re.timestamp;
     baseReward = re.baseReward;
-    uncAddReward = re.uncAddReward;
+    baseAddReward = re.baseAddReward;
     uncleReward = re.uncleReward;
 
     // EXISTING_CODE

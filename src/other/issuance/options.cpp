@@ -14,9 +14,17 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("option1", "o", "", OPT_SWITCH, "option one"),
-    COption("thing", "t", "<val>", OPT_FLAG, "option two"),
-    COption("", "", "", OPT_DESCRIPTION, "This is what the program does.\n"),
+    COption("generate", "g", "", OPT_SWITCH, "generate expercted miner and uncle rewards for each block"),
+    COption("audit", "a", "", OPT_SWITCH, "audit miner and uncle rewards for each block"),
+    COption("uncles", "u", "", OPT_SWITCH, "generate a list of blocks containing one or more uncles"),
+    COption("by_year", "y", "", OPT_SWITCH, "summarize previously generated results by year"),
+    COption("by_month", "m", "", OPT_SWITCH, "summarize previously generated results by month"),
+    COption("by_day", "d", "", OPT_SWITCH, "summarize previously generated results by day"),
+    COption("by_hour", "o", "", OPT_SWITCH, "summarize previously generated results by hour"),
+    COption("discrete", "i", "", OPT_SWITCH, "while accumulating, reset accumulator at each period"),
+    //COption("option1", "o", "", OPT_HIDDEN|OPT_SWITCH, "option one"),
+    COption("thing", "t", "<val>", OPT_HIDDEN|OPT_FLAG, "option two"),
+    COption("", "", "", OPT_DESCRIPTION, "Process various data related to Ethereum's issuance.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -25,14 +33,37 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    bool by_year = false;
+    bool by_month = false;
+    bool by_day = false;
+    bool by_hour = false;
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
-        if (arg == "-o" || arg == "--option1") {
-            option1 = true;
+        if (arg == "-g" || arg == "--generate") {
+            generate = true;
 
-        } else if (arg == "-t" || arg == "--thing") {
-            option2 = true;
+        } else if (arg == "-a" || arg == "--audit") {
+            audit = true;
+
+        } else if (arg == "-u" || arg == "--uncles") {
+            uncles = true;
+
+        } else if (arg == "-y" || arg == "--by_year") {
+            by_year = true;
+
+        } else if (arg == "-m" || arg == "--by_month") {
+            by_month = true;
+
+        } else if (arg == "-d" || arg == "--by_day") {
+            by_day = true;
+
+        } else if (arg == "-o" || arg == "--by_hour") {
+            by_hour = true;
+
+        } else if (arg == "-i" || arg == "--discrete") {
+            discrete = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
@@ -41,8 +72,22 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (option1 && option2)
-        return usage("Option 1 and option 2 cannot both be true.");
+    if (!generate && !audit && !uncles)
+        return usage("Please choose one of the available options.");
+
+    if ((generate + audit + uncles) != 1)
+        return usage("Please choose only one of the available options.");
+
+    if (by_year)
+        by_period = BY_YEAR;
+    else if (by_month)
+        by_period = BY_MONTH;
+    else if (by_day)
+        by_period = BY_DAY;
+    else if (by_hour)
+        by_period = BY_HOUR;
+    else
+        by_period = BY_NOTHING;
 
     return true;
 }
@@ -50,15 +95,14 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-
-    option1 = false;
-    option2 = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+
+    CRewardReconcilation::registerClass();
 }
 
 //--------------------------------------------------------------------------------

@@ -77,6 +77,9 @@ string_q CRewardReconcilation::getValueByName(const string_q& fieldName) const {
             if (fieldName % "baseReward") {
                 return wei_2_Str(baseReward);
             }
+            if (fieldName % "baseAddReward") {
+                return wei_2_Str(baseAddReward);
+            }
             break;
         case 't':
             if (fieldName % "timestamp") {
@@ -84,9 +87,6 @@ string_q CRewardReconcilation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'u':
-            if (fieldName % "uncAddReward") {
-                return wei_2_Str(uncAddReward);
-            }
             if (fieldName % "uncleReward") {
                 return wei_2_Str(uncleReward);
             }
@@ -120,6 +120,10 @@ bool CRewardReconcilation::setValueByName(const string_q& fieldNameIn, const str
                 baseReward = str_2_Wei(fieldValue);
                 return true;
             }
+            if (fieldName % "baseAddReward") {
+                baseAddReward = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 't':
             if (fieldName % "timestamp") {
@@ -128,10 +132,6 @@ bool CRewardReconcilation::setValueByName(const string_q& fieldNameIn, const str
             }
             break;
         case 'u':
-            if (fieldName % "uncAddReward") {
-                uncAddReward = str_2_Wei(fieldValue);
-                return true;
-            }
             if (fieldName % "uncleReward") {
                 uncleReward = str_2_Wei(fieldValue);
                 return true;
@@ -165,7 +165,7 @@ bool CRewardReconcilation::Serialize(CArchive& archive) {
     archive >> blockNumber;
     archive >> timestamp;
     archive >> baseReward;
-    archive >> uncAddReward;
+    archive >> baseAddReward;
     archive >> uncleReward;
     finishParse();
     return true;
@@ -181,7 +181,7 @@ bool CRewardReconcilation::SerializeC(CArchive& archive) const {
     archive << blockNumber;
     archive << timestamp;
     archive << baseReward;
-    archive << uncAddReward;
+    archive << baseAddReward;
     archive << uncleReward;
 
     return true;
@@ -222,7 +222,7 @@ void CRewardReconcilation::registerClass(void) {
     ADD_FIELD(CRewardReconcilation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CRewardReconcilation, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CRewardReconcilation, "baseReward", T_WEI, ++fieldNum);
-    ADD_FIELD(CRewardReconcilation, "uncAddReward", T_WEI, ++fieldNum);
+    ADD_FIELD(CRewardReconcilation, "baseAddReward", T_WEI, ++fieldNum);
     ADD_FIELD(CRewardReconcilation, "uncleReward", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -243,6 +243,22 @@ string_q nextRewardreconcilationChunk_custom(const string_q& fieldIn, const void
     if (rew) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "day")
+                    return ts_2_Date(rew->timestamp).Format(FMT_JSON).substr(0,10);
+                break;
+            case 'm':
+                if (fieldIn % "month")
+                    return ts_2_Date(rew->timestamp).Format(FMT_JSON).substr(0,7);
+                break;
+            case 'b':
+                if (fieldIn % "blockReward")
+                    return wei_2_Str(rew->baseReward + rew->baseAddReward);
+                break;
+            case 't':
+                if (fieldIn % "totalReward")
+                    return wei_2_Str(rew->baseReward + rew->baseAddReward + rew->uncleReward);
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -282,16 +298,20 @@ ostream& operator<<(ostream& os, const CRewardReconcilation& item) {
 const char* STR_DISPLAY_REWARDRECONCILATION =
     "[{BLOCKNUMBER}]\t"
     "[{TIMESTAMP}]\t"
+    "[{MONTH}]\t"
+    "[{DAY}]\t"
     "[{BASEREWARD}]\t"
-    "[{UNCADDREWARD}]\t"
-    "[{UNCLEREWARD}]";
+    "[{BASEADDREWARD}]\t"
+    "[{BLOCKREWARD}]\t"
+    "[{UNCLEREWARD}]\t"
+    "[{TOTALREWARD}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CRewardReconcilation::CRewardReconcilation(blknum_t bn, const address_t& blockMiner) {
     blockNumber = bn;
     baseReward = getBlockReward(bn, false);
-    uncAddReward = getBlockReward(bn, true) - baseReward;
+    baseAddReward = getBlockReward(bn, true) - baseReward;
     uint64_t count = getUncleCount(bn);
     for (size_t i = 0 ; i < count ; i++) {
         CBlock uncle;
@@ -299,5 +319,14 @@ CRewardReconcilation::CRewardReconcilation(blknum_t bn, const address_t& blockMi
         uncleReward += getUncleReward(bn, uncle.blockNumber);
     }
 }
+
+//---------------------------------------------------------------------------
+CRewardReconcilation& CRewardReconcilation::operator+=(const CRewardReconcilation& rec) {
+    baseReward += rec.baseReward;
+    baseAddReward += rec.baseAddReward;
+    uncleReward += rec.uncleReward;
+    return *this;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks
