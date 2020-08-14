@@ -1,21 +1,21 @@
-## Modeling and Auditing the Ethereum Supply
+# Modeling and Auditing the Ethereum Supply
 
-This is an attempt to respond to #SupplyGate, which was a silly Twitter discussion about the fact that getting Ethereum's current supply is not as easy as it should be. News flash: it's not.
+This code is in response to #SupplyGate, which was a silly Twitter discussion (as most are) about the fact that a perfectly mathematical number is difficult to get from an Ethereum node. News flash: it's difficult to get.
 
-We wrote two articles (here and here) trying to explain the calcuations. We did this mostly to help ourselves understand how to write the code in this repo.
+We wrote two articles explaing the calcuations by re-visting the Yellow Paper, looking closely at the overly complete equations, translating those equations into English, and then arriving at the above code.
 
 Here's links to the two articles which discuss:
 
 Ethereum Issuance: minerReward
 Ethereum Issuance: uncleReward
 
-### Building the Code
+## Building and Using the Code
 
-First, you must download, build and get running the TrueBlocks core libraries and tools.
+To get started, you must download, build and get running the TrueBlocks core libraries and tools. Do that now, and return when you've completed that task.
 
-After that, follow these instructions to build this repo:
+Next, follow these instructions to build the code in this repo (from the ./build folder):
 
-    cd ./src/other/issuance
+    cd ../src/other/issuance
     make every
     bin/issuance
 
@@ -39,19 +39,67 @@ The above command should return this help screen.
 
     Powered by QBlocks (GHC-TrueBlocks//0.7.0-alpha-c2cc73914-20200811)
 
-### Creating the Data
+## Creating the Data
 
-#### List of Uncle Blocks
+We tried to build code that runs as quickly as possible. This involves building first a list of blocks that contain uncles. With that list, we can avoid querying uncessarily for blocks that do not have uncles. The issuance for blocks that do not have uncles requires no query to the chain. The reward is a pure function of `blockNumber`.
 
-First, we'll show you how to create the data we use in the data anaylsis article mentioned above. Follow these instructions from the `./src/other/issuance` folder:
+### Listing Uncle Blocks
+
+Assuming you've built the repo properly, follow these instructions from the `./src/other/issuance` folder to create the list of blocks with uncles:
 
     mkdir data
     bin/issuance --uncles | tee data/uncle_blocks.csv
 
-This takes a while to run, but it's worth it, as it will save a lot of time in later processes.
+This takes a while to run, but it's worth it, as it will save a lot of time in later processing.
 
-This command spins through each block calling `getUncleCount` on each block. If a block has uncles, it writes the `blockNumber` to the output. We save the results in the file `./data/uncle_blocks.csv`. The next process will use this data file.
+This command spins through each block calling `getUncleCount` on each block. If a block has uncles, it writes the `blockNumber` to the output. We save the results in the file `./data/uncle_blocks.csv`. The next process will use that data file.
 
-#### Modeling the issuance
+### Modeling the Issuance
 
 The next process, which uses the file `data/uncle_blocks.csv` created in the previous step, generates for each block the 'expected' accounting for the blockReward, the nephewReward, and the uncleReward for each block.
+
+Complete this process with this command:
+
+    bin/issuance --generate
+
+We call this process `modeling the expected value` in the articles.
+
+This process takes a _very long time_ and creates a _very large data file_ (~ 1.1 GB) called `./data/results.csv`. It contains accounting records for each `blockReward` and all `uncleRewards`. The CSV data file has the following fields:
+
+| Field        | Meaning                                                                 |
+| ------------ | ----------------------------------------------------------------------- |
+| blockNumber  | the block number of the record                                          |
+| timestamp    | the timestamp of the block                                              |
+| month        | the month this block was created                                        |
+| day          | the month this block was created                                        |
+| baseReward   | the base reward issues for all blocks ingoring uncles                   |
+| nephewReward | an additionl reward given to the miner of the block for included uncles |
+| blockReward  | the total reward delivered to the miner                                 |
+| uncleReward  | the reward issues to the miners of the uncle blocks (if any)            |
+| issuance     | the total new issuance for the block                                    |
+
+It's important to realize that the data created in this step is a modeling of the data, not the actual data stored on the blockchain as represented by the account balances of the rewarded miners.
+
+### Auditing the Reward Calcuations
+
+Note: The processes detailed in this section requires an Ethereum archive node. A local node that allows you to query as quickly as possible is greatly preferred. Trying to hit a remote archive node such as Infura may meet the limits of the service.
+
+To run the next process do this:
+
+    bin/issuance --audit
+
+The next process is to `audit` the blockchain by using the same calculations used above but, in addition, to do a `reconcilation` or `audit` at each issuances.
+
+One way to do this would be to spin through the blocks again (or during the previous process) and `audit` each issuance as it occurs. We would do this by querying the balance of the block's `miner` and each `uncle miner` prior to the block (i.e. at `blockNumber - 1`), modeling the issuance for each beneficiary, adding that issuance to the beginning balances, and then checking the result against the balance at the end of the block.
+
+If we've modeled it right, it should balance. Right?
+
+News flash: it doesn't.
+
+#### Digging Deeper
+
+The trouble with the above process is that it ignores the fact that the miner can have mony other sources of income and/or expenditures other than the issuance in a given block. In order to account for this other spending, one must spin through all the transactions on the chain, but, it's even worse than that as not all income and expenditures are at the transaction level, so we also have to spin through every trace of every transactions all the way down to the bottom. And, now, we have a really big problem. The above process, implented nievly, would literally take months to run. We have to be more creative than that.
+
+The goal, and the only way we've discovered to speed this process up, is to avoid querying the node at all costs  -- we need to avoid querying for blocks if we can, avoid querying for transactions with attention, avoid querying for balances (although this is not possible), and especially avoid querying for traces.
+
+As a way to avoid querying blocks so as to get the miner and uncle miner addresses, we use work we did previously in which we index every address in every block (including miners and uncle miners). This speeds up the process from many days to less than a day.
