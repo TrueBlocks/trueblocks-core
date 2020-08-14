@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+bin/issuance --by_day | tee data/by_day.csv
+bin/issuance --by_week | tee data/by_week.csv
+bin/issuance --by_month | tee data/by_month.csv
+##bin/issuance --by_year | tee data/by_year.csv
+
+bin/issuance --by_day --ether | tee data/by_day_ether.csv
+bin/issuance --by_week --ether | tee data/by_week_ether.csv
+bin/issuance --by_month --ether | tee data/by_month_ether.csv
+##bin/issuance --by_year --ether | tee data/by_year_ether.csv
+
+bin/issuance --by_day --ether --discrete| tee data/by_day_ether_discrete.csv
+bin/issuance --by_week --ether --discrete | tee data/by_week_ether_discrete.csv
+bin/issuance --by_month --ether --discrete | tee data/by_month_ether_discrete.csv
+#bin/issuance --by_year --ether --discrete | tee data/by_year_ether_discrete.csv

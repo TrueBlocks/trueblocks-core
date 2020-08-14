@@ -307,4 +307,6 @@ extern bool isSameDay(const time_q& t1, const time_q& t2);
 extern bool isSameHour(const time_q& t1, const time_q& t2);
 extern bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2);
 
+extern string_q per_2_Str(period_t period);
+
 }  // namespace qblocks

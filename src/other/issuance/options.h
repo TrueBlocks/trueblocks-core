@@ -15,8 +15,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
-#include "rewardreconcilation.h"
+#include "acctlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -38,7 +37,6 @@ class COptions : public COptionsBase {
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool loadResults(CRewardReconcilationArray& recs);
 
     bool model_issuance(void);
     bool audit_issuance(void);
@@ -50,4 +48,7 @@ class COptions : public COptionsBase {
 extern bool visitNonEmptyBlock(CBlock& node, void* data);
 extern bool visitEmptyBlock(CBlock& node, void* data);
 extern timestamp_t getBlockTimestamp(blknum_t bn);
-extern string_q CSV_DISPLAY_REWARDRECONCILATION;
+extern string_q STR_DISPLAY_EXPORT;
+extern string_q STR_HEADER_EXPORT;
+extern biguint_t operator-(const biguint_t& a, const bigint_t& b);
+extern biguint_t operator+(const biguint_t& a, const bigint_t& b);

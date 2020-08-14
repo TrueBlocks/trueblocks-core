@@ -1,7 +1,7 @@
 [settings]
 class = CReconciliationOutput
-fields = blknum bn|\
-        timestamp ts|\
+fields = blknum blockNum|\
+        timestamp timestamp|\
         string asset|\
         string begBal|\
         string begBalDiff|\
@@ -11,7 +11,10 @@ fields = blknum bn|\
         string intOutflow|\
         string selfDestructInflow|\
         string selfDestructOutflow|\
-        string miningInflow|\
+        string minerRewardInflow2|\
+        string minerAddInflow|\
+        string minerTxFeeInflow|\
+        string uncleRewardInflow|\
         string prefundInflow|\
         string gasCostOutflow|\
         string endBal|\

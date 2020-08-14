@@ -5651,7 +5651,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xe6923e9b56db1eed1c9f430ea761da7565e260fe	FaceCoin	FC	On Chain	2		false	false	false
 34-Humanity DAO	0xe6925f5cd1eb3f8d7f203708d64ee10216ad2e4a	garnettfan2		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xe69a353b3152dd7b706ff7dd40fe1d18b7802d31	AdHive Token	ADH	On Chain	18		false	false	false
-75-Early Actors	0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca	Miner_0012_462		OnChain			false	false	false
+75-Early Actors	0xe6a7a1d47ff21b6321162aea7c6cb457d5476bca	MinerOfFirstBlock		OnChain			false	false	false
 31-Gitcoin Grants:Contracts	0xe6b26dc4dda8b7cb03305d6a569f7625ddc00bee	Grant 137 Subscription Contract		OnChain			false	false	false
 30-Contracts	0xe6b4c185e286905cf34b53527f0338bffb9759d0	Totle Ethex Wrapper		0xTracker			false	false	false
 34-Humanity DAO	0xe6c8382ec2cb73f04ce10c982a4b337a19f63a31	cicnos1		https://www.humanitydao.org/humans			false	false	false

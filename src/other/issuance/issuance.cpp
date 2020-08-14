@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CRewardReconcilation));
+            cout << exportPreamble(expContext().fmtMap["header"], NULL);
 
         if (options.generate) {
             if (options.by_period)
@@ -64,5 +64,3 @@ timestamp_t getBlockTimestamp(blknum_t bn) {
     return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;
 }
 
-//--------------------------------------------------------------
-string_q CSV_DISPLAY_REWARDRECONCILATION = substitute(STR_DISPLAY_REWARDRECONCILATION, "\t", ",");

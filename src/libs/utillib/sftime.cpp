@@ -1046,16 +1046,35 @@ bool isSameHour(const time_q& t1, const time_q& t2) {
 //----------------------------------------------------------------------------------
 bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
     switch (period) {
-        case BY_YEAR: return isSameYear(t1, t2);
-        case BY_MONTH: return isSameMonth(t1, t2);
-        case BY_WEEK: return isSameWeek(t1, t2);
-        case BY_DAY: return isSameDay(t1, t2);
-        case BY_HOUR: return isSameHour(t1, t2);
+        case BY_YEAR:
+            return isSameYear(t1, t2);
+        case BY_MONTH:
+            return isSameMonth(t1, t2);
+        case BY_WEEK:
+            return isSameWeek(t1, t2);
+        case BY_DAY:
+            return isSameDay(t1, t2);
+        case BY_HOUR:
+            return isSameHour(t1, t2);
         case BY_NOTHING:
         default:
             break;
     }
     return t1 == t2;
+}
+
+string_q per_2_Str(period_t period) {
+    switch (period) {
+    case BY_YEAR: return "[{YEAR}]";
+    case BY_MONTH: return "[{MONTH}]";
+    case BY_WEEK: return "[{WEEK}]";
+    case BY_DAY: return "[{DAY}]";
+    case BY_HOUR: return "[{HOUR}]";
+    case BY_NOTHING:
+    default:
+        break;
+    }
+    return "[{MONTH}],[{DAY}]";
 }
 
 }  // namespace qblocks

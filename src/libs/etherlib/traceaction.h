@@ -46,6 +46,7 @@ class CTraceAction : public CBaseNode {
 
     // EXISTING_CODE
     friend class CTrace;
+    wei_t value2;
     // EXISTING_CODE
     bool operator==(const CTraceAction& item) const;
     bool operator!=(const CTraceAction& item) const {
@@ -110,6 +111,7 @@ inline void CTraceAction::initialize(void) {
     value = 0;
 
     // EXISTING_CODE
+    value2 = 0;
     // EXISTING_CODE
 }
 
@@ -130,6 +132,7 @@ inline void CTraceAction::duplicate(const CTraceAction& tr) {
     value = tr.value;
 
     // EXISTING_CODE
+    value2 = tr.value2;
     // EXISTING_CODE
 }
 

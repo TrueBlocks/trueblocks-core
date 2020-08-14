@@ -23,6 +23,7 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
     action.to = trans.to;
     action.callType = "block-reward";
     action.value = getBlockReward(bn);
+    action.value2 = (result.gasUsed * trans.gasPrice);
     traceAddress.push_back("null-b-s");
     // transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";
@@ -90,7 +91,8 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
     hash = uint_2_Hex(bn * 100000 + txid);
     to = addr;
     from = "0xBlockReward";
-    value = getBlockReward(bn) + getTransFees(bn);
+    value = getBlockReward(bn);
+    value2 = getTransFees(bn);  // weird temp value2 for reconciliation only
     return true;
 }
 
@@ -108,7 +110,11 @@ bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn) {
 
 //---------------------------------------------------------------------------
 wei_t getBlockReward(blknum_t bn, bool incUncleBits) {
+    if (bn == 0)
+        return 0;
+
     wei_t reward = 0;
+
     if (bn < byzantiumBlock) {
         reward = str_2_Wei("5000000000000000000");
     } else if (bn < constantinopleBlock) {
@@ -128,8 +134,11 @@ wei_t getBlockReward(blknum_t bn, bool incUncleBits) {
 
 //---------------------------------------------------------------------------
 wei_t getUncleReward(blknum_t bn, blknum_t uncleBn) {
+    if (bn == 0)
+        return 0;
+
     wei_t reward = getBlockReward(bn, false);
-    if ((uncleBn + 8) < bn)
+    if ((uncleBn + 6) < bn)
         return 0;
     blknum_t diff = (uncleBn + 8 - bn);
     return (reward / 8 * diff);
@@ -137,6 +146,9 @@ wei_t getUncleReward(blknum_t bn, blknum_t uncleBn) {
 
 //---------------------------------------------------------------------------
 extern wei_t getTransFees(blknum_t bn) {
+    if (bn == 0)
+        return 0;
+
     wei_t fees = 0;
     CBlock block;
     getBlock(block, bn);

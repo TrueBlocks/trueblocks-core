@@ -77,8 +77,8 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                return uint_2_Str(bn);
+            if (fieldName % "blockNum") {
+                return uint_2_Str(blockNum);
             }
             if (fieldName % "begBal") {
                 return bni_2_Str(begBal);
@@ -115,8 +115,14 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'm':
-            if (fieldName % "miningInflow") {
-                return bni_2_Str(miningInflow);
+            if (fieldName % "minerRewardInflow2") {
+                return bni_2_Str(minerRewardInflow2);
+            }
+            if (fieldName % "minerAddInflow") {
+                return bni_2_Str(minerAddInflow);
+            }
+            if (fieldName % "minerTxFeeInflow") {
+                return bni_2_Str(minerTxFeeInflow);
             }
             break;
         case 'o':
@@ -146,8 +152,13 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if (fieldName % "ts") {
-                return ts_2_Str(ts);
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
+            }
+            break;
+        case 'u':
+            if (fieldName % "uncleRewardInflow") {
+                return bni_2_Str(uncleRewardInflow);
             }
             break;
         default:
@@ -177,8 +188,8 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                bn = str_2_Uint(fieldValue);
+            if (fieldName % "blockNum") {
+                blockNum = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -225,8 +236,16 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'm':
-            if (fieldName % "miningInflow") {
-                miningInflow = str_2_Wei(fieldValue);
+            if (fieldName % "minerRewardInflow2") {
+                minerRewardInflow2 = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "minerAddInflow") {
+                minerAddInflow = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "minerTxFeeInflow") {
+                minerTxFeeInflow = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -263,8 +282,14 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 't':
-            if (fieldName % "ts") {
-                ts = str_2_Ts(fieldValue);
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
+                return true;
+            }
+            break;
+        case 'u':
+            if (fieldName % "uncleRewardInflow") {
+                uncleRewardInflow = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -293,15 +318,18 @@ bool CReconciliation::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> bn;
-    archive >> ts;
+    archive >> blockNum;
+    archive >> timestamp;
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
     archive >> inflow;
     archive >> intInflow;
     archive >> selfDestructInflow;
-    archive >> miningInflow;
+    archive >> minerRewardInflow2;
+    archive >> minerAddInflow;
+    archive >> minerTxFeeInflow;
+    archive >> uncleRewardInflow;
     archive >> prefundInflow;
     archive >> outflow;
     archive >> intOutflow;
@@ -323,15 +351,18 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << bn;
-    archive << ts;
+    archive << blockNum;
+    archive << timestamp;
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
     archive << inflow;
     archive << intInflow;
     archive << selfDestructInflow;
-    archive << miningInflow;
+    archive << minerRewardInflow2;
+    archive << minerAddInflow;
+    archive << minerTxFeeInflow;
+    archive << uncleRewardInflow;
     archive << prefundInflow;
     archive << outflow;
     archive << intOutflow;
@@ -378,15 +409,18 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliation, "bn", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CReconciliation, "ts", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CReconciliation, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "inflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "intInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "miningInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerRewardInflow2", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerAddInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerTxFeeInflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "uncleRewardInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundInflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "outflow", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "intOutflow", T_INT256, ++fieldNum);
@@ -416,6 +450,39 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "day") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0,10);
+                }
+                break;
+            case 'h':
+                if (fieldIn % "hour") {
+                    return BOH(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,13);
+                }
+                break;
+            case 'i':
+                if (fieldIn % "issuance") {
+                    return bni_2_Str(rec->minerRewardInflow2 + rec->minerAddInflow + rec->uncleRewardInflow);
+                }
+                break;
+            case 'm':
+                if (fieldIn % "month") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,7);
+                }
+                if (fieldIn % "minerissuance") {
+                    return bni_2_Str(rec->minerRewardInflow2 + rec->minerAddInflow);
+                }
+                break;
+            case 'w':
+                if (fieldIn % "week") {
+                    return BOW(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,10);
+                }
+                break;
+            case 'y':
+                if (fieldIn % "year") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,4);
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -494,16 +561,19 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     if (trans->to == expContext().accountedFor) {
         if (trans->from == "0xPrefund") {
             prefundInflow = trans->value;
-        } else if (trans->from == "0xBlockReward" || trans->from == "0xUncleReward") {
-            miningInflow = trans->value;
+        } else if (trans->from == "0xBlockReward") {
+            minerRewardInflow2 = trans->value;
+            minerTxFeeInflow = trans->value2;
+        } else if (trans->from == "0xUncleReward") {
+            uncleRewardInflow = trans->value;
         } else {
             inflow = trans->isError ? 0 : trans->value;
         }
     }
 
     // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(expContext().accountedFor, bn == 0 ? 0 : bn - 1);
-    endBal = getBalanceAt(expContext().accountedFor, bn);
+    begBal = getBalanceAt(expContext().accountedFor, blockNum == 0 ? 0 : blockNum - 1);
+    endBal = getBalanceAt(expContext().accountedFor, blockNum);
 
     // If the user has given us corrections, use them...
     if (corrections.size() > 0) {
@@ -516,11 +586,12 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Calculate what we think the balances should be...
-    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                 intOutflow - selfDestructOutflow - gasCostOutflow;
+    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
+                 minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
+                 gasCostOutflow;
 
     // Check to see if there are any mismatches...
-    begBalDiff = trans - bn == 0 ? 0 : begBal - lastStatement.endBal;
+    begBalDiff = trans - blockNum == 0 ? 0 : begBal - lastStatement.endBal;
     endBalDiff = endBal - endBalCalc;
 
     // ...if not, we're reconciled, so we can return...
@@ -550,8 +621,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
           12          13           15        both next and previous are different (handled above)
      */
 
-    bool prevDifferent = lastStatement.bn != bn;
-    bool nextDifferent = bn != nextBlock;
+    bool prevDifferent = lastStatement.blockNum != blockNum;
+    bool nextDifferent = blockNum != nextBlock;
 
     if (prevDifferent && nextDifferent) {
         // handled above...
@@ -562,12 +633,13 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // that case.
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
-        begBal = getBalanceAt(expContext().accountedFor, bn == 0 ? 0 : bn - 1);
+        begBal = getBalanceAt(expContext().accountedFor, blockNum == 0 ? 0 : blockNum - 1);
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - gasCostOutflow;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
+                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
+                     gasCostOutflow;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
         // available until the end of the block. The best we can do is temporarily assume the calculated balance
@@ -586,12 +658,13 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - gasCostOutflow;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
+                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
+                     gasCostOutflow;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
-        endBal = getBalanceAt(expContext().accountedFor, bn);
+        endBal = getBalanceAt(expContext().accountedFor, blockNum);
         endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 
@@ -605,8 +678,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                     intOutflow - selfDestructOutflow - gasCostOutflow;
+        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
+                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
+                     gasCostOutflow;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc;
@@ -624,7 +698,7 @@ extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool use
 bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
                                            const CTransaction* trans) {
     outflow = inflow = 0;  // we will store it in the internal values
-    prefundInflow = miningInflow = 0;
+    prefundInflow = minerRewardInflow2 = minerAddInflow = minerTxFeeInflow + uncleRewardInflow = 0;
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
     // articulated, so we only want to load traces if we don't already have them
@@ -656,8 +730,11 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
             if (trace.action.to == expContext().accountedFor) {
                 if (trans->from == "0xPrefund") {
                     prefundInflow = trans->value;
-                } else if (trans->from == "0xBlockReward" || trans->from == "0xUncleReward") {
-                    miningInflow = trans->value;
+                } else if (trans->from == "0xBlockReward") {
+                    minerRewardInflow2 = trans->value;
+                    minerTxFeeInflow = trans->value2;
+                } else if (trans->from == "0xUncleReward") {
+                    uncleRewardInflow = trans->value;
                 } else {
                     intInflow += trans->isError ? 0 : trace.action.value;
                 }
@@ -670,8 +747,9 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
         prefundInflow = trans->value;
     }
 
-    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + miningInflow + prefundInflow - outflow -
-                 intOutflow - selfDestructOutflow - gasCostOutflow;
+    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
+                 minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
+                 gasCostOutflow;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
@@ -683,6 +761,24 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
         ((CTransaction*)trans)->traces.clear();
     }
     return reconciled;
+}
+
+//--------------------------------------------------------------
+CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
+    CReconciliation rec = a;
+    rec.inflow += b.inflow;
+    rec.intInflow += b.intInflow;
+    rec.selfDestructInflow += b.selfDestructInflow;
+    rec.minerRewardInflow2 += b.minerRewardInflow2;
+    rec.minerAddInflow += b.minerAddInflow;
+    rec.minerTxFeeInflow += b.minerTxFeeInflow;
+    rec.uncleRewardInflow += b.uncleRewardInflow;
+    rec.prefundInflow += b.prefundInflow;
+    rec.outflow += b.outflow;
+    rec.intOutflow += b.intOutflow;
+    rec.selfDestructOutflow += b.selfDestructOutflow;
+    rec.gasCostOutflow += b.gasCostOutflow;
+    return rec;
 }
 // EXISTING_CODE
 }  // namespace qblocks

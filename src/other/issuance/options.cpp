@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("uncles", "u", "", OPT_SWITCH, "generate a list of blocks containing one or more uncles"),
     COption("by_year", "y", "", OPT_SWITCH, "summarize previously generated results by year"),
     COption("by_month", "m", "", OPT_SWITCH, "summarize previously generated results by month"),
+    COption("by_week", "w", "", OPT_SWITCH, "summarize previously generated results by week"),
     COption("by_day", "d", "", OPT_SWITCH, "summarize previously generated results by day"),
     COption("by_hour", "o", "", OPT_SWITCH, "summarize previously generated results by hour"),
     COption("discrete", "i", "", OPT_SWITCH, "while accumulating, reset accumulator at each period"),
@@ -35,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool by_year = false;
     bool by_month = false;
+    bool by_week = false;
     bool by_day = false;
     bool by_hour = false;
 
@@ -56,6 +58,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-m" || arg == "--by_month") {
             by_month = true;
 
+        } else if (arg == "-w" || arg == "--by_week") {
+            by_week = true;
+
         } else if (arg == "-d" || arg == "--by_day") {
             by_day = true;
 
@@ -72,16 +77,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!generate && !audit && !uncles)
-        return usage("Please choose one of the available options.");
-
-    if ((generate + audit + uncles) != 1)
-        return usage("Please choose only one of the available options.");
-
     if (by_year)
         by_period = BY_YEAR;
     else if (by_month)
         by_period = BY_MONTH;
+    else if (by_week)
+        by_period = BY_WEEK;
     else if (by_day)
         by_period = BY_DAY;
     else if (by_hour)
@@ -89,22 +90,45 @@ bool COptions::parseArguments(string_q& command) {
     else
         by_period = BY_NOTHING;
 
+    generate = generate || by_period;
+
+    if (!generate && !audit && !uncles)
+        return usage("Please choose one of the available options.");
+
+    if ((generate + audit + uncles) != 1)
+        return usage("Please choose only one of the available options.");
+
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_PREFUND | OPT_OUTPUT);
+    // Since we need prefunds, let's load the names library here
+    CAccountName unused;
+    getNamedAccount(unused, "0x0");
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-
-    CRewardReconcilation::registerClass();
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------
+biguint_t operator-(const biguint_t& a, const bigint_t& b) {
+    ASSERT(b < a); // Can't make a negative unsigned big int
+    bigint_t aa = str_2_BigInt(bnu_2_Str(a));
+    return str_2_BigUint(bni_2_Str(aa - b));
+}
+
+//--------------------------------------------------------------
+biguint_t operator+(const biguint_t& a, const bigint_t& b) {
+    bigint_t aa = str_2_BigInt(bnu_2_Str(a));
+    return str_2_BigUint(bni_2_Str(aa + b));
 }

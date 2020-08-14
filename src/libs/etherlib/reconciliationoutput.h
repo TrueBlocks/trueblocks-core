@@ -26,8 +26,8 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CReconciliationOutput : public CBaseNode {
   public:
-    blknum_t bn;
-    timestamp_t ts;
+    blknum_t blockNum;
+    timestamp_t timestamp;
     string_q asset;
     string_q begBal;
     string_q begBalDiff;
@@ -37,7 +37,10 @@ class CReconciliationOutput : public CBaseNode {
     string_q intOutflow;
     string_q selfDestructInflow;
     string_q selfDestructOutflow;
-    string_q miningInflow;
+    string_q minerRewardInflow2;
+    string_q minerAddInflow;
+    string_q minerTxFeeInflow;
+    string_q uncleRewardInflow;
     string_q prefundInflow;
     string_q gasCostOutflow;
     string_q endBal;
@@ -56,6 +59,7 @@ class CReconciliationOutput : public CBaseNode {
 
     // EXISTING_CODE
     explicit CReconciliationOutput(const CReconciliation& nums);
+    CReconciliation nums;
     // EXISTING_CODE
     bool operator==(const CReconciliationOutput& item) const;
     bool operator!=(const CReconciliationOutput& item) const {
@@ -108,8 +112,8 @@ inline void CReconciliationOutput::clear(void) {
 inline void CReconciliationOutput::initialize(void) {
     CBaseNode::initialize();
 
-    bn = 0;
-    ts = 0;
+    blockNum = 0;
+    timestamp = 0;
     asset = "";
     begBal = "";
     begBalDiff = "";
@@ -119,7 +123,10 @@ inline void CReconciliationOutput::initialize(void) {
     intOutflow = "";
     selfDestructInflow = "";
     selfDestructOutflow = "";
-    miningInflow = "";
+    minerRewardInflow2 = "";
+    minerAddInflow = "";
+    minerTxFeeInflow = "";
+    uncleRewardInflow = "";
     prefundInflow = "";
     gasCostOutflow = "";
     endBal = "";
@@ -129,6 +136,7 @@ inline void CReconciliationOutput::initialize(void) {
     reconciled = false;
 
     // EXISTING_CODE
+    //nums = CReconciliation();
     // EXISTING_CODE
 }
 
@@ -137,8 +145,8 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     clear();
     CBaseNode::duplicate(re);
 
-    bn = re.bn;
-    ts = re.ts;
+    blockNum = re.blockNum;
+    timestamp = re.timestamp;
     asset = re.asset;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
@@ -148,7 +156,10 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     intOutflow = re.intOutflow;
     selfDestructInflow = re.selfDestructInflow;
     selfDestructOutflow = re.selfDestructOutflow;
-    miningInflow = re.miningInflow;
+    minerRewardInflow2 = re.minerRewardInflow2;
+    minerAddInflow = re.minerAddInflow;
+    minerTxFeeInflow = re.minerTxFeeInflow;
+    uncleRewardInflow = re.uncleRewardInflow;
     prefundInflow = re.prefundInflow;
     gasCostOutflow = re.gasCostOutflow;
     endBal = re.endBal;
@@ -158,6 +169,7 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     reconciled = re.reconciled;
 
     // EXISTING_CODE
+    nums = re.nums;
     // EXISTING_CODE
 }
 
@@ -200,5 +212,7 @@ extern const char* STR_DISPLAY_RECONCILIATIONOUTPUT;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //------------------------------------------------------------
+extern string_q bni_2_Ether(const bigint_t& num);
+extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num);
 // EXISTING_CODE
 }  // namespace qblocks

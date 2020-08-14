@@ -77,8 +77,8 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                return uint_2_Str(bn);
+            if (fieldName % "blockNum") {
+                return uint_2_Str(blockNum);
             }
             if (fieldName % "begBal") {
                 return begBal;
@@ -115,8 +115,14 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 'm':
-            if (fieldName % "miningInflow") {
-                return miningInflow;
+            if (fieldName % "minerRewardInflow2") {
+                return minerRewardInflow2;
+            }
+            if (fieldName % "minerAddInflow") {
+                return minerAddInflow;
+            }
+            if (fieldName % "minerTxFeeInflow") {
+                return minerTxFeeInflow;
             }
             break;
         case 'o':
@@ -146,8 +152,13 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 't':
-            if (fieldName % "ts") {
-                return ts_2_Str(ts);
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
+            }
+            break;
+        case 'u':
+            if (fieldName % "uncleRewardInflow") {
+                return uncleRewardInflow;
             }
             break;
         default:
@@ -177,8 +188,8 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 'b':
-            if (fieldName % "bn") {
-                bn = str_2_Uint(fieldValue);
+            if (fieldName % "blockNum") {
+                blockNum = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -225,8 +236,16 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 'm':
-            if (fieldName % "miningInflow") {
-                miningInflow = fieldValue;
+            if (fieldName % "minerRewardInflow2") {
+                minerRewardInflow2 = fieldValue;
+                return true;
+            }
+            if (fieldName % "minerAddInflow") {
+                minerAddInflow = fieldValue;
+                return true;
+            }
+            if (fieldName % "minerTxFeeInflow") {
+                minerTxFeeInflow = fieldValue;
                 return true;
             }
             break;
@@ -263,8 +282,14 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 't':
-            if (fieldName % "ts") {
-                ts = str_2_Ts(fieldValue);
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
+                return true;
+            }
+            break;
+        case 'u':
+            if (fieldName % "uncleRewardInflow") {
+                uncleRewardInflow = fieldValue;
                 return true;
             }
             break;
@@ -293,8 +318,8 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> bn;
-    archive >> ts;
+    archive >> blockNum;
+    archive >> timestamp;
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
@@ -304,7 +329,10 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
     archive >> intOutflow;
     archive >> selfDestructInflow;
     archive >> selfDestructOutflow;
-    archive >> miningInflow;
+    archive >> minerRewardInflow2;
+    archive >> minerAddInflow;
+    archive >> minerTxFeeInflow;
+    archive >> uncleRewardInflow;
     archive >> prefundInflow;
     archive >> gasCostOutflow;
     archive >> endBal;
@@ -323,8 +351,8 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << bn;
-    archive << ts;
+    archive << blockNum;
+    archive << timestamp;
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
@@ -334,7 +362,10 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
     archive << intOutflow;
     archive << selfDestructInflow;
     archive << selfDestructOutflow;
-    archive << miningInflow;
+    archive << minerRewardInflow2;
+    archive << minerAddInflow;
+    archive << minerTxFeeInflow;
+    archive << uncleRewardInflow;
     archive << prefundInflow;
     archive << gasCostOutflow;
     archive << endBal;
@@ -378,8 +409,8 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "bn", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "ts", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBal", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBalDiff", T_TEXT, ++fieldNum);
@@ -389,7 +420,10 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "intOutflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "selfDestructInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "selfDestructOutflow", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "miningInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "minerRewardInflow2", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "minerAddInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "minerTxFeeInflow", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "uncleRewardInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "prefundInflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "gasCostOutflow", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "endBal", T_TEXT, ++fieldNum);
@@ -416,6 +450,58 @@ string_q nextReconciliationoutputChunk_custom(const string_q& fieldIn, const voi
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'd':
+                if (fieldIn % "day") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0,10);
+                }
+                break;
+            case 'h':
+                if (fieldIn % "hour") {
+                    return BOH(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,13);
+                }
+                break;
+            case 'i':
+                if (fieldIn % "issuance") {
+                    bigint_t val = rec->nums.minerRewardInflow2 + rec->nums.minerAddInflow + rec->nums.uncleRewardInflow;
+                    //cerr << rec->nums << endl;
+                    //cerr << padLeft(bni_2_Ether(rec->nums.minerRewardInflow2), 40) << endl;
+                    //cerr << padLeft(bni_2_Ether(rec->nums.minerAddInflow), 40) << endl;
+                    //cerr << padLeft(bni_2_Ether(rec->nums.uncleRewardInflow), 40) << endl;
+                    //cerr << padLeft(bni_2_Ether(val), 40) << endl;
+                    if (expContext().asEther) {
+                        return bni_2_Ether(val);
+                    } else if (expContext().asDollars) {
+                        return bni_2_Dollars(rec->nums.timestamp, val);
+                    } else {
+                        return bni_2_Str(val);
+                    }
+                }
+                break;
+            case 'm':
+                if (fieldIn % "month") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,7);
+                }
+                if (fieldIn % "minerissuance") {
+                    bigint_t val = rec->nums.minerRewardInflow2 + rec->nums.minerAddInflow;
+                    if (expContext().asEther) {
+                        return bni_2_Ether(val);
+                    } else if (expContext().asDollars) {
+                        return bni_2_Dollars(rec->nums.timestamp, val);
+                    } else {
+                        return bni_2_Str(val);
+                    }
+                }
+                break;
+            case 'w':
+                if (fieldIn % "week") {
+                    return BOW(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,10);
+                }
+                break;
+            case 'y':
+                if (fieldIn % "year") {
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,4);
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -469,7 +555,7 @@ const char* STR_DISPLAY_RECONCILIATIONOUTPUT = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-inline string_q bni_2_Ether(const bigint_t& num) {
+string_q bni_2_Ether(const bigint_t& num) {
     if (num == 0)
         return "";
 
@@ -492,7 +578,7 @@ inline string_q bni_2_Ether(const bigint_t& num) {
 }
 
 //---------------------------------------------------------------------------
-inline string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num) {
+string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num) {
     if (num == 0)
         return "";
     bigint_t n = num;
@@ -505,11 +591,12 @@ inline string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num) {
 }
 
 //---------------------------------------------------------------------------
-CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
+CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
+    nums = numsIn;
     reconciliationType = nums.reconciliationType;
     reconciled = nums.reconciled;
-    bn = nums.bn;
-    ts = nums.ts;
+    blockNum = nums.blockNum;
+    timestamp = nums.timestamp;
     if (expContext().asEther) {
         asset = "ETH";
         begBal = bni_2_Ether(nums.begBal);
@@ -520,7 +607,10 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
         intOutflow = bni_2_Ether(nums.intOutflow);
         selfDestructInflow = bni_2_Ether(nums.selfDestructInflow);
         selfDestructOutflow = bni_2_Ether(nums.selfDestructOutflow);
-        miningInflow = bni_2_Ether(nums.miningInflow);
+        minerRewardInflow2 = bni_2_Ether(nums.minerRewardInflow2);
+        minerAddInflow = bni_2_Ether(nums.minerAddInflow);
+        minerTxFeeInflow = bni_2_Ether(nums.minerTxFeeInflow);
+        uncleRewardInflow = bni_2_Ether(nums.uncleRewardInflow);
         prefundInflow = bni_2_Ether(nums.prefundInflow);
         gasCostOutflow = bni_2_Ether(nums.gasCostOutflow);
         endBal = bni_2_Ether(nums.endBal);
@@ -528,20 +618,23 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
         endBalDiff = bni_2_Ether(nums.endBalDiff);
     } else if (expContext().asDollars) {
         asset = "USD";
-        begBal = bni_2_Dollars(nums.ts, nums.begBal);
-        begBalDiff = bni_2_Dollars(nums.ts, nums.begBalDiff);
-        inflow = bni_2_Dollars(nums.ts, nums.inflow);
-        outflow = bni_2_Dollars(nums.ts, nums.outflow);
-        intInflow = bni_2_Dollars(nums.ts, nums.intInflow);
-        intOutflow = bni_2_Dollars(nums.ts, nums.intOutflow);
-        selfDestructInflow = bni_2_Dollars(nums.ts, nums.selfDestructInflow);
-        selfDestructOutflow = bni_2_Dollars(nums.ts, nums.selfDestructOutflow);
-        miningInflow = bni_2_Dollars(nums.ts, nums.miningInflow);
-        prefundInflow = bni_2_Dollars(nums.ts, nums.prefundInflow);
-        gasCostOutflow = bni_2_Dollars(nums.ts, nums.gasCostOutflow);
-        endBal = bni_2_Dollars(nums.ts, nums.endBal);
-        endBalCalc = bni_2_Dollars(nums.ts, nums.endBalCalc);
-        endBalDiff = bni_2_Dollars(nums.ts, nums.endBalDiff);
+        begBal = bni_2_Dollars(nums.timestamp, nums.begBal);
+        begBalDiff = bni_2_Dollars(nums.timestamp, nums.begBalDiff);
+        inflow = bni_2_Dollars(nums.timestamp, nums.inflow);
+        outflow = bni_2_Dollars(nums.timestamp, nums.outflow);
+        intInflow = bni_2_Dollars(nums.timestamp, nums.intInflow);
+        intOutflow = bni_2_Dollars(nums.timestamp, nums.intOutflow);
+        selfDestructInflow = bni_2_Dollars(nums.timestamp, nums.selfDestructInflow);
+        selfDestructOutflow = bni_2_Dollars(nums.timestamp, nums.selfDestructOutflow);
+        minerRewardInflow2 = bni_2_Dollars(nums.timestamp, nums.minerRewardInflow2);
+        minerAddInflow = bni_2_Dollars(nums.timestamp, nums.minerAddInflow);
+        minerTxFeeInflow = bni_2_Dollars(nums.timestamp, nums.minerTxFeeInflow);
+        uncleRewardInflow = bni_2_Dollars(nums.timestamp, nums.uncleRewardInflow);
+        prefundInflow = bni_2_Dollars(nums.timestamp, nums.prefundInflow);
+        gasCostOutflow = bni_2_Dollars(nums.timestamp, nums.gasCostOutflow);
+        endBal = bni_2_Dollars(nums.timestamp, nums.endBal);
+        endBalCalc = bni_2_Dollars(nums.timestamp, nums.endBalCalc);
+        endBalDiff = bni_2_Dollars(nums.timestamp, nums.endBalDiff);
     } else {
         asset = "WEI";
         begBal = bni_2_Str(nums.begBal);
@@ -552,7 +645,10 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& nums) {
         intOutflow = bni_2_Str(nums.intOutflow);
         selfDestructInflow = bni_2_Str(nums.selfDestructInflow);
         selfDestructOutflow = bni_2_Str(nums.selfDestructOutflow);
-        miningInflow = bni_2_Str(nums.miningInflow);
+        minerRewardInflow2 = bni_2_Str(nums.minerRewardInflow2);
+        minerAddInflow = bni_2_Str(nums.minerAddInflow);
+        minerTxFeeInflow = bni_2_Str(nums.minerTxFeeInflow);
+        uncleRewardInflow = bni_2_Str(nums.uncleRewardInflow);
         prefundInflow = bni_2_Str(nums.prefundInflow);
         gasCostOutflow = bni_2_Str(nums.gasCostOutflow);
         endBal = bni_2_Str(nums.endBal);

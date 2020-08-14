@@ -25,15 +25,18 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CReconciliation : public CBaseNode {
   public:
-    blknum_t bn;
-    timestamp_t ts;
+    blknum_t blockNum;
+    timestamp_t timestamp;
     string_q asset;
     bigint_t begBal;
     bigint_t begBalDiff;
     bigint_t inflow;
     bigint_t intInflow;
     bigint_t selfDestructInflow;
-    bigint_t miningInflow;
+    bigint_t minerRewardInflow2;
+    bigint_t minerAddInflow;
+    bigint_t minerTxFeeInflow;
+    bigint_t uncleRewardInflow;
     bigint_t prefundInflow;
     bigint_t outflow;
     bigint_t intOutflow;
@@ -109,15 +112,18 @@ inline void CReconciliation::clear(void) {
 inline void CReconciliation::initialize(void) {
     CBaseNode::initialize();
 
-    bn = 0;
-    ts = 0;
+    blockNum = 0;
+    timestamp = 0;
     asset = "";
     begBal = 0;
     begBalDiff = 0;
     inflow = 0;
     intInflow = 0;
     selfDestructInflow = 0;
-    miningInflow = 0;
+    minerRewardInflow2 = 0;
+    minerAddInflow = 0;
+    minerTxFeeInflow = 0;
+    uncleRewardInflow = 0;
     prefundInflow = 0;
     outflow = 0;
     intOutflow = 0;
@@ -138,15 +144,18 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     clear();
     CBaseNode::duplicate(re);
 
-    bn = re.bn;
-    ts = re.ts;
+    blockNum = re.blockNum;
+    timestamp = re.timestamp;
     asset = re.asset;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
     inflow = re.inflow;
     intInflow = re.intInflow;
     selfDestructInflow = re.selfDestructInflow;
-    miningInflow = re.miningInflow;
+    minerRewardInflow2 = re.minerRewardInflow2;
+    minerAddInflow = re.minerAddInflow;
+    minerTxFeeInflow = re.minerTxFeeInflow;
+    uncleRewardInflow = re.uncleRewardInflow;
     prefundInflow = re.prefundInflow;
     outflow = re.outflow;
     intOutflow = re.intOutflow;
@@ -200,5 +209,6 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,9 +1,0 @@
-[settings]
-class = CRewardReconcilation
-fields = blknum blockNumber|\
-        timestamp timestamp|\
-        wei baseReward|\
-        wei baseAddReward|\
-        wei uncleReward
-includes = etherlib.h
-display_str = blockNumber, timestamp, month, day, baseReward, baseAddReward, blockReward, uncleReward, totalReward
