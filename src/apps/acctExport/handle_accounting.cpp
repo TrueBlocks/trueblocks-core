@@ -43,8 +43,8 @@ bool COptions::exportAccounting(void) {
                 if (accounting) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.bn = trans.blockNumber;
-                    nums.ts = trans.timestamp;
+                    nums.blockNum = trans.blockNumber;
+                    nums.timestamp = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, next, &trans);
                     // trans.reconciliations.clear();
@@ -104,8 +104,8 @@ bool COptions::exportAccounting(void) {
                 if (accounting) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.bn = trans.blockNumber;
-                    nums.ts = trans.timestamp;
+                    nums.blockNum = trans.blockNumber;
+                    nums.timestamp = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, next, &trans);
                     CReconciliationOutput st(nums);
