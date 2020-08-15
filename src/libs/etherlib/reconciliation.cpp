@@ -583,8 +583,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Calculate what we think the balances should be...
-    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
-                 minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut - gasCostOut;
+    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
+                 minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut - gasCostOut;
 
     // Check to see if there are any mismatches...
     begBalDiff = trans - blockNum == 0 ? 0 : begBal - lastStatement.endBal;
@@ -633,8 +633,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
-                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
                      gasCostOut;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
@@ -654,8 +654,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
-                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
                      gasCostOut;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
@@ -674,8 +674,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
-                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
                      gasCostOut;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
@@ -744,8 +744,8 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
         prefundIn = trans->value;
     }
 
-    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
-                 minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut - gasCostOut;
+    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
+                 minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut - gasCostOut;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);

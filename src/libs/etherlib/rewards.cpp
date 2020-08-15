@@ -134,7 +134,7 @@ wei_t getNephewReward(blknum_t bn) {
     wei_t reward = 0;
     blknum_t nUncles = getUncleCount(bn);
     if (nUncles)
-        reward += ((getBlockReward2(bn) / 32) * nUncles);
+        reward += ((getBlockReward2(bn) * nUncles) / 32);
     return reward;
 }
 

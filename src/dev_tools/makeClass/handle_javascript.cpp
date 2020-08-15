@@ -63,7 +63,7 @@ bool COptions::handle_generate_js_pages(void) {
             replaceAll(templateContents, "[{DATAQUERY}]", page.dataQuery);
             replaceAll(templateContents, "[{DEFAULT_TABLE}]", page.defaultTable);
             replaceAll(templateContents, "[{CMDURL}]",
-                       page.cmdUrl == "none" ? "" : "\n  const cmdUrl = '" + page.cmdUrl + "';");
+                       page.cmdUrl == "none" ? "" : "\n  const cmdUrl = getApiUrl('" + page.cmdUrl + "');");
             replaceAll(templateContents, "[{DELETE_CMD}]", page.cmdUrl == "none" ? "" : STR_DELETE_CMDS);
             replaceAll(templateContents, "[{DISPATCH}]", page.cmdUrl == "none" ? "" : "dispatch, ");
             replaceAll(templateContents, "[{LONG}]", page.longName);

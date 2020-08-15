@@ -91,6 +91,14 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
                 return compressedTx;
             }
             break;
+        case 'e':
+            if (fieldName % "extraValue1") {
+                return wei_2_Str(extraValue1);
+            }
+            if (fieldName % "extraValue2") {
+                return wei_2_Str(extraValue2);
+            }
+            break;
         case 'f':
             if (fieldName % "from") {
                 return addr_2_Str(from);
@@ -306,6 +314,16 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 'e':
+            if (fieldName % "extraValue1") {
+                extraValue1 = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "extraValue2") {
+                extraValue2 = str_2_Wei(fieldValue);
+                return true;
+            }
+            break;
         case 'f':
             if (fieldName % "from") {
                 from = str_2_Addr(fieldValue);
@@ -441,6 +459,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> from;
     archive >> to;
     archive >> value;
+    archive >> extraValue1;
+    archive >> extraValue2;
     archive >> gas;
     archive >> gasPrice;
     archive >> input;
@@ -449,7 +469,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> receipt;
     archive >> traces;
     archive >> articulatedTx;
-    archive >> reconciliations;
+    // archive >> reconciliations;
     // archive >> compressedTx;
     // archive >> statements;
     // archive >> finalized;
@@ -473,6 +493,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << from;
     archive << to;
     archive << value;
+    archive << extraValue1;
+    archive << extraValue2;
     archive << gas;
     archive << gasPrice;
     archive << input;
@@ -481,7 +503,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << receipt;
     archive << traces;
     archive << articulatedTx;
-    archive << reconciliations;
+    // archive << reconciliations;
     // archive << compressedTx;
     // archive << statements;
     // archive << finalized;
@@ -530,6 +552,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "from", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "to", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CTransaction, "value", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "extraValue1", T_WEI, ++fieldNum);
+    ADD_FIELD(CTransaction, "extraValue2", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
@@ -539,6 +563,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
     ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY, ++fieldNum);
+    HIDE_FIELD(CTransaction, "reconciliations");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);
     HIDE_FIELD(CTransaction, "compressedTx");
     ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY, ++fieldNum);
@@ -561,6 +586,7 @@ void CTransaction::registerClass(void) {
     // works, but hide them since they are never used.
     ADD_FIELD(CTransaction, "confirmations", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CTransaction, "confirmations");
+    SHOW_FIELD(CTransaction, "reconciliations");
 
     // Add custom fields
     ADD_FIELD(CTransaction, "classification1", T_TEXT, ++fieldNum);
@@ -784,6 +810,30 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> isError;
         archive >> isInternal;
         archive >> receipt;
+        finishParse();
+        done = true;
+    } else if (m_schema <= getVersionNum(0, 7, 9)) {
+        archive >> hash;
+        archive >> blockHash;
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> nonce;
+        archive >> timestamp;
+        archive >> from;
+        archive >> to;
+        archive >> value;
+        archive >> gas;
+        archive >> gasPrice;
+        archive >> input;
+        archive >> isError;
+        archive >> isInternal;
+        archive >> receipt;
+        archive >> traces;
+        archive >> articulatedTx;
+        archive >> reconciliations;
+        // archive >> compressedTx;
+        // archive >> statements;
+        // archive >> finalized;
         finishParse();
         done = true;
     }

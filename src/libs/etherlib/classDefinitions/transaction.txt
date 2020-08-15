@@ -9,6 +9,8 @@ fields = hash hash|\
         address from|\
         address to|\
         wei value|\
+        wei extraValue1|\
+        wei extraValue2|\
         gas gas|\
         gas gasPrice|\
         string input|\
@@ -17,7 +19,7 @@ fields = hash hash|\
         CReceipt receipt|\
         CTraceArray traces|\
         CFunction articulatedTx|\
-        CReconciliationArray reconciliations|\
+        CReconciliationArray reconciliations (nowrite)|\
         string compressedTx (nowrite)|\
         CReconciliationOutputArray statements (nowrite)|\
         sbool finalized (nowrite)

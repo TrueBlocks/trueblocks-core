@@ -474,7 +474,7 @@ string_q nextReconciliationoutputChunk_custom(const string_q& fieldIn, const voi
                     return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0, 7);
                 }
                 if (fieldIn % "minerissuance") {
-                    bigint_t val = rec->nums.minerBaseRewardIn + rec->nums.minerUncleRewardIn;
+                    bigint_t val = rec->nums.minerBaseRewardIn + rec->nums.minerNephewRewardIn;
                     if (expContext().asEther) {
                         return bni_2_Ether(val);
                     } else if (expContext().asDollars) {
@@ -600,7 +600,7 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         selfDestructIn = bni_2_Ether(nums.selfDestructIn);
         selfDestructOut = bni_2_Ether(nums.selfDestructOut);
         minerBaseRewardIn = bni_2_Ether(nums.minerBaseRewardIn);
-        minerUncleRewardIn = bni_2_Ether(nums.minerUncleRewardIn);
+        minerNephewRewardIn = bni_2_Ether(nums.minerNephewRewardIn);
         minerTxFeeIn = bni_2_Ether(nums.minerTxFeeIn);
         minerUncleRewardIn = bni_2_Ether(nums.minerUncleRewardIn);
         prefundIn = bni_2_Ether(nums.prefundIn);
@@ -619,7 +619,7 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         selfDestructIn = bni_2_Dollars(nums.timestamp, nums.selfDestructIn);
         selfDestructOut = bni_2_Dollars(nums.timestamp, nums.selfDestructOut);
         minerBaseRewardIn = bni_2_Dollars(nums.timestamp, nums.minerBaseRewardIn);
-        minerUncleRewardIn = bni_2_Dollars(nums.timestamp, nums.minerUncleRewardIn);
+        minerNephewRewardIn = bni_2_Dollars(nums.timestamp, nums.minerNephewRewardIn);
         minerTxFeeIn = bni_2_Dollars(nums.timestamp, nums.minerTxFeeIn);
         minerUncleRewardIn = bni_2_Dollars(nums.timestamp, nums.minerUncleRewardIn);
         prefundIn = bni_2_Dollars(nums.timestamp, nums.prefundIn);
@@ -638,7 +638,7 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         selfDestructIn = bni_2_Str(nums.selfDestructIn);
         selfDestructOut = bni_2_Str(nums.selfDestructOut);
         minerBaseRewardIn = bni_2_Str(nums.minerBaseRewardIn);
-        minerUncleRewardIn = bni_2_Str(nums.minerUncleRewardIn);
+        minerNephewRewardIn = bni_2_Str(nums.minerNephewRewardIn);
         minerTxFeeIn = bni_2_Str(nums.minerTxFeeIn);
         minerUncleRewardIn = bni_2_Str(nums.minerUncleRewardIn);
         prefundIn = bni_2_Str(nums.prefundIn);

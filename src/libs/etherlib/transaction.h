@@ -43,6 +43,8 @@ class CTransaction : public CBaseNode {
     address_t from;
     address_t to;
     wei_t value;
+    wei_t extraValue1;
+    wei_t extraValue2;
     gas_t gas;
     gas_t gasPrice;
     string_q input;
@@ -67,8 +69,6 @@ class CTransaction : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    wei_t extraValue1;
-    wei_t extraValue2;
     const CBlock* pBlock;
     bool forEveryAddressTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
@@ -138,6 +138,8 @@ inline void CTransaction::initialize(void) {
     from = "";
     to = "";
     value = 0;
+    extraValue1 = 0;
+    extraValue2 = 0;
     gas = 0;
     gasPrice = 0;
     input = "";
@@ -153,8 +155,6 @@ inline void CTransaction::initialize(void) {
 
     // EXISTING_CODE
     pBlock = NULL;
-    extraValue1 = 0;
-    extraValue2 = 0;
     // EXISTING_CODE
 }
 
@@ -172,6 +172,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     from = tr.from;
     to = tr.to;
     value = tr.value;
+    extraValue1 = tr.extraValue1;
+    extraValue2 = tr.extraValue2;
     gas = tr.gas;
     gasPrice = tr.gasPrice;
     input = tr.input;
@@ -187,8 +189,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    extraValue1 = tr.extraValue1;
-    extraValue2 = tr.extraValue2;
     finishParse();
     // EXISTING_CODE
 }
