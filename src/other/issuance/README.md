@@ -1,10 +1,10 @@
 # Modeling and Auditing the Ethereum Supply
 
-This code is in response to #SupplyGate, which was a silly Twitter discussion (as most are) about the fact that a perfectly mathematical number is difficult to get from an Ethereum node. News flash: it's difficult to get.
+This code is in response to [#SupplyGate](https://twitter.com/hashtag/Supplygate?src=hashtag_click) ([here](https://www.coindesk.com/how-much-ether-is-out-there-ethereum-developers-create-new-scripts-for-self-verification) and [here](https://finance.yahoo.com/news/supplygate-battle-frame-crypto-next-190000565.html)), which was a silly Twitter discussion (as most are) about the fact that a purely mathematical number, called `Total Ether Supply`, is difficult to get. News flash: it is difficult to get, especially on a desktop computer.
 
-We wrote two articles explaing the calcuations by re-visting the Yellow Paper, looking closely at the overly complete equations, translating those equations into English, and then arriving at the above code.
+We wrote two articles explaining first the calcuations of the total supply by re-visting the Yellow Paper, looking closely at the stupidly complicated equations, translating those equations into English, and then writing the following code.
 
-Here's links to the two articles which discuss:
+Here's links to the two articles:
 
 Ethereum Issuance: minerReward
 Ethereum Issuance: uncleReward
@@ -100,6 +100,6 @@ News flash: it doesn't.
 
 The trouble with the above process is that it ignores the fact that the miner can have mony other sources of income and/or expenditures other than the issuance in a given block. In order to account for this other spending, one must spin through all the transactions on the chain, but, it's even worse than that as not all income and expenditures are at the transaction level, so we also have to spin through every trace of every transactions all the way down to the bottom. And, now, we have a really big problem. The above process, implented nievly, would literally take months to run. We have to be more creative than that.
 
-The goal, and the only way we've discovered to speed this process up, is to avoid querying the node at all costs  -- we need to avoid querying for blocks if we can, avoid querying for transactions with attention, avoid querying for balances (although this is not possible), and especially avoid querying for traces.
+The goal, and the only way we've discovered to speed this process up, is to avoid querying the node at all costs -- we need to avoid querying for blocks if we can, avoid querying for transactions with attention, avoid querying for balances (although this is not possible), and especially avoid querying for traces.
 
 As a way to avoid querying blocks so as to get the miner and uncle miner addresses, we use work we did previously in which we index every address in every block (including miners and uncle miners). This speeds up the process from many days to less than a day.

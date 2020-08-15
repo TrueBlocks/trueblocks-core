@@ -172,7 +172,7 @@ bool reconcileIssuance(const CAppearance& app) {
             netTx += trans.isError ? 0 : trans.value;
         }
         expected = begBal + minerReward + minerTxFee + uncleReward1 + uncleReward2 + netTx;
-        cerr << expected << " : " << endBal << string_q(120, ' ') << "\r"; cerr.flush();
+        cerr << expected << " : " << endBal << " : " << (expected - endBal) << string_q(90, ' ') << "\r"; cerr.flush();
         if (endBal == expected) return true;
     }
 
@@ -200,7 +200,7 @@ bool reconcileIssuance(const CAppearance& app) {
 bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     static bool skip = true;
     string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
-    if (contains(fn, "005594083-005595221"))
+    if (contains(fn, "006963699-006965754"))
         skip = false;
     if (skip) return true;
 
@@ -223,7 +223,7 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
         }
     }
 
-    cout << "nMiners: " << nMiners << " nUncles: " << nUncles << string_q(120, ' ') << endl;
+    cout << fn << " nMiners: " << nMiners << " nUncles: " << nUncles << string_q(120, ' ') << endl;
     for (auto app : checkList) {
         if (reconcileIssuance(app)) {
             cerr << fn << ": Block reward for  " << app.addr << " at block " << app.bn << " balances" << "    \r"; cerr.flush();
