@@ -200,7 +200,7 @@ bool reconcileIssuance(const CAppearance& app) {
 bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     static bool skip = true;
     string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
-    if (contains(fn, "006963699-006965754"))
+    if (contains(fn, "009834895-009836032"))
         skip = false;
     if (skip) return true;
 
