@@ -99,40 +99,35 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'g':
-            if (fieldName % "gasCostOutflow") {
-                return bni_2_Str(gasCostOutflow);
+            if (fieldName % "gasCostOut") {
+                return bni_2_Str(gasCostOut);
             }
             break;
         case 'i':
-            if (fieldName % "inflow") {
-                return bni_2_Str(inflow);
+            if (fieldName % "internalIn") {
+                return bni_2_Str(internalIn);
             }
-            if (fieldName % "intInflow") {
-                return bni_2_Str(intInflow);
-            }
-            if (fieldName % "intOutflow") {
-                return bni_2_Str(intOutflow);
+            if (fieldName % "internalOut") {
+                return bni_2_Str(internalOut);
             }
             break;
         case 'm':
-            if (fieldName % "minerRewardInflow2") {
-                return bni_2_Str(minerRewardInflow2);
+            if (fieldName % "minerBaseRewardIn") {
+                return bni_2_Str(minerBaseRewardIn);
             }
-            if (fieldName % "minerAddInflow") {
-                return bni_2_Str(minerAddInflow);
+            if (fieldName % "minerNephewRewardIn") {
+                return bni_2_Str(minerNephewRewardIn);
             }
-            if (fieldName % "minerTxFeeInflow") {
-                return bni_2_Str(minerTxFeeInflow);
+            if (fieldName % "minerTxFeeIn") {
+                return bni_2_Str(minerTxFeeIn);
             }
-            break;
-        case 'o':
-            if (fieldName % "outflow") {
-                return bni_2_Str(outflow);
+            if (fieldName % "minerUncleRewardIn") {
+                return bni_2_Str(minerUncleRewardIn);
             }
             break;
         case 'p':
-            if (fieldName % "prefundInflow") {
-                return bni_2_Str(prefundInflow);
+            if (fieldName % "prefundIn") {
+                return bni_2_Str(prefundIn);
             }
             break;
         case 'r':
@@ -144,11 +139,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "selfDestructInflow") {
-                return bni_2_Str(selfDestructInflow);
+            if (fieldName % "selfDestructIn") {
+                return bni_2_Str(selfDestructIn);
             }
-            if (fieldName % "selfDestructOutflow") {
-                return bni_2_Str(selfDestructOutflow);
+            if (fieldName % "selfDestructOut") {
+                return bni_2_Str(selfDestructOut);
             }
             break;
         case 't':
@@ -156,9 +151,12 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
                 return ts_2_Str(timestamp);
             }
             break;
-        case 'u':
-            if (fieldName % "uncleRewardInflow") {
-                return bni_2_Str(uncleRewardInflow);
+        case 'w':
+            if (fieldName % "weiIn") {
+                return bni_2_Str(weiIn);
+            }
+            if (fieldName % "weiOut") {
+                return bni_2_Str(weiOut);
             }
             break;
         default:
@@ -216,48 +214,42 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'g':
-            if (fieldName % "gasCostOutflow") {
-                gasCostOutflow = str_2_Wei(fieldValue);
+            if (fieldName % "gasCostOut") {
+                gasCostOut = str_2_Wei(fieldValue);
                 return true;
             }
             break;
         case 'i':
-            if (fieldName % "inflow") {
-                inflow = str_2_Wei(fieldValue);
+            if (fieldName % "internalIn") {
+                internalIn = str_2_Wei(fieldValue);
                 return true;
             }
-            if (fieldName % "intInflow") {
-                intInflow = str_2_Wei(fieldValue);
-                return true;
-            }
-            if (fieldName % "intOutflow") {
-                intOutflow = str_2_Wei(fieldValue);
+            if (fieldName % "internalOut") {
+                internalOut = str_2_Wei(fieldValue);
                 return true;
             }
             break;
         case 'm':
-            if (fieldName % "minerRewardInflow2") {
-                minerRewardInflow2 = str_2_Wei(fieldValue);
+            if (fieldName % "minerBaseRewardIn") {
+                minerBaseRewardIn = str_2_Wei(fieldValue);
                 return true;
             }
-            if (fieldName % "minerAddInflow") {
-                minerAddInflow = str_2_Wei(fieldValue);
+            if (fieldName % "minerNephewRewardIn") {
+                minerNephewRewardIn = str_2_Wei(fieldValue);
                 return true;
             }
-            if (fieldName % "minerTxFeeInflow") {
-                minerTxFeeInflow = str_2_Wei(fieldValue);
+            if (fieldName % "minerTxFeeIn") {
+                minerTxFeeIn = str_2_Wei(fieldValue);
                 return true;
             }
-            break;
-        case 'o':
-            if (fieldName % "outflow") {
-                outflow = str_2_Wei(fieldValue);
+            if (fieldName % "minerUncleRewardIn") {
+                minerUncleRewardIn = str_2_Wei(fieldValue);
                 return true;
             }
             break;
         case 'p':
-            if (fieldName % "prefundInflow") {
-                prefundInflow = str_2_Wei(fieldValue);
+            if (fieldName % "prefundIn") {
+                prefundIn = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -272,12 +264,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 's':
-            if (fieldName % "selfDestructInflow") {
-                selfDestructInflow = str_2_Wei(fieldValue);
+            if (fieldName % "selfDestructIn") {
+                selfDestructIn = str_2_Wei(fieldValue);
                 return true;
             }
-            if (fieldName % "selfDestructOutflow") {
-                selfDestructOutflow = str_2_Wei(fieldValue);
+            if (fieldName % "selfDestructOut") {
+                selfDestructOut = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -287,9 +279,13 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 return true;
             }
             break;
-        case 'u':
-            if (fieldName % "uncleRewardInflow") {
-                uncleRewardInflow = str_2_Wei(fieldValue);
+        case 'w':
+            if (fieldName % "weiIn") {
+                weiIn = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "weiOut") {
+                weiOut = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -323,18 +319,18 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
-    archive >> inflow;
-    archive >> intInflow;
-    archive >> selfDestructInflow;
-    archive >> minerRewardInflow2;
-    archive >> minerAddInflow;
-    archive >> minerTxFeeInflow;
-    archive >> uncleRewardInflow;
-    archive >> prefundInflow;
-    archive >> outflow;
-    archive >> intOutflow;
-    archive >> selfDestructOutflow;
-    archive >> gasCostOutflow;
+    archive >> weiIn;
+    archive >> internalIn;
+    archive >> selfDestructIn;
+    archive >> minerBaseRewardIn;
+    archive >> minerNephewRewardIn;
+    archive >> minerTxFeeIn;
+    archive >> minerUncleRewardIn;
+    archive >> prefundIn;
+    archive >> weiOut;
+    archive >> internalOut;
+    archive >> selfDestructOut;
+    archive >> gasCostOut;
     archive >> endBal;
     archive >> endBalCalc;
     archive >> endBalDiff;
@@ -356,18 +352,18 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
-    archive << inflow;
-    archive << intInflow;
-    archive << selfDestructInflow;
-    archive << minerRewardInflow2;
-    archive << minerAddInflow;
-    archive << minerTxFeeInflow;
-    archive << uncleRewardInflow;
-    archive << prefundInflow;
-    archive << outflow;
-    archive << intOutflow;
-    archive << selfDestructOutflow;
-    archive << gasCostOutflow;
+    archive << weiIn;
+    archive << internalIn;
+    archive << selfDestructIn;
+    archive << minerBaseRewardIn;
+    archive << minerNephewRewardIn;
+    archive << minerTxFeeIn;
+    archive << minerUncleRewardIn;
+    archive << prefundIn;
+    archive << weiOut;
+    archive << internalOut;
+    archive << selfDestructOut;
+    archive << gasCostOut;
     archive << endBal;
     archive << endBalCalc;
     archive << endBalDiff;
@@ -414,18 +410,18 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "inflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "intInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "selfDestructInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "minerRewardInflow2", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "minerAddInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "minerTxFeeInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "uncleRewardInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "prefundInflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "outflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "intOutflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "selfDestructOutflow", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "gasCostOutflow", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "weiIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "internalIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerBaseRewardIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerNephewRewardIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerTxFeeIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prefundIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "weiOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "internalOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "gasCostOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
@@ -452,35 +448,35 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "day") {
-                    return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0,10);
+                    return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0, 10);
                 }
                 break;
             case 'h':
                 if (fieldIn % "hour") {
-                    return BOH(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,13);
+                    return BOH(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0, 13);
                 }
                 break;
             case 'i':
                 if (fieldIn % "issuance") {
-                    return bni_2_Str(rec->minerRewardInflow2 + rec->minerAddInflow + rec->uncleRewardInflow);
+                    return bni_2_Str(rec->minerBaseRewardIn + rec->minerNephewRewardIn + rec->minerUncleRewardIn);
                 }
                 break;
             case 'm':
                 if (fieldIn % "month") {
-                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,7);
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0, 7);
                 }
                 if (fieldIn % "minerissuance") {
-                    return bni_2_Str(rec->minerRewardInflow2 + rec->minerAddInflow);
+                    return bni_2_Str(rec->minerBaseRewardIn + rec->minerNephewRewardIn);
                 }
                 break;
             case 'w':
                 if (fieldIn % "week") {
-                    return BOW(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0,10);
+                    return BOW(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0, 10);
                 }
                 break;
             case 'y':
                 if (fieldIn % "year") {
-                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0,4);
+                    return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0, 4);
                 }
                 break;
             // EXISTING_CODE
@@ -553,21 +549,22 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
     // We need to account for both the case where the account is the sender...
     if (trans->from == expContext().accountedFor) {
-        outflow = trans->isError ? 0 : trans->value;
-        gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
+        weiOut = trans->isError ? 0 : trans->value;
+        gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
     // ... and/or the receiver...
     if (trans->to == expContext().accountedFor) {
         if (trans->from == "0xPrefund") {
-            prefundInflow = trans->value;
+            prefundIn = trans->value;
         } else if (trans->from == "0xBlockReward") {
-            minerRewardInflow2 = trans->value;
-            minerTxFeeInflow = trans->value2;
+            minerBaseRewardIn = trans->value;
+            minerNephewRewardIn = trans->extraValue1;
+            minerTxFeeIn = trans->extraValue2;
         } else if (trans->from == "0xUncleReward") {
-            uncleRewardInflow = trans->value;
+            minerUncleRewardIn = trans->value;
         } else {
-            inflow = trans->isError ? 0 : trans->value;
+            weiIn = trans->isError ? 0 : trans->value;
         }
     }
 
@@ -586,9 +583,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Calculate what we think the balances should be...
-    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
-                 minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
-                 gasCostOutflow;
+    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
+                 minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut - gasCostOut;
 
     // Check to see if there are any mismatches...
     begBalDiff = trans - blockNum == 0 ? 0 : begBal - lastStatement.endBal;
@@ -637,9 +633,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
-                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
-                     gasCostOutflow;
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
+                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+                     gasCostOut;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
         // available until the end of the block. The best we can do is temporarily assume the calculated balance
@@ -658,9 +654,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
-                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
-                     gasCostOutflow;
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
+                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+                     gasCostOut;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
@@ -678,9 +674,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
-        endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
-                     minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
-                     gasCostOutflow;
+        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn +
+                     minerTxFeeIn + minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut -
+                     gasCostOut;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc;
@@ -697,8 +693,8 @@ extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool use
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
                                            const CTransaction* trans) {
-    outflow = inflow = 0;  // we will store it in the internal values
-    prefundInflow = minerRewardInflow2 = minerAddInflow = minerTxFeeInflow + uncleRewardInflow = 0;
+    weiOut = weiIn = 0;  // we will store it in the internal values
+    prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
     // articulated, so we only want to load traces if we don't already have them
@@ -711,32 +707,33 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
         if (isSelfDestruct) {
             if (trace.action.refundAddress == expContext().accountedFor) {
                 // receives self destructed ether
-                selfDestructInflow += trace.action.balance;
+                selfDestructIn += trace.action.balance;
             }
 
             // do not collapse. It may be both
             if (trace.action.selfDestructed == expContext().accountedFor) {
                 // the smart contract that is being killed and thereby loses the eth
-                selfDestructOutflow += trace.action.balance;
+                selfDestructOut += trace.action.balance;
             }
 
         } else {
             if (trace.action.from == expContext().accountedFor) {
-                intOutflow += trans->isError ? 0 : trace.action.value;
+                internalOut += trans->isError ? 0 : trace.action.value;
                 // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
             }
 
             // do not collapse. It may be both
             if (trace.action.to == expContext().accountedFor) {
                 if (trans->from == "0xPrefund") {
-                    prefundInflow = trans->value;
+                    prefundIn = trans->value;
                 } else if (trans->from == "0xBlockReward") {
-                    minerRewardInflow2 = trans->value;
-                    minerTxFeeInflow = trans->value2;
+                    minerBaseRewardIn = trans->value;
+                    minerNephewRewardIn = trans->extraValue1;
+                    minerTxFeeIn = trans->extraValue2;
                 } else if (trans->from == "0xUncleReward") {
-                    uncleRewardInflow = trans->value;
+                    minerUncleRewardIn = trans->value;
                 } else {
-                    intInflow += trans->isError ? 0 : trace.action.value;
+                    internalIn += trans->isError ? 0 : trace.action.value;
                 }
             }
         }
@@ -744,12 +741,11 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
 
     if (trans->blockNumber == 0) {
         begBal = 0;
-        prefundInflow = trans->value;
+        prefundIn = trans->value;
     }
 
-    endBalCalc = begBal + inflow + intInflow + selfDestructInflow + minerRewardInflow2 + minerAddInflow +
-                 minerTxFeeInflow + uncleRewardInflow + prefundInflow - outflow - intOutflow - selfDestructOutflow -
-                 gasCostOutflow;
+    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
+                 minerUncleRewardIn + prefundIn - weiOut - internalOut - selfDestructOut - gasCostOut;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
@@ -766,18 +762,18 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
 //--------------------------------------------------------------
 CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     CReconciliation rec = a;
-    rec.inflow += b.inflow;
-    rec.intInflow += b.intInflow;
-    rec.selfDestructInflow += b.selfDestructInflow;
-    rec.minerRewardInflow2 += b.minerRewardInflow2;
-    rec.minerAddInflow += b.minerAddInflow;
-    rec.minerTxFeeInflow += b.minerTxFeeInflow;
-    rec.uncleRewardInflow += b.uncleRewardInflow;
-    rec.prefundInflow += b.prefundInflow;
-    rec.outflow += b.outflow;
-    rec.intOutflow += b.intOutflow;
-    rec.selfDestructOutflow += b.selfDestructOutflow;
-    rec.gasCostOutflow += b.gasCostOutflow;
+    rec.weiIn += b.weiIn;
+    rec.internalIn += b.internalIn;
+    rec.selfDestructIn += b.selfDestructIn;
+    rec.minerBaseRewardIn += b.minerBaseRewardIn;
+    rec.minerNephewRewardIn += b.minerNephewRewardIn;
+    rec.minerTxFeeIn += b.minerTxFeeIn;
+    rec.minerUncleRewardIn += b.minerUncleRewardIn;
+    rec.prefundIn += b.prefundIn;
+    rec.weiOut += b.weiOut;
+    rec.internalOut += b.internalOut;
+    rec.selfDestructOut += b.selfDestructOut;
+    rec.gasCostOut += b.gasCostOut;
     return rec;
 }
 // EXISTING_CODE

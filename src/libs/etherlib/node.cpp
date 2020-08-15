@@ -160,7 +160,7 @@ bool getUncle(CBlock& block, const hash_t& blockHash, size_t index) {
 //-------------------------------------------------------------------------
 bool queryUncle(CBlock& block, const string_q& datIn, size_t index) {
     if (datIn == "latest")
-        return queryUncle(block, uint_2_Str(getLatestBlock_client()), index);
+        return queryUncle(block, uint_2_Hex(getLatestBlock_client()), index);
     string_q func = isHash(datIn) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     string_q params = "[" + quote(datIn) + "," + quote(uint_2_Hex(index)) + "]";
     return getObjectViaRPC(block, func, params);
@@ -386,6 +386,17 @@ bool queryRawBlock(string_q& blockStr, const string_q& datIn, bool needTrace, bo
 }
 
 //-------------------------------------------------------------------------
+bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index) {
+    if (blockNum == "latest")
+        return queryRawUncle(results, uint_2_Str(getLatestBlock_client()), index);
+    string_q func = isHash(blockNum) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
+    uint64_t bn = str_2_Uint(blockNum);
+    string_q params = "[" + quote(uint_2_Hex(bn)) + "," + quote(uint_2_Hex(index)) + "]";
+    results = callRPC(func, params, true);
+    return true;
+}
+
+//-------------------------------------------------------------------------
 bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
     string_q data = "[\"[BLOCKNUM]\"]";
     replace(data, "[BLOCKNUM]", hexNum);
@@ -399,6 +410,19 @@ string_q getRawBlock(blknum_t bn) {
 
     string_q str;
     queryRawBlock(str, numStr, true, false);
+
+    CRPCResult generic;
+    generic.parseJson3(str);
+
+    return generic.result;
+}
+
+//-------------------------------------------------------------------------
+string_q getRawUncle(blknum_t bn, uint64_t index) {
+    string_q numStr = uint_2_Str(bn);
+
+    string_q str;
+    queryRawUncle(str, numStr, index);
 
     CRPCResult generic;
     generic.parseJson3(str);

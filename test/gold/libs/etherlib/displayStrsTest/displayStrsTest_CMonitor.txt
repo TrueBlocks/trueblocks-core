@@ -1,7 +1,7 @@
 displayStrsTest argc: 2 [1:CMonitor] 
 displayStrsTest CMonitor 
 ------------------------------CMonitor------------------------------
-STATEMENT::INFLOW: 
+STATEMENT::WEIIN: 
 NAME: interface
 NAME: input
 ADDRESS: 0x1234567890123456789012345678901234567890

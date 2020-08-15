@@ -63,10 +63,10 @@ bool testDisplayStr(COptions& options) {
         monitor.stateHistory.push_back(es);
 
         CReconciliation is;
-        is.inflow = str_2_Wei("2000000000000000000");
+        is.weiIn = str_2_Wei("2000000000000000000");
         monitor.summaryStatement = is;
 
-        cout << monitor.Format("[{p:STATEMENT::INFLOW}]: [{STATEMENT::INFLOW}]") << endl;
+        cout << monitor.Format("[{p:STATEMENT::WEIIN}]: [{STATEMENT::WEIIN}]") << endl;
         // TODO(tjayrush): To address elements of array it should look like this:
         //      monitor.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
         // or

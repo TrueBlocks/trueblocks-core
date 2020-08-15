@@ -39,6 +39,7 @@ bool COptions::parseArguments(string_q& command) {
     bool by_week = false;
     bool by_day = false;
     bool by_hour = false;
+    bool thing = false;
 
     Init();
     explode(arguments, command, ' ');
@@ -67,6 +68,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--by_hour") {
             by_hour = true;
 
+        } else if (arg == "-t" || arg == "--thing") {
+            thing = true;
+
         } else if (arg == "-i" || arg == "--discrete") {
             discrete = true;
 
@@ -75,6 +79,11 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
         }
+    }
+
+    if (thing) {
+        check_uncles();
+        return false;
     }
 
     if (by_year)

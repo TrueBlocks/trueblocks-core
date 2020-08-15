@@ -1065,14 +1065,19 @@ bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
 
 string_q per_2_Str(period_t period) {
     switch (period) {
-    case BY_YEAR: return "[{YEAR}]";
-    case BY_MONTH: return "[{MONTH}]";
-    case BY_WEEK: return "[{WEEK}]";
-    case BY_DAY: return "[{DAY}]";
-    case BY_HOUR: return "[{HOUR}]";
-    case BY_NOTHING:
-    default:
-        break;
+        case BY_YEAR:
+            return "[{YEAR}]";
+        case BY_MONTH:
+            return "[{MONTH}]";
+        case BY_WEEK:
+            return "[{WEEK}]";
+        case BY_DAY:
+            return "[{DAY}]";
+        case BY_HOUR:
+            return "[{HOUR}]";
+        case BY_NOTHING:
+        default:
+            break;
     }
     return "[{MONTH}],[{DAY}]";
 }

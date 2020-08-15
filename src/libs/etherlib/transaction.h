@@ -67,7 +67,8 @@ class CTransaction : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    wei_t value2;
+    wei_t extraValue1;
+    wei_t extraValue2;
     const CBlock* pBlock;
     bool forEveryAddressTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
@@ -152,7 +153,8 @@ inline void CTransaction::initialize(void) {
 
     // EXISTING_CODE
     pBlock = NULL;
-    value2 = 0;
+    extraValue1 = 0;
+    extraValue2 = 0;
     // EXISTING_CODE
 }
 
@@ -185,7 +187,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
 
     // EXISTING_CODE
     pBlock = tr.pBlock;  // no deep copy, we don't own it
-    value2 = tr.value2;
+    extraValue1 = tr.extraValue1;
+    extraValue2 = tr.extraValue2;
     finishParse();
     // EXISTING_CODE
 }

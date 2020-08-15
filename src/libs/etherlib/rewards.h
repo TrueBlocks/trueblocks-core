@@ -17,7 +17,8 @@
 namespace qblocks {
 
 //----------------------------------------------------------------------
-extern wei_t getBlockReward(blknum_t bn, bool incUncleBits = true);
+extern wei_t getBlockReward2(blknum_t bn);
+extern wei_t getNephewReward(blknum_t bn);
 extern wei_t getUncleReward(blknum_t bn, blknum_t uncleBn);
 extern wei_t getTransFees(blknum_t bn);
 

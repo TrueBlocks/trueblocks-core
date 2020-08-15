@@ -53,6 +53,7 @@ extern bool queryRawBlockTrace(string_q& results, const string_q& hexNum);
 inline bool queryRawBlockTrace(string_q& results, blknum_t blockNum) {
     return queryRawBlockTrace(results, uint_2_Hex(blockNum));
 }
+extern bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index);
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
@@ -81,6 +82,7 @@ inline bool queryRawLogs(string_q& results, const hash_t& hash) {
 
 //-----------------------------------------------------------------------
 extern string_q getRawBlock(blknum_t bn);
+extern string_q getRawUncle(blknum_t bn, uint64_t index);
 extern hash_t getRawBlockHash(blknum_t bn);
 extern hash_t getRawTransactionHash(blknum_t bn, txnum_t tx);
 

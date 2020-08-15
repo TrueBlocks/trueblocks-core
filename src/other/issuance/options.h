@@ -42,6 +42,7 @@ class COptions : public COptionsBase {
     bool audit_issuance(void);
     bool show_uncle_blocks(void);
     bool summary_by_period(void);
+    bool check_uncles(void);
 };
 
 //-----------------------------------------------------------------------------

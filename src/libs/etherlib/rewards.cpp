@@ -22,8 +22,9 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
     action.from = "0xBlockReward";
     action.to = trans.to;
     action.callType = "block-reward";
-    action.value = getBlockReward(bn);
-    action.value2 = (result.gasUsed * trans.gasPrice);
+    action.value = getBlockReward2(bn);
+    action.extraValue1 = getNephewReward(bn);
+    action.extraValue2 = (result.gasUsed * trans.gasPrice);
     traceAddress.push_back("null-b-s");
     // transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";
@@ -91,8 +92,9 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
     hash = uint_2_Hex(bn * 100000 + txid);
     to = addr;
     from = "0xBlockReward";
-    value = getBlockReward(bn);
-    value2 = getTransFees(bn);  // weird temp value2 for reconciliation only
+    value = getBlockReward2(bn);
+    extraValue1 = getNephewReward(bn);
+    extraValue2 = getTransFees(bn);  // weird temp value for reconciliation only
     return true;
 }
 
@@ -109,12 +111,11 @@ bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn) {
 }
 
 //---------------------------------------------------------------------------
-wei_t getBlockReward(blknum_t bn, bool incUncleBits) {
+wei_t getBlockReward2(blknum_t bn) {
     if (bn == 0)
         return 0;
 
     wei_t reward = 0;
-
     if (bn < byzantiumBlock) {
         reward = str_2_Wei("5000000000000000000");
     } else if (bn < constantinopleBlock) {
@@ -122,13 +123,18 @@ wei_t getBlockReward(blknum_t bn, bool incUncleBits) {
     } else {
         reward = str_2_Wei("2000000000000000000");
     }
+    return reward;
+}
 
-    if (incUncleBits) {
-        blknum_t nUncles = getUncleCount(bn);
-        if (nUncles)
-            reward += ((reward / 32) * nUncles);
-    }
+//---------------------------------------------------------------------------
+wei_t getNephewReward(blknum_t bn) {
+    if (bn == 0)
+        return 0;
 
+    wei_t reward = 0;
+    blknum_t nUncles = getUncleCount(bn);
+    if (nUncles)
+        reward += ((getBlockReward2(bn) / 32) * nUncles);
     return reward;
 }
 
@@ -137,7 +143,7 @@ wei_t getUncleReward(blknum_t bn, blknum_t uncleBn) {
     if (bn == 0)
         return 0;
 
-    wei_t reward = getBlockReward(bn, false);
+    wei_t reward = getBlockReward2(bn);
     if ((uncleBn + 6) < bn)
         return 0;
     blknum_t diff = (uncleBn + 8 - bn);

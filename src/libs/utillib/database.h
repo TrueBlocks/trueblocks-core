@@ -174,6 +174,7 @@ extern bool writeTheCode(const codewrite_t& cw);
 extern size_t asciiFileToString(const string_q& filename, string& contents);
 extern string_q asciiFileToString(const string_q& filename);
 extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
+extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
 extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------

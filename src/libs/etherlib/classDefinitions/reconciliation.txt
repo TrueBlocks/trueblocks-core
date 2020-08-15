@@ -5,18 +5,18 @@ fields = blknum blockNum|\
         string asset|\
         int256 begBal|\
         int256 begBalDiff|\
-        int256 inflow|\
-        int256 intInflow|\
-        int256 selfDestructInflow|\
-        int256 minerRewardInflow2|\
-        int256 minerAddInflow|\
-        int256 minerTxFeeInflow|\
-        int256 uncleRewardInflow|\
-        int256 prefundInflow|\
-        int256 outflow|\
-        int256 intOutflow|\
-        int256 selfDestructOutflow|\
-        int256 gasCostOutflow|\
+        int256 weiIn|\
+        int256 internalIn|\
+        int256 selfDestructIn|\
+        int256 minerBaseRewardIn|\
+        int256 minerNephewRewardIn|\
+        int256 minerTxFeeIn|\
+        int256 minerUncleRewardIn|\
+        int256 prefundIn|\
+        int256 weiOut|\
+        int256 internalOut|\
+        int256 selfDestructOut|\
+        int256 gasCostOut|\
         int256 endBal|\
         int256 endBalCalc|\
         int256 endBalDiff|\

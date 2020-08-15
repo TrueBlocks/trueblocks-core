@@ -26,21 +26,19 @@ public:
     }
 };
 
-const string_q uncleBlocks = "data/uncle_blocks.csv";
+const string_q uncleBlockFile = "data/uncle_blocks.csv";
 const string_q resultsFile = "data/results.csv";
 //--------------------------------------------------------------
 bool COptions::model_issuance(void) {
-    if (!fileExists(uncleBlocks))
+    if (!fileExists(uncleBlockFile))
         return usage("Cannot open list of uncle blocks. Run with --uncles option first.");
 
-    blknum_t prev = 0;
-    CUintArray blocks;
+    CUintArray uncleBlocks;
+    asciiFileToLines(uncleBlockFile, uncleBlocks);
 
-    string_q contents = asciiFileToString(uncleBlocks);
-    explode(blocks, contents, '\n');
-
-    for (auto block : blocks) {
-        for (blknum_t bn = prev; bn < block; bn++) {
+    blknum_t prevBn = 0;
+    for (auto uncleBn : uncleBlocks) {
+        for (blknum_t bn = prevBn; bn < uncleBn; bn++) {
             if (true) {
                 CReconciliation rec;
                 rec.blockNum = bn;
@@ -48,24 +46,24 @@ bool COptions::model_issuance(void) {
                 if (bn == 0) {
                     cout << STR_HEADER_EXPORT << endl;
                     for (auto item : prefundWeiMap)
-                        rec.minerRewardInflow2 = (rec.minerRewardInflow2 + item.second);
+                        rec.minerBaseRewardIn = (rec.minerBaseRewardIn + item.second);
                 } else {
-                    rec.minerRewardInflow2 = getBlockReward(bn, false);
+                    rec.minerBaseRewardIn = getBlockReward2(bn);
                 }
-                if (bn != 0 && bn == prev) {
+                if (bn != 0 && bn == prevBn) {
                     // This block has an uncle
-                    rec.minerAddInflow = getBlockReward(bn, true) - rec.minerRewardInflow2;
+                    rec.minerNephewRewardIn = getNephewReward(bn);
                     uint64_t count = getUncleCount(bn);
                     for (size_t i = 0; i < count; i++) {
                         CBlock uncle;
                         getUncle(uncle, bn, i);
-                        rec.uncleRewardInflow = (rec.uncleRewardInflow + getUncleReward(bn, uncle.blockNumber));
+                        rec.minerUncleRewardIn = (rec.minerUncleRewardIn + getUncleReward(bn, uncle.blockNumber));
                     }
                 }
                 cout << rec.Format(STR_DISPLAY_EXPORT) << endl;
             }
         }
-        prev = block;
+        prevBn = uncleBn;
     }
 
     return true;
@@ -75,7 +73,7 @@ CStringArray header;
 ////--------------------------------------------------------------
 //bool auditLine(const char* str, void* data) {
 //    if (header.empty()) {
-//        string_q headers = "blockNum,timestamp,month,day,minerRewardInflow2,minerAddInflow,minerIssuance,uncleRewardInflow,issuance";
+//        string_q headers = "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
 //        explode(header, headers, ',');
 //        return true;
 //    }
@@ -131,11 +129,12 @@ bool reconcileIssuance(const CAppearance& app) {
     if (app.addr == "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead")
         return true;
 
-    bigint_t minerReward, minerTxFee, uncleReward1, uncleReward2, netTx;
-    size_t d1=0, d2=0;
+    bigint_t minerReward, nephewReward, minerTxFee, uncleReward1, uncleReward2, netTx;
+    uint64_t d1=0, d2=0;
     uint64_t uncleCount = getUncleCount(app.bn);
     if (app.tx != 99998) {
-        minerReward = getBlockReward(app.bn);
+        minerReward = getBlockReward2(app.bn);
+        nephewReward = getNephewReward(app.bn);
         minerTxFee = getTransFees(app.bn);
     }
 
@@ -155,7 +154,7 @@ bool reconcileIssuance(const CAppearance& app) {
 
     bigint_t begBal = getBalanceAt(app.addr, app.bn - 1);
     bigint_t endBal = getBalanceAt(app.addr, app.bn);
-    bigint_t expected = begBal + minerReward + minerTxFee + uncleReward1 + uncleReward2;
+    bigint_t expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2;
 
     if (expected == endBal) {
         return true;
@@ -171,7 +170,7 @@ bool reconcileIssuance(const CAppearance& app) {
         if (trans.to == app.addr) {
             netTx += trans.isError ? 0 : trans.value;
         }
-        expected = begBal + minerReward + minerTxFee + uncleReward1 + uncleReward2 + netTx;
+        expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2 + netTx;
         cerr << expected << " : " << endBal << " : " << (expected - endBal) << string_q(90, ' ') << "\r"; cerr.flush();
         if (endBal == expected) return true;
     }
@@ -183,10 +182,11 @@ bool reconcileIssuance(const CAppearance& app) {
         cout << "begBal:       " << padLeft(bni_2_Str(begBal), 20) << endl;
         cout << "endBal:       " << padLeft(bni_2_Str(endBal), 20) << endl;
         cout << "minerReward:  " << padLeft(bni_2_Str(minerReward), 20) << endl;
+        cout << "nephewReward: " << padLeft(bni_2_Str(nephewReward), 20) << endl;
         cout << "minerTxFee:   " << padLeft(bni_2_Str(minerTxFee), 20) << endl;
-        cout << "d1:           " << padLeft(int_2_Str(d1), 20) << endl;
+        cout << "d1:           " << padLeft(uint_2_Str(d1), 20) << endl;
         cout << "uncleReward1: " << padLeft(bni_2_Str(uncleReward1), 20) << endl;
-        cout << "d2:           " << padLeft(int_2_Str(d2), 20) << endl;
+        cout << "d2:           " << padLeft(uint_2_Str(d2), 20) << endl;
         cout << "uncleReward2: " << padLeft(bni_2_Str(uncleReward2), 20) << endl;
         cout << "netTx:        " << padLeft(bni_2_Str(netTx), 20) << endl;
         cout << "expected:     " << padLeft(bni_2_Str(expected), 20) << endl;
@@ -249,7 +249,7 @@ bool visitLine(const char* str, void* data) {
     CAccumulator *acc = (CAccumulator*)data;
 
     if (header.empty()) {
-        string_q headers = "blockNum,timestamp,month,day,minerRewardInflow2,minerAddInflow,minerIssuance,uncleRewardInflow,issuance";
+        string_q headers = "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
         explode(header, headers, ',');
         return true;
     }
@@ -283,10 +283,13 @@ bool visitLine(const char* str, void* data) {
 //--------------------------------------------------------------
 bool COptions::show_uncle_blocks(void) {
     blknum_t latest = getLatestBlock_client();
+
+    cout << "blockNumber" << endl;
     for (size_t bn = 0 ; bn < latest ; bn++) {
         if (getUncleCount(bn))
             cout << bn << endl;
     }
+
     return true;
 }
 
@@ -307,17 +310,40 @@ bool COptions::summary_by_period(void) {
 }
 
 //--------------------------------------------------------------------------------
+bool COptions::check_uncles(void) {
+    if (!fileExists(uncleBlockFile))
+        return usage("Cannot open list of uncle blocks. Run with --uncles option first.");
+
+    CUintArray uncleBlocks;
+    asciiFileToLines(uncleBlockFile, uncleBlocks);
+
+    for (auto uncleBn : uncleBlocks) {
+        uint64_t nUncles = getUncleCount(uncleBn);
+        for (size_t index = 0 ; index < nUncles ; index++) {
+            string_q uncleStr = getRawUncle(uncleBn, index);
+            if (contains(uncleStr, "uncles:[]")) {
+                cerr << "No uncles in uncle block " << uncleBn << "." << index << "\r"; cerr.flush();
+            } else {
+                cout << "Uncle block " << uncleBn << "." << index << " has children" << endl;
+            }
+            printf("");
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
 string_q STR_DISPLAY_EXPORT =
 "[{BLOCKNUM}],"\
 "[{TIMESTAMP}],"\
 "[{MONTH}],"\
 "[{DAY}],"\
-"[{MINERREWARDINFLOW2}],"\
-"[{MINERADDINFLOW}],"\
+"[{MINERBASEREWARDIN}],"\
+"[{MINERNEPHEWREWARDIN}],"\
 "[{MINERISSUANCE}],"\
-"[{UNCLEREWARDINFLOW}],"\
+"[{MINERUNCLEREWARDIN}],"\
 "[{ISSUANCE}]";
 
 
 string_q STR_HEADER_EXPORT =
-"blockNum,timestamp,month,day,minerReward,minerAdd,minerIssuance,uncleReward,issuance";
+"blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";

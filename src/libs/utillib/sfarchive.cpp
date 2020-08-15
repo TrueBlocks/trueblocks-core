@@ -279,6 +279,14 @@ size_t asciiFileToLines(const string_q& fileName, CStringArray& lines) {
 }
 
 //----------------------------------------------------------------------
+size_t asciiFileToLines(const string_q& fileName, CUintArray& lines) {
+    string_q contents;
+    asciiFileToString(fileName, contents);
+    explode(lines, contents, '\n');
+    return lines.size();
+}
+
+//----------------------------------------------------------------------
 string_q asciiFileToString(const string_q& filename) {
     string_q ret;
     asciiFileToString(filename, ret);
