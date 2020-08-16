@@ -1044,6 +1044,29 @@ bool isSameHour(const time_q& t1, const time_q& t2) {
 }
 
 //----------------------------------------------------------------------------------
+bool isSamePeriod(period_t period, blknum_t b1, blknum_t b2) {
+    switch (period) {
+        case BY_1:
+        case BY_10:
+        case BY_100:
+        case BY_1000:
+        case BY_10000:
+        case BY_100000:
+        case BY_1000000:
+            return ((b1 / period) == (b2 / period));
+        case BY_YEAR:
+        case BY_MONTH:
+        case BY_WEEK:
+        case BY_DAY:
+        case BY_HOUR:
+        case BY_NOTHING:
+        default:
+            break;
+    }
+    return b1 == b2;
+}
+
+//----------------------------------------------------------------------------------
 bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
     switch (period) {
         case BY_YEAR:
@@ -1056,6 +1079,13 @@ bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
             return isSameDay(t1, t2);
         case BY_HOUR:
             return isSameHour(t1, t2);
+        case BY_1:
+        case BY_10:
+        case BY_100:
+        case BY_1000:
+        case BY_10000:
+        case BY_100000:
+        case BY_1000000:
         case BY_NOTHING:
         default:
             break;
@@ -1063,6 +1093,7 @@ bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
     return t1 == t2;
 }
 
+//----------------------------------------------------------------------------------
 string_q per_2_Str(period_t period) {
     switch (period) {
         case BY_YEAR:
@@ -1075,6 +1106,14 @@ string_q per_2_Str(period_t period) {
             return "[{DAY}]";
         case BY_HOUR:
             return "[{HOUR}]";
+        case BY_1:
+        case BY_10:
+        case BY_100:
+        case BY_1000:
+        case BY_10000:
+        case BY_100000:
+        case BY_1000000:
+            return "";
         case BY_NOTHING:
         default:
             break;

@@ -17,13 +17,9 @@ static const COption params[] = {
     COption("generate", "g", "", OPT_SWITCH, "generate expercted miner and uncle rewards for each block"),
     COption("audit", "a", "", OPT_SWITCH, "audit miner and uncle rewards for each block"),
     COption("uncles", "u", "", OPT_SWITCH, "generate a list of blocks containing one or more uncles"),
-    COption("by_year", "y", "", OPT_SWITCH, "summarize previously generated results by year"),
-    COption("by_month", "m", "", OPT_SWITCH, "summarize previously generated results by month"),
-    COption("by_week", "w", "", OPT_SWITCH, "summarize previously generated results by week"),
-    COption("by_day", "d", "", OPT_SWITCH, "summarize previously generated results by day"),
-    COption("by_hour", "o", "", OPT_SWITCH, "summarize previously generated results by hour"),
+    COption("by_date", "d", "enum[hour|day|week|month|year]", OPT_FLAG, "summarize by date"),
+    COption("by_block", "b", "enum[1|10|100|1000|10000|100000|1000000]", OPT_FLAG, "summarize by block number"),
     COption("discrete", "i", "", OPT_SWITCH, "while accumulating, reset accumulator at each period"),
-    //COption("option1", "o", "", OPT_HIDDEN|OPT_SWITCH, "option one"),
     COption("thing", "t", "<val>", OPT_HIDDEN|OPT_FLAG, "option two"),
     COption("", "", "", OPT_DESCRIPTION, "Process various data related to Ethereum's issuance.\n"),
 };
@@ -34,11 +30,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    bool by_year = false;
-    bool by_month = false;
-    bool by_week = false;
-    bool by_day = false;
-    bool by_hour = false;
+    string_q by_date = "";
+    string_q by_block = "";
     bool thing = false;
 
     Init();
@@ -53,20 +46,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--uncles") {
             uncles = true;
 
-        } else if (arg == "-y" || arg == "--by_year") {
-            by_year = true;
+        } else if (startsWith(arg, "-d:") || startsWith(arg, "--by_date:")) {
+            if (!confirmEnum("by_date", by_date, arg))
+                return false;
 
-        } else if (arg == "-m" || arg == "--by_month") {
-            by_month = true;
-
-        } else if (arg == "-w" || arg == "--by_week") {
-            by_week = true;
-
-        } else if (arg == "-d" || arg == "--by_day") {
-            by_day = true;
-
-        } else if (arg == "-o" || arg == "--by_hour") {
-            by_hour = true;
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--by_block:")) {
+            if (!confirmEnum("by_block", by_block, arg))
+                return false;
 
         } else if (arg == "-t" || arg == "--thing") {
             thing = true;
@@ -86,21 +72,28 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (by_year)
-        by_period = BY_YEAR;
-    else if (by_month)
-        by_period = BY_MONTH;
-    else if (by_week)
-        by_period = BY_WEEK;
-    else if (by_day)
-        by_period = BY_DAY;
-    else if (by_hour)
-        by_period = BY_HOUR;
-    else
-        by_period = BY_NOTHING;
+    if (!by_date.empty() && !by_block.empty())
+        return usage("Please choose either --by_date or --by_block, not both. Quitting...");
+
+    if (!by_date.empty() || !by_block.empty()) {
+        string_q by_what = by_date + by_block;
+        map<string_q, period_t> perMap;
+        perMap["hour"] = BY_HOUR;
+        perMap["day"] = BY_DAY;
+        perMap["week"] = BY_WEEK;
+        perMap["month"] = BY_MONTH;
+        perMap["year"] = BY_YEAR;
+        perMap["1"] = BY_1;
+        perMap["10"] = BY_10;
+        perMap["100"] = BY_100;
+        perMap["1000"] = BY_1000;
+        perMap["10000"] = BY_10000;
+        perMap["100000"] = BY_100000;
+        perMap["1000000"] = BY_1000000;
+        by_period = perMap[by_what];
+    }
 
     generate = generate || by_period;
-
     if (!generate && !audit && !uncles)
         return usage("Please choose one of the available options.");
 

@@ -17,12 +17,24 @@ class CAccumulator {
 public:
     CReconciliation rec;
     period_t period;
-    time_q prevDate;
+    blknum_t prevBlock;
+    timestamp_t prevTs;
     string_q fmt;
     bool discrete;
     CAccumulator(void) {
         period = BY_NOTHING;
         discrete = false;
+        prevBlock = NOPOS;
+        prevTs = (timestamp_t)NOPOS;
+    }
+    void setPrevious(blknum_t bn, timestamp_t ts) {
+        prevBlock = bn;
+        prevTs = ts;
+    }
+    bool isSamePeriod(blknum_t bn, timestamp_t ts) {
+        if (period == BY_1 || period == BY_10 || period == BY_100 || period == BY_1000 || period == BY_10000 || period == BY_100000 || period == BY_1000000)
+            return qblocks::isSamePeriod(period, prevBlock, bn);
+        return qblocks::isSamePeriod(period, ts_2_Date(prevTs), ts_2_Date(ts));
     }
 };
 
@@ -200,7 +212,7 @@ bool reconcileIssuance(const CAppearance& app) {
 bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     static bool skip = true;
     string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
-    if (contains(fn, "009834895-009836032"))
+    if (contains(fn, "010497016-010498673"))
         skip = false;
     if (skip) return true;
 
@@ -258,23 +270,29 @@ bool visitLine(const char* str, void* data) {
     CReconciliation rec;
     rec.parseCSV(header, line);
 
-    time_q curDate = str_2_Date(rec.Format(per_2_Str(acc->period)));
-    bool same = isSamePeriod(acc->period, acc->prevDate, curDate);
+//    CReconciliationOutput debug(rec);
+//    debug.blockNum = rec.blockNum;
+//    debug.timestamp = rec.timestamp;
+//    cout << bGreen << debug.Format(acc->fmt) << cOff;
+//    if (getchar() == 'q')
+//        return false;
+
+    acc->rec = (acc->rec + rec);
+    bool same = acc->isSamePeriod(rec.blockNum, rec.timestamp);
     if (!same) {
         CReconciliationOutput out(acc->rec);
+        out.blockNum = rec.blockNum;
+        out.timestamp = rec.timestamp;
         cout << out.Format(acc->fmt) << endl;
-        acc->prevDate = curDate;
         if (acc->discrete) {
             CReconciliation reset;
             acc->rec = reset;
         }
-        acc->rec.blockNum = rec.blockNum;
-        acc->rec.timestamp = rec.timestamp;
     } else {
         if (!(rec.timestamp % 23))
-            cerr << "Processing " << ts_2_Date(rec.timestamp).Format(FMT_JSON) << "\r"; cerr.flush();
+            cerr << "Processing " << rec.blockNum << ": " << ts_2_Date(rec.timestamp).Format(FMT_JSON) << "\r"; cerr.flush();
     }
-    acc->rec = (acc->rec + rec);
+    acc->setPrevious(rec.blockNum, rec.timestamp);
 //    cerr << "A: " << acc->rec.Format(acc->fmt) << endl;
 //    cerr << "B: " << rec.Format(acc->fmt) << endl;
     return true;
@@ -299,11 +317,11 @@ bool COptions::summary_by_period(void) {
     CAccumulator accumulator;
     accumulator.period = by_period;
     accumulator.fmt = substitute(STR_DISPLAY_EXPORT, "[{MONTH}],[{DAY}]", per_2_Str(by_period));
-    accumulator.rec.timestamp = blockZeroTs;
-    accumulator.prevDate = ts_2_Date(blockZeroTs);
     accumulator.discrete = discrete;
     forEveryLineInAsciiFile(resultsFile, visitLine, &accumulator);
     CReconciliationOutput out(accumulator.rec);
+    out.blockNum = accumulator.prevBlock;
+    out.timestamp = accumulator.prevTs;
     cout << out.Format(accumulator.fmt) << endl;
 
     return true;

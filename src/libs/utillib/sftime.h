@@ -299,13 +299,30 @@ typedef struct {
 extern bool getNewestFile(const string_q& path, void* data);
 extern fileInfo getNewestFileInFolder(const string_q& path);
 
-typedef enum { BY_NOTHING = 0, BY_YEAR, BY_MONTH, BY_WEEK, BY_DAY, BY_HOUR } period_t;
+using blknum_t = uint64_t;
+
+typedef enum {
+    BY_NOTHING = 0,
+    BY_YEAR = 20,  // opaque value anyway, to avoid conflict with below
+    BY_MONTH,
+    BY_WEEK,
+    BY_DAY,
+    BY_HOUR,
+    BY_1 = 1, // non-opaque values
+    BY_10 = 10,
+    BY_100 = 100,
+    BY_1000 = 1000,
+    BY_10000 = 10000,
+    BY_100000 = 100000,
+    BY_1000000 = 1000000
+} period_t;
 extern bool isSameYear(const time_q& t1, const time_q& t2);
 extern bool isSameMonth(const time_q& t1, const time_q& t2);
 extern bool isSameWeek(const time_q& t1, const time_q& t2);
 extern bool isSameDay(const time_q& t1, const time_q& t2);
 extern bool isSameHour(const time_q& t1, const time_q& t2);
 extern bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2);
+extern bool isSamePeriod(period_t period, blknum_t t1, blknum_t t2);
 
 extern string_q per_2_Str(period_t period);
 
