@@ -1,6 +1,9 @@
 #include "pinlib.h"
 
 extern bool addPinToArray(CPinnedItem& item, void *data);
+namespace qblocks {
+extern bool removeFromPinata(CPinnedItem& item, void *data);
+}
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
@@ -11,9 +14,29 @@ int main(int argc, const char* argv[]) {
     LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
     LOG_INFO("unchainedIndex:\t", cGreen, unchainedIndex, cOff);
 
-    //freshenBloomFilters();
-    //publishManifest(cout); //, prevHash);
-    cout << getFileContentsByHash("QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV")<< endl;
+    //forEveryPin(removeFromPinata, NULL);
+    string_q pins;
+    listPins(pins);
+    CPinataList pinList;
+    pinList.parseJson3(pins);
+    while (str_2_Uint(pinList.count) != 0) {
+        cout << pinList.count << endl;
+        for (auto pin : pinList.rows) {
+            cout << "Unpinning " << pin.metadata.name << ": " << pin.ipfs_pin_hash << " ";
+            unpinChunkByHash(pin.ipfs_pin_hash);
+        }
+        usleep(300000);
+        pins = "";
+        pins.clear();
+        listPins(pins);
+        pinList = CPinataList();
+        pinList.parseJson3(pins);
+    }
+//        listPins(pins);
+//    }
+    //freshenBloomFilters(true);
+//    //publishManifest(cout); //, prevHash);
+//    cout << getFileContentsByHash("QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV")<< endl;
 
     pinlib_cleanup();
 

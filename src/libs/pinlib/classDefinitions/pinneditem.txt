@@ -2,7 +2,8 @@
 class = CPinnedItem
 fields = string fileName|\
         string bloomHash|\
-        string indexHash
+        string indexHash|\
+        bool onDisc (nowrite)
 includes = utillib.h
 cpp_includes =
 sort = v1.fileName < v2.fileName

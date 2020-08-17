@@ -85,6 +85,11 @@ string_q CPinnedItem::getValueByName(const string_q& fieldName) const {
                 return indexHash;
             }
             break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                return bool_2_Str(onDisc);
+            }
+            break;
         default:
             break;
     }
@@ -123,6 +128,12 @@ bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
                 return true;
             }
             break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                onDisc = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         default:
             break;
     }
@@ -151,6 +162,7 @@ bool CPinnedItem::Serialize(CArchive& archive) {
     archive >> fileName;
     archive >> bloomHash;
     archive >> indexHash;
+    // archive >> onDisc;
     finishParse();
     return true;
 }
@@ -165,6 +177,7 @@ bool CPinnedItem::SerializeC(CArchive& archive) const {
     archive << fileName;
     archive << bloomHash;
     archive << indexHash;
+    // archive << onDisc;
 
     return true;
 }
@@ -204,6 +217,8 @@ void CPinnedItem::registerClass(void) {
     ADD_FIELD(CPinnedItem, "fileName", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinnedItem, "bloomHash", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinnedItem, "indexHash", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinnedItem, "onDisc", T_BOOL, ++fieldNum);
+    HIDE_FIELD(CPinnedItem, "onDisc");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinnedItem, "schema");

@@ -25,7 +25,7 @@ extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
 extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
 
 extern bool publishManifest(ostream& os);
-extern bool freshenBloomFilters(void);
+extern bool freshenBloomFilters(bool download);
 extern hash_t getCurrentManifest(void);
 extern hash_t getLastManifest(void);
 

@@ -28,6 +28,7 @@ class CPinnedItem : public CBaseNode {
     string_q fileName;
     string_q bloomHash;
     string_q indexHash;
+    bool onDisc;
 
   public:
     CPinnedItem(void);
@@ -93,6 +94,7 @@ inline void CPinnedItem::initialize(void) {
     fileName = "";
     bloomHash = "";
     indexHash = "";
+    onDisc = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -106,6 +108,7 @@ inline void CPinnedItem::duplicate(const CPinnedItem& pi) {
     fileName = pi.fileName;
     bloomHash = pi.bloomHash;
     indexHash = pi.indexHash;
+    onDisc = pi.onDisc;
 
     // EXISTING_CODE
     // EXISTING_CODE

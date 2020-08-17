@@ -17,7 +17,7 @@ namespace qblocks {
 static string_q pinOneFile(const string_q& fileName, const string_q& type);
 static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
-static bool writeManifest(const CPinnedItemArray& array, bool writeAscii);
+static bool writeManifest(const CPinnedItemArray& array);
 static bool readManifest(bool required = false);
 
 //---------------------------------------------------------------------------
@@ -94,7 +94,13 @@ hash_t getLastManifest(void) {
 }
 
 //----------------------------------------------------------------
-bool freshenBloomFilters(void) {
+bool checkOnDisc(CPinnedItem& pin, void* data) {
+    pin.onDisc = fileExists(pin.fileName);
+    return true;
+}
+
+//----------------------------------------------------------------
+bool freshenBloomFilters(bool download) {
     string_q cur = getCurrentManifest();
     string_q prev = getLastManifest();
     if (cur != prev) {
@@ -104,11 +110,16 @@ bool freshenBloomFilters(void) {
         if (contents != "empty file") {
             stringToAsciiFile(configPath("ipfs-hashes/pin-manifest.json"), contents);
             pinList.clear();
-            readManifest();
         }
     } else {
         LOG_INFO("Manifest is up to data at: ", cur);
     }
+
+    readManifest();
+    if (download) {
+        forEveryPin(checkOnDisc, NULL);
+    }
+
     return true;
 }
 
@@ -172,13 +183,13 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
 
     // write the array (after sorting it) to the database
     sort(pinList.begin(), pinList.end());
-    return writeManifest(pinList, true);
+    return writeManifest(pinList);
 }
 
 //---------------------------------------------------------------------------
 bool unpinChunkByHash(const hash_t& hash) {
     unpinOneFile(hash);
-    usleep(3000000);
+    usleep(1000000);
     return true;
 }
 
@@ -213,7 +224,14 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     pinList.clear();
     pinList = array;
     sort(pinList.begin(), pinList.end());
-    return writeManifest(pinList, true);
+    return writeManifest(pinList);
+}
+
+//----------------------------------------------------------------
+bool removeFromPinata(CPinnedItem& item, void *data) {
+    cout << item << endl;
+    unpinChunk(item.fileName, item);
+    return true;
 }
 
 //---------------------------------------------------------------------------
@@ -376,7 +394,10 @@ static string_q unpinOneFile(const string_q& hash) {
         }
     }
     curl_easy_cleanup(curl);
-    LOG4("Finishing unpin: ", result);
+    if (contains(result, "error"))
+        LOG_WARN("Pinata returned an error: ", result);
+    else
+        LOG_INFO("Finishing unpin: ", result);
     return result;
 }
 
@@ -424,24 +445,8 @@ static void cleanPinataStr(string_q& in) {
 }
 
 //---------------------------------------------------------------------------
-static bool writeManifest(const CPinnedItemArray& array, bool writeAscii) {
-    ostringstream os;
-    if (writeAscii)
-        for (auto pin : pinList)
-            os << pin.Format(STR_DISPLAY_PINNEDITEM) << endl;
-
+static bool writeManifest(const CPinnedItemArray& array) {
     lockSection(true);  // disallow control+C until we write both files
-
-    if (writeAscii) {
-        string_q textFile = configPath("ipfs-hashes/pins.txt");
-        stringToAsciiFile(textFile, os.str());
-        string_q now = Now().Format("%Y%m%d%H%M.00");
-        string_q cmd = "touch -mt " + now + " " + textFile;
-        // cerr << cmd << endl;
-        // clang-format off
-        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-    }
 
     string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
@@ -469,8 +474,8 @@ static bool readManifest(bool required) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
-    // LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
-    // LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
+    LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
+    LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
@@ -499,7 +504,7 @@ static bool readManifest(bool required) {
             pinList.push_back(pin);
         LOG4("Done Loading pins");
         sort(pinList.begin(), pinList.end());
-        writeManifest(pinList, false);
+        writeManifest(pinList);
     }
     return true;
 }
