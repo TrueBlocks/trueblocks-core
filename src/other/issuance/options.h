@@ -24,6 +24,8 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    blknum_t start;
+    blknum_t end;
     // END_CODE_DECLARE
 
     bool generate = false;

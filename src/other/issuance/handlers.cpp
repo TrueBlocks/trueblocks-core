@@ -20,12 +20,15 @@ public:
     blknum_t prevBlock;
     timestamp_t prevTs;
     string_q fmt;
+    blknum_t start, end;
     bool discrete;
     CAccumulator(void) {
         period = BY_NOTHING;
         discrete = false;
         prevBlock = NOPOS;
         prevTs = (timestamp_t)NOPOS;
+        start = 0;
+        end = getLatestBlock_client();
     }
     void setPrevious(blknum_t bn, timestamp_t ts) {
         prevBlock = bn;
@@ -212,9 +215,12 @@ bool reconcileIssuance(const CAppearance& app) {
 bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     static bool skip = true;
     string_q fn = substitute(chunk.getFilename(), indexFolder_finalized, "");
-    if (contains(fn, "010497016-010498673"))
+    if (contains(fn, "010401728-010403680"))
         skip = false;
-    if (skip) return true;
+    if (skip) {
+        cerr << "Skipping " << fn << endl;
+        return true;
+    }
 
     size_t nMiners = 0;
     size_t nUncles = 0;
@@ -283,7 +289,10 @@ bool visitLine(const char* str, void* data) {
         CReconciliationOutput out(acc->rec);
         out.blockNum = rec.blockNum;
         out.timestamp = rec.timestamp;
-        cout << out.Format(acc->fmt) << endl;
+        if (inRange(rec.blockNum, acc->start, acc->end))
+            cout << out.Format(acc->fmt) << endl;
+        if (rec.blockNum > acc->end)
+            return false;
         if (acc->discrete) {
             CReconciliation reset;
             acc->rec = reset;
@@ -318,6 +327,8 @@ bool COptions::summary_by_period(void) {
     accumulator.period = by_period;
     accumulator.fmt = substitute(STR_DISPLAY_EXPORT, "[{MONTH}],[{DAY}]", per_2_Str(by_period));
     accumulator.discrete = discrete;
+    accumulator.start = start;
+    accumulator.end = end;
     forEveryLineInAsciiFile(resultsFile, visitLine, &accumulator);
     CReconciliationOutput out(accumulator.rec);
     out.blockNum = accumulator.prevBlock;

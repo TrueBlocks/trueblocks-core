@@ -21,6 +21,8 @@ static const COption params[] = {
     COption("by_block", "b", "enum[1|10|100|1000|10000|100000|1000000]", OPT_FLAG, "summarize by block number"),
     COption("discrete", "i", "", OPT_SWITCH, "while accumulating, reset accumulator at each period"),
     COption("thing", "t", "<val>", OPT_HIDDEN|OPT_FLAG, "option two"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Process various data related to Ethereum's issuance.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -60,12 +62,23 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-i" || arg == "--discrete") {
             discrete = true;
 
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+            if (!confirmUint("start", start, arg))
+                return false;
+
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+            if (!confirmUint("end", end, arg))
+                return false;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
             if (!builtInCmd(arg)) {
                 return usage("Invalid option: " + arg);
             }
         }
     }
+
+    if (start >= end || end > getLatestBlock_client())
+        return usage("Invalid --start or --end. Quitting...");
 
     if (thing) {
         check_uncles();
@@ -110,6 +123,9 @@ void COptions::Init(void) {
     // Since we need prefunds, let's load the names library here
     CAccountName unused;
     getNamedAccount(unused, "0x0");
+
+    start = 0;
+    end = getLatestBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------
