@@ -129,8 +129,9 @@ bool COptions::parseArguments(string_q& command) {
     latestBlockTs = latestBlock.timestamp;
     latestBlockNum = latestBlock.blockNumber;
 
-    string_q zeroBin = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
-    if (!fileExists(zeroBin)) {
+    string_q zeroBloom = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
+    string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
+    if (!fileExists(zeroBloom)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
 
         LOG_INFO("Index for block zero was not found. Building it from " + uint_2_Str(prefundWeiMap.size()) +
