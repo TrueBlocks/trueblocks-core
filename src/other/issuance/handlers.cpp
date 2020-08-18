@@ -257,7 +257,6 @@ extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
 }
 //--------------------------------------------------------------
 bool COptions::audit_issuance(void) {
-    //forEveryLineInAsciiFile(resultsFile, auditLine, NULL);
     qblocks::forEveryIndexChunk(visitIndexChunk, NULL);
     return true;
 }
@@ -308,15 +307,30 @@ bool visitLine(const char* str, void* data) {
 }
 
 //--------------------------------------------------------------
-bool COptions::show_uncle_blocks(void) {
-    blknum_t latest = getLatestBlock_client();
+int sortByBlockNumber(const void *v1, const void *v2) {
+    CAppearance_base *vv1 = (CAppearance_base*)v1;
+    CAppearance_base *vv2 = (CAppearance_base*)v2;
+    if (vv1->blk > vv2->blk)
+        return 1;
+    else if (vv1->blk < vv2->blk)
+        return -1;
+    return 0;
+}
 
-    cout << "blockNumber" << endl;
-    for (size_t bn = 0 ; bn < latest ; bn++) {
-        if (getUncleCount(bn))
-            cout << bn << endl;
+//--------------------------------------------------------------
+bool listUncleBlocks(CIndexArchive& chunk, void *data) {
+    qsort(chunk.appearances, chunk.nApps, sizeof(CAppearance_base), sortByBlockNumber);
+    for (size_t i = 0 ; i < chunk.nApps ; i++) {
+        CAppearance_base *start = &chunk.appearances[i];
+        if (start->txid == 99998)
+            cout << start[0].blk << endl;
     }
+    return true;
+}
 
+//--------------------------------------------------------------
+bool COptions::show_uncle_blocks(void) {
+    qblocks::forEveryIndexChunk(listUncleBlocks, NULL);
     return true;
 }
 
