@@ -223,9 +223,6 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     return true;
 }
 
-namespace qblocks {
-extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
-}
 //--------------------------------------------------------------
 bool COptions::audit_issuance(void) {
     qblocks::forEveryIndexChunk(visitIndexChunk, NULL);

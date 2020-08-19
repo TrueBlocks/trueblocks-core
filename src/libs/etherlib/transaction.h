@@ -27,7 +27,7 @@ namespace qblocks {
 // EXISTING_CODE
 class CBlock;
 class CAppearance;
-typedef bool (*ADDRESSFUNC)(const CAppearance& item, void* data);
+typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
 // EXISTING_CODE
 
@@ -70,9 +70,9 @@ class CTransaction : public CBaseNode {
 
     // EXISTING_CODE
     const CBlock* pBlock;
-    bool forEveryAddressTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryAddressTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddress(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddressPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool loadTransAsPrefund(const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn);

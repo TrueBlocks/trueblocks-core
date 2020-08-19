@@ -52,9 +52,9 @@ class CBlock : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    bool forEveryAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryAddress(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddress(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAddressPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     // EXISTING_CODE
     bool operator==(const CBlock& item) const;
     bool operator!=(const CBlock& item) const {

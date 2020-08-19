@@ -555,9 +555,9 @@ const char* STR_DISPLAY_BLOCK =
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 extern bool accumulateAddresses(const CAppearance& item, void* data);
-extern bool foundOne(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr,
+extern bool foundOne(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr,
                      const string_q& reason);  // NOLINT
-extern bool foundPot(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList,
+extern bool foundPot(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList,
                      const string_q& reason);  // NOLINT
 
 //---------------------------------------------------------------------------
@@ -575,7 +575,7 @@ string_q stringy(const CStringArray& array) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CBlock::forEveryAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
 
@@ -595,7 +595,7 @@ bool CBlock::forEveryAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data
 }
 
 //---------------------------------------------------------------------------
-bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy, void* data) {
+bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC funcy, void* data) {
     string_q str;
     queryRawTrace(str, hash);
 
@@ -631,7 +631,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, ADDRESSFUNC funcy,
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryAddressTx(ADDRESSFUNC funcy, TRANSFUNC filt, void* data) {
+bool CTransaction::forEveryAddressTx(APPEARANCEFUNC funcy, TRANSFUNC filt, void* data) {
     blknum_t tr = transactionIndex;
     const CReceipt* recPtr = &receipt;
     if (!foundOne(funcy, data, blockNumber, tr, 0, from, "from"))
@@ -669,7 +669,7 @@ bool CTransaction::forEveryAddressTx(ADDRESSFUNC funcy, TRANSFUNC filt, void* da
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CTransaction::forEveryUniqueAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, false);
@@ -677,7 +677,7 @@ bool CTransaction::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CTransaction::forEveryUniqueAddressPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, true);

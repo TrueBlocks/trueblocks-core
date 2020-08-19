@@ -330,7 +330,7 @@ bool accumulateAddresses(const CAppearance& item, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CBlock::forEveryUniqueAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, false);
@@ -338,7 +338,7 @@ bool CBlock::forEveryUniqueAddress(ADDRESSFUNC func, TRANSFUNC traceFilter, void
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAddressPerTx(ADDRESSFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CBlock::forEveryUniqueAddressPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, true);
@@ -370,7 +370,7 @@ bool isPotentialAddr(biguint_t test, address_t& addrOut) {
 }
 
 //---------------------------------------------------------------------------
-bool potentialAddr(ADDRESSFUNC func, void* data, const CAppearance& item, const string_q& potList) {
+bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& item, const string_q& potList) {
     if (!func)
         return false;
 
@@ -389,14 +389,14 @@ bool potentialAddr(ADDRESSFUNC func, void* data, const CAppearance& item, const 
 }
 
 //---------------------------------------------------------------------------
-bool foundOne(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr,
+bool foundOne(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const address_t& addr,
               const string_q& reason) {  // NOLINT
     CAppearance item(bn, tx, tc, addr, reason);
     return (*func)(item, data);
 }
 
 //---------------------------------------------------------------------------
-bool foundPot(ADDRESSFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList,
+bool foundPot(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_t tc, const string_q& potList,
               const string_q& reason) {  // NOLINT
     CAppearance item(bn, tx, tc, "", reason);
     return potentialAddr(func, data, item, potList);

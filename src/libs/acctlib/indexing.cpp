@@ -158,11 +158,11 @@ bool chunkVisitFunc(const string_q& path, void* data) {
 
     } else {
         CChunkVisitor* visitor = (CChunkVisitor*)data;
-        if (!visitor || !visitor->callFunc)
+        if (!visitor || !visitor->indexFunc)
             return false;
         CIndexArchive archive(READING_ARCHIVE);
         archive.ReadIndexFromBinary(path);
-        return (*visitor->callFunc)(archive, visitor->callData);
+        return (*visitor->indexFunc)(archive, visitor->callData);
     }
     return true;
 }
@@ -170,7 +170,7 @@ bool chunkVisitFunc(const string_q& path, void* data) {
 //--------------------------------------------------------------
 bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data) {
     CChunkVisitor visitor;
-    visitor.callFunc = func;
+    visitor.indexFunc = func;
     visitor.callData = data;
     return forEveryFileInFolder(indexFolder_finalized, chunkVisitFunc, &visitor);
 }
@@ -181,9 +181,76 @@ bool bloomVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);
 bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data) {
     return forEveryFileInFolder(indexFolder_blooms, bloomVisitFunc, data);
+}
+
+//--------------------------------------------------------------
+bool addressVisitFunc(const string_q& path, void* data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
+
+    } else {
+        CChunkVisitor* visitor = (CChunkVisitor*)data;
+        if (!visitor || !visitor->addrFunc)
+            return false;
+        CIndexArchive archive(READING_ARCHIVE);
+        archive.ReadIndexFromBinary(path);
+        for (uint64_t i = 0 ; i < archive.nAddrs ; i++) {
+            CAddressRecord_base *rec = &archive.addresses[i];
+            address_t addr = bytes_2_Addr(rec->bytes);
+            bool ret = (*visitor->addrFunc)(addr, visitor->callData);
+            if (!ret)
+                return false;
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool forEveryAddress(ADDRESSFUNC func, void *data) {
+    CChunkVisitor visitor;
+    visitor.addrFunc = func;
+    visitor.callData = data;
+    return forEveryFileInFolder(indexFolder_finalized, addressVisitFunc, &visitor);
+    return true;
+}
+
+bool hasCodeAt(const address_t& addr, blknum_t blk) {
+    return !getCodeAt(addr, blk).empty();
+}
+//--------------------------------------------------------------
+bool smartContractVisitFunc(const string_q& path, void* data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
+
+    } else {
+        CChunkVisitor* visitor = (CChunkVisitor*)data;
+        if (!visitor || !visitor->addrFunc)
+            return false;
+        CIndexArchive archive(READING_ARCHIVE);
+        archive.ReadIndexFromBinary(path);
+        for (uint64_t i = 0 ; i < archive.nAddrs ; i++) {
+            CAddressRecord_base *rec = &archive.addresses[i];
+            address_t addr = bytes_2_Addr(rec->bytes);
+            if (hasCodeAt(addr, visitor->atBlock)) {
+                bool ret = (*visitor->addrFunc)(addr, visitor->callData);
+                if (!ret)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool forEverySmartContract(ADDRESSFUNC func, void *data) {
+    CChunkVisitor visitor;
+    visitor.addrFunc = func;
+    visitor.callData = data;
+    visitor.atBlock = getLatestBlock_client();
+    return forEveryFileInFolder(indexFolder_finalized, smartContractVisitFunc, &visitor);
+    return true;
 }
 
 //    //--------------------------------------------------------------

@@ -5,6 +5,16 @@
 cmake_minimum_required (VERSION 3.0)
 
 # ----------------------------------------------------------------------------------------
+# C++11 required
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 11)
+elseif (CMAKE_CXX_STANDARD LESS 11)
+    message(WARNING "CMAKE_CXX_STANDARD has been set to '${CMAKE_CXX_STANDARD}' which is lower than the minimum required standard (c++11).")
+endif ()
+message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ----------------------------------------------------------------------------------------
 # Define default installation PATH
 if(NOT WIN32)
     set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
@@ -19,10 +29,6 @@ project (quickBlocks)
 # ----------------------------------------------------------------------------------------
 # Debug msg
 # message(DEBUG  "Building src")
-
-# ----------------------------------------------------------------------------------------
-# Add support for building some go programs
-include(other/build_assets/GolangSimple.cmake)
 
 # ----------------------------------------------------------------------------------------
 # Allow targets in cascade
@@ -50,12 +56,12 @@ endif (CURL_FOUND)
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2 -fPIC")
 if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMAC -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS acct ether util pin ${CURL_LIBRARIES})
+set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
 # set (BASE_LIBS acct ether util pin sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
@@ -66,12 +72,12 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/acctlib"
      "${CMAKE_SOURCE_DIR}/libs/pinlib")
 
-#set (BASE_INCLUDE 
-#     "${CMAKE_SOURCE_DIR}/libs/utillib"
-#     "${CMAKE_SOURCE_DIR}/libs/etherlib"
-#     "${CMAKE_SOURCE_DIR}/libs/acctlib"
-#     "${CMAKE_SOURCE_DIR}/libs/pinlib"
-#     "${CMAKE_SOURCE_DIR}/libs/sqllit3lib")
+# set (BASE_INCLUDE 
+#      "${CMAKE_SOURCE_DIR}/libs/utillib"
+#      "${CMAKE_SOURCE_DIR}/libs/etherlib"
+#      "${CMAKE_SOURCE_DIR}/libs/acctlib"
+#      "${CMAKE_SOURCE_DIR}/libs/pinlib"
+#      "${CMAKE_SOURCE_DIR}/libs/sqlite3lib")
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
@@ -84,11 +90,20 @@ function(build_readme sourcePath toolName)
     add_custom_target(readme COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/makeReadme.py" "${CMAKE_SOURCE_DIR}" "${sourcePath}" "${toolName}" DEPENDS help.txt)
 endfunction(build_readme)
 
+add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-ao" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTestingAll" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
 add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (apps)
 add_subdirectory (go-apps)
-add_subdirectory (other)
 add_subdirectory (dev_tools)
+#add_subdirectory (examples)
+add_subdirectory (other)

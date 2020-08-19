@@ -157,9 +157,10 @@ extern const char* STR_DISPLAY_APPEARANCE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(const CAppearance& item, void* data);
+typedef bool (*ADDRESSFUNC)(const address_t& addr, void *data);
+typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
-extern bool potentialAddr(ADDRESSFUNC func, void* data, const CAppearance& item, const string_q& potList);
+extern bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& item, const string_q& potList);
 
 //---------------------------------------------------------------------------
 struct addrOnlyComparator {
@@ -187,13 +188,13 @@ typedef map<CAppearance, bool, addrTxComparator> CAddressTxAppearanceMap;      /
 //---------------------------------------------------------------------------
 class CUniqueState {
   public:
-    ADDRESSFUNC func;
+    APPEARANCEFUNC func;
     void* data;
     CAddressOnlyAppearanceMap* addrOnlyMap;
     CAddressTxAppearanceMap* addrTxMap;
 
   public:
-    CUniqueState(ADDRESSFUNC f, void* d, bool perTx) {
+    CUniqueState(APPEARANCEFUNC f, void* d, bool perTx) {
         func = f;
         data = d;
         addrOnlyMap = (perTx ? NULL : new CAddressOnlyAppearanceMap);
