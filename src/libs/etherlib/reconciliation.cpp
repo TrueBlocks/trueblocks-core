@@ -762,6 +762,8 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
 //--------------------------------------------------------------
 CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     CReconciliation rec = a;
+    rec.blockNum = b.blockNum; // assign
+    rec.timestamp = b.timestamp; // assign
     rec.weiIn += b.weiIn;
     rec.internalIn += b.internalIn;
     rec.selfDestructIn += b.selfDestructIn;

@@ -63,11 +63,11 @@ bool COptions::parseArguments(string_q& command) {
             discrete = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmUint("start", start, arg))
+            if (!confirmUint("start", startBlock, arg))
                 return false;
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmUint("end", end, arg))
+            if (!confirmUint("end", endBlock, arg))
                 return false;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (start >= end || end > getLatestBlock_client())
+    if (startBlock >= endBlock || endBlock > getLatestBlock_client())
         return usage("Invalid --start or --end. Quitting...");
 
     if (thing) {
@@ -124,8 +124,8 @@ void COptions::Init(void) {
     CAccountName unused;
     getNamedAccount(unused, "0x0");
 
-    start = 0;
-    end = getLatestBlock_client();
+    startBlock = 0;
+    endBlock = getLatestBlock_client();
 }
 
 //---------------------------------------------------------------------------------------------------

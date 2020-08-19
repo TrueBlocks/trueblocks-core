@@ -1053,7 +1053,8 @@ bool isSamePeriod(period_t period, blknum_t b1, blknum_t b2) {
         case BY_10000:
         case BY_100000:
         case BY_1000000:
-            return ((b1 / period) == (b2 / period));
+            if (b1 == 0 && b2 == 1) return false;
+            return ((b1-1) / period) == ((b2-1) / period);
         case BY_YEAR:
         case BY_MONTH:
         case BY_WEEK:
