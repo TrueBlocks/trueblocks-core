@@ -228,7 +228,7 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //----------------------------------------------------------------
-bool removeFromPinata(CPinnedItem& item, void *data) {
+bool removeFromPinata(CPinnedItem& item, void* data) {
     cout << item << endl;
     unpinChunk(item.fileName, item);
     return true;

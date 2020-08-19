@@ -196,8 +196,8 @@ bool addressVisitFunc(const string_q& path, void* data) {
             return false;
         CIndexArchive archive(READING_ARCHIVE);
         archive.ReadIndexFromBinary(path);
-        for (uint64_t i = 0 ; i < archive.nAddrs ; i++) {
-            CAddressRecord_base *rec = &archive.addresses[i];
+        for (uint64_t i = 0; i < archive.nAddrs; i++) {
+            CAddressRecord_base* rec = &archive.addresses[i];
             address_t addr = bytes_2_Addr(rec->bytes);
             bool ret = (*visitor->addrFunc)(addr, visitor->callData);
             if (!ret)
@@ -208,7 +208,7 @@ bool addressVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-bool forEveryAddress(ADDRESSFUNC func, void *data) {
+bool forEveryAddress(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;
@@ -230,8 +230,8 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
             return false;
         CIndexArchive archive(READING_ARCHIVE);
         archive.ReadIndexFromBinary(path);
-        for (uint64_t i = 0 ; i < archive.nAddrs ; i++) {
-            CAddressRecord_base *rec = &archive.addresses[i];
+        for (uint64_t i = 0; i < archive.nAddrs; i++) {
+            CAddressRecord_base* rec = &archive.addresses[i];
             address_t addr = bytes_2_Addr(rec->bytes);
             if (hasCodeAt(addr, visitor->atBlock)) {
                 bool ret = (*visitor->addrFunc)(addr, visitor->callData);
@@ -244,7 +244,7 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-bool forEverySmartContract(ADDRESSFUNC func, void *data) {
+bool forEverySmartContract(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;

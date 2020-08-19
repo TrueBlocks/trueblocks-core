@@ -157,7 +157,7 @@ extern const char* STR_DISPLAY_APPEARANCE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-typedef bool (*ADDRESSFUNC)(const address_t& addr, void *data);
+typedef bool (*ADDRESSFUNC)(const address_t& addr, void* data);
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 extern bool isPotentialAddr(biguint_t test, address_t& addrOut);
 extern bool potentialAddr(APPEARANCEFUNC func, void* data, const CAppearance& item, const string_q& potList);

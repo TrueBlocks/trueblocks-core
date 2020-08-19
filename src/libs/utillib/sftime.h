@@ -308,7 +308,7 @@ typedef enum {
     BY_WEEK,
     BY_DAY,
     BY_HOUR,
-    BY_1 = 1, // non-opaque values
+    BY_1 = 1,  // non-opaque values
     BY_10 = 10,
     BY_100 = 100,
     BY_1000 = 1000,

@@ -34,7 +34,7 @@ extern bool readIndexHeaderFromBinary(const string_q& inFn, CHeaderRecord_base* 
 typedef bool (*INDEXCHUNKFUNC)(CIndexArchive& chunk, void* data);
 typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);
 class CChunkVisitor {
-public:
+  public:
     INDEXCHUNKFUNC indexFunc = nullptr;
     ADDRESSFUNC addrFunc = nullptr;
     void* callData = nullptr;
@@ -42,7 +42,7 @@ public:
 };
 extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
 extern bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data);
-extern bool forEveryAddress(ADDRESSFUNC func, void *data);
-extern bool forEverySmartContract(ADDRESSFUNC func, void *data);
+extern bool forEveryAddress(ADDRESSFUNC func, void* data);
+extern bool forEverySmartContract(ADDRESSFUNC func, void* data);
 
 }  // namespace qblocks
