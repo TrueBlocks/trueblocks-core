@@ -37,7 +37,7 @@ jsonrpc             	1005	0	131122	T_TEXT TS_STRING
 result              	1006	0	131122	T_TEXT TS_STRING
 id                  	1007	0	131122	T_TEXT TS_STRING
 {
-  "schema": 7000,
+  "schema": 8001,
   "deleted": false,
   "showing": true,
   "cname": "RPCResult"

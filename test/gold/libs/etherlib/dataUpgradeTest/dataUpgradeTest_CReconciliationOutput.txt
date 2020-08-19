@@ -97,7 +97,7 @@ endBalDiff          	1024	0	131122	T_TEXT TS_STRING
 reconciliationType  	1025	0	131122	T_TEXT TS_STRING
 reconciled          	1026	0	65556	T_BOOL TS_NUMERAL
 {
-  "schema": 7000,
+  "schema": 8001,
   "deleted": false,
   "showing": true,
   "cname": "ReconciliationOutput",

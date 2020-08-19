@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:test13.toml]
 tomlTest test13.toml 
 test13.toml
 [version]
-current = "0.7.0-alpha"
+current = "0.8.1-alpha"
 
 [display]
 to_screen = true
@@ -120,7 +120,7 @@ list=[{ address = "bb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firs
 
 File contents after write
 [version]
-current = "0.7.0-alpha"
+current = "0.8.1-alpha"
 
 [display]
 to_screen = true

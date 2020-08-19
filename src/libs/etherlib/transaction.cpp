@@ -624,6 +624,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "traces");
     HIDE_FIELD(CTransaction, "articulatedTx");
     HIDE_FIELD(CTransaction, "reconciliations");
+    HIDE_FIELD(CTransaction, "extraValue1");
+    HIDE_FIELD(CTransaction, "extraValue2");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
