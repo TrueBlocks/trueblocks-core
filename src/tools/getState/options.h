@@ -27,6 +27,7 @@ class COptions : public CHistoryOptions {
     CAddressArray addrs;
     bool changes;
     bool no_zero;
+    string_q call;
     // END_CODE_DECLARE
 
     address_t current;

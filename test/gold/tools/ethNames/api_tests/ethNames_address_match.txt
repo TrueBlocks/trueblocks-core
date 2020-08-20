@@ -856,6 +856,15 @@
       "description": ""
     },
     {
+      "tags": "36-Chainlink",
+      "address": "0x151445852b0cfdf6a4cc81440f2af99176e8ad08",
+      "name": "Chainlink GBP-USD Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "90-DevCon2:Individual",
       "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
       "name": "d2friend",
@@ -1077,6 +1086,15 @@
       "name": "Simon de la Rouviere",
       "symbol": "",
       "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "36-Chainlink",
+      "address": "0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936",
+      "name": "Chainlink FTSE-GBP Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },
@@ -1790,24 +1808,6 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1c6640089c6af02e11f04f0ee44b2cc6ef924057",
-      "name": "Name 0x1c664008",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7",
-      "name": "TEAM",
-      "symbol": "TEAM",
-      "source": "On Chain",
-      "decimals": 4,
-      "description": "TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level."
     }
   ],
   "types": [

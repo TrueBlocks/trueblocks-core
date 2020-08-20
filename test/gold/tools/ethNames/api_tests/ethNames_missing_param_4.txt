@@ -51,6 +51,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma				https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp
 34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar				Trueblocks.io
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper				0xTracker
+36-Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator				EtherScan
 50-Tokens:ERC20	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos Token	PYN		18	On Chain
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS			6	On Chain
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack				Etherscan
@@ -76,6 +77,7 @@ tags	address	name	symbol	decimals	source
 34-Twitter: Friends	0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6	Name 0x02bbea93				Twitter
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18	On Chain
 31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 782 Ethereum Cat Herders Community Fund				https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund
+36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator				EtherScan
 31-Gitcoin Grants:Friends	0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1	Name 0x02d9cc72				Gitcoin Website
 31-Gitcoin Grants:Friends	0x02dbd1aa375c7d00ecf1de198158ffa332110d47	Name 0x02dbd1aa				Gitcoin Website
 50-Tokens:ERC20	0x02e3083a51e8632e571fbd6a62ac396c10c653ba	EplusCoin	EPLUS		8	On Chain
@@ -86,6 +88,7 @@ tags	address	name	symbol	decimals	source
 30-Contracts	0x0358629bd27fa559b88d0f41ea3da28d057c3414	Arbitrage Bot				0xTracker
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18	On Chain
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18	On Chain
+36-Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator				EtherScan
 31-Gitcoin Grants:Grant	0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4	Grant 284 My DAO Dashboard				https://gitcoin.co/grants/284/my-dao-dashboard
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS		6	On Chain
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis				Etherscan
@@ -128,6 +131,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x05aaaa829afa407d83315cded1d45eb16025910c	SP8DE Token	SPX		18	On Chain
 50-Tokens:ERC20	0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect Token	LCT		18	On Chain
 90-DevCon2:Individual	0x05cca80c318762feacb111e95ed29ebb8fc7aac8	pete				DevCon2 Token Contract
+36-Chainlink	0x05cf62c4ba0ccea3da680f9a8744ac51116d6231	Chainlink AUD-USD Aggregator				EtherScan
 60-Airdrops	0x05d03474df1b73c17891b41858633a5958c07713	LPT Airdrop Sender				TrueBlocks.io
 50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU		18	On Chain
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL		12	On Chain
@@ -196,7 +200,3 @@ tags	address	name	symbol	decimals	source
 50-Tokens	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT		18	defipulse.com
 80-Malicious	0x0978b496a1635e4a0b4ff867569cf43ee030e967	Possibly Malicious 0x097				TrueBlocks.io
 31-Gitcoin Grants:Friends	0x0982a0bf061f3cec2a004b4d2c802f479099c971	Name 0x0982a0bf				Gitcoin Website
-30-Contracts	0x09b091492759737c03da9db7edf1cd6bcc3a9d91	Crypto: URI Prefix Controller				Github
-40-Exchanges	0x09cabec1ead1c0ba254b09efb3ee13841712be14	Uniswap: DAI				TrueBlocks.io
-31-Gitcoin Grants:Friends	0x09dcabf773a87ff1b1b9885576938f0dcc1075db	Name 0x09dcabf7				Gitcoin Website
-50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK		18	On Chain

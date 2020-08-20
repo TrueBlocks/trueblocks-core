@@ -474,8 +474,8 @@ static bool readManifest(bool required) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
-    LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
-    LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
+    // LOG_INFO("binDate: ", binDate.Format(FMT_JSON));
+    // LOG_INFO("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);

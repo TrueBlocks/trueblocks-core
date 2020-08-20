@@ -469,6 +469,15 @@
       "description": ""
     },
     {
+      "tags": "36-Chainlink",
+      "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
+      "name": "Chainlink BTC-ETH Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0142c3b2fc51819b5af5dfc4aa52df9722790851",
       "name": "Paycentos Token",
@@ -694,6 +703,15 @@
       "description": "https://twitter.com/EthCatHerders"
     },
     {
+      "tags": "36-Chainlink",
+      "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
+      "name": "Chainlink CHF-USD Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
       "name": "Name 0x02d9cc72",
@@ -782,6 +800,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Student jobs marketplace."
+    },
+    {
+      "tags": "36-Chainlink",
+      "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
+      "name": "Chainlink DAI-ETH Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": ""
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -1158,6 +1185,15 @@
       "name": "pete",
       "symbol": "",
       "source": "DevCon2 Token Contract",
+      "decimals": "0",
+      "description": ""
+    },
+    {
+      "tags": "36-Chainlink",
+      "address": "0x05cf62c4ba0ccea3da680f9a8744ac51116d6231",
+      "name": "Chainlink AUD-USD Aggregator",
+      "symbol": "",
+      "source": "EtherScan",
       "decimals": "0",
       "description": ""
     },
@@ -1771,42 +1807,6 @@
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x09b091492759737c03da9db7edf1cd6bcc3a9d91",
-      "name": "Crypto: URI Prefix Controller",
-      "symbol": "",
-      "source": "Github",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "40-Exchanges",
-      "address": "0x09cabec1ead1c0ba254b09efb3ee13841712be14",
-      "name": "Uniswap: DAI",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x09dcabf773a87ff1b1b9885576938f0dcc1075db",
-      "name": "Name 0x09dcabf7",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x09fe5f0236f0ea5d930197dce254d77b04128075",
-      "name": "Wrapped CryptoKitties",
-      "symbol": "WCK",
-      "source": "On Chain",
-      "decimals": 18,
       "description": ""
     }
   ],

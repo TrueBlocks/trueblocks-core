@@ -2,8 +2,6 @@ chifra argc: 8 [1:status] [2:all] [3:--details] [4:--start] [5:1400000] [6:--end
 chifra status all --details --start 1400000 --end 2000000 
 cacheStatus argc: 7 [1:all] [2:--details] [3:--start] [4:1400000] [5:--end] [6:2000000] 
 cacheStatus all --details --start 1400000 --end 2000000 
-TIME ~ CLOCK - <INFO>  : binDate: 2020-08-19 12:12:41 UTC
-TIME ~ CLOCK - <INFO>  : textDate: 2020-08-07 20:44:24 UTC
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",

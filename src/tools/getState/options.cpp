@@ -25,6 +25,7 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
+    COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma-separated string of an address, a 4-byte, and required parameters for a call against a smart contract"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance (in wei) for one or more addresses at the given block(s)."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -61,6 +62,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--no_zero") {
             no_zero = true;
 
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--call:")) {
+            call = substitute(substitute(arg, "-a:", ""), "--call:", "");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -77,6 +81,21 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
+    }
+
+    if (!call.empty()) {
+        CStringArray vars;
+        explode(vars, call, ',');
+        if (!isAddress(vars[0]))
+            return usage("Invalid address " + vars[0] + ". Quitting...");
+        CAbi abi;
+        abi.loadAbiByAddress(vars[0]);
+        blknum_t bn = vars.size() > 3 ? str_2_Uint(vars[3]) : getLatestBlock_client();
+        string_q p = vars.size() > 2 ? vars[2] : "";
+        if (vars.size() < 2)
+            return usage("Need a 4-byte. Quitting...");
+        cout << doEthCall(vars[0], vars[1], p, bn, abi) << endl;
+        return false;
     }
 
     for (auto part : parts) {
@@ -172,6 +191,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     changes = false;
     no_zero = false;
+    call = "";
     // END_CODE_INIT
 
     prevBal = 0;

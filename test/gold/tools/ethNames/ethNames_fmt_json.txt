@@ -506,6 +506,15 @@ ethNames --named --custom --owned --fmt json
     "description": ""
   },
   {
+    "tags": "36-Chainlink",
+    "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
+    "name": "Chainlink BTC-ETH Aggregator",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0142c3b2fc51819b5af5dfc4aa52df9722790851",
     "name": "Paycentos Token",
@@ -731,6 +740,15 @@ ethNames --named --custom --owned --fmt json
     "description": "https://twitter.com/EthCatHerders"
   },
   {
+    "tags": "36-Chainlink",
+    "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
+    "name": "Chainlink CHF-USD Aggregator",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1",
     "name": "Name 0x02d9cc72",
@@ -819,6 +837,15 @@ ethNames --named --custom --owned --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "Student jobs marketplace."
+  },
+  {
+    "tags": "36-Chainlink",
+    "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
+    "name": "Chainlink DAI-ETH Aggregator",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": ""
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -1195,6 +1222,15 @@ ethNames --named --custom --owned --fmt json
     "name": "pete",
     "symbol": "",
     "source": "DevCon2 Token Contract",
+    "decimals": 0,
+    "description": ""
+  },
+  {
+    "tags": "36-Chainlink",
+    "address": "0x05cf62c4ba0ccea3da680f9a8744ac51116d6231",
+    "name": "Chainlink AUD-USD Aggregator",
+    "symbol": "",
+    "source": "EtherScan",
     "decimals": 0,
     "description": ""
   },
@@ -1769,42 +1805,6 @@ ethNames --named --custom --owned --fmt json
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x0957e08cdbbc0e99ad1b2874a88af2133b5a4d42",
     "name": "Name 0x0957e08c",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x095c005552b751bdcdc577bfc5722ebb1d94a4f9",
-    "name": "Name 0x095c0055",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens",
-    "address": "0x09617f6fd6cf8a71278ec86e23bbab29c04353a7",
-    "name": "Unblocked Ledger Token",
-    "symbol": "ULT",
-    "source": "defipulse.com",
-    "decimals": 18,
-    "description": ""
-  },
-  {
-    "tags": "80-Malicious",
-    "address": "0x0978b496a1635e4a0b4ff867569cf43ee030e967",
-    "name": "Possibly Malicious 0x097",
-    "symbol": "",
-    "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0982a0bf061f3cec2a004b4d2c802f479099c971",
-    "name": "Name 0x0982a0bf",
     "symbol": "",
     "source": "Gitcoin Website",
     "decimals": 0,

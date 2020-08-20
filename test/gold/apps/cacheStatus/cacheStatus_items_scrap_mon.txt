@@ -1,7 +1,5 @@
 cacheStatus argc: 7 [1:--details] [2:index] [3:--start] [4:1000000] [5:--end] [6:2200000] 
 cacheStatus --details index --start 1000000 --end 2200000 
-TIME ~ CLOCK - <INFO>  : binDate: 2020-08-19 12:12:41 UTC
-TIME ~ CLOCK - <INFO>  : textDate: 2020-08-07 20:44:24 UTC
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",
@@ -18,13 +16,13 @@ TIME ~ CLOCK - <INFO>  : textDate: 2020-08-07 20:44:24 UTC
         {
           "type": "CIndexCacheItem",
           "nAddresses": 43849,
-          "nAppearances": 1000002,
+          "nAppearances": 1000001,
           "firstAppearance": 970514,
           "latestAppearance": 1076298,
           "firstTs": 1454898449,
           "latestTs": 1456718198,
           "filename": "/--index-path--/000970514-001076298.bin",
-          "indexSizeBytes": 9227832,
+          "indexSizeBytes": 9227824,
           "index_hash": "QmYD...Y87x",
           "bloomSizeBytes": 131080,
           "bloom_hash": "Qmak...3Bdo"

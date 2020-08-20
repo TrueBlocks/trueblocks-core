@@ -1,7 +1,5 @@
 cacheStatus argc: 5 [1:caches] [2:--types] [3:transactions] [4:--details] 
 cacheStatus caches --types transactions --details 
-TIME ~ CLOCK - <INFO>  : binDate: 2020-08-19 12:12:41 UTC
-TIME ~ CLOCK - <INFO>  : textDate: 2020-08-07 20:44:24 UTC
 {
   "client_version": "Parity version",
   "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",

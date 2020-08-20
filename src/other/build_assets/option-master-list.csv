@@ -179,6 +179,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13140,tools,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
 13160,tools,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
+13190,tools,state,getState,call,a,,false,false,false,true,header,flag,<string>,a comma-separated string of an address&#44; a 4-byte&#44; and required parameters for a call against a smart contract
 13220,tools,state,getState,,,,false,false,true,true,--,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
 13222,tools,state,getState,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 13224,tools,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
