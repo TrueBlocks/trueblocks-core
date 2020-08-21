@@ -10,19 +10,22 @@
       "host": "--hostname-- (--username--)",
       "is_testing": true,
       "is_scraping": false,
+      "is_archive": true,
+      "is_tracing": true,
+      "has_eskey": true,
       "caches": [
         {
           "items": [
             {
               "type": "CIndexCacheItem",
               "nAddresses": 43849,
-              "nAppearances": 1000001,
+              "nAppearances": 1000002,
               "firstAppearance": 970514,
               "latestAppearance": 1076298,
               "firstTs": 1454898449,
               "latestTs": 1456718198,
               "filename": "/--index-path--/000970514-001076298.bin",
-              "indexSizeBytes": 9227824,
+              "indexSizeBytes": 9227832,
               "index_hash": "QmYD...Y87x",
               "bloomSizeBytes": 131080,
               "bloom_hash": "Qmak...3Bdo"

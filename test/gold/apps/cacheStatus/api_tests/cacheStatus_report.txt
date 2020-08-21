@@ -8,6 +8,9 @@
   "host": "--hostname-- (--username--)",
   "is_testing": true,
   "is_scraping": false,
+  "is_archive": true,
+  "is_tracing": true,
+  "has_eskey": true,
   "caches": [
     {
       "items": [],

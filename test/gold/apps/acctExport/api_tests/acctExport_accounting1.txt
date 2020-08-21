@@ -169,9 +169,6 @@
       "encoding": "0x"
     }
   ],
-  "errors": [
-    "RPCerror(1): Invalid params: invalid length 1"
-  ],
   "types": [
     {
       "type": "CTransaction",

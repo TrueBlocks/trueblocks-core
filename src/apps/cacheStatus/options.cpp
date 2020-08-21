@@ -217,7 +217,7 @@ void COptions::Init(void) {
     status.is_testing = isTestMode();
     status.is_archive = isArchiveNode();
     status.is_tracing = isTracingNode();
-    status.has_eskey = !getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<NOT_SET>").empty();
+    status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
 }
 
 //---------------------------------------------------------------------------------------------------
