@@ -208,7 +208,7 @@ bool addressVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-bool forEveryAddress(ADDRESSFUNC func, void* data) {
+bool forEveryAddressInIndex(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;
@@ -244,7 +244,7 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-bool forEverySmartContract(ADDRESSFUNC func, void* data) {
+bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;

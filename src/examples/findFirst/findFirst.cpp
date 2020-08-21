@@ -22,7 +22,7 @@ int main(int argc, const char* argv[]) {
     for (blknum_t bl = start; bl < getLatestBlock_client(); bl++) {
         CBlock block;
         getBlock(block, bl);
-        if (!block.forEveryUniqueAddress(visitAddress, NULL, &search))
+        if (!block.forEveryUniqueAppearanceInBlock(visitAddress, NULL, &search))
             return 0;
     }
     return 0;

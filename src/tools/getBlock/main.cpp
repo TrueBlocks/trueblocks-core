@@ -179,11 +179,11 @@ bool visitBlock(uint64_t num, void* data) {
 
         opt->addrCounter = 0;
         if (opt->filterType == "uniq")
-            block.forEveryUniqueAddress(visitAddrs, transFilter, opt);
+            block.forEveryUniqueAppearanceInBlock(visitAddrs, transFilter, opt);
         else if (opt->filterType == "uniq_tx")
-            block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, opt);
+            block.forEveryUniqueAppearanceInBlockPerTx(visitAddrs, transFilter, opt);
         else
-            block.forEveryAddress(visitAddrs, transFilter, opt);
+            block.forEveryAppearanceInBlock(visitAddrs, transFilter, opt);
 
         if (opt->count_only)
             cout << block.Format(

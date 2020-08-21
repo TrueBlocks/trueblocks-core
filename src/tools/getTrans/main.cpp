@@ -77,7 +77,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     }
 
     if (opt->uniq) {
-        trans.forEveryUniqueAddressPerTx(visitAddrs, transFilter, opt);
+        trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
         return true;
     }
 

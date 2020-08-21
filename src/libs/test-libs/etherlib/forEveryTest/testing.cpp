@@ -101,20 +101,20 @@ bool sortAddressArray(const CAppearance& v1, const CAppearance& v2) {
 //--------------------------------------------------------------
 void everyAddress(CBlock& block) {
     cout << "Every address in block 4312145\n";
-    block.forEveryAddress(visitAddrs, transFilter, NULL);
+    block.forEveryAppearanceInBlock(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everyUniqueAddress(CBlock& block) {
     cout << "Every unique addresses in block 4312145\n";
-    block.forEveryUniqueAddress(visitAddrs, transFilter, NULL);
+    block.forEveryUniqueAppearanceInBlock(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everySortedUniqueAddress(CBlock& block) {
     cout << "Every unique addresses in block 4312145 (sorted)\n";
     CAppearanceArray array;
-    block.forEveryUniqueAddress(accumAddrs, transFilter, &array);
+    block.forEveryUniqueAppearanceInBlock(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
         cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";
@@ -123,14 +123,14 @@ void everySortedUniqueAddress(CBlock& block) {
 //--------------------------------------------------------------
 void everyUniqueAddressPerTx(CBlock& block) {
     cout << "Every unique addresses per tx in block 4312145\n";
-    block.forEveryUniqueAddressPerTx(visitAddrs, transFilter, NULL);
+    block.forEveryUniqueAppearanceInBlockPerTx(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everySortedUniqueAddressPerTx(CBlock& block) {
     cout << "Every unique addresses per tx in block 4312145 (sorted)\n";
     CAppearanceArray array;
-    block.forEveryUniqueAddressPerTx(accumAddrs, transFilter, &array);
+    block.forEveryUniqueAppearanceInBlockPerTx(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
         cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";

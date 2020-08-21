@@ -180,5 +180,8 @@ extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t block
 extern uint64_t getNonceAt(const address_t& addr, blknum_t num);
 extern blknum_t getDeployBlock(const address_t& addr);
 extern bool nodeHasBalances(bool showErrors);
+inline bool isArchiveNode(void) {
+    return nodeHasBalances(false);
+}
 // EXISTING_CODE
 }  // namespace qblocks

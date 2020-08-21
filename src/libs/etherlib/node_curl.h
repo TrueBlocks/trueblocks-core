@@ -60,6 +60,9 @@ extern void namesNotRequired(void);
 extern void checkNodeRequired(void);
 extern bool isNodeRunning(void);
 extern bool nodeHasTraces(void);
+inline bool isTracingNode(void) {
+    return nodeHasTraces();
+}
 extern void displayCurlError(const string_q& msg, const string_q& val = "");
 extern string_q setDataSource(const string_q& newSrc);
 inline string_q getDataSource(void) {

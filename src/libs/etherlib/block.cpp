@@ -575,7 +575,7 @@ string_q stringy(const CStringArray& array) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CBlock::forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
 
@@ -588,7 +588,7 @@ bool CBlock::forEveryAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* d
     }
     for (size_t tr = 0; tr < transactions.size(); tr++) {
         CTransaction* trans = &transactions[tr];
-        if (!trans->forEveryAddressTx(func, traceFilter, data))
+        if (!trans->forEveryAppearanceInTx(func, traceFilter, data))
             return false;
     }
     return true;
@@ -631,7 +631,7 @@ bool getTracesAndVisit(const hash_t& hash, CAppearance& item, APPEARANCEFUNC fun
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryAddressTx(APPEARANCEFUNC funcy, TRANSFUNC filt, void* data) {
+bool CTransaction::forEveryAppearanceInTx(APPEARANCEFUNC funcy, TRANSFUNC filt, void* data) {
     blknum_t tr = transactionIndex;
     const CReceipt* recPtr = &receipt;
     if (!foundOne(funcy, data, blockNumber, tr, 0, from, "from"))
@@ -669,19 +669,19 @@ bool CTransaction::forEveryAddressTx(APPEARANCEFUNC funcy, TRANSFUNC filt, void*
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddress(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CTransaction::forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, false);
-    return forEveryAddressTx(accumulateAddresses, traceFilter, &state);
+    return forEveryAppearanceInTx(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------
-bool CTransaction::forEveryUniqueAddressPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CTransaction::forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, true);
-    return forEveryAddressTx(accumulateAddresses, traceFilter, &state);
+    return forEveryAppearanceInTx(accumulateAddresses, traceFilter, &state);
 }
 
 //---------------------------------------------------------------------------

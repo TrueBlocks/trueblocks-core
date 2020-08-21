@@ -966,6 +966,10 @@ string_q getIndexPath(const string_q& _part) {
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>" || !folderExists(indexPath))
         return getCachePath("addr_index/" + _part);
+    indexPath += (!endsWith(indexPath, '/') ? "/" : "");
+    if (!folderExists(indexPath)) {
+        LOG_WARN("Index path '" + indexPath + "' not found.");
+    }
     return indexPath + _part;
 }
 

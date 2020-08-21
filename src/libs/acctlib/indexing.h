@@ -42,7 +42,7 @@ class CChunkVisitor {
 };
 extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
 extern bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data);
-extern bool forEveryAddress(ADDRESSFUNC func, void* data);
-extern bool forEverySmartContract(ADDRESSFUNC func, void* data);
+extern bool forEveryAddressInIndex(ADDRESSFUNC func, void* data);
+extern bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data);
 
 }  // namespace qblocks

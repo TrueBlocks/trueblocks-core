@@ -373,12 +373,17 @@ bool nodeHasBalances(bool showErrors) {
     // at block zero. If the node is holding balances (i.e. its an archive node), then it will
     // return that value for block 1 as well. Otherwise, it will return a zero balance.
     // NOTE: Unimportantly, account 0xa1e4380a3b1f749673e270229993ee55f35663b4 transacted in the first ever transaction.
-    uint64_t save = verbose;  // silence the warning from the node since we know this may fail
+
+    // Silence warnings since we know this may fail
+    uint64_t saveVerbose = verbose;
+    bool saveErrors = getCurlContext()->reportErrors;
+
     verbose = 0;
     getCurlContext()->reportErrors = showErrors;
     bool ret = getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
-    getCurlContext()->reportErrors = true;
-    verbose = save;
+
+    getCurlContext()->reportErrors = saveErrors;
+    verbose = saveVerbose;
     return ret;
 }
 
