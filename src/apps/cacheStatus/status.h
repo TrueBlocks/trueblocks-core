@@ -36,6 +36,9 @@ class CStatus : public CBaseNode {
     string_q host;
     bool is_testing;
     bool is_scraping;
+    bool is_archive;
+    bool is_tracing;
+    bool has_eskey;
     timestamp_t ts;
     CCachePtrArray caches;
 
@@ -111,6 +114,9 @@ inline void CStatus::initialize(void) {
     host = "";
     is_testing = false;
     is_scraping = false;
+    is_archive = false;
+    is_tracing = false;
+    has_eskey = false;
     ts = date_2_Ts(Now());
     caches.clear();
 
@@ -137,6 +143,9 @@ inline void CStatus::duplicate(const CStatus& st) {
     host = st.host;
     is_testing = st.is_testing;
     is_scraping = st.is_scraping;
+    is_archive = st.is_archive;
+    is_tracing = st.is_tracing;
+    has_eskey = st.has_eskey;
     ts = st.ts;
     caches = st.caches;
 

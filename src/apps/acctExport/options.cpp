@@ -335,7 +335,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!nodeHasBals) {
                 string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
                 if (rpcProvider == balanceProvider || balanceProvider.empty())
-                    EXIT_FAIL(
+                    EXIT_USAGE(
                         "--accounting requires historical balances. The RPC server does not have them. Quitting...");
                 setRpcProvider(balanceProvider);
                 if (!nodeHasBalances(false))

@@ -215,6 +215,9 @@ void COptions::Init(void) {
     status.trueblocks_version = getVersionStr();
     status.is_scraping = isTestMode() ? false : isRunning("chifra scrape");
     status.is_testing = isTestMode();
+    status.is_archive = isArchiveNode();
+    status.is_tracing = isTracingNode();
+    status.has_eskey = !getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<NOT_SET>").empty();
 }
 
 //---------------------------------------------------------------------------------------------------

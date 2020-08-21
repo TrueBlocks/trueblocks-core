@@ -100,6 +100,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "host") {
                 return host;
             }
+            if (fieldName % "has_eskey") {
+                return bool_2_Str(has_eskey);
+            }
             break;
         case 'i':
             if (fieldName % "index_path") {
@@ -110,6 +113,12 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "is_scraping") {
                 return bool_2_Str(is_scraping);
+            }
+            if (fieldName % "is_archive") {
+                return bool_2_Str(is_archive);
+            }
+            if (fieldName % "is_tracing") {
+                return bool_2_Str(is_tracing);
             }
             break;
         case 'r':
@@ -176,6 +185,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 host = fieldValue;
                 return true;
             }
+            if (fieldName % "has_eskey") {
+                has_eskey = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'i':
             if (fieldName % "index_path") {
@@ -188,6 +201,14 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "is_scraping") {
                 is_scraping = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_archive") {
+                is_archive = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_tracing") {
+                is_tracing = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -241,6 +262,10 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> host;
     archive >> is_testing;
     archive >> is_scraping;
+    archive >> is_archive;
+    archive >> is_tracing;
+    archive >> has_eskey;
+    // archive >> ts;
     uint64_t nCaches = 0;
     archive >> nCaches;
     if (nCaches) {
@@ -274,6 +299,10 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << host;
     archive << is_testing;
     archive << is_scraping;
+    archive << is_archive;
+    archive << is_tracing;
+    archive << has_eskey;
+    // archive << ts;
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
         archive << cache->getRuntimeClass()->getClassNamePtr();
@@ -324,7 +353,11 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_testing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "is_archive", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "is_tracing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "has_eskey", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
+    HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
