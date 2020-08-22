@@ -305,6 +305,7 @@ bool getPinataKeys(string_q& apiKey, string_q& secret) {
 
 //----------------------------------------------------------------
 static string_q pinOneFile(const string_q& fileName, const string_q& type) {
+#if 0
     LOG4("Starting pin");
 
     string_q apiKey, secret;
@@ -359,6 +360,9 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
 
     // LOG4("Finishing pin: ", result);
     LOG4("Finishing pin");
+#else
+    string_q result;
+#endif
     return result;
 }
 
