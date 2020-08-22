@@ -34,6 +34,9 @@
       "tags": "31-Gitcoin Grants:Grant"
     },
     {
+      "tags": "31-Pasta"
+    },
+    {
       "tags": "33-Set Protocol"
     },
     {

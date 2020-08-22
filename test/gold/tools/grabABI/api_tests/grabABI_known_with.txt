@@ -481,6 +481,14 @@
       "output_names": ""
     },
     {
+      "name": "Cut",
+      "type": "function",
+      "signature": "Cut(bytes[])",
+      "encoding": "0x043f1619",
+      "input_names": "_diamondCut,",
+      "output_names": ""
+    },
+    {
       "name": "getMemberProposalVote",
       "type": "function",
       "signature": "getMemberProposalVote(address,uint256)",
@@ -4593,6 +4601,14 @@
       "output_names": ""
     },
     {
+      "name": "facetAddresses",
+      "type": "function",
+      "signature": "facetAddresses()",
+      "encoding": "0x52ef6b2c",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "clear",
       "type": "function",
       "signature": "clear()",
@@ -6585,6 +6601,14 @@
       "output_names": ""
     },
     {
+      "name": "facets",
+      "type": "function",
+      "signature": "facets()",
+      "encoding": "0x7a0ed627",
+      "input_names": "",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "secondsPerBlock",
       "type": "function",
       "signature": "secondsPerBlock()",
@@ -6694,6 +6718,14 @@
       "signature": "issueModule(address,address,address,uint256)",
       "encoding": "0x7c68561f",
       "input_names": "_owner,_recipient,_set,_quantity,",
+      "output_names": ""
+    },
+    {
+      "name": "diamondCut",
+      "type": "function",
+      "signature": "diamondCut(bytes[],address,bytes)",
+      "encoding": "0x7c696fea",
+      "input_names": "_diamondCut,_init,_,",
       "output_names": ""
     },
     {
@@ -7729,6 +7761,14 @@
       "output_names": "ret_0,memory,"
     },
     {
+      "name": "diamondStorage",
+      "type": "function",
+      "signature": "diamondStorage()",
+      "encoding": "0x9459e9ce",
+      "input_names": "",
+      "output_names": "storage ds,"
+    },
+    {
       "name": "get",
       "type": "function",
       "signature": "get(uint256)",
@@ -8039,6 +8079,14 @@
       "encoding": "0x99d50d5d",
       "input_names": "",
       "output_names": "memory,"
+    },
+    {
+      "name": "diamondCut",
+      "type": "function",
+      "signature": "diamondCut(bytes[])",
+      "encoding": "0x99f5f52e",
+      "input_names": "_diamondCut,",
+      "output_names": ""
     },
     {
       "name": "getLatestForContractAddress",
@@ -9102,6 +9150,14 @@
       "signature": "sub(int256,int256)",
       "encoding": "0xadefc37b",
       "input_names": "a,b,",
+      "output_names": "ret_0,"
+    },
+    {
+      "name": "facetFunctionSelectors",
+      "type": "function",
+      "signature": "facetFunctionSelectors(address)",
+      "encoding": "0xadfca15e",
+      "input_names": "_facet,",
       "output_names": "ret_0,"
     },
     {
@@ -10663,6 +10719,14 @@
       "encoding": "0xcdb2867b",
       "input_names": "_voteId,_voter,",
       "output_names": ""
+    },
+    {
+      "name": "facetAddress",
+      "type": "function",
+      "signature": "facetAddress(bytes4)",
+      "encoding": "0xcdffacc6",
+      "input_names": "_Selector,",
+      "output_names": "ret_0,"
     },
     {
       "name": "NewOwner",

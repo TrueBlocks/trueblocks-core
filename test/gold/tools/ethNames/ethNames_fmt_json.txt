@@ -1712,6 +1712,15 @@ ethNames --named --custom --owned --fmt json
     "description": ""
   },
   {
+    "tags": "31-Pasta",
+    "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
+    "name": "Pasta V1 Token",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70",
     "name": "Grant 425 Turkish Cryptocurrency YouTuber and Researcher",
@@ -1784,6 +1793,15 @@ ethNames --named --custom --owned --fmt json
     "description": ""
   },
   {
+    "tags": "31-Pasta",
+    "address": "0x093430541975e7aa0b2d9de2085bf99f33a5e91c",
+    "name": "Pasta/YFI Uniswap",
+    "symbol": "",
+    "source": "Spaghetti Website",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0947b0e6d821378805c9598291385ce7c791a6b2",
     "name": "Lendingblock",
@@ -1791,24 +1809,6 @@ ethNames --named --custom --owned --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way."
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0951ff0835302929d6c0162b3d2495a85e38ec3a",
-    "name": "Name 0x0951ff08",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x0957e08cdbbc0e99ad1b2874a88af2133b5a4d42",
-    "name": "Name 0x0957e08c",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

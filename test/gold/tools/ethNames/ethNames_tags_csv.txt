@@ -12,6 +12,7 @@ ethNames --tags --fmt csv
 "31-Gitcoin Grants:Core"
 "31-Gitcoin Grants:Friends"
 "31-Gitcoin Grants:Grant"
+"31-Pasta"
 "33-Set Protocol"
 "33-Set Protocol:Core"
 "33-Set Protocol:Core Caller"

@@ -338,6 +338,18 @@
     },
     {
       "deleted": false,
+      "tags": "31-Pasta",
+      "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
+      "name": "Pasta V1 Token",
+      "symbol": "",
+      "source": "EtherScan",
+      "decimals": "0",
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "50-Tokens",
       "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
       "name": "Dentacoin",
@@ -2396,18 +2408,6 @@
       "symbol": "KEY",
       "source": "Etherscan",
       "decimals": "0",
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x78b039921e84e726eb72e7b1212bb35504c645ca",
-      "name": "Sether",
-      "symbol": "SETH",
-      "source": "On Chain",
-      "decimals": 18,
       "description": "",
       "is_custom": false,
       "is_prefund": false

@@ -29,6 +29,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	On Chain	8	DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.	false	false	false
 31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 Austin Griffith Ethereum Rampd		https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd			false	false	false
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	On Chain		The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	false	false	false
+31-Pasta	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		EtherScan			false	false	false
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	DENT	Etherscan.io		Aims to be the blockchain solution for the global dental industry.	false	false	false
 30-Contracts	0x08dbf4f942ba8cd7871c13addefdffef3e5a8035	GU: Rare Pack Three		Etherscan			false	false	false
 34-ENS	0x0904dac3347ea47d208f3fd67402d039a3b99859	ENS: Wallet 1 nickdjohnson		Etherscan			false	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x7612e2d6c9f95c0344044cd6e92b156c596e9e9c	EtherCash Airdrop Sender		TrueBlocks.io			false	false	false
 31-Gitcoin Grants:Grant	0x7624cf3a128e5801d69a2ea0a13a74a6b3ebad4a	Grant 196 Ethereum Dao Game					false	false	false
 30-Contracts	0x775e90a06a3d908940ec326924262b37943aa140	HackMoney	KEY	Etherscan			false	false	false
-50-Tokens:ERC20	0x78b039921e84e726eb72e7b1212bb35504c645ca	Sether	SETH	On Chain	18		false	false	false
