@@ -44,28 +44,49 @@ endif()
 # Always copy the names.txt file (this one is ours, so we can overwrite)
 #---------------------------------------------------------------
 message(STATUS "Copying names file to ${DEST_PATH}/names")
-file(COPY "${SOURCE_PATH}/names.txt" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/names/names.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+
+#---------------------------------------------------------------
+# Always copy the verified.txt file (this one is ours, so we can overwrite)
+#---------------------------------------------------------------
+message(STATUS "Copying verified file to ${DEST_PATH}/names")
+file(COPY "${SOURCE_PATH}/names/verified.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the prefunds even if it already exists (this one is ours - it never changes)
 #---------------------------------------------------------------
 message(STATUS "Copying prefunds file to ${DEST_PATH}/names")
-file(COPY "${SOURCE_PATH}/names_prefunds.txt" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/names/names_prefunds.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the custom names file (empty), unless it already exists  (this one is the user's)
 #---------------------------------------------------------------
-set(CUSTOM_NAMES "${DEST_PATH}/names/names_custom.txt")
+set(CUSTOM_NAMES "${DEST_PATH}/names/names_custom.tab")
 if (NOT EXISTS "${CUSTOM_NAMES}")
 	message(STATUS "Copying custom names file to ${DEST_PATH}/names")
-	file(COPY "${SOURCE_PATH}/names_custom.txt" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/names/names_custom.tab" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
+
+#---------------------------------------------------------------
+# Copy the sample collections if it does not already exist
+#---------------------------------------------------------------
+set(CUSTOM_COLLS "${DEST_PATH}/names/collections.csv")
+if (NOT EXISTS "${CUSTOM_COLLS}")
+	message(STATUS "Copying sample collections file${DEST_PATH}/names")
+	file(COPY "${SOURCE_PATH}/names/collections.csv" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------
 # Clear the bin file, so it gets regenerated on each build
 #---------------------------------------------------------------
-message(STATUS "Removing binary name file: ${DEST_PATH}/names/names.bin")
-file(REMOVE "${DEST_PATH}/names/names.bin")
+message(STATUS "Removing binary name file: ${DEST_PATH}/cache/names/names.bin")
+file(REMOVE "${DEST_PATH}/cache/names/names.bin")
+
+#---------------------------------------------------------------
+# Copy the mock data, but don't unzip it
+#---------------------------------------------------------------
+message(STATUS "Copying unzipped mock data to ${DEST_PATH}/mockData")
+file(COPY "${SOURCE_PATH}/mockData/mockData.tar.gz" DESTINATION "${DEST_PATH}/mockData" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # makeClass content
@@ -74,7 +95,7 @@ file(REMOVE "${DEST_PATH}/names/names.bin")
 #file(COPY "${CMAKE_SOURCE_DIR}/../../../bin/makeClass" DESTINATION "${DEST_PATH}/makeClass")
 #file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/blank*")
 #foreach(FILE ${TARGET_FILES} )
-#	message(STATUS "  Copied file to ${DEST_PATH}/makeClass/${FILE}")
+#	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 #	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
 #endforeach( FILE )
 
@@ -84,7 +105,7 @@ file(REMOVE "${DEST_PATH}/names/names.bin")
 message(STATUS "Copying grabABI templates to ${DEST_PATH}/grabABI")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
 foreach(FILE ${TARGET_FILES} )
-	# message(STATUS "  Copied file to ${DEST_PATH}/grabABI/${FILE}")
+	# message(STATUS "  Copied file to ${DEST_PATH}/grabABI")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/grabABI")
 endforeach( FILE )
 
@@ -109,11 +130,11 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/finalized.txt")
+set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/pin-manifest.json")
 if (NOT EXISTS "${IPFS_HASHES}")
 	message(STATUS "Seeding ipfs hash files to ${DEST_PATH}/ipfs-hashes")
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/finalized.txt" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/blooms.txt" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/ipfs-hashes/pin-manifest.json" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/ipfs-hashes/empty.fil" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------
