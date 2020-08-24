@@ -36,6 +36,7 @@ on, both, fast, abi, tools/grabABI, fmt_api,               y, addrs = 0xe94327d0
 on, both, fast, abi, tools/grabABI, fmt_json,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on, both, fast, abi, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
 
+on, both, fast, abi, tools/grabABI, findSig,               y, addrs = 0xa6f9dae1 & find, findSig
 #on, cmd,  fast, abi, tools/grabABI, rm_generation,        n, RMFILE -f generated/*
 #on, cmd,  fast, abi, tools/grabABI, rm_generation2,       n, RMFILE -f generated/classDefinitions/*
 on, cmd,  fast, abi, tools/grabABI, generation,            n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose = 10 & generate

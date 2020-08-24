@@ -18,14 +18,48 @@ import (
 	"github.com/spf13/viper"
 )
 
-func scrapeBlocks() {
+// globalOptionsT Structure to carry command line and config file options
+type globalOptionsT struct {
+	fmt            string
+	signaturesPath string
+	unused         bool
+}
+
+// Options Carries the configuration options (from both command line and config file)
+var Options globalOptionsT
+
+func prettyPrint(encoding string, signature interface{}) {
+	if Options.fmt == "json" {
+		fmt.Printf("{ \"encoding\": \"0x%s\", \"signature\": \"%s\" }\n", encoding, signature)
+	} else if Options.fmt == "txt" {
+		fmt.Printf("0x%s\t%s\n", encoding, signature)
+	} else {
+		fmt.Printf("\"0x%s\",\"%s\"\n", encoding, signature)
+	}
+}
+
+func findEncoding() {
+	apimode := (os.Getenv("API_MODE") == "true")
+	testmode := (os.Getenv("TEST_MODE") == "true")
+	if apimode {
+		Options.fmt = "json"
+	}
+	// if !apimode {
+	// 	fmt.Printf("API_MODE: %s %s\n", os.Getenv("API_MODE"), apimode)
+	//  fmt.Printf("sigsFolder: %s\n", Options.signaturesPath)
+	//  fmt.Printf("fmt: %s\n", Options.fmt)
+	// }
+
 	var search [][]byte
 	for _, i := range os.Args[1:] {
-		decoded, err := hex.DecodeString(i[2:])
-		if err != nil {
-			fmt.Printf("Couldn't parse argument %s\n", i)
-		} else {
-			search = append(search, decoded)
+		// fmt.Println("A: ", i, i[:2])
+		if i[:2] == "0x" {
+			decoded, err := hex.DecodeString(i[2:])
+			if err != nil {
+				fmt.Printf("Couldn't parse argument %s\n", i)
+			} else {
+				search = append(search, decoded)
+			}
 		}
 	}
 
@@ -38,22 +72,26 @@ func scrapeBlocks() {
 		for i := 0; i < len(search); i++ {
 			cur := search[i]
 			if bytes.Equal(res, cur) {
-				fmt.Printf("                                                            \r")
-				fmt.Printf("\"0x%s\",\"%s\"\n", hex.EncodeToString(res), canonical)
+				if !testmode {
+					fmt.Fprintf(os.Stderr, "                                                                        \r")
+				}
+				prettyPrint(hex.EncodeToString(res), canonical)
 				os.Exit(0)
 			}
-			fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
+			if !testmode {
+				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
+			}
 		}
 		wait.Done()
 	})
 
 	// Load files
-	fTemp2, _ := os.Open("/Users/jrush/.quickBlocks/known_abis/uniq_funcs.tab")
+	fTemp2, _ := os.Open(Options.signaturesPath + "uniq_funcs.tab")
 	defer fTemp2.Close()
 	sTemp2 := bufio.NewScanner(fTemp2)
 	sTemp2.Split(bufio.ScanLines)
 
-	fTemp1, _ := os.Open("/Users/jrush/.quickBlocks/known_abis/uniq_sigs.tab")
+	fTemp1, _ := os.Open(Options.signaturesPath + "uniq_sigs.tab")
 	defer fTemp1.Close()
 	sTemp1 := bufio.NewScanner(fTemp1)
 	sTemp1.Split(bufio.ScanLines)
@@ -85,7 +123,7 @@ Description:
   previously unmatched four bytes and event topics.`,
 	Version: "GHC-TrueBlocks, LLC//0.8.1-alpha",
 	Run: func(cmd *cobra.Command, args []string) {
-		scrapeBlocks()
+		findEncoding()
 	},
 }
 
@@ -102,6 +140,8 @@ func Execute() {
 // init Initalize options
 func init() {
 	cobra.OnInitialize(initConfig)
+	rootCmd.PersistentFlags().BoolVarP(&Options.unused, "find", "i", true, "find the value")
+	rootCmd.PersistentFlags().StringVarP(&Options.fmt, "fmt", "f", "json", "format of the output (one of 'json', 'txt', or 'csv')")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -125,4 +165,6 @@ func initConfig() {
 	viper.SetEnvPrefix("TB")
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 	viper.AutomaticEnv()
+
+	Options.signaturesPath = home + "/.quickBlocks/known_abis/"
 }
