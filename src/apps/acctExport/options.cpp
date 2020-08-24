@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
-    COption("emitter", "M", "", OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
+    COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),

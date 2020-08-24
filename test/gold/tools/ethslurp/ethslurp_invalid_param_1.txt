@@ -1,6 +1,5 @@
 ethslurp argc: 2 [1:--pink] 
 ethslurp --pink 
-Processing: --pink
 
   Invalid option: --pink
 

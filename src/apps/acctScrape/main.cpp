@@ -19,8 +19,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             continue;
 
-        // Clean the staging folder since we want to start with clean scrapes for both
-        // never scraped or unfinished (partial) scrapes
+        // Clean the monitor stage of previously unfinished scrapes
         cleanMonitorStage();
 
         if (options.visitTypes & VIS_FINAL)

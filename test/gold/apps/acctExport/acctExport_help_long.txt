@@ -1,7 +1,7 @@
 acctExport argc: 2 [1:--help] 
 acctExport --help 
 
-  Usage:    acctExport [-p|-r|-l|-t|-b|-C|-a|-i|-R|-M|-U|-v|-h] <address> [address...]  
+  Usage:    acctExport [-p|-r|-l|-t|-b|-C|-a|-i|-R|-U|-v|-h] <address> [address...]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  
@@ -15,7 +15,6 @@ acctExport --help
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-i  (--write_txs)     write transactions to the cache (see notes)
 	-R  (--write_traces)  write traces to the cache (see notes)
-	-M  (--emitter)       available for --logs option only, export will only export if the address emitted the event
 	-U  (--count)         only available for --appearances mode, if present return only the number of records
 
 #### Hidden options (shown during testing only)
@@ -25,6 +24,7 @@ acctExport --help
 	-f  (--freshen)       freshen but do not print the exported data
 	-F  (--freshen_max <num>)maximum number of records to process for --freshen option
 	-D  (--deltas)        for --balances option only, export only changes in balances
+	-M  (--emitter)       available for --logs option only, export will only export if the address emitted the event
 	-c  (--first_record <num>)the first record to process
 	-e  (--max_records <num>)the maximum number of records to process before reporting
 	-s  (--staging)       ignored (preserved for backwards compatibility)

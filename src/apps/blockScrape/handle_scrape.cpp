@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-// FIX_THIS_CODE
 //#define MAX_ROWS 50
 //#define CLIENT 10480200
 //#define N_BLOCKS 100

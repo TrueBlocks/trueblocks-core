@@ -15,6 +15,7 @@
 #include "biglib.h"
 #include "curl_code.h"
 #include "database.h"
+#include "options_base.h"
 
 namespace qblocks {
 
@@ -57,7 +58,8 @@ size_t internalCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
 string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
     CURL* curl = curl_easy_init();
     if (!curl) {
-        cerr << "Curl failed to initialize. Quitting..." << endl;
+        errorMessage("Curl failed to initialize.");
+        ;
         quickQuitHandler(0);
     }
     CResponseData result;
@@ -67,7 +69,9 @@ string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, internalCallback);
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
+        string_q msg = "curl_easy_perform() failed with: ";
+        msg += curl_easy_strerror(res);
+        errorMessage(msg);
         quickQuitHandler(0);
     }
     curl_easy_cleanup(curl);

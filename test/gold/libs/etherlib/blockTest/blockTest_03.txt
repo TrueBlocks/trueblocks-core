@@ -60,9 +60,9 @@ Using Format(fmt) on a derived class QTransferFrom.
 ------------------------------------------------------------------------------------------------------------------------
 Not registered, should error out
 ------------------------------------------------------------------------------------------------------------------------
-No fieldList in QFromTransferFrom. Did you register the class?
-No fieldList in QFromTransferFrom. Did you register the class?
-No fieldList in QFromTransferFrom. Did you register the class?
+TIME ~ CLOCK - <WARNG> : No fieldList in QFromTransferFrom. Did you register the class?
+TIME ~ CLOCK - <WARNG> : No fieldList in QFromTransferFrom. Did you register the class?
+TIME ~ CLOCK - <WARNG> : No fieldList in QFromTransferFrom. Did you register the class?
 	0x0	0x0	0	
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) on a derived class derived from QTransferFrom.

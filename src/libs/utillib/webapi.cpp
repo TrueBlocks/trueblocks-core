@@ -23,12 +23,10 @@ string_q getApiKey(const string_q& apiName, const string_q& signup) {
     char buffer[256];
     bzero(buffer, sizeof(buffer));
 
-    cerr << endl << cRed << "  ***Warning***" << cOff << endl;
-    cerr << "  This program needs an api_key from " + apiName + " in order to work. You may get one at" << endl;
-    cerr << "  " + signup + ". See our online help file for more information. Please" << endl;
-    cerr << "  provide an API key or type 'exit'" << endl;
-    cerr << "  > ";
+    const char* STR_ERROR_NOKEY = "This program requires an api_key from `[APINAME]`. See `[SIGNUP]`.";
+    errorMessage(substitute(substitute(STR_ERROR_NOKEY, "[APINAME]", apiName), "[SIGNUP]", signup));
     quickQuitHandler(0);
+
     return "";
 }
 

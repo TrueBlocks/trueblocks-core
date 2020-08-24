@@ -227,6 +227,6 @@ class COptionsTransList {
 
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str);
-extern const char* STR_ERROR_JSON;
+extern void errorMessage(const string_q& msg);
 
 }  // namespace qblocks

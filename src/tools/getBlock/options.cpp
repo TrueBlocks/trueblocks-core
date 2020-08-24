@@ -36,6 +36,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 extern const char* STR_FORMAT_COUNT_JSON;
 extern const char* STR_FORMAT_COUNT_TXT;
+extern const char* STR_FORMAT_COUNT_TXT_VERBOSE;
 extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
 //---------------------------------------------------------------------------------------------------
@@ -152,12 +153,16 @@ bool COptions::parseArguments(string_q& command) {
         expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
 
     // Display formatting
-    if (count_only)
-        configureDisplay("", "CBlock", STR_FORMAT_COUNT_TXT);
-    else if (!filterType.empty())
+    if (count_only) {
+        string_q ff = verbose ? STR_FORMAT_COUNT_TXT_VERBOSE : STR_FORMAT_COUNT_TXT;
+        if (verbose <= 2)
+            ff = substitute(ff, "\t[{TRACE_COUNT}]", "");
+        configureDisplay("", "CBlock", ff);
+    } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
-    else
+    } else {
         configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
+    }
 
     if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
         if (count_only)
@@ -232,6 +237,8 @@ const char* STR_FORMAT_COUNT_JSON =
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_COUNT_TXT = "[{BLOCKNUMBER}]\t[{TRANSACTIONSCNT}]\t[{ADDR_COUNT}]";
+const char* STR_FORMAT_COUNT_TXT_VERBOSE =
+    "[{BLOCKNUMBER}]\t[{UNCLE_COUNT}]\t[{TRANSACTIONSCNT}]\t[{TRACE_COUNT}]\t[{ADDR_COUNT}]";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_JSON =

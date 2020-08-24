@@ -74,6 +74,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // This will fail if we don't have a key. Let's fail early.
+    getApiKey("Etherscan", "http://api.etherscan.io/apis");
+
     for (auto type : types) {
         if (type == "all") {
             typesList.clear();

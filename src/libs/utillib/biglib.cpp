@@ -63,7 +63,7 @@ unsigned int bitLen(unsigned int x) {
 
 //------------------------------------------------------------------
 BigUnsignedInABase::BigUnsignedInABase(const biguint_t& x, unsigned short base) {  // NOLINT
-    //        cerr << "\t" << TIC() << " ";
+    //        c err << "\t" << TIC() << " ";
     if (base < 2)
         throw "BigUnsignedInABase(biguint_t, Base): The base must be at least 2";
     this->base = base;
@@ -91,7 +91,7 @@ BigUnsignedInABase::BigUnsignedInABase(const biguint_t& x, unsigned short base) 
 
     // Save the actual length.
     len = digitNum;
-    //        cerr << TIC() << " BigUnsigned" << endl;
+    //        c err << TIC() << " BigUnsigned" << endl;
 }
 
 //------------------------------------------------------------------

@@ -271,7 +271,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     }
 
     if (contains(cmdLine, "--version ")) {
-        cerr << getProgName() << " " << getVersionStr() << "\n";
+        cout << getProgName() << " " << getVersionStr() << "\n";
         return false;
     }
 
@@ -426,7 +426,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             if (isTestMode()) {
                 string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not-set>");
                 if (test != "<not-set>")
-                    cerr << "Custom [display]format field set to: " << test << endl;
+                    LOG_WARN("Custom [display]format field set to: ", test);
             }
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
@@ -581,12 +581,28 @@ bool COptionsBase::usage(const string_q& errMsg) const {
     return false;
 }
 
-const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
+//--------------------------------------------------------------------------------
+void errorMessage(const string_q& msg) {
+    if (isApiMode()) {
+        const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
+        cout << substitute(substitute(STR_ERROR_JSON, "[ERRORS]", msg), "`", "");
+    } else {
+        string_q message = substitute(msg, "|", "\n  ");
+        while (contains(message, '`')) {
+            replace(message, "`", bTeal);
+            replace(message, "`", cOff);
+        }
+        cerr << endl
+             << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl
+             << endl;
+        ;
+    }
+}
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::usageStr(const string_q& errMsg) const {
     if (isApiMode())
-        cout << substitute(STR_ERROR_JSON, "[ERRORS]", getProgName() + " - " + errMsg);
+        errorMessage(getProgName() + " - " + errMsg);
 
     ostringstream os;
     if (isReadme) {
@@ -605,8 +621,8 @@ string_q COptionsBase::usageStr(const string_q& errMsg) const {
         os << bBlue << "  Powered by QBlocks";
         os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
     }
-    string_q ret = os.str().c_str();
-    return ret;
+
+    return os.str().c_str();
 }
 
 //--------------------------------------------------------------------------------
@@ -866,10 +882,7 @@ void editFile(const string_q& fileName) {
     if (!isTestMode() && editor == "<NOT_SET>") {
         editor = getEnvStr("EDITOR");
         if (editor.empty()) {
-            cerr << endl;
-            cerr << cTeal << "\tWarning: " << cOff;
-            cerr << "$EDITOR environment setting not found. Either export it or\n";
-            cerr << "\tadd an \"[settings] editor=\" value in the config file." << endl << endl;
+            errorMessage("$EDITOR is not set. Either export it to your environment before calling.");
             return;
         }
     }

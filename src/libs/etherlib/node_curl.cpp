@@ -179,12 +179,7 @@ static const char* STR_ERROR_NODEREQUIRED = "The Ethereum RPC: '[RPC]' was not f
 
 //-------------------------------------------------------------------------
 void displayCurlError(const string_q& msg, const string_q& val) {
-    ostringstream message;
-    message << substitute(substitute(msg, "[VAL]", val), "[RPC]", getCurlContext()->baseURL);
-    if (isApiMode())
-        cerr << substitute(STR_ERROR_JSON, "[ERRORS]", message.str());
-    else
-        cerr << "\n\t" << cRed << "Warning: " << cOff << substitute(message.str(), "|", "\n\t") << " Quitting...\n\n";
+    errorMessage(substitute(substitute(msg, "[VAL]", val), "[RPC]", getCurlContext()->baseURL));
     quickQuitHandler(EXIT_FAILURE);
     return;
 }

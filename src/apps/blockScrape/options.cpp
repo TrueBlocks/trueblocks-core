@@ -182,12 +182,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    // FIX_THIS_CODE
-    if (isAlreadyRunning("ipfsScraper")) {
-        LOG_WARN("The " + getProgName() + " is already running. Quitting...");
-        return false;
-    }
-
     // Do not run if the index is being searched...
     if (isRunning("acctScrape")) {
         LOG_WARN("Refusing to run while acctScrape is running. Will restart shortly...");

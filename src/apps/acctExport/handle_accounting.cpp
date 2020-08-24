@@ -420,21 +420,21 @@ bool COptions::exportAccounting(void) {
     // At this point, either the file was empty or we've displayed all transactions in the file. Remember this...
     nCacheItemsWritten = nCacheItemsRead;
 
-    // We open the file in staging to protect it from interruption...
+    // We open the file in s taging to protect it from interruption...
     LOG8(string_q(120, '-'));
 
-    string_q stagingFilename = getMonitorCach(expContext().accountedFor);
-    bool stagingFileExists = false;
+    string_q s tagingFilename = getMonitorCach(expContext().accountedFor);
+    bool s tagingFileExists = false;
     if (readFileExists) {
-        copyFile(readFilename, stagingFilename);
-        stagingFileExists = fileExists(stagingFilename);
+        copyFile(readFilename, s tagingFilename);
+        s tagingFileExists = fileExists(s tagingFilename);
     }
 
     CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(stagingFilename, stagingFileExists ? modeReadWrite : modeWriteCreate, LOCK_WAIT))
-        EXIT_FAIL("Could not open file " + stagingFilename + ". Quitting...");
+    if (!archive.Lock(s tagingFilename, s tagingFileExists ? modeReadWrite : modeWriteCreate, LOCK_WAIT))
+        EXIT_FAIL("Could not open file " + s tagingFilename + ". Quitting...");
 
-    if (!stagingFileExists) {
+    if (!s tagingFileExists) {
         // If the file did not yet exist, we need to save some space of the counts, so write those and flush...
         lockSection(true);
         archive.Seek(0, SEEK_SET);
@@ -523,8 +523,8 @@ lastStatement.blockNum);
         // If we wrote anything, copy the file to production
         lockSection(true);
         string_q prodFilename = getMonitorCach(expContext().accountedFor);
-        if (fileExists(stagingFilename))
-            moveFile(stagingFilename, prodFilename);
+        if (fileExists(s tagingFilename))
+            moveFile(s tagingFilename, prodFilename);
         lockSection(false);
     }
 

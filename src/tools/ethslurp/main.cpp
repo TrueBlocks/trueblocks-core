@@ -25,9 +25,10 @@ int main(int argc, const char* argv[]) {
 
     CAccount theAccount;
     for (auto command : options.commandLines) {
-        cerr << "Processing: " << command << "\n";
         if (!options.parseArguments(command))
             return 0;
+
+        cerr << "Processing: " << command << "\n";
 
         if (!Slurp(theAccount, options)) {
             for (auto err : options.errors) {

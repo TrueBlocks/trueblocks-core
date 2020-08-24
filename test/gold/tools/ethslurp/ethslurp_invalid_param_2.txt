@@ -1,6 +1,5 @@
 ethslurp argc: 2 [1:--pank] 
 ethslurp --pank 
-Processing: --pank
 
   Invalid option: --pank
 

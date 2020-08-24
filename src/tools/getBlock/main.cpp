@@ -185,10 +185,21 @@ bool visitBlock(uint64_t num, void* data) {
         else
             block.forEveryAppearanceInBlock(visitAddrs, transFilter, opt);
 
-        if (opt->count_only)
-            cout << block.Format(
-                substitute(substitute(expContext().fmtMap["format"], "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter)),
-                           "[{FILTER_TYPE}]", opt->filterType));
+        if (opt->count_only) {
+            string_q fmt = expContext().fmtMap["format"];
+            fmt = substitute(fmt, "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter));
+            fmt = substitute(fmt, "[{FILTER_TYPE}]", opt->filterType);
+            if (verbose) {
+                fmt = substitute(fmt, "[{UNCLE_COUNT}]", uint_2_Str(getUncleCount(num)));
+                if (verbose > 2) {
+                    uint64_t cnt = 0;
+                    for (auto trans : block.transactions)
+                        cnt += getTraceCount(trans.hash);
+                    fmt = substitute(fmt, "[{TRACE_COUNT}]", uint_2_Str(cnt));
+                }
+            }
+            cout << block.Format(fmt);
+        }
 
     } else {
         cout << doOneBlock(num, *opt);

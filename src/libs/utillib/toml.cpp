@@ -16,6 +16,7 @@
 #include "conversions.h"
 #include "version.h"
 #include "sfstring.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -197,7 +198,7 @@ biguint_t CToml::getConfigBigInt(const string_q& section, const string_q& key, b
     string_q check = ret;
     replaceAny(check, "0123456789abcdefABCDEF", "");
     if (!check.empty()) {
-        cerr << "Big int config item " << section << "::" << key << " is not an integer...returning zero.";
+        LOG_WARN("Big int config item ", section, "::", key, " is not an integer...returning zero.");
         return 0;
     }
     return str_2_BigUint(ret);

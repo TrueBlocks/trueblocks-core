@@ -41,7 +41,6 @@ class COptions : public COptionsBase {
 
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
-    // FIX_THIS_CODE
     blknum_t maxIndexRows;
 
     COptions(void);

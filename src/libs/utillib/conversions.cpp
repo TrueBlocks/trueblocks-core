@@ -611,20 +611,20 @@ time_q str_2_Date(const string_q& strIn) {
     for (auto ch : valid)
         replaceAll(check, string_q(1, ch), "");
     if (!check.empty()) {
-        cerr << "str_2_Date: Invalid date string '" << strIn << "'";
+        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
         return earliestDate;
     }
 
     replaceAny(str, "T:-", "");
     // clang-format off
-    if (str.length() == 4)  str += "0101000000";  // YYYY NOLINT
+    if (str.length() == 4)  str += "0101000000";       // YYYY NOLINT
     else if (str.length() == 6)  str += "01000000";    // YYYYMM
     else if (str.length() == 8)  str += "000000";      // YYYYMMDD
     else if (str.length() == 10) str += "0000";        // YYYYMMDDHH
     else if (str.length() == 12) str += "00";          // YYYYMMDDHHMM
     else if (str.length() == 14) str += "";            // YYYYMMDDHHMMSS
-    else { cerr << "str_2_Date: Invalid date string '" << strIn << "'"; }  // NOLINT
-                                                                           // clang-format off
+    else { LOG_WARN("str_2_Date: Invalid date string '", strIn, "'"); }  // NOLINT
+                                                                         // clang-format off
 
 #define NP ((uint32_t)-1)
 #define str_2_Int32u(a) (uint32_t) str_2_Uint((a))
@@ -649,7 +649,7 @@ time_q str_2_Date(const string_q& strIn) {
         s = str_2_Int32u(extract(str, 12, 2));
     }
     if (y == NP || m == NP || d == NP || h == NP || mn == NP || s == NP) {
-        cerr << "str_2_Date: Invalid date string '" << strIn << "'";
+        LOG_WARN("str_2_Date: Invalid date string '", strIn, "'");
         return earliestDate;
     }
 

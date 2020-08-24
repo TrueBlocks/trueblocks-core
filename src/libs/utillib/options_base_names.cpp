@@ -56,8 +56,7 @@ string_q getCachePath(const string_q& _part) {
 
         g_cachePath = folder.getFullPath();
         if (!folder.isValid()) {
-            cerr << "{ \"errors\": [\"Invalid cachePath (" << folder.getFullPath()
-                 << ") in config file. Quitting.\"] }\n";
+            errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
             path = configPath("cache/");
             CFilename fallback(path);
             g_cachePath = fallback.getFullPath();

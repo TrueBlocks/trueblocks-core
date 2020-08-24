@@ -467,7 +467,7 @@ void CBaseNode::toJson(ostream& os) const {
     }
 
     if (fields.size() == 0) {
-        cerr << "No fieldList in " << pClass->m_ClassName << ". Did you register the class?" << endl;
+        LOG_WARN("No fieldList in ", pClass->m_ClassName, ". Did you register the class?");
         return;
     }
 
@@ -546,7 +546,7 @@ void CBaseNode::doExport(ostream& os) const {
         return;
 
     if (pClass->fieldList.size() == 0) {
-        cerr << "Class '" << pClass->m_ClassName << "' has no fields. Is it registered?" << endl;
+        LOG_WARN("Class '", pClass->m_ClassName, "' has no fields. Is it registered?");
         return;
     }
 
@@ -664,8 +664,8 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
                 if (fieldIn % "parsed") {
                     CRuntimeClass* pClass = node->getRuntimeClass();
                     if (!pClass || pClass->fieldList.size() == 0) {
-                        cerr << "No fieldList in " << node->getRuntimeClass()->m_ClassName
-                             << ". Did you register the class?" << endl;
+                        LOG_WARN("No fieldList in ", node->getRuntimeClass()->m_ClassName,
+                                 ". Did you register the class?");
                         return "";
                     }
                     ostringstream os;

@@ -116,8 +116,6 @@ bool COptions::handle_scrape(void) {
     bool waitFileExists = fileExists(waitFile);
     size_t nRuns = 0;
     size_t maxRuns = (isTestMode() ? 1 : UINT64_MAX);
-    // FIX_THIS_CODE
-    // maxRuns = 4;
     while (nRuns++ < maxRuns && !shouldQuit()) {
         if (waitFileExists) {
             if (!wasPaused)
@@ -130,17 +128,11 @@ bool COptions::handle_scrape(void) {
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
             wasPaused = false;
             ostringstream os;
-            // FIX_THIS_CODE
-            // os << "ipfsScraper " << tool_flags;
             os << "blockScrape " << tool_flags;
             LOG_CALL(os.str());
             // clang-format off
             if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
             // clang-format on
-
-            // FIX_THIS_CODE
-            // Catch the timestamp file up to the scraper
-            // freshenTimestamps(getLatestBlock_cache_ripe());
 
             if (isTestMode()) {
                 // Do nothing related in --daemon mode while testing

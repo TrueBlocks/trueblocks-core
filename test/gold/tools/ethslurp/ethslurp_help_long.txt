@@ -1,6 +1,5 @@
 ethslurp argc: 2 [1:--help] 
 ethslurp --help 
-Processing: --help
 
   Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.

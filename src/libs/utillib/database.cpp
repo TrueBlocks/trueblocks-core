@@ -79,7 +79,7 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
     string_q lockFilename = m_filename + ".lck";
 
     if (fileExists(lockFilename) && !isTestMode())
-        cerr << "Waiting for lock to clear\n";
+        LOG_WARN("Waiting for lock to clear");
 
     int i = 0;
     while (i < maxSecondsLock) {
@@ -98,7 +98,7 @@ bool CSharedResource::waitOnLock(bool deleteOnFail) const {
         pResource->Release();
         pResource->m_ownsLock = owns;
         if (!isTestMode())
-            cerr << "Lock cleared...\n";
+            LOG_WARN("Lock cleared...");
         return true;
     }
 
@@ -322,8 +322,7 @@ string_q docxToString(const string_q& filename) {
 size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
     string_q cmd =
         getHomeFolder() + "source/createDocx \"" + fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
-    string_q ret = doCommand(cmd);
-    cerr << "ret: " << ret << endl;
+    doCommand(cmd);
     return true;
 }
 
@@ -478,8 +477,7 @@ void cleanFileLocks(void) {
     explode(files, list, '|');
     for (auto file : files) {
         remove(file.c_str());
-        cerr << "Removing file: " << file << "\n";
-        cerr.flush();
+        LOG_INFO("Removing file: ", file);
     }
     manageRemoveList("clear");
 }

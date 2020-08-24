@@ -1,14 +1,14 @@
 # Running code
 
-```
+```[go]
 go run main.go 0xXXXXXXXX 0xYYYYYYYY ... 0xZZZZZZZZ
 ```
+
 where 0xXXXXXXXX, 0xYYYYYYYY, 0xZZZZZZZZ - search requests (multiple at once)
 
 I'd recommend to use 'go run main.go ... 2> /dev/null', i.e. redirect STDERR (or even comment 'fmt.Fprintf(os.Stderr...' line in code), because console output heavily slows down bruteforce.
 
-
-# Documentation
+## Documentation
 
 After unzipping the data files found in this folder and using the same techniques as are used by the Solidity compiler to build 4-byte codes out of canonical function signatures, cross multiply a list of the 100,000 most commonly-used English words (provided in the file `function_names.csv`) with 680 argument lists (provided in the file `function_signatures.csv`) searching for the given 4-byte code by applying keccak256 to each resulting function signature.
 
