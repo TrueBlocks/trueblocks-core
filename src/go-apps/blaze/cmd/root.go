@@ -24,7 +24,7 @@ Description:
   later query this index (with acctScrape) many orders of magnitude
   more quickly than scanning the blockchain directly. All of the
   component's numeric command line options are required.`,
-	Version: "GHC-TrueBlocks, LLC//0.0.1-alpha",
+	Version: "GHC-TrueBlocks, LLC//0.8.1-alpha",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
