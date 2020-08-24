@@ -117,7 +117,7 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, block
 					// 0x0 (reward got burned). We enter a false record with a false tx_id
 					// to account for this.
 					author = "0xdeaddeaddeaddeaddeaddeaddeaddeaddeaddead"
-					addressMap[author+"\t"+blockNum+"\t"+"99997"] = true
+					addressMap[author+"\t"+blockNum+"\t"+"99998"] = true
 
 				} else {
 					if goodAddr(author) {
