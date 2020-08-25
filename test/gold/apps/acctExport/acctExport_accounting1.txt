@@ -13,12 +13,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
+  "receipt": {},
   "traces": [],
   "articulatedTx": {},
   "compressedTx": "0x ( )",

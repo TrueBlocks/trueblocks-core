@@ -25,3 +25,4 @@ fields = blknum blockNum|\
 includes = abilib.h
 cpp_includes = etherlib.h
 serializable = true
+equals = ((blockNum == item.blockNum) && (asset == item.asset))

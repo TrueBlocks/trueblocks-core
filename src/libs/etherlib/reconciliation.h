@@ -183,8 +183,8 @@ inline CReconciliation& CReconciliation::operator=(const CReconciliation& re) {
 inline bool CReconciliation::operator==(const CReconciliation& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return ((blockNum == item.blockNum) && (asset == item.asset));
 }
 
 //-------------------------------------------------------------------------

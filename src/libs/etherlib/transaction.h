@@ -205,8 +205,8 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
 inline bool CTransaction::operator==(const CTransaction& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (hash == item.hash);
 }
 
 //-------------------------------------------------------------------------

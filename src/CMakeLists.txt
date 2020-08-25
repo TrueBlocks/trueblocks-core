@@ -56,9 +56,8 @@ endif (CURL_FOUND)
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2 -fPIC")
 if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMAC -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
-
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
 set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
@@ -92,8 +91,8 @@ endfunction(build_readme)
 
 add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-ao" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-aop" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTestingAll" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")

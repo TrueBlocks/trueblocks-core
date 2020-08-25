@@ -22,6 +22,7 @@ makeClass -r --edit
 #### Hidden options (shown during testing only)
 	-e  (--edit)          edit <class_name(s)> definition file in local folder
 	-d  (--dump)          dump any classDefinition config tomls to screen and quit
+	-p  (--api)           generate api options file in trueblocks-explorer repo
 #### Hidden options (shown during testing only)
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

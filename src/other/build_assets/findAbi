@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-export SOURCE="/Users/jrush/Development/trueblocks-core/src/other/abis"
-
-cd $SOURCE
-$SOURCE/bin/abis $1
-cd -

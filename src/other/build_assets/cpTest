@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-cd ..
-export QUICKBLOCKS=`pwd`
-
-find $QUICKBLOCKS/test/working -name "/$1*"  >/tmp/f1
-find $QUICKBLOCKS/test/gold    -name "/$1*" >>/tmp/f1
-cp -p `cat /tmp/f1 | xargs`
-rm -f /tmp/f1

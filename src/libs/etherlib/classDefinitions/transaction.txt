@@ -28,3 +28,4 @@ cpp_includes = etherlib.h
 scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
+equals = (hash == item.hash)

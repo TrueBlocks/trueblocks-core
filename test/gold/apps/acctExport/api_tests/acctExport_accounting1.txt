@@ -13,12 +13,7 @@
       "gasPrice": 0,
       "input": "",
       "isError": 0,
-      "receipt": {
-        "contractAddress": "0x0",
-        "gasUsed": 0,
-        "logs": [],
-        "status": null
-      },
+      "receipt": {},
       "traces": [],
       "articulatedTx": {},
       "compressedTx": "0x ( )",

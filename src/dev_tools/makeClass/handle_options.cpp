@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "commandoption.h"
 
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
@@ -34,7 +33,7 @@ bool COptions::handle_options(void) {
     CCommandOption::registerClass();
     counter = CCounter();  // reset
 
-    string_q contents = asciiFileToString("../src/other/build_assets/option-master-list.csv");
+    string_q contents = asciiFileToString("../src/cmd-line-options.csv");
 
     CStringArray lines;
     explode(lines, contents, '\n');
@@ -330,6 +329,68 @@ bool COptions::handle_options(void) {
     }
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
+
+    if (api) {
+        CCommands commands;
+        CApiRoute curRoute;
+        for (auto option : optionArray) {
+            if (curRoute.route != option.api_route) {
+                if (!curRoute.route.empty())
+                    commands.routes.push_back(curRoute);
+                curRoute = CApiRoute();
+                curRoute.route = option.api_route;
+            }
+            curRoute.commands.push_back(option);
+        }
+        commands.routes.push_back(curRoute);
+
+        expContext().lev = 2;
+        HIDE_FIELD(CCommandOption, "is_customizable");
+
+        ostringstream out;
+        bool first2 = true;
+        out << "{" << endl;
+        for (auto route : commands.routes) {
+            if (!first2)
+                out << "," << endl;
+            out << "  \"" << route.route << "\": {" << endl;
+            bool first1 = true;
+            for (auto command : route.commands) {
+                if (command.option_kind != "note") {
+                    if (command.hotkey.empty())
+                        command.hotkey = "<not-set>";
+                    if (command.command.empty())
+                        command.command = "<not-set>";
+                    if (command.data_type.empty())
+                        command.data_type = "<not-set>";
+                    ostringstream ts;
+                    ts << command;
+                    string_q tss = ts.str();
+                    replaceReverse(tss, "\n", "");
+
+                    ostringstream os;
+                    if (!first1)
+                        os << "," << endl;
+                    os << "    "
+                       << "\"" << command.command << "\": " << tss;
+                    string_q s = os.str();
+                    replaceAll(s, "\"true\"", "true");
+                    replaceAll(s, "\"false\"", "false");
+                    replaceAll(s, "NOPOS", "");
+                    replaceAll(s, "\"def_val\": false,", "\"def_val\": \"\",");
+                    replaceAll(s, "\"def_val\": true,", "\"def_val\": \"true\",");
+                    replaceAll(s, "\"def_val\": \"\"\"\",", "\"def_val\": \"\",");
+                    replaceAll(s, "<not-set>", "");
+                    out << s;
+                    first1 = false;
+                }
+            }
+            out << endl << "  }";
+            first2 = false;
+        }
+        out << endl << "}" << endl;
+        stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", out.str());
+    }
 
     return true;
 }

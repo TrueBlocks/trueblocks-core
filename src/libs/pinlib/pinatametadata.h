@@ -122,8 +122,8 @@ inline CPinataMetadata& CPinataMetadata::operator=(const CPinataMetadata& pi) {
 inline bool CPinataMetadata::operator==(const CPinataMetadata& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (name == item.name);
 }
 
 //-------------------------------------------------------------------------

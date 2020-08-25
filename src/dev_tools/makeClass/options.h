@@ -21,6 +21,7 @@
 #include "page.h"
 #include "skin.h"
 #include "schema.h"
+#include "commands.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -57,6 +58,7 @@ class COptions : public COptionsBase {
     string_q filter;
     bool test;
     bool force;
+    bool api;
     // END_CODE_DECLARE
 
     map<string_q, CPage> pageMap;

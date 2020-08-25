@@ -34,6 +34,7 @@ static const COption params[] = {
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
+    COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in trueblocks-explorer repo"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -97,6 +98,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--force") {
             force = true;
+
+        } else if (arg == "-p" || arg == "--api") {
+            api = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -215,6 +219,7 @@ void COptions::Init(void) {
     filter = "";
     test = false;
     force = false;
+    api = false;
     // END_CODE_INIT
 
     mode = NONE;
@@ -252,6 +257,8 @@ COptions::COptions(void) : classFile("") {
 
     updateTemplates();
 
+    CCommands::registerClass();
+    CApiRoute::registerClass();
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
     CPage::registerClass();

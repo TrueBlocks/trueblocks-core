@@ -6,3 +6,4 @@ includes = function.h|parameter.h
 cpp_includes = node.h
 serializable = true
 display_str = address, encoding, type, name, signature, input_names, output_names
+equals = (address == item.address)

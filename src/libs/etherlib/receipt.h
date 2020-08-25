@@ -144,8 +144,8 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
 inline bool CReceipt::operator==(const CReceipt& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (getValueByName("transactionHash") == item.getValueByName("transactionHash"));
 }
 
 //-------------------------------------------------------------------------

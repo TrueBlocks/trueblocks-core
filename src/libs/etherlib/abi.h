@@ -158,8 +158,8 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
 inline bool CAbi::operator==(const CAbi& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // No default equal operator in class definition, assume none are equal (so find fails)
-    return false;
+    // Equality operator as defined in class definition
+    return (address == item.address);
 }
 
 //-------------------------------------------------------------------------

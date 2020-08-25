@@ -58,12 +58,7 @@ encoding            	1042	1	131122	T_TEXT TS_STRING
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
+  "receipt": {},
   "gasUsed": 0
 }
 
@@ -180,12 +175,7 @@ encoding            	1042	0	131122	T_TEXT TS_STRING
   "gasPrice": 0,
   "isError": 0,
   "isInternal": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
+  "receipt": {},
   "traces": [],
   "articulatedTx": {},
   "reconciliations": [],

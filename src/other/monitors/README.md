@@ -33,14 +33,14 @@ or just leave the --fmt option off, as JSON is the default. The [acctExport app 
 
 ### Managing the Cache
 
-Finally, you may want to manage the transaction cache for a particular monitor. You may do this with the `cacheMan` application. `cacheMan` allows you to import, remove, replace, list, and fix the data in a monitor. Type this to get help:
+Finally, you may want to manage the transaction cache for a particular monitor. You may do this with the `c acheMan` application. `c acheMan` allows you to import, remove, replace, list, and fix the data in a monitor. Type this to get help:
 
     cd ./monitors/<monitor_name>
-    cacheMan
+    c acheMan
 
 For example, if you've gathered a list of transactions from EtherScan, you may prepare an `import.txt` file (which contains simply one record with two tab-separated fields `blockNumber` and `transactionIndex` -- alternatively, simply the transaction hashes). Place that file in the monitor's folder and run:
 
     cd ./monitors/<monitor_name>
-    cacheMan -i cache/0x.....bin
+    c acheMan -i cache/0x.....bin
     
-where `0x.....bin` is the name of the cache file. There's a similar feature for removing items from the cache. For more information, see the [cacheMan README.md](../src/apps/cacheMan/README.md) for more information.
+where `0x.....bin` is the name of the cache file. There's a similar feature for removing items from the cache. For more information, see the [c acheMan README.md](../src/apps/c acheMan/README.md) for more information.

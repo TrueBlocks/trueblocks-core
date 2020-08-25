@@ -1,0 +1,4 @@
+[settings]
+class = CCommands
+fields = CApiRouteArray routes
+includes = etherlib.h|apiroute.h

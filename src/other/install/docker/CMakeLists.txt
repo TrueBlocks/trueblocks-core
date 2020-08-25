@@ -56,7 +56,7 @@ endif (CURL_FOUND)
 # Globally available C++ settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall -O2 -fPIC")
 if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMAC -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 
 # ----------------------------------------------------------------------------------------
