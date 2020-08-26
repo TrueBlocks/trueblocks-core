@@ -74,7 +74,7 @@ CStringArray header;
 //        return true;
 //
 //    CTransaction trans;
-//    trans.loadTransAsBlockReward(rec.blockNum, 99999, block.miner);
+//    trans.l oadTransAsBlockReward(rec.blockNum, 99999, block.miner);
 //    expContext().accountedFor = block.miner;
 //    if (rec.reconcileIssuance(rec.blockNum, &trans)) {
 //        cout << "Block " << rec.blockNum << " balances" << endl;

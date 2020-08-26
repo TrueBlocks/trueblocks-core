@@ -205,15 +205,15 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
 
 //-----------------------------------------------------------------------
 bool COptionsBase::loadNames(void) {
-    ENTER("loadNames");
+    ENTER8("loadNames");
 
     if (getEnvStr("NO_NAMES") == "true")
-        EXIT_NOMSG(true);
+        EXIT_NOMSG8(true);
 
     if (namedAccounts.size() > 0)
-        EXIT_NOMSG(true);
+        EXIT_NOMSG8(true);
 
-    LOG4("Entering loadNames...");
+    LOG8("Entering loadNames...");
     establishFolder(getCachePath("names/"));
 
     string_q txtFile = configPath("names/names.tab");
@@ -236,41 +236,41 @@ bool COptionsBase::loadNames(void) {
 
     // If none of the source files is out of date, load the entire names database as quickly as possible
     if (binDate > txtDate) {
-        LOG4("Reading names from binary cache");
+        LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> namedAccounts;
             nameCache.Release();
-            EXIT_NOMSG(true);
+            EXIT_NOMSG8(true);
         }
     }
 
     name_map_t theMap;
     if (!importTabFile(theMap, txtFile))
         EXIT_USAGE("Could not open names database...");
-    LOG4("Finished adding names from regular database...");
+    LOG8("Finished adding names from regular database...");
 
     if (!importTabFile(theMap, customFile))
         EXIT_USAGE("Could not open custom names database...");
-    LOG4("Finished adding names from custom database...");
+    LOG8("Finished adding names from custom database...");
 
     if (!importTabFile(theMap, prefundFile))
         EXIT_USAGE("Could not open prefunds database...");
-    LOG4("Finished adding names from prefunds database...");
+    LOG8("Finished adding names from prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap)
         namedAccounts.push_back(item.second);
 
-    LOG4("Writing binary cache");
+    LOG8("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << namedAccounts;
         nameCache.Release();
     }
-    LOG4("Finished writing binary cache...");
+    LOG8("Finished writing binary cache...");
 
-    EXIT_NOMSG(true);
+    EXIT_NOMSG8(true);
 }
 
 //-----------------------------------------------------------------------

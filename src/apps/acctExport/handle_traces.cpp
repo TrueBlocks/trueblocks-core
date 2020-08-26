@@ -5,21 +5,23 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+#define FREQ 5
+
 //-----------------------------------------------------------------------
 bool COptions::exportTraces(void) {
-    ENTER("exportData");
+    ENTER("exportTraces");
 
     ASSERT(traces);
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;
-    bool isJson =
-        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 
     bool first = true;
-    for (size_t i = 0;
-         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
+    for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
+        if (shouldQuit() || item->blk >= ts_cnt)
+            break;
+
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;
@@ -37,8 +39,7 @@ bool COptions::exportTraces(void) {
             } else {
                 if (item->blk == 0) {
                     address_t addr = prefundAddrMap[item->txid];
-                    trans.transactionIndex = item->txid;
-                    trans.loadTransAsPrefund(addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(item->blk, item->txid, addr, prefundWeiMap[addr]);
 
                 } else if (item->txid == 99997 || item->txid == 99999) {
                     trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
@@ -48,8 +49,9 @@ bool COptions::exportTraces(void) {
                     for (size_t u = 0; u < nUncles; u++) {
                         CBlock uncle;
                         getUncle(uncle, item->blk, u);
-                        trans.loadTransAsUncleReward(item->blk, uncle.blockNumber);
-                        trans.to = blkRewardMap[item->blk];
+                        if (uncle.miner == blkRewardMap[item->blk]) {
+                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber, uncle.miner);
+                        }
                     }
 
                 } else {
@@ -81,12 +83,12 @@ bool COptions::exportTraces(void) {
                     }
                     if (articulate)
                         abis.articulateTrace(&trace);
-                    if (isJson && shouldDisplay && !first)
-                        cout << ", ";
                     nExported++;
-                    if (shouldDisplay)
+                    if (shouldDisplay) {
+                        cout << ((isJson() && !first) ? ", " : "");
                         cout << trace.Format() << endl;
-                    first = false;
+                        first = false;
+                    }
                 }
 
                 if (isSuicide) {  // suicide
@@ -98,11 +100,12 @@ bool COptions::exportTraces(void) {
                     copy.traceAddress.push_back("s");
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = "0x";
-                    if (isJson && shouldDisplay && !first)
-                        cout << ", ";
                     nExported++;
-                    if (shouldDisplay)
+                    if (shouldDisplay) {
+                        cout << ((isJson() && !first) ? ", " : "");
                         cout << copy.Format() << endl;
+                        first = false;
+                    }
                 }
 
                 if (isCreation) {  // contract creation
@@ -116,11 +119,12 @@ bool COptions::exportTraces(void) {
                     copy.traceAddress.push_back("s");
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = trace.action.input;
-                    if (isJson && shouldDisplay && !first)
-                        cout << ", ";
                     nExported++;
-                    if (shouldDisplay)
+                    if (shouldDisplay) {
+                        cout << ((isJson() && !first) ? ", " : "");
                         cout << copy.Format() << endl;
+                        first = false;
+                    }
                 }
             }
 
@@ -135,10 +139,14 @@ bool COptions::exportTraces(void) {
         }
     }
 
+    LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+                  " traces for address " + monitors[0].address + "\r");
+
     for (auto monitor : monitors)
         if (items.size() > 0)
             monitor.writeLastExport(items[items.size() - 1].blk);
 
     reportNeighbors();
+
     EXIT_NOMSG(true);
 }

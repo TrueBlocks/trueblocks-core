@@ -9,13 +9,12 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportAccounting(void) {
-    ENTER("exportData");
+    ENTER("exportAccounting");
 
+    ASSERT(!traces && !receipts);
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;
-    bool isJson =
-        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 
     CReconciliation lastStatement;
     if (items.size() > 0 && first_record != 0)
@@ -32,8 +31,10 @@ bool COptions::exportAccounting(void) {
             block.blockNumber = item->blk;
             CTransaction trans;
             trans.pBlock = &block;
+
             string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
             if (item->blk != 0 && fileExists(txFilename)) {
+                // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
@@ -65,7 +66,7 @@ bool COptions::exportAccounting(void) {
                 }
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && (nExported % FREQ)) {
+                if (!isTestMode() && !(nExported % FREQ)) {
                     blknum_t current = first_record + nExported;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
@@ -76,8 +77,7 @@ bool COptions::exportAccounting(void) {
             } else {
                 if (item->blk == 0) {
                     address_t addr = prefundAddrMap[item->txid];
-                    trans.transactionIndex = item->txid;
-                    trans.loadTransAsPrefund(addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(item->blk, item->txid, addr, prefundWeiMap[addr]);
 
                 } else if (item->txid == 99997 || item->txid == 99999) {
                     trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
@@ -88,8 +88,7 @@ bool COptions::exportAccounting(void) {
                         CBlock uncle;
                         getUncle(uncle, item->blk, u);
                         if (uncle.miner == blkRewardMap[item->blk]) {
-                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber);
-                            trans.to = uncle.miner;
+                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber, uncle.miner);
                         }
                     }
 
@@ -158,7 +157,7 @@ bool COptions::exportAccounting(void) {
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && (nExported % FREQ)) {
+                if (!isTestMode() && !(nExported % FREQ)) {
                     blknum_t current = first_record + nExported;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
@@ -170,7 +169,7 @@ bool COptions::exportAccounting(void) {
             if (logs) {
                 for (auto log : trans.receipt.logs) {
                     if (!emitter || log.address == monitors[0].address) {
-                        if (isJson && shouldDisplay && !first)
+                        if (isJson() && shouldDisplay && !first)
                             cout << ", ";
                         if (shouldDisplay)
                             cout << log.Format() << endl;
@@ -179,7 +178,7 @@ bool COptions::exportAccounting(void) {
                     }
                 }
             } else {
-                if (isJson && shouldDisplay && !first)
+                if (isJson() && shouldDisplay && !first)
                     cout << ", ";
                 if (shouldDisplay)
                     cout << trans.Format() << endl;
@@ -201,341 +200,18 @@ bool COptions::exportAccounting(void) {
     EXIT_NOMSG(true);
 }
 
-#if 0
-TODO: If an abi file is changed, we should re-articulate.
-#endif
-
-// #if 0
-// * -------------------------------------------------------------------------
-// * This source code is confidential proprietary information which is
-// * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
-// * All Rights Reserved
-// *------------------------------------------------------------------------ * /
-//#include "options.h"
-//
-////-----------------------------------------------------------------------
-// bool COptions::exportAccounting(void) {
-//    ENTER("exportAccounting");
-//
-//    if (items.size() == 0)
-//        EXIT_FAIL("Nothing to export. Quitting...");
-//    articulate = true;
-//
-//    ASSERT(isApiMode());
-//    ASSERT(!freshen && !appearances && !logs && !receipts && !traces && articulate);
-//    ASSERT(expContext().exportFmt == API1);
-//    ASSERT(monitors.size() == 1);
-//    ASSERT(nodeHasBalances(false));
-//
-//    fileInfo knownAbis = getNewestFileInFolder(configPath("known_abis/"));
-//    bool knownIsStale = false;
-//    if (oldestMonitor < knownAbis.fileTime) {
-//        // The known abis cache has been updated. We need to re-articulate this cache
-//        knownIsStale = true;
-//    }
-//
-//    bool first = true;
-//    cout << "[";
-//    for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk < ts_cnt; i++) {
-//        const CAppearance_base* item = &items[i];
-//        if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
-//            CBlock block;
-//            block.blockNumber = item->blk;
-//            CTransaction trans;
-//            trans.pBlock = &block;
-//
-//            string_q codePath = "Unknown";
-//            static CReconciliation lastStatement;
-//
-//            string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
-//            if (item->blk != 0 && fileExists(txFilename)) {
-//                // Note: all data other than the articulation is from the node, so if we have the file we can
-//                // use the node data (as it never changes), but...
-//                readTransFromBinary(trans, txFilename);
-//                trans.finishParse();
-//                trans.pBlock = &block;
-//                block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
-//
-//                CReconciliation rec = trans.reconciliations[trans.reconciliations.size() - 1];
-//                lastStatement = rec;
-//
-//                // This data isn't stored, so we need to recreate it
-//                CReconciliationOutput st(rec);
-//                trans.statements.push_back(st);
-//
-//                // ...if the cached transaction is older than it's abi, we need to re-articulate
-//                // TODO(tjayrush): stale abis for traces are ignored
-//                bool abiIsStale =
-//                    fileExists(getAbiPath(trans.to)) && oldestMonitor < fileLastModifyDate(getAbiPath(trans.to));
-//                if (knownIsStale || abiIsStale) {
-//                    abis.articulateTransaction(&trans);
-//                    writeTransToBinary(trans, txFilename);
-//                    codePath = "Rearticulating ";
-//                    //LOG_INFO("rearticulating");
-//                } else {
-//                    codePath = "Reading ";
-//                }
-//
-//            } else {
-//                if (item->blk == 0) {
-//                    address_t addr = prefundAddrMap[item->txid];
-//                    trans.transactionIndex = item->txid;
-//                    trans.loadAsP refund(addr, prefundWeiMap[addr]);
-//                } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99 999) {
-//                    trans.loadAsBloc kReward(item->blk, item->txid, blkRewardMap[item->blk]);
-//                } else {
-//                    getTransaction(trans, item->blk, item->txid);
-//                    getFullReceipt(&trans, true);
-//                }
-//                trans.pBlock = &block;
-//                trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
-//
-//                blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
-//                CReconciliation nums;
-//                nums.blockNum = trans.blockNumber;
-//                CStringArray corrections;
-//                nums.reconcile(corrections, lastStatement, next, &trans);
-//                trans.reconciliations.push_back(nums);
-//                CReconciliationOutput st(nums);
-//                trans.statements.push_back(st);
-//                if (toAddrMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
-//                    CStringArray unused;
-//                    loadAbiAndCache(abis, trans.to, false, unused);
-//                }
-//                abis.articulateTransaction(&trans);
-//                writeTransToBinary(trans, txFilename);
-//                lastStatement = nums;
-//                codePath = "Extracting ";
-//            }
-//            toAddrMap[trans.to]++;
-//            fromAddrMap[trans.from]++;
-//            if (!first)
-//                cout << ", ";
-//            nExported++;
-//            cout << trans.Format() << endl;
-//            first = false;
-//            HIDE_FIELD(CFunction, "message");
-//            if (!isTestMode())
-//                LOG_INFO(codePath, i, " of ", nTransactions, " records (max ", nProcessing, ")          \r");
-//        }
-//    }
-//    cout << "]";
-//
-//    for (auto monitor : monitors) {
-//        string_q path = getMonitorPath(monitor.address);
-//        if (fileExists(path)) {
-//            if (items.size() > 0)
-//                monitor.writeLastExport(items[items.size() - 1].blk);
-//            ostringstream os;
-//            os << "touch " << path;
-//            // clang-format off
-//            if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
-//            // clang-format on
-//        }
-//    }
-//
-//    reportNeighbors();
-//    EXIT_NOMSG(true);
-//}
-//
-//#else
-/*
-//(write_opt & CACHE_TRACES)
-
-/ *-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------* /
-#include "options.h"
-
-//-----------------------------------------------------------------------
-bool COptions::exportAccounting(void) {
-    ENTER("exportAccounting");
-
-    ASSERT(isApiMode());
-    ASSERT(!freshen && !appearances && !logs && !receipts && !traces && articulate);
-    ASSERT(expContext().exportFmt == API1);
-    ASSERT(monitors.size() == 1);
-
-    if (items.size() == 0)
-        EXIT_FAIL("Nothing to export. Quitting...");
-
-    CReconciliation lastStatement;
-    lastStatement.blockNum = NOPOS;
-
-    bool first = true;
-    cout << "[";
-
-    nCacheItemsRead = 0;
-    nExported = 0;
-
-    string_q readFilename = getMonitorCach(expContext().accountedFor);
-    bool readFileExists = fileExists(readFilename);
-
-    LOG8(string_q(120, '+'));
-    LOG8("readFile: ", readFilename, " (", fileSize(readFilename), ") readFileExists: ", readFileExists);
-
-    if (readFileExists && fileSize(readFilename) > 0) {
-        // If the cache already exists, we read it into memory...
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(readFilename, modeReadOnly, LOCK_WAIT)) {
-            archive >> nCacheItemsRead;
-            archive >> lastStatement.blockNum;
-            for (blknum_t i = 0; i < nCacheItemsRead; i++) {
-                // Read in the data...
-                CTransaction trans;
-                archive >> trans;
-                archive >> trans.statements;
-                archive >> trans.traces;
-
-                // We've read in block 'n', so we can start at 'n + 1'...
-                scanRange.first = trans.blockNumber + 1;
-                // Remember which addresses we've seen...
-                fromNameExistsMap[trans.from]++;
-                toNameExistsMap[trans.to]++;
-
-                // If we have the file, ignore this range test and just deliver the entire file
-                if (true) {  // inRange(i, first_record, (first_record + max_records - 1))) {
-
-                    // Display the transaction...
-                    abis.articulateTransaction(&trans);
-                    if (!first)
-                        cout << ", ";
-                    cout << trans.Format() << endl;
-                    first = false;
-                    nExported++;
-                    if (!isTestMode())
-                        LOG_INFO("Reading ", (i + 1), " of ", nTransactions, " cache records (max ", nProcessing,
-                                 ").          \r");
-                }
-            }
-            archive.Release();
-
-        } else if (readFileExists) {
-            EXIT_FAIL("Could not open file " + readFilename + " or file size is zero. Quitting...");
-        }
-    }
-
-    // At this point, either the file was empty or we've displayed all transactions in the file. Remember this...
-    nCacheItemsWritten = nCacheItemsRead;
-
-    // We open the file in s taging to protect it from interruption...
-    LOG8(string_q(120, '-'));
-
-    string_q s tagingFilename = getMonitorCach(expContext().accountedFor);
-    bool s tagingFileExists = false;
-    if (readFileExists) {
-        copyFile(readFilename, s tagingFilename);
-        s tagingFileExists = fileExists(s tagingFilename);
-    }
-
-    CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(s tagingFilename, s tagingFileExists ? modeReadWrite : modeWriteCreate, LOCK_WAIT))
-        EXIT_FAIL("Could not open file " + s tagingFilename + ". Quitting...");
-
-    if (!s tagingFileExists) {
-        // If the file did not yet exist, we need to save some space of the counts, so write those and flush...
-        lockSection(true);
-        archive.Seek(0, SEEK_SET);
-        archive << 0;  // set it to zero until we can get it right
-        archive << lastStatement.blockNum;
-        archive.flush();
-        lockSection(false);
-
-    } else {
-        // Otherwise go to the end of the file.
-        archive.Seek(0, SEEK_END);
-        lastStatement.endBal = lastStatement.endBalCalc = getBalanceAt(expContext().accountedFor,
-lastStatement.blockNum);
-    }
-
-    LOG8(string_q(120, '='));
-
-    for (size_t i = 0; i < items.size() && !shouldQuit() && items[i].blk <= scanRange.second; i++) {
-        const CAppearance_base* item = &items[i];
-        bool include = inRange((blknum_t)item->blk, scanRange.first, scanRange.second);
-        bool dClude = nCacheItemsWritten < max_records;
-        bool tClude = items[i].blk < ts_cnt;
-
-        if (include && dClude && tClude) {
-            CBlock block;  // do not move this from this scope
-            block.blockNumber = item->blk;
-            CTransaction trans;
-            trans.pBlock = &block;
-            if (item->blk == 0) {
-                address_t addr = prefundAddrMap[item->txid];
-                trans.transactionIndex = item->txid;
-                trans.loadAs Prefund(addr, prefundWeiMap[addr]);
-
-            } else if (item->txid == 99997 || item->txid == 99998 || item->txid == 99 999) {
-                trans.loadAsBlock Reward(item->blk, item->txid, blkRewardMap[item->blk]);
-
-            } else {
-                getTransaction(trans, item->blk, item->txid);
-                getFullReceipt(&trans, true);
-            }
-
-            trans.pBlock = &block;
-            trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
-
-            blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
-
-            CReconciliation nums;
-            nums.blockNum = trans.blockNumber;
-            CStringArray corrections;
-            nums.reconcile(corrections, lastStatement, next, &trans);
-            lastStatement = nums;
-            CReconciliationOutput st(nums);
-            trans.statements.push_back(st);
-
-            fromNameExistsMap[trans.from]++;
-            toNameExistsMap[trans.to]++;
-
-            abis.articulateTransaction(&trans);
-
-            nCacheItemsWritten++;
-
-            lockSection(true);
-            archive << trans;
-            archive << trans.statements;
-            archive << trans.traces;
-            archive.Seek(0, SEEK_SET);
-            archive << nCacheItemsWritten;
-            archive << lastStatement.blockNum;
-            archive.Seek(0, SEEK_END);
-            archive.flush();
-            monitors[0].writeLastExport(lastStatement.blockNum);
-            lockSection(false);
-            LOG8("wrote: ", trans.blockNumber, ".", trans.transactionIndex, ": ", nCacheItemsWritten);
-
-            if (!first)
-                cout << ", ";
-            cout << trans.Format() << endl;
-            first = false;
-            nExported++;
-            // LOG_INFO("Exporting ", nCacheItemsWritten, " of ", nTransactions, " records (max ", nProcessing,
-            //         ").          \r");
-        }
-    }
-    archive.Release();
-    if (nCacheItemsWritten > nCacheItemsRead) {
-        // If we wrote anything, copy the file to production
-        lockSection(true);
-        string_q prodFilename = getMonitorCach(expContext().accountedFor);
-        if (fileExists(s tagingFilename))
-            moveFile(s tagingFilename, prodFilename);
-        lockSection(false);
-    }
-
-    LOG8(string_q(120, '@'));
-
-    cout << "]" << endl;
-
-    reportNeighbors();
-
-    LOG_INFO(string_q(120, ' '), "\r");
-    EXIT_NOMSG(true);
-}
-*/
-//#endif
+// TODO: If an abi file is changed, we should re-articulate.
+// TODO: accounting must be API mode -- why?
+// TODO: accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
+// TODO: accounting must be exportFmt API1 - why?
+// TODO: accounting must be for one monitor address - why?
+// TODO: accounting requires node balances - why?
+// TODO: Used to ask if any ABI files were newer than monitors, noted it (knownIsStale) and then would re-articulate
+// TODO: What does prefundAddrMap and prefundWeiMap do? Needs testing
+// TODO: What does blkRewardMap do? Needs testing
+// TODO: Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I think)
+// TODO: Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than once
+// TODO: writeLastExport is really weird
+// TODO: writeLastBlock is really weird
+// TODO: We used to write traces sometimes
+// TODO: We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

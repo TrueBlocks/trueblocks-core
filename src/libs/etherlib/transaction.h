@@ -73,9 +73,9 @@ class CTransaction : public CBaseNode {
     bool forEveryAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool loadTransAsPrefund(const address_t& addr, const wei_t& amount);
+    bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
-    bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn);
+    bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTransaction& item) const;
     bool operator!=(const CTransaction& item) const {

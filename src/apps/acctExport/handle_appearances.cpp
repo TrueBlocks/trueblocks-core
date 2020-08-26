@@ -9,9 +9,6 @@
 bool COptions::exportAppearances(void) {
     ENTER("exportAppearances");
 
-    bool isJson =
-        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
-
     bool first = true;
     for (size_t i = 0; i < items.size(); i++) {
         const CAppearance_base* item = &items[i];
@@ -20,7 +17,7 @@ bool COptions::exportAppearances(void) {
 
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CDisplayApp app(hackAppAddr, item->blk, item->txid);
-            cout << ((isJson && !first) ? ", " : "");
+            cout << ((isJson() && !first) ? ", " : "");
             cout << app.Format() << endl;
             first = false;
             nExported++;

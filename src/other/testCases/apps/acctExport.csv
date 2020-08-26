@@ -7,70 +7,38 @@ on, cmd,  fast, export, apps/acctExport, help_long,             n, help
 
 on, both, fast, export, apps/acctExport, no_params,             y,
 
+on, both, fast, export, apps/acctExport, export_apps,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
+on, both, fast, export, apps/acctExport, export_apps_c,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
+
+on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
+on, both, fast, export, apps/acctExport, export_c,              y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
+on, both, fast, export, apps/acctExport, export_c_fail,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
+
+on, both, fast, export, apps/acctExport, export_receipts,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 38
+on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt & end = 001506480
+on, both, fast, export, apps/acctExport, export_traces,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480
+
+#on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt & end = 001506480
+#on, both, fast, export, apps/acctExport, export_balances_d,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & end = 001506480
+#on, both, fast, export, apps/acctExport, export_balances_dol,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & dollars & end = 001507000
+#on, both, fast, export, apps/acctExport, export_balances_d_eth, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & ether & end = 001507000
 on, both, fast, export, apps/acctExport, accounting1,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & fmt = api & max_records = 5
 on, both, fast, export, apps/acctExport, accounting2,           y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & fmt = api & max_records = 5
 on, both, fast, export, apps/acctExport, accounting3,           y, addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api
 
-on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
-on, both, fast, export, apps/acctExport, export_apps,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
-on, both, fast, export, apps/acctExport, export_logs,           n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = txt & end = 001506480
-on, both, fast, export, apps/acctExport, export_receipts,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = csv & max_records = 2
-on, both, fast, export, apps/acctExport, export_traces,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480
-#on, both, fast, export, apps/acctExport, export_balances,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & fmt = txt & end = 001506480
-#on, both, fast, export, apps/acctExport, export_balances_d,     y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & end = 001506480
-
-on, both, fast, export, apps/acctExport, export_dao,            n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = csv & max_records = 38
-
-# state tests
-#on, both, fast, export, apps/acctExport, export_balances_dol,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & dollars & end = 001507000
-#on, both, fast, export, apps/acctExport, export_balances_d_eth, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & balances & deltas & ether & end = 001507000
-
-on, both, fast, export, apps/acctExport, export_c,              y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
-on, both, fast, export, apps/acctExport, export_apps_c,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
-
 #on, both, fast, export, apps/acctExport, export_occ,            n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & end = 1506480 & occurrence = 2
 #on, both, fast, export, apps/acctExport, export_hashes,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & hashes_only & end = 001506480
 
-# 10200,apps,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
-# 10300,apps,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
-# 10240,apps,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
-# 10240,apps,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
-# 10260,apps,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
-# 10280,apps,export,acctExport,balances,b,,false,false,true,true,header,switch,<boolean>,export balance history instead of transaction list
-# 10300,apps,export,acctExport,hashes_only,e,,false,false,true,true,header,switch,<boolean>,export the IPFS hashes of the index chunks the address appears in
-# 10320,apps,export,acctExport,count_only,c,,false,false,true,true,header,switch,<boolean>,display only the count of the number of data items requested
-# 10220,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-# 10360,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
-# 10380,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
-# 10400,apps,export,acctExport,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-# 10420,apps,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
-# 10440,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
-# 10460,apps,export,acctExport,grab_abis,g,,false,false,false,false,header,switch,<boolean>,using each trace's 'to' address&#44; grab the abi for that address (improves articulation)
-# 10480,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
-# 10500,apps,export,acctExport,deltas,D,,false,false,false,false,header,switch,<boolean>,for --balances option only&#44; export only changes in balances
-# 10520,apps,export,acctExport,start,S,,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-# 10540,apps,export,acctExport,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-# 10560,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
-# 10562,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
-# 10563,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
-
-# COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-# COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
-# COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
-# COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
-# COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-# COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
-# COption("hashes_only", "e", "", OPT_SWITCH, "export the IPFS hashes of the index chunks the address appears in"),
-# COption("count_only", "c", "", OPT_SWITCH, "display only the count of the number of data items requested"),
 # COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
+# COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
+# COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
+# COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
+# COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
+
 # COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
 # COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-# COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
+# COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
 # COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-# COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-# COption("grab_abis", "g", "", OPT_HIDDEN | OPT_SWITCH, "using each trace's 'to' address, grab the abi for that address (improves articulation)"),  // NOLINT
 # COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-# COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
-# COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-# COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-# COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
+# COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
+# COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),

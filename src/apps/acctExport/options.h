@@ -101,3 +101,8 @@ class COptions : public COptionsBase {
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
 }
+
+//--------------------------------------------------------------------------------
+inline bool isJson(void) {
+    return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
+}

@@ -68,7 +68,7 @@ int main(int argc, const char* argv[]) {
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!isTestMode() && !options.freshen && !options.count) {
+    if (!isTestMode() && !options.freshen && !options.count && !options.accounting) {
         ostringstream oss;
         oss << "exported " << padNum6T(options.nExported) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");

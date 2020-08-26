@@ -120,7 +120,6 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
         // See if this field belongs to the item's container
         ret = nextTransactionChunk(tmpName, pTrans);
-        // LOG4(fieldName, "=", ret, " from parent");
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())
@@ -138,7 +137,6 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    // SEP4("CReceipt::setValueByName(" + fieldName + ", " + fieldValue.substr(0,40) + "...)");
     if (fieldName == "contractAddress" && fieldValue == "null") {
         *((string_q*)&fieldValue) = "0";  // NOLINT
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
@@ -335,6 +333,12 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                                rec->pTrans->pBlock->blockNumber < byzantiumBlock) {
                         return "null";
                     }
+                }
+                break;
+            case 'c':
+                if (fieldIn % "contractAddress") {
+                    if (isZeroAddr(rec->contractAddress))
+                        return "";
                 }
                 break;
             // EXISTING_CODE

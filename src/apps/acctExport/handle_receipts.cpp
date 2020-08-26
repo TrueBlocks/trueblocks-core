@@ -7,19 +7,21 @@
 
 //-----------------------------------------------------------------------
 bool COptions::exportReceipts(void) {
-    ENTER("exportData");
+    ENTER("exportReceipts");
 
     ASSERT(receipts);
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;
-    bool isJson =
-        (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 
+    SHOW_FIELD(CReceipt, "blockNumber");
+    SHOW_FIELD(CReceipt, "transactionIndex");
+    SHOW_FIELD(CReceipt, "isError");
     bool first = true;
-    for (size_t i = 0;
-         i < items.size() && !shouldQuit() && items[i].blk < ts_cnt && (!freshen || (nExported < freshen_max)); i++) {
+    for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
+        if (shouldQuit() || items[i].blk >= ts_cnt)
+            break;
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;
@@ -35,8 +37,9 @@ bool COptions::exportReceipts(void) {
                 block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
 
             } else {
-                if (item->blk == 0 || (item->txid == 99997 || item->txid == 99999 || item->txid == 99998)) {
-                    // Not a thing
+                if (item->blk == 0) {
+                    address_t addr = prefundAddrMap[item->txid];
+                    trans.loadTransAsPrefund(item->blk, item->txid, addr, prefundWeiMap[addr]);
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);
@@ -53,12 +56,12 @@ bool COptions::exportReceipts(void) {
 
             if (articulate)
                 abis.articulateTransaction(&trans);
-            if (isJson && shouldDisplay && !first)
-                cout << ", ";
             nExported++;
-            if (shouldDisplay)
+            if (shouldDisplay) {
+                cout << ((isJson() && !first) ? ", " : "");
                 cout << trans.receipt.Format() << endl;
-            first = false;
+                first = false;
+            }
 
             HIDE_FIELD(CFunction, "message");
             if (!isTestMode() && (isApiMode() || !(i % 3))) {
