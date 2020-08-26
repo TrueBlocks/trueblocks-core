@@ -13,8 +13,8 @@ timestamp           	1007	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 asset               	1008	0	131122	T_TEXT TS_STRING
 begBal              	1009	0	131122	T_TEXT TS_STRING
 begBalDiff          	1010	0	131122	T_TEXT TS_STRING
-weiIn               	1011	0	131122	T_TEXT TS_STRING
-weiOut              	1012	0	131122	T_TEXT TS_STRING
+amountIn            	1011	0	131122	T_TEXT TS_STRING
+amountOut           	1012	0	131122	T_TEXT TS_STRING
 internalIn          	1013	0	131122	T_TEXT TS_STRING
 internalOut         	1014	0	131122	T_TEXT TS_STRING
 selfDestructIn      	1015	0	131122	T_TEXT TS_STRING
@@ -28,8 +28,9 @@ gasCostOut          	1022	0	131122	T_TEXT TS_STRING
 endBal              	1023	0	131122	T_TEXT TS_STRING
 endBalCalc          	1024	0	131122	T_TEXT TS_STRING
 endBalDiff          	1025	0	131122	T_TEXT TS_STRING
-reconciliationType  	1026	0	131122	T_TEXT TS_STRING
-reconciled          	1027	0	65556	T_BOOL TS_NUMERAL
+amountNet           	1026	0	131122	T_TEXT TS_STRING
+reconciliationType  	1027	0	131122	T_TEXT TS_STRING
+reconciled          	1028	0	65556	T_BOOL TS_NUMERAL
 {
   "blockNumber": 0,
   "transactionIndex": 0,
@@ -50,8 +51,8 @@ timestamp           	1007	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 asset               	1008	1	131122	T_TEXT TS_STRING
 begBal              	1009	1	131122	T_TEXT TS_STRING
 begBalDiff          	1010	1	131122	T_TEXT TS_STRING
-weiIn               	1011	1	131122	T_TEXT TS_STRING
-weiOut              	1012	1	131122	T_TEXT TS_STRING
+amountIn            	1011	1	131122	T_TEXT TS_STRING
+amountOut           	1012	1	131122	T_TEXT TS_STRING
 internalIn          	1013	1	131122	T_TEXT TS_STRING
 internalOut         	1014	1	131122	T_TEXT TS_STRING
 selfDestructIn      	1015	1	131122	T_TEXT TS_STRING
@@ -65,8 +66,9 @@ gasCostOut          	1022	1	131122	T_TEXT TS_STRING
 endBal              	1023	1	131122	T_TEXT TS_STRING
 endBalCalc          	1024	1	131122	T_TEXT TS_STRING
 endBalDiff          	1025	1	131122	T_TEXT TS_STRING
-reconciliationType  	1026	1	131122	T_TEXT TS_STRING
-reconciled          	1027	1	65556	T_BOOL TS_NUMERAL
+amountNet           	1026	1	131122	T_TEXT TS_STRING
+reconciliationType  	1027	1	131122	T_TEXT TS_STRING
+reconciled          	1028	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -83,8 +85,8 @@ timestamp           	1007	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
 asset               	1008	0	131122	T_TEXT TS_STRING
 begBal              	1009	0	131122	T_TEXT TS_STRING
 begBalDiff          	1010	0	131122	T_TEXT TS_STRING
-weiIn               	1011	0	131122	T_TEXT TS_STRING
-weiOut              	1012	0	131122	T_TEXT TS_STRING
+amountIn            	1011	0	131122	T_TEXT TS_STRING
+amountOut           	1012	0	131122	T_TEXT TS_STRING
 internalIn          	1013	0	131122	T_TEXT TS_STRING
 internalOut         	1014	0	131122	T_TEXT TS_STRING
 selfDestructIn      	1015	0	131122	T_TEXT TS_STRING
@@ -98,8 +100,9 @@ gasCostOut          	1022	0	131122	T_TEXT TS_STRING
 endBal              	1023	0	131122	T_TEXT TS_STRING
 endBalCalc          	1024	0	131122	T_TEXT TS_STRING
 endBalDiff          	1025	0	131122	T_TEXT TS_STRING
-reconciliationType  	1026	0	131122	T_TEXT TS_STRING
-reconciled          	1027	0	65556	T_BOOL TS_NUMERAL
+amountNet           	1026	0	131122	T_TEXT TS_STRING
+reconciliationType  	1027	0	131122	T_TEXT TS_STRING
+reconciled          	1028	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,
