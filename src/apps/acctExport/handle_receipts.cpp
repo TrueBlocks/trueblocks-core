@@ -5,9 +5,11 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+#define FREQ 5
+
 //-----------------------------------------------------------------------
-bool COptions::exportReceipts(void) {
-    ENTER("exportReceipts");
+bool COptions::handle_receipts(void) {
+    ENTER("handle_receipts");
 
     ASSERT(receipts);
     ASSERT(nodeHasBalances(false));
@@ -20,7 +22,7 @@ bool COptions::exportReceipts(void) {
     bool first = true;
     for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
-        if (shouldQuit() || items[i].blk >= ts_cnt)
+        if (shouldQuit() || item->blk >= ts_cnt)
             break;
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
@@ -40,6 +42,19 @@ bool COptions::exportReceipts(void) {
                 if (item->blk == 0) {
                     address_t addr = prefundAddrMap[item->txid];
                     trans.loadTransAsPrefund(item->blk, item->txid, addr, prefundWeiMap[addr]);
+
+                } else if (item->txid == 99997 || item->txid == 99999) {
+                    trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+
+                } else if (item->txid == 99998) {
+                    uint64_t nUncles = getUncleCount(item->blk);
+                    for (size_t u = 0; u < nUncles; u++) {
+                        CBlock uncle;
+                        getUncle(uncle, item->blk, u);
+                        if (uncle.miner == blkRewardMap[item->blk]) {
+                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber, uncle.miner);
+                        }
+                    }
 
                 } else {
                     getTransaction(trans, item->blk, item->txid);
@@ -74,10 +89,14 @@ bool COptions::exportReceipts(void) {
         }
     }
 
+    LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+                  " receipts for address " + monitors[0].address + "\r");
+
     for (auto monitor : monitors)
         if (items.size() > 0)
             monitor.writeLastExport(items[items.size() - 1].blk);
 
     reportNeighbors();
+
     EXIT_NOMSG(true);
 }

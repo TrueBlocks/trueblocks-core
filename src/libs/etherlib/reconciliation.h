@@ -25,7 +25,8 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CReconciliation : public CBaseNode {
   public:
-    blknum_t blockNum;
+    blknum_t blockNumber;
+    blknum_t transactionIndex;
     timestamp_t timestamp;
     string_q asset;
     bigint_t begBal;
@@ -112,7 +113,8 @@ inline void CReconciliation::clear(void) {
 inline void CReconciliation::initialize(void) {
     CBaseNode::initialize();
 
-    blockNum = 0;
+    blockNumber = 0;
+    transactionIndex = 0;
     timestamp = 0;
     asset = "";
     begBal = 0;
@@ -144,7 +146,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     clear();
     CBaseNode::duplicate(re);
 
-    blockNum = re.blockNum;
+    blockNumber = re.blockNumber;
+    transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
     asset = re.asset;
     begBal = re.begBal;
@@ -184,7 +187,7 @@ inline bool CReconciliation::operator==(const CReconciliation& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((blockNum == item.blockNum) && (asset == item.asset));
+    return ((blockNumber == item.blockNumber) && (asset == item.asset));
 }
 
 //-------------------------------------------------------------------------

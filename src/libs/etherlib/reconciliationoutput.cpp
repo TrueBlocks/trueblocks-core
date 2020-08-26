@@ -77,8 +77,8 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                return uint_2_Str(blockNum);
+            if (fieldName % "blockNumber") {
+                return uint_2_Str(blockNumber);
             }
             if (fieldName % "begBal") {
                 return begBal;
@@ -147,6 +147,9 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             }
             break;
         case 't':
+            if (fieldName % "transactionIndex") {
+                return uint_2_Str(transactionIndex);
+            }
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
             }
@@ -186,8 +189,8 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                blockNum = str_2_Uint(fieldValue);
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -274,6 +277,10 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
             }
             break;
         case 't':
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "timestamp") {
                 timestamp = str_2_Ts(fieldValue);
                 return true;
@@ -314,7 +321,8 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNum;
+    archive >> blockNumber;
+    archive >> transactionIndex;
     archive >> timestamp;
     archive >> asset;
     archive >> begBal;
@@ -347,7 +355,8 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNum;
+    archive << blockNumber;
+    archive << transactionIndex;
     archive << timestamp;
     archive << asset;
     archive << begBal;
@@ -405,7 +414,8 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBal", T_TEXT, ++fieldNum);
@@ -587,7 +597,8 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
     nums = numsIn;
     reconciliationType = nums.reconciliationType;
     reconciled = nums.reconciled;
-    blockNum = nums.blockNum;
+    blockNumber = nums.blockNumber;
+    transactionIndex = nums.transactionIndex;
     timestamp = nums.timestamp;
     if (expContext().asEther) {
         asset = "ETH";

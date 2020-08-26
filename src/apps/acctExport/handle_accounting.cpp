@@ -8,10 +8,10 @@
 #define FREQ 5
 
 //-----------------------------------------------------------------------
-bool COptions::exportAccounting(void) {
-    ENTER("exportAccounting");
+bool COptions::handle_accounting(void) {
+    ENTER("handle_accounting");
 
-    ASSERT(!traces && !receipts);
+    ASSERT(!traces && !receipts && !appearances);
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;
@@ -25,7 +25,6 @@ bool COptions::exportAccounting(void) {
         const CAppearance_base* item = &items[i];
         if (shouldQuit() || item->blk >= ts_cnt)
             break;
-
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;
@@ -41,10 +40,11 @@ bool COptions::exportAccounting(void) {
                 block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
 
                 // This data isn't stored, so we need to recreate it
-                if (accounting) {
+                if (accounting || statements) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.blockNum = trans.blockNumber;
+                    nums.blockNumber = trans.blockNumber;
+                    nums.transactionIndex = trans.transactionIndex;
                     nums.timestamp = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, next, &trans);
@@ -100,10 +100,11 @@ bool COptions::exportAccounting(void) {
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
 
-                if (accounting) {
+                if (accounting || statements) {
                     blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
                     CReconciliation nums;
-                    nums.blockNum = trans.blockNumber;
+                    nums.blockNumber = trans.blockNumber;
+                    nums.transactionIndex = trans.transactionIndex;
                     nums.timestamp = trans.timestamp;
                     CStringArray corrections;
                     nums.reconcile(corrections, lastStatement, next, &trans);
@@ -169,27 +170,37 @@ bool COptions::exportAccounting(void) {
             if (logs) {
                 for (auto log : trans.receipt.logs) {
                     if (!emitter || log.address == monitors[0].address) {
-                        if (isJson() && shouldDisplay && !first)
-                            cout << ", ";
-                        if (shouldDisplay)
-                            cout << log.Format() << endl;
                         nExported++;
+                        if (shouldDisplay) {
+                            cout << ((isJson() && !first) ? ", " : "");
+                            cout << log.Format() << endl;
+                            first = false;
+                        }
+                    }
+                }
+            } else if (statements) {
+                for (auto statement : trans.statements) {
+                    nExported++;
+                    if (shouldDisplay) {
+                        cout << ((isJson() && !first) ? ", " : "");
+                        cout << statement.Format() << endl;
                         first = false;
                     }
                 }
+
             } else {
-                if (isJson() && shouldDisplay && !first)
-                    cout << ", ";
-                if (shouldDisplay)
-                    cout << trans.Format() << endl;
                 nExported++;
-                first = false;
+                if (shouldDisplay) {
+                    cout << ((isJson() && !first) ? ", " : "");
+                    cout << trans.Format() << endl;
+                    first = false;
+                }
             }
         }
     }
 
     LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
-                  " txs for address " + monitors[0].address + "\r");
+                  " transactions for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
         if (items.size() > 0)

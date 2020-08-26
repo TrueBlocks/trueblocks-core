@@ -26,7 +26,8 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CReconciliationOutput : public CBaseNode {
   public:
-    blknum_t blockNum;
+    blknum_t blockNumber;
+    blknum_t transactionIndex;
     timestamp_t timestamp;
     string_q asset;
     string_q begBal;
@@ -112,7 +113,8 @@ inline void CReconciliationOutput::clear(void) {
 inline void CReconciliationOutput::initialize(void) {
     CBaseNode::initialize();
 
-    blockNum = 0;
+    blockNumber = 0;
+    transactionIndex = 0;
     timestamp = 0;
     asset = "";
     begBal = "";
@@ -145,7 +147,8 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     clear();
     CBaseNode::duplicate(re);
 
-    blockNum = re.blockNum;
+    blockNumber = re.blockNumber;
+    transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
     asset = re.asset;
     begBal = re.begBal;

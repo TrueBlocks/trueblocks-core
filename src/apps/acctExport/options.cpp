@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-    COption("balances", "b", "", OPT_SWITCH, "export balance history instead of transaction list"),
+    COption("statements", "T", "", OPT_SWITCH, "export reconcilations instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
@@ -28,7 +28,6 @@ static const COption params[] = {
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
-    COption("deltas", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --balances option only, export only changes in balances"),
     COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
@@ -84,8 +83,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-b" || arg == "--balances") {
-            balances = true;
+        } else if (arg == "-T" || arg == "--statements") {
+            statements = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
@@ -115,9 +114,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--freshen_max:")) {
             if (!confirmBlockNum("freshen_max", freshen_max, arg, latest))
                 return false;
-
-        } else if (arg == "-D" || arg == "--deltas") {
-            deltas = true;
 
         } else if (arg == "-M" || arg == "--emitter") {
             emitter = true;
@@ -287,6 +283,9 @@ bool COptions::parseArguments(string_q& command) {
             format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
             expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
 
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
+            expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
 
@@ -310,6 +309,8 @@ bool COptions::parseArguments(string_q& command) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
+            } else if (statements) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
             }
@@ -318,7 +319,7 @@ bool COptions::parseArguments(string_q& command) {
         if (freshen)
             expContext().exportFmt = NONE1;
 
-        if (accounting) {
+        if (accounting || statements) {
             if (addrs.size() != 1)
                 EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
             if (freshen)
@@ -360,14 +361,13 @@ void COptions::Init(void) {
     receipts = false;
     logs = false;
     traces = false;
-    balances = false;
+    statements = false;
     accounting = false;
     articulate = false;
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     freshen = false;
     freshen_max = 5000;
-    deltas = false;
     emitter = false;
     count = false;
     first_record = 0;

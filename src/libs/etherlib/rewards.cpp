@@ -105,6 +105,7 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
 //-------------------------------------------------------------------------
 bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr) {
     ASSERT(txid == 99998);
+    initialize();
     blockNumber = bn;
     transactionIndex = 99998;
     from = "0xUncleReward";

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "hash": "0x30d3f",
+      "hash": "0x0",
       "blockHash": "0x0",
       "blockNumber": 1,
       "transactionIndex": 99999,
@@ -24,7 +24,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 1,
+          "blockNumber": 1,
+          "transactionIndex": 99999,
           "timestamp": 1438269988,
           "asset": "WEI",
           "begBal": "0",
@@ -57,7 +58,7 @@
       "encoding": ""
     },
     {
-      "hash": "0x927bf",
+      "hash": "0x0",
       "blockHash": "0x0",
       "blockNumber": 5,
       "transactionIndex": 99999,
@@ -80,7 +81,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 5,
+          "blockNumber": 5,
+          "transactionIndex": 99999,
           "timestamp": 1438270083,
           "asset": "WEI",
           "begBal": "5000000000000000000",
@@ -136,7 +138,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 56,
+          "blockNumber": 56,
+          "transactionIndex": 99998,
           "timestamp": 1438270322,
           "asset": "WEI",
           "begBal": "10000000000000000000",
@@ -169,7 +172,7 @@
       "encoding": ""
     },
     {
-      "hash": "0x1681b7f",
+      "hash": "0x0",
       "blockHash": "0x0",
       "blockNumber": 235,
       "transactionIndex": 99999,
@@ -192,7 +195,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 235,
+          "blockNumber": 235,
+          "transactionIndex": 99999,
           "timestamp": 1438270713,
           "asset": "WEI",
           "begBal": "13750000000000000000",
@@ -248,7 +252,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 247,
+          "blockNumber": 247,
+          "transactionIndex": 99998,
           "timestamp": 1438270739,
           "asset": "WEI",
           "begBal": "18750000000000000000",

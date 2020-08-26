@@ -1,36 +1,36 @@
-acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--statements] [3:--fmt] [4:json] [5:--dollars] [6:--end] [7:001507000] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --dollars --end 001507000 
+acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--statements] [3:--fmt] [4:json] [5:--ether] [6:--end] [7:001507000] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --ether --end 001507000 
 { "data": [
 {
   "blockNumber": 0,
   "transactionIndex": 2,
   "timestamp": 1438269960,
-  "asset": "USD",
-  "prefundIn": "5880.000000000000000000",
-  "endBal": "5880.000000000000000000",
-  "endBalCalc": "5880.000000000000000000",
+  "asset": "ETH",
+  "prefundIn": "4200.0000000",
+  "endBal": "4200.0000000",
+  "endBalCalc": "4200.0000000",
   "reconciled": true
 }
 , {
   "blockNumber": 202249,
   "transactionIndex": 0,
   "timestamp": 1441703356,
-  "asset": "USD",
-  "begBal": "5628.000000000000000000",
-  "weiOut": "5627.866000000000000000",
-  "gasCostOut": "0.033929710544636369",
-  "endBal": "0.100070289455363630",
-  "endBalCalc": "0.100070289455363630",
+  "asset": "ETH",
+  "begBal": "4200.0000000",
+  "weiOut": "4199.9000000",
+  "gasCostOut": "0.0253206",
+  "endBal": "0.0746793",
+  "endBalCalc": "0.0746793",
   "reconciled": true
 }
 , {
   "blockNumber": 1501459,
   "transactionIndex": 2,
   "timestamp": 1463025233,
-  "asset": "USD",
-  "begBal": "0.735591306817411759",
-  "weiOut": "0.731454306817411759",
-  "gasCostOut": "0.004137000000000000",
+  "asset": "ETH",
+  "begBal": "0.0746793",
+  "weiOut": "0.0742593",
+  "gasCostOut": "0.0004200",
   "reconciled": true
 }
 TIME ~ CLOCK - <INFO>  : Reported 3 of 3 transactions for address 0x001d14804b399c6ef80e64576f657660804fec0b], "types": [

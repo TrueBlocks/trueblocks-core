@@ -8,8 +8,8 @@
 #define FREQ 5
 
 //-----------------------------------------------------------------------
-bool COptions::exportTraces(void) {
-    ENTER("exportTraces");
+bool COptions::handle_traces(void) {
+    ENTER("handle_traces");
 
     ASSERT(traces);
     ASSERT(nodeHasBalances(false));
@@ -21,7 +21,6 @@ bool COptions::exportTraces(void) {
         const CAppearance_base* item = &items[i];
         if (shouldQuit() || item->blk >= ts_cnt)
             break;
-
         if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = item->blk;

@@ -6,8 +6,8 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool COptions::exportCounts(void) {
-    ENTER("exportCounts");
+bool COptions::handle_counts(void) {
+    ENTER("handle_counts");
 
     bool first = true;
     for (auto cnt : counts) {

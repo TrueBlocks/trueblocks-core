@@ -13,13 +13,19 @@
       "gasPrice": 0,
       "input": "",
       "isError": 0,
-      "receipt": {},
+      "receipt": {
+        "contractAddress": "0x0",
+        "gasUsed": 0,
+        "logs": [],
+        "status": null
+      },
       "traces": [],
       "articulatedTx": {},
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 0,
+          "blockNumber": 0,
+          "transactionIndex": 2,
           "timestamp": 1438269960,
           "asset": "WEI",
           "begBal": "0",
@@ -75,7 +81,8 @@
       "compressedTx": "0x454e3456 ( stub: 3147544238 )",
       "statements": [
         {
-          "blockNum": 202249,
+          "blockNumber": 202249,
+          "transactionIndex": 0,
           "timestamp": 1441703356,
           "asset": "WEI",
           "begBal": "4200000000000000000000",
@@ -131,7 +138,8 @@
       "compressedTx": "0x ( )",
       "statements": [
         {
-          "blockNum": 1501459,
+          "blockNumber": 1501459,
+          "transactionIndex": 2,
           "timestamp": 1463025233,
           "asset": "WEI",
           "begBal": "74679320489077336",

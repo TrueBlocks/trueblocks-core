@@ -25,28 +25,32 @@ int main(int argc, const char* argv[]) {
                        ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
                        : (options.traces
                               ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                              : (options.receipts ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                                                  : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                                                  : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
+                              : (options.receipts
+                                     ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                                     : (options.logs
+                                            ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                            : (options.statements ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
+                                                                  : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
         if (options.loadAllAppearances()) {
             if (options.count) {
-                options.exportCounts();
+                options.handle_counts();
 
             } else if (options.appearances) {
-                options.exportAppearances();
+                options.hanlde_appearances();
 
             } else if (options.receipts) {
-                options.exportReceipts();
+                options.handle_receipts();
 
             } else if (options.traces) {
-                options.exportTraces();
+                options.handle_traces();
 
             } else {
-                options.exportAccounting();
+                ASSERT(logs || accounting || statements);
+                options.handle_accounting();
             }
         }
 
@@ -68,7 +72,8 @@ int main(int argc, const char* argv[]) {
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!isTestMode() && !options.freshen && !options.count && !options.accounting) {
+    if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs &&
+        !options.statements) {
         ostringstream oss;
         oss << "exported " << padNum6T(options.nExported) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");

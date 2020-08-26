@@ -1,7 +1,78 @@
-acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--balances] [3:--fmt] [4:txt] [5:--end] [6:001506480] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --balances --fmt txt --end 001506480 
-blocknumber	transactionindex	address	priorbalance	balance	diff
-0	2	0x001d14804b399c6ef80e64576f657660804fec0b	0	4200000000000000000000	4200000000000000000000
-202249	0	0x001d14804b399c6ef80e64576f657660804fec0b	4200000000000000000000	74679320489077336	-4199925320679510922664
-1501459	2	0x001d14804b399c6ef80e64576f657660804fec0b	74679320489077336	0	-74679320489077336
-TIME ~ CLOCK - <INFO>  : exported 3 balances from 6 transactions                                                       
+acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--statements] [3:--fmt] [4:json] [5:--end] [6:001506480] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --end 001506480 
+{ "data": [
+{
+  "blockNumber": 0,
+  "transactionIndex": 2,
+  "timestamp": 1438269960,
+  "asset": "WEI",
+  "begBal": "0",
+  "begBalDiff": "0",
+  "weiIn": "0",
+  "weiOut": "0",
+  "internalIn": "0",
+  "internalOut": "0",
+  "selfDestructIn": "0",
+  "selfDestructOut": "0",
+  "minerBaseRewardIn": "0",
+  "minerNephewRewardIn": "0",
+  "minerTxFeeIn": "0",
+  "minerUncleRewardIn": "0",
+  "prefundIn": "4200000000000000000000",
+  "gasCostOut": "0",
+  "endBal": "4200000000000000000000",
+  "endBalCalc": "4200000000000000000000",
+  "endBalDiff": "0",
+  "reconciled": true
+}
+, {
+  "blockNumber": 202249,
+  "transactionIndex": 0,
+  "timestamp": 1441703356,
+  "asset": "WEI",
+  "begBal": "4200000000000000000000",
+  "begBalDiff": "0",
+  "weiIn": "0",
+  "weiOut": "4199900000000000000000",
+  "internalIn": "0",
+  "internalOut": "0",
+  "selfDestructIn": "0",
+  "selfDestructOut": "0",
+  "minerBaseRewardIn": "0",
+  "minerNephewRewardIn": "0",
+  "minerTxFeeIn": "0",
+  "minerUncleRewardIn": "0",
+  "prefundIn": "0",
+  "gasCostOut": "25320679510922664",
+  "endBal": "74679320489077336",
+  "endBalCalc": "74679320489077336",
+  "endBalDiff": "0",
+  "reconciled": true
+}
+, {
+  "blockNumber": 1501459,
+  "transactionIndex": 2,
+  "timestamp": 1463025233,
+  "asset": "WEI",
+  "begBal": "74679320489077336",
+  "begBalDiff": "0",
+  "weiIn": "0",
+  "weiOut": "74259320489077336",
+  "internalIn": "0",
+  "internalOut": "0",
+  "selfDestructIn": "0",
+  "selfDestructOut": "0",
+  "minerBaseRewardIn": "0",
+  "minerNephewRewardIn": "0",
+  "minerTxFeeIn": "0",
+  "minerUncleRewardIn": "0",
+  "prefundIn": "0",
+  "gasCostOut": "420000000000000",
+  "endBal": "0",
+  "endBalCalc": "0",
+  "endBalDiff": "0",
+  "reconciled": true
+}
+TIME ~ CLOCK - <INFO>  : Reported 3 of 3 transactions for address 0x001d14804b399c6ef80e64576f657660804fec0b], "types": [
+{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "weiIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "weiOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
+] }

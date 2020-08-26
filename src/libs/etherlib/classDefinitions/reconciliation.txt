@@ -1,6 +1,7 @@
 [settings]
 class = CReconciliation
-fields = blknum blockNum|\
+fields = blknum blockNumber|\
+        blknum transactionIndex|\
         timestamp timestamp|\
         string asset|\
         int256 begBal|\
@@ -25,4 +26,4 @@ fields = blknum blockNum|\
 includes = abilib.h
 cpp_includes = etherlib.h
 serializable = true
-equals = ((blockNum == item.blockNum) && (asset == item.asset))
+equals = ((blockNumber == item.blockNumber) && (asset == item.asset))

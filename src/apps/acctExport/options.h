@@ -33,14 +33,13 @@ class COptions : public COptionsBase {
     bool receipts;
     bool logs;
     bool traces;
-    bool balances;
+    bool statements;
     bool accounting;
     bool articulate;
     bool skip_ddos;
     uint64_t max_traces;
     bool freshen;
     blknum_t freshen_max;
-    bool deltas;
     bool emitter;
     bool count;
     blknum_t first_record;
@@ -87,11 +86,11 @@ class COptions : public COptionsBase {
     bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
     bool loadAllAppearances(void);
 
-    bool exportAccounting(void);
-    bool exportAppearances(void);
-    bool exportCounts(void);
-    bool exportReceipts(void);
-    bool exportTraces(void);
+    bool handle_accounting(void);
+    bool hanlde_appearances(void);
+    bool handle_receipts(void);
+    bool handle_traces(void);
+    bool handle_counts(void);
 
     void addNeighbor(addr_count_map_t& map, const address_t& addr);
     bool reportNeighbors(void);

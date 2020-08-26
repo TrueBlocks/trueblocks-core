@@ -77,8 +77,8 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                return uint_2_Str(blockNum);
+            if (fieldName % "blockNumber") {
+                return uint_2_Str(blockNumber);
             }
             if (fieldName % "begBal") {
                 return bni_2_Str(begBal);
@@ -147,6 +147,9 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
+            if (fieldName % "transactionIndex") {
+                return uint_2_Str(transactionIndex);
+            }
             if (fieldName % "timestamp") {
                 return ts_2_Str(timestamp);
             }
@@ -186,8 +189,8 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'b':
-            if (fieldName % "blockNum") {
-                blockNum = str_2_Uint(fieldValue);
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "begBal") {
@@ -274,6 +277,10 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 't':
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "timestamp") {
                 timestamp = str_2_Ts(fieldValue);
                 return true;
@@ -314,7 +321,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNum;
+    archive >> blockNumber;
+    archive >> transactionIndex;
     archive >> timestamp;
     archive >> asset;
     archive >> begBal;
@@ -347,7 +355,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNum;
+    archive << blockNumber;
+    archive << transactionIndex;
     archive << timestamp;
     archive << asset;
     archive << begBal;
@@ -405,7 +414,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CReconciliation, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliation, "blockNum", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
@@ -569,8 +579,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(expContext().accountedFor, blockNum == 0 ? 0 : blockNum - 1);
-    endBal = getBalanceAt(expContext().accountedFor, blockNum);
+    begBal = getBalanceAt(expContext().accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    endBal = getBalanceAt(expContext().accountedFor, blockNumber);
 
     // If the user has given us corrections, use them...
     if (corrections.size() > 0) {
@@ -587,7 +597,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
                  minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut - gasCostOut;
 
     // Check to see if there are any mismatches...
-    begBalDiff = trans - blockNum == 0 ? 0 : begBal - lastStatement.endBal;
+    begBalDiff = trans - blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     endBalDiff = endBal - endBalCalc;
 
     // ...if not, we're reconciled, so we can return...
@@ -617,8 +627,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
           12          13           15        both next and previous are different (handled above)
      */
 
-    bool prevDifferent = lastStatement.blockNum != blockNum;
-    bool nextDifferent = blockNum != nextBlock;
+    bool prevDifferent = lastStatement.blockNumber != blockNumber;
+    bool nextDifferent = blockNumber != nextBlock;
 
     if (prevDifferent && nextDifferent) {
         // handled above...
@@ -629,7 +639,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // that case.
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
-        begBal = getBalanceAt(expContext().accountedFor, blockNum == 0 ? 0 : blockNum - 1);
+        begBal = getBalanceAt(expContext().accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
@@ -660,7 +670,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
-        endBal = getBalanceAt(expContext().accountedFor, blockNum);
+        endBal = getBalanceAt(expContext().accountedFor, blockNumber);
         endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 
@@ -762,8 +772,9 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
 //--------------------------------------------------------------
 CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     CReconciliation rec = a;
-    rec.blockNum = b.blockNum;    // assign
-    rec.timestamp = b.timestamp;  // assign
+    rec.blockNumber = b.blockNumber;            // assign
+    rec.transactionIndex = b.transactionIndex;  // assign
+    rec.timestamp = b.timestamp;                // assign
     rec.weiIn += b.weiIn;
     rec.internalIn += b.internalIn;
     rec.selfDestructIn += b.selfDestructIn;

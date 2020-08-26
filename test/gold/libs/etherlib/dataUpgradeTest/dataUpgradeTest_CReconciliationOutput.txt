@@ -7,30 +7,32 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-timestamp           	1006	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-asset               	1007	0	131122	T_TEXT TS_STRING
-begBal              	1008	0	131122	T_TEXT TS_STRING
-begBalDiff          	1009	0	131122	T_TEXT TS_STRING
-weiIn               	1010	0	131122	T_TEXT TS_STRING
-weiOut              	1011	0	131122	T_TEXT TS_STRING
-internalIn          	1012	0	131122	T_TEXT TS_STRING
-internalOut         	1013	0	131122	T_TEXT TS_STRING
-selfDestructIn      	1014	0	131122	T_TEXT TS_STRING
-selfDestructOut     	1015	0	131122	T_TEXT TS_STRING
-minerBaseRewardIn   	1016	0	131122	T_TEXT TS_STRING
-minerNephewRewardIn 	1017	0	131122	T_TEXT TS_STRING
-minerTxFeeIn        	1018	0	131122	T_TEXT TS_STRING
-minerUncleRewardIn  	1019	0	131122	T_TEXT TS_STRING
-prefundIn           	1020	0	131122	T_TEXT TS_STRING
-gasCostOut          	1021	0	131122	T_TEXT TS_STRING
-endBal              	1022	0	131122	T_TEXT TS_STRING
-endBalCalc          	1023	0	131122	T_TEXT TS_STRING
-endBalDiff          	1024	0	131122	T_TEXT TS_STRING
-reconciliationType  	1025	0	131122	T_TEXT TS_STRING
-reconciled          	1026	0	65556	T_BOOL TS_NUMERAL
+blockNumber         	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+timestamp           	1007	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1008	0	131122	T_TEXT TS_STRING
+begBal              	1009	0	131122	T_TEXT TS_STRING
+begBalDiff          	1010	0	131122	T_TEXT TS_STRING
+weiIn               	1011	0	131122	T_TEXT TS_STRING
+weiOut              	1012	0	131122	T_TEXT TS_STRING
+internalIn          	1013	0	131122	T_TEXT TS_STRING
+internalOut         	1014	0	131122	T_TEXT TS_STRING
+selfDestructIn      	1015	0	131122	T_TEXT TS_STRING
+selfDestructOut     	1016	0	131122	T_TEXT TS_STRING
+minerBaseRewardIn   	1017	0	131122	T_TEXT TS_STRING
+minerNephewRewardIn 	1018	0	131122	T_TEXT TS_STRING
+minerTxFeeIn        	1019	0	131122	T_TEXT TS_STRING
+minerUncleRewardIn  	1020	0	131122	T_TEXT TS_STRING
+prefundIn           	1021	0	131122	T_TEXT TS_STRING
+gasCostOut          	1022	0	131122	T_TEXT TS_STRING
+endBal              	1023	0	131122	T_TEXT TS_STRING
+endBalCalc          	1024	0	131122	T_TEXT TS_STRING
+endBalDiff          	1025	0	131122	T_TEXT TS_STRING
+reconciliationType  	1026	0	131122	T_TEXT TS_STRING
+reconciled          	1027	0	65556	T_BOOL TS_NUMERAL
 {
-  "blockNum": 0,
+  "blockNumber": 0,
+  "transactionIndex": 0,
   "timestamp": 0,
   "reconciled": false
 }
@@ -42,28 +44,29 @@ schema              	1001	1	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	1	65556	T_BOOL TS_NUMERAL
 showing             	1003	1	65556	T_BOOL TS_NUMERAL
 cname               	1004	1	131122	T_TEXT TS_STRING
-blockNum            	1005	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-timestamp           	1006	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-asset               	1007	1	131122	T_TEXT TS_STRING
-begBal              	1008	1	131122	T_TEXT TS_STRING
-begBalDiff          	1009	1	131122	T_TEXT TS_STRING
-weiIn               	1010	1	131122	T_TEXT TS_STRING
-weiOut              	1011	1	131122	T_TEXT TS_STRING
-internalIn          	1012	1	131122	T_TEXT TS_STRING
-internalOut         	1013	1	131122	T_TEXT TS_STRING
-selfDestructIn      	1014	1	131122	T_TEXT TS_STRING
-selfDestructOut     	1015	1	131122	T_TEXT TS_STRING
-minerBaseRewardIn   	1016	1	131122	T_TEXT TS_STRING
-minerNephewRewardIn 	1017	1	131122	T_TEXT TS_STRING
-minerTxFeeIn        	1018	1	131122	T_TEXT TS_STRING
-minerUncleRewardIn  	1019	1	131122	T_TEXT TS_STRING
-prefundIn           	1020	1	131122	T_TEXT TS_STRING
-gasCostOut          	1021	1	131122	T_TEXT TS_STRING
-endBal              	1022	1	131122	T_TEXT TS_STRING
-endBalCalc          	1023	1	131122	T_TEXT TS_STRING
-endBalDiff          	1024	1	131122	T_TEXT TS_STRING
-reconciliationType  	1025	1	131122	T_TEXT TS_STRING
-reconciled          	1026	1	65556	T_BOOL TS_NUMERAL
+blockNumber         	1005	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+timestamp           	1007	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1008	1	131122	T_TEXT TS_STRING
+begBal              	1009	1	131122	T_TEXT TS_STRING
+begBalDiff          	1010	1	131122	T_TEXT TS_STRING
+weiIn               	1011	1	131122	T_TEXT TS_STRING
+weiOut              	1012	1	131122	T_TEXT TS_STRING
+internalIn          	1013	1	131122	T_TEXT TS_STRING
+internalOut         	1014	1	131122	T_TEXT TS_STRING
+selfDestructIn      	1015	1	131122	T_TEXT TS_STRING
+selfDestructOut     	1016	1	131122	T_TEXT TS_STRING
+minerBaseRewardIn   	1017	1	131122	T_TEXT TS_STRING
+minerNephewRewardIn 	1018	1	131122	T_TEXT TS_STRING
+minerTxFeeIn        	1019	1	131122	T_TEXT TS_STRING
+minerUncleRewardIn  	1020	1	131122	T_TEXT TS_STRING
+prefundIn           	1021	1	131122	T_TEXT TS_STRING
+gasCostOut          	1022	1	131122	T_TEXT TS_STRING
+endBal              	1023	1	131122	T_TEXT TS_STRING
+endBalCalc          	1024	1	131122	T_TEXT TS_STRING
+endBalDiff          	1025	1	131122	T_TEXT TS_STRING
+reconciliationType  	1026	1	131122	T_TEXT TS_STRING
+reconciled          	1027	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -74,34 +77,36 @@ schema              	1001	0	65561	T_NUMBER TS_NUMERAL
 deleted             	1002	0	65556	T_BOOL TS_NUMERAL
 showing             	1003	0	65556	T_BOOL TS_NUMERAL
 cname               	1004	0	131122	T_TEXT TS_STRING
-blockNum            	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-timestamp           	1006	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-asset               	1007	0	131122	T_TEXT TS_STRING
-begBal              	1008	0	131122	T_TEXT TS_STRING
-begBalDiff          	1009	0	131122	T_TEXT TS_STRING
-weiIn               	1010	0	131122	T_TEXT TS_STRING
-weiOut              	1011	0	131122	T_TEXT TS_STRING
-internalIn          	1012	0	131122	T_TEXT TS_STRING
-internalOut         	1013	0	131122	T_TEXT TS_STRING
-selfDestructIn      	1014	0	131122	T_TEXT TS_STRING
-selfDestructOut     	1015	0	131122	T_TEXT TS_STRING
-minerBaseRewardIn   	1016	0	131122	T_TEXT TS_STRING
-minerNephewRewardIn 	1017	0	131122	T_TEXT TS_STRING
-minerTxFeeIn        	1018	0	131122	T_TEXT TS_STRING
-minerUncleRewardIn  	1019	0	131122	T_TEXT TS_STRING
-prefundIn           	1020	0	131122	T_TEXT TS_STRING
-gasCostOut          	1021	0	131122	T_TEXT TS_STRING
-endBal              	1022	0	131122	T_TEXT TS_STRING
-endBalCalc          	1023	0	131122	T_TEXT TS_STRING
-endBalDiff          	1024	0	131122	T_TEXT TS_STRING
-reconciliationType  	1025	0	131122	T_TEXT TS_STRING
-reconciled          	1026	0	65556	T_BOOL TS_NUMERAL
+blockNumber         	1005	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+timestamp           	1007	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+asset               	1008	0	131122	T_TEXT TS_STRING
+begBal              	1009	0	131122	T_TEXT TS_STRING
+begBalDiff          	1010	0	131122	T_TEXT TS_STRING
+weiIn               	1011	0	131122	T_TEXT TS_STRING
+weiOut              	1012	0	131122	T_TEXT TS_STRING
+internalIn          	1013	0	131122	T_TEXT TS_STRING
+internalOut         	1014	0	131122	T_TEXT TS_STRING
+selfDestructIn      	1015	0	131122	T_TEXT TS_STRING
+selfDestructOut     	1016	0	131122	T_TEXT TS_STRING
+minerBaseRewardIn   	1017	0	131122	T_TEXT TS_STRING
+minerNephewRewardIn 	1018	0	131122	T_TEXT TS_STRING
+minerTxFeeIn        	1019	0	131122	T_TEXT TS_STRING
+minerUncleRewardIn  	1020	0	131122	T_TEXT TS_STRING
+prefundIn           	1021	0	131122	T_TEXT TS_STRING
+gasCostOut          	1022	0	131122	T_TEXT TS_STRING
+endBal              	1023	0	131122	T_TEXT TS_STRING
+endBalCalc          	1024	0	131122	T_TEXT TS_STRING
+endBalDiff          	1025	0	131122	T_TEXT TS_STRING
+reconciliationType  	1026	0	131122	T_TEXT TS_STRING
+reconciled          	1027	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,
   "showing": true,
   "cname": "ReconciliationOutput",
-  "blockNum": 0,
+  "blockNumber": 0,
+  "transactionIndex": 0,
   "timestamp": 0,
   "reconciled": false
 }
