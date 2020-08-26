@@ -31,7 +31,7 @@ class CReconciliation : public CBaseNode {
     string_q asset;
     bigint_t begBal;
     bigint_t begBalDiff;
-    bigint_t weiIn;
+    bigint_t amountIn;
     bigint_t internalIn;
     bigint_t selfDestructIn;
     bigint_t minerBaseRewardIn;
@@ -39,13 +39,14 @@ class CReconciliation : public CBaseNode {
     bigint_t minerTxFeeIn;
     bigint_t minerUncleRewardIn;
     bigint_t prefundIn;
-    bigint_t weiOut;
+    bigint_t amountOut;
     bigint_t internalOut;
     bigint_t selfDestructOut;
     bigint_t gasCostOut;
     bigint_t endBal;
     bigint_t endBalCalc;
     bigint_t endBalDiff;
+    bigint_t amountNet;
     string_q reconciliationType;
     bool reconciled;
 
@@ -119,7 +120,7 @@ inline void CReconciliation::initialize(void) {
     asset = "";
     begBal = 0;
     begBalDiff = 0;
-    weiIn = 0;
+    amountIn = 0;
     internalIn = 0;
     selfDestructIn = 0;
     minerBaseRewardIn = 0;
@@ -127,13 +128,14 @@ inline void CReconciliation::initialize(void) {
     minerTxFeeIn = 0;
     minerUncleRewardIn = 0;
     prefundIn = 0;
-    weiOut = 0;
+    amountOut = 0;
     internalOut = 0;
     selfDestructOut = 0;
     gasCostOut = 0;
     endBal = 0;
     endBalCalc = 0;
     endBalDiff = 0;
+    amountNet = 0;
     reconciliationType = "";
     reconciled = false;
 
@@ -152,7 +154,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     asset = re.asset;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
-    weiIn = re.weiIn;
+    amountIn = re.amountIn;
     internalIn = re.internalIn;
     selfDestructIn = re.selfDestructIn;
     minerBaseRewardIn = re.minerBaseRewardIn;
@@ -160,13 +162,14 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     minerTxFeeIn = re.minerTxFeeIn;
     minerUncleRewardIn = re.minerUncleRewardIn;
     prefundIn = re.prefundIn;
-    weiOut = re.weiOut;
+    amountOut = re.amountOut;
     internalOut = re.internalOut;
     selfDestructOut = re.selfDestructOut;
     gasCostOut = re.gasCostOut;
     endBal = re.endBal;
     endBalCalc = re.endBalCalc;
     endBalDiff = re.endBalDiff;
+    amountNet = re.amountNet;
     reconciliationType = re.reconciliationType;
     reconciled = re.reconciled;
 

@@ -9,6 +9,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "prefundIn": "5880.000000000000000000",
   "endBal": "5880.000000000000000000",
   "endBalCalc": "5880.000000000000000000",
+  "amountNet": "5880.000000000000000000",
   "reconciled": true
 }
 , {
@@ -17,10 +18,11 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "timestamp": 1441703356,
   "asset": "USD",
   "begBal": "5628.000000000000000000",
-  "weiOut": "5627.866000000000000000",
+  "amountOut": "5627.866000000000000000",
   "gasCostOut": "0.033929710544636369",
   "endBal": "0.100070289455363630",
   "endBalCalc": "0.100070289455363630",
+  "amountNet": "-5627.899929710544636369",
   "reconciled": true
 }
 , {
@@ -29,10 +31,11 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "timestamp": 1463025233,
   "asset": "USD",
   "begBal": "0.735591306817411759",
-  "weiOut": "0.731454306817411759",
+  "amountOut": "0.731454306817411759",
   "gasCostOut": "0.004137000000000000",
+  "amountNet": "-0.735591306817411759",
   "reconciled": true
 }
 TIME ~ CLOCK - <INFO>  : Reported 3 of 3 transactions for address 0x001d14804b399c6ef80e64576f657660804fec0b], "types": [
-{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "weiIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "weiOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
+{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "amountIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "amountOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "amountNet", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
 ] }

@@ -75,6 +75,15 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             if (fieldName % "asset") {
                 return asset;
             }
+            if (fieldName % "amountIn") {
+                return bni_2_Str(amountIn);
+            }
+            if (fieldName % "amountOut") {
+                return bni_2_Str(amountOut);
+            }
+            if (fieldName % "amountNet") {
+                return bni_2_Str(amountNet);
+            }
             break;
         case 'b':
             if (fieldName % "blockNumber") {
@@ -154,14 +163,6 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
                 return ts_2_Str(timestamp);
             }
             break;
-        case 'w':
-            if (fieldName % "weiIn") {
-                return bni_2_Str(weiIn);
-            }
-            if (fieldName % "weiOut") {
-                return bni_2_Str(weiOut);
-            }
-            break;
         default:
             break;
     }
@@ -185,6 +186,18 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
         case 'a':
             if (fieldName % "asset") {
                 asset = fieldValue;
+                return true;
+            }
+            if (fieldName % "amountIn") {
+                amountIn = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "amountOut") {
+                amountOut = str_2_Wei(fieldValue);
+                return true;
+            }
+            if (fieldName % "amountNet") {
+                amountNet = str_2_Wei(fieldValue);
                 return true;
             }
             break;
@@ -286,16 +299,6 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 return true;
             }
             break;
-        case 'w':
-            if (fieldName % "weiIn") {
-                weiIn = str_2_Wei(fieldValue);
-                return true;
-            }
-            if (fieldName % "weiOut") {
-                weiOut = str_2_Wei(fieldValue);
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -327,7 +330,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
-    archive >> weiIn;
+    archive >> amountIn;
     archive >> internalIn;
     archive >> selfDestructIn;
     archive >> minerBaseRewardIn;
@@ -335,13 +338,14 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> minerTxFeeIn;
     archive >> minerUncleRewardIn;
     archive >> prefundIn;
-    archive >> weiOut;
+    archive >> amountOut;
     archive >> internalOut;
     archive >> selfDestructOut;
     archive >> gasCostOut;
     archive >> endBal;
     archive >> endBalCalc;
     archive >> endBalDiff;
+    archive >> amountNet;
     archive >> reconciliationType;
     archive >> reconciled;
     finishParse();
@@ -361,7 +365,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
-    archive << weiIn;
+    archive << amountIn;
     archive << internalIn;
     archive << selfDestructIn;
     archive << minerBaseRewardIn;
@@ -369,13 +373,14 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << minerTxFeeIn;
     archive << minerUncleRewardIn;
     archive << prefundIn;
-    archive << weiOut;
+    archive << amountOut;
     archive << internalOut;
     archive << selfDestructOut;
     archive << gasCostOut;
     archive << endBal;
     archive << endBalCalc;
     archive << endBalDiff;
+    archive << amountNet;
     archive << reconciliationType;
     archive << reconciled;
 
@@ -420,7 +425,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "weiIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerBaseRewardIn", T_INT256, ++fieldNum);
@@ -428,13 +433,14 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "minerTxFeeIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundIn", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "weiOut", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasCostOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
 
@@ -559,7 +565,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
     // We need to account for both the case where the account is the sender...
     if (trans->from == expContext().accountedFor) {
-        weiOut = trans->isError ? 0 : trans->value;
+        amountOut = trans->isError ? 0 : trans->value;
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
@@ -574,7 +580,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         } else if (trans->from == "0xUncleReward") {
             minerUncleRewardIn = trans->value;
         } else {
-            weiIn = trans->isError ? 0 : trans->value;
+            amountIn = trans->isError ? 0 : trans->value;
         }
     }
 
@@ -593,8 +599,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     }
 
     // Calculate what we think the balances should be...
-    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
-                 minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut - gasCostOut;
+    endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
+                 minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut - selfDestructOut - gasCostOut;
 
     // Check to see if there are any mismatches...
     begBalDiff = trans - blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
@@ -602,8 +608,10 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
     // ...if not, we're reconciled, so we can return...
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
-    if (reconciled)
+    if (reconciled) {
+        amountNet = endBal - begBal;
         return true;
+    }
 
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
@@ -643,9 +651,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
 
         // We use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
-                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
-                     gasCostOut;
+        endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut -
+                     selfDestructOut - gasCostOut;
 
         // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
         // available until the end of the block. The best we can do is temporarily assume the calculated balance
@@ -664,9 +672,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         begBalDiff = begBal - lastStatement.endBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
-                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
-                     gasCostOut;
+        endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut -
+                     selfDestructOut - gasCostOut;
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
@@ -684,9 +692,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         ASSERT(trans->blockNumber != 0);
         begBalDiff = begBal - lastStatement.endBalCalc;
 
-        endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
-                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut -
-                     gasCostOut;
+        endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
+                     minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut -
+                     selfDestructOut - gasCostOut;
 
         // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc;
@@ -696,6 +704,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
     // If we're reconciled, we're done...
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
+    if (reconciled)
+        amountNet = endBal - begBal;
     return reconciled;
 }
 
@@ -703,7 +713,7 @@ extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool use
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
                                            const CTransaction* trans) {
-    weiOut = weiIn = 0;  // we will store it in the internal values
+    amountOut = amountIn = 0;  // we will store it in the internal values
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
@@ -754,8 +764,8 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
         prefundIn = trans->value;
     }
 
-    endBalCalc = begBal + weiIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
-                 minerTxFeeIn + minerUncleRewardIn - weiOut - internalOut - selfDestructOut - gasCostOut;
+    endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
+                 minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut - selfDestructOut - gasCostOut;
     endBalDiff = endBal - endBalCalc;
     begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
@@ -765,6 +775,8 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
     if (!reconciled) {
         // remove the traces if we don't need them to balance
         ((CTransaction*)trans)->traces.clear();
+    } else {
+        amountNet = endBal - begBal;
     }
     return reconciled;
 }
@@ -775,7 +787,7 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     rec.blockNumber = b.blockNumber;            // assign
     rec.transactionIndex = b.transactionIndex;  // assign
     rec.timestamp = b.timestamp;                // assign
-    rec.weiIn += b.weiIn;
+    rec.amountIn += b.amountIn;
     rec.internalIn += b.internalIn;
     rec.selfDestructIn += b.selfDestructIn;
     rec.minerBaseRewardIn += b.minerBaseRewardIn;
@@ -783,7 +795,7 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     rec.minerTxFeeIn += b.minerTxFeeIn;
     rec.minerUncleRewardIn += b.minerUncleRewardIn;
     rec.prefundIn += b.prefundIn;
-    rec.weiOut += b.weiOut;
+    rec.amountOut += b.amountOut;
     rec.internalOut += b.internalOut;
     rec.selfDestructOut += b.selfDestructOut;
     rec.gasCostOut += b.gasCostOut;

@@ -30,8 +30,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "asset": "WEI",
       "begBal": "0",
       "begBalDiff": "0",
-      "weiIn": "0",
-      "weiOut": "0",
+      "amountIn": "0",
+      "amountOut": "0",
       "internalIn": "0",
       "internalOut": "0",
       "selfDestructIn": "0",
@@ -45,6 +45,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "endBal": "5000000000000000000",
       "endBalCalc": "5000000000000000000",
       "endBalDiff": "0",
+      "amountNet": "5000000000000000000",
       "reconciled": true
     }
   ],
@@ -82,8 +83,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "asset": "WEI",
       "begBal": "5000000000000000000",
       "begBalDiff": "0",
-      "weiIn": "0",
-      "weiOut": "0",
+      "amountIn": "0",
+      "amountOut": "0",
       "internalIn": "0",
       "internalOut": "0",
       "selfDestructIn": "0",
@@ -97,6 +98,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "endBal": "10000000000000000000",
       "endBalCalc": "10000000000000000000",
       "endBalDiff": "0",
+      "amountNet": "5000000000000000000",
       "reconciled": true
     }
   ],
@@ -134,8 +136,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "asset": "WEI",
       "begBal": "10000000000000000000",
       "begBalDiff": "0",
-      "weiIn": "0",
-      "weiOut": "0",
+      "amountIn": "0",
+      "amountOut": "0",
       "internalIn": "0",
       "internalOut": "0",
       "selfDestructIn": "0",
@@ -149,6 +151,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "endBal": "13750000000000000000",
       "endBalCalc": "13750000000000000000",
       "endBalDiff": "0",
+      "amountNet": "3750000000000000000",
       "reconciled": true
     }
   ],
@@ -186,8 +189,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "asset": "WEI",
       "begBal": "13750000000000000000",
       "begBalDiff": "0",
-      "weiIn": "0",
-      "weiOut": "0",
+      "amountIn": "0",
+      "amountOut": "0",
       "internalIn": "0",
       "internalOut": "0",
       "selfDestructIn": "0",
@@ -201,6 +204,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "endBal": "18750000000000000000",
       "endBalCalc": "18750000000000000000",
       "endBalDiff": "0",
+      "amountNet": "5000000000000000000",
       "reconciled": true
     }
   ],
@@ -238,8 +242,8 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "asset": "WEI",
       "begBal": "18750000000000000000",
       "begBalDiff": "0",
-      "weiIn": "0",
-      "weiOut": "0",
+      "amountIn": "0",
+      "amountOut": "0",
       "internalIn": "0",
       "internalOut": "0",
       "selfDestructIn": "0",
@@ -253,6 +257,7 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
       "endBal": "21875000000000000000",
       "endBalCalc": "21875000000000000000",
       "endBalDiff": "0",
+      "amountNet": "3125000000000000000",
       "reconciled": true
     }
   ],

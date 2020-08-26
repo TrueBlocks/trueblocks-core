@@ -7,8 +7,8 @@
       "asset": "ETH",
       "begBal": "",
       "begBalDiff": "",
-      "weiIn": "",
-      "weiOut": "",
+      "amountIn": "",
+      "amountOut": "",
       "internalIn": "",
       "internalOut": "",
       "selfDestructIn": "",
@@ -22,6 +22,7 @@
       "endBal": "4200.0000000",
       "endBalCalc": "4200.0000000",
       "endBalDiff": "",
+      "amountNet": "4200.0000000",
       "reconciliationType": "",
       "reconciled": true
     },
@@ -32,8 +33,8 @@
       "asset": "ETH",
       "begBal": "4200.0000000",
       "begBalDiff": "",
-      "weiIn": "",
-      "weiOut": "4199.9000000",
+      "amountIn": "",
+      "amountOut": "4199.900000000000000000",
       "internalIn": "",
       "internalOut": "",
       "selfDestructIn": "",
@@ -43,10 +44,11 @@
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
-      "gasCostOut": "0.0253206",
-      "endBal": "0.0746793",
-      "endBalCalc": "0.0746793",
+      "gasCostOut": "0.025320679510922664",
+      "endBal": "0.074679320489077336",
+      "endBalCalc": "0.074679320489077336",
       "endBalDiff": "",
+      "amountNet": "-4199.925320679510922664",
       "reconciliationType": "",
       "reconciled": true
     },
@@ -55,10 +57,10 @@
       "transactionIndex": 2,
       "timestamp": 1463025233,
       "asset": "ETH",
-      "begBal": "0.0746793",
+      "begBal": "0.074679320489077336",
       "begBalDiff": "",
-      "weiIn": "",
-      "weiOut": "0.0742593",
+      "amountIn": "",
+      "amountOut": "0.074259320489077336",
       "internalIn": "",
       "internalOut": "",
       "selfDestructIn": "",
@@ -68,10 +70,11 @@
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
-      "gasCostOut": "0.0004200",
+      "gasCostOut": "0.000420000000000000",
       "endBal": "",
       "endBalCalc": "",
       "endBalDiff": "",
+      "amountNet": "-0.074679320489077336",
       "reconciliationType": "",
       "reconciled": true
     }
@@ -105,7 +108,7 @@
           "type": "int256"
         },
         {
-          "name": "weiIn",
+          "name": "amountIn",
           "type": "int256"
         },
         {
@@ -137,7 +140,7 @@
           "type": "int256"
         },
         {
-          "name": "weiOut",
+          "name": "amountOut",
           "type": "int256"
         },
         {
@@ -162,6 +165,10 @@
         },
         {
           "name": "endBalDiff",
+          "type": "int256"
+        },
+        {
+          "name": "amountNet",
           "type": "int256"
         },
         {

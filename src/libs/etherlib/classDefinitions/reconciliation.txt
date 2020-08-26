@@ -6,7 +6,7 @@ fields = blknum blockNumber|\
         string asset|\
         int256 begBal|\
         int256 begBalDiff|\
-        int256 weiIn|\
+        int256 amountIn|\
         int256 internalIn|\
         int256 selfDestructIn|\
         int256 minerBaseRewardIn|\
@@ -14,13 +14,14 @@ fields = blknum blockNumber|\
         int256 minerTxFeeIn|\
         int256 minerUncleRewardIn|\
         int256 prefundIn|\
-        int256 weiOut|\
+        int256 amountOut|\
         int256 internalOut|\
         int256 selfDestructOut|\
         int256 gasCostOut|\
         int256 endBal|\
         int256 endBalCalc|\
         int256 endBalDiff|\
+        int256 amountNet|\
         string reconciliationType|\
         bool reconciled
 includes = abilib.h

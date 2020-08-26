@@ -75,6 +75,15 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
             if (fieldName % "asset") {
                 return asset;
             }
+            if (fieldName % "amountIn") {
+                return amountIn;
+            }
+            if (fieldName % "amountOut") {
+                return amountOut;
+            }
+            if (fieldName % "amountNet") {
+                return amountNet;
+            }
             break;
         case 'b':
             if (fieldName % "blockNumber") {
@@ -154,14 +163,6 @@ string_q CReconciliationOutput::getValueByName(const string_q& fieldName) const 
                 return ts_2_Str(timestamp);
             }
             break;
-        case 'w':
-            if (fieldName % "weiIn") {
-                return weiIn;
-            }
-            if (fieldName % "weiOut") {
-                return weiOut;
-            }
-            break;
         default:
             break;
     }
@@ -185,6 +186,18 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
         case 'a':
             if (fieldName % "asset") {
                 asset = fieldValue;
+                return true;
+            }
+            if (fieldName % "amountIn") {
+                amountIn = fieldValue;
+                return true;
+            }
+            if (fieldName % "amountOut") {
+                amountOut = fieldValue;
+                return true;
+            }
+            if (fieldName % "amountNet") {
+                amountNet = fieldValue;
                 return true;
             }
             break;
@@ -286,16 +299,6 @@ bool CReconciliationOutput::setValueByName(const string_q& fieldNameIn, const st
                 return true;
             }
             break;
-        case 'w':
-            if (fieldName % "weiIn") {
-                weiIn = fieldValue;
-                return true;
-            }
-            if (fieldName % "weiOut") {
-                weiOut = fieldValue;
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -327,8 +330,8 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
     archive >> asset;
     archive >> begBal;
     archive >> begBalDiff;
-    archive >> weiIn;
-    archive >> weiOut;
+    archive >> amountIn;
+    archive >> amountOut;
     archive >> internalIn;
     archive >> internalOut;
     archive >> selfDestructIn;
@@ -342,6 +345,7 @@ bool CReconciliationOutput::Serialize(CArchive& archive) {
     archive >> endBal;
     archive >> endBalCalc;
     archive >> endBalDiff;
+    archive >> amountNet;
     archive >> reconciliationType;
     archive >> reconciled;
     finishParse();
@@ -361,8 +365,8 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
     archive << asset;
     archive << begBal;
     archive << begBalDiff;
-    archive << weiIn;
-    archive << weiOut;
+    archive << amountIn;
+    archive << amountOut;
     archive << internalIn;
     archive << internalOut;
     archive << selfDestructIn;
@@ -376,6 +380,7 @@ bool CReconciliationOutput::SerializeC(CArchive& archive) const {
     archive << endBal;
     archive << endBalCalc;
     archive << endBalDiff;
+    archive << amountNet;
     archive << reconciliationType;
     archive << reconciled;
 
@@ -420,8 +425,8 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "asset", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBal", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "begBalDiff", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "weiIn", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliationOutput, "weiOut", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "amountIn", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "amountOut", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "internalIn", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "internalOut", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "selfDestructIn", T_TEXT, ++fieldNum);
@@ -435,6 +440,7 @@ void CReconciliationOutput::registerClass(void) {
     ADD_FIELD(CReconciliationOutput, "endBal", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "endBalCalc", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "endBalDiff", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliationOutput, "amountNet", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "reconciliationType", T_TEXT, ++fieldNum);
     ADD_FIELD(CReconciliationOutput, "reconciled", T_BOOL, ++fieldNum);
 
@@ -568,15 +574,19 @@ string_q bni_2_Ether(const bigint_t& num) {
         n = n * -1;
     }
 
+    static uint64_t round = NOPOS;
+    if (round == NOPOS) {
+        round = getGlobalConfig("acctExport")->getConfigInt("settings", "ether_rounding", 18);
+    }
     string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(n)));
     CStringArray parts;
     explode(parts, ret, '.');
     ret = parts[0] + ".";
     if (parts.size() == 1)
         return (negative ? "-" : "") + ret + "0000000";
-    if (parts[1].length() >= 7)
-        return (negative ? "-" : "") + ret + parts[1].substr(0, 7);
-    return (negative ? "-" : "") + ret + parts[1] + string_q(7 - parts[1].length(), '0');
+    if (parts[1].length() >= round)
+        return (negative ? "-" : "") + ret + parts[1].substr(0, round);
+    return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
 }
 
 //---------------------------------------------------------------------------
@@ -604,8 +614,8 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         asset = "ETH";
         begBal = bni_2_Ether(nums.begBal);
         begBalDiff = bni_2_Ether(nums.begBalDiff);
-        weiIn = bni_2_Ether(nums.weiIn);
-        weiOut = bni_2_Ether(nums.weiOut);
+        amountIn = bni_2_Ether(nums.amountIn);
+        amountOut = bni_2_Ether(nums.amountOut);
         internalIn = bni_2_Ether(nums.internalIn);
         internalOut = bni_2_Ether(nums.internalOut);
         selfDestructIn = bni_2_Ether(nums.selfDestructIn);
@@ -619,12 +629,13 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         endBal = bni_2_Ether(nums.endBal);
         endBalCalc = bni_2_Ether(nums.endBalCalc);
         endBalDiff = bni_2_Ether(nums.endBalDiff);
+        amountNet = bni_2_Ether(nums.amountNet);
     } else if (expContext().asDollars) {
         asset = "USD";
         begBal = bni_2_Dollars(nums.timestamp, nums.begBal);
         begBalDiff = bni_2_Dollars(nums.timestamp, nums.begBalDiff);
-        weiIn = bni_2_Dollars(nums.timestamp, nums.weiIn);
-        weiOut = bni_2_Dollars(nums.timestamp, nums.weiOut);
+        amountIn = bni_2_Dollars(nums.timestamp, nums.amountIn);
+        amountOut = bni_2_Dollars(nums.timestamp, nums.amountOut);
         internalIn = bni_2_Dollars(nums.timestamp, nums.internalIn);
         internalOut = bni_2_Dollars(nums.timestamp, nums.internalOut);
         selfDestructIn = bni_2_Dollars(nums.timestamp, nums.selfDestructIn);
@@ -638,12 +649,13 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         endBal = bni_2_Dollars(nums.timestamp, nums.endBal);
         endBalCalc = bni_2_Dollars(nums.timestamp, nums.endBalCalc);
         endBalDiff = bni_2_Dollars(nums.timestamp, nums.endBalDiff);
+        amountNet = bni_2_Dollars(nums.timestamp, nums.amountNet);
     } else {
         asset = "WEI";
         begBal = bni_2_Str(nums.begBal);
         begBalDiff = bni_2_Str(nums.begBalDiff);
-        weiIn = bni_2_Str(nums.weiIn);
-        weiOut = bni_2_Str(nums.weiOut);
+        amountIn = bni_2_Str(nums.amountIn);
+        amountOut = bni_2_Str(nums.amountOut);
         internalIn = bni_2_Str(nums.internalIn);
         internalOut = bni_2_Str(nums.internalOut);
         selfDestructIn = bni_2_Str(nums.selfDestructIn);
@@ -657,6 +669,7 @@ CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
         endBal = bni_2_Str(nums.endBal);
         endBalCalc = bni_2_Str(nums.endBalCalc);
         endBalDiff = bni_2_Str(nums.endBalDiff);
+        amountNet = bni_2_Str(nums.amountNet);
     }
 }
 // EXISTING_CODE

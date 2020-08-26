@@ -6,8 +6,8 @@ fields = blknum blockNumber|\
         string asset|\
         string begBal|\
         string begBalDiff|\
-        string weiIn|\
-        string weiOut|\
+        string amountIn|\
+        string amountOut|\
         string internalIn|\
         string internalOut|\
         string selfDestructIn|\
@@ -21,6 +21,7 @@ fields = blknum blockNumber|\
         string endBal|\
         string endBalCalc|\
         string endBalDiff|\
+        string amountNet|\
         string reconciliationType|\
         bool reconciled
 includes = abilib.h|reconciliation.h

@@ -37,7 +37,14 @@ int main(int argc, const char* argv[]) {
 
         if (options.loadAllAppearances()) {
             if (options.count) {
-                options.handle_counts();
+                bool first = true;
+                for (auto cnt : options.counts) {
+                    if (shouldQuit())
+                        break;
+                    cout << ((isJson() && !first) ? ", " : "");
+                    cout << cnt.Format() << endl;
+                    first = false;
+                }
 
             } else if (options.appearances) {
                 options.hanlde_appearances();
@@ -48,8 +55,14 @@ int main(int argc, const char* argv[]) {
             } else if (options.traces) {
                 options.handle_traces();
 
+            } else if (options.logs) {
+                options.handle_logs();
+
+            } else if (options.statements) {
+                options.handle_statements();
+
             } else {
-                ASSERT(logs || accounting || statements);
+                ASSERT(accounting);
                 options.handle_accounting();
             }
         }

@@ -8,8 +8,8 @@
 #define FREQ 5
 
 //-----------------------------------------------------------------------
-bool COptions::handle_accounting(void) {
-    ENTER("handle_accounting");
+bool COptions::handle_statements(void) {
+    ENTER("handle_statements");
 
     ASSERT(!traces && !receipts && !appearances);
     ASSERT(nodeHasBalances(false));
@@ -168,11 +168,13 @@ bool COptions::handle_accounting(void) {
                 }
             }
 
-            nExported++;
-            if (shouldDisplay) {
-                cout << ((isJson() && !first) ? ", " : "");
-                cout << trans.Format() << endl;
-                first = false;
+            for (auto statement : trans.statements) {
+                nExported++;
+                if (shouldDisplay) {
+                    cout << ((isJson() && !first) ? ", " : "");
+                    cout << statement.Format() << endl;
+                    first = false;
+                }
             }
         }
     }

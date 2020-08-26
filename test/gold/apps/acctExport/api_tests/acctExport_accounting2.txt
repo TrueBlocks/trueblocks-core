@@ -30,8 +30,8 @@
           "asset": "WEI",
           "begBal": "0",
           "begBalDiff": "0",
-          "weiIn": "0",
-          "weiOut": "0",
+          "amountIn": "0",
+          "amountOut": "0",
           "internalIn": "0",
           "internalOut": "0",
           "selfDestructIn": "0",
@@ -45,6 +45,7 @@
           "endBal": "5000000000000000000",
           "endBalCalc": "5000000000000000000",
           "endBalDiff": "0",
+          "amountNet": "5000000000000000000",
           "reconciliationType": "",
           "reconciled": true
         }
@@ -87,8 +88,8 @@
           "asset": "WEI",
           "begBal": "5000000000000000000",
           "begBalDiff": "0",
-          "weiIn": "0",
-          "weiOut": "0",
+          "amountIn": "0",
+          "amountOut": "0",
           "internalIn": "0",
           "internalOut": "0",
           "selfDestructIn": "0",
@@ -102,6 +103,7 @@
           "endBal": "10000000000000000000",
           "endBalCalc": "10000000000000000000",
           "endBalDiff": "0",
+          "amountNet": "5000000000000000000",
           "reconciliationType": "",
           "reconciled": true
         }
@@ -144,8 +146,8 @@
           "asset": "WEI",
           "begBal": "10000000000000000000",
           "begBalDiff": "0",
-          "weiIn": "0",
-          "weiOut": "0",
+          "amountIn": "0",
+          "amountOut": "0",
           "internalIn": "0",
           "internalOut": "0",
           "selfDestructIn": "0",
@@ -159,6 +161,7 @@
           "endBal": "13750000000000000000",
           "endBalCalc": "13750000000000000000",
           "endBalDiff": "0",
+          "amountNet": "3750000000000000000",
           "reconciliationType": "",
           "reconciled": true
         }
@@ -201,8 +204,8 @@
           "asset": "WEI",
           "begBal": "13750000000000000000",
           "begBalDiff": "0",
-          "weiIn": "0",
-          "weiOut": "0",
+          "amountIn": "0",
+          "amountOut": "0",
           "internalIn": "0",
           "internalOut": "0",
           "selfDestructIn": "0",
@@ -216,6 +219,7 @@
           "endBal": "18750000000000000000",
           "endBalCalc": "18750000000000000000",
           "endBalDiff": "0",
+          "amountNet": "5000000000000000000",
           "reconciliationType": "",
           "reconciled": true
         }
@@ -258,8 +262,8 @@
           "asset": "WEI",
           "begBal": "18750000000000000000",
           "begBalDiff": "0",
-          "weiIn": "0",
-          "weiOut": "0",
+          "amountIn": "0",
+          "amountOut": "0",
           "internalIn": "0",
           "internalOut": "0",
           "selfDestructIn": "0",
@@ -273,6 +277,7 @@
           "endBal": "21875000000000000000",
           "endBalCalc": "21875000000000000000",
           "endBalDiff": "0",
+          "amountNet": "3125000000000000000",
           "reconciliationType": "",
           "reconciled": true
         }

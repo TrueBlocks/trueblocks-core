@@ -567,3 +567,19 @@ string_q report_cache(int opt) {
     }
     return os.str();
 }
+
+// TODO: If an abi file is changed, we should re-articulate.
+// TODO: accounting must be API mode -- why?
+// TODO: accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
+// TODO: accounting must be exportFmt API1 - why?
+// TODO: accounting must be for one monitor address - why?
+// TODO: accounting requires node balances - why?
+// TODO: Used to ask if any ABI files were newer than monitors, noted it (knownIsStale) and then would re-articulate
+// TODO: What does prefundAddrMap and prefundWeiMap do? Needs testing
+// TODO: What does blkRewardMap do? Needs testing
+// TODO: Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I think)
+// TODO: Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than once
+// TODO: writeLastExport is really weird
+// TODO: writeLastBlock is really weird
+// TODO: We used to write traces sometimes
+// TODO: We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

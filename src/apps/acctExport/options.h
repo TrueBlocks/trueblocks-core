@@ -88,9 +88,10 @@ class COptions : public COptionsBase {
 
     bool handle_accounting(void);
     bool hanlde_appearances(void);
+    bool handle_logs(void);
     bool handle_receipts(void);
+    bool handle_statements(void);
     bool handle_traces(void);
-    bool handle_counts(void);
 
     void addNeighbor(addr_count_map_t& map, const address_t& addr);
     bool reportNeighbors(void);

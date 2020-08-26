@@ -32,8 +32,8 @@ class CReconciliationOutput : public CBaseNode {
     string_q asset;
     string_q begBal;
     string_q begBalDiff;
-    string_q weiIn;
-    string_q weiOut;
+    string_q amountIn;
+    string_q amountOut;
     string_q internalIn;
     string_q internalOut;
     string_q selfDestructIn;
@@ -47,6 +47,7 @@ class CReconciliationOutput : public CBaseNode {
     string_q endBal;
     string_q endBalCalc;
     string_q endBalDiff;
+    string_q amountNet;
     string_q reconciliationType;
     bool reconciled;
 
@@ -119,8 +120,8 @@ inline void CReconciliationOutput::initialize(void) {
     asset = "";
     begBal = "";
     begBalDiff = "";
-    weiIn = "";
-    weiOut = "";
+    amountIn = "";
+    amountOut = "";
     internalIn = "";
     internalOut = "";
     selfDestructIn = "";
@@ -134,6 +135,7 @@ inline void CReconciliationOutput::initialize(void) {
     endBal = "";
     endBalCalc = "";
     endBalDiff = "";
+    amountNet = "";
     reconciliationType = "";
     reconciled = false;
 
@@ -153,8 +155,8 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     asset = re.asset;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
-    weiIn = re.weiIn;
-    weiOut = re.weiOut;
+    amountIn = re.amountIn;
+    amountOut = re.amountOut;
     internalIn = re.internalIn;
     internalOut = re.internalOut;
     selfDestructIn = re.selfDestructIn;
@@ -168,6 +170,7 @@ inline void CReconciliationOutput::duplicate(const CReconciliationOutput& re) {
     endBal = re.endBal;
     endBalCalc = re.endBalCalc;
     endBalDiff = re.endBalDiff;
+    amountNet = re.amountNet;
     reconciliationType = re.reconciliationType;
     reconciled = re.reconciled;
 

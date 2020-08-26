@@ -8,8 +8,8 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "asset": "WEI",
   "begBal": "0",
   "begBalDiff": "0",
-  "weiIn": "0",
-  "weiOut": "0",
+  "amountIn": "0",
+  "amountOut": "0",
   "internalIn": "0",
   "internalOut": "0",
   "selfDestructIn": "0",
@@ -23,6 +23,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "endBal": "4200000000000000000000",
   "endBalCalc": "4200000000000000000000",
   "endBalDiff": "0",
+  "amountNet": "4200000000000000000000",
   "reconciled": true
 }
 , {
@@ -32,8 +33,8 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "asset": "WEI",
   "begBal": "4200000000000000000000",
   "begBalDiff": "0",
-  "weiIn": "0",
-  "weiOut": "4199900000000000000000",
+  "amountIn": "0",
+  "amountOut": "4199900000000000000000",
   "internalIn": "0",
   "internalOut": "0",
   "selfDestructIn": "0",
@@ -47,6 +48,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "endBal": "74679320489077336",
   "endBalCalc": "74679320489077336",
   "endBalDiff": "0",
+  "amountNet": "-4199925320679510922664",
   "reconciled": true
 }
 , {
@@ -56,8 +58,8 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "asset": "WEI",
   "begBal": "74679320489077336",
   "begBalDiff": "0",
-  "weiIn": "0",
-  "weiOut": "74259320489077336",
+  "amountIn": "0",
+  "amountOut": "74259320489077336",
   "internalIn": "0",
   "internalOut": "0",
   "selfDestructIn": "0",
@@ -71,8 +73,9 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --
   "endBal": "0",
   "endBalCalc": "0",
   "endBalDiff": "0",
+  "amountNet": "-74679320489077336",
   "reconciled": true
 }
 TIME ~ CLOCK - <INFO>  : Reported 3 of 3 transactions for address 0x001d14804b399c6ef80e64576f657660804fec0b], "types": [
-{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "weiIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "weiOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
+{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "amountIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "amountOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "amountNet", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
 ] }
