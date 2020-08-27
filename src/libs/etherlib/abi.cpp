@@ -429,7 +429,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
     string_q results;
     string_q fileName = getAbiPath(addr);
 
-    string_q localFile("./" + addr + ".json");
+    string_q localFile(getCWD() + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
         LOG4("Local file copied to cache");
         copyFile(localFile, fileName);
@@ -448,7 +448,10 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
                                   getApiKey("Etherscan",
                                             "http:/"
                                             "/api.etherscan.io/apis"));
-        results = substitute(urlToString(url), "\\", "");
+        string_q fromES = urlToString(url); // some of etherscan's data kind of sucks, so clean it
+        replaceAll(fromES, "\\r", "\r");
+        replaceAll(fromES, "\\n", "\n");
+        results = substitute(fromES, "\\", "");
 
         if (!contains(results, "NOTOK")) {
             if (!isTestMode()) {
