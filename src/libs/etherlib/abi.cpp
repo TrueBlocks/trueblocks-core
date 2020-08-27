@@ -318,7 +318,8 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 //---------------------------------------------------------------------------
 bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath) {
     fileInfo info = getNewestFileInFolder(sourcePath);
-    bool cacheIsFresh = (info.fileName == binPath) || (fileExists(binPath) && (fileLastModifyDate(binPath) > info.fileTime));
+    bool cacheIsFresh =
+        (info.fileName == binPath) || (fileExists(binPath) && (fileLastModifyDate(binPath) > info.fileTime));
     if (cacheIsFresh) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
