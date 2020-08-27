@@ -440,6 +440,10 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         asciiFileToString(fileName, results);
 
     } else {
+        // If this isn't a smart contract, don't bother
+        if (!isContractAt(addr, getLatestBlock_client()))
+            return;
+
         const char* STR_CONTRACT_API =
             "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
         if (!isTestMode())
@@ -448,7 +452,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
                                   getApiKey("Etherscan",
                                             "http:/"
                                             "/api.etherscan.io/apis"));
-        string_q fromES = urlToString(url); // some of etherscan's data kind of sucks, so clean it
+        string_q fromES = urlToString(url);  // some of etherscan's data kind of sucks, so clean it
         replaceAll(fromES, "\\r", "\r");
         replaceAll(fromES, "\\n", "\n");
         results = substitute(fromES, "\\", "");
