@@ -43,6 +43,8 @@ namespace qblocks {
 #define IS_BUILTIN (1 << 4)
 #define IS_MINIMAL (1 << 5)
 #define IS_ENABLED (1 << 6)
+class CParameter;
+typedef vector<CParameter> CParameterArray;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -53,6 +55,8 @@ class CParameter : public CBaseNode {
     string_q str_default;
     string_q value;
     bool indexed;
+    string_q internalType;
+    CParameterArray components;
     bool no_write;
     uint64_t is_flags;
 
@@ -64,7 +68,10 @@ class CParameter : public CBaseNode {
 
     DECLARE_NODE(CParameter);
 
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+
     // EXISTING_CODE
+    string_q resolveType(void) const;
     explicit CParameter(string_q& txtIn);
     explicit CParameter(const string_q& n, const string_q& type, const string_q& val = "");
     explicit CParameter(const string_q& n, const string_q& type, uint64_t val);
@@ -133,6 +140,8 @@ inline void CParameter::initialize(void) {
     str_default = "";
     value = "";
     indexed = false;
+    internalType = "";
+    components.clear();
     no_write = false;
     is_flags = IS_ENABLED;
 
@@ -150,6 +159,8 @@ inline void CParameter::duplicate(const CParameter& pa) {
     str_default = pa.str_default;
     value = pa.value;
     indexed = pa.indexed;
+    internalType = pa.internalType;
+    components = pa.components;
     no_write = pa.no_write;
     is_flags = pa.is_flags;
 

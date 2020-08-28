@@ -3,25 +3,34 @@
     {
       "name": "",
       "type": "constructor",
-      "stateMutability": "",
-      "signature": "(address,uint256,address)",
+      "stateMutability": "nonpayable",
+      "signature": "()",
       "encoding": "",
-      "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "addMinter",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "addMinter(address)",
+      "encoding": "0x983b2d56",
+      "input_names": "_addr,",
       "output_names": ""
     },
     {
       "name": "allowance",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "allowance(address,address)",
       "encoding": "0xdd62ed3e",
       "input_names": "_owner,_spender,",
-      "output_names": "remaining,"
+      "output_names": "val_0,"
     },
     {
       "name": "approve",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "approve(address,uint256)",
       "encoding": "0x095ea7b3",
       "input_names": "_spender,_value,",
@@ -30,61 +39,115 @@
     {
       "name": "balanceOf",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "balanceOf(address)",
       "encoding": "0x70a08231",
       "input_names": "_owner,",
       "output_names": "balance,"
     },
     {
+      "name": "batchTransfer",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "batchTransfer(address[],uint256[])",
+      "encoding": "0x88d695b2",
+      "input_names": "_addresses,_value,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "cap",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "cap()",
+      "encoding": "0x355274ea",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "decimals",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "decimals()",
       "encoding": "0x313ce567",
       "input_names": "",
       "output_names": "val_0,"
     },
     {
-      "name": "initialized",
+      "name": "decreaseApproval",
       "type": "function",
-      "stateMutability": "",
-      "signature": "initialized()",
-      "encoding": "0x158ef93e",
+      "stateMutability": "nonpayable",
+      "signature": "decreaseApproval(address,uint256)",
+      "encoding": "0x66188463",
+      "input_names": "_spender,_subtractedValue,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "deleteMinter",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "deleteMinter(address)",
+      "encoding": "0xd82f94a3",
+      "input_names": "_addr,",
+      "output_names": ""
+    },
+    {
+      "name": "enableTransfers",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "enableTransfers()",
+      "encoding": "0xaf35c6c7",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "finishMinting",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "finishMinting()",
+      "encoding": "0x7d64bcb4",
       "input_names": "",
       "output_names": "val_0,"
     },
     {
-      "name": "legacyRepContract",
+      "name": "increaseApproval",
       "type": "function",
-      "stateMutability": "",
-      "signature": "legacyRepContract()",
-      "encoding": "0xb85e0aca",
+      "stateMutability": "nonpayable",
+      "signature": "increaseApproval(address,uint256)",
+      "encoding": "0xd73dd623",
+      "input_names": "_spender,_addedValue,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "mint",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mint(address,uint256)",
+      "encoding": "0x40c10f19",
+      "input_names": "_to,_amount,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "minters",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "minters(address)",
+      "encoding": "0xf46eccc4",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "mintingFinished",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "mintingFinished()",
+      "encoding": "0x05d2035b",
       "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "migrateBalance",
-      "type": "function",
-      "stateMutability": "",
-      "signature": "migrateBalance(address)",
-      "encoding": "0x2988e36b",
-      "input_names": "_holder,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "migrateBalances",
-      "type": "function",
-      "stateMutability": "",
-      "signature": "migrateBalances(address[])",
-      "encoding": "0x4b92738e",
-      "input_names": "_holders,",
       "output_names": "val_0,"
     },
     {
       "name": "name",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "name()",
       "encoding": "0x06fdde03",
       "input_names": "",
@@ -93,52 +156,25 @@
     {
       "name": "owner",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "owner()",
       "encoding": "0x8da5cb5b",
       "input_names": "",
       "output_names": "val_0,"
     },
     {
-      "name": "pause",
-      "type": "function",
-      "stateMutability": "",
-      "signature": "pause()",
-      "encoding": "0x8456cb59",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "paused",
-      "type": "function",
-      "stateMutability": "",
-      "signature": "paused()",
-      "encoding": "0x5c975abb",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
       "name": "symbol",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "symbol()",
       "encoding": "0x95d89b41",
       "input_names": "",
       "output_names": "val_0,"
     },
     {
-      "name": "targetSupply",
-      "type": "function",
-      "stateMutability": "",
-      "signature": "targetSupply()",
-      "encoding": "0x2a1eafd9",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
       "name": "totalSupply",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "view",
       "signature": "totalSupply()",
       "encoding": "0x18160ddd",
       "input_names": "",
@@ -147,7 +183,7 @@
     {
       "name": "transfer",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "transfer(address,uint256)",
       "encoding": "0xa9059cbb",
       "input_names": "_to,_value,",
@@ -156,7 +192,7 @@
     {
       "name": "transferFrom",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "transferFrom(address,address,uint256)",
       "encoding": "0x23b872dd",
       "input_names": "_from,_to,_value,",
@@ -165,18 +201,27 @@
     {
       "name": "transferOwnership",
       "type": "function",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "transferOwnership(address)",
       "encoding": "0xf2fde38b",
       "input_names": "newOwner,",
       "output_names": ""
     },
     {
-      "name": "unpause",
+      "name": "transfersEnabledFlag",
       "type": "function",
-      "stateMutability": "",
-      "signature": "unpause()",
-      "encoding": "0x3f4ba83a",
+      "stateMutability": "view",
+      "signature": "transfersEnabledFlag()",
+      "encoding": "0x05f9bb6b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "version",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "version()",
+      "encoding": "0x54fd4d50",
       "input_names": "",
       "output_names": "val_0,"
     },
@@ -190,21 +235,30 @@
       "output_names": ""
     },
     {
-      "name": "Migrated",
+      "name": "Mint",
       "type": "event",
       "stateMutability": "",
-      "signature": "Migrated(address,uint256)",
-      "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
-      "input_names": "holder,amount,",
+      "signature": "Mint(address,uint256)",
+      "encoding": "0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
+      "input_names": "to,amount,",
       "output_names": ""
     },
     {
-      "name": "Pause",
+      "name": "MintFinished",
       "type": "event",
       "stateMutability": "",
-      "signature": "Pause()",
-      "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
+      "signature": "MintFinished()",
+      "encoding": "0xae5184fba832cb2b1f702aca6117b8d265eaf03ad33eb133f19dde0f5920fa08",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "OwnershipTransferred",
+      "type": "event",
+      "stateMutability": "",
+      "signature": "OwnershipTransferred(address,address)",
+      "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "input_names": "previousOwner,newOwner,",
       "output_names": ""
     },
     {
@@ -214,15 +268,6 @@
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "input_names": "from,to,value,",
-      "output_names": ""
-    },
-    {
-      "name": "Unpause",
-      "type": "event",
-      "stateMutability": "",
-      "signature": "Unpause()",
-      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
-      "input_names": "",
       "output_names": ""
     }
   ],

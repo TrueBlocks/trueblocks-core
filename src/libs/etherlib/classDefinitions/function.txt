@@ -5,6 +5,7 @@ fields = string name|\
         sbool anonymous|\
         sbool constant|\
         sbool payable|\
+        string stateMutability|\
         string signature|\
         string encoding|\
         string message (nowrite)|\
@@ -15,4 +16,4 @@ includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % item.encoding
 serializable = true
-display_str = name, type, anonymous, constant, payable, signature, encoding, inputs, outputs
+display_str = name, type, stateMutability, signature, encoding, inputs, outputs

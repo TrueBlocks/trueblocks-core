@@ -9,6 +9,7 @@
       "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
       "articulatedLog": {
         "name": "",
+        "stateMutability": "",
         "inputs": [],
         "outputs": []
       },

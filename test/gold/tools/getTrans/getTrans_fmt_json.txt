@@ -54,6 +54,7 @@ getTrans 2222222.0 2332332.0 --fmt json
             "type": "",
             "constant": 0,
             "payable": 0,
+            "stateMutability": "",
             "signature": "",
             "encoding": "",
             "inputs": [],

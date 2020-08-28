@@ -134,6 +134,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
+            if (fieldName % "stateMutability") {
+                return stateMutability;
+            }
             if (fieldName % "signature") {
                 return signature;
             }
@@ -255,6 +258,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             }
             break;
         case 's':
+            if (fieldName % "stateMutability") {
+                stateMutability = fieldValue;
+                return true;
+            }
             if (fieldName % "signature") {
                 signature = fieldValue;
                 return true;
@@ -304,6 +311,7 @@ bool CFunction::Serialize(CArchive& archive) {
     archive >> anonymous;
     archive >> constant;
     archive >> payable;
+    archive >> stateMutability;
     archive >> signature;
     archive >> encoding;
     // archive >> message;
@@ -326,6 +334,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     archive << anonymous;
     archive << constant;
     archive << payable;
+    archive << stateMutability;
     archive << signature;
     archive << encoding;
     // archive << message;
@@ -373,6 +382,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "anonymous", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "payable", T_BOOL, ++fieldNum);
+    ADD_FIELD(CFunction, "stateMutability", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "signature", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "encoding", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "message", T_TEXT, ++fieldNum);
@@ -411,7 +421,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 if (fieldIn % "hex") {
                     string_q ret = fun->name + "(";
                     for (size_t i = 0; i < fun->inputs.size(); i++) {
-                        ret += fun->inputs[i].type;
+                        ret += fun->inputs[i].resolveType();
                         if (i < fun->inputs.size())
                             ret += ",";
                     }
@@ -513,9 +523,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
 const char* STR_DISPLAY_FUNCTION =
     "[{NAME}]\t"
     "[{TYPE}]\t"
-    "[{ANONYMOUS}]\t"
-    "[{CONSTANT}]\t"
-    "[{PAYABLE}]\t"
+    "[{STATEMUTABILITY}]\t"
     "[{SIGNATURE}]\t"
     "[{ENCODING}]\t"
     "[{INPUTS}]\t"
@@ -540,7 +548,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
     os << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
     os << (parts & SIG_FTYPE || parts & SIG_FNAME ? "(" : "");
     for (size_t j = 0; j < cnt; j++) {
-        os << (parts & SIG_ITYPE ? inputs[j].type : "");
+        os << (parts & SIG_ITYPE ? inputs[j].resolveType() : "");
         os << (parts & SIG_IINDEXED ? (inputs[j].indexed ? " indexed" : "") : "");
         os << (parts & SIG_INAME ? " " + inputs[j].name : "");
         os << (parts & SIG_ITYPE ? (j < cnt - 1 ? "," : "") : "");

@@ -70,9 +70,27 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "components" || fieldName % "componentsCnt") {
+                size_t cnt = components.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += components[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
+            }
+            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
+            }
+            if (fieldName % "internalType") {
+                return internalType;
             }
             if (fieldName % "is_flags") {
                 return uint_2_Str(is_flags);
@@ -130,9 +148,24 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
+        case 'c':
+            if (fieldName % "components") {
+                CParameter item;
+                string_q str = fieldValue;
+                while (item.parseJson3(str)) {
+                    components.push_back(item);
+                    item = CParameter();  // reset
+                }
+                return true;
+            }
+            break;
         case 'i':
             if (fieldName % "indexed") {
                 indexed = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "internalType") {
+                internalType = fieldValue;
                 return true;
             }
             if (fieldName % "is_flags") {
@@ -177,6 +210,8 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
 //---------------------------------------------------------------------------------------------------
 void CParameter::finishParse() {
     // EXISTING_CODE
+    if (internalType.empty())
+        internalType = type;
     // EXISTING_CODE
 }
 
@@ -198,6 +233,8 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> str_default;
     archive >> value;
     archive >> indexed;
+    archive >> internalType;
+    archive >> components;
     archive >> no_write;
     archive >> is_flags;
     finishParse();
@@ -216,6 +253,8 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << str_default;
     archive << value;
     archive << indexed;
+    archive << internalType;
+    archive << components;
     archive << no_write;
     archive << is_flags;
 
@@ -259,6 +298,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "str_default", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "internalType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
 
@@ -334,11 +375,19 @@ ostream& operator<<(ostream& os, const CParameter& item) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "components" && index < components.size())
+        return &components[index];
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_PARAMETER =
     "[{TYPE}]\t"
     "[{NAME}]\t"
     "[{STR_DEFAULT}]\t"
     "[{VALUE}]\t"
+    "[{INTERNALTYPE}]\t"
     "[{INDEXED}]\t"
     "[{IS_POINTER}]\t"
     "[{IS_ARRAY}]\t"
@@ -555,6 +604,21 @@ size_t explode(CParameterArray& result, const string& input, char needle) {
         result.push_back(param);
     }
     return result.size();
+}
+
+//--------------------------------------------------------------------------------
+string_q CParameter::resolveType(void) const {
+    if (contains(type, "tuple")) {
+        ostringstream os;
+        bool first = true;
+        for (auto component : components) {
+            os << (!first ? "," : "");
+            os << component.resolveType();
+            first = false;
+        }
+        return substitute(type, "tuple", "(" + os.str() + ")");
+    }
+    return type;
 }
 // EXISTING_CODE
 }  // namespace qblocks

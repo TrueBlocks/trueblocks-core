@@ -17,6 +17,7 @@ getReceipt 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 
           "type": "",
           "constant": "0",
           "payable": "0",
+          "stateMutability": "",
           "signature": "",
           "encoding": "",
           "inputs": [],

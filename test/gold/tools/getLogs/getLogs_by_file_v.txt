@@ -12,18 +12,25 @@ getLogs --file:cmd_file --verbose --fmt json
     "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
     "articulatedLog": {
       "name": "Transfer",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_from",
-          "value": "0x306b79fc32fb1561480102e032844bb36ea97102"
+          "value": "0x306b79fc32fb1561480102e032844bb36ea97102",
+          "internalType": "",
+          "components": []
         },
         {
           "name": "_to",
-          "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+          "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb",
+          "internalType": "",
+          "components": []
         },
         {
           "name": "_amount",
-          "value": "666666666600000000"
+          "value": "666666666600000000",
+          "internalType": "",
+          "components": []
         }
       ],
       "outputs": []
@@ -38,14 +45,19 @@ getLogs --file:cmd_file --verbose --fmt json
     "data": "0x00000000000000000000000063585740143301cf0163f6448fd8a63c3b376fd30000000000000000000000000000000000000000000000000137f79234afd6fd",
     "articulatedLog": {
       "name": "ProfitWithdrawn",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "tokenHolder",
-          "value": "0x63585740143301cf0163f6448fd8a63c3b376fd3"
+          "value": "0x63585740143301cf0163f6448fd8a63c3b376fd3",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "amountPaidOut",
-          "value": "87810925078238973"
+          "value": "87810925078238973",
+          "internalType": "uint256",
+          "components": []
         }
       ]
     },

@@ -42,24 +42,33 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "transferFrom",
+          "stateMutability": "",
           "inputs": [
             {
               "name": "_from",
-              "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+              "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+              "internalType": "address",
+              "components": []
             },
             {
               "name": "_to",
-              "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+              "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+              "internalType": "address",
+              "components": []
             },
             {
               "name": "_value",
-              "value": "8263636363636363636"
+              "value": "8263636363636363636",
+              "internalType": "uint256",
+              "components": []
             }
           ],
           "outputs": [
             {
               "name": "success",
-              "value": "false"
+              "value": "false",
+              "internalType": "bool",
+              "components": []
             }
           ]
         },
@@ -68,24 +77,33 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "transferFrom",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_from",
-          "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+          "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "_to",
-          "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+          "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "_value",
-          "value": "8263636363636363636"
+          "value": "8263636363636363636",
+          "internalType": "uint256",
+          "components": []
         }
       ],
       "outputs": [
         {
           "name": "success",
-          "value": "false"
+          "value": "false",
+          "internalType": "bool",
+          "components": []
         }
       ]
     },
@@ -121,22 +139,31 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "data": "0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000004432e910757d1000000000000000000000000000000000000000000000000015af1d78b58c40000",
           "articulatedLog": {
             "name": "CancelRequest",
+            "stateMutability": "",
             "inputs": [
               {
                 "name": "_key",
-                "value": "1"
+                "value": "1",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_sender",
-                "value": "0x752c71a68e4e0ea308c6e4209b7802d135c49292"
+                "value": "0x752c71a68e4e0ea308c6e4209b7802d135c49292",
+                "internalType": "address",
+                "components": []
               },
               {
                 "name": "_deposit",
-                "value": "307140400019656960"
+                "value": "307140400019656960",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_amount",
-                "value": "25000000000000000000"
+                "value": "25000000000000000000",
+                "internalType": "uint256",
+                "components": []
               }
             ]
           },
@@ -167,10 +194,13 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "cancelExistingRequest",
+          "stateMutability": "",
           "inputs": [
             {
               "name": "_key",
-              "value": "1"
+              "value": "1",
+              "internalType": "uint256",
+              "components": []
             }
           ]
         },
@@ -179,10 +209,13 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "cancelExistingRequest",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_key",
-          "value": "1"
+          "value": "1",
+          "internalType": "uint256",
+          "components": []
         }
       ]
     },
@@ -232,14 +265,19 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "split",
+          "stateMutability": "",
           "inputs": [
             {
               "name": "targetFork",
-              "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+              "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+              "internalType": "address",
+              "components": []
             },
             {
               "name": "targetNoFork",
-              "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+              "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21",
+              "internalType": "address",
+              "components": []
             }
           ]
         },
@@ -248,14 +286,19 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "split",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "targetFork",
-          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "targetNoFork",
-          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21",
+          "internalType": "address",
+          "components": []
         }
       ]
     },

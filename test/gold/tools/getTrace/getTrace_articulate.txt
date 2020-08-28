@@ -22,24 +22,33 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "transferFrom",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_from",
-          "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413"
+          "value": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "_to",
-          "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1"
+          "value": "0x713fa27cb26b5902ea398b04d21e6018bba3a2f1",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "_value",
-          "value": "8263636363636363636"
+          "value": "8263636363636363636",
+          "internalType": "uint256",
+          "components": []
         }
       ],
       "outputs": [
         {
           "name": "success",
-          "value": "false"
+          "value": "false",
+          "internalType": "bool",
+          "components": []
         }
       ]
     },
@@ -65,10 +74,13 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "cancelExistingRequest",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_key",
-          "value": "1"
+          "value": "1",
+          "internalType": "uint256",
+          "components": []
         }
       ]
     },
@@ -94,14 +106,19 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "split",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "targetFork",
-          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476"
+          "value": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "targetNoFork",
-          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21"
+          "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21",
+          "internalType": "address",
+          "components": []
         }
       ]
     },
@@ -127,11 +144,14 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "forked",
+      "stateMutability": "",
       "inputs": [],
       "outputs": [
         {
           "name": "val_0",
-          "value": "true"
+          "value": "true",
+          "internalType": "bool",
+          "components": []
         }
       ]
     },
@@ -157,6 +177,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "",
+      "stateMutability": "",
       "inputs": [],
       "outputs": []
     },

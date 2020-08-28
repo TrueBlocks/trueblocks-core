@@ -24,6 +24,7 @@
             "type": "",
             "constant": false,
             "payable": false,
+            "stateMutability": "",
             "signature": "",
             "encoding": "",
             "inputs": [],

@@ -56,15 +56,16 @@ type                	1006	0	131122	T_TEXT TS_STRING
 anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
 constant            	1008	0	65556	T_BOOL TS_NUMERAL
 payable             	1009	0	65556	T_BOOL TS_NUMERAL
-signature           	1010	0	131122	T_TEXT TS_STRING
-encoding            	1011	0	131122	T_TEXT TS_STRING
-message             	1012	1	131122	T_TEXT TS_STRING
-inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-address             	1015	1	131127	T_ADDRESS TS_STRING
-input_names         	1016	1	131122	T_TEXT TS_STRING
-output_names        	1017	1	131122	T_TEXT TS_STRING
-declaration         	1018	1	131122	T_TEXT TS_STRING
+stateMutability     	1010	0	131122	T_TEXT TS_STRING
+signature           	1011	0	131122	T_TEXT TS_STRING
+encoding            	1012	0	131122	T_TEXT TS_STRING
+message             	1013	1	131122	T_TEXT TS_STRING
+inputs              	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+address             	1016	1	131127	T_ADDRESS TS_STRING
+input_names         	1017	1	131122	T_TEXT TS_STRING
+output_names        	1018	1	131122	T_TEXT TS_STRING
+declaration         	1019	1	131122	T_TEXT TS_STRING
 {
   "inputs": [],
   "outputs": []
@@ -82,15 +83,16 @@ type                	1006	1	131122	T_TEXT TS_STRING
 anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
 constant            	1008	1	65556	T_BOOL TS_NUMERAL
 payable             	1009	1	65556	T_BOOL TS_NUMERAL
-signature           	1010	1	131122	T_TEXT TS_STRING
-encoding            	1011	1	131122	T_TEXT TS_STRING
-message             	1012	1	131122	T_TEXT TS_STRING
-inputs              	1013	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-outputs             	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-address             	1015	1	131127	T_ADDRESS TS_STRING
-input_names         	1016	1	131122	T_TEXT TS_STRING
-output_names        	1017	1	131122	T_TEXT TS_STRING
-declaration         	1018	1	131122	T_TEXT TS_STRING
+stateMutability     	1010	1	131122	T_TEXT TS_STRING
+signature           	1011	1	131122	T_TEXT TS_STRING
+encoding            	1012	1	131122	T_TEXT TS_STRING
+message             	1013	1	131122	T_TEXT TS_STRING
+inputs              	1014	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+address             	1016	1	131127	T_ADDRESS TS_STRING
+input_names         	1017	1	131122	T_TEXT TS_STRING
+output_names        	1018	1	131122	T_TEXT TS_STRING
+declaration         	1019	1	131122	T_TEXT TS_STRING
 {
 }
 
@@ -106,15 +108,16 @@ type                	1006	0	131122	T_TEXT TS_STRING
 anonymous           	1007	0	65556	T_BOOL TS_NUMERAL
 constant            	1008	0	65556	T_BOOL TS_NUMERAL
 payable             	1009	0	65556	T_BOOL TS_NUMERAL
-signature           	1010	0	131122	T_TEXT TS_STRING
-encoding            	1011	0	131122	T_TEXT TS_STRING
-message             	1012	0	131122	T_TEXT TS_STRING
-inputs              	1013	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-outputs             	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-address             	1015	0	131127	T_ADDRESS TS_STRING
-input_names         	1016	0	131122	T_TEXT TS_STRING
-output_names        	1017	0	131122	T_TEXT TS_STRING
-declaration         	1018	0	131122	T_TEXT TS_STRING
+stateMutability     	1010	0	131122	T_TEXT TS_STRING
+signature           	1011	0	131122	T_TEXT TS_STRING
+encoding            	1012	0	131122	T_TEXT TS_STRING
+message             	1013	0	131122	T_TEXT TS_STRING
+inputs              	1014	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+outputs             	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+address             	1016	0	131127	T_ADDRESS TS_STRING
+input_names         	1017	0	131122	T_TEXT TS_STRING
+output_names        	1018	0	131122	T_TEXT TS_STRING
+declaration         	1019	0	131122	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -138,15 +141,18 @@ name                	1006	0	131122	T_TEXT TS_STRING
 str_default         	1007	0	131122	T_TEXT TS_STRING
 value               	1008	0	131122	T_TEXT TS_STRING
 indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-no_write            	1010	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
-is_array            	1013	0	65556	T_BOOL TS_NUMERAL
-is_object           	1014	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1015	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1017	1	65556	T_BOOL TS_NUMERAL
+internalType        	1010	0	131122	T_TEXT TS_STRING
+components          	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+no_write            	1012	0	65556	T_BOOL TS_NUMERAL
+is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
+is_array            	1015	0	65556	T_BOOL TS_NUMERAL
+is_object           	1016	0	65556	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
 {
+  "components": []
 }
 
 --------------------------------------------------------------------------------
@@ -161,14 +167,16 @@ name                	1006	1	131122	T_TEXT TS_STRING
 str_default         	1007	1	131122	T_TEXT TS_STRING
 value               	1008	1	131122	T_TEXT TS_STRING
 indexed             	1009	1	65556	T_BOOL TS_NUMERAL
-no_write            	1010	1	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1012	1	65556	T_BOOL TS_NUMERAL
-is_array            	1013	1	65556	T_BOOL TS_NUMERAL
-is_object           	1014	1	65556	T_BOOL TS_NUMERAL
-is_builtin          	1015	1	65556	T_BOOL TS_NUMERAL
-is_minimal          	1016	1	65556	T_BOOL TS_NUMERAL
-is_enabled          	1017	1	65556	T_BOOL TS_NUMERAL
+internalType        	1010	1	131122	T_TEXT TS_STRING
+components          	1011	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+no_write            	1012	1	65556	T_BOOL TS_NUMERAL
+is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	1	65556	T_BOOL TS_NUMERAL
+is_array            	1015	1	65556	T_BOOL TS_NUMERAL
+is_object           	1016	1	65556	T_BOOL TS_NUMERAL
+is_builtin          	1017	1	65556	T_BOOL TS_NUMERAL
+is_minimal          	1018	1	65556	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
 {
 }
 
@@ -184,19 +192,22 @@ name                	1006	0	131122	T_TEXT TS_STRING
 str_default         	1007	0	131122	T_TEXT TS_STRING
 value               	1008	0	131122	T_TEXT TS_STRING
 indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-no_write            	1010	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1011	0	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1012	0	65556	T_BOOL TS_NUMERAL
-is_array            	1013	0	65556	T_BOOL TS_NUMERAL
-is_object           	1014	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1015	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1016	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1017	0	65556	T_BOOL TS_NUMERAL
+internalType        	1010	0	131122	T_TEXT TS_STRING
+components          	1011	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+no_write            	1012	0	65556	T_BOOL TS_NUMERAL
+is_flags            	1013	0	65563	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
+is_array            	1015	0	65556	T_BOOL TS_NUMERAL
+is_object           	1016	0	65556	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
+is_enabled          	1019	0	65556	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,
   "showing": true,
   "cname": "Parameter",
+  "components": [],
   "is_flags": 64,
   "is_enabled": true
 }

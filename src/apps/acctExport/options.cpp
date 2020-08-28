@@ -294,7 +294,10 @@ bool COptions::parseArguments(string_q& command) {
             format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
             expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
         }
+        HIDE_FIELD(CFunction, "stateMutability");
         HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CParameter, "components");
+        HIDE_FIELD(CParameter, "internalType");
         HIDE_FIELD(CTransaction, "datesh");
         HIDE_FIELD(CTransaction, "time");
         HIDE_FIELD(CTransaction, "age");

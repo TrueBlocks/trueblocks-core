@@ -31,6 +31,7 @@ class CFunction : public CBaseNode {
     bool anonymous;
     bool constant;
     bool payable;
+    string_q stateMutability;
     string_q signature;
     string_q encoding;
     string_q message;
@@ -122,6 +123,7 @@ inline void CFunction::initialize(void) {
     anonymous = false;
     constant = false;
     payable = false;
+    stateMutability = "";
     signature = "";
     encoding = "";
     message = "";
@@ -146,6 +148,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
     anonymous = fu.anonymous;
     constant = fu.constant;
     payable = fu.payable;
+    stateMutability = fu.stateMutability;
     signature = fu.signature;
     encoding = fu.encoding;
     message = fu.message;

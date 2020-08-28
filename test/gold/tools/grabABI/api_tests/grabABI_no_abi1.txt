@@ -13,6 +13,10 @@
           "type": "text"
         },
         {
+          "name": "stateMutability",
+          "type": "text"
+        },
+        {
           "name": "signature",
           "type": "text"
         },

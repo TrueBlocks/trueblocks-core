@@ -10,27 +10,39 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_curator"
+      "name": "_curator",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_daoCreator"
+      "name": "_daoCreator",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_proposalDeposit"
+      "name": "_proposalDeposit",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_minTokensToCreate"
+      "name": "_minTokensToCreate",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_closingTime"
+      "name": "_closingTime",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_privateCreation"
+      "name": "_privateCreation",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -44,11 +56,15 @@ ABI of test1.json
     {
       "type": "address",
       "name": "_recipient",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "_allowed"
+      "name": "_allowed",
+      "internalType": "bool",
+      "components": []
     }
   ],
   "outputs": []
@@ -62,16 +78,22 @@ ABI of test1.json
     {
       "type": "address",
       "name": "_owner",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
       "name": "_spender",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_amount"
+      "name": "_amount",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -85,11 +107,15 @@ ABI of test1.json
     {
       "type": "address",
       "name": "to",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "amount"
+      "name": "amount",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -103,13 +129,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -123,7 +153,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -135,7 +167,9 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "value"
+      "name": "value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -149,7 +183,9 @@ ABI of test1.json
     {
       "type": "address",
       "name": "_newCurator",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -163,23 +199,33 @@ ABI of test1.json
     {
       "type": "uint256",
       "name": "proposalID",
-      "indexed": true
+      "indexed": true,
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "address",
-      "name": "recipient"
+      "name": "recipient",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "amount"
+      "name": "amount",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "newCurator"
+      "name": "newCurator",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "string",
-      "name": "description"
+      "name": "description",
+      "internalType": "string",
+      "components": []
     }
   ],
   "outputs": []
@@ -193,15 +239,21 @@ ABI of test1.json
     {
       "type": "uint256",
       "name": "proposalID",
-      "indexed": true
+      "indexed": true,
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "result"
+      "name": "result",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "quorum"
+      "name": "quorum",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -215,11 +267,15 @@ ABI of test1.json
     {
       "type": "address",
       "name": "to",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "value"
+      "name": "value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -233,16 +289,22 @@ ABI of test1.json
     {
       "type": "address",
       "name": "_from",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
       "name": "_to",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_amount"
+      "name": "_amount",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -256,16 +318,22 @@ ABI of test1.json
     {
       "type": "uint256",
       "name": "proposalID",
-      "indexed": true
+      "indexed": true,
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "position"
+      "name": "position",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "address",
       "name": "voter",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -280,7 +348,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "_actualBalance"
+      "name": "_actualBalance",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -293,17 +363,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_owner"
+      "name": "_owner",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_spender"
+      "name": "_spender",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "remaining"
+      "name": "remaining",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -316,13 +392,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -334,17 +414,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_spender"
+      "name": "_spender",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_amount"
+      "name": "_amount",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -357,13 +443,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_owner"
+      "name": "_owner",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "balance"
+      "name": "balance",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -376,13 +466,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -394,17 +488,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_recipient"
+      "name": "_recipient",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "_allowed"
+      "name": "_allowed",
+      "internalType": "bool",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -416,7 +516,9 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalDeposit"
+      "name": "_proposalDeposit",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -430,25 +532,35 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_recipient"
+      "name": "_recipient",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_amount"
+      "name": "_amount",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bytes",
-      "name": "_transactionData"
+      "name": "_transactionData",
+      "internalType": "bytes",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "_codeChecksOut"
+      "name": "_codeChecksOut",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -462,7 +574,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -474,13 +588,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_tokenHolder"
+      "name": "_tokenHolder",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -494,7 +612,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -508,7 +628,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -522,7 +644,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "divisor"
+      "name": "divisor",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -534,17 +658,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bytes",
-      "name": "_transactionData"
+      "name": "_transactionData",
+      "internalType": "bytes",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -558,7 +688,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -571,7 +703,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -584,13 +718,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "address",
-      "name": "_newDAO"
+      "name": "_newDAO",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -603,7 +741,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -617,7 +757,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "bool",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -631,7 +773,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -645,7 +789,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -659,7 +805,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -673,7 +821,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -685,7 +835,9 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_newContract"
+      "name": "_newContract",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -698,33 +850,47 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_recipient"
+      "name": "_recipient",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_amount"
+      "name": "_amount",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "string",
-      "name": "_description"
+      "name": "_description",
+      "internalType": "string",
+      "components": []
     },
     {
       "type": "bytes",
-      "name": "_transactionData"
+      "name": "_transactionData",
+      "internalType": "bytes",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_debatingPeriod"
+      "name": "_debatingPeriod",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "_newCurator"
+      "name": "_newCurator",
+      "internalType": "bool",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -738,7 +904,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "_numberOfProposals"
+      "name": "_numberOfProposals",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -751,13 +919,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -771,7 +943,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -785,7 +959,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -798,57 +974,83 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "address",
-      "name": "recipient"
+      "name": "recipient",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "amount"
+      "name": "amount",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "string",
-      "name": "description"
+      "name": "description",
+      "internalType": "string",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "votingDeadline"
+      "name": "votingDeadline",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "open"
+      "name": "open",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "proposalPassed"
+      "name": "proposalPassed",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "proposalHash"
+      "name": "proposalHash",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "proposalDeposit"
+      "name": "proposalDeposit",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "newCurator"
+      "name": "newCurator",
+      "internalType": "bool",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "yea"
+      "name": "yea",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "nay"
+      "name": "nay",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "address",
-      "name": "creator"
+      "name": "creator",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -861,7 +1063,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "bool",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -881,13 +1085,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "bool",
-      "name": "_toMembers"
+      "name": "_toMembers",
+      "internalType": "bool",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -901,7 +1109,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -914,13 +1124,17 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -932,17 +1146,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_newCurator"
+      "name": "_newCurator",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "_success"
+      "name": "_success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -956,7 +1176,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -970,7 +1192,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -982,17 +1206,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_to"
+      "name": "_to",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_value"
+      "name": "_value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -1004,21 +1234,29 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_from"
+      "name": "_from",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_to"
+      "name": "_to",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_value"
+      "name": "_value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -1030,21 +1268,29 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_from"
+      "name": "_from",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "address",
-      "name": "_to"
+      "name": "_to",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_value"
+      "name": "_value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -1056,17 +1302,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "address",
-      "name": "_to"
+      "name": "_to",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "_value"
+      "name": "_value",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bool",
-      "name": "success"
+      "name": "success",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -1080,7 +1332,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -1101,7 +1355,9 @@ ABI of test1.json
   "outputs": [
     {
       "type": "bool",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bool",
+      "components": []
     }
   ]
 }
@@ -1113,17 +1369,23 @@ ABI of test1.json
   "inputs": [
     {
       "type": "uint256",
-      "name": "_proposalID"
+      "name": "_proposalID",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "_supportsProposal"
+      "name": "_supportsProposal",
+      "internalType": "bool",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint256",
-      "name": "_voteID"
+      "name": "_voteID",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -1145,15 +1407,21 @@ ABI of test2.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1167,11 +1435,15 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1185,20 +1457,28 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
       "name": "val_1",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint8",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "uint8",
+      "components": []
     }
   ],
   "outputs": []
@@ -1212,20 +1492,28 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "string",
       "name": "val_1",
-      "indexed": true
+      "indexed": true,
+      "internalType": "string",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1239,20 +1527,28 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
       "name": "val_1",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1266,11 +1562,15 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1284,16 +1584,22 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
       "name": "val_1",
-      "indexed": true
+      "indexed": true,
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     }
   ],
   "outputs": []
@@ -1307,16 +1613,22 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "bytes32",
       "name": "val_1",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1330,11 +1642,15 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1348,11 +1664,15 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint64",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "uint64",
+      "components": []
     }
   ],
   "outputs": []
@@ -1366,11 +1686,15 @@ ABI of test2.json
     {
       "type": "bytes32",
       "name": "val_0",
-      "indexed": true
+      "indexed": true,
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1383,11 +1707,15 @@ ABI of test2.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1402,7 +1730,9 @@ ABI of test2.json
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -1415,29 +1745,41 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint8",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint8",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_4"
+      "name": "val_4",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -1449,7 +1791,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1462,7 +1806,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "string",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "string",
+      "components": []
     }
   ],
   "outputs": []
@@ -1476,7 +1822,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1490,13 +1838,17 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -1510,7 +1862,9 @@ ABI of test2.json
   "outputs": [
     {
       "type": "uint256",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint256",
+      "components": []
     }
   ]
 }
@@ -1522,7 +1876,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1536,13 +1892,17 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -1556,7 +1916,9 @@ ABI of test2.json
   "outputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ]
 }
@@ -1569,17 +1931,23 @@ ABI of test2.json
   "inputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "address",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "address",
+      "components": []
     }
   ]
 }
@@ -1591,11 +1959,15 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1608,11 +1980,15 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1625,15 +2001,21 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1646,11 +2028,15 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "uint64",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "uint64",
+      "components": []
     }
   ],
   "outputs": []
@@ -1664,25 +2050,35 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ]
 }
@@ -1694,7 +2090,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1707,7 +2105,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32[]",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32[]",
+      "components": []
     }
   ],
   "outputs": []
@@ -1721,13 +2121,17 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint8",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint8",
+      "components": []
     }
   ]
 }
@@ -1739,11 +2143,15 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     }
   ],
   "outputs": []
@@ -1756,7 +2164,9 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []
@@ -1770,13 +2180,17 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": [
     {
       "type": "uint64",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "uint64",
+      "components": []
     }
   ]
 }
@@ -1788,19 +2202,27 @@ ABI of test2.json
   "inputs": [
     {
       "type": "bytes32",
-      "name": "val_0"
+      "name": "val_0",
+      "internalType": "bytes32",
+      "components": []
     },
     {
       "type": "address",
-      "name": "val_1"
+      "name": "val_1",
+      "internalType": "address",
+      "components": []
     },
     {
       "type": "uint256",
-      "name": "val_2"
+      "name": "val_2",
+      "internalType": "uint256",
+      "components": []
     },
     {
       "type": "bytes32",
-      "name": "val_3"
+      "name": "val_3",
+      "internalType": "bytes32",
+      "components": []
     }
   ],
   "outputs": []

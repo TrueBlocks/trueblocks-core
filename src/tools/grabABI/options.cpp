@@ -166,9 +166,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     string_q format = STR_DISPLAY_ABI;
-    string_q funcFields = "CFunction:address,name,type,signature,encoding,inputs,outputs";
+    string_q ffields = toLower(substitute(substitute(substitute(STR_DISPLAY_FUNCTION, "[{", ""), "}]", ""), "\t", ","));
+    string_q funcFields = "CFunction:" + ffields;
     if (isTestMode())
-        funcFields = "CFunction:address,name,type,signature,encoding,input_names,output_names";
+        funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
 
     if (!addr) {
         replace(format, "[{ADDRESS}]\t", "");
@@ -184,7 +185,7 @@ bool COptions::parseArguments(string_q& command) {
     manageFields("CFunction:all", false);
     manageFields(funcFields, true);
     manageFields("CParameter:all", false);
-    manageFields("CParameter:type,name,is_array,indexed", true);
+    manageFields("CParameter:type,name,internalType,components,is_array,indexed", true);
 
     removeDuplicateEncodings(abiList);
 

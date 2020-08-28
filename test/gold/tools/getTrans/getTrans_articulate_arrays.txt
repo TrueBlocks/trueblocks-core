@@ -28,26 +28,37 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
           "data": "0x00000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "articulatedLog": {
             "name": "AcceptRequest",
+            "stateMutability": "",
             "inputs": [
               {
                 "name": "_key",
-                "value": "6"
+                "value": "6",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_etherAmount",
-                "value": "236159796400000000"
+                "value": "236159796400000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_tokenAmount",
-                "value": "25000000000000000000"
+                "value": "25000000000000000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_dollarPrice",
-                "value": "2000000000000000000"
+                "value": "2000000000000000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_acceptor",
-                "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
+                "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
+                "internalType": "address",
+                "components": []
               }
             ]
           },
@@ -63,26 +74,37 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
           "data": "0x00000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000347021566a68c000000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000001bc16d674ec80000",
           "articulatedLog": {
             "name": "AcceptRequest",
+            "stateMutability": "",
             "inputs": [
               {
                 "name": "_key",
-                "value": "5"
+                "value": "5",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_etherAmount",
-                "value": "236159796400000000"
+                "value": "236159796400000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_tokenAmount",
-                "value": "25000000000000000000"
+                "value": "25000000000000000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_dollarPrice",
-                "value": "2000000000000000000"
+                "value": "2000000000000000000",
+                "internalType": "uint256",
+                "components": []
               },
               {
                 "name": "_acceptor",
-                "value": "0xd503d263de9092232d28492d60c5a956ad754a83"
+                "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
+                "internalType": "address",
+                "components": []
               }
             ]
           },
@@ -113,18 +135,25 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
         },
         "articulatedTrace": {
           "name": "acceptTheseAskRequestsAndBUY",
+          "stateMutability": "",
           "inputs": [
             {
               "name": "_keys",
-              "value": "[6, 5]"
+              "value": "[6, 5]",
+              "internalType": "uint256[]",
+              "components": []
             },
             {
               "name": "_tokenAmounts",
-              "value": "[25000000000000000000, 25000000000000000000]"
+              "value": "[25000000000000000000, 25000000000000000000]",
+              "internalType": "uint256[]",
+              "components": []
             },
             {
               "name": "_dollarPrices",
-              "value": "[2000000000000000000, 2000000000000000000]"
+              "value": "[2000000000000000000, 2000000000000000000]",
+              "internalType": "uint256[]",
+              "components": []
             }
           ]
         },
@@ -133,18 +162,25 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
     ],
     "articulatedTx": {
       "name": "acceptTheseAskRequestsAndBUY",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_keys",
-          "value": "[6, 5]"
+          "value": "[6, 5]",
+          "internalType": "uint256[]",
+          "components": []
         },
         {
           "name": "_tokenAmounts",
-          "value": "[25000000000000000000, 25000000000000000000]"
+          "value": "[25000000000000000000, 25000000000000000000]",
+          "internalType": "uint256[]",
+          "components": []
         },
         {
           "name": "_dollarPrices",
-          "value": "[2000000000000000000, 2000000000000000000]"
+          "value": "[2000000000000000000, 2000000000000000000]",
+          "internalType": "uint256[]",
+          "components": []
         }
       ]
     },

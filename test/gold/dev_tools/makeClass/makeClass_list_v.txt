@@ -14,41 +14,50 @@ makeClass --dump function --verbose
   "fieldArray": [
     {
       "type": "string",
-      "name": "name"
+      "name": "name",
+      "components": []
     },
     {
       "type": "string",
-      "name": "type"
+      "name": "type",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "anonymous"
+      "name": "anonymous",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "constant"
+      "name": "constant",
+      "components": []
     },
     {
       "type": "bool",
-      "name": "payable"
+      "name": "payable",
+      "components": []
     },
     {
       "type": "string",
-      "name": "signature"
+      "name": "signature",
+      "components": []
     },
     {
       "type": "string",
-      "name": "encoding"
+      "name": "encoding",
+      "components": []
     },
     {
       "type": "CParameterArray",
       "name": "inputs",
+      "components": [],
       "is_array": true,
       "is_object": true
     },
     {
       "type": "CParameterArray",
       "name": "outputs",
+      "components": [],
       "is_array": true,
       "is_object": true
     }

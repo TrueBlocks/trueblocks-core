@@ -22,18 +22,25 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     },
     "articulatedTrace": {
       "name": "acceptTheseAskRequestsAndBUY",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_keys",
-          "value": "[6, 5]"
+          "value": "[6, 5]",
+          "internalType": "uint256[]",
+          "components": []
         },
         {
           "name": "_tokenAmounts",
-          "value": "[25000000000000000000, 25000000000000000000]"
+          "value": "[25000000000000000000, 25000000000000000000]",
+          "internalType": "uint256[]",
+          "components": []
         },
         {
           "name": "_dollarPrices",
-          "value": "[2000000000000000000, 2000000000000000000]"
+          "value": "[2000000000000000000, 2000000000000000000]",
+          "internalType": "uint256[]",
+          "components": []
         }
       ]
     },
@@ -59,16 +66,21 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     },
     "articulatedTrace": {
       "name": "USD",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_id",
-          "value": "0"
+          "value": "0",
+          "internalType": "uint256",
+          "components": []
         }
       ],
       "outputs": [
         {
           "name": "ret_0",
-          "value": "47231959280000"
+          "value": "47231959280000",
+          "internalType": "uint256",
+          "components": []
         }
       ]
     },
@@ -94,16 +106,21 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     },
     "articulatedTrace": {
       "name": "USD",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "_id",
-          "value": "0"
+          "value": "0",
+          "internalType": "uint256",
+          "components": []
         }
       ],
       "outputs": [
         {
           "name": "ret_0",
-          "value": "47231959280000"
+          "value": "47231959280000",
+          "internalType": "uint256",
+          "components": []
         }
       ]
     },

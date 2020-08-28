@@ -29,18 +29,25 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
           "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
           "articulatedLog": {
             "name": "DataDumped",
+            "stateMutability": "",
             "inputs": [
               {
                 "name": "_recipient",
-                "value": "0xd31f381ad54386895852f311fc3be2008c88cb27"
+                "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+                "internalType": "address",
+                "components": []
               },
               {
                 "name": "_topic",
-                "value": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
+                "value": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866",
+                "internalType": "string",
+                "components": []
               },
               {
                 "name": "_dataHash",
-                "value": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S"
+                "value": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+                "internalType": "bytes32",
+                "components": []
               }
             ]
           },
@@ -71,18 +78,25 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
         },
         "articulatedTrace": {
           "name": "postData",
+          "stateMutability": "",
           "inputs": [
             {
               "name": "recipient",
-              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27"
+              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+              "internalType": "address",
+              "components": []
             },
             {
               "name": "topic",
-              "value": "This is the string that represents the type of data being posted"
+              "value": "This is the string that represents the type of data being posted",
+              "internalType": "string",
+              "components": []
             },
             {
               "name": "data",
-              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353"
+              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+              "internalType": "bytes32",
+              "components": []
             }
           ]
         },
@@ -91,18 +105,25 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
     ],
     "articulatedTx": {
       "name": "postData",
+      "stateMutability": "",
       "inputs": [
         {
           "name": "recipient",
-          "value": "0xd31f381ad54386895852f311fc3be2008c88cb27"
+          "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+          "internalType": "address",
+          "components": []
         },
         {
           "name": "topic",
-          "value": "This is the string that represents the type of data being posted"
+          "value": "This is the string that represents the type of data being posted",
+          "internalType": "string",
+          "components": []
         },
         {
           "name": "data",
-          "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353"
+          "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+          "internalType": "bytes32",
+          "components": []
         }
       ]
     },
