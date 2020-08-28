@@ -141,6 +141,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
+      "decimals": "0"
+    },
+    {
       "address": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45",
       "decimals": 18
     },
@@ -202,6 +206,10 @@
     },
     {
       "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
       "decimals": "0"
     },
     {
@@ -509,6 +517,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x057b56736d32b86616a10f619859c6cd6f59092a",
+      "decimals": "0"
+    },
+    {
       "address": "0x058601725fcf134e2cdeef2d9e53cb91dc7e6c15",
       "decimals": "0"
     },
@@ -593,6 +605,10 @@
       "decimals": "0"
     },
     {
+      "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
+      "decimals": "0"
+    },
+    {
       "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
       "decimals": "0"
     },
@@ -646,6 +662,10 @@
     },
     {
       "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
+      "decimals": "0"
+    },
+    {
+      "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
       "decimals": "0"
     },
     {
@@ -717,6 +737,10 @@
       "decimals": 18
     },
     {
+      "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
+      "decimals": "0"
+    },
+    {
       "address": "0x07f66cde25828ddb3578b30c52a491db08c92d77",
       "decimals": "0"
     },
@@ -779,30 +803,6 @@
     {
       "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
       "decimals": "0"
-    },
-    {
-      "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
-      "decimals": 8
-    },
-    {
-      "address": "0x08fdc2ee954b3ce261b8cc7f65fdb02df168802e",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
-      "decimals": "0"
-    },
-    {
-      "address": "0x09328efb1093120b9d07c005f201cd743cb01708",
-      "decimals": "0"
-    },
-    {
-      "address": "0x093430541975e7aa0b2d9de2085bf99f33a5e91c",
-      "decimals": "0"
-    },
-    {
-      "address": "0x0947b0e6d821378805c9598291385ce7c791a6b2",
-      "decimals": 18
     }
   ],
   "types": [

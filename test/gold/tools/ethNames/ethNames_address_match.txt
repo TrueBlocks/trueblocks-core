@@ -524,6 +524,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "42-DaoDrain",
+    "address": "0x12e626b0eebfe86a56d633b9864e389b45dcb260",
+    "name": "Dao Drain 078",
+    "symbol": "",
+    "source": "GethSource",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
     "name": "Cofoundit",
@@ -947,6 +956,15 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
+    "tags": "42-DaoDrain",
+    "address": "0x1591fc0f688c81fbeb17f5426a162a7024d430c2",
+    "name": "Dao Drain 050",
+    "symbol": "",
+    "source": "GethSource",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
     "name": "Name 0x15ad5da7",
@@ -1208,6 +1226,15 @@ ethNames 0x1 --fmt api
     "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
   },
   {
+    "tags": "42-DaoDrain",
+    "address": "0x17802f43a0137c506ba92291391a8a8f207f487d",
+    "name": "Dao Drain 096",
+    "symbol": "",
+    "source": "GethSource",
+    "decimals": 0,
+    "description": ""
+  },
+  {
     "tags": "60-Airdrops",
     "address": "0x17a7ad6a2850f58f7344ae27e53eb44f81f9655c",
     "name": "RZM Airdrop Sender",
@@ -1449,6 +1476,15 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/844/solidity-visualizer-extension",
     "decimals": 0,
     "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
+  },
+  {
+    "tags": "42-DaoDrain",
+    "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
+    "name": "Dao Drain 005",
+    "symbol": "",
+    "source": "GethSource Ether Camp",
+    "decimals": 0,
+    "description": ""
   },
   {
     "tags": "50-Tokens",
@@ -1773,42 +1809,6 @@ ethNames 0x1 --fmt api
     "source": "TrueBlocks.io",
     "decimals": 0,
     "description": ""
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x1c277bd41a276f87d3e92bccd50c7364aa2ffc69",
-    "name": "Name 0x1c277bd4",
-    "symbol": "",
-    "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1c4481750daa5ff521a2a7490d9981ed46465dbd",
-    "name": "BLOCKMASON CREDIT PROTOCOL TOKEN",
-    "symbol": "BCPT",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "Democratizing the creation of credit through permanently recorded debts and obligations."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1c4b7d0e1885bd7667af3378e0c538f74e712006",
-    "name": "IOGToken",
-    "symbol": "IOG",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": ""
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff",
-    "name": "Soniq Token",
-    "symbol": "SONIQ",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby."
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
