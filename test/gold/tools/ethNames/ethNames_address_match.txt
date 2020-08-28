@@ -524,7 +524,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x12e626b0eebfe86a56d633b9864e389b45dcb260",
     "name": "Dao Drain 078",
     "symbol": "",
@@ -956,7 +956,7 @@ ethNames 0x1 --fmt api
     "description": ""
   },
   {
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x1591fc0f688c81fbeb17f5426a162a7024d430c2",
     "name": "Dao Drain 050",
     "symbol": "",
@@ -1226,7 +1226,7 @@ ethNames 0x1 --fmt api
     "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
   },
   {
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x17802f43a0137c506ba92291391a8a8f207f487d",
     "name": "Dao Drain 096",
     "symbol": "",
@@ -1478,7 +1478,7 @@ ethNames 0x1 --fmt api
     "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
   },
   {
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
     "symbol": "",

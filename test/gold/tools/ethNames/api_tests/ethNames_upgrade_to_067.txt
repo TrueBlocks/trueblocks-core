@@ -280,7 +280,7 @@
       "description": ""
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
       "name": "Dao Drain 086",
       "symbol": "",
@@ -433,7 +433,7 @@
       "description": "https://nescience.io"
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
       "name": "Dao Drain 075",
       "symbol": "",
@@ -1126,7 +1126,7 @@
       "description": "https://medium.com/@w_brealey"
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x057b56736d32b86616a10f619859c6cd6f59092a",
       "name": "Dao Drain 065",
       "symbol": "",
@@ -1324,7 +1324,7 @@
       "description": "@okbabyqn88"
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
       "name": "Dao Drain 008",
       "symbol": "",
@@ -1459,7 +1459,7 @@
       "description": ""
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
       "name": "Dao Drain 059",
       "symbol": "",
@@ -1621,7 +1621,7 @@
       "description": ""
     },
     {
-      "tags": "42-DaoDrain",
+      "tags": "74-DaoDrain",
       "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
       "name": "Dao Drain 070",
       "symbol": "",

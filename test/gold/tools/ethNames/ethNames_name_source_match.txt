@@ -99,7 +99,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "Dao Drain 075",
     "symbol": "",
@@ -291,7 +291,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
     "name": "Dao Drain 059",
     "symbol": "",
@@ -519,7 +519,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d",
     "name": "Dao Drain 087",
     "symbol": "",
@@ -747,7 +747,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
     "symbol": "",
@@ -855,7 +855,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x200450f06520bdd6c527622a273333384d870efb",
     "name": "Dao Drain 015",
     "symbol": "",
@@ -963,7 +963,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
     "name": "Dao Drain 097",
     "symbol": "",
@@ -1179,7 +1179,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f",
     "name": "Dao Drain 003",
     "symbol": "",
@@ -1215,7 +1215,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "Dao Drain 067 (DarkDAO)",
     "symbol": "",
@@ -1251,7 +1251,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x319f70bab6845585f412ec7724b744fec6095c85",
     "name": "Dao Drain 007",
     "symbol": "",
@@ -1635,7 +1635,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
     "name": "Dao Drain 041",
     "symbol": "",
@@ -1683,7 +1683,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
     "name": "Dao Drain 109 DAO_Hell_007",
     "symbol": "",
@@ -1911,7 +1911,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x51e0ddd9998364a2eb38588679f0d2c42653e4a6",
     "name": "Dao Drain 021",
     "symbol": "",
@@ -1935,7 +1935,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
     "name": "Dao Drain 061",
     "symbol": "",
@@ -1959,7 +1959,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x5524c55fb03cf21f549444ccbecb664d0acad706",
     "name": "Dao Drain 093",
     "symbol": "",
@@ -2079,7 +2079,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5",
     "name": "Dao Drain 013",
     "symbol": "",
@@ -2091,7 +2091,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x5c8536898fbb74fc7445814902fd08422eac56d0",
     "name": "Dao Drain 009",
     "symbol": "",
@@ -2103,7 +2103,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x5d2b2e6fcbe3b11d26b525e085ff818dae332479",
     "name": "Dao Drain 063",
     "symbol": "",
@@ -2187,7 +2187,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x6131c42fa982e56929107413a9d526fd99405560",
     "name": "Dao Drain 049",
     "symbol": "",
@@ -2367,7 +2367,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "42-DaoDrain",
+    "tags": "74-DaoDrain",
     "address": "0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb",
     "name": "Dao Drain 017 Other DAO",
     "symbol": "",

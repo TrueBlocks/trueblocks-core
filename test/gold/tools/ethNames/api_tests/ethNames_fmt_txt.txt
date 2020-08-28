@@ -34,7 +34,7 @@ tags	address	name	symbol	decimals
 60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender
 31-Gitcoin Grants:Friends	0x004efb233c8d26ccc063061bee54f0be9302e6ed	Name 0x004efb23
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent
-42-DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	Dao Drain 086
+74-DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	Dao Drain 086
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18
 31-Gitcoin Grants:Grant	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 845 Remote Developer Bootcamp
 31-Gitcoin Grants:Grant	0x0087a081a9b430fd8f688c6ac5dd24421bfb060d	Grant 779 DeFi LATAM
@@ -51,7 +51,7 @@ tags	address	name	symbol	decimals
 60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Airdrop Sender
 60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Airdrop Sender
 31-Gitcoin Grants:Grant	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 624 Nescience Software Portfolio Rebalancing Direct Indexing
-42-DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	Dao Drain 075
+74-DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	Dao Drain 075
 31-Gitcoin Grants:Friends	0x010afb8548a5d1a3a3d62f58ca0a5a1329974206	Name 0x010afb85
 31-Gitcoin Grants:Grant	0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70	Grant 790 Loft Radio
 31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma
@@ -128,7 +128,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD		2
 60-Airdrops	0x0571325cd46718cd9445f082332a4fd9a21b8498	FIFAMini Airdrop Sender
 31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 292 Will Brealey Ethereum Writer
-42-DaoDrain	0x057b56736d32b86616a10f619859c6cd6f59092a	Dao Drain 065
+74-DaoDrain	0x057b56736d32b86616a10f619859c6cd6f59092a	Dao Drain 065
 90-DevCon2:Individual	0x058601725fcf134e2cdeef2d9e53cb91dc7e6c15	kelvin
 50-Tokens:ERC20	0x05860d453c7974cbf46508c06cba14e211c629ce	Eden Coin	EDN		18
 31-Gitcoin Grants:Friends	0x058bdde93176f754be2c4361a99ed20869e106bc	Name 0x058bdde9
@@ -150,7 +150,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x0639092a9c3d9467dd6f89a13213541c8a1e58b2	Grant 194 Reach Platform
 31-Gitcoin Grants:Friends	0x064d3230f753d8c14e06cf491fe2f1a3d2ccd5dd	Name 0x064d3230
 34-Twitter: Friends	0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e	Name 0x0667ad4c
-42-DaoDrain	0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936	Dao Drain 008
+74-DaoDrain	0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936	Dao Drain 008
 40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4
 30-Contracts	0x0681e844593a051e2882ec897ecd5444efe19ff2	StarbitEx
 31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group
@@ -165,7 +165,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach
-42-DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	Dao Drain 059
+74-DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	Dao Drain 059
 31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 268 Simpleaswater
 31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	Name 0x073c841e
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18
@@ -183,7 +183,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18
 31-Gitcoin Grants:Friends	0x07e405e6ec64b85206ad5aaf490a534394d7a65b	Name 0x07e405e6
 50-Tokens:ERC20	0x07ef9e82721ac16809d24dafbe1792ce01654db4	Chimpion	BNANA		18
-42-DaoDrain	0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a	Dao Drain 070
+74-DaoDrain	0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a	Dao Drain 070
 31-Gitcoin Grants:Friends	0x07f66cde25828ddb3578b30c52a491db08c92d77	Name 0x07f66cde
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius
 30-Contracts	0x080bf510fcbf18b91105470639e9561022937712	0x Exchange V2.1
