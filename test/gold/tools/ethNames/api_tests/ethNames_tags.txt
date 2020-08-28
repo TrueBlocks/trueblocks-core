@@ -91,9 +91,6 @@
       "tags": "40-Exchanges"
     },
     {
-      "tags": "74-DaoDrain"
-    },
-    {
       "tags": "50-Tokens"
     },
     {
@@ -107,6 +104,9 @@
     },
     {
       "tags": "70-Vendors"
+    },
+    {
+      "tags": "74-DaoDrain"
     },
     {
       "tags": "75-Early Actors"
