@@ -7,8 +7,6 @@ line: ;encode_raw|encoding negative int32|function baz(int32)|-2|0xfffffffffffff
 testType: ;encode_raw
 testName: encoding negative int32
 signature: function baz(int32) : function baz(int32)
-values: 
--2
 expected: --0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe--?
 result:   --0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe--? 1
 passed 'func.doTest(line)' is true
@@ -18,8 +16,6 @@ line: ;encode_raw|encoding negative int256|function baz(int256)|bn(-199999999999
 testType: ;encode_raw
 testName: encoding negative int256
 signature: function baz(int256) : function baz(int256)
-values: 
-bn(-19999999999999999999999999999999999999999999999999999999999999)
 expected: --0xfffffffffffff38dd0f10627f5529bdb2c52d4846810af0ac000000000000001--?
 result:   --0xfffffffffffff38dd0f10627f5529bdb2c52d4846810af0ac000000000000001--? 1
 passed 'func.doTest(line)' is true
@@ -29,8 +25,6 @@ line: ;encode_raw|encoding string >32bytes|function baz(string)|hello world hell
 testType: ;encode_raw
 testName: encoding string >32bytes
 signature: function baz(string) : function baz(string)
-values: 
-hello world hello world hello world hello world  hello world hello world hello world hello world  hello world hello world hello world hello world hello world hello world hello world hello world
 expected: --0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000c22068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64000000000000000000000000000000000000000000000000000000000000--?
 result:   --0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000c22068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64000000000000000000000000000000000000000000000000000000000000--? 1
 passed 'func.doTest(line)' is true
@@ -40,8 +34,6 @@ line: ;encode_raw|encoding uint32 response|function baz(uint32)|42|0x00000000000
 testType: ;encode_raw
 testName: encoding uint32 response
 signature: function baz(uint32) : function baz(uint32)
-values: 
-42
 expected: --0x000000000000000000000000000000000000000000000000000000000000002a--?
 result:   --0x000000000000000000000000000000000000000000000000000000000000002a--? 1
 passed 'func.doTest(line)' is true
@@ -51,8 +43,6 @@ line: ;encode_raw|encoding string response (unsupported)|function baz(string)|a 
 testType: ;encode_raw
 testName: encoding string response (unsupported)
 signature: function baz(string) : function baz(string)
-values: 
-a response string (unsupported)
 expected: --0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f6120726573706f6e736520737472696e672028756e737570706f727465642900--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f6120726573706f6e736520737472696e672028756e737570706f727465642900--? 1
 passed 'func.doTest(line)' is true
@@ -62,8 +52,6 @@ line: ;encode_raw|encoding 1|function baz(uint256)|1|0x0000000000000000000000000
 testType: ;encode_raw
 testName: encoding 1
 signature: function baz(uint256) : function baz(uint256)
-values: 
-1
 expected: --0x0000000000000000000000000000000000000000000000000000000000000001--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000001--? 1
 passed 'func.doTest(line)' is true
@@ -73,8 +61,6 @@ line: ;encode_raw|encoding 2|function baz(uint)|1|0x0000000000000000000000000000
 testType: ;encode_raw
 testName: encoding 2
 signature: function baz(uint) : function baz(uint256)
-values: 
-1
 expected: --0x0000000000000000000000000000000000000000000000000000000000000001--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000001--? 1
 passed 'func.doTest(line)' is true
@@ -84,8 +70,6 @@ line: ;encode_raw|encoding 3|function baz(int256)|-1|0xfffffffffffffffffffffffff
 testType: ;encode_raw
 testName: encoding 3
 signature: function baz(int256) : function baz(int256)
-values: 
--1
 expected: --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff--?
 result:   --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff--? 1
 passed 'func.doTest(line)' is true
@@ -95,8 +79,6 @@ line: ;encode_raw|encoding 3|function baz(string,uint256[2])|foo,[5, 6]|0x000000
 testType: ;encode_raw
 testName: encoding 3
 signature: function baz(string,uint256[2]) : function baz(string,uint256[2])
-values: 
-foo,[5, 6]
 expected: --0x0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000--? 1
 passed 'func.doTest(line)' is true
@@ -106,9 +88,6 @@ line: ;encode_raw|decoding address with leading 0|function baz(address)|0x000000
 testType: ;encode_raw
 testName: decoding address with leading 0
 signature: function baz(address) : function baz(address)
-values: 
-0x0000000000000000000000000005b7d915458ef540ade6068dfe2f44e8fa733c
-
 expected: --0x0005b7d915458ef540ade6068dfe2f44e8fa733c--?
 result:   --0x0005b7d915458ef540ade6068dfe2f44e8fa733c--? 1
 passed 'func.doTest(line)' is true
@@ -118,8 +97,6 @@ line: ;raw_encode|encoding ufixed128x128|function baz(ufixed128x128)|1|0x0000000
 testType: ;raw_encode
 testName: encoding ufixed128x128
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
-values: 
-1
 expected: --0x0000000000000000000000000000000100000000000000000000000000000000--?
 result:   --0x0000000000000000000000000000000100000000000000000000000000000000--? 1
 passed 'func.doTest(line)' is true
@@ -129,8 +106,6 @@ line: ;raw_encode|encoding fixed128x128|function baz(fixed128x128|-1|0xfffffffff
 testType: ;raw_encode
 testName: encoding fixed128x128
 signature: function baz(fixed128x128 : function baz(fixed128x128)
-values: 
--1
 expected: --0xffffffffffffffffffffffffffffffff00000000000000000000000000000000--?
 result:   --0xffffffffffffffffffffffffffffffff00000000000000000000000000000000--? 1
 passed 'func.doTest(line)' is true

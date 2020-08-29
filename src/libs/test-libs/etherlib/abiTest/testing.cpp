@@ -353,21 +353,6 @@ TEST_F(CThisTest, TestSerpent) {
 }
 
 //------------------------------------------------------------------------
-string_q prettyPrint(const string_q& strIn) {
-    if (!contains(strIn, "0x"))
-        return strIn;
-    string_q str = strIn;
-    ostringstream os;
-    os << str.substr(0, 66) << endl;
-    replace(str, str.substr(0, 66), "");
-    while (!str.empty()) {
-        os << "  " << str.substr(0, 64) << endl;
-        replace(str, str.substr(0, 64), "");
-    }
-    return os.str();
-}
-
-//------------------------------------------------------------------------
 class CFunctionTester : public CFunction {
   public:
     bool doTest(const string_q& line1) {
@@ -396,7 +381,6 @@ class CFunctionTester : public CFunction {
         cout << "testType: " << parts[0] << endl;
         cout << "testName: " << parts[1] << endl;
         cout << "signature: " << parts[2] << " : " << type << " " << getSignature(SIG_CANONICAL) << endl;
-        cout << "values: " << endl << prettyPrint(parts[3]) << endl;
         if (startsWith(line, ';')) {
             cout << (expected == result ? bGreen : bRed);
             cout << "expected: --" << parts[4] << "--?" << endl;
@@ -416,8 +400,9 @@ class CFunctionTester : public CFunction {
             result = (type == "function" ? result.substr(0, 10) : result);
 
         } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
-            expected = substitute(parts[4], "<empty>", "");
+            cerr << endl << string_q(50, '-') << endl;
             decodeRLP(inputs, parts[2], parts[3]);
+            expected = substitute(parts[4], "<empty>", "");
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";

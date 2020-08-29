@@ -7,8 +7,6 @@ line: signature|test 1|function vote(uint256,bool)||0xc9d27afe
 testType: signature
 testName: test 1
 signature: function vote(uint256,bool) : function vote(uint256,bool)
-values: 
-
 expected: --0xc9d27afe--?
 result:   --0xc9d27afe--? 1
 passed 'func.doTest(line)' is true
@@ -18,8 +16,6 @@ line: signature|test 2|event AllowedRecipientChanged(address,bool)||0x73ad2a153c
 testType: signature
 testName: test 2
 signature: event AllowedRecipientChanged(address,bool) : event AllowedRecipientChanged(address,bool)
-values: 
-
 expected: --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--?
 result:   --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--? 1
 passed 'func.doTest(line)' is true
@@ -29,8 +25,6 @@ line: signature|method signature 1|function test()||0xf8a8fd6d
 testType: signature
 testName: method signature 1
 signature: function test() : function test()
-values: 
-
 expected: --0xf8a8fd6d--?
 result:   --0xf8a8fd6d--? 1
 passed 'func.doTest(line)' is true
@@ -40,8 +34,6 @@ line: signature|method signature 2|function test(uint)||0x29e99f07
 testType: signature
 testName: method signature 2
 signature: function test(uint) : function test(uint256)
-values: 
-
 expected: --0x29e99f07--?
 result:   --0x29e99f07--? 1
 passed 'func.doTest(line)' is true
@@ -51,8 +43,6 @@ line: signature|method signature 3|function test(uint256)||0x29e99f07
 testType: signature
 testName: method signature 3
 signature: function test(uint256) : function test(uint256)
-values: 
-
 expected: --0x29e99f07--?
 result:   --0x29e99f07--? 1
 passed 'func.doTest(line)' is true
@@ -62,8 +52,6 @@ line: signature|method signature 4|function test(uint, uint)||0xeb8ac921
 testType: signature
 testName: method signature 4
 signature: function test(uint, uint) : function test(uint256,uint256)
-values: 
-
 expected: --0xeb8ac921--?
 result:   --0xeb8ac921--? 1
 passed 'func.doTest(line)' is true
@@ -73,8 +61,6 @@ line: signature|event signature 1|event test()||0xf8a8fd6dd9544ca87214e80c840685
 testType: signature
 testName: event signature 1
 signature: event test() : event test()
-values: 
-
 expected: --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--?
 result:   --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--? 1
 passed 'func.doTest(line)' is true
@@ -84,8 +70,6 @@ line: signature|event signature 2|event test(uint)||0x29e99f07d14aa8d30a12fa0b07
 testType: signature
 testName: event signature 2
 signature: event test(uint) : event test(uint256)
-values: 
-
 expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
 result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
 passed 'func.doTest(line)' is true
@@ -95,8 +79,6 @@ line: signature|event signature 3|event test(uint256)||0x29e99f07d14aa8d30a12fa0
 testType: signature
 testName: event signature 3
 signature: event test(uint256) : event test(uint256)
-values: 
-
 expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
 result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
 passed 'func.doTest(line)' is true
@@ -106,8 +88,6 @@ line: signature|event signature 4|event test(uint, uint)||0xeb8ac9210327650aab00
 testType: signature
 testName: event signature 4
 signature: event test(uint, uint) : event test(uint256,uint256)
-values: 
-
 expected: --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--?
 result:   --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--? 1
 passed 'func.doTest(line)' is true
@@ -117,8 +97,6 @@ line: signature|encoding bytes33 (should fail)|function baz(bytes33)||fail
 testType: signature
 testName: encoding bytes33 (should fail)
 signature: function baz(bytes33) : function baz(bytes33)
-values: 
-
 expected: --fail--?
 result:   --fail--? 1
 passed 'func.doTest(line)' is true

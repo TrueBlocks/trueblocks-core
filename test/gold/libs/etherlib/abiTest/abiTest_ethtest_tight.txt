@@ -7,8 +7,6 @@ line: ;tight|solidity tight packing bool|function baz(bool)|true|01
 testType: ;tight
 testName: solidity tight packing bool
 signature: function baz(bool) : function baz(bool)
-values: 
-true
 expected: --01--?
 result:   --01--? 1
 passed 'func.doTest(line)' is true
@@ -18,8 +16,6 @@ line: ;tight|solidity tight packing bool|function baz(bool)|false|00
 testType: ;tight
 testName: solidity tight packing bool
 signature: function baz(bool) : function baz(bool)
-values: 
-false
 expected: --00--?
 result:   --00--? 1
 passed 'func.doTest(line)' is true
@@ -29,9 +25,6 @@ line: ;tight|solidity tight packing address|function baz(address)|0x43989fb883ba
 testType: ;tight
 testName: solidity tight packing address
 signature: function baz(address) : function baz(address)
-values: 
-0x43989fb883ba8111221e89123897538475893837
-
 expected: --0x43989fb883ba8111221e89123897538475893837--?
 result:   --0x43989fb883ba8111221e89123897538475893837--? 1
 passed 'func.doTest(line)' is true
@@ -41,8 +34,6 @@ line: ;tight|solidity tight packing string|function baz(string)|test|0x74657374
 testType: ;tight
 testName: solidity tight packing string
 signature: function baz(string) : function baz(string)
-values: 
-test
 expected: --0x74657374--?
 result:   --0x74657374--? 1
 passed 'func.doTest(line)' is true
@@ -52,9 +43,6 @@ line: ;tight|solidity tight packing bytes|function baz(bytes)|0x123456|0x123456
 testType: ;tight
 testName: solidity tight packing bytes
 signature: function baz(bytes) : function baz(bytes)
-values: 
-0x123456
-
 expected: --0x123456--?
 result:   --0x123456--? 1
 passed 'func.doTest(line)' is true
@@ -64,9 +52,6 @@ line: ;tight|solidity tight packing bytes8|function baz(bytes8)|0x123456|0x12345
 testType: ;tight
 testName: solidity tight packing bytes8
 signature: function baz(bytes8) : function baz(bytes8)
-values: 
-0x123456
-
 expected: --0x1234560000000000--?
 result:   --0x1234560000000000--? 1
 passed 'func.doTest(line)' is true
@@ -76,8 +61,6 @@ line: ;tight|solidity tight packing uint|function baz(uint)|42|0x000000000000000
 testType: ;tight
 testName: solidity tight packing uint
 signature: function baz(uint) : function baz(uint256)
-values: 
-42
 expected: --0x000000000000000000000000000000000000000000000000000000000000002a--?
 result:   --0x000000000000000000000000000000000000000000000000000000000000002a--? 1
 passed 'func.doTest(line)' is true
@@ -87,8 +70,6 @@ line: ;tight|solidity tight packing uint16|function baz(uint16)|42|002a
 testType: ;tight
 testName: solidity tight packing uint16
 signature: function baz(uint16) : function baz(uint16)
-values: 
-42
 expected: --002a--?
 result:   --002a--? 1
 passed 'func.doTest(line)' is true
@@ -98,8 +79,6 @@ line: ;tight|solidity tight packing int|function baz(int)|-42|0xffffffffffffffff
 testType: ;tight
 testName: solidity tight packing int
 signature: function baz(int) : function baz(int256)
-values: 
--42
 expected: --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6--?
 result:   --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6--? 1
 passed 'func.doTest(line)' is true
@@ -109,8 +88,6 @@ line: ;tight|solidity tight packing int16|function baz(int16)|-42|0xffd6
 testType: ;tight
 testName: solidity tight packing int16
 signature: function baz(int16) : function baz(int16)
-values: 
--42
 expected: --0xffd6--?
 result:   --0xffd6--? 1
 passed 'func.doTest(line)' is true
@@ -120,9 +97,6 @@ line: ;tight|solidity tight packing multiple arguments|function baz(bytes32, uin
 testType: ;tight
 testName: solidity tight packing multiple arguments
 signature: function baz(bytes32, uint32, uint32, uint32, uint32) : function baz(bytes32,uint32,uint32,uint32,uint32)
-values: 
-0x123456,6,7,8,9
-
 expected: --0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009--?
 result:   --0x123456000000000000000000000000000000000000000000000000000000000000000006000000070000000800000009--? 1
 passed 'func.doTest(line)' is true
@@ -132,9 +106,6 @@ line: ;tight|solidity tight packing sha3|function baz(address,address,uint,uint)
 testType: ;tight
 testName: solidity tight packing sha3
 signature: function baz(address,address,uint,uint) : function baz(address,address,uint256,uint256)
-values: 
-0x43989fb883ba8111221e89123897538475893837, 0, 10000, 1448075779
-
 expected: --0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595--?
 result:   --0xc3ab5ca31a013757f26a88561f0ff5057a97dfcc33f43d6b479abc3ac2d1d595--? 1
 passed 'func.doTest(line)' is true
@@ -144,9 +115,6 @@ line: ;tight|solidity tight packing sha3 #2|function baz(bytes32,uint32,uint32,u
 testType: ;tight
 testName: solidity tight packing sha3 #2
 signature: function baz(bytes32,uint32,uint32,uint32,uint32) : function baz(bytes32,uint32,uint32,uint32,uint32)
-values: 
-0x123456,6,7,8,9
-
 expected: --0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba--?
 result:   --0x1f2eedb6c2ac3e4b4e4c9f7598e626baf1e15a4e848d295479f46ec85d967cba--? 1
 passed 'func.doTest(line)' is true
@@ -156,9 +124,6 @@ line: ;tight|solidity tight packing sha256|function baz(address,address,uint,uin
 testType: ;tight
 testName: solidity tight packing sha256
 signature: function baz(address,address,uint,uint) : function baz(address,address,uint256,uint256)
-values: 
-0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779
-
 expected: --0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231--?
 result:   --0x344d8cb0711672efbdfe991f35943847c1058e1ecf515ff63ad936b91fd16231--? 1
 passed 'func.doTest(line)' is true
@@ -168,9 +133,6 @@ line: ;tight|solidity tight packing ripemd160|function baz(address,address,uint,
 testType: ;tight
 testName: solidity tight packing ripemd160
 signature: function baz(address,address,uint,uint) : function baz(address,address,uint256,uint256)
-values: 
-0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779
-
 expected: --0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7--?
 result:   --0x000000000000000000000000a398cc72490f72048efa52c4e92067e8499672e7--? 1
 passed 'func.doTest(line)' is true
@@ -180,9 +142,6 @@ line: ;tight|solidity tight packing with small ints|function baz(address,address
 testType: ;tight
 testName: solidity tight packing with small ints
 signature: function baz(address,address,int64,uint192 : function baz(address,address,int64,uint192)
-values: 
-0x43989fb883ba8111221e89123897538475893837,0,10000,1448075779)
-
 expected: --0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986--?
 result:   --0x1c34bbd3d419c05d028a9f13a81a1212e33cb21f4b96ce1310442911c62c6986--? 1
 passed 'func.doTest(line)' is true

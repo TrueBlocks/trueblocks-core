@@ -1,6 +1,21 @@
 abiTest2 argc: 1 
 abiTest2 
-[TIME ~ CLOCK - <WARNG> : Unknown type: tuple in decodeTheData
+[--1 : 5 : 0
+--  0: donations -- tuple[]((address token,uint256 amount,address recipient))
+--  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
+--  1: 0000000000000000000000000000000000000000000000000000000000000001
+--  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
+--  3: 00000000000000000000000000000000000000000000001f711def073e900000
+--  4: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+array of type[]...
+  --1 : 5 : 2
+  --  0:  -- tuple(address token,uint256 amount,address recipient)
+  --  0: 0000000000000000000000000000000000000000000000000000000000000020
+  --  1: 0000000000000000000000000000000000000000000000000000000000000001 <===
+  --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f <---
+  --  3: 00000000000000000000000000000000000000000000001f711def073e900000
+  --  4: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <WARNG> : Unknown type: tuple in decodeTheData
 {
   "blockNumber": 10419885,
   "transactionIndex": 115,
@@ -62,7 +77,13 @@ abiTest2
     "inputs": [
       {
         "name": "donations",
-        "value": "[]"
+        "value": "[
+          {
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "amount": "120101",
+              "recipient": "0x1719c7dc8216ce67f96171e1a817195ae075d78d",
+          }
+        ]"
       }
     ]
   }
